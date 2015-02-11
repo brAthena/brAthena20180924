@@ -1,0 +1,36 @@
+//  ____________________________________________________________
+// /                                                            \
+// |         _           _   _   _                              |
+// |        | |__  _ __ / \ | |_| |__   ___ _ __   __ _         |
+// |        | '_ \| '__/ _ \| __| '_ \ / _ \ '_ \ / _` |        |
+// |        | |_) | | / ___ \ |_| | | |  __/ | | | (_| |        |
+// |        |_.__/|_|/_/   \_\__|_| |_|\___|_| |_|\__,_|        |
+// |                                                            |
+// |                       brAthena Script                      |
+// |------------------------------------------------------------|
+// | Nome da Configuração: grf-files.conf                       |
+// |------------------------------------------------------------|
+// | Criado por: eA/rA/brA Dev. Team                            |
+// |------------------------------------------------------------|
+// | Descrição: Configurações dos arquivos GRF.                 |
+// |------------------------------------------------------------|
+// | Changelog:                                                 |
+// | 1.0 Traduzido [Protimus]                                   |
+// |------------------------------------------------------------|
+// | - Anotações                                                |
+// | "Comentários" devem ser adicionados com // no início da    |
+// | frase, senão você causará problemas de conf, pois o texto  |
+// | será inválido conforme o código fonte.                     |
+// | Lembre-se que "NOTAS" são recomendações importantes.       |
+// \____________________________________________________________/
+
+//----- Oficiais -----
+// grf: C:\caminho\da\pasta\RO\data.grf
+// grf: C:\caminho\da\pasta\RO\sdata.grf
+// Você deve adicionar o caminho de sua GRF do Ragnarök conforme os exemplos acima.
+// grf: <diretório do grf>
+
+//----- Servidor -----
+// Diretório da pasta data (Pasta data do seu servidor)
+// Exemplo: "C:\caminho\da\pasta\RO\data\", ficaria:
+// data_dir: C:\caminho\da\pasta\RO\
