@@ -3731,9 +3731,7 @@ int inter_config_read(char *cfgName) {
 			safestrncpy(map->server_db, w2, sizeof(map->server_db));
 		else if(strcmpi(w1,"default_codepage")==0)
 			safestrncpy(map->default_codepage, w2, sizeof(map->default_codepage));
-			
 #include "../brA_hook/map/map_readstring.inc"
-			
 		else if(strcmpi(w1,"use_sql_item_db")==0) {
 			map->db_use_sql_item_db = config_switch(w2);
 			ShowStatus ("Using item database as SQL: '%s'\n", w2);
