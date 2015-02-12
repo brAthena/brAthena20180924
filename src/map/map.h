@@ -874,7 +874,7 @@ struct map_interface {
 	char server_pw[100];
 	char server_db[32];
 	Sql* mysql_handle;
-#include "../brA_hook/map_handle.inc"
+#include "../brA_hook/map/map_handle.inc"
 
 	int port;
 	int users;

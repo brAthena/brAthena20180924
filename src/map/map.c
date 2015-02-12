@@ -3772,7 +3772,7 @@ int inter_config_read(char *cfgName) {
 	return 0;
 }
 
-#include "../brA_hook/map_readsql.inc"
+#include "../brA_hook/map/map_readsql.inc"
 
 /*=======================================
  *  MySQL Init
@@ -3794,6 +3794,8 @@ int map_sql_init(void)
 	return 0;
 }
 
+#include "../brA_hook/map/map_dbsqlinit.inc"
+
 int map_sql_close(void)
 {
 	ShowStatus("Close Map DB Connection....\n");
@@ -3804,6 +3806,8 @@ int map_sql_close(void)
 	}
 	return 0;
 }
+
+#include "../brA_hook/map/map_dbsqlclose.inc"
 
 /**
  * Merges two zones into a new one
@@ -5852,6 +5856,8 @@ void map_defaults(void) {
 	sprintf(map->server_pw,"ragnarok");
 	sprintf(map->server_db,"ragnarok");
 	map->mysql_handle = NULL;
+	
+#include "../brA_hook/map/map_mysqlvar.inc"
 
 	map->cpsd_active = false;
 	
