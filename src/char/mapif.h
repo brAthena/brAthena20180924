@@ -193,8 +193,8 @@ struct mapif_interface {
 
 struct mapif_interface *mapif;
 
-#ifdef HERCULES_CORE
+#ifdef BRATHENA_CORE
 void mapif_defaults(void);
-#endif // HERCULES_CORE
+#endif // BRATHENA_CORE
 
 #endif /* CHAR_MAPIF_H */

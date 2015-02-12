@@ -129,8 +129,8 @@ struct nullpo_interface {
 
 struct nullpo_interface *nullpo;
 
-#ifdef HERCULES_CORE
+#ifdef BRATHENA_CORE
 void nullpo_defaults(void);
-#endif // HERCULES_CORE
+#endif // BRATHENA_CORE
 
 #endif /* COMMON_NULLPO_H */

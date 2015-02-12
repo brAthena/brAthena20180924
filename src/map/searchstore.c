@@ -2,7 +2,7 @@
 // See the LICENSE file
 // Portions Copyright (c) Athena Dev Teams
 
-#define HERCULES_CORE
+#define BRATHENA_CORE
 
 #include "searchstore.h"  // struct s_search_store_info
 

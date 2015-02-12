@@ -86,8 +86,8 @@ struct console_interface {
 
 struct console_interface *console;
 
-#ifdef HERCULES_CORE
+#ifdef BRATHENA_CORE
 void console_defaults(void);
-#endif // HERCULES_CORE
+#endif // BRATHENA_CORE
 
 #endif /* COMMON_CONSOLE_H */

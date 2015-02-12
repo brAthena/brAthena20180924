@@ -9,7 +9,7 @@
 typedef struct ramutex ramutex; // Mutex
 typedef struct racond racond; // Condition Var
 
-#ifdef HERCULES_CORE
+#ifdef BRATHENA_CORE
 /**
  * Creates a Mutex
  *
@@ -89,6 +89,6 @@ void racond_signal(racond *c);
  *  All Waiters getting notified.
  */
 void racond_broadcast(racond *c);
-#endif // HERCULES_CORE
+#endif // BRATHENA_CORE
 
 #endif /* COMMON_MUTEX_H */

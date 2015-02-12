@@ -131,8 +131,8 @@ struct log_interface {
 
 struct log_interface *logs;
 
-#ifdef HERCULES_CORE
+#ifdef BRATHENA_CORE
 void log_defaults(void);
-#endif // HERCULES_CORE
+#endif // BRATHENA_CORE
 
 #endif /* MAP_LOG_H */

@@ -8,9 +8,9 @@
 
 struct s_homunculus;
 
-#ifdef HERCULES_CORE
+#ifdef BRATHENA_CORE
 void inter_homunculus_defaults(void);
-#endif // HERCULES_CORE
+#endif // BRATHENA_CORE
 
 /**
  * inter_homunculus interface

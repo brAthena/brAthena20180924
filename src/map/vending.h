@@ -34,8 +34,8 @@ struct vending_interface {
 
 struct vending_interface *vending;
 
-#ifdef HERCULES_CORE
+#ifdef BRATHENA_CORE
 void vending_defaults(void);
-#endif // HERCULES_CORE
+#endif // BRATHENA_CORE
 
 #endif /* MAP_VENDING_H */

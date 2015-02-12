@@ -6,9 +6,9 @@
 
 struct s_pet;
 
-#ifdef HERCULES_CORE
+#ifdef BRATHENA_CORE
 void inter_pet_defaults(void);
-#endif // HERCULES_CORE
+#endif // BRATHENA_CORE
 
 /**
  * inter_pet interface

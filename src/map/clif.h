@@ -1251,19 +1251,19 @@ struct clif_interface {
 	void (*pCashShopBuy) (int fd, struct map_session_data *sd);
 	void (*pPartyTick) (int fd, struct map_session_data *sd);
 	void (*pGuildInvite2) (int fd, struct map_session_data *sd);
-	/* Group Search System Update */
+	/* Sistema de pesquisa do grupo */
 	void (*pPartyBookingAddFilter) (int fd, struct map_session_data *sd);
 	void (*pPartyBookingSubFilter) (int fd, struct map_session_data *sd);
 	void (*pPartyBookingReqVolunteer) (int fd, struct map_session_data *sd);
 	void (*pPartyBookingRefuseVolunteer) (int fd, struct map_session_data *sd);
 	void (*pPartyBookingCancelVolunteer) (int fd, struct map_session_data *sd);
-	/* Bank System [Yommy/Hercules] */
+	/* Sistema de Banco */
 	void (*pBankDeposit) (int fd, struct map_session_data *sd);
 	void (*pBankWithdraw) (int fd, struct map_session_data *sd);
 	void (*pBankCheck) (int fd, struct map_session_data *sd);
 	void (*pBankOpen) (int fd, struct map_session_data *sd);
 	void (*pBankClose) (int fd, struct map_session_data *sd);
-	/* Roulette System [Yommy/Hercules] */
+	/* Sistema de Roleta */
 	void (*pRouletteOpen) (int fd, struct map_session_data *sd);
 	void (*pRouletteInfo) (int fd, struct map_session_data *sd);
 	void (*pRouletteClose) (int fd, struct map_session_data *sd);
@@ -1278,8 +1278,8 @@ struct clif_interface {
 
 struct clif_interface *clif;
 
-#ifdef HERCULES_CORE
+#ifdef BRATHENA_CORE
 void clif_defaults(void);
-#endif // HERCULES_CORE
+#endif // BRATHENA_CORE
 
 #endif /* MAP_CLIF_H */

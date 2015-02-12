@@ -10,9 +10,9 @@ struct item;
 struct mail_data;
 struct mail_message;
 
-#ifdef HERCULES_CORE
+#ifdef BRATHENA_CORE
 void inter_mail_defaults(void);
-#endif // HERCULES_CORE
+#endif // BRATHENA_CORE
 
 /**
  * inter_mail interface

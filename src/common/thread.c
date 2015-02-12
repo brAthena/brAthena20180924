@@ -6,7 +6,7 @@
 // Copyright (c) rAthena Project (www.rathena.org) - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#define HERCULES_CORE
+#define BRATHENA_CORE
 
 #include "thread.h"
 

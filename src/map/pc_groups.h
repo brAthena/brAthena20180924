@@ -98,8 +98,8 @@ struct pc_groups_interface {
 
 struct pc_groups_interface *pcg;
 
-#ifdef HERCULES_CORE
+#ifdef BRATHENA_CORE
 void pc_groups_defaults(void);
-#endif // HERCULES_CORE
+#endif // BRATHENA_CORE
 
 #endif /* MAP_PC_GROUPS_H */

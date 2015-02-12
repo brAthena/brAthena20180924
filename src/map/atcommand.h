@@ -116,9 +116,9 @@ struct atcommand_interface {
 
 struct atcommand_interface *atcommand;
 
-#ifdef HERCULES_CORE
+#ifdef BRATHENA_CORE
 void atcommand_defaults(void);
-#endif // HERCULES_CORE
+#endif // BRATHENA_CORE
 
 /* stay here */
 #define ACMD(x) static bool atcommand_ ## x (const int fd, struct map_session_data* sd, const char* command, const char* message, struct AtCommandInfo *info)

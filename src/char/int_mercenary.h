@@ -8,9 +8,9 @@
 
 struct mmo_charstatus;
 
-#ifdef HERCULES_CORE
+#ifdef BRATHENA_CORE
 void inter_mercenary_defaults(void);
-#endif // HERCULES_CORE
+#endif // BRATHENA_CORE
 
 /**
  * inter_mercenary interface

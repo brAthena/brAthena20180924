@@ -6,7 +6,7 @@
  *
  ***********************************************************/
 
-#define HERCULES_CORE
+#define BRATHENA_CORE
 
 #include "md5calc.h"
 

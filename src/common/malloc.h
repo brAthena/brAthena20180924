@@ -59,11 +59,11 @@
 
 ////////////////////////////////////////////////
 
-#ifdef HERCULES_CORE
+#ifdef BRATHENA_CORE
 void malloc_defaults(void);
 
 void memmgr_report(int extra);
-#endif // HERCULES_CORE
+#endif // BRATHENA_CORE
 
 struct malloc_interface {
 	void (*init) (void);

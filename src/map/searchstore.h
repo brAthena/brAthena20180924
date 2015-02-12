@@ -97,8 +97,8 @@ struct searchstore_interface {
 
 struct searchstore_interface *searchstore;
 
-#ifdef HERCULES_CORE
+#ifdef BRATHENA_CORE
 void searchstore_defaults(void);
-#endif // HERCULES_CORE
+#endif // BRATHENA_CORE
 
 #endif /* MAP_SEARCHSTORE_H */

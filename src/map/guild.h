@@ -165,8 +165,8 @@ struct guild_interface {
 
 struct guild_interface *guild;
 
-#ifdef HERCULES_CORE
+#ifdef BRATHENA_CORE
 void guild_defaults(void);
-#endif // HERCULES_CORE
+#endif // BRATHENA_CORE
 
 #endif /* MAP_GUILD_H */

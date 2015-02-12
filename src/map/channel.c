@@ -1,7 +1,7 @@
 // Copyright (c) Hercules Dev Team, licensed under GNU GPL.
 // See the LICENSE file
 
-#define HERCULES_CORE
+#define BRATHENA_CORE
 
 #include "channel.h"
 

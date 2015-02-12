@@ -57,8 +57,8 @@ struct chat_interface {
 
 struct chat_interface *chat;
 
-#ifdef HERCULES_CORE
+#ifdef BRATHENA_CORE
 void chat_defaults(void);
-#endif // HERCULES_CORE
+#endif // BRATHENA_CORE
 
 #endif /* MAP_CHAT_H */

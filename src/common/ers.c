@@ -40,7 +40,7 @@
  * @see common#ers.h                                                         *
 \*****************************************************************************/
 
-#define HERCULES_CORE
+#define BRATHENA_CORE
 
 #include "ers.h"
 

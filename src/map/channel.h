@@ -112,8 +112,8 @@ struct channel_interface {
 
 struct channel_interface *channel;
 
-#ifdef HERCULES_CORE
+#ifdef BRATHENA_CORE
 void channel_defaults(void);
-#endif // HERCULES_CORE
+#endif // BRATHENA_CORE
 
 #endif /* MAP_CHANNEL_H */

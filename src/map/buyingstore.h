@@ -73,8 +73,8 @@ struct buyingstore_interface {
 
 struct buyingstore_interface *buyingstore;
 
-#ifdef HERCULES_CORE
+#ifdef BRATHENA_CORE
 void buyingstore_defaults (void);
-#endif // HERCULES_CORE
+#endif // BRATHENA_CORE
 
 #endif  // MAP_BUYINGSTORE_H

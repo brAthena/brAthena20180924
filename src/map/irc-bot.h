@@ -61,8 +61,8 @@ struct irc_bot_interface {
 
 struct irc_bot_interface *ircbot;
 
-#ifdef HERCULES_CORE
+#ifdef BRATHENA_CORE
 void ircbot_defaults(void);
-#endif // HERCULES_CORE
+#endif // BRATHENA_CORE
 
 #endif /* MAP_IRC_BOT_H */

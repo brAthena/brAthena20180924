@@ -23,9 +23,9 @@ struct party_data {
 	unsigned char size; //Total size of party.
 };
 
-#ifdef HERCULES_CORE
+#ifdef BRATHENA_CORE
 void inter_party_defaults(void);
-#endif // HERCULES_CORE
+#endif // BRATHENA_CORE
 
 /**
  * inter_party interface

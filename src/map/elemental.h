@@ -119,8 +119,8 @@ struct elemental_interface {
 
 struct elemental_interface *elemental;
 
-#ifdef HERCULES_CORE
+#ifdef BRATHENA_CORE
 void elemental_defaults(void);
-#endif // HERCULES_CORE
+#endif // BRATHENA_CORE
 
 #endif /* MAP_ELEMENTAL_H */

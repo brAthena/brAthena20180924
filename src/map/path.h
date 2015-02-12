@@ -55,8 +55,8 @@ struct path_interface {
 
 struct path_interface *path;
 
-#ifdef HERCULES_CORE
+#ifdef BRATHENA_CORE
 void path_defaults(void);
-#endif // HERCULES_CORE
+#endif // BRATHENA_CORE
 
 #endif /* MAP_PATH_H */

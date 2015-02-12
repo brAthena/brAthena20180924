@@ -127,10 +127,10 @@ struct online_login_data {
 #define sex_str2num(str) ( ((str) == 'F') ? SEX_FEMALE : ((str) == 'M') ? SEX_MALE : SEX_SERVER )
 
 #define MAX_SERVERS 30
-#ifdef HERCULES_CORE
+#ifdef BRATHENA_CORE
 extern struct mmo_char_server server[MAX_SERVERS];
 extern struct Login_Config login_config;
-#endif // HERCULES_CORE
+#endif // BRATHENA_CORE
 
 /**
  * Login.c Interface
@@ -203,8 +203,8 @@ struct login_interface {
 
 struct login_interface *login;
 
-#ifdef HERCULES_CORE
+#ifdef BRATHENA_CORE
 void login_defaults(void);
-#endif // HERCULES_CORE
+#endif // BRATHENA_CORE
 
 #endif /* LOGIN_LOGIN_H */

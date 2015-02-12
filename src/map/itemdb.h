@@ -467,19 +467,19 @@ struct item_chain {
 struct item_package_rand_entry {
 	unsigned short id;
 	unsigned short qty;
-	unsigned short rate;
-	unsigned short hours;
-	unsigned int announce : 1;
-	unsigned int named : 1;
+	unsigned short probability;
+	unsigned short hour;
+	unsigned int onair : 1;
+	unsigned int guid : 1;
 	struct item_package_rand_entry *next;
 };
 
 struct item_package_must_entry {
 	unsigned short id;
 	unsigned short qty;
-	unsigned short hours;
-	unsigned int announce : 1;
-	unsigned int named : 1;
+	unsigned short hour;
+	unsigned int onair : 1;
+	unsigned int guid : 1;
 };
 
 struct item_package_rand_group {
@@ -621,8 +621,8 @@ struct itemdb_interface {
 
 struct itemdb_interface *itemdb;
 
-#ifdef HERCULES_CORE
+#ifdef BRATHENA_CORE
 void itemdb_defaults(void);
-#endif // HERCULES_CORE
+#endif // BRATHENA_CORE
 
 #endif /* MAP_ITEMDB_H */

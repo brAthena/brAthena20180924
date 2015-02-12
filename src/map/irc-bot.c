@@ -2,7 +2,7 @@
 // See the LICENSE file
 // Base Author: shennetsind @ http://hercules.ws
 
-#define HERCULES_CORE
+#define BRATHENA_CORE
 
 #include "irc-bot.h"
 

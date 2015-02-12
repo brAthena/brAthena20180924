@@ -68,7 +68,7 @@
  * @see #db.h
 \*****************************************************************************/
 
-#define HERCULES_CORE
+#define BRATHENA_CORE
 
 #include "db.h"
 

@@ -2,7 +2,7 @@
 // See the LICENSE file
 // Portions Copyright (c) Athena Dev Teams
 
-#define HERCULES_CORE
+#define BRATHENA_CORE
 
 #include "../config/core.h" // ANTI_MAYAP_CHEAT, RENEWAL, SECURE_NPCTIMEOUT
 #include "clif.h"
@@ -19107,13 +19107,13 @@ void clif_defaults(void) {
 	clif->pPartyBookingReqVolunteer = clif_parse_PartyBookingReqVolunteer;
 	clif->pPartyBookingRefuseVolunteer = clif_parse_PartyBookingRefuseVolunteer;
 	clif->pPartyBookingCancelVolunteer = clif_parse_PartyBookingCancelVolunteer;
-	/* Bank System [Yommy/Hercules] */
+	/* Sistema de Banco */
 	clif->pBankDeposit = clif_parse_BankDeposit;
 	clif->pBankWithdraw = clif_parse_BankWithdraw;
 	clif->pBankCheck = clif_parse_BankCheck;
 	clif->pBankOpen = clif_parse_BankOpen;
 	clif->pBankClose = clif_parse_BankClose;
-	/* Roulette System [Yommy/Hercules] */
+	/* Sistema de Roleta */
 	clif->pRouletteOpen = clif_parse_RouletteOpen;
 	clif->pRouletteInfo = clif_parse_RouletteInfo;
 	clif->pRouletteClose = clif_parse_RouletteClose;

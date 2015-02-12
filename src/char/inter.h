@@ -11,11 +11,11 @@
 
 struct accreg;
 
-#ifdef HERCULES_CORE
+#ifdef BRATHENA_CORE
 extern unsigned int party_share_level;
 
 void inter_defaults(void);
-#endif // HERCULES_CORE
+#endif // BRATHENA_CORE
 
 /**
  * inter interface

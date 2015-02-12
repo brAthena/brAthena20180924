@@ -22,9 +22,9 @@ enum {
 	GS_REMOVE = 0x8000,
 };
 
-#ifdef HERCULES_CORE
+#ifdef BRATHENA_CORE
 void inter_guild_defaults(void);
-#endif // HERCULES_CORE
+#endif // BRATHENA_CORE
 
 /**
  * inter_guild interface

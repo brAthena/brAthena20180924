@@ -93,8 +93,8 @@ struct libconfig_interface {
 
 struct libconfig_interface *libconfig;
 
-#ifdef HERCULES_CORE
+#ifdef BRATHENA_CORE
 void libconfig_defaults(void);
-#endif // HERCULES_CORE
+#endif // BRATHENA_CORE
 
 #endif // COMMON_CONF_H

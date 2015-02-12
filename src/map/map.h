@@ -1089,8 +1089,8 @@ struct map_interface {
 
 struct map_interface *map;
 
-#ifdef HERCULES_CORE
+#ifdef BRATHENA_CORE
 void map_defaults(void);
-#endif // HERCULES_CORE
+#endif // BRATHENA_CORE
 
 #endif /* MAP_MAP_H */

@@ -6,9 +6,9 @@
 
 #include "../common/mmo.h"
 
-#ifdef HERCULES_CORE
+#ifdef BRATHENA_CORE
 void inter_auction_defaults(void);
-#endif // HERCULES_CORE
+#endif // BRATHENA_CORE
 
 /**
  * inter_auction_interface interface

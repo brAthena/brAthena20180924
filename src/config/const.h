@@ -6,16 +6,7 @@
 #define CONFIG_CONSTANTS_H
 
 /**
- * Hercules configuration file (http://hercules.ws)
- * For detailed guidance on these check http://hercules.ws/wiki/SRC/config/
- **/
-
-/**
- * @INFO: This file holds constants that aims at making code smoother and more efficient
- */
-
-/**
- * "Sane Checks" to save you from compiling with cool bugs
+ * Checagens de segurança para tempo de intervalo nos diálogos com npcs.
  **/
 #if SECURE_NPCTIMEOUT_INTERVAL <= 0
 	#error SECURE_NPCTIMEOUT_INTERVAL should be at least 1 (1s)
@@ -31,12 +22,16 @@
 #endif
 
 /**
- * Path within the /db folder to (non-)renewal specific db files
+ * Sufixo para arquivos no banco de dados da renovação/pré-renovação ou old-times
  **/
 #ifdef RENEWAL
 	#define DBPATH "re/"
 #else
+#ifdef OLD_TIMES
+	#define DBPATH "ot/"
+#else
 	#define DBPATH "pre-re/"
+#endif
 #endif
 
 /**

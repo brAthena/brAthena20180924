@@ -382,8 +382,8 @@ struct mob_interface {
 
 struct mob_interface *mob;
 
-#ifdef HERCULES_CORE
+#ifdef BRATHENA_CORE
 void mob_defaults(void);
-#endif // HERCULES_CORE
+#endif // BRATHENA_CORE
 
 #endif /* MAP_MOB_H */

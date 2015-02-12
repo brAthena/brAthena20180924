@@ -2,7 +2,7 @@
 // See the LICENSE file
 // Portions Copyright (c) Athena Dev Teams
 
-#define HERCULES_CORE
+#define BRATHENA_CORE
 
 #include "showmsg.h"
 
@@ -19,9 +19,9 @@
 #include "../common/strlib.h" // StringBuf
 
 #ifdef WIN32
-#	include "../common/winapi.h"
+	#include "../common/winapi.h"
 #else // not WIN32
-#	include <unistd.h>
+	#include <unistd.h>
 #endif // WIN32
 
 #if defined(DEBUGLOGMAP)
@@ -639,7 +639,9 @@ int vShowMessage_(enum msg_type flag, const char *string, va_list ap)
 	if(
 	    (flag == MSG_INFORMATION && msg_silent&1) ||
 	    (flag == MSG_STATUS && msg_silent&2) ||
+	    (flag == MSG_CONF && msg_silent&3) ||
 	    (flag == MSG_NOTICE && msg_silent&4) ||
+	    (flag == MSG_NPC && msg_silent&5) ||
 	    (flag == MSG_WARNING && msg_silent&8) ||
 	    (flag == MSG_ERROR && msg_silent&16) ||
 	    (flag == MSG_SQL && msg_silent&16) ||
@@ -657,7 +659,13 @@ int vShowMessage_(enum msg_type flag, const char *string, va_list ap)
 		case MSG_NONE: // direct printf replacement
 			break;
 		case MSG_STATUS: //Bright Green (To inform about good things)
-			strcat(prefix,CL_GREEN"[Status]"CL_RESET":");
+			strcat(prefix,CL_LT_GREEN"[Sucesso]"CL_RESET":");
+			break;
+		case MSG_CONF: // Cor Ciano Escuro (Leitura para arquivo de configuração)
+			strcat(prefix,CL_LT_CYAN"[Conf]"CL_RESET":");
+			break;
+		case MSG_NPC: //Cor Amarelo escuro (Leitura para arquivos de NPCS)
+			strcat(prefix,CL_LT_YELLOW"[NPC]"CL_RESET":");
 			break;
 		case MSG_SQL: //Bright Violet (For dumping out anything related with SQL) <- Actually, this is mostly used for SQL errors with the database, as successes can as well just be anything else... [Skotlex]
 			strcat(prefix,CL_MAGENTA"[SQL]"CL_RESET":");
@@ -666,19 +674,19 @@ int vShowMessage_(enum msg_type flag, const char *string, va_list ap)
 			strcat(prefix,CL_WHITE"[Info]"CL_RESET":");
 			break;
 		case MSG_NOTICE: //Bright White (Less than a warning)
-			strcat(prefix,CL_WHITE"[Notice]"CL_RESET":");
+			sprintf(prefix,CL_GREEN"[Not%ccia]"CL_RESET":", 161);
 			break;
 		case MSG_WARNING: //Bright Yellow
-			strcat(prefix,CL_YELLOW"[Warning]"CL_RESET":");
+			strcat(prefix,CL_YELLOW"[Aviso]"CL_RESET":");
 			break;
 		case MSG_DEBUG: //Bright Cyan, important stuff!
-			strcat(prefix,CL_CYAN"[Debug]"CL_RESET":");
+			strcat(prefix,CL_CYAN"[Depurar]"CL_RESET":");
 			break;
 		case MSG_ERROR: //Bright Red  (Regular errors)
-			strcat(prefix,CL_RED"[Error]"CL_RESET":");
+			strcat(prefix,CL_RED"[Erro]"CL_RESET":");
 			break;
 		case MSG_FATALERROR: //Bright Red (Fatal errors, abort(); if possible)
-			strcat(prefix,CL_RED"[Fatal Error]"CL_RESET":");
+			sprintf(prefix, CL_LT_RED"[Erro Cr%ctico]"CL_RESET":", 161);
 			break;
 		default:
 			ShowError("In function vShowMessage_() -> Invalid flag passed.\n");
@@ -752,6 +760,20 @@ void ShowStatus(const char *string, ...) {
 	va_list ap;
 	va_start(ap, string);
 	vShowMessage_(MSG_STATUS, string, ap);
+	va_end(ap);
+}
+void ShowConf(const char *string, ...) __attribute__((format(printf, 1, 2)));
+void ShowConf(const char *string, ...) {
+	va_list ap;
+	va_start(ap, string);
+	vShowMessage_(MSG_CONF, string, ap);
+	va_end(ap);
+}
+void ShowNpc(const char *string, ...) __attribute__((format(printf, 1, 2)));
+void ShowNpc(const char *string, ...) {
+	va_list ap;
+	va_start(ap, string);
+	vShowMessage_(MSG_NPC, string, ap);
 	va_end(ap);
 }
 void ShowSQL(const char *string, ...) __attribute__((format(printf, 1, 2)));

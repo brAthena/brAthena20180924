@@ -171,9 +171,9 @@ struct socket_interface {
 
 struct socket_interface *sockt;
 
-#ifdef HERCULES_CORE
+#ifdef BRATHENA_CORE
 void socket_defaults(void);
-#endif // HERCULES_CORE
+#endif // BRATHENA_CORE
 
 /* the purpose of these macros is simply to not make calling them be an annoyance */
 #ifndef H_SOCKET_C

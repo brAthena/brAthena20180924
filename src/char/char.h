@@ -63,7 +63,7 @@ enum {
 	TABLE_GUILD_STORAGE,
 };
 
-#ifdef HERCULES_CORE
+#ifdef BRATHENA_CORE
 extern int char_name_option;
 extern char char_name_letters[];
 extern bool char_gm_read;
@@ -113,7 +113,7 @@ extern int log_inter;
 
 void char_load_defaults();
 void char_defaults();
-#endif // HERCULES_CORE
+#endif // BRATHENA_CORE
 
 struct char_auth_node {
 	int account_id;
