@@ -5443,6 +5443,7 @@ int do_final(void) {
 	db_destroy(map->regen_db);
 
 	map->sql_close();
+#include "../brA_hook/map/map_sqlclose.inc"
 	ers_destroy(map->iterator_ers);
 	ers_destroy(map->flooritem_ers);
 
@@ -5704,6 +5705,7 @@ int do_init(int argc, char *argv[])
 		map->sql_init();
 		if (logs->config.sql_logs)
 			logs->sql_init();
+#include "../brA_hook/map/map_loadsqlinit.inc"
 	}
 
 	i = mapindex->init();
@@ -6057,7 +6059,9 @@ void map_defaults(void) {
 	map->reloadnpc_sub = map_reloadnpc_sub;
 	map->inter_config_read = inter_config_read;
 	map->sql_init = map_sql_init;
+#include "../brA_hook/map/map_defsqlinit.inc"
 	map->sql_close = map_sql_close;
+#include "../brA_hook/map/map_defsqlclose.inc"
 	map->zone_mf_cache = map_zone_mf_cache;
 	map->zone_str2itemid = map_zone_str2itemid;
 	map->zone_str2skillid = map_zone_str2skillid;

@@ -1,0 +1,1 @@
+	map->brAsql_close = brAmap_sql_close;

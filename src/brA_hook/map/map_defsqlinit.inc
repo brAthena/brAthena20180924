@@ -1,0 +1,1 @@
+	map->brAsql_init = brAdb_sql_init;

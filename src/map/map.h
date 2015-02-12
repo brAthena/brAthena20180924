@@ -1069,6 +1069,7 @@ struct map_interface {
 	int (*inter_config_read) (char *cfgName);
 	int (*sql_init) (void);
 	int (*sql_close) (void);
+#include "../brA_hook/map/map_intersqlclose.inc"
 	bool (*zone_mf_cache) (int m, char *flag, char *params);
 	unsigned short (*zone_str2itemid) (const char *name);
 	unsigned short (*zone_str2skillid) (const char *name);
