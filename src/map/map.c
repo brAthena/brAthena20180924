@@ -3772,6 +3772,8 @@ int inter_config_read(char *cfgName) {
 	return 0;
 }
 
+#include "../brA_hook/map_readsql.inc"
+
 /*=======================================
  *  MySQL Init
  *---------------------------------------*/
