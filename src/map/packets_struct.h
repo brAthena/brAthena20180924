@@ -1,7 +1,13 @@
-// Copyright (c) Hercules Dev Team, licensed under GNU GPL.
-// See the LICENSE file
-
-/* Hercules Renewal: Phase Two http://hercules.ws/board/topic/383-hercules-renewal-phase-two/ */
+/****************************************************************************!
+*                _           _   _   _                                       *
+*               | |__  _ __ / \ | |_| |__   ___ _ __   __ _                  *
+*               | '_ \| '__/ _ \| __| '_ \ / _ \ '_ \ / _` |                 *
+*               | |_) | | / ___ \ |_| | | |  __/ | | | (_| |                 *
+*               |_.__/|_|/_/   \_\__|_| |_|\___|_| |_|\__,_|                 *
+*                                                                            *
+******************************************************************************
+*                          www.brathena.org                                  *
+*****************************************************************************/
 
 #ifndef MAP_PACKETS_STRUCT_H
 #define MAP_PACKETS_STRUCT_H
