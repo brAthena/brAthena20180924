@@ -1,72 +1,13 @@
-/*****************************************************************************\
- *  Copyright (c) Athena Dev Teams - Licensed under GNU GPL
- *  For more information, see LICENCE in the main folder
- *
- *  This file is separated in five sections:
- *  (1) Private typedefs, enums, structures, defines and global variables
- *  (2) Private functions
- *  (3) Protected functions used internally
- *  (4) Protected functions used in the interface of the database
- *  (5) Public functions
- *
- *  The databases are structured as a hashtable of RED-BLACK trees.
- *
- *  <B>Properties of the RED-BLACK trees being used:</B>
- *  1. The value of any node is greater than the value of its left child and
- *     less than the value of its right child.
- *  2. Every node is colored either RED or BLACK.
- *  3. Every red node that is not a leaf has only black children.
- *  4. Every path from the root to a leaf contains the same number of black
- *     nodes.
- *  5. The root node is black.
- *  An <code>n</code> node in a RED-BLACK tree has the property that its
- *  height is <code>O(lg(n))</code>.
- *  Another important property is that after adding a node to a RED-BLACK
- *  tree, the tree can be readjusted in <code>O(lg(n))</code> time.
- *  Similarly, after deleting a node from a RED-BLACK tree, the tree can be
- *  readjusted in <code>O(lg(n))</code> time.
- *  {@link http://www.cs.mcgill.ca/~cs251/OldCourses/1997/topic18/}
- *
- *  <B>How to add new database types:</B>
- *  1. Add the identifier of the new database type to the enum DBType
- *  2. If not already there, add the data type of the key to the union DBKey
- *  3. If the key can be considered NULL, update the function db_is_key_null
- *  4. If the key can be duplicated, update the functions db_dup_key and
- *     db_dup_key_free
- *  5. Create a comparator and update the function db_default_cmp
- *  6. Create a hasher and update the function db_default_hash
- *  7. If the new database type requires or does not support some options,
- *     update the function db_fix_options
- *
- *  TODO:
- *  - create test cases to test the database system thoroughly
- *  - finish this header describing the database system
- *  - create custom database allocator
- *  - make the system thread friendly
- *  - change the structure of the database to T-Trees
- *  - create a db that organizes itself by splaying
- *
- *  HISTORY:
- *    2013/08/25 - Added int64/uint64 support for keys [Ind/Hercules]
- *    2013/04/27 - Added ERS to speed up iterator memory allocation [Ind/Hercules]
- *    2012/03/09 - Added enum for data types (int, uint, void*)
- *    2008/02/19 - Fixed db_obj_get not handling deleted entries correctly.
- *    2007/11/09 - Added an iterator to the database.
- *    2006/12/21 - Added 1-node cache to the database.
- *    2.1 (Athena build #???#) - Portability fix
- *      - Fixed the portability of casting to union and added the functions
- *        ensure and clear to the database.
- *    2.0 (Athena build 4859) - Transition version
- *      - Almost everything recoded with a strategy similar to objects,
- *        database structure is maintained.
- *    1.0 (up to Athena build 4706)
- *      - Previous database system.
- *
- * @version 2006/12/21
- * @author Athena Dev team
- * @encoding US-ASCII
- * @see #db.h
-\*****************************************************************************/
+/****************************************************************************!
+*                _           _   _   _                                       *
+*               | |__  _ __ / \ | |_| |__   ___ _ __   __ _                  *
+*               | '_ \| '__/ _ \| __| '_ \ / _ \ '_ \ / _` |                 *
+*               | |_) | | / ___ \ |_| | | |  __/ | | | (_| |                 *
+*               |_.__/|_|/_/   \_\__|_| |_|\___|_| |_|\__,_|                 *
+*                                                                            *
+******************************************************************************
+*                          www.brathena.org                                  *
+*****************************************************************************/
 
 #define BRATHENA_CORE
 

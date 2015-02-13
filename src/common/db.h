@@ -1,44 +1,14 @@
-/*****************************************************************************\
- *  Copyright (c) Athena Dev Teams - Licensed under GNU GPL                  *
- *  For more information, see LICENCE in the main folder                     *
- *                                                                           *
- *  This file is separated in two sections:                                  *
- *  (1) public typedefs, enums, unions, structures and defines               *
- *  (2) public functions                                                     *
- *                                                                           *
- *  <B>Notes on the release system:</B>                                      *
- *  Whenever an entry is removed from the database both the key and the      *
- *  data are requested to be released.                                       *
- *  At least one entry is removed when replacing an entry, removing an       *
- *  entry, clearing the database or destroying the database.                 *
- *  What is actually released is defined by the release function, the        *
- *  functions of the database only ask for the key and/or data to be         *
- *  released.                                                                *
- *                                                                           *
- *  TODO:                                                                    *
- *  - create a custom database allocator                                     *
- *  - see what functions need or should be added to the database interface   *
- *                                                                           *
- *  HISTORY:                                                                 *
- *    2013/08/25 - Added int64/uint64 support for keys                       *
- *    2012/03/09 - Added enum for data types (int, uint, void*)              *
- *    2007/11/09 - Added an iterator to the database.                        *
- *    2.1 (Athena build #???#) - Portability fix                             *
- *      - Fixed the portability of casting to union and added the functions  *
- *        {@link DBMap#ensure(DBMap,DBKey,DBCreateData,...)} and             *
- *        {@link DBMap#clear(DBMap,DBApply,...)}.                            *
- *    2.0 (Athena build 4859) - Transition version                           *
- *      - Almost everything recoded with a strategy similar to objects,      *
- *        database structure is maintained.                                  *
- *    1.0 (up to Athena build 4706)                                          *
- *      - Previous database system.                                          *
- *                                                                           *
- * @version 2.1 (Athena build #???#) - Portability fix                       *
- * @author (Athena build 4859) Flavio @ Amazon Project                       *
- * @author (up to Athena build 4706) Athena Dev Teams                        *
- * @encoding US-ASCII                                                        *
- * @see common#db.c                                                          *
-\*****************************************************************************/
+/****************************************************************************!
+*                _           _   _   _                                       *
+*               | |__  _ __ / \ | |_| |__   ___ _ __   __ _                  *
+*               | '_ \| '__/ _ \| __| '_ \ / _ \ '_ \ / _` |                 *
+*               | |_) | | / ___ \ |_| | | |  __/ | | | (_| |                 *
+*               |_.__/|_|/_/   \_\__|_| |_|\___|_| |_|\__,_|                 *
+*                                                                            *
+******************************************************************************
+*                          www.brathena.org                                  *
+*****************************************************************************/
+
 #ifndef COMMON_DB_H
 #define COMMON_DB_H
 
