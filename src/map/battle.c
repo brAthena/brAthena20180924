@@ -1527,9 +1527,6 @@ int battle_calc_skillratio(int attack_type, struct block_list *src, struct block
 				case NPC_ENERGYDRAIN:
 					skillratio += 100 * skill_lv;
 					break;
-				case NPC_EARTHQUAKE:
-					skillratio += 100 + 100 * skill_lv + 100 * (skill_lv/2);
-					break;
 			#ifdef RENEWAL
 				case WZ_HEAVENDRIVE:
 				case WZ_METEOR:
@@ -1892,6 +1889,9 @@ int battle_calc_skillratio(int attack_type, struct block_list *src, struct block
 				case NPC_HELLJUDGEMENT:
 				case NPC_PULSESTRIKE:
 					skillratio += 100 * (skill_lv-1);
+					break;
+				case NPC_EARTHQUAKE:
+					skillratio += 100 + 100 * skill_lv + 100 * (skill_lv / 2);
 					break;
 				case RG_BACKSTAP:
 					if( sd && sd->status.weapon == W_BOW && battle_config.backstab_bow_penalty )
@@ -3159,9 +3159,9 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 	}
 
 	if( bl->type == BL_MOB && !status->isdead(bl) && src != bl) {
-	  if (damage > 0 )
+		if ( damage > 0 )
 			mob->skill_event((TBL_MOB*)bl,src,timer->gettick(),flag);
-	  if (skill_id)
+		if (skill_id)
 			mob->skill_event((TBL_MOB*)bl,src,timer->gettick(),MSC_SKILLUSED|(skill_id<<16));
 	}
 	if( sd ) {
@@ -3599,15 +3599,6 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 		}
 
 		ad.damage = battle->calc_defense(BF_MAGIC, src, target, skill_id, skill_lv, ad.damage, flag.imdef, 0);
-
-		if (skill_id == NPC_EARTHQUAKE) {
-			//Adds atk2 to the damage, should be influenced by number of hits and skill-ratio, but not mdef reductions. [Skotlex]
-			//Also divide the extra bonuses from atk2 based on the number in range [Kevin]
-			if(mflag>0)
-				ad.damage+= (sstatus->rhw.atk2*skillratio/100)/mflag;
-			else
-				ShowError("Zero range by %d:%s, divide per 0 avoided!\n", skill_id, skill->get_name(skill_id));
-		}
 
 		if(ad.damage<1)
 			ad.damage=1;
@@ -4264,6 +4255,7 @@ struct Damage battle_calc_weapon_attack(struct block_list *src,struct block_list
 					wd.div_ = tstatus->size + 2 + ( (rnd()%100 < 50-tstatus->size*10) ? 1 : 0 );
 				break;
 #ifdef RENEWAL
+			case PA_SHIELDCHAIN:
 			case NJ_KUNAI:
 			case HW_MAGICCRASHER:
 			case NJ_SYURIKEN:
@@ -4355,7 +4347,6 @@ struct Damage battle_calc_weapon_attack(struct block_list *src,struct block_list
 		else if(sc && sc->data[SC_FEARBREEZE] && sd->weapontype1==W_BOW
 			&& (i = sd->equip_index[EQI_AMMO]) >= 0 && sd->inventory_data[i] && sd->status.inventory[i].amount > 1){
 				int chance = rnd()%100;
-				wd.type = 0x08;
 				switch(sc->data[SC_FEARBREEZE]->val1){
 					case 5:
 						if( chance < 3){// 3 % chance to attack 5 times.
@@ -4379,8 +4370,11 @@ struct Damage battle_calc_weapon_attack(struct block_list *src,struct block_list
 							break;
 						}
 				}
-				wd.div_ = min(wd.div_,sd->status.inventory[i].amount);
-				sc->data[SC_FEARBREEZE]->val4 = wd.div_-1;
+				if ( wd.div_ > 1 ) {
+					wd.div_ = min(wd.div_, sd->status.inventory[i].amount);
+					sc->data[SC_FEARBREEZE]->val4 = wd.div_ - 1;
+					wd.type = 0x08;
+				}
 		}
 	}
 
@@ -4522,6 +4516,12 @@ struct Damage battle_calc_weapon_attack(struct block_list *src,struct block_list
 			case NPC_UNDEADATTACK:
 			case NPC_TELEKINESISATTACK:
 			case NPC_BLEEDING:
+			case NPC_EARTHQUAKE:
+			case NPC_FIREBREATH:
+			case NPC_ICEBREATH:
+			case NPC_THUNDERBREATH:
+			case NPC_ACIDBREATH:
+			case NPC_DARKNESSBREATH:
 				hitrate += hitrate * 20 / 100;
 				break;
 			case KN_PIERCE:
@@ -4663,9 +4663,10 @@ struct Damage battle_calc_weapon_attack(struct block_list *src,struct block_list
 						break;
 				}
 				break;
+
+			case PA_SHIELDCHAIN:
 #endif
 			case CR_SHIELDBOOMERANG:
-			case PA_SHIELDCHAIN:
 				wd.damage = sstatus->batk;
 				if (sd) {
 					int damagevalue = 0;
@@ -4782,6 +4783,16 @@ struct Damage battle_calc_weapon_attack(struct block_list *src,struct block_list
 				break;
 
 	#ifdef RENEWAL
+			case PA_SHIELDCHAIN:
+				if ( sd ) {
+					short index = sd->equip_index[EQI_HAND_L];
+					if ( index >= 0 && sd->inventory_data[index] && sd->inventory_data[index]->type == IT_ARMOR ) {
+						ATK_ADD(sd->inventory_data[index]->weight / 10 + 4 * sd->status.inventory[index].refine);
+					}
+				} else
+					ATK_ADD(sstatus->rhw.atk2); //Else use Atk2
+				ATK_RATE(battle->calc_skillratio(BF_WEAPON, src, target, skill_id, skill_lv, skillratio, wflag));
+				break;
 			case NJ_TATAMIGAESHI:
 					ATK_RATE(200);
 				/* Fall through */
@@ -5052,6 +5063,16 @@ struct Damage battle_calc_weapon_attack(struct block_list *src,struct block_list
 #ifdef RENEWAL
 		//Div fix.
 		damage_div_fix(wd.damage, wd.div_);
+#endif
+#if 0 // Can't find any source about this one even in eagis
+		if (skill_id == NPC_EARTHQUAKE) {
+			//Adds atk2 to the damage, should be influenced by number of hits and skill-ratio, but not mdef reductions. [Skotlex]
+			//Also divide the extra bonuses from atk2 based on the number in range [Kevin]
+			if ( wflag>0 )
+				ATK_ADD((sstatus->rhw.atk2*skillratio / 100) / wflag);
+			else
+				ShowError("Zero range by %d:%s, divide per 0 avoided!\n", skill_id, skill->get_name(skill_id));
+		}
 #endif
 		//Post skill/vit reduction damage increases
 		if (sc) {
