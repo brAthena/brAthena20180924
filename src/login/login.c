@@ -1910,6 +1910,39 @@ void do_shutdown_login(void)
 	}
 }
 
+/**
+ * --login-config handler
+ *
+ * Overrides the default login configuration file.
+ * @see cmdline->exec
+ */
+static CMDLINEARG(loginconfig)
+{
+	aFree(login->LOGIN_CONF_NAME);
+	login->LOGIN_CONF_NAME = aStrdup(params);
+	return true;
+}
+/**
+ * --lan-config handler
+ *
+ * Overrides the default subnet configuration file.
+ * @see cmdline->exec
+ */
+static CMDLINEARG(lanconfig)
+{
+	aFree(login->LAN_CONF_NAME);
+	login->LAN_CONF_NAME = aStrdup(params);
+	return true;
+}
+/**
+ * Defines the local command line arguments
+ */
+void cmdline_args_init_local(void)
+{
+	CMDLINEARG_DEF2(login-config, loginconfig, "Alternative login-server configuration.", CMDLINE_OPT_PARAM);
+	CMDLINEARG_DEF2(lan-config, lanconfig, "Alternative subnet configuration.", CMDLINE_OPT_PARAM);
+}
+
 //------------------------------
 // Login server initialization
 //------------------------------
@@ -1933,6 +1966,8 @@ int do_init(int argc, char** argv)
 	login->LOGIN_CONF_NAME = aStrdup("conf/login-server.conf");
 	login->LAN_CONF_NAME   = aStrdup("conf/subnet.conf");
 
+	cmdline->exec(argc, argv, CMDLINE_OPT_PREINIT);
+	cmdline->exec(argc, argv, CMDLINE_OPT_NORMAL);
 	login_config_read(login->LOGIN_CONF_NAME);
 	login->lan_config_read(login->LAN_CONF_NAME);
 

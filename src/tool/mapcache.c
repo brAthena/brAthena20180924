@@ -182,6 +182,69 @@ char *remove_extension(char *mapname)
 	return mapname;
 }
 
+/**
+ * --grf-list handler
+ *
+ * Overrides the default grf list filename.
+ * @see cmdline->exec
+ */
+static CMDLINEARG(grflist)
+{
+	aFree(grf_list_file);
+	grf_list_file = aStrdup(params);
+	return true;
+}
+
+/**
+ * --map-list handler
+ *
+ * Overrides the default map list filename.
+ * @see cmdline->exec
+ */
+static CMDLINEARG(maplist)
+{
+	aFree(map_list_file);
+	map_list_file = aStrdup(params);
+	return true;
+}
+
+/**
+ * --map-cache handler
+ *
+ * Overrides the default map cache filename.
+ * @see cmdline->exec
+ */
+static CMDLINEARG(mapcache)
+{
+	aFree(map_cache_file);
+	map_cache_file = aStrdup(params);
+	return true;
+}
+
+/**
+ * --rebuild handler
+ *
+ * Forces a rebuild of the mapcache, rather than only adding missing maps.
+ * @see cmdline->exec
+ */
+static CMDLINEARG(rebuild)
+{
+	rebuild = 1;
+	return true;
+}
+
+/**
+ * Defines the local command line arguments
+ */
+void cmdline_args_init_local(void)
+{
+	CMDLINEARG_DEF2(grf-list, grflist, "Alternative grf list file", CMDLINE_OPT_NORMAL|CMDLINE_OPT_PARAM);
+	CMDLINEARG_DEF2(map-list, maplist, "Alternative map list file", CMDLINE_OPT_NORMAL|CMDLINE_OPT_PARAM);
+	CMDLINEARG_DEF2(map-cache, mapcache, "Alternative map cache file", CMDLINE_OPT_NORMAL|CMDLINE_OPT_PARAM);
+	CMDLINEARG_DEF2(rebuild, rebuild, "Forces a rebuild of the map cache, rather than only adding missing maps", CMDLINE_OPT_NORMAL);
+
+}
+
 int do_init(int argc, char** argv)
 {
 	FILE *list;
@@ -193,6 +256,9 @@ int do_init(int argc, char** argv)
 	map_list_file = aStrdup("db/map_index.txt");
 	/* setup pre-defined, #define-dependant */
 	map_cache_file = aStrdup("db/"DBPATH"map_cache.dat");
+
+	cmdline->exec(argc, argv, CMDLINE_OPT_PREINIT);
+	cmdline->exec(argc, argv, CMDLINE_OPT_NORMAL);
 
 	ShowStatus("Initializing grfio with %s\n", grf_list_file);
 	grfio_init(grf_list_file);

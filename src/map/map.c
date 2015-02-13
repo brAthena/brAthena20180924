@@ -5424,7 +5424,7 @@ int do_final(void) {
 	elemental->final();
 	map->list_final();
 	vending->final();
-	
+
 	map->map_db->destroy(map->map_db, map->db_final);
 
 	mapindex->final();
@@ -5623,6 +5623,155 @@ void map_load_defaults(void) {
 	npc_chat_defaults();
 #endif
 }
+/**
+ * --run-once handler
+ *
+ * Causes the server to run its loop once, and shutdown. Useful for testing.
+ * @see cmdline->exec
+ */
+static CMDLINEARG(runonce)
+{
+	runflag = CORE_ST_STOP;
+	return true;
+}
+/**
+ * --map-config handler
+ *
+ * Overrides the default map-server configuration filename.
+ * @see cmdline->exec
+ */
+static CMDLINEARG(mapconfig)
+{
+	aFree(map->MAP_CONF_NAME);
+	map->MAP_CONF_NAME = aStrdup(params);
+	return true;
+}
+/**
+ * --battle-config handler
+ *
+ * Overrides the default battle configuration filename.
+ * @see cmdline->exec
+ */
+static CMDLINEARG(battleconfig)
+{
+	aFree(map->BATTLE_CONF_FILENAME);
+	map->BATTLE_CONF_FILENAME = aStrdup(params);
+	return true;
+}
+/**
+ * --atcommand-config handler
+ *
+ * Overrides the default atcommands configuration filename.
+ * @see cmdline->exec
+ */
+static CMDLINEARG(atcommandconfig)
+{
+	aFree(map->ATCOMMAND_CONF_FILENAME);
+	map->ATCOMMAND_CONF_FILENAME = aStrdup(params);
+	return true;
+}
+/**
+ * --script-config handler
+ *
+ * Overrides the default script configuration filename.
+ * @see cmdline->exec
+ */
+static CMDLINEARG(scriptconfig)
+{
+	aFree(map->SCRIPT_CONF_NAME);
+	map->SCRIPT_CONF_NAME = aStrdup(params);
+	return true;
+}
+/**
+ * --msg-config handler
+ *
+ * Overrides the default messages configuration filename.
+ * @see cmdline->exec
+ */
+static CMDLINEARG(msgconfig)
+{
+	aFree(map->MSG_CONF_NAME);
+	map->MSG_CONF_NAME = aStrdup(params);
+	return true;
+}
+/**
+ * --grf-path handler
+ *
+ * Overrides the default grf configuration filename.
+ * @see cmdline->exec
+ */
+static CMDLINEARG(grfpath)
+{
+	aFree(map->GRF_PATH_FILENAME);
+	map->GRF_PATH_FILENAME = aStrdup(params);
+	return true;
+}
+/**
+ * --inter-config handler
+ *
+ * Overrides the default inter-server configuration filename.
+ * @see cmdline->exec
+ */
+static CMDLINEARG(interconfig)
+{
+	aFree(map->INTER_CONF_NAME);
+	map->INTER_CONF_NAME = aStrdup(params);
+	return true;
+}
+/**
+ * --log-config handler
+ *
+ * Overrides the default log configuration filename.
+ * @see cmdline->exec
+ */
+static CMDLINEARG(logconfig)
+{
+	aFree(map->LOG_CONF_NAME);
+	map->LOG_CONF_NAME = aStrdup(params);
+	return true;
+}
+/**
+ * --script-check handler
+ *
+ * Enables script-check mode. Checks scripts and quits without running.
+ * @see cmdline->exec
+ */
+static CMDLINEARG(scriptcheck)
+{
+	map->minimal = true;
+	runflag = CORE_ST_STOP;
+	map->scriptcheck = true;
+	return true;
+}
+/**
+ * --load-script handler
+ *
+ * Adds a filename to the script auto-load list.
+ * @see cmdline->exec
+ */
+static CMDLINEARG(loadscript)
+{
+	RECREATE(map->extra_scripts, char *, ++map->extra_scripts_count);
+	map->extra_scripts[map->extra_scripts_count-1] = aStrdup(params);
+	return true;
+}
+/**
+ * Defines the local command line arguments
+ */
+void cmdline_args_init_local(void)
+{
+	CMDLINEARG_DEF2(run-once, runonce, "Closes server after loading (testing).", CMDLINE_OPT_NORMAL);
+	CMDLINEARG_DEF2(map-config, mapconfig, "Alternative map-server configuration.", CMDLINE_OPT_NORMAL|CMDLINE_OPT_PARAM);
+	CMDLINEARG_DEF2(battle-config, battleconfig, "Alternative battle configuration.", CMDLINE_OPT_NORMAL|CMDLINE_OPT_PARAM);
+	CMDLINEARG_DEF2(atcommand-config, atcommandconfig, "Alternative atcommand configuration.", CMDLINE_OPT_NORMAL|CMDLINE_OPT_PARAM);
+	CMDLINEARG_DEF2(script-config, scriptconfig, "Alternative script configuration.", CMDLINE_OPT_NORMAL|CMDLINE_OPT_PARAM);
+	CMDLINEARG_DEF2(msg-config, msgconfig, "Alternative message configuration.", CMDLINE_OPT_NORMAL|CMDLINE_OPT_PARAM);
+	CMDLINEARG_DEF2(grf-path, grfpath, "Alternative GRF path configuration.", CMDLINE_OPT_NORMAL|CMDLINE_OPT_PARAM);
+	CMDLINEARG_DEF2(inter-config, interconfig, "Alternative inter-server configuration.", CMDLINE_OPT_NORMAL|CMDLINE_OPT_PARAM);
+	CMDLINEARG_DEF2(log-config, logconfig, "Alternative logging configuration.", CMDLINE_OPT_NORMAL|CMDLINE_OPT_PARAM);
+	CMDLINEARG_DEF2(script-check, scriptcheck, "Doesn't run the server, only tests the scripts passed through --load-script.", CMDLINE_OPT_SILENT);
+	CMDLINEARG_DEF2(load-script, loadscript, "Loads an additional script (can be repeated).", CMDLINE_OPT_NORMAL|CMDLINE_OPT_PARAM);
+}
 
 int do_init(int argc, char *argv[])
 {
@@ -5644,6 +5793,9 @@ int do_init(int argc, char *argv[])
 	map->MSG_CONF_NAME           = aStrdup("conf/messages.conf");
 	map->GRF_PATH_FILENAME       = aStrdup("conf/grf-files.txt");
 
+	cmdline->exec(argc, argv, CMDLINE_OPT_PREINIT);
+
+	cmdline->exec(argc, argv, CMDLINE_OPT_NORMAL);
 	minimal = map->minimal;/* temp (perhaps make minimal a mask with options of what to load? e.g. plugin 1 does minimal |= mob_db; */
 	if (!minimal) {
 		map->config_read(map->MAP_CONF_NAME);

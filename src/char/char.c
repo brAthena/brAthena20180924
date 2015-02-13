@@ -5708,6 +5708,52 @@ void do_shutdown(void)
 	}
 }
 
+/**
+ * --char-config handler
+ *
+ * Overrides the default char configuration file.
+ * @see cmdline->exec
+ */
+static CMDLINEARG(charconfig)
+{
+	aFree(chr->CHAR_CONF_NAME);
+	chr->CHAR_CONF_NAME = aStrdup(params);
+	return true;
+}
+/**
+ * --inter-config handler
+ *
+ * Overrides the default inter-server configuration file.
+ * @see cmdline->exec
+ */
+static CMDLINEARG(interconfig)
+{
+	aFree(chr->INTER_CONF_NAME);
+	chr->INTER_CONF_NAME = aStrdup(params);
+	return true;
+}
+/**
+ * --lan-config handler
+ *
+ * Overrides the default subnet configuration file.
+ * @see cmdline->exec
+ */
+static CMDLINEARG(lanconfig)
+{
+	aFree(chr->LAN_CONF_NAME);
+	chr->LAN_CONF_NAME = aStrdup(params);
+	return true;
+}
+/**
+ * Initializes the command line arguments handlers.
+ */
+void cmdline_args_init_local(void)
+{
+	CMDLINEARG_DEF2(char-config, charconfig, "Alternative char-server configuration.", CMDLINE_OPT_PARAM);
+	CMDLINEARG_DEF2(inter-config, interconfig, "Alternative inter-server configuration.", CMDLINE_OPT_PARAM);
+	CMDLINEARG_DEF2(lan-config, lanconfig, "Alternative subnet configuration.", CMDLINE_OPT_PARAM);
+}
+
 int do_init(int argc, char **argv) {
 	int i;
 	memset(&skillid2idx, 0, sizeof(skillid2idx));
@@ -5722,10 +5768,13 @@ int do_init(int argc, char **argv) {
 	for(i = 0; i < MAX_MAP_SERVERS; i++ )
 		chr->server[i].map = NULL;
 
+	cmdline->exec(argc, argv, CMDLINE_OPT_PREINIT);
+
 	//Read map indexes
 	mapindex->init();
 	start_point.map = mapindex->name2id("new_zone01");
 
+	cmdline->exec(argc, argv, CMDLINE_OPT_NORMAL);
 	chr->config_read(chr->CHAR_CONF_NAME);
 	chr->lan_config_read(chr->LAN_CONF_NAME);
 	chr->sql_config_read(chr->SQL_CONF_NAME);
