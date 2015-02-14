@@ -18982,13 +18982,13 @@ void skill_readdb(bool minimal) {
 	}
 
 	// load skill databases
-	safestrncpy(skill->db[0].name, "UNKNOWN_SKILL", sizeof(skill->db[0].name));
-	safestrncpy(skill->db[0].desc, "Unknown Skill", sizeof(skill->db[0].desc));
+	safestrncpy(skill->db[0].name, "HABILIDADE_DESCONHECIDA", sizeof(skill->db[0].name));
+	safestrncpy(skill->db[0].desc, "Habilidade desconhecida", sizeof(skill->db[0].desc));
 
 #ifdef ENABLE_CASE_CHECK
 	script->parser_current_file = DBPATH"skill_db.txt";
 #endif // ENABLE_CASE_CHECK
-	sv->readdb(map->db_path, DBPATH"skill_db.txt",           ',',  17,                       17,               MAX_SKILL_DB, skill->parse_row_skilldb);
+	sv_readsqldb(get_database_name(0), NULL, 17, -1, skill->parse_row_skilldb);
 #ifdef ENABLE_CASE_CHECK
 	script->parser_current_file = NULL;
 #endif // ENABLE_CASE_CHECK
@@ -18996,26 +18996,25 @@ void skill_readdb(bool minimal) {
 	if (minimal)
 		return;
 
-	sv->readdb(map->db_path, DBPATH"skill_require_db.txt",   ',',  32,                       32,               MAX_SKILL_DB, skill->parse_row_requiredb);
+	sv_readsqldb(get_database_name(1), NULL, 32, -1, skill->parse_row_requiredb);
 #ifdef RENEWAL_CAST
-	sv->readdb(map->db_path, "re/skill_cast_db.txt",         ',',   8,                        8,               MAX_SKILL_DB, skill->parse_row_castdb);
+	sv_readsqldb(get_database_name(2), NULL, 8,  -1, skill->parse_row_castdb);
 #else
-	sv->readdb(map->db_path, "pre-re/skill_cast_db.txt",     ',',   7,                        7,               MAX_SKILL_DB, skill->parse_row_castdb);
+	sv_readsqldb(get_database_name(2), NULL, 7,  -1, skill->parse_row_castdb);
 #endif
-	sv->readdb(map->db_path, DBPATH"skill_castnodex_db.txt", ',',   2,                        3,               MAX_SKILL_DB, skill->parse_row_castnodexdb);
-	sv->readdb(map->db_path, DBPATH"skill_unit_db.txt",      ',',   8,                        8,               MAX_SKILL_DB, skill->parse_row_unitdb);
+	sv_readsqldb(get_database_name(3), NULL, 3,  -1, skill->parse_row_castnodexdb);
+	sv_readsqldb(get_database_name(4), NULL, 8,  -1, skill->parse_row_unitdb);
 
 	skill->init_unit_layout();
-	sv->readdb(map->db_path, "produce_db.txt",               ',',   4, 4+2*MAX_PRODUCE_RESOURCE,       MAX_SKILL_PRODUCE_DB, skill->parse_row_producedb);
-	sv->readdb(map->db_path, "create_arrow_db.txt",          ',', 1+2,   1+2*MAX_ARROW_RESOURCE,         MAX_SKILL_ARROW_DB, skill->parse_row_createarrowdb);
-	sv->readdb(map->db_path, "abra_db.txt",                  ',',   4,                        4,          MAX_SKILL_ABRA_DB, skill->parse_row_abradb);
-	//Warlock
-	sv->readdb(map->db_path, "spellbook_db.txt",             ',',   3,                        3,     MAX_SKILL_SPELLBOOK_DB, skill->parse_row_spellbookdb);
-	//Guillotine Cross
-	sv->readdb(map->db_path, "magicmushroom_db.txt",         ',',   1,                        1, MAX_SKILL_MAGICMUSHROOM_DB, skill->parse_row_magicmushroomdb);
-	sv->readdb(map->db_path, "skill_reproduce_db.txt",       ',',   1,                        1,               MAX_SKILL_DB, skill->parse_row_reproducedb);
-	sv->readdb(map->db_path, "skill_improvise_db.txt",       ',',   2,                        2,     MAX_SKILL_IMPROVISE_DB, skill->parse_row_improvisedb);
-	sv->readdb(map->db_path, "skill_changematerial_db.txt",  ',',   4,                    4+2*5,       MAX_SKILL_PRODUCE_DB, skill->parse_row_changematerialdb);
+	sv_readsqldb(get_database_name(6),  NULL, 4+2*MAX_PRODUCE_RESOURCE,  -1, skill->parse_row_producedb);
+	sv_readsqldb(get_database_name(7),  NULL, 1+2*MAX_ARROW_RESOURCE,  -1, skill->parse_row_createarrowdb);
+	sv_readsqldb(get_database_name(8),  NULL, 4,  -1, skill->parse_row_abradb);
+	sv_readsqldb(get_database_name(9),  NULL, 3,  -1, skill->parse_row_spellbookdb);
+	sv_readsqldb(get_database_name(10), NULL, 1,  -1, skill->parse_row_magicmushroomdb);
+	sv_readsqldb(get_database_name(11), NULL, 1,  -1, skill->parse_row_reproducedb);
+	sv_readsqldb(get_database_name(12), NULL, 2,  -1, skill->parse_row_improvisedb);
+	sv_readsqldb(get_database_name(13), NULL, 4+2*5,  -1, skill->parse_row_changematerialdb);
+
 }
 
 void skill_reload (void) {
