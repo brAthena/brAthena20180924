@@ -18988,7 +18988,7 @@ void skill_readdb(bool minimal) {
 #ifdef ENABLE_CASE_CHECK
 	script->parser_current_file = DBPATH"skill_db.txt";
 #endif // ENABLE_CASE_CHECK
-	sv_readsqldb(get_database_name(0), NULL, 17, -1, skill->parse_row_skilldb);
+	sv_readsqldb(get_database_name(0), 17, -1, skill->parse_row_skilldb);
 #ifdef ENABLE_CASE_CHECK
 	script->parser_current_file = NULL;
 #endif // ENABLE_CASE_CHECK
@@ -18996,24 +18996,24 @@ void skill_readdb(bool minimal) {
 	if (minimal)
 		return;
 
-	sv_readsqldb(get_database_name(1), NULL, 32, -1, skill->parse_row_requiredb);
+	sv_readsqldb(get_database_name(1), 32, -1, skill->parse_row_requiredb);
 #ifdef RENEWAL_CAST
-	sv_readsqldb(get_database_name(2), NULL, 8,  -1, skill->parse_row_castdb);
+	sv_readsqldb(get_database_name(2), 8,  -1, skill->parse_row_castdb);
 #else
-	sv_readsqldb(get_database_name(2), NULL, 7,  -1, skill->parse_row_castdb);
+	sv_readsqldb(get_database_name(2), 7,  -1, skill->parse_row_castdb);
 #endif
-	sv_readsqldb(get_database_name(3), NULL, 3,  -1, skill->parse_row_castnodexdb);
-	sv_readsqldb(get_database_name(4), NULL, 8,  -1, skill->parse_row_unitdb);
+	sv_readsqldb(get_database_name(3), 3,  -1, skill->parse_row_castnodexdb);
+	sv_readsqldb(get_database_name(4), 8,  -1, skill->parse_row_unitdb);
 
 	skill->init_unit_layout();
-	sv_readsqldb(get_database_name(6),  NULL, 4+2*MAX_PRODUCE_RESOURCE,  -1, skill->parse_row_producedb);
-	sv_readsqldb(get_database_name(7),  NULL, 1+2*MAX_ARROW_RESOURCE,  -1, skill->parse_row_createarrowdb);
-	sv_readsqldb(get_database_name(8),  NULL, 4,  -1, skill->parse_row_abradb);
-	sv_readsqldb(get_database_name(9),  NULL, 3,  -1, skill->parse_row_spellbookdb);
-	sv_readsqldb(get_database_name(10), NULL, 1,  -1, skill->parse_row_magicmushroomdb);
-	sv_readsqldb(get_database_name(11), NULL, 1,  -1, skill->parse_row_reproducedb);
-	sv_readsqldb(get_database_name(12), NULL, 2,  -1, skill->parse_row_improvisedb);
-	sv_readsqldb(get_database_name(13), NULL, 4+2*5,  -1, skill->parse_row_changematerialdb);
+	sv_readsqldb(get_database_name(6), 4+2*MAX_PRODUCE_RESOURCE,  -1, skill->parse_row_producedb);
+	sv_readsqldb(get_database_name(7), 1+2*MAX_ARROW_RESOURCE,  -1, skill->parse_row_createarrowdb);
+	sv_readsqldb(get_database_name(8), 4,  -1, skill->parse_row_abradb);
+	sv_readsqldb(get_database_name(9), 3,  -1, skill->parse_row_spellbookdb);
+	sv_readsqldb(get_database_name(10), 1,  -1, skill->parse_row_magicmushroomdb);
+	sv_readsqldb(get_database_name(11), 1,  -1, skill->parse_row_reproducedb);
+	sv_readsqldb(get_database_name(12), 2,  -1, skill->parse_row_improvisedb);
+	sv_readsqldb(get_database_name(13), 4+2*5,  -1, skill->parse_row_changematerialdb);
 
 }
 

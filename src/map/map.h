@@ -1095,7 +1095,7 @@ struct map_interface {
 };
 
 struct map_interface *map;
-void sv_readsqldb(char *table_name, char *name, int param_size, int max_allowed, bool(*sub_parse_row)(char *string[], int columns, int current));
+void sv_readsqldb(char *table_name, int param_size, int max_allowed, bool(*sub_parse_row)(char *string[], int columns, int current));
 char* get_database_name(int database_id);
 
 #ifdef BRATHENA_CORE
