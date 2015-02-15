@@ -10271,7 +10271,7 @@ void pc_read_skill_tree(void) {
 		}
 		
 	}
-	ShowConf("Leitura de '"CL_WHITE"%d"CL_RESET"' Habilidade em '"CL_WHITE"%s"CL_RESET"'.\n", skillid, config_filename);
+	ShowConf("Leitura de '"CL_WHITE"%d"CL_RESET"' Habilidades em '"CL_WHITE"%s"CL_RESET"'.\n", skillid, config_filename);
 	libconfig->destroy(&skill_tree_conf);
 
 	/* lets update all players skill tree */
