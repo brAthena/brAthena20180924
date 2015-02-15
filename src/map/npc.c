@@ -482,7 +482,7 @@ int npc_event_do_clock(int tid, int64 tick, int id, intptr_t data) {
  **/
 void npc_event_do_oninit( bool reload )
 {
-	ShowStatus("Event '"CL_WHITE"OnInit"CL_RESET"' executed with '"CL_WHITE"%d"CL_RESET"' NPCs."CL_CLL"\n", npc->event_doall("OnInit"));
+	ShowNpc("Event '"CL_WHITE"OnInit"CL_RESET"' executed with '"CL_WHITE"%d"CL_RESET"' NPCs."CL_CLL"\n", npc->event_doall("OnInit"));
 
 	// This interval has already been added on startup
 	if( !reload )
@@ -4326,7 +4326,7 @@ void npc_read_event_script(void)
 	if (battle_config.etc_log) {
 		//Print summary.
 		for (i = 0; i < NPCE_MAX; i++)
-			ShowInfo("%s: %d '%s' events.\n", config[i].name, script_event[i].event_count, config[i].event_name);
+			ShowNpc("%s: %d '%s' events.\n", config[i].name, script_event[i].event_count, config[i].event_name);
 	}
 }
 
@@ -4358,13 +4358,13 @@ int npc_ev_label_db_clear_sub(DBKey key, DBData *data, va_list args)
 void npc_process_files( int npc_min ) {
 	struct npc_src_list *file; // Current file
 
-	ShowStatus("Loading NPCs...\r");
+	ShowNpc("Loading NPCs...\r");
 	for( file = npc->src_files; file != NULL; file = file->next ) {
-		ShowStatus("Loading NPC file: %s"CL_CLL"\r", file->name);
+		ShowNpc("Loading NPC file: %s"CL_CLL"\r", file->name);
 		if (npc->parsesrcfile(file->name, false) != EXIT_SUCCESS)
 			map->retval = EXIT_FAILURE;
 	}
-	ShowInfo ("Done loading '"CL_WHITE"%d"CL_RESET"' NPCs:"CL_CLL"\n"
+	ShowNpc ("Done loading '"CL_WHITE"%d"CL_RESET"' NPCs:"CL_CLL"\n"
 		"\t-'"CL_WHITE"%d"CL_RESET"' Warps\n"
 		"\t-'"CL_WHITE"%d"CL_RESET"' Shops\n"
 		"\t-'"CL_WHITE"%d"CL_RESET"' Scripts\n"
@@ -4449,7 +4449,7 @@ int npc_reload(void) {
 
 	map->zone_init();
 
-	npc->motd = npc->name2id("HerculesMOTD"); /* [Ind/Hercules] */
+	npc->motd = npc->name2id("brAthenaMOTD");
 
 	//Re-read the NPC Script Events cache.
 	npc->read_event_script();
@@ -4462,8 +4462,8 @@ int npc_reload(void) {
 	// Execute rest of the startup events if connected to char-server. [Lance]
 	// Executed when connection is established with char-server in chrif_connectack
 	if( !intif->CheckForCharServer() ) {
-		ShowStatus("Event '"CL_WHITE"OnInterIfInit"CL_RESET"' executed with '"CL_WHITE"%d"CL_RESET"' NPCs.\n", npc->event_doall("OnInterIfInit"));
-		ShowStatus("Event '"CL_WHITE"OnInterIfInitOnce"CL_RESET"' executed with '"CL_WHITE"%d"CL_RESET"' NPCs.\n", npc->event_doall("OnInterIfInitOnce"));
+		ShowNpc("Event '"CL_WHITE"OnInterIfInit"CL_RESET"' executed with '"CL_WHITE"%d"CL_RESET"' NPCs.\n", npc->event_doall("OnInterIfInit"));
+		ShowNpc("Event '"CL_WHITE"OnInterIfInitOnce"CL_RESET"' executed with '"CL_WHITE"%d"CL_RESET"' NPCs.\n", npc->event_doall("OnInterIfInitOnce"));
 	}
 	// Refresh guild castle flags on both woe setups
 	// These events are only executed after receiving castle information from char-server
@@ -4593,7 +4593,7 @@ int do_init_npc(bool minimal) {
 	if (!minimal) {
 		map->zone_init();
 	
-		npc->motd = npc->name2id("HerculesMOTD"); /* [Ind/Hercules] */
+		npc->motd = npc->name2id("brAthenaMOTD");
 	
 		// set up the events cache
 		memset(script_event, 0, sizeof(script_event));

@@ -10024,7 +10024,7 @@ void pc_read_skill_tree(void) {
 #else
 	const char *config_filename = "db/pre-re/skill_tree.conf"; // FIXME hardcoded name
 #endif
-	int i = 0, jnamelen = 0;
+	int i = 0, jnamelen = 0, skillid = 0;
 	struct s_mapiterator *iter;
 	struct map_session_data *sd;
 	struct {
@@ -10208,6 +10208,7 @@ void pc_read_skill_tree(void) {
 							pc->skill_tree[idx][skidx].need[h].id  = rskid;
 							pc->skill_tree[idx][skidx].need[h].idx = skill->get_index(rskid);
 							pc->skill_tree[idx][skidx].need[h].lv  = (unsigned char)libconfig->setting_get_int(rsk);
+							skillid++;
 						} else if( rsk ) {
 							ShowWarning("pc_read_skill_tree: unknown requirement '%s' for '%s' in '%s'\n",config_setting_name(rsk),sk_name,name);
 						} else {
@@ -10270,7 +10271,7 @@ void pc_read_skill_tree(void) {
 		}
 		
 	}
-	
+	ShowConf("Leitura de '"CL_WHITE"%d"CL_RESET"' Habilidade em '"CL_WHITE"%s"CL_RESET"'.\n", skillid, config_filename);
 	libconfig->destroy(&skill_tree_conf);
 
 	/* lets update all players skill tree */

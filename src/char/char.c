@@ -5456,7 +5456,7 @@ void char_sql_config_read(const char* cfgName)
 			chr->sql_config_read(w2);
 	}
 	fclose(fp);
-	ShowInfo("Done reading %s.\n", cfgName);
+	ShowConf("Done reading %s.\n", cfgName);
 }
 
 void char_config_dispatch(char *w1, char *w2) {
@@ -5639,7 +5639,7 @@ int char_config_read(const char* cfgName)
 	}
 	fclose(fp);
 
-	ShowInfo("Done reading %s.\n", cfgName);
+	ShowConf("Done reading %s.\n", cfgName);
 	return 0;
 }
 

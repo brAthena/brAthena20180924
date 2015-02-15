@@ -1837,7 +1837,7 @@ int login_config_read(const char* cfgName)
 		}
 	}
 	fclose(fp);
-	ShowInfo("Finished reading %s.\n", cfgName);
+	ShowConf("Finished reading %s.\n", cfgName);
 	return 0;
 }
 

@@ -61,18 +61,18 @@ void display_title(void) {
 	const char *vcstype = sysinfo->vcstype();
 
 	ShowMessage("\n");
-	ShowMessage(""CL_BG_GREEN""CL_BT_WHITE"                                                                      "CL_CLL""CL_NORMAL"\n");
-	ShowMessage(""CL_BG_GREEN""CL_BT_WHITE"                        brAthena Dev.Team apresenta                   "CL_CLL""CL_NORMAL"\n");
-	ShowMessage(""CL_BG_GREEN""CL_BT_WHITE"                                                                      "CL_CLL""CL_NORMAL"\n");
-	ShowMessage(""CL_BG_GREEN""CL_BT_WHITE"                _           _   _   _                                 "CL_CLL""CL_NORMAL"\n");
-	ShowMessage(""CL_BG_GREEN""CL_BT_WHITE"               | |__  _ __ / \\ | |_| |__   ___ _ __   __ _           "CL_CLL""CL_NORMAL"\n");
-	ShowMessage(""CL_BG_GREEN""CL_BT_WHITE"               | '_ \\| '__/ _ \\| __| '_ \\ / _ \\ '_ \\ / _` |      "CL_CLL""CL_NORMAL"\n");
-	ShowMessage(""CL_BG_GREEN""CL_BT_WHITE"               | |_) | | / ___ \\ |_| | | |  __/ | | | (_| |          "CL_CLL""CL_NORMAL"\n");
-	ShowMessage(""CL_BG_GREEN""CL_BT_WHITE"               |_.__/|_|/_/   \\_\\__|_| |_|\\___|_| |_|\\__,_|       "CL_CLL""CL_NORMAL"\n");
-	ShowMessage(""CL_BG_GREEN""CL_BT_WHITE"                                                                      "CL_CLL""CL_NORMAL"\n");
-	ShowMessage(""CL_BG_GREEN""CL_BT_WHITE"                 Projeto brAthena (c) 2008 - 2015                     "CL_CLL""CL_NORMAL"\n");
-	ShowMessage(""CL_BG_GREEN""CL_BT_WHITE"                          www.brathena.org                            "CL_CLL""CL_NORMAL"\n");
-	ShowMessage(""CL_BG_GREEN""CL_BT_WHITE"                                                                      "CL_CLL""CL_NORMAL"\n");
+	ShowMessage(""CL_BG_GREEN""CL_BT_WHITE"\t\t\t                                                                          "CL_CLL""CL_NORMAL"\n");
+	ShowMessage(""CL_BG_GREEN""CL_BT_WHITE"\t\t\t                            brAthena Dev.Team apresenta                   "CL_CLL""CL_NORMAL"\n");
+	ShowMessage(""CL_BG_GREEN""CL_BT_WHITE"\t\t\t                                                                          "CL_CLL""CL_NORMAL"\n");
+	ShowMessage(""CL_BG_GREEN""CL_BT_WHITE"\t\t\t                    _           _   _   _                                 "CL_CLL""CL_NORMAL"\n");
+	ShowMessage(""CL_BG_GREEN""CL_BT_WHITE"\t\t\t                   | |__  _ __ / \\ | |_| |__   ___ _ __   __ _           "CL_CLL""CL_NORMAL"\n");
+	ShowMessage(""CL_BG_GREEN""CL_BT_WHITE"\t\t\t                   | '_ \\| '__/ _ \\| __| '_ \\ / _ \\ '_ \\ / _` |      "CL_CLL""CL_NORMAL"\n");
+	ShowMessage(""CL_BG_GREEN""CL_BT_WHITE"\t\t\t                   | |_) | | / ___ \\ |_| | | |  __/ | | | (_| |          "CL_CLL""CL_NORMAL"\n");
+	ShowMessage(""CL_BG_GREEN""CL_BT_WHITE"\t\t\t                   |_.__/|_|/_/   \\_\\__|_| |_|\\___|_| |_|\\__,_|       "CL_CLL""CL_NORMAL"\n");
+	ShowMessage(""CL_BG_GREEN""CL_BT_WHITE"\t\t\t                                                                          "CL_CLL""CL_NORMAL"\n");
+	ShowMessage(""CL_BG_GREEN""CL_BT_WHITE"\t\t\t                         Projeto brAthena (c) 2008 - 2015                 "CL_CLL""CL_NORMAL"\n");
+	ShowMessage(""CL_BG_GREEN""CL_BT_WHITE"\t\t\t                                 www.brathena.org                         "CL_CLL""CL_NORMAL"\n");
+	ShowMessage(""CL_BG_GREEN""CL_BT_WHITE"\t\t\t                                                                          "CL_CLL""CL_NORMAL"\n");
 
 	ShowInfo("brAthena %d-bit for %s\n", sysinfo->is64bit() ? 64 : 32, sysinfo->platform());
 	ShowInfo("%s revisao (src): '"CL_WHITE"%s"CL_RESET"'\n", vcstype, sysinfo->vcsrevision_src());
