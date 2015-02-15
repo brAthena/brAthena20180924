@@ -20,7 +20,6 @@
 #include "atcommand.h"
 #include "guild.h"
 #include "instance.h"
-#include "irc-bot.h"
 #include "map.h"
 #include "pc.h"
 #include "../common/cbasetypes.h"
@@ -271,15 +270,11 @@ void channel_send(struct channel_data *chan, struct map_session_data *sd, const 
 	} else if (sd) {
 		snprintf(message, 150, "[ #%s ] %s : %s",chan->name,sd->status.name, msg);
 		clif->channel_msg(chan,sd,message);
-		if (chan->type == HCS_TYPE_IRC)
-			ircbot->relay(sd->status.name,msg);
 		if (chan->msg_delay != 0)
 			sd->hchsysch_tick = timer->gettick();
 	} else {
 		snprintf(message, 150, "[ #%s ] %s",chan->name, msg);
 		clif->channel_msg2(chan, message);
-		if (chan->type == HCS_TYPE_IRC)
-			ircbot->relay(NULL, msg);
 	}
 }
 
@@ -577,12 +572,10 @@ void read_channels_config(void)
 		config_setting_t *colors;
 		int i,k;
 		const char *local_name, *ally_name,
-					*local_color, *ally_color,
-					*irc_name, *irc_color;
+					*local_color, *ally_color;
 		int ally_enabled = 0, local_enabled = 0,
 			local_autojoin = 0, ally_autojoin = 0,
-			allow_user_channel_creation = 0,
-			irc_enabled = 0;
+			allow_user_channel_creation = 0;
 
 		if( !libconfig->setting_lookup_string(settings, "map_local_channel_name", &local_name) )
 			local_name = "map";
@@ -592,74 +585,13 @@ void read_channels_config(void)
 			ally_name = "ally";
 		safestrncpy(channel->config->ally_name, ally_name, HCS_NAME_LENGTH);
 
-		if( !libconfig->setting_lookup_string(settings, "irc_channel_name", &irc_name) )
-			irc_name = "irc";
-		safestrncpy(channel->config->irc_name, irc_name, HCS_NAME_LENGTH);
-
 		libconfig->setting_lookup_bool(settings, "map_local_channel", &local_enabled);
 		libconfig->setting_lookup_bool(settings, "ally_channel_enabled", &ally_enabled);
-		libconfig->setting_lookup_bool(settings, "irc_channel_enabled", &irc_enabled);
 
 		if (local_enabled)
 			channel->config->local = true;
 		if (ally_enabled)
 			channel->config->ally = true;
-		if (irc_enabled)
-			channel->config->irc = true;
-
-		channel->config->irc_server[0] = channel->config->irc_channel[0] = channel->config->irc_nick[0] = channel->config->irc_nick_pw[0] = '\0';
-
-		if (channel->config->irc) {
-			const char *irc_server, *irc_channel,
-				 *irc_nick, *irc_nick_pw;
-			int irc_use_ghost = 0;
-			if( libconfig->setting_lookup_string(settings, "irc_channel_network", &irc_server) ) {
-				if( !strstr(irc_server,":") ) {
-					channel->config->irc = false;
-					ShowWarning("channels.conf : network port wasn't found in 'irc_channel_network', disabling irc channel...\n");
-				} else {
-					unsigned char d = 0, dlen = strlen(irc_server);
-					char server[40];
-					if (dlen > 39)
-						dlen = 39;
-					memset(server, '\0', sizeof(server));
-
-					for(d = 0; d < dlen; d++) {
-						if(irc_server[d] == ':') {
-							memcpy(server, irc_server, d);
-							safestrncpy(channel->config->irc_server, server, 40);
-							memcpy(server, &irc_server[d+1], dlen - d - 1);
-							channel->config->irc_server_port = atoi(server);
-							break;
-						}
-					}
-				}
-			} else {
-				channel->config->irc = false;
-				ShowWarning("channels.conf : irc channel enabled but irc_channel_network wasn't found, disabling irc channel...\n");
-			}
-			if( libconfig->setting_lookup_string(settings, "irc_channel_channel", &irc_channel) )
-				safestrncpy(channel->config->irc_channel, irc_channel, 50);
-			else {
-				channel->config->irc = false;
-				ShowWarning("channels.conf : irc channel enabled but irc_channel_channel wasn't found, disabling irc channel...\n");
-			}
-			if( libconfig->setting_lookup_string(settings, "irc_channel_nick", &irc_nick) ) {
-				if( strcmpi(irc_nick,"Hercules_chSysBot") == 0 ) {
-					sprintf(channel->config->irc_nick, "Hercules_chSysBot%d",rnd()%777);
-				} else
-					safestrncpy(channel->config->irc_nick, irc_nick, 40);
-			} else {
-				channel->config->irc = false;
-				ShowWarning("channels.conf : irc channel enabled but irc_channel_nick wasn't found, disabling irc channel...\n");
-			}
-			if( libconfig->setting_lookup_string(settings, "irc_channel_nick_pw", &irc_nick_pw) ) {
-				safestrncpy(channel->config->irc_nick_pw, irc_nick_pw, 30);
-				config_setting_lookup_bool(settings, "irc_channel_use_ghost", &irc_use_ghost);
-				channel->config->irc_use_ghost = irc_use_ghost;
-			}
-
-		}
 
 		libconfig->setting_lookup_bool(settings, "map_local_channel_autojoin", &local_autojoin);
 		libconfig->setting_lookup_bool(settings, "ally_channel_autojoin", &ally_autojoin);
@@ -719,24 +651,6 @@ void read_channels_config(void)
 			channel->config->ally = false;
 		}
 
-		libconfig->setting_lookup_string(settings, "irc_channel_color", &irc_color);
-
-		for (k = 0; k < channel->config->colors_count; k++) {
-			if (strcmpi(channel->config->colors_name[k], irc_color) == 0)
-				break;
-		}
-
-		if (k < channel->config->colors_count) {
-			channel->config->irc_color = k;
-		} else {
-			ShowError("channels.conf: unknown color '%s' for 'irc_channel_color', disabling '#%s'...\n",irc_color,irc_name);
-			channel->config->irc = false;
-		}
-
-		if (channel->config->irc) {
-			ircbot->channel = channel->create(HCS_TYPE_IRC, channel->config->irc_name, channel->config->irc_color);
-		}
-
 		if( (channels = libconfig->setting_get_member(settings, "default_channels")) != NULL ) {
 			int channel_count = libconfig->setting_length(channels);
 
@@ -752,7 +666,6 @@ void read_channels_config(void)
 				}
 				if (strcmpi(name, channel->config->local_name) == 0
 				 || strcmpi(name, channel->config->ally_name) == 0
-				 || strcmpi(name, channel->config->irc_name) == 0
 				 || strdb_exists(channel->db, name)) {
 					ShowError("channels.conf: duplicate channel '%s', skipping channel...\n",name);
 					continue;
@@ -776,7 +689,7 @@ int do_init_channel(bool minimal)
 		return 0;
 
 	channel->db = stridb_alloc(DB_OPT_DUP_KEY|DB_OPT_RELEASE_DATA, HCS_NAME_LENGTH);
-	channel->config->ally = channel->config->local = channel->config->irc = channel->config->ally_autojoin = channel->config->local_autojoin = false;
+	channel->config->ally = channel->config->local = channel->config->ally_autojoin = channel->config->local_autojoin = false;
 	channel->config_read();
 
 	return 0;

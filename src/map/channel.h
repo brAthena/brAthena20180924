@@ -40,7 +40,6 @@ enum channel_types {
 	HCS_TYPE_PRIVATE = 1,
 	HCS_TYPE_MAP     = 2,
 	HCS_TYPE_ALLY    = 3,
-	HCS_TYPE_IRC     = 4,
 };
 
 enum channel_operation_status {

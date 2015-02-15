@@ -33,7 +33,6 @@
 #include "homunculus.h"
 #include "instance.h"
 #include "intif.h"
-#include "irc-bot.h"
 #include "itemdb.h"
 #include "log.h"
 #include "mail.h"
@@ -5406,7 +5405,6 @@ int do_final(void) {
 
 	atcommand->final();
 	battle->final();
-	ircbot->final();/* before channel. */
 	channel->final();
 	chrif->final();
 	clif->final();
@@ -5600,7 +5598,6 @@ void map_load_defaults(void) {
 	gstorage_defaults();
 	homunculus_defaults();
 	instance_defaults();
-	ircbot_defaults();
 	itemdb_defaults();
 	log_defaults();
 	mail_defaults();
@@ -5897,7 +5894,6 @@ int do_init(int argc, char *argv[])
 	channel->init(minimal);
 	chrif->init(minimal);
 	clif->init(minimal);
-	ircbot->init(minimal);
 	script->init(minimal);
 	itemdb->init(minimal);
 	skill->init(minimal);

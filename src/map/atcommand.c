@@ -8779,7 +8779,7 @@ ACMD(channel) {
 				clif->message(fd, atcmd_output);
 			}
 			for (chan = dbi_first(iter); dbi_exists(iter); chan = dbi_next(iter)) {
-				if (show_all || chan->type == HCS_TYPE_PUBLIC || chan->type == HCS_TYPE_IRC) {
+				if (show_all || chan->type == HCS_TYPE_PUBLIC) {
 					sprintf(atcmd_output, msg_txt(1409), chan->name, db_size(chan->users));// - #%s ( %d users )
 					clif->message(fd, atcmd_output);
 				}

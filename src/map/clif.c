@@ -31,7 +31,6 @@
 #include "homunculus.h"
 #include "instance.h"
 #include "intif.h"
-#include "irc-bot.h"
 #include "itemdb.h"
 #include "log.h"
 #include "mail.h"
