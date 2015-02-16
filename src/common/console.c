@@ -163,7 +163,7 @@ CPCMD_C(skip,update) {
 		ShowDebug("usage example: sql update skip 2013-02-14--16-15.sql\n");
 		return;
 	}
-	Sql_HerculesUpdateSkip(console->input->SQL, line);
+	Sql_brAthenaUpdateSkip(console->input->SQL, line);
 }
 
 /**

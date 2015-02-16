@@ -264,9 +264,9 @@ int decode_zip(void* dest, unsigned long* destLen, const void* source, unsigned 
 
 /// zlib compress
 int encode_zip(void* dest, unsigned long* destLen, const void* source, unsigned long sourceLen) {
-	if( *destLen == 0 ) /* [Ind/Hercules] */
+	if( *destLen == 0 ) /* [Ind] */
 		*destLen = compressBound(sourceLen);
-	if( dest == NULL ) { /* [Ind/Hercules] */
+	if( dest == NULL ) {
 		CREATE(dest, unsigned char, *destLen);
 	}
 	return compress((Bytef*)dest, destLen, (const Bytef*)source, sourceLen);

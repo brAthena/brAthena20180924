@@ -13,7 +13,7 @@
 #define COMMON_SYSINFO_H
 
 /**
- * Provides various bits of information about the system Hercules is running on
+ * Provides various bits of information about the system brAthena is running on
  * (note: on unix systems, to avoid runtime detection, most of the data is
  * cached at compile time)
  */

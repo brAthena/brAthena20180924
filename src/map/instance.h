@@ -58,10 +58,6 @@ struct instance_data {
 	unsigned int original_progress_timeout;
 
 	struct point respawn; ///< reload spawn
-
-	/** HPM Custom Struct */
-	struct HPluginData **hdata;
-	unsigned int hdatac;
 };
 
 struct instance_interface {

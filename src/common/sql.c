@@ -27,7 +27,7 @@
 #endif
 #include <mysql.h>
 
-void hercules_mysql_error_handler(unsigned int ecode);
+void brathena_mysql_error_handler(unsigned int ecode);
 
 int mysql_reconnect_type;
 unsigned int mysql_reconnect_count;
@@ -277,14 +277,14 @@ int Sql_QueryV(Sql* self, const char* query, va_list args)
 	if( mysql_real_query(&self->handle, StrBuf->Value(&self->buf), (unsigned long)StrBuf->Length(&self->buf)) )
 	{
 		ShowSQL("DB error - %s\n", mysql_error(&self->handle));
-		hercules_mysql_error_handler(mysql_errno(&self->handle));
+		brathena_mysql_error_handler(mysql_errno(&self->handle));
 		return SQL_ERROR;
 	}
 	self->result = mysql_store_result(&self->handle);
 	if( mysql_errno(&self->handle) != 0 )
 	{
 		ShowSQL("DB error - %s\n", mysql_error(&self->handle));
-		hercules_mysql_error_handler(mysql_errno(&self->handle));
+		brathena_mysql_error_handler(mysql_errno(&self->handle));
 		return SQL_ERROR;
 	}
 	return SQL_SUCCESS;
@@ -304,14 +304,14 @@ int Sql_QueryStr(Sql* self, const char* query)
 	if( mysql_real_query(&self->handle, StrBuf->Value(&self->buf), (unsigned long)StrBuf->Length(&self->buf)) )
 	{
 		ShowSQL("DB error - %s\n", mysql_error(&self->handle));
-		hercules_mysql_error_handler(mysql_errno(&self->handle));
+		brathena_mysql_error_handler(mysql_errno(&self->handle));
 		return SQL_ERROR;
 	}
 	self->result = mysql_store_result(&self->handle);
 	if( mysql_errno(&self->handle) != 0 )
 	{
 		ShowSQL("DB error - %s\n", mysql_error(&self->handle));
-		hercules_mysql_error_handler(mysql_errno(&self->handle));
+		brathena_mysql_error_handler(mysql_errno(&self->handle));
 		return SQL_ERROR;
 	}
 	return SQL_SUCCESS;
@@ -641,7 +641,7 @@ int SqlStmt_PrepareV(SqlStmt* self, const char* query, va_list args)
 	if( mysql_stmt_prepare(self->stmt, StrBuf->Value(&self->buf), (unsigned long)StrBuf->Length(&self->buf)) )
 	{
 		ShowSQL("DB error - %s\n", mysql_stmt_error(self->stmt));
-		hercules_mysql_error_handler(mysql_stmt_errno(self->stmt));
+		brathena_mysql_error_handler(mysql_stmt_errno(self->stmt));
 		return SQL_ERROR;
 	}
 	self->bind_params = false;
@@ -663,7 +663,7 @@ int SqlStmt_PrepareStr(SqlStmt* self, const char* query)
 	if( mysql_stmt_prepare(self->stmt, StrBuf->Value(&self->buf), (unsigned long)StrBuf->Length(&self->buf)) )
 	{
 		ShowSQL("DB error - %s\n", mysql_stmt_error(self->stmt));
-		hercules_mysql_error_handler(mysql_stmt_errno(self->stmt));
+		brathena_mysql_error_handler(mysql_stmt_errno(self->stmt));
 		return SQL_ERROR;
 	}
 	self->bind_params = false;
@@ -725,14 +725,14 @@ int SqlStmt_Execute(SqlStmt* self)
 		mysql_stmt_execute(self->stmt) )
 	{
 		ShowSQL("DB error - %s\n", mysql_stmt_error(self->stmt));
-		hercules_mysql_error_handler(mysql_stmt_errno(self->stmt));
+		brathena_mysql_error_handler(mysql_stmt_errno(self->stmt));
 		return SQL_ERROR;
 	}
 	self->bind_columns = false;
 	if( mysql_stmt_store_result(self->stmt) )// store all the data
 	{
 		ShowSQL("DB error - %s\n", mysql_stmt_error(self->stmt));
-		hercules_mysql_error_handler(mysql_stmt_errno(self->stmt));
+		brathena_mysql_error_handler(mysql_stmt_errno(self->stmt));
 		return SQL_ERROR;
 	}
 
@@ -865,7 +865,7 @@ int SqlStmt_NextRow(SqlStmt* self)
 #endif
 	if (err) {
 		ShowSQL("DB error - %s\n", mysql_stmt_error(self->stmt));
-		hercules_mysql_error_handler(mysql_stmt_errno(self->stmt));
+		brathena_mysql_error_handler(mysql_stmt_errno(self->stmt));
 		return SQL_ERROR;
 	}
 
@@ -943,7 +943,7 @@ void SqlStmt_Free(SqlStmt* self)
 	}
 }
 /* receives mysql error codes during runtime (not on first-time-connects) */
-void hercules_mysql_error_handler(unsigned int ecode) {
+void brathena_mysql_error_handler(unsigned int ecode) {
 	static unsigned int retry = 1;
 	switch( ecode ) {
 	case 2003:/* Can't connect to MySQL (this error only happens here when failing to reconnect) */
@@ -998,7 +998,7 @@ void Sql_inter_server_read(const char* cfgName, bool first) {
 	return;
 }
 
-void Sql_HerculesUpdateCheck(Sql* self) {
+void Sql_brAthenaUpdateCheck(Sql* self) {
 	char line[22];// "yyyy-mm-dd--hh-mm" (17) + ".sql" (4) + 1
 	FILE* ifp;/* index fp */
 	unsigned int performed = 0;
@@ -1059,7 +1059,7 @@ void Sql_HerculesUpdateCheck(Sql* self) {
 	StrBuf->Destroy(&buf);
 }
 
-void Sql_HerculesUpdateSkip(Sql* self,const char *filename) {
+void Sql_brAthenaUpdateSkip(Sql* self,const char *filename) {
 	char path[41];// "sql-files/upgrades/" (19) + "yyyy-mm-dd--hh-mm" (17) + ".sql" (4) + 1
 	char timestamp[11];// "1360186680" (10) + 1
 	FILE* ifp;/* index fp */

@@ -21,7 +21,7 @@
 #	include <signal.h>
 #endif
 
-#define HERC_UNKNOWN_VER '\x02'
+#define BRATHENA_UNKNOWN_VER '\x02'
 
 enum server_types {
 	SERVER_TYPE_UNKNOWN = 0x0,
@@ -91,8 +91,8 @@ struct cmdline_interface *cmdline;
 #define CMDLINEARG(x) bool cmdline_arg_ ## x (const char *name, const char *params)
 #ifdef BRATHENA_CORE
 
-#define CMDLINEARG_DEF(name, shortname, help, options)
-#define CMDLINEARG_DEF2(name, funcname, help, options)
+#define CMDLINEARG_DEF(name, shortname, help, options) cmdline->arg_add("--" EXPAND_AND_QUOTE(name), shortname, cmdline_arg_ ## name, help, options)
+#define CMDLINEARG_DEF2(name, funcname, help, options) cmdline->arg_add("--" EXPAND_AND_QUOTE(name), '\0', cmdline_arg_ ## funcname, help, options)
 
 void cmdline_defaults(void);
 #endif // BRATHENA_CORE

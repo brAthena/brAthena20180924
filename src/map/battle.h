@@ -464,7 +464,7 @@ struct Battle_Config {
 	int mob_icewall_walk_block; //How a normal monster should be trapped in icewall [Playtester]
 	int boss_icewall_walk_block; //How a boss monster should be trapped in icewall [Playtester]
 
-	/** Hercules **/
+	/** **/
 	int skill_trap_type;
 	int item_restricted_consumption_type;
 	int unequip_restricted_equipment;

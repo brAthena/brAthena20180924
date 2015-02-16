@@ -6908,7 +6908,7 @@ static const struct battle_data {
 	{ "mob_size_influence",                 &battle_config.mob_size_influence,              0,      0,      1,              },
 	{ "bowling_bash_area",                  &battle_config.bowling_bash_area,               0,      0,      20,             },
 	/**
-	 * Hercules
+	 *
 	 **/
 	{ "skill_trap_type",                    &battle_config.skill_trap_type,                 0,      0,      1,              },
 	{ "item_restricted_consumption_type",   &battle_config.item_restricted_consumption_type,1,      0,      1,              },
@@ -6938,9 +6938,9 @@ static const struct battle_data {
 };
 #ifndef STATS_OPT_OUT
 /**
- * Hercules anonymous statistic usage report -- packet is built here, and sent to char server to report.
+ * brAthena anonymous statistic usage report -- packet is built here, and sent to char server to report.
  **/
-void Hercules_report(char* date, char *time_c) {
+void brathena_report(char* date, char *time_c) {
 	int i, bd_size = ARRAYLENGTH(battle_data);
 	unsigned int config = 0;
 	char timestring[25];
@@ -7098,9 +7098,9 @@ void Hercules_report(char* date, char *time_c) {
 
 #undef BFLAG_LENGTH
 }
-static int Hercules_report_timer(int tid, int64 tick, int id, intptr_t data) {
+static int brathena_report_timer(int tid, int64 tick, int id, intptr_t data) {
 	if( chrif->isconnected() ) {/* char server relays it, so it must be online. */
-		Hercules_report(__DATE__,__TIME__);
+		brathena_report(__DATE__,__TIME__);
 	}
 	return 0;
 }
@@ -7253,8 +7253,8 @@ void do_init_battle(bool minimal) {
 	timer->add_func_list(battle->delay_damage_sub, "battle_delay_damage_sub");
 
 #ifndef STATS_OPT_OUT
-	timer->add_func_list(Hercules_report_timer, "Hercules_report_timer");
-	timer->add_interval(timer->gettick()+30000, Hercules_report_timer, 0, 0, 60000 * 30);
+	timer->add_func_list(brathena_report_timer, "brathena_report_timer");
+	timer->add_interval(timer->gettick()+30000, brathena_report_timer, 0, 0, 60000 * 30);
 #endif
 
 }

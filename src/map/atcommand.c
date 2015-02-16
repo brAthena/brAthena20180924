@@ -7207,7 +7207,7 @@ ACMD(whereis)
 }
 
 ACMD(version) {
-	sprintf(atcmd_output, msg_txt(1296), sysinfo->is64bit() ? 64 : 32, sysinfo->platform()); // Hercules %d-bit for %s
+	sprintf(atcmd_output, msg_txt(1296), sysinfo->is64bit() ? 64 : 32, sysinfo->platform()); // brAthena %d-bit for %s
 	clif->message(fd, atcmd_output);
 	sprintf(atcmd_output, msg_txt(1295), sysinfo->vcstype(), sysinfo->vcsrevision_src(), sysinfo->vcsrevision_scripts()); // %s revision '%s' (src) / '%s' (scripts)
 	clif->message(fd, atcmd_output);
@@ -8617,7 +8617,7 @@ ACMD(cart) {
 	return true;
 #undef MC_CART_MDFY
 }
-/* [Ind/Hercules] */
+/* [Ind] */
 ACMD(join)
 {
 	struct channel_data *chan = NULL;

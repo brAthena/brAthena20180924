@@ -4636,7 +4636,7 @@ void clif_addskill(struct map_session_data *sd, int id)
 	WFIFOW(fd,12)= skill->get_range2(&sd->bl, id,sd->status.skill[idx].lv);
 	safestrncpy((char*)WFIFOP(fd,14), skill->get_name(id), NAME_LENGTH);
 	if( sd->status.skill[idx].flag == SKILL_FLAG_PERMANENT )
-		WFIFOB(fd,38) = (sd->status.skill[id].lv < skill->tree_get_max(id, sd->status.class_))? 1:0;
+		WFIFOB(fd,38) = (sd->status.skill[idx].lv < skill->tree_get_max(id, sd->status.class_))? 1:0;
 	else
 		WFIFOB(fd,38) = 0;
 	WFIFOSET(fd,packet_len(0x111));
@@ -17490,7 +17490,7 @@ void clif_item_drop_announce(struct map_session_data *sd, unsigned short nameid,
 
 	clif->send(&p,sizeof(p), &sd->bl, ALL_CLIENT);
 }
-/* [Ind/Hercules] special thanks to Yommy~! */
+/* [Ind/Hercules] */
 void clif_skill_cooldown_list(int fd, struct skill_cd* cd) {
 #if PACKETVER >= 20120604
 	const int offset = 10;
@@ -17524,7 +17524,7 @@ void clif_skill_cooldown_list(int fd, struct skill_cd* cd) {
 
 	WFIFOSET(fd,4+(offset*count));
 }
-/* [Ind/Hercules] - Data Thanks to Yommy
+/*
  * - ADDITEM_TO_CART_FAIL_WEIGHT = 0x0
  * - ADDITEM_TO_CART_FAIL_COUNT  = 0x1
  */
@@ -17536,7 +17536,7 @@ void clif_cart_additem_ack(struct map_session_data *sd, int flag) {
 
 	clif->send(&p,sizeof(p), &sd->bl, SELF);
 }
-/* Bank System [Yommy/Hercules] */
+/* Sistema de Banco */
 void clif_parse_BankDeposit(int fd, struct map_session_data* sd) {
 	struct packet_banking_deposit_req *p = P2PTR(fd);
 	int money;
@@ -17820,7 +17820,7 @@ void clif_PartyLeaderChanged(struct map_session_data *sd, int prev_leader_aid, i
 	clif->send(&p,sizeof(p),&sd->bl,PARTY);
 }
 
-/* Roulette System [Yommy/Hercules] */
+/* Sistema de Roleta */
 void clif_parse_RouletteOpen(int fd, struct map_session_data* sd) {
 	struct packet_roulette_open_ack p;
 	
@@ -18870,12 +18870,12 @@ void clif_defaults(void) {
 	clif->user_count = clif_user_count;
 	clif->noask_sub = clif_noask_sub;
 	clif->bc_ready = clif_bc_ready;
-	/* Hercules Channel System */
+	/* Sistema de Canal */
 	clif->channel_msg = clif_channel_msg;
 	clif->channel_msg2 = clif_channel_msg2;
 	/* */
 	clif->undisguise_timer = clif_undisguise_timer;
-	/* Bank System [Yommy/Hercules] */
+	/* Sistema de Banco */
 	clif->bank_deposit = clif_bank_deposit;
 	clif->bank_withdraw = clif_bank_withdraw;
 	/* */
@@ -19098,7 +19098,7 @@ void clif_defaults(void) {
 	clif->pBGQueueCheckState = clif_parse_bgqueue_checkstate;
 	clif->pBGQueueRevokeReq = clif_parse_bgqueue_revoke_req;
 	clif->pBGQueueBattleBeginAck = clif_parse_bgqueue_battlebegin_ack;
-	/* RagExe Cash Shop [Ind/Hercules] */
+	/* Loja de Cash */
 	clif->pCashShopOpen = clif_parse_CashShopOpen;
 	clif->pCashShopClose = clif_parse_CashShopClose;
 	clif->pCashShopReqTab = clif_parse_CashShopReqTab;
@@ -19107,7 +19107,7 @@ void clif_defaults(void) {
 	/*  */
 	clif->pPartyTick = clif_parse_PartyTick;
 	clif->pGuildInvite2 = clif_parse_GuildInvite2;
-	/* Group Search System Update */
+	/* Sistema busca de grupos */
 	clif->pPartyBookingAddFilter = clif_parse_PartyBookingAddFilteringList;
 	clif->pPartyBookingSubFilter = clif_parse_PartyBookingSubFilteringList;
 	clif->pPartyBookingReqVolunteer = clif_parse_PartyBookingReqVolunteer;

@@ -1,16 +1,14 @@
 #                                               -*- Autoconf -*-
 # Process this file with autoconf to produce a configure script.
 
-AC_INIT(Hercules)
+AC_INIT(brAthena)
 AC_REVISION([m4_esyscmd_s([type git >/dev/null 2>&1 && git describe --always 2>/dev/null || echo '(unknown version)'])])
 AC_PREREQ([2.59])
 AC_CONFIG_SRCDIR([src/common/cbasetypes.h])
 AC_CONFIG_FILES([Makefile src/common/Makefile])
 AC_CONFIG_FILES([3rdparty/mt19937ar/Makefile 3rdparty/libconfig/Makefile])
 AC_CONFIG_FILES([src/char/Makefile src/login/Makefile])
-AC_CONFIG_FILES([src/map/Makefile src/plugins/Makefile src/tool/Makefile])
-AC_CONFIG_FILES([src/test/Makefile])
-AC_CONFIG_FILES([tools/HPMHookGen/Makefile])
+AC_CONFIG_FILES([src/map/Makefile src/tool/Makefile])
 
 dnl AC_USE_SYSTEM_EXTENSIONS requires autoconf 2.60 or newer. Fall back to AC_GNU_SOURCE otherwise.
 m4_ifdef([AC_USE_SYSTEM_EXTENSIONS],
@@ -807,152 +805,6 @@ AC_COMPILE_IFELSE(
 )
 CFLAGS="$OLD_CFLAGS"
 
-#
-# option for shared objects
-#
-AC_MSG_CHECKING([how to make shared objects])
-OLD_CFLAGS="$CFLAGS"
-compiler_shared_objects=""
-compiler_supports_shared_objects="no"
-if test "$compiler_supports_pic" = "yes" ; then
-	my_shared_test_flags="$CFLAGS -fPIC"
-fi
-# default
-CFLAGS="$my_shared_test_flags -shared"
-AC_LINK_IFELSE(
-	[AC_LANG_SOURCE([
-		int bar = 0;
-
-		int foo(void)
-		{
-			return bar;
-		}
-	])],
-	[
-		compiler_shared_objects="-shared"
-		compiler_supports_shared_objects="yes"
-	]
-)
-# BeOS specific
-CFLAGS="$my_shared_test_flags -nostart"
-AC_LINK_IFELSE(
-	[AC_LANG_SOURCE([
-		int bar = 0;
-
-		int foo(void)
-		{
-			return bar;
-		}
-	])],
-	[
-		compiler_shared_objects="-nostart"
-		compiler_supports_shared_objects="yes"
-	]
-)
-CFLAGS="$OLD_CFLAGS"
-if test "$compiler_supports_shared_objects" = "no" ; then
-	AC_MSG_RESULT([not supported])
-	AC_MSG_NOTICE([compiler is unable to generate shared objects, disabled plugins (optional)])
-	WITH_PLUGINS="no"
-else
-	AC_MSG_RESULT([$compiler_shared_objects $compiler_supports_shared_objects])
-	SOFLAGS="$SOFLAGS $compiler_shared_objects"
-	AC_SUBST([SOFLAGS])
-
-	#
-	# On certain platforms, undefined references on shared libraries won't be checked
-	# unless explicitly required with the --no-undefined linker option
-	#
-	AC_MSG_CHECKING([whether $CC needs -Wl,--no-undefined to check for undefined references in shared objects])
-	OLD_CFLAGS="$CFLAGS"
-	CFLAGS="$SOFLAGS"
-	AC_LINK_IFELSE(
-		[AC_LANG_SOURCE([
-			void foo(void) {
-				foobar();
-			}
-		])],
-		[
-			CFLAGS="$SOFLAGS -Wl,--no-undefined"
-			AC_LINK_IFELSE(
-				[AC_LANG_SOURCE([
-					int bar = 0;
-
-					int foo(void) {
-						return bar;
-					}
-				])],
-				[
-					AC_MSG_RESULT([yes])
-					SOFLAGS="$SOFLAGS -Wl,--no-undefined"
-				],
-				[
-					AC_MSG_RESULT([unsupported (undefined references check will be ignored)])
-				]
-			)
-		],
-		[
-			AC_MSG_RESULT([no])
-		]
-	)
-	CFLAGS="$OLD_CFLAGS"
-
-	#
-	# shared objects need position independent code; some platforms emit
-	# it always, others need -fPIC
-	#
-	AC_MSG_CHECKING([whether $CC needs -fPIC for shared objects])
-	OLD_CFLAGS="$CFLAGS"
-	CFLAGS="$CFLAGS $SOFLAGS"
-	WITH_PLUGINS="yes"
-	AC_LINK_IFELSE(
-		[AC_LANG_SOURCE([
-			int bar = 0;
-
-			int foo(void)
-			{
-				return bar;
-			}
-		])],
-		[
-			AC_MSG_RESULT([no])
-			CFLAGS="$OLD_CFLAGS"
-		],
-		[
-			if test "$compiler_supports_pic" = "yes" ; then
-				# Verify if -shared really fails due to lack of -fPIC or something else
-				CFLAGS="$CFLAGS -fPIC"
-				AC_LINK_IFELSE(
-					[AC_LANG_SOURCE([
-						int bar = 0;
-
-						int foo(void)
-						{
-							return bar;
-						}
-					])],
-					[
-						AC_MSG_RESULT([yes])
-						CFLAGS="$OLD_CFLAGS -fPIC"
-					],
-					[
-						AC_MSG_RESULT([no, but fails for another reason])
-						AC_MSG_ERROR([compiler is unable to compile shared objects for an unhandled reason, please report this with attached config.log... stopping])
-					]
-				)
-			else
-				# Disable compilation of plugins (optional), so 'make all' does not fail
-				AC_MSG_RESULT([yes, but unsupported])
-				AC_MSG_NOTICE([compiler is unable to generate position independent code, disabled plugins (optional)])
-				WITH_PLUGINS="no"
-			fi
-		]
-	)
-
-fi
-my_shared_test_flags=""
-AC_SUBST([WITH_PLUGINS])
-
 
 #
 # -O2 implies -fstrict-aliasing, but the code is not safe for that
@@ -1326,7 +1178,6 @@ AC_SUBST([PCRE_CFLAGS])
 if test "$enable_static" != "no" ; then
 
 	STATIC="-static"
-	PLUGINSTATIC="-static-libgcc"
 
 	OLD_CFLAGS="$CFLAGS"
 	OLD_LDFLAGS="$LDFLAGS"
@@ -1367,14 +1218,6 @@ if test "$enable_static" != "no" ; then
 		])],
 		[
 			AC_MSG_RESULT([yes])
-		],
-		[
-			AC_MSG_RESULT([no])
-			PLUGINSTATIC=""
-		],
-		[
-			AC_MSG_RESULT([guessing no])
-			PLUGINSTATIC=""
 		]
 	)
 
@@ -1384,17 +1227,6 @@ if test "$enable_static" != "no" ; then
 fi
 
 AC_SUBST(STATIC, ${STATIC})
-AC_SUBST(PLUGINSTATIC, ${PLUGINSTATIC})
-
-
-
-#
-# Doxygen, perl (for HPMHookGen)
-#
-
-AC_CHECK_PROG([HAVE_DOXYGEN],[doxygen],[yes],[no])
-
-AC_CHECK_PROG([HAVE_PERL],[perl],[yes],[no])
 
 ###############################################################################
 AC_OUTPUT

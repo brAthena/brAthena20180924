@@ -170,7 +170,7 @@ void signals_init (void) {
  */
 void usercheck(void) {
 	if (sysinfo->is_superuser()) {
-		ShowWarning("You are running Hercules with root privileges, it is not necessary.\n");
+		ShowWarning("You are running brAthena with root privileges, it is not necessary.\n");
 	}
 }
 

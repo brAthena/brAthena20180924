@@ -539,7 +539,7 @@ struct clif_interface {
 	int map_fd;
 	/* for clif_clearunit_delayed */
 	struct eri *delay_clearunit_ers;
-	/* Cash Shop [Ind/Hercules] */
+	/* Cash Shop [Ind] */
 	struct {
 		struct hCSData **data[CASHSHOP_TAB_MAX];
 		unsigned int item_count[CASHSHOP_TAB_MAX];
@@ -1024,11 +1024,11 @@ struct clif_interface {
 	void (*user_count) (struct map_session_data* sd, int count);
 	void (*noask_sub) (struct map_session_data *src, struct map_session_data *target, int type);
 	void (*bc_ready) (void);
-	/* Hercules Channel System */
+	/* Sistema de Canal */
 	void (*channel_msg) (struct channel_data *chan, struct map_session_data *sd, char *msg);
 	void (*channel_msg2) (struct channel_data *chan, char *msg);
 	int (*undisguise_timer) (int tid, int64 tick, int id, intptr_t data);
-	/* Bank System [Yommy/Hercules] */
+	/* Sistema de Banco */
 	void (*bank_deposit) (struct map_session_data *sd, enum e_BANKING_DEPOSIT_ACK reason);
 	void (*bank_withdraw) (struct map_session_data *sd,enum e_BANKING_WITHDRAW_ACK reason);
 	/* */
@@ -1250,7 +1250,7 @@ struct clif_interface {
 	void (*pBGQueueCheckState) (int fd, struct map_session_data *sd);
 	void (*pBGQueueRevokeReq) (int fd, struct map_session_data *sd);
 	void (*pBGQueueBattleBeginAck) (int fd, struct map_session_data *sd);
-	/* RagExe Cash Shop [Ind/Hercules] */
+	/* Loja de Cash */
 	void (*pCashShopOpen) (int fd, struct map_session_data *sd);
 	void (*pCashShopClose) (int fd, struct map_session_data *sd);
 	void (*pCashShopReqTab) (int fd, struct map_session_data *sd);

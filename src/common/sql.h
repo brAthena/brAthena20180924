@@ -283,8 +283,8 @@ void sql_defaults(void);
 
 void Sql_Init(void);
 
-void Sql_HerculesUpdateCheck(Sql* self);
-void Sql_HerculesUpdateSkip(Sql* self,const char *filename);
+void Sql_brAthenaUpdateCheck(Sql* self);
+void Sql_brAthenaUpdateSkip(Sql* self,const char *filename);
 #endif // BRATHENA_CORE
 
 #if defined(SQL_REMOVE_SHOWDEBUG)

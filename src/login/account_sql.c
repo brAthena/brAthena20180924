@@ -176,7 +176,7 @@ static bool account_db_sql_init(AccountDB* self)
 	if( codepage[0] != '\0' && SQL_ERROR == SQL->SetEncoding(sql_handle, codepage) )
 		Sql_ShowDebug(sql_handle);
 
-	Sql_HerculesUpdateCheck(db->accounts);
+	Sql_brAthenaUpdateCheck(db->accounts);
 #ifdef CONSOLE_INPUT
 	console->input->setSQL(db->accounts);
 #endif

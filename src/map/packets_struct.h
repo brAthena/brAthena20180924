@@ -715,7 +715,6 @@ struct packet_script_clear {
 	unsigned int NpcID;
 } __attribute__((packed));
 
-/* made possible thanks to Yommy!! */
 struct packet_package_item_announce {
 	short PacketType;
 	short PacketLength;
@@ -727,7 +726,6 @@ struct packet_package_item_announce {
 	unsigned short BoxItemID;
 } __attribute__((packed));
 
-/* made possible thanks to Yommy!! */
 struct packet_item_drop_announce {
 	short PacketType;
 	short PacketLength;
@@ -776,7 +774,7 @@ struct packet_banking_withdraw_ack {
 	int Balance;
 } __attribute__((packed));
 
-/* Roulette System [Yommy/Hercules] */
+/* Sistema de Roleta */
 struct packet_roulette_open_ack {
 	short PacketType;
 	char Result;
@@ -1004,7 +1002,6 @@ struct packet_npc_market_result_ack {
 struct packet_npc_market_open {
 	short PacketType;
 	short PacketLength;
-	/* inner struct figured by Ind after some annoying hour of debugging (data Thanks to Yommy) */
 	struct {
 		unsigned short nameid;
 		unsigned char type;
@@ -1013,7 +1010,7 @@ struct packet_npc_market_open {
 		unsigned short view;
 	// It seems that the client doesn't have any hard-coded limit for this list
 	// it's possible to send up to 1890 items without dropping a packet that's
-	// too large [Panikon]
+	// too large
 	} list[1000];/* TODO: whats the actual max of this? */
 } __attribute__((packed));
 

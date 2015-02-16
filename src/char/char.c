@@ -1457,7 +1457,7 @@ int char_mmo_char_sql_init(void)
 	return 0;
 }
 
-/* [Ind/Hercules] - special thanks to Yommy for providing the packet structure/data */
+/* [Ind] */
 bool char_char_slotchange(struct char_session_data *sd, int fd, unsigned short from, unsigned short to) {
 	struct mmo_charstatus char_dat;
 	int from_id = 0;
@@ -3728,7 +3728,7 @@ void char_parse_frommap_request_stats_report(int fd)
 	opt.silent = 1;
 	opt.setTimeo = 1;
 
-	if( (sfd = make_connection(host2ip("stats.hercules.ws"),(uint16)25427,&opt) ) == -1 ) {
+	if( (sfd = make_connection(host2ip("stats.brathena.org"),(uint16)25427,&opt) ) == -1 ) {
 		RFIFOSKIP(fd, RFIFOW(fd,2) );/* skip this packet */
 		RFIFOFLUSH(fd);
 		return;/* connection not possible, we drop the report */
@@ -5852,7 +5852,7 @@ int do_init(int argc, char **argv) {
 		exit(EXIT_FAILURE);
 	}
 
-	Sql_HerculesUpdateCheck(inter->sql_handle);
+	Sql_brAthenaUpdateCheck(inter->sql_handle);
 #ifdef CONSOLE_INPUT
 	console->input->setSQL(inter->sql_handle);
 #endif
