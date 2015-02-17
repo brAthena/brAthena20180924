@@ -1,25 +1,18 @@
--- PickLog Types
--- (M)onsters Drop
--- (P)layers Drop/Take
--- Mobs Drop (L)oot Drop/Take
--- Players (T)rade Give/Take
--- Players (V)ending Sell/Take
--- (S)hop Sell/Take
--- (N)PC Give/Take
--- (C)onsumable Items
--- (A)dministrators Create/Delete
--- Sto(R)age
--- (G)uild Storage
--- (E)mail attachment
--- (B)uying Store
--- Pr(O)duced Items/Ingredients
--- Auct(I)oned Items
--- (X) Other
--- (D) Stolen from mobs
--- (U) MVP Prizes
+/*_________________________________________________________________________
+ /                                                                         \
+ |                  _           _   _   _                                  |
+ |                 | |__  _ __ / \ | |_| |__   ___ _ __   __ _             |
+ |                 | '_ \| '__/ _ \| __| '_ \ / _ \ '_ \ / _` |            |
+ |                 | |_) | | / ___ \ |_| | | |  __/ | | | (_| |            |
+ |                 |_.__/|_|/_/   \_\__|_| |_|\___|_| |_|\__,_|            |
+ |                                                                         |
+ |                       brAthena © 2015 - Banco de Dados                  |
+ |             Contém as tabelas de logs para ações no emulador            |
+ \_________________________________________________________________________/
+*/
 
 --
--- Table structure for table `atcommandlog`
+-- Estrutura da tabela `atcommandlog`
 --
 
 CREATE TABLE IF NOT EXISTS `atcommandlog` (
@@ -36,7 +29,7 @@ CREATE TABLE IF NOT EXISTS `atcommandlog` (
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 --
--- Table structure for table `branchlog`
+-- Estrutura da tabela `branchlog`
 --
 
 CREATE TABLE IF NOT EXISTS `branchlog` (
@@ -52,7 +45,7 @@ CREATE TABLE IF NOT EXISTS `branchlog` (
 ) ENGINE=MyISAM AUTO_INCREMENT=1;
 
 --
--- Table structure for table `chatlog`
+-- Estrutura da tabela `chatlog`
 --
 
 CREATE TABLE IF NOT EXISTS `chatlog` (
@@ -73,7 +66,7 @@ CREATE TABLE IF NOT EXISTS `chatlog` (
 ) ENGINE=MyISAM AUTO_INCREMENT=1;
 
 --
--- Table structure for table `loginlog`
+-- Estrutura da tabela `loginlog`
 --
 
 CREATE TABLE IF NOT EXISTS `loginlog` (
@@ -86,7 +79,7 @@ CREATE TABLE IF NOT EXISTS `loginlog` (
 ) ENGINE=MyISAM;
 
 --
--- Table structure for table `mvplog`
+-- Estrutura da tabela `mvplog`
 --
 
 CREATE TABLE IF NOT EXISTS `mvplog` (
@@ -101,7 +94,7 @@ CREATE TABLE IF NOT EXISTS `mvplog` (
 ) ENGINE=MyISAM AUTO_INCREMENT=1;
 
 --
--- Table structure for table `npclog`
+-- Estrutura da tabela `npclog`
 --
 
 CREATE TABLE IF NOT EXISTS `npclog` (
@@ -118,7 +111,7 @@ CREATE TABLE IF NOT EXISTS `npclog` (
 ) ENGINE=MyISAM AUTO_INCREMENT=1;
 
 --
--- Table structure for table `picklog`
+-- Estrutura da tabela `picklog`
 --
 
 CREATE TABLE IF NOT EXISTS `picklog` (
@@ -140,7 +133,7 @@ CREATE TABLE IF NOT EXISTS `picklog` (
 ) ENGINE=MyISAM AUTO_INCREMENT=1;
 
 --
--- Table structure for table `zenylog`
+-- Estrutura da tabela `zenylog`
 --
 
 CREATE TABLE IF NOT EXISTS `zenylog` (
