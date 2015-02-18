@@ -629,8 +629,6 @@ static int create_session(int fd, RecvFunc func_recv, SendFunc func_send, ParseF
 	session[fd]->func_parse = func_parse;
 	session[fd]->rdata_tick = sockt->last_tick;
 	session[fd]->session_data = NULL;
-	session[fd]->hdata = NULL;
-	session[fd]->hdatac = 0;
 	return 0;
 }
 

@@ -529,10 +529,6 @@ struct map_session_data {
 
 	unsigned char delayed_damage;//ref. counter bugreport:7307 [Ind/Hercules]
 
-	/* HPM Custom Struct */
-	struct HPluginData **hdata;
-	unsigned int hdatac;
-
 	/* expiration_time timer id */
 	int expiration_tid;
 	time_t expiration_time;

@@ -196,8 +196,6 @@
 #define EL_CLASS_BASE 2114
 #define EL_CLASS_MAX (EL_CLASS_BASE+MAX_ELEMENTAL_CLASS-1)
 
-struct HPluginData;
-
 enum item_types {
 	IT_HEALING = 0,
 	IT_UNKNOWN, //1
@@ -617,9 +615,6 @@ struct guild {
 
 	struct channel_data *channel;
 
-	/* HPM Custom Struct */
-	struct HPluginData **hdata;
-	unsigned int hdatac;
 };
 
 struct guild_castle {

@@ -18,7 +18,6 @@
 #include "../common/cbasetypes.h"
 #include "../common/db.h"
 
-struct HPluginData;
 struct view_data;
 
 enum npc_parse_options {
@@ -109,9 +108,6 @@ struct npc_data {
 			char killer_name[NAME_LENGTH];
 		} tomb;
 	} u;
-	/* HPData Support for npc_data */
-	struct HPluginData **hdata;
-	unsigned int hdatac;
 };
 
 
