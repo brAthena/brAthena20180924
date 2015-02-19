@@ -1,21 +1,26 @@
-//===== Hercules Script ======================================
-//= Alberta Town
-//===== By: ==================================================
-//= DZeroX
-//===== Current Version: =====================================
-//= 1.6
-//===== Description: =========================================
-//= Town-specific Alberta NPCs
-//===== Additional Comments: =================================
-//= 1.0 Converted from Aegis 10.4 [DZeroX]
-//= 1.1 Optimized, missing next, REMOVED .GATs! again [Lupus]
-//= 1.2 Implemented progression fixes provided by $ephiroth. [L0ne_W0lf]
-//= 1.2b More pregression clean up provided by Barron-Monster. [L0ne_W0lf]
-//= 1.3 Removed npc "Tourist#al" as it's a quest NPC. [L0ne_W0lf]
-//= 1.4 Removed "Fastidious Old Man" duplicate. [L0ne_W0lf]
-//= 1.5 Updated to match AEGIS script. [Kisuka]
-//= 1.6 Added Izlude RE coordinates. [Euphy]
-//============================================================
+//    ________________________________________________________
+//   /                                                        \
+//   |       _           _   _   _                            |
+//   |      | |__  _ __ / \ | |_| |__   ___ _ __   __ _       |
+//   |      | '_ \| '__/ _ \| __| '_ \ / _ \ '_ \ / _` |      |
+//   |      | |_) | | / ___ \ |_| | | |  __/ | | | (_| |      |
+//   |      |_.__/|_|/_/   \_\__|_| |_|\___|_| |_|\__,_|      |
+//   |                                                        |
+//   |                    brAthena Script                     |
+//   |--------------------------------------------------------|
+//   | Nome do Script: alberta.txt                            |
+//   |--------------------------------------------------------|
+//   | Criado por: eA/rA/Herc/brA Dev. Team                   |
+//   |--------------------------------------------------------|
+//   | Versões eA/rA/Herc/brA: 1.6/1.6/1.6/1.0                |
+//   |--------------------------------------------------------|
+//   | Descrição: NPC's da Cidade de Alberta.                 |
+//   |--------------------------------------------------------|
+//   | Changelog:                                             |
+//   | 1.0 Cabeçalho brAthena [Axl]                           |
+//   |--------------------------------------------------------|
+//   | - Anotações                                            |
+//   \________________________________________________________/
 
 alberta,97,51,0	script	Fabian	4_M_02,{
 	mes "[Fabian]";
