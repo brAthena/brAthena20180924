@@ -2725,11 +2725,11 @@ REPLACE INTO `skill_db` VALUES(2037,'9:10:11:12:13',6,1,'-1','0','0',5,'1','no',
 REPLACE INTO `skill_db` VALUES(2038,'11',8,1,'6','0x2','3',5,'-3','yes',0,'0','0','magic','0','AB_JUDEX','Judex');
 REPLACE INTO `skill_db` VALUES(2039,'0',6,4,'0','0x1','0',1,'1','yes',0,'0','0','magic','0','AB_ANCILLA','Ancilla');
 REPLACE INTO `skill_db` VALUES(2040,'11',8,1,'6','0','0',10,'-10','yes',0,'0','0','magic','0','AB_ADORAMUS','Adoramus');
-REPLACE INTO `skill_db` VALUES(2041,'0',6,4,'6','0x3','3:7:15',3,'1','yes',0,'0','0','magic','0','AB_CLEMENTIA','Crementia');
-REPLACE INTO `skill_db` VALUES(2042,'0',6,4,'6','0x3','3:7:15',3,'1','yes',0,'0','0','magic','0','AB_CANTO','Canto Candidus');
+REPLACE INTO `skill_db` VALUES(2041,'0',6,4,'0','0x3','3:7:15',3,'1','yes',0,'0','0','magic','0','AB_CLEMENTIA','Crementia');
+REPLACE INTO `skill_db` VALUES(2042,'0',6,4,'0','0x3','3:7:15',3,'1','yes',0,'0','0','magic','0','AB_CANTO','Canto Candidus');
 REPLACE INTO `skill_db` VALUES(2043,'0',6,4,'6','0x3','3:7:15',3,'1','yes',0,'0','0','magic','0','AB_CHEAL','Coluceo Heal');
 REPLACE INTO `skill_db` VALUES(2044,'11',6,2,'6','0x1','0',5,'1','yes',0,'0','1','magic','0','AB_EPICLESIS','Epiclesis');
-REPLACE INTO `skill_db` VALUES(2045,'0',6,4,'6','0x3','15',10,'1','yes',0,'0','0','magic','0','AB_PRAEFATIO','Praefatio');
+REPLACE INTO `skill_db` VALUES(2045,'0',6,4,'0','0x3','15',10,'1','yes',0,'0','0','magic','0','AB_PRAEFATIO','Praefatio');
 REPLACE INTO `skill_db` VALUES(2046,'0',6,4,'6','0x3','15',10,'1','yes',0,'0','0','magic','0','AB_ORATIO','Oratio');
 REPLACE INTO `skill_db` VALUES(2047,'0',6,4,'6','0x3','15',4,'1','yes',0,'0','0','magic','0','AB_LAUDAAGNUS','Lauda Agnus');
 REPLACE INTO `skill_db` VALUES(2048,'0',6,4,'6','0x3','15',4,'1','yes',0,'0','0','magic','0','AB_LAUDARAMUS','Lauda Ramus');
