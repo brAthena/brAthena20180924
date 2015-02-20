@@ -1,4 +1,4 @@
-ï»¿//    ________________________________________________________
+//    ________________________________________________________
 //   /                                                        \
 //   |       _           _   _   _                            |
 //   |      | |__  _ __ / \ | |_| |__   ___ _ __   __ _       |
@@ -12,41 +12,41 @@
 //   |--------------------------------------------------------|
 //   | Criado por: eA/rA/Herc/brA Dev. Team                   |
 //   |--------------------------------------------------------|
-//   | VersÃµes eA/rA/Herc/brA: 1.7/1.7/1.7/1.0                |
+//   | Versões eA/rA/Herc/brA: 1.7/1.7/1.7/1.0                |
 //   |--------------------------------------------------------|
-//   | DescriÃ§Ã£o: NPCs da Cidade de Huguel.                   |
+//   | Descrição: NPCs da Cidade de Huguel.                   |
 //   |--------------------------------------------------------|
 //   | Changelog:                                             |
-//   | 1.0 Adicionado diÃ¡logos oficiais do bRO [Axl]          |
+//   | 1.0 Adicionado diálogos oficiais do bRO [Axl]          |
 //   |--------------------------------------------------------|
-//   | - AnotaÃ§Ãµes                                            |
+//   | - Anotações                                            |
 //   \________________________________________________________/
 
 // Hugel
 //============================================================
 hugel,189,143,5	script	Jovem	4_M_HUMAN_01,{
 	mes "[Jovem]";
-	mes "Hmm. EntÃ£o aquela bolsa";
+	mes "Hmm. Então aquela bolsa";
 	mes "de ar gigante pode fazer";
 	mes "as pessoas flutuarem no ar?";
-	mes "SerÃ¡ que se eu encher minha barriga";
-	mes "com vento tambÃ©m funciona assim?";
+	mes "Será que se eu encher minha barriga";
+	mes "com vento também funciona assim?";
 	close;
 }
 
 hugel,126,151,3	script	Emily	4_F_01,{
 	mes "[Emily]";
-	mes "Eu me sinto tÃ£o feliz por";
+	mes "Eu me sinto tão feliz por";
 	mes "viver nesta calma e pequena";
-	mes "cidade.  Ã‰ tÃ£o bonita e ";
-	mes "todos sÃ£o tÃ£o legais.";
+	mes "cidade.  É tão bonita e ";
+	mes "todos são tão legais.";
 	next;
 	mes "[Emily]";
-	mes "Por algum motivo, minha irmÃ£ ";
+	mes "Por algum motivo, minha irmã ";
 	mes "mais velha quer se mudar de";
 	mes "Hugel assim que puder. Ela";
-	mes "diz que estÃ¡ ficando louca por causa";
-	mes "das pessoas que vivem aqui. NÃ£o acha que isso Ã© estranho?";
+	mes "diz que está ficando louca por causa";
+	mes "das pessoas que vivem aqui. Não acha que isso é estranho?";
 	close;
 }
  
@@ -54,23 +54,23 @@ hugel,86,165,5	script	Kayplas	4_M_HUBOY,{
 	mes "[Kayplas]";
 	mes "Ah, eu realmente quero";
 	mes "aquela garrafa vermelha.";
-	mes "Eu devia pedir para a minha mÃ£e";
-	mes "me comprar uma. Ela nÃ£o parece";
+	mes "Eu devia pedir para a minha mãe";
+	mes "me comprar uma. Ela não parece";
 	mes "ser muito cara, parece?";
 	close;
 }
 
 hugel,71,197,3	script	Lisa	4_F_01,{
 	mes "[Lisa]";
-	mes "Hugel Ã© uma pequena";
+	mes "Hugel é uma pequena";
 	mes "vila residencial.";
 	mes "Todo mundo se conhece,";
 	mes "todos sabem o que";
-	mes "os outros estÃ£o fazendo.";
-	mes " Ã‰ tÃ£o sufocante!";
+	mes "os outros estão fazendo.";
+	mes " É tão sufocante!";
 	next;
 	mes "[Lisa]";
-	mes "NÃ£o hÃ¡ privacidade em";
+	mes "Não há privacidade em";
 	mes "cidades pequenas. Algum dia";
 	mes "eu vou embora e ";
 	mes "vou viver na cidade grande. ";
@@ -79,17 +79,17 @@ hugel,71,197,3	script	Lisa	4_F_01,{
 
 hugel,169,112,5	script	Velha Nikki	4_F_HUGRANMA,{
 	mes "[Velha Nikki]";
-	mes "VocÃª nÃ£o deve ser";
-	mes "daqui. Ah, vocÃª Ã© ";
+	mes "Você não deve ser";
+	mes "daqui. Ah, você é ";
 	mes "um aventureir"+(Sex?"o":"a")+", certo? E";
-	mes "vocÃª sabe como eu sei?";
+	mes "você sabe como eu sei?";
 	next;
 	mes "[Velha Nikki]";
-	mes " Ã‰ porque todo mundo";
-	mes "que vive aqui comeÃ§a";
-	mes "a ter a mesma aparÃªncia apÃ³s algum tempo.";
-	mes "E vocÃª certamente nÃ£o parece";
-	mes "tÃ£o velho quanto nÃ³s. Bem, tenha ";
+	mes " É porque todo mundo";
+	mes "que vive aqui começa";
+	mes "a ter a mesma aparência após algum tempo.";
+	mes "E você certamente não parece";
+	mes "tão velho quanto nós. Bem, tenha ";
 	mes "um bom dia, aventureiro.";
 	close;
 }
@@ -98,12 +98,12 @@ hugel,175,115,5	script	Marius	4_M_HUGRANFA,{
 	mes "[Marius]";
 	mes "Sim, eu sou um velho, mas";
 	mes "eu posso vencer um paspalho";
-	mes "como vocÃª em qualquer dia da semana!";
-	mes "VocÃª sabe, Hugel tem uma ";
-	mes "expectativa de vida muito maior do que as outras cidades. Quer saber por quÃª?";
+	mes "como você em qualquer dia da semana!";
+	mes "Você sabe, Hugel tem uma ";
+	mes "expectativa de vida muito maior do que as outras cidades. Quer saber por quê?";
 	next;
 	mes "[Marius]";
-	mes " Ã‰ porque os velhos";
+	mes " É porque os velhos";
 	mes "desta cidade se recusam";
 	mes "a deitar e morrer!";
 	mes "Agora, vamos! Deixe-me mostrar";
@@ -116,23 +116,23 @@ hugel,175,115,5	script	Marius	4_M_HUGRANFA,{
 //============================================================
 hu_in01,111,386,4	script	Chris	4_M_04,{
 	mes "[Chris]";
-	mes "VocÃª sabe, as pessoas nÃ£o";
+	mes "Você sabe, as pessoas não";
 	mes "lutam com monstros perigosos, elas";
-	mes "sÃ³ se protegem ";
-	mes "usando armaduras. Ã‰ sÃ³ ";
+	mes "só se protegem ";
+	mes "usando armaduras. É só ";
 	mes "o jeito deles.";
 	next;
 	mes "[Chris]";
-	mes "Se vocÃª quer comprar";
+	mes "Se você quer comprar";
 	mes "alguma armadura melhor,";
-	mes "entÃ£o eu sugiro que vÃ¡ comprar";
+	mes "então eu sugiro que vá comprar";
 	mes "em uma cidade maior.";
 	close;
 }
 
 hu_in01,23,311,4	script	Artigos de Festa	4_M_HUMAN_01,{
 	mes "[Vendedor]";
-	mes "Bem-vindo Ã  loja de artigos para festas!";
+	mes "Bem-vindo à loja de artigos para festas!";
 	mes "Que tal divertir-se com os amigos assistindo a uma espetacular queima de fogos?";
 	mes "Vendemos 5 unidades por 500 zenys.";
 	next;
@@ -140,13 +140,13 @@ hu_in01,23,311,4	script	Artigos de Festa	4_M_HUMAN_01,{
 		case 1:
 			if (Zeny < 500) {
 				mes "[Vendedor]";
-				mes "Desculpe, mas vocÃª nÃ£o tem dinheiro suficiente.";
+				mes "Desculpe, mas você não tem dinheiro suficiente.";
 				close;
 			}
 			Zeny -= 500;
-			getitem 12018,5;	// Fogo de ArtifÃ­cio
+			getitem 12018,5;	// Fogo de Artifício
 			mes "[Vendedor]";
-			mes "Muito obrigado, divirta-se com seus fogos de artifÃ­cio!";
+			mes "Muito obrigado, divirta-se com seus fogos de artifício!";
 			close;
 		case 2:
 			mes "[Vendedor]";
@@ -155,35 +155,35 @@ hu_in01,23,311,4	script	Artigos de Festa	4_M_HUMAN_01,{
 	}
 }
 
-hu_in01,18,94,0	script	Assistente TemporÃ¡rio#1	1_M_03,{
+hu_in01,18,94,0	script	Assistente Temporário#1	1_M_03,{
 	mes "[Luda]";
 	mes "Bem-vind"+(Sex?"o":"a")+" ao";
-	mes "EscritÃ³rio da ExpediÃ§Ã£o ao Templo.";
+	mes "Escritório da Expedição ao Templo.";
 	mes "Eu sou Luda, um assistente";
-	mes "temporÃ¡rio. Meu trabalho Ã©";
-	mes "manter o escritÃ³rio arrumado e";
-	mes "limpo, mas veja sÃ³ este lugar!";
+	mes "temporário. Meu trabalho é";
+	mes "manter o escritório arrumado e";
+	mes "limpo, mas veja só este lugar!";
 	next;
 	mes "[Luda]";
 	mes "Ainda assim, eu acho que posso";
 	mes "cuidar dessa tarefa.";
-	mes "Esta sala Ã© o escritÃ³rio da ";
-	mes "equipe da RepÃºlica de Schwaltzvalt,";
-	mes "e a outra Ã© da equipe de";
+	mes "Esta sala é o escritório da ";
+	mes "equipe da Repúlica de Schwaltzvalt,";
+	mes "e a outra é da equipe de";
 	mes "Rune-Midgard.";
 	next;
 	mes "[Luda]";
 	mes "Eu tenho que limpar as duas salas,";
-	mes "entÃ£o estou sempre muito ocupado.";
-	mes "Por que vocÃª nÃ£o se alista como ";
-	mes "voluntÃ¡rio para a expediÃ§Ã£o? Eu sei que eles";
-	mes "nÃ£o podem pagar a vocÃª, mas Ã©";
+	mes "então estou sempre muito ocupado.";
+	mes "Por que você não se alista como ";
+	mes "voluntário para a expedição? Eu sei que eles";
+	mes "não podem pagar a você, mas é";
 	mes "uma grande chance de explorar.";
 	close;
 }
 
-hu_in01,26,77,4	script	Assistente TemporÃ¡rio#2	1_M_04,{
-	mes "^3355FFEste temporÃ¡rio estÃ¡";
+hu_in01,26,77,4	script	Assistente Temporário#2	1_M_04,{
+	mes "^3355FFEste temporário está";
 	mes "completamente desgostoso";
 	mes "com essa tarefa de organizar";
 	mes "livros e arquivos.^000000";

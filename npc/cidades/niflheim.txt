@@ -12,20 +12,20 @@
 //   |--------------------------------------------------------|
 //   | Criado por: eA/rA/Herc/brA Dev. Team                   |
 //   |--------------------------------------------------------|
-//   | Vers√µes eA/rA/Herc/brA: 1.5/1.5/1.5/1.0                |
+//   | Versıes eA/rA/Herc/brA: 1.5/1.5/1.5/1.0                |
 //   |--------------------------------------------------------|
-//   | Descri√ß√£o: NPCs da Cidade de Niflheim.                 |
+//   | DescriÁ„o: NPCs da Cidade de Niflheim.                 |
 //   |--------------------------------------------------------|
 //   | Changelog:                                             |
-//   | 1.0 Adicionado di√°logos oficiais do bRO [Axl]          |
+//   | 1.0 Adicionado di·logos oficiais do bRO [Axl]          |
 //   |--------------------------------------------------------|
-//   | - Anota√ß√µes                                            |
+//   | - AnotaÁıes                                            |
 //   \________________________________________________________/
 
 niflheim,52,147,3	script	Kurse#nif	4_M_NFDEADSWDMAN,{
 	mes "[Kurse]";
-	mes "Os vivos n√£o podem entrar nesse local.";
-	mes "N√£o! Eu me recuso a permitir";
+	mes "Os vivos n„o podem entrar nesse local.";
+	mes "N„o! Eu me recuso a permitir";
 	mes "a passagem de seres vivos!";
 	close;
 }
@@ -33,20 +33,20 @@ niflheim,52,147,3	script	Kurse#nif	4_M_NFDEADSWDMAN,{
 niflheim,195,211,6	script	Kikandia#nif	4_M_NFDEADSWDMAN,3,3,{
 	if (isequipped(5038) || isequipped(2257) || isequipped(2256)) {
 		mes "[" + strcharinfo(0) + "]";
-		mes "O que posso fazer por voc√™? ";
+		mes "O que posso fazer por vocÍ? ";
 		next;
 		mes "[Kikandia]";
 		mes "Sim, fui eu mesmo quem te chamei.";
-		mes "Vamos, venha at√© aqui!";
+		mes "Vamos, venha atÈ aqui!";
 		next;
 		mes "[Kikandia]";
-		mes "Olha, voc√™ √© muito descuidado. Seus chifres...";
-		mes "Eles est√£o ca√≠dos. Devia manter sempre bem arrumados e polidos.";
-		mes "Voc√™ sabe, o Senhor dos Mortos est√° de olho em voc√™. ";
+		mes "Olha, vocÍ È muito descuidado. Seus chifres...";
+		mes "Eles est„o caÌdos. Devia manter sempre bem arrumados e polidos.";
+		mes "VocÍ sabe, o Senhor dos Mortos est· de olho em vocÍ. ";
 		close;
 	}
 	mes "[Kikandia]";
-	mes "O senhor dos mortos v√™ tudo.";
+	mes "O senhor dos mortos vÍ tudo.";
 	close;
 
 OnTouch:
@@ -61,101 +61,101 @@ OnTouch:
 nif_in,16,27,1	script	Galinha Morta#nif	4_NFCOCK,{
 	percentheal -5,0;
 	mes "[Assado]";
-	mes "Coc√≥! Fui comida por um humano, num jantar!";
-	mes "Agora √© minha vez de comer voc√™! CoCo√≥√≥Co√≥. ";
-	mes "Ahaha! Nunca pensei que este mundo fosse t√£o divertido. Co√≥coco√≥. ";
+	mes "CocÛ! Fui comida por um humano, num jantar!";
+	mes "Agora È minha vez de comer vocÍ! CoCoÛÛCoÛ. ";
+	mes "Ahaha! Nunca pensei que este mundo fosse t„o divertido. CoÛcocoÛ. ";
 	close;
 }
 
 nif_in,16,30,4	script	Morcego Vampiro Morto#nif	4_NFBAT,{
 	percentheal -5,0;
 	mes "[Bathoman]";
-	mes "Sangue de humano √© bom, estejam eles,";
+	mes "Sangue de humano È bom, estejam eles,";
 	mes "mortos ou vivos. Hmmm...";
-	mes "Voc√™ parece bem saud√°vel. ";
-	mes "Posso dar uma mordidinha em voc√™? ";
+	mes "VocÍ parece bem saud·vel. ";
+	mes "Posso dar uma mordidinha em vocÍ? ";
 	close;
 }
 
 nif_in,156,93,5	script	Ana Arcana#niflheim	4_F_NFLOSTGIRL,{
 	mes "[Ana Arcana]";
-	mes "Q-Que lugar √© esse!?";
-	mes "Eu acordei neste lugar escuro... Mam√£e? ";
-	mes "Eu quero minha mam√£e! Huh...? Bu√°√°√°√°... ";
+	mes "Q-Que lugar È esse!?";
+	mes "Eu acordei neste lugar escuro... Mam„e? ";
+	mes "Eu quero minha mam„e! Huh...? Bu····... ";
 	mes "Quero ir para casa!";
 	next;
-	switch(select("Sobre a feiticeira...:Sobre essa maldi√ß√£o...:Ir embora")) {
+	switch(select("Sobre a feiticeira...:Sobre essa maldiÁ„o...:Ir embora")) {
 		case 1:
 			mes "[Ana Arcana]";
-			mes "Feiticeira...? N√£o conhe√ßo nenhuma...";
-			mes "Minha mam√£e lia sobre feiticeiras nos contos.";
-			mes "Mas n√£o sei se existe mesmo uma feiticeira.";
-			mes "Se ela existir mesmo, deve ser muito m√°...";
+			mes "Feiticeira...? N„o conheÁo nenhuma...";
+			mes "Minha mam„e lia sobre feiticeiras nos contos.";
+			mes "Mas n„o sei se existe mesmo uma feiticeira.";
+			mes "Se ela existir mesmo, deve ser muito m·...";
 			next;
 			mes "[Ana Arcana]";
-			mes "Mas por que est√° t√£o frio aqui...?";
-			mes "Voc√™ n√£o est√° com frio, ti"+(Sex?"o":"a")+"? Que estranho...";
+			mes "Mas por que est· t„o frio aqui...?";
+			mes "VocÍ n„o est· com frio, ti"+(Sex?"o":"a")+"? Que estranho...";
 			mes "Quero minha casa...";
 			mes "P-Por favor... Me ajuda! Por favor!";
 			close;
 		case 2:
 			mes "[Ana Arcana]";
-			mes "Maldi√ß√£o... Eu lembro da vov√≥ falando sobre";
+			mes "MaldiÁ„o... Eu lembro da vovÛ falando sobre";
 			mes "isso antes. Que havia um jeito de fugir da";
-			mes "maldi√ß√£o que n√£o se cura nem com b√™n√ß√£o. ";
-			mes "Uma maldi√ß√£o muito terr√≠vel... ";
+			mes "maldiÁ„o que n„o se cura nem com bÍnÁ„o. ";
+			mes "Uma maldiÁ„o muito terrÌvel... ";
 			next;
 			mes "[Ana Arcana]";
 			mes "Klaatu(Klaatu)...";
 			mes "Verata(Verata).....";
-			mes "E ent√£o... Hmm... Qual era a √∫ltima? ";
-			mes "Oh, eu n√£o me lembro da palavra m√°gica! ";
+			mes "E ent„o... Hmm... Qual era a ˙ltima? ";
+			mes "Oh, eu n„o me lembro da palavra m·gica! ";
 			next;
 			mes "[Ana Arcana]";
 			mes "Ela disse que eu devia lembrar sempre,";
-			mes "que devia falar as tr√™s palavras em ordem para escapar.";
-			mes "Mas n√£o lembro a terceira palavra.";
+			mes "que devia falar as trÍs palavras em ordem para escapar.";
+			mes "Mas n„o lembro a terceira palavra.";
 			mes "Eu esqueci!";
 			close;
 		case 3:
 			mes "[Ana Arcana]";
-			mes "Est√° t√£o frio... T√£o frio... Quero minha mam√£e. ";
-			mes "Por favor... Me leve com voc√™... ";
+			mes "Est· t„o frio... T„o frio... Quero minha mam„e. ";
+			mes "Por favor... Me leve com vocÍ... ";
 			mes "Estou com muito medo aqui...";
 			mes "Por favor! Me salve deste lugar...";
 			close;
 	}
 }
 
-niflheim,350,258,1	script	Esp√≠rito Amaldi√ßoado#nif	4_NFWISP,{
-	killmonster "niflheim","Esp√≠rito Amaldi√ßoado#nif::OnMyMobDead";
+niflheim,350,258,1	script	EspÌrito AmaldiÁoado#nif	4_NFWISP,{
+	killmonster "niflheim","EspÌrito AmaldiÁoado#nif::OnMyMobDead";
 	mes "[Eshu Bruce]";
-	mes "Eu posso sentir uma maldi√ß√£o terr√≠vel em voc√™... ";
-	mes "Saia daqui! N√£o se aproxime";
+	mes "Eu posso sentir uma maldiÁ„o terrÌvel em vocÍ... ";
+	mes "Saia daqui! N„o se aproxime";
 	mes "desta biblioteca ou eu te mato!!!";
-	mes "N√£o toque nos meus livros!!";
+	mes "N„o toque nos meus livros!!";
 	next;
 	switch(select("Pegar o primeiro livro:Pegar o segundo livro:Pegar o terceiro livro:Ir embora")) {
 		case 1:
-			monster "niflheim",349,259,"Rideword",1478,1,"Esp√≠rito Amaldi√ßoado#nif::OnMyMobDead";
+			monster "niflheim",349,259,"Rideword",1478,1,"EspÌrito AmaldiÁoado#nif::OnMyMobDead";
 			mes "[Eshu Bruce]";
 			mes "Como ousa tocar em meus livros?";
-			mes "MWAHAHAHAH! Morra com sua maldi√ß√£o!! ";
-			mes "Voc√™ ser√° enterrado aqui e sofrer√° mil tormentos!";
+			mes "MWAHAHAHAH! Morra com sua maldiÁ„o!! ";
+			mes "VocÍ ser· enterrado aqui e sofrer· mil tormentos!";
 			close;
 		case 2:
 			mes "[Eshu Bruce]";
-			mes "Eu disse para n√£o tocar nos meus livros...";
+			mes "Eu disse para n„o tocar nos meus livros...";
 			mes "SAIA!";
-			mes "N√£o atrapalhe meu sono!";
+			mes "N„o atrapalhe meu sono!";
 			close2;
 			warp "niflheim",34,162;
 			end;
 		case 3:
 			mes "[Eshu Bruce]";
 			mes "Mwahahahahaha....";
-			mes "Como ousa me amaldi√ßoar...!! Agora venha...";
-			mes "Fale as tr√™s palavras da contra-maldi√ß√£o, vamos!";
+			mes "Como ousa me amaldiÁoar...!! Agora venha...";
+			mes "Fale as trÍs palavras da contra-maldiÁ„o, vamos!";
 			next;
 		if (select("Clover.:Klaatu:Cleiton") == 2) {
 			++.@spell;
@@ -163,7 +163,7 @@ niflheim,350,258,1	script	Esp√≠rito Amaldi√ßoado#nif	4_NFWISP,{
 		if (select("Verit:Veritas:Vitata") == 3) {
 			++.@spell;
 		}
-		if (select("N√©ctar:Nerus:Nero:^FFFFFFNictu!!!^000000") == 4) {
+		if (select("NÈctar:Nerus:Nero:^FFFFFFNictu!!!^000000") == 4) {
 			++.@spell;
 		}
 		if (.@spell == 3) {
@@ -172,65 +172,65 @@ niflheim,350,258,1	script	Esp√≠rito Amaldi√ßoado#nif	4_NFWISP,{
 					if (morison_meat < 15) {
 						morrison_meat = 15;
 						mes "[Eshu Bruce]";
-						mes "Hahahaha!!! A maldi√ß√£o est√° quebrada!";
+						mes "Hahahaha!!! A maldiÁ„o est· quebrada!";
 						mes "MwahaHahaha.....!!!";
 						close;
 					}
 					mes "[Eshu Bruce]";
-					mes "Voc√™ leu o encantamento corretamente...";
-					mes "MAS N√ÉO O QUE QUEBRA O FEITI√áO! ";
+					mes "VocÍ leu o encantamento corretamente...";
+					mes "MAS N√O O QUE QUEBRA O FEITI«O! ";
 					mes "Mwahahahahaha.....!!!";
 					close;
 				case 2:
 					if (thai_head == 1) {
 						thai_head = 2;
 						mes "[Eshu Bruce]";
-						mes "Hahahaha!!! A maldi√ß√£o est√° quebrada!";
+						mes "Hahahaha!!! A maldiÁ„o est· quebrada!";
 						mes "MwahaHahaha.....!!!";
 						close;
 					}
 					mes "[Eshu Bruce]";
-					mes "Voc√™ leu o encantamento corretamente...";
-					mes "MAS N√ÉO O QUE QUEBRA O FEITI√áO! ";
+					mes "VocÍ leu o encantamento corretamente...";
+					mes "MAS N√O O QUE QUEBRA O FEITI«O! ";
 					mes "Mwahahahahaha.....!!!";
 					close;
 				case 3:
 					if (thai_head == 8) {
 						thai_head = 7;
 						mes "[Eshu Bruce]";
-						mes "Hahahaha!!! A maldi√ß√£o est√° quebrada!";
+						mes "Hahahaha!!! A maldiÁ„o est· quebrada!";
 						mes "MwahaHahaha.....!!!";
 						close;
 				}
 					mes "[Eshu Bruce]";
-					mes "Voc√™ leu o encantamento corretamente...";
-					mes "MAS N√ÉO O QUE QUEBRA O FEITI√áO! ";
+					mes "VocÍ leu o encantamento corretamente...";
+					mes "MAS N√O O QUE QUEBRA O FEITI«O! ";
 					mes "Mwahahahahaha.....!!!";
 					close;
 				case 4:
 					mes "[Eshu Bruce]";
-					mes "Voc√™ leu o encantamento corretamente...";
-					mes "MAS N√ÉO O QUE QUEBRA O FEITI√áO! ";
+					mes "VocÍ leu o encantamento corretamente...";
+					mes "MAS N√O O QUE QUEBRA O FEITI«O! ";
 					mes "Mwahahahahaha.....!!!";
 					close;
 			}
 		}
-			monster "niflheim",345,259,"Orc Esqueleto",1462,1,"Esp√≠rito Amaldi√ßoado#nif::OnMyMobDead";
-			monster "niflheim",347,261,"Orc Esqueleto",1462,1,"Esp√≠rito Amaldi√ßoado#nif::OnMyMobDead";
-			monster "niflheim",344,253,"Orc Esqueleto",1462,1,"Esp√≠rito Amaldi√ßoado#nif::OnMyMobDead";
-			monster "niflheim",346,251,"Orc Esqueleto",1462,1,"Esp√≠rito Amaldi√ßoado#nif::OnMyMobDead";
-			monster "niflheim",349,249,"Orc Esqueleto",1462,1,"Esp√≠rito Amaldi√ßoado#nif::OnMyMobDead";
-			monster "niflheim",350,260,"Orc Esqueleto",1462,1,"Esp√≠rito Amaldi√ßoado#nif::OnMyMobDead";
-			monster "niflheim",353,256,"Orc Esqueleto",1462,1,"Esp√≠rito Amaldi√ßoado#nif::OnMyMobDead";
+			monster "niflheim",345,259,"Orc Esqueleto",1462,1,"EspÌrito AmaldiÁoado#nif::OnMyMobDead";
+			monster "niflheim",347,261,"Orc Esqueleto",1462,1,"EspÌrito AmaldiÁoado#nif::OnMyMobDead";
+			monster "niflheim",344,253,"Orc Esqueleto",1462,1,"EspÌrito AmaldiÁoado#nif::OnMyMobDead";
+			monster "niflheim",346,251,"Orc Esqueleto",1462,1,"EspÌrito AmaldiÁoado#nif::OnMyMobDead";
+			monster "niflheim",349,249,"Orc Esqueleto",1462,1,"EspÌrito AmaldiÁoado#nif::OnMyMobDead";
+			monster "niflheim",350,260,"Orc Esqueleto",1462,1,"EspÌrito AmaldiÁoado#nif::OnMyMobDead";
+			monster "niflheim",353,256,"Orc Esqueleto",1462,1,"EspÌrito AmaldiÁoado#nif::OnMyMobDead";
 			mes "[Eshu Bruce]";
-			mes "Hahahahaha!!! O feiti√ßo est√° errado!";
+			mes "Hahahahaha!!! O feitiÁo est· errado!";
 			mes "Eu avisei! Morra de uma vez aqui!";
 			mes "E sofra os mil tormentos...!!";
 			close;
 		case 4:
 			mes "[Eshu Bruce]";
 			mes "Mwah Hahahah! Bom trabalho...";
-			mes "Espero que voc√™ continue vivo... Uhuh...";
+			mes "Espero que vocÍ continue vivo... Uhuh...";
 			close;
 	}
 

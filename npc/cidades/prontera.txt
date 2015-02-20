@@ -1,4 +1,4 @@
-Ôªø//    ________________________________________________________
+//    ________________________________________________________
 //   /                                                        \
 //   |       _           _   _   _                            |
 //   |      | |__  _ __ / \ | |_| |__   ___ _ __   __ _       |
@@ -12,21 +12,21 @@
 //   |--------------------------------------------------------|
 //   | Criado por: eA/rA/Herc/brA Dev. Team                   |
 //   |--------------------------------------------------------|
-//   | Vers√µes eA/rA/Herc/brA: 2.1/2.1/2.1/1.0                |
+//   | Versıes eA/rA/Herc/brA: 2.1/2.1/2.1/1.0                |
 //   |--------------------------------------------------------|
-//   | Descri√ß√£o: NPCs da Cidade de Prontera.                 |
+//   | DescriÁ„o: NPCs da Cidade de Prontera.                 |
 //   |--------------------------------------------------------|
 //   | Changelog:                                             |
-//   | 1.0 Adicionado di√°logos oficiais do bRO [Axl]          |
+//   | 1.0 Adicionado di·logos oficiais do bRO [Axl]          |
 //   |--------------------------------------------------------|
-//   | - Anota√ß√µes                                            |
+//   | - AnotaÁıes                                            |
 //   \________________________________________________________/
 
 // Prontera
 //============================================================
 prontera,160,330,0	script	Soldado#pront::prtguard	8W_SOLDIER,{
 	mes "[Soldado]";
-	mes "Bem vindo √† Prontera.";
+	mes "Bem vindo ‡ Prontera.";
 	close;
 }
 prontera,223,99,1	duplicate(prtguard)	Soldado#2pront	8W_SOLDIER
@@ -35,60 +35,60 @@ prontera,47,339,5	duplicate(prtguard)	Soldado#4pront	8W_SOLDIER
 
 prontera,101,288,3	script	Homem#pront	4W_M_02,{
 	mes "[Homem]";
-	mes "Existe um monstro rosado chamado ^000077Poring^000000 nos arredores da cidade que √© um dos mais comuns em Midgard.";
-	mes "Ele √© bem bonitinho e inofensivo. Nada de muito especial a respeito, certo? Por√©m, ao que parece, ele gosta de engolir itens que s√£o deixados no ch√£o.";
+	mes "Existe um monstro rosado chamado ^000077Poring^000000 nos arredores da cidade que È um dos mais comuns em Midgard.";
+	mes "Ele È bem bonitinho e inofensivo. Nada de muito especial a respeito, certo? PorÈm, ao que parece, ele gosta de engolir itens que s„o deixados no ch„o.";
 	next;
 	mes "[Homem]";
-	mes "As pessoas costumam ficar enfezadas com isso. N√£o que seja muito preocupante, pois os Porings s√£o muito fracos...";
-	mes "J√° os ^000077Poporings^000000, que s√£o Porings verdes, s√£o mais fortes e resistentes. Tome cuidado ao provoc√°-los, porque comparados √† Porings normais eles s√£o surpreendentemente fortes.";
+	mes "As pessoas costumam ficar enfezadas com isso. N„o que seja muito preocupante, pois os Porings s„o muito fracos...";
+	mes "J· os ^000077Poporings^000000, que s„o Porings verdes, s„o mais fortes e resistentes. Tome cuidado ao provoc·-los, porque comparados ‡ Porings normais eles s„o surpreendentemente fortes.";
 	close;
 }
 
 prontera,54,240,6	script	Teodoro#pront	4W_M_01,{
 	mes "[Teodoro]";
-	mes "Voc√™ sabia que o Fabre √© a larva dos Creamys?";
+	mes "VocÍ sabia que o Fabre È a larva dos Creamys?";
 	mes "Quando o Fabre amadurece, ele se fecha num Casulo. ";
-	mes "Ap√≥s permanecer no Casulo por algum tempo, ele torna-se um Creamy, uma esp√©cie de borboleta, bem mais forte do que um Fabre comum.";
+	mes "ApÛs permanecer no Casulo por algum tempo, ele torna-se um Creamy, uma espÈcie de borboleta, bem mais forte do que um Fabre comum.";
 	next;
 	mes "[Teodoro]";
 	mes "Sabe os Pecopecos?";
-   	mes "Os Pickys s√£o os filhotes de Pecopeco.";
-	mes "Eles s√£o bem diferentes entre si. Heheheheh. Os Pickys s√£o bem mais bonitinhos, n√£o acha?";
+   	mes "Os Pickys s„o os filhotes de Pecopeco.";
+	mes "Eles s„o bem diferentes entre si. Heheheheh. Os Pickys s„o bem mais bonitinhos, n„o acha?";
 	close;
 }
 
 prontera,106,116,6	script	Mulher#pront	4_F_02,{
 	mes "[Mulher]";
-	mes "Uma vez eu fui fazer um piquenique com a minha fam√≠lia e encontrei uma das coisas mais estranhas que j√° vi, um grande enxame de abelhas!";
+	mes "Uma vez eu fui fazer um piquenique com a minha famÌlia e encontrei uma das coisas mais estranhas que j· vi, um grande enxame de abelhas!";
 	next;
 	mes "[Mulher]";
-	mes "Claro que n√£o era um enxame qualquer, n√©? Sen√£o n√£o teria nada de estranho... O mais estranho √© que tinha uma Abelha Rainha que controlava as outras.";
-	mes "Estranho, n√£o √©? Eu acho, pelo menos. Quer dizer, imagine controlar seres humanos como aquela Rainha controlava as outras abelhas... ";
+	mes "Claro que n„o era um enxame qualquer, nÈ? Sen„o n„o teria nada de estranho... O mais estranho È que tinha uma Abelha Rainha que controlava as outras.";
+	mes "Estranho, n„o È? Eu acho, pelo menos. Quer dizer, imagine controlar seres humanos como aquela Rainha controlava as outras abelhas... ";
 	close;
 }
 
 prontera,160,133,2	script	Yuni#pront	8_F,{
 	mes "[Yuni]";
-	mes "Entre monstros da mesma forma, existem alguns mais ferozes que outros. Um exemplo s√£o Porings e Poporings, que tem a mesma forma mas for√ßas diferentes.";
-	mes "√â bom tomar cuidado ao atacar algum deles, pois voc√™ pode se dar mal.";
+	mes "Entre monstros da mesma forma, existem alguns mais ferozes que outros. Um exemplo s„o Porings e Poporings, que tem a mesma forma mas forÁas diferentes.";
+	mes "… bom tomar cuidado ao atacar algum deles, pois vocÍ pode se dar mal.";
 	next;
 	mes "[Yuni]";
-	mes "Normalmente, voc√™ pode determinar qual √© qual pela diferen√ßa de cores.";
-   	mes "Como eu disse, tomar cuidado √© sempre bom, ent√£o cheque os nomes dos inimigos antes de atacar.";
+	mes "Normalmente, vocÍ pode determinar qual È qual pela diferenÁa de cores.";
+   	mes "Como eu disse, tomar cuidado È sempre bom, ent„o cheque os nomes dos inimigos antes de atacar.";
 	close;
 }
 
 prontera,149,202,2	script	Gabiroba#pront	8_F_GIRL,{
 	mes "[Gabiroba]";
-	mes "Odin √© o mais poderoso dos Deuses, o todo-poderoso, o lorde dos Aesir. Ele √© um Deus guerreiro e muito s√°bio.";
-	mes "Para conseguir sua sabedoria sem-limites, Odin bebeu da √°gua do po√ßo de Imir, e para isso teve de perder um de seus olhos. Isso mostra sua incr√≠vel coragem e determina√ß√£o! Aquela est√°tua no centro da fonte √© de Odin.";
+	mes "Odin È o mais poderoso dos Deuses, o todo-poderoso, o lorde dos Aesir. Ele È um Deus guerreiro e muito s·bio.";
+	mes "Para conseguir sua sabedoria sem-limites, Odin bebeu da ·gua do poÁo de Imir, e para isso teve de perder um de seus olhos. Isso mostra sua incrÌvel coragem e determinaÁ„o! Aquela est·tua no centro da fonte È de Odin.";
 	next;
 	mes "[Gabiroba]";
 	mes "Mas eu estou decepcionado com esse escultor! Seja quem for, ele poderia ter feito um trabalho melhor que esse!";
-	mes "A est√°tua est√° diferente do verdadeiro Deus Odin! Provavelmente o escultor √© um metido a moderninho, e quis inventar um novo visual para nosso Deus!";
+	mes "A est·tua est· diferente do verdadeiro Deus Odin! Provavelmente o escultor È um metido a moderninho, e quis inventar um novo visual para nosso Deus!";
 	next;
 	mes "[Gabiroba]";
-	mes "Olhe! Ele n√£o est√° usando seu capacete de √°guia, n√£o tem barba, e nem est√° montado em Sleipnir, seu poderoso cavalo de oito patas! Isso √© um ultraje! Eu n√£o sei como o Rei aprovou essa est√°tua como o principal monumento de nossa cidade!";
+	mes "Olhe! Ele n„o est· usando seu capacete de ·guia, n„o tem barba, e nem est· montado em Sleipnir, seu poderoso cavalo de oito patas! Isso È um ultraje! Eu n„o sei como o Rei aprovou essa est·tua como o principal monumento de nossa cidade!";
 	close;
 }
 
@@ -96,22 +96,22 @@ prontera,216,70,2	script	George#pront	1_M_02,{
 	if (Class == Job_Novice) {
 		if (event_prt_nov_dreamtalk == 0) {
 			mes "[George]";
-			mes "Um dia eu serei um grande Cavaleiro. √â pra isso que eu treino sem parar!";
-			mes "Claro que nem um Espadachin eu sou ainda... Ent√£o ainda falta muito pra chegar l√°. E voc√™, tem um sonho pra seguir?";
+			mes "Um dia eu serei um grande Cavaleiro. … pra isso que eu treino sem parar!";
+			mes "Claro que nem um Espadachin eu sou ainda... Ent„o ainda falta muito pra chegar l·. E vocÍ, tem um sonho pra seguir?";
 			next;
-			if (select("Claro que sim.:N√£o.") == 1) {
+			if (select("Claro que sim.:N„o.") == 1) {
 				event_prt_nov_dreamtalk = 1;
 				mes "[George]";
-				mes "Pra se tornar um Espadachin... √â preciso ir at√© Izlude, a cidade-sat√©lite de Prontera e passar no exame dos Espadachins.";
-				mes "Eu j√° falhei no exame uma vez... Mas garanto que isso n√£o vai acontecer de novo!";
+				mes "Pra se tornar um Espadachin... … preciso ir atÈ Izlude, a cidade-satÈlite de Prontera e passar no exame dos Espadachins.";
+				mes "Eu j· falhei no exame uma vez... Mas garanto que isso n„o vai acontecer de novo!";
 				next;
 				mes "[George]";
 				mes "Treinar! Treinar! E treinar mais!";
-				mes "Anime-se! A pr√≥xima vez que eu te encontrar seremos mais fortes!";
+				mes "Anime-se! A prÛxima vez que eu te encontrar seremos mais fortes!";
 				close;
 			}
 				mes "[George]";
-				mes "Ei, vamos l√°! Voc√™ tem que ter um sonho para o seu futuro!";
+				mes "Ei, vamos l·! VocÍ tem que ter um sonho para o seu futuro!";
 				mes "Sem sonhos do que vale viver?";
 				close;
 		}
@@ -124,14 +124,14 @@ prontera,216,70,2	script	George#pront	1_M_02,{
 	else if (Class != Job_Novice) {
 		if (event_prt_nov_dreamtalk == 1) {
 			mes "[George]";
-			mes "Ei! A gente j√° se encontrou antes?";
-			mes "Olha s√≥ pra voc√™! Caramba, voc√™ est√° demais! Nossa, que inveja... Mas, tudo bem, eu vou continuar treinando at√© ser como voc√™, voc√™ vai ver!";
-			mes "√â isso a√≠! O trabalho duro √© a minha voca√ß√£o!";
+			mes "Ei! A gente j· se encontrou antes?";
+			mes "Olha sÛ pra vocÍ! Caramba, vocÍ est· demais! Nossa, que inveja... Mas, tudo bem, eu vou continuar treinando atÈ ser como vocÍ, vocÍ vai ver!";
+			mes "… isso aÌ! O trabalho duro È a minha vocaÁ„o!";
 			next;
 			event_prt_nov_dreamtalk = 2;
 			getitem 2501,1; //Hood
 			mes "[George]";
-			mes "Ei, n√£o precisa me olhar com essa cara! √â um presente... Parab√©ns!";
+			mes "Ei, n„o precisa me olhar com essa cara! … um presente... ParabÈns!";
 			mes "Continue assim!";
 			close;
 		}
@@ -141,25 +141,25 @@ prontera,216,70,2	script	George#pront	1_M_02,{
 			close;
 		}
 	mes "[George]";
-	mes "Um dia eu serei um grande Cavaleiro. √â pra isso que eu treino sem parar!";
-	mes "O qu√™, voc√™ n√£o acredita? N√£o me subestime, eu sei que vou conseguir!";
+	mes "Um dia eu serei um grande Cavaleiro. … pra isso que eu treino sem parar!";
+	mes "O quÍ, vocÍ n„o acredita? N„o me subestime, eu sei que vou conseguir!";
 	next;
 	mes "[George]";
 	mes "Eu sei, eu sei... Eu nem sou um Espadachin ainda... Mas eu vou ser!";
-	mes "Eu sei como √© dif√≠cil, mas com muita for√ßa de vontade eu vou chegar l√°!";
+	mes "Eu sei como È difÌcil, mas com muita forÁa de vontade eu vou chegar l·!";
 	next;
 	mes "[George]";
-	mes "Eu gosto de ficar aqui e ver os Espadachins promovidos √† Cavaleiros. Me deixa feliz e me motiva a n√£o ficar pra tr√°s!";
+	mes "Eu gosto de ficar aqui e ver os Espadachins promovidos ‡ Cavaleiros. Me deixa feliz e me motiva a n„o ficar pra tr·s!";
 	mes "Por isso, eu fico aqui e treino pra valer!";
 	next;
 	if (select("Continue treinando!:Ah, desista, moleque.") == 1) {
  		mes "[George]";
- 		mes "√â claro que sim! Eu n√£o vou desistir, porque eu sei que vou ser forte como voc√™ algum dia!";
- 		mes "Olha l√°, hein, se a gente se encontrar depois, n√£o v√° me esnobar! Lembre de dizer um 'ol√°'!";
+ 		mes "… claro que sim! Eu n„o vou desistir, porque eu sei que vou ser forte como vocÍ algum dia!";
+ 		mes "Olha l·, hein, se a gente se encontrar depois, n„o v· me esnobar! Lembre de dizer um 'ol·'!";
  		close;
 		}
  		mes "[George]";
- 		mes "Ha-h√°! Nem pensar! Voc√™ vai ver! Aposto que eu ainda vou ser mais forte que voc√™!";
+ 		mes "Ha-h·! Nem pensar! VocÍ vai ver! Aposto que eu ainda vou ser mais forte que vocÍ!";
 		close;
 	}
 }
@@ -167,96 +167,96 @@ prontera,216,70,2	script	George#pront	1_M_02,{
 prontera,78,150,3	script	Darlene#pront	4_F_01,{
 	mes "[Darlene]";
 	mes "Como a cidade est?cheia hoje!";
-	mes "√â isso que eu adoro em Prontera, voc√™ pode ver pessoas do mundo inteiro!";
-	mes "E claro, tamb√©m ouvir novidades de toda Midgard!";
+	mes "… isso que eu adoro em Prontera, vocÍ pode ver pessoas do mundo inteiro!";
+	mes "E claro, tambÈm ouvir novidades de toda Midgard!";
 	next;
 	if (select("Conversar:Cancelar") == 1) {
 		mes "[Darlene]";
-		mes "Eu n√£o sei se voc√™ se interessa por vestidos... Hihihihi... Mas eu ouvi uma coisa maravilhosa hoje.";
-		mes "Era sobre vestidos tingidos! Roupas, assim como a sua, s√≥ que de uma cor completamente nova!";
+		mes "Eu n„o sei se vocÍ se interessa por vestidos... Hihihihi... Mas eu ouvi uma coisa maravilhosa hoje.";
+		mes "Era sobre vestidos tingidos! Roupas, assim como a sua, sÛ que de uma cor completamente nova!";
 		next;
 		mes "[Darlene]";
-		mes "Parece que se faz usando aquelas tinturas de morroc... Mas elas s√£o t√£o caras...";
-		mes "E do mesmo jeito, acho que vai demorar muito at√© aparecer algu√©m que saiba como tingir as roupas.";
+		mes "Parece que se faz usando aquelas tinturas de morroc... Mas elas s„o t„o caras...";
+		mes "E do mesmo jeito, acho que vai demorar muito atÈ aparecer alguÈm que saiba como tingir as roupas.";
 		close;
 	}
 		mes "[Darlene]";
-		mes "Foi voc√™ que clicou em mim, fofura. Tem certeza de que n√£o quer ouvir umas fofocas?";
+		mes "Foi vocÍ que clicou em mim, fofura. Tem certeza de que n„o quer ouvir umas fofocas?";
 		close;
 }
 
 // inside Prontera
 //============================================================
-prt_in,175,50,0	script	Bibliotec√°ria#pront	1_F_LIBRARYGIRL,{
-	mes "[Bibliotec√°ria Barbara]";
-	mes "Bem-vindo! Os dados nesta biblioteca est√£o separados pelos nomes dos monstros. Voc√™ pode ler livros e escritas de seu interesse aqui. Aqui tamb√©m existem livros sobre as classes dos Ferreiros e Mercadores.";
-	mes "Ah! A pr√≥xima biblioteca tamb√©m √© muito interessante. Visite-a se puder.";
+prt_in,175,50,0	script	Bibliotec·ria#pront	1_F_LIBRARYGIRL,{
+	mes "[Bibliotec·ria Barbara]";
+	mes "Bem-vindo! Os dados nesta biblioteca est„o separados pelos nomes dos monstros. VocÍ pode ler livros e escritas de seu interesse aqui. Aqui tambÈm existem livros sobre as classes dos Ferreiros e Mercadores.";
+	mes "Ah! A prÛxima biblioteca tambÈm È muito interessante. Visite-a se puder.";
 	close;
 }
 
 prt_in,47,141,0	script	Tio#pront	1_M_KNIGHTMASTER,{
 	mes "[Tio]";
-	mes "As pessoas n√£o entram nestes esgotos h√° muito tempo... Um aventureiro me contou que o lugar est√° infestado de ^000077Baratas^000000.";
+	mes "As pessoas n„o entram nestes esgotos h· muito tempo... Um aventureiro me contou que o lugar est· infestado de ^000077Baratas^000000.";
 	next;
 	mes "[Tio]";
-	mes "Elas se reproduzem muito r√°pido e ningu√©m as t√™m impedido de se espalhar... Imagine quantas n√£o devem existir l√° embaixo agora!";
+	mes "Elas se reproduzem muito r·pido e ninguÈm as tÍm impedido de se espalhar... Imagine quantas n„o devem existir l· embaixo agora!";
 	close;
 }
 
 prt_in,26,31,0	script	Tio#2pront	1_M_JOBGUIDER,{
 	mes "[Tio]";
-	mes "Voc√™ pode n√£o acreditar em mim, mas eu vi uma coisa incr√≠vel nos ^000077Esgotos de Prontera^000000.";
-	mes "Eu j√° fui l√° muitas vezes, pois sou um dos encarregados da manuten√ß√£o das tubula√ß√µes de l√°... Conhe√ßo tudo como a palma da minha m√£o!";
-	mes "Eu vi a tal coisa no Quarto Subsolo... Era um ^000077Besouro Ladr√£o^000000 brilhante! Era dourada e reluzia no escuro! Foi muito estranho!";
+	mes "VocÍ pode n„o acreditar em mim, mas eu vi uma coisa incrÌvel nos ^000077Esgotos de Prontera^000000.";
+	mes "Eu j· fui l· muitas vezes, pois sou um dos encarregados da manutenÁ„o das tubulaÁıes de l·... ConheÁo tudo como a palma da minha m„o!";
+	mes "Eu vi a tal coisa no Quarto Subsolo... Era um ^000077Besouro Ladr„o^000000 brilhante! Era dourada e reluzia no escuro! Foi muito estranho!";
 	next;
 	mes "[Tio]";
-	mes "Um Besouro Dourado, imagine s√≥! Ela tinha uma luz m√°gica, acho que at√© Sagrada e era muito, muito forte! Como pode um bicho t√£o repulsivo e sujo ter uma luz dessas?";
+	mes "Um Besouro Dourado, imagine sÛ! Ela tinha uma luz m·gica, acho que atÈ Sagrada e era muito, muito forte! Como pode um bicho t„o repulsivo e sujo ter uma luz dessas?";
 	close;
 }
 
-prt_in,180,20,2	script	Gar√ßom#pront	1_M_PUBMASTER,{
-	mes "[Gar√ßom]";
-	mes "Ol√°, seja bem-vindo! Hehehe! A freguesia anda aumentando por aqui!";
-	mes "Este j√° foi um neg√≥cio bem dif√≠cil, sabe? Pelo menos os lucros sempre foram bons... Hehe, mas agora est√£o melhores...";
+prt_in,180,20,2	script	GarÁom#pront	1_M_PUBMASTER,{
+	mes "[GarÁom]";
+	mes "Ol·, seja bem-vindo! Hehehe! A freguesia anda aumentando por aqui!";
+	mes "Este j· foi um negÛcio bem difÌcil, sabe? Pelo menos os lucros sempre foram bons... Hehe, mas agora est„o melhores...";
 	mes "A dificuldade? Ora, conseguir os ingredientes para a cozinha!";
 	next;
-	mes "[Gar√ßom]";
-   	mes "Como voc√™ deve saber, o aumento das hordas de monstros agressivos em torno das cidades do reino criou uma escassez na obten√ß√£o de certas mat√©rias-primas e produtos...";
-	mes "Por isso, tentamos adaptar o menu do restaurante quando h√° falta de alimentos. Fazemos especiais ou inventamos pratos mais simples pra n√£o perder a clientela.";
+	mes "[GarÁom]";
+   	mes "Como vocÍ deve saber, o aumento das hordas de monstros agressivos em torno das cidades do reino criou uma escassez na obtenÁ„o de certas matÈrias-primas e produtos...";
+	mes "Por isso, tentamos adaptar o menu do restaurante quando h· falta de alimentos. Fazemos especiais ou inventamos pratos mais simples pra n„o perder a clientela.";
 	next;
-	mes "[Gar√ßom]";
-	mes "Recentemente, contratamos alguns soldados e mercen√°rios para conseguir melhores ingredientes ca√ßando alguns monstros.";
-	mes "Estes aqui s√£o frescos e de √≥tima qualidade, por isso os pratos est√£o deliciosos. √â pena que seja por pouco tempo, j√° que o estoque n√£o deve durar...";
-	mes "Os sujeitos que contratei n√£o trouxeram muito, e eu n√£o quis nem reclamar... √â que, al√©m de estar cada vez mais dif√≠cil ca√ßar monstros, esses caras eram bem mal-encarados...";
+	mes "[GarÁom]";
+	mes "Recentemente, contratamos alguns soldados e mercen·rios para conseguir melhores ingredientes caÁando alguns monstros.";
+	mes "Estes aqui s„o frescos e de Ûtima qualidade, por isso os pratos est„o deliciosos. … pena que seja por pouco tempo, j· que o estoque n„o deve durar...";
+	mes "Os sujeitos que contratei n„o trouxeram muito, e eu n„o quis nem reclamar... … que, alÈm de estar cada vez mais difÌcil caÁar monstros, esses caras eram bem mal-encarados...";
 	next;
-	mes "[Gar√ßom]";
-	mes "Ent√£o, se estiver interessado, nossos pratos de hoje s√£o: 'Carapa√ßas de formiga ao molho' e 'Pernas de Gafanhoto fritas'...";
+	mes "[GarÁom]";
+	mes "Ent„o, se estiver interessado, nossos pratos de hoje s„o: 'CarapaÁas de formiga ao molho' e 'Pernas de Gafanhoto fritas'...";
 	next;
 	.@drink = 1;
 	while(.@drink) {
-		switch(select("'Carapa√ßa de formiga ao molho'?:'Perna de Gafanhoto frita'?:Eu... acho que vou indo.")) {
+		switch(select("'CarapaÁa de formiga ao molho'?:'Perna de Gafanhoto frita'?:Eu... acho que vou indo.")) {
 			case 1:
-				mes "[Gar√ßom]";
-				mes "√â uma deliciosa iguaria e um cl√°ssico local! √â feito √† partir das cascas das formigas do deserto Sograt, ao sul daqui.";
-				mes "Essas formigas s√£o bem grandes e ferozes, e o melhor lugar para ca√ß√°-las √© no Formigueiro Infernal... O problema √© que l√° √†s vezes h√° formigas demais... Por isso, a maioria das pessoas tem medo de enfrent√°-las...";
+				mes "[GarÁom]";
+				mes "… uma deliciosa iguaria e um cl·ssico local! … feito ‡ partir das cascas das formigas do deserto Sograt, ao sul daqui.";
+				mes "Essas formigas s„o bem grandes e ferozes, e o melhor lugar para caÁ·-las È no Formigueiro Infernal... O problema È que l· ‡s vezes h· formigas demais... Por isso, a maioria das pessoas tem medo de enfrent·-las...";
 				next;
-				mes "[Gar√ßom]";
-				mes "Mesmo assim, a maioria das pessoas tamb√©m gostam de um belo prato de formiga ao molho... E adoram reclamar se acaba meu estoque. ";
+				mes "[GarÁom]";
+				mes "Mesmo assim, a maioria das pessoas tambÈm gostam de um belo prato de formiga ao molho... E adoram reclamar se acaba meu estoque. ";
 				next;
 				break;
 
 			case 2:
-				mes "[Gar√ßom]";
-				mes "Sim, as pernas de gafanhoto ficam especialmente boas fritas com azeite de oliva... Uma del√≠cia. ";
-				mes "S√≥ √© pena que hoje os gafanhotos estejam t√£o agressivos... Mas ainda assim, n√£o s√£o t√£o dif√≠ceis de ca√ßar. O problema √© que eu sou meio covarde na hora de matar monstros, sen√£o ia l√° e ensinava uma li√ß√£o a eles!";
+				mes "[GarÁom]";
+				mes "Sim, as pernas de gafanhoto ficam especialmente boas fritas com azeite de oliva... Uma delÌcia. ";
+				mes "SÛ È pena que hoje os gafanhotos estejam t„o agressivos... Mas ainda assim, n„o s„o t„o difÌceis de caÁar. O problema È que eu sou meio covarde na hora de matar monstros, sen„o ia l· e ensinava uma liÁ„o a eles!";
 				next;
-				mes "[Gar√ßom]";
-				mes "√â, mas do jeito que v√£o as coisas logo, logo, vou ter que voltar a fazer pratos comuns de novo...";
+				mes "[GarÁom]";
+				mes "…, mas do jeito que v„o as coisas logo, logo, vou ter que voltar a fazer pratos comuns de novo...";
 				next;
 				break;
 			case 3:
-				mes "[Gar√ßom]";
-				mes "Bem, tenha cuidado l√° fora, e coma um pouco da pr√≥xima vez!";
+				mes "[GarÁom]";
+				mes "Bem, tenha cuidado l· fora, e coma um pouco da prÛxima vez!";
 				close2;
 				.@drink = 0;
 				break;
@@ -268,74 +268,74 @@ prt_in,180,20,2	script	Gar√ßom#pront	1_M_PUBMASTER,{
 
 prt_in,173,24,2	script	Hubite#pront	4_M_03,{
 	mes "[Hubite]";
-	mes "Ei, colega! Chegue aqui e tome um drinque comigo! Eu tenho umas hist√≥rias boas pra te contar.";
-	mes "Sabe, eu j√° andei por todos os arredores de Prontera!";
-	mes "Lugares cheios de monstros, lugares cheios de itens, √≥timos para treinar!";
+	mes "Ei, colega! Chegue aqui e tome um drinque comigo! Eu tenho umas histÛrias boas pra te contar.";
+	mes "Sabe, eu j· andei por todos os arredores de Prontera!";
+	mes "Lugares cheios de monstros, lugares cheios de itens, Ûtimos para treinar!";
 	next;
-	if (select("E como voc√™ foi pra tantos lugares:√â? E da√≠?") == 1) {
+	if (select("E como vocÍ foi pra tantos lugares:…? E daÌ?") == 1) {
 		mes "[Hubite]";
-		mes "Ora, eu sou um cara muito talentoso! Eu j√° fiz de tudo!";
-		mes "Eu j√° viajei bastante por a√≠ fazendo servi√ßos para os aventureiros e para a cidade... Fazendo o qu√™? Bem...h√£... entregando coisas.";
-		mes "√â... Eu sei que √†s vezes √© um trabalho meio chato e sem gra√ßa, esse de fazer entregas.";
+		mes "Ora, eu sou um cara muito talentoso! Eu j· fiz de tudo!";
+		mes "Eu j· viajei bastante por aÌ fazendo serviÁos para os aventureiros e para a cidade... Fazendo o quÍ? Bem...h„... entregando coisas.";
+		mes "…... Eu sei que ‡s vezes È um trabalho meio chato e sem graÁa, esse de fazer entregas.";
 		next;
 		mes "[Hubite]";
-		mes "Mas assim eu tenho a oportunidade de viajar bastante e conhecer novos lugares! √â muito divertido!";
-		mes "Mas n√£o pense que eu fa√ßo isso por divers√£o... Eu sou um cara muito dedicado, viu? Se voc√™ precisa entregar alguma coisa, eu sou seu homem!";
+		mes "Mas assim eu tenho a oportunidade de viajar bastante e conhecer novos lugares! … muito divertido!";
+		mes "Mas n„o pense que eu faÁo isso por divers„o... Eu sou um cara muito dedicado, viu? Se vocÍ precisa entregar alguma coisa, eu sou seu homem!";
 		next;
 		mes "[Hubite]";
-		mes "Viajando por a√≠ eu j√° achei alguns lugares bem estranhos e tamb√©m fascinantes...";
-		mes "(√â muito legal, porque eu sei que quase ningu√©m aqui sabe deles...Hehehe.)";
-		mes "Por exemplo, uma certa caverna que eu conhe√ßo... E tamb√©m aquela floresta perigos√≠ssima...";
+		mes "Viajando por aÌ eu j· achei alguns lugares bem estranhos e tambÈm fascinantes...";
+		mes "(… muito legal, porque eu sei que quase ninguÈm aqui sabe deles...Hehehe.)";
+		mes "Por exemplo, uma certa caverna que eu conheÁo... E tambÈm aquela floresta perigosÌssima...";
 		next;
 		switch(select("Que caverna?:Floresta perigosa? Hmmm.:Bem, eu preciso ir...")) {
 			case 1:
 				mes "[Hubite]";
-				mes "Hmm... A caverna... Ela fica ao Norte daqui. Eu acompanhei alguns ca√ßadores at√© l√° uma vez.";
+				mes "Hmm... A caverna... Ela fica ao Norte daqui. Eu acompanhei alguns caÁadores atÈ l· uma vez.";
 				next;
 				mes "[Hubite]";
-				mes "Embora existam muitos monstros por l√°, ouvi dizer que h√° √≥timos tesouros tamb√©m.";
-				mes "Quando eu estive l√°, mesmo estando com aventureiros experientes, era dif√≠cil n√£o se perder.";
+				mes "Embora existam muitos monstros por l·, ouvi dizer que h· Ûtimos tesouros tambÈm.";
+				mes "Quando eu estive l·, mesmo estando com aventureiros experientes, era difÌcil n„o se perder.";
 				next;
 				mes "[Hubite]";
-				mes "Chegou uma hora em que todos os caminhos pareciam dar no mesmo lugar. Est√°vamos sem muitas op√ß√µes e ficando sem suprimentos.";
-				mes "Ent√£o, acabamos voltando... De m√£os abanando, claro. Mas... Quem sabe eu volto l√° algum dia. ";
+				mes "Chegou uma hora em que todos os caminhos pareciam dar no mesmo lugar. Est·vamos sem muitas opÁıes e ficando sem suprimentos.";
+				mes "Ent„o, acabamos voltando... De m„os abanando, claro. Mas... Quem sabe eu volto l· algum dia. ";
 				next;
-				if (select("Como eu fa√ßo pra chegar l√°?:Bom, a gente se v√™ por a√≠.") == 1) {
+				if (select("Como eu faÁo pra chegar l·?:Bom, a gente se vÍ por aÌ.") == 1) {
 					mes "[Hubite]";
-					mes "O qu√™? Mas √© aqui do lado! Voc√™ deveria conhecer...";
-					mes "√â s√≥ sair da cidade pelo port√£o Norte. A caverna fica na parte de cima da floresta...";
+					mes "O quÍ? Mas È aqui do lado! VocÍ deveria conhecer...";
+					mes "… sÛ sair da cidade pelo port„o Norte. A caverna fica na parte de cima da floresta...";
 					close;
 				}
 					mes "[Hubite]";
-					mes "Tudo bem... Tome cuidado por a√≠.";	
+					mes "Tudo bem... Tome cuidado por aÌ.";	
 					close;
 
 			case 2:
 				mes "[Hubite]";
-				mes "Essa floresta fica √† nordeste daqui. Existem algumas ru√≠nas bem bonitas ali perto... Eu fui entregar um pacote para um sacerdote que mora l√° uma vez.";
-				mes "Antes dessas ru√≠nas, voc√™ vai ver a tal floresta. Ela √© cheia de texugos e macacos.";
+				mes "Essa floresta fica ‡ nordeste daqui. Existem algumas ruÌnas bem bonitas ali perto... Eu fui entregar um pacote para um sacerdote que mora l· uma vez.";
+				mes "Antes dessas ruÌnas, vocÍ vai ver a tal floresta. Ela È cheia de texugos e macacos.";
 				next;
 				mes "[Hubite]";
-				mes "√â bom tomar cuidado l√°... Se voc√™ deixar cair algum item no ch√£o, os Yoyos saem correndo pra peg√°-lo. E o pior √© que se voc√™ atacar um deles, eles v√£o se juntar contra voc√™. ";
+				mes "… bom tomar cuidado l·... Se vocÍ deixar cair algum item no ch„o, os Yoyos saem correndo pra peg·-lo. E o pior È que se vocÍ atacar um deles, eles v„o se juntar contra vocÍ. ";
 				next;
-				if (select("Como se chega l√°?:Ah, cansei dessa conversa...") == 1) {
+				if (select("Como se chega l·?:Ah, cansei dessa conversa...") == 1) {
 					mes "[Hubite]";
-					mes "O caminho √© um pouquinho complicado, mas se voc√™ seguir para o Norte e depois Leste, n√£o tem como errar.";
-					mes "S√≥ cuidado com algumas plantas que tem pelo caminho... Elas atacam qualquer um que chegar muito perto.";
+					mes "O caminho È um pouquinho complicado, mas se vocÍ seguir para o Norte e depois Leste, n„o tem como errar.";
+					mes "SÛ cuidado com algumas plantas que tem pelo caminho... Elas atacam qualquer um que chegar muito perto.";
 					close;
 				}
 					mes "[Hubite]";
-					mes "Tudo bem, ent√£o!... Lembre sempre de tomar cuidado quando viajar por a√≠.";
+					mes "Tudo bem, ent„o!... Lembre sempre de tomar cuidado quando viajar por aÌ.";
 					close;
 
 			case 3:
 				mes "[Hubite]";
-				mes "Tudo bem... Tome cuidado por a√≠.";
+				mes "Tudo bem... Tome cuidado por aÌ.";
 				close;
 		}
 	}
 		mes "[Hubite]";
-		mes "Bem, se tiver alguma d√∫vida, venha falar comigo.";
+		mes "Bem, se tiver alguma d˙vida, venha falar comigo.";
 		close;
 }
 
@@ -343,17 +343,17 @@ prt_in,177,20,2	script	Tanhu#pront	4W_M_01,{
 	switch(rand(3)) {
 		case 1:
 			mes "[Tanhu]";
-			mes "Ent√£o, voc√™ est√° cansado de s√≥ matar monstros?";
-			mes "N√£o aguenta mais ficar dentro de calabou√ßos ou se perdendo nas florestas?";
-			mes "Pois voc√™ deveria ir no PvP!";
+			mes "Ent„o, vocÍ est· cansado de sÛ matar monstros?";
+			mes "N„o aguenta mais ficar dentro de calabouÁos ou se perdendo nas florestas?";
+			mes "Pois vocÍ deveria ir no PvP!";
 			next;
 			mes "[Tanhu]";
-			mes "No PvP voc√™ pode enfrentar outras pessoas em replicas perfeitas de nossas cidades.";
-			mes "J√° me disseram que PvP significa 'Player versus Players', mas como eu n√£o sei ingles, continuei na mesma.";
-			mes "De qualquer maneira, eu te garanto que √© muito divertido!";
+			mes "No PvP vocÍ pode enfrentar outras pessoas em replicas perfeitas de nossas cidades.";
+			mes "J· me disseram que PvP significa 'Player versus Players', mas como eu n„o sei ingles, continuei na mesma.";
+			mes "De qualquer maneira, eu te garanto que È muito divertido!";
 			next;
 			mes "[Tanhu]";
-			mes "Voc√™ devia ao menos experimentar...";
+			mes "VocÍ devia ao menos experimentar...";
 			close;
 
 		case 2:
@@ -362,11 +362,11 @@ prt_in,177,20,2	script	Tanhu#pront	4W_M_01,{
 			mes "Mas que cidade linda! Com aqueles canais, e aqueles tijolinhos brancos...";
 			next;
 			mes "[Tanhu]";
-			mes "E √© l√° que fica a Central das Kafras, e elas oferecem alguns servi√ßoes especiais.";
-			mes "E √© sempre bons ver aquelas carinhas bonitinhas.";
+			mes "E È l· que fica a Central das Kafras, e elas oferecem alguns serviÁoes especiais.";
+			mes "E È sempre bons ver aquelas carinhas bonitinhas.";
 			next;
 			mes "[Tanhu]";
-			mes "Mas tome cuidado no caminho at√© Aldebaran... Eu fui atacado por mosntros sem que tivesse feito nada! Sem raz√£o nenhuma! Ent√£o v√° bem preparado...";
+			mes "Mas tome cuidado no caminho atÈ Aldebaran... Eu fui atacado por mosntros sem que tivesse feito nada! Sem raz„o nenhuma! Ent„o v· bem preparado...";
 			close;
 		
 		default:
@@ -374,56 +374,56 @@ prt_in,177,20,2	script	Tanhu#pront	4W_M_01,{
 			mes "Eu acho o mercado de Prontera simplesmente incrivel!";
 			next;
 			mes "[Tanhu]";
-			mes "D√° a impress√£o de que voc√™ pode encontrar qualquer coisa aqui...";
-			mes "Eu s√≥ gostaria que alguns mercadores e ferreiros n√£o abrissem suas lojas no meio da rua... √â pra isso que servem as cal√ßadas!";
+			mes "D· a impress„o de que vocÍ pode encontrar qualquer coisa aqui...";
+			mes "Eu sÛ gostaria que alguns mercadores e ferreiros n„o abrissem suas lojas no meio da rua... … pra isso que servem as calÁadas!";
 			close;
 	}
 }
 
 prt_in,177,18,2	script	Marin#pront	1_F_PUBGIRL,{
 	mes "[Marin]";
-	mes "A maioria das habilidades √© maximizada no n√≠vel 10, e isso s√£o muitos pontos...";
+	mes "A maioria das habilidades È maximizada no nÌvel 10, e isso s„o muitos pontos...";
 	next;
 	mes "[Marin]";
-	mes "Ao decidir que habilidades voc√™ vai usar, seja muito cuidadoso.";
+	mes "Ao decidir que habilidades vocÍ vai usar, seja muito cuidadoso.";
 	mes "Pesquise a respeito delas, por que nem todas valem a pena ser maximizadas.";
 	next;
 	mes "[Marin]";
-	mes "Muitas vezes, abrimos m√£os de certas habilidades por n√£o termos pontos o bastante...";
-	mes "Por isso em certas classes √© importante ir at√© o n√≠vel 50 de classe.";
+	mes "Muitas vezes, abrimos m„os de certas habilidades por n„o termos pontos o bastante...";
+	mes "Por isso em certas classes È importante ir atÈ o nÌvel 50 de classe.";
 	next;
 	mes "[Marin]";
-	mes "Claro que versatilidade √© algo importante, mas√© sempre bom pensar com que tipo de pessoas voc√™ vai estar acompanhado.";
-	mes "Minha dica √© sempre a mesma: Estude, estude, estude! Voc√™ n√£o vai querer se arrepender depois....";
+	mes "Claro que versatilidade È algo importante, masÈ sempre bom pensar com que tipo de pessoas vocÍ vai estar acompanhado.";
+	mes "Minha dica È sempre a mesma: Estude, estude, estude! VocÍ n„o vai querer se arrepender depois....";
 	close;
 }
 
 prt_in,284,168,3	script	Ginedin Rephere#pront	1_M_JOBTESTER,{
 	mes "[Ginedin Rephere]";
 	mes "Hmmm... Espero que caiba todos os meus convidados aqui...";
-	mes "Oh! Perd√£o, eu mal percebi que voc√™ estava aqui!";
+	mes "Oh! Perd„o, eu mal percebi que vocÍ estava aqui!";
 	next;
 	switch(select("Conversar:Tingir Roupas:Cancelar")) {
 		case 1:
 			mes "[Ginedin Rephere]";
 			mes "As pessoas ficam cada vez mais ricas, e podem gastar dinheiro com mais coisas.";
 			mes "Eu acho isso maravilhoso, por que assim as pessoas podem deixar de usar farrapos e investirem em lindas roupas!";
-			mes "Eu n√£o acho que roupas bonitas sejam algo superfluo, como muitos acham, mas √© claro que antes voc√™ deve se preocupar em por comida na mesa!";
+			mes "Eu n„o acho que roupas bonitas sejam algo superfluo, como muitos acham, mas È claro que antes vocÍ deve se preocupar em por comida na mesa!";
 			next;
 			mes "[Ginedin Rephere]";
-			mes "Uma roupa bem escolhida faz com que voc√™ se sinta melhor consigo mesmo, e seja mais feliz.";
+			mes "Uma roupa bem escolhida faz com que vocÍ se sinta melhor consigo mesmo, e seja mais feliz.";
 			mes "E eu adoro trabalhar com isso.. Fazer roupas que deixem as pessoas mais felizes, que expressem as suas personalidades..";
-			mes "Pode ser um trabalho muito dif√≠cil, mas √© imensamente recompensador.";
+			mes "Pode ser um trabalho muito difÌcil, mas È imensamente recompensador.";
 			close;
 		case 2:
 			mes "[Ginedin Rephere]";
-			mes "Ah... Voc√™ veio aqui tingir suas roupas?";
-			mes "Eu sinto muito, eu estou ocupad√≠ssimo no momento, n√£o posso mais tingir roupas.";
-			mes "Volte mais tarde, e quem sabe eu tenho um tempinho pra voc√™.";
+			mes "Ah... VocÍ veio aqui tingir suas roupas?";
+			mes "Eu sinto muito, eu estou ocupadÌssimo no momento, n„o posso mais tingir roupas.";
+			mes "Volte mais tarde, e quem sabe eu tenho um tempinho pra vocÍ.";
 			close;
 		case 3:
 			mes "[Ginedin Rephere]";
-			mes "Por favor, sinta-se em casa. Perdoe-me por n√£o poder lhe dar aten√ß√£o, tenho que organizar a minha festa.";
+			mes "Por favor, sinta-se em casa. Perdoe-me por n„o poder lhe dar atenÁ„o, tenho que organizar a minha festa.";
 			close;
 	}
 }
@@ -432,79 +432,79 @@ prt_in,284,168,3	script	Ginedin Rephere#pront	1_M_JOBTESTER,{
 //============================================================
 prt_church,103,76,0	script	Hemera#pront	1_F_02,{
 	mes "[Hemera]";
-	mes "Ol√°! Sou a Hemera, pode me chamar de Hemy... Mas ent√£o. Voc√™ gostaria de fazer o bem para os outros? As habilidades dos Sacerdotes s√£o feitas para isso!";
-	mes "Se voc√™ se interessa por esta voca√ß√£o, de ajudar e dedicar sua vida ao bem estar alheio, voc√™ pode ser um de n√≥s!";
+	mes "Ol·! Sou a Hemera, pode me chamar de Hemy... Mas ent„o. VocÍ gostaria de fazer o bem para os outros? As habilidades dos Sacerdotes s„o feitas para isso!";
+	mes "Se vocÍ se interessa por esta vocaÁ„o, de ajudar e dedicar sua vida ao bem estar alheio, vocÍ pode ser um de nÛs!";
 	next;
 	mes "[Hemera]";
-	mes "Com os poderes divinos, podemos restaurar o corpo mais cansado ou acordar a for√ßa total de um aventureiro!";
-	mes "Fique √† vontade, me pergunte o que quiser, viu? Meu conhecimento est√° √† sua disposi√ß√£o. Sobre qual habilidade voc√™ quer saber mais?";
+	mes "Com os poderes divinos, podemos restaurar o corpo mais cansado ou acordar a forÁa total de um aventureiro!";
+	mes "Fique ‡ vontade, me pergunte o que quiser, viu? Meu conhecimento est· ‡ sua disposiÁ„o. Sobre qual habilidade vocÍ quer saber mais?";
 	next;
 	.@SkillChat = 1;
 	while(.@SkillChat) {
-		switch(select("Sobre 'Curar'.:Sobre 'Medicar'.:Sobre 'Aumentar Agilidade'.:Sobre 'Angelus'.:Sobre 'Ben√ß√£o'.:Sobre 'Portal'.:N√£o me interesso muito por sacerdotes...")) {
+		switch(select("Sobre 'Curar'.:Sobre 'Medicar'.:Sobre 'Aumentar Agilidade'.:Sobre 'Angelus'.:Sobre 'BenÁ„o'.:Sobre 'Portal'.:N„o me interesso muito por sacerdotes...")) {
 			case 1:
 				mes "[Hemera]";
-				mes "'Curar' √© uma habilidade que restaura o HP do alvo.";
-				mes "√â uma das habilidades mais valiosas de um sacerdote, e vital para proteger e ajudar ao pr√≥ximo.";
-				mes "Os Sacerdotes t√™m uma evolu√ß√£o desta habilidade de nome 'Santu√°rio', que possibilita curar mais de uma pessoa ao mesmo tempo.";
+				mes "'Curar' È uma habilidade que restaura o HP do alvo.";
+				mes "… uma das habilidades mais valiosas de um sacerdote, e vital para proteger e ajudar ao prÛximo.";
+				mes "Os Sacerdotes tÍm uma evoluÁ„o desta habilidade de nome 'Santu·rio', que possibilita curar mais de uma pessoa ao mesmo tempo.";
 				next;
 				mes "[Hemera]";
 				mes "Mas deixe eu te contar um segredo... Se usada em monstros Malditos, como os mortos-vivos...Ela causa dano!";
-				mes "Isso porque estes monstros s√£o especialmente fracos contra poderes Sagrados. S√≥ n√£o se esque√ßa de apertar a tecla 'shift' ao 'cur√°-los'.";
+				mes "Isso porque estes monstros s„o especialmente fracos contra poderes Sagrados. SÛ n„o se esqueÁa de apertar a tecla 'shift' ao 'cur·-los'.";
 				next;
 				break;
 			case 2:
 				mes "[Hemera]";
-				mes "'Medicar'√© uma habilidade que pode retirar de um jogador algum estado especial, como Tontura ou Maldi√ß√£o.";
-				mes "Para aprend√™-la √© necess√°rio obter primeiro 'Curar' n√≠vel 2.";
+				mes "'Medicar'È uma habilidade que pode retirar de um jogador algum estado especial, como Tontura ou MaldiÁ„o.";
+				mes "Para aprendÍ-la È necess·rio obter primeiro 'Curar' nÌvel 2.";
 				next;
 				break;
 			case 3:
 				mes "[Hemera]";
-				mes "Esta habilidade aumenta o n√∫mero de pontos de Agilidade do jogador alvo beneficiando a velocidade dos ataques e a esquiva, al√©m de fazer com que ele ande mais r√°pido.";
+				mes "Esta habilidade aumenta o n˙mero de pontos de Agilidade do jogador alvo beneficiando a velocidade dos ataques e a esquiva, alÈm de fazer com que ele ande mais r·pido.";
 				mes "Ela favorece especialmente os Gatunos e Arqueiros, que costumam depender bastante da Agilidade nas batalhas.";
-				mes "Para aprend√™-la, √© necess√°rio primeiro ter 'Curar' em n√≠vel 3.";
+				mes "Para aprendÍ-la, È necess·rio primeiro ter 'Curar' em nÌvel 3.";
 				next;
 				break;
 			case 4:
 				mes "[Hemera]";
-				mes "Angelus √© uma habilidade que aumenta a Defesa de um Grupo todo ao mesmo tempo, fazendo com que todos resistam melhor √† ataques inimigos.";
-				mes "Mas, lembre-se que ela aumentar√° a defesa proporcionalmente √† Vitalidade de cada jogador, ent√£o os efeitos ser√£o diferentes pra cada um.";
+				mes "Angelus È uma habilidade que aumenta a Defesa de um Grupo todo ao mesmo tempo, fazendo com que todos resistam melhor ‡ ataques inimigos.";
+				mes "Mas, lembre-se que ela aumentar· a defesa proporcionalmente ‡ Vitalidade de cada jogador, ent„o os efeitos ser„o diferentes pra cada um.";
 				next;
 				mes "[Hemera]";
-				mes "Para obter esta habilidade, o n√≠vel de Prote√ß√£o Divina, uma habilidade que aumenta a Defesa do Sacerdote contra monstros Malditos, deve ser pelo menos 3.";
-				mes "Tendo aprendido Angelus, voc√™ poder√° obter uma habilidade muito valiosa quando se tornar um Sacerdote...";
-				mes "Esta habilidade chama-se Kyrie Eleison, e protege o jogador alvo de qualquer dano por um determinado n√∫mero de ataques.";
+				mes "Para obter esta habilidade, o nÌvel de ProteÁ„o Divina, uma habilidade que aumenta a Defesa do Sacerdote contra monstros Malditos, deve ser pelo menos 3.";
+				mes "Tendo aprendido Angelus, vocÍ poder· obter uma habilidade muito valiosa quando se tornar um Sacerdote...";
+				mes "Esta habilidade chama-se Kyrie Eleison, e protege o jogador alvo de qualquer dano por um determinado n˙mero de ataques.";
 				next;
 				break;
 			case 5:
 				mes "[Hemera]";
-				mes "'Ben√ß√£o' aumenta temporariamente os pontos do jogador alvo em For√ßa, Destreza e Intelig√™ncia.";
-				mes "√â uma das habilidades mais valiosas tanto para voc√™ quanto para seus companheiros!";
+				mes "'BenÁ„o' aumenta temporariamente os pontos do jogador alvo em ForÁa, Destreza e InteligÍncia.";
+				mes "… uma das habilidades mais valiosas tanto para vocÍ quanto para seus companheiros!";
 				next;
 				mes "[Hemera]";
-				mes "Assim como 'Angelus', para aprender 'Ben√ß√£o' √© necess√°rio ter algum n√≠vel em Prote√ß√£o Divina (s√≥ que n√≠vel 5 e n√£o 3).";
-				mes "N√£o se esque√ßa, 'Ben√ß√£o' pode ser muito √∫til para o pr√≥prio Sacerdote, j√° que com mais Intelig√™ncia, habilidades como 'Curar' ser√£o mais poderosos...";
+				mes "Assim como 'Angelus', para aprender 'BenÁ„o' È necess·rio ter algum nÌvel em ProteÁ„o Divina (sÛ que nÌvel 5 e n„o 3).";
+				mes "N„o se esqueÁa, 'BenÁ„o' pode ser muito ˙til para o prÛprio Sacerdote, j· que com mais InteligÍncia, habilidades como 'Curar' ser„o mais poderosos...";
 				next;
 				break;
 			case 6:
 				mes "[Hemera]";
-				mes "Para aprender a abrir um 'Portal', voc√™ precisa primeiro aprender 'Teleporte'.";
-				mes "Para aprender 'Teleporte' √© necess√°rio obter antes 'Revela√ß√£o', que permite detectar monstros escondidos e tem apenas um n√≠vel de habilidade.";
-				mes "'Portal' √© uma habilidade muito √∫til. Vou te explicar melhor como funciona.";
+				mes "Para aprender a abrir um 'Portal', vocÍ precisa primeiro aprender 'Teleporte'.";
+				mes "Para aprender 'Teleporte' È necess·rio obter antes 'RevelaÁ„o', que permite detectar monstros escondidos e tem apenas um nÌvel de habilidade.";
+				mes "'Portal' È uma habilidade muito ˙til. Vou te explicar melhor como funciona.";
 				next;
 				mes "[Hemera]";
-				mes "Abrir um 'Portal' faz com que voc√™ possa se transportar entre locais muito, muito distantes num piscar de olhos.";
-				mes "Voc√™ pode escolher at√© 4 lugares (no n√≠vel 4 da habilidade) para onde abrir um portal. Um destes lugares ser√° obrigatoriamente onde voc√™ salvou seu Ponto de In√≠cio.";
+				mes "Abrir um 'Portal' faz com que vocÍ possa se transportar entre locais muito, muito distantes num piscar de olhos.";
+				mes "VocÍ pode escolher atÈ 4 lugares (no nÌvel 4 da habilidade) para onde abrir um portal. Um destes lugares ser· obrigatoriamente onde vocÍ salvou seu Ponto de InÌcio.";
 				next;
 				mes "[Hemera]";
-				mes "Como se faz para 'marcar' um lugar como destino de um portal? √â s√≥ digitar /memo no local que voc√™ desejar e ele ser√° marcado.";
-				mes "Lembre-se que n√£o √© poss√≠vel marcar um portal dentro de um calabou√ßo.";
-				mes "E cuidado, pois esta habilidade gasta muito SP e dependendo da situa√ß√£o, isso pode te deixar em maus len√ß√≥is!";
+				mes "Como se faz para 'marcar' um lugar como destino de um portal? … sÛ digitar /memo no local que vocÍ desejar e ele ser· marcado.";
+				mes "Lembre-se que n„o È possÌvel marcar um portal dentro de um calabouÁo.";
+				mes "E cuidado, pois esta habilidade gasta muito SP e dependendo da situaÁ„o, isso pode te deixar em maus lenÁÛis!";
 				next;
 				mes "[Hemera]";
-				mes "Ah! E o mais importante! √â necess√°rio usar a energia de uma Gema Azul para abrir um portal.";
-				mes "Se voc√™ n√£o tiver uma Gema Azul para 'gastar', o portal simplesmente n√£o abre!";
+				mes "Ah! E o mais importante! … necess·rio usar a energia de uma Gema Azul para abrir um portal.";
+				mes "Se vocÍ n„o tiver uma Gema Azul para 'gastar', o portal simplesmente n„o abre!";
 				next;
 				break;
 			case 7:
@@ -520,67 +520,67 @@ prt_church,103,76,0	script	Hemera#pront	1_F_02,{
 
 prt_church,103,71,0	script	Kostario#pront	2_M_PHARMACIST,{
 	mes "[Kostario]";
-	mes "√â muito bom poder ajudar ao pr√≥ximo...";
-	mes "No entanto, n√£o √© s√≥ disso que vive um servo do Senhor. Nossa miss√£o tamb√©m √© a de proteger o mundo dos amaldi√ßoados e dos dem√¥nios.";
-	mes "Os Sacerdotes devem ser capazes de lutar contra as legi√µes Malditas em nome do Senhor! Por isso, temos habilidades que nos favorecem contra os servos do Mal. Quer saber mais sobre alguma delas?";
+	mes "… muito bom poder ajudar ao prÛximo...";
+	mes "No entanto, n„o È sÛ disso que vive um servo do Senhor. Nossa miss„o tambÈm È a de proteger o mundo dos amaldiÁoados e dos demÙnios.";
+	mes "Os Sacerdotes devem ser capazes de lutar contra as legiıes Malditas em nome do Senhor! Por isso, temos habilidades que nos favorecem contra os servos do Mal. Quer saber mais sobre alguma delas?";
 	next;
 	.@SkillChat = 1;
 	while(.@SkillChat) {
-		switch(select("Sobre 'Prote√ß√£o Divina'.:Sobre 'Flagelo do Mal'.:Sobre 'Diminuir Agilidade'.:Sobre 'Signum Crusis'.:Sobre 'Escudo Sagrado'.:Sobre 'Revela√ß√£o'.:Sobre 'Teleporte'.:Na verdade, n√£o.")) {
+		switch(select("Sobre 'ProteÁ„o Divina'.:Sobre 'Flagelo do Mal'.:Sobre 'Diminuir Agilidade'.:Sobre 'Signum Crusis'.:Sobre 'Escudo Sagrado'.:Sobre 'RevelaÁ„o'.:Sobre 'Teleporte'.:Na verdade, n„o.")) {
 			case 1:
 				mes "[Kostario]";
-				mes "Para aumentar sua resist√™ncia aos ataques Malditos e de D√™monios voc√™ precisa desta habilidade.";
-				mes "Esta √© uma habilidade passiva, e portanto sem limite de tempo ou gasto de SP.";
+				mes "Para aumentar sua resistÍncia aos ataques Malditos e de DÍmonios vocÍ precisa desta habilidade.";
+				mes "Esta È uma habilidade passiva, e portanto sem limite de tempo ou gasto de SP.";
 				next;
 				mes "[Kostario]";
-				mes "Subindo o n√≠vel da habilidade at√© 3, voc√™ pode aprender 'Flagelo do Mal', que aumenta o ataque contra os monstros Malditos e D√™monios.";
-				mes "'Angelus' tamb√©m pode ser usada para aumentar a defesa e 'Ben√ß√£o' para aumentar sua For√ßa, Destreza e Intelig√™ncia temporariamente. Como voc√™ pode ver, temos muitas armas contra o mal...Hehehe.";
+				mes "Subindo o nÌvel da habilidade atÈ 3, vocÍ pode aprender 'Flagelo do Mal', que aumenta o ataque contra os monstros Malditos e DÍmonios.";
+				mes "'Angelus' tambÈm pode ser usada para aumentar a defesa e 'BenÁ„o' para aumentar sua ForÁa, Destreza e InteligÍncia temporariamente. Como vocÍ pode ver, temos muitas armas contra o mal...Hehehe.";
 				next;
 				break;
 			case 2:
 				mes "[Kostario]";
-				mes "'Flagelo do Mal' aumenta o dano de ataques contra os monstros Malditos e D√™monios.";
-				mes "Ele requer 'Prote√ß√£o Divina' n√≠vel 3, e assim como esta, √© uma habilidade passiva e sem gasto de SP.";
+				mes "'Flagelo do Mal' aumenta o dano de ataques contra os monstros Malditos e DÍmonios.";
+				mes "Ele requer 'ProteÁ„o Divina' nÌvel 3, e assim como esta, È uma habilidade passiva e sem gasto de SP.";
 				next;
 				mes "[Kostario]";
-				mes "Com n√≠vel 3 em 'Flagelo do Mal' voc√™ pode aprender 'Signum Crusis', que diminui a defesa destes monstros.";
+				mes "Com nÌvel 3 em 'Flagelo do Mal' vocÍ pode aprender 'Signum Crusis', que diminui a defesa destes monstros.";
 				next;
 				break;
 			case 3:
 				mes "[Kostario]";
-				mes "Esta habilidade diminui a Agilidade dos inimigos, e com isso, diminui tamb√©m a velocidade de ataque e esquiva deles.";
-				mes "Para aprend√™-la √© necess√°rio pelo menos um ponto de habilidade em 'Aumentar Agilidade'.";
+				mes "Esta habilidade diminui a Agilidade dos inimigos, e com isso, diminui tambÈm a velocidade de ataque e esquiva deles.";
+				mes "Para aprendÍ-la È necess·rio pelo menos um ponto de habilidade em 'Aumentar Agilidade'.";
 				next;
 				break;
 			case 4:
 				mes "[Kostario]";
-				mes "Esta habilidade diminui a Defesa de monstros de propriedade Maldita ou de Escurid√£o... Ela funciona numa √°rea de alcance bem grande, quase todo o espa√ßo da tela!";
-				mes "Por√©m, a chance de sucesso dela √© pequena e costuma falhar bastante.  Lembre-se disso!";
+				mes "Esta habilidade diminui a Defesa de monstros de propriedade Maldita ou de Escurid„o... Ela funciona numa ·rea de alcance bem grande, quase todo o espaÁo da tela!";
+				mes "PorÈm, a chance de sucesso dela È pequena e costuma falhar bastante.  Lembre-se disso!";
 				next;
 				mes "[Kostario]";
-				mes "Para usar esta habilidade, √© necess√°rio ter 'Flagelo do Mal' em n√≠vel 3.";
+				mes "Para usar esta habilidade, È necess·rio ter 'Flagelo do Mal' em nÌvel 3.";
 				next;
 				break;
 			case 5:
 				mes "[Kostario]";
-				mes "Tendo maximizado 'Portal', voc√™ poder√° aprender esa habilidade.";
-				mes "Ela permite que voc√™ crie um escudo protetor contra ataques de proj√©teis como flechas, pedras ou balas.";
+				mes "Tendo maximizado 'Portal', vocÍ poder· aprender esa habilidade.";
+				mes "Ela permite que vocÍ crie um escudo protetor contra ataques de projÈteis como flechas, pedras ou balas.";
 				next;
 				break;
 			case 6:
 				mes "[Kostario]";
-				mes "Esta habilidade permite detectar monstros (e jogadores) escondidos. Quando revelados, eles sofrer√£o um ataque de propriedade Sagrada.";
-				mes "Este ataque varia em poder de acordo com a Intelig√™ncia do Padre. √â um pr√©-requisito para aprender 'Teleporte' e 'Portal'.";
+				mes "Esta habilidade permite detectar monstros (e jogadores) escondidos. Quando revelados, eles sofrer„o um ataque de propriedade Sagrada.";
+				mes "Este ataque varia em poder de acordo com a InteligÍncia do Padre. … um prÈ-requisito para aprender 'Teleporte' e 'Portal'.";
 				next;
 				break;
 			case 7:
 				mes "[Kostario]";
-				mes "'Teleporte' √© aprendida ap√≥s obter-se 1 n√≠vel em 'Revela√ß√£o'.";
-				mes "Em n√≠vel 1 ela permite que voc√™ se teleporte para um lugar qualquer dentro do mapa em que voc√™ se encontra.";
-				mes "Cuidado para n√£o cair em algum lugar perigoso! No n√≠vel 2, 'Teleporte' permite mandar o personagem de volta ao Ponto de In√≠cio, onde ele salvou.";
+				mes "'Teleporte' È aprendida apÛs obter-se 1 nÌvel em 'RevelaÁ„o'.";
+				mes "Em nÌvel 1 ela permite que vocÍ se teleporte para um lugar qualquer dentro do mapa em que vocÍ se encontra.";
+				mes "Cuidado para n„o cair em algum lugar perigoso! No nÌvel 2, 'Teleporte' permite mandar o personagem de volta ao Ponto de InÌcio, onde ele salvou.";
 				next;
 				mes "[Kostario]";
-				mes "Depois de 'Teleporte', voc√™ pode aprender 'Portal' que permite teleportar outros personagens tamb√©m, para √°reas √† sua escolha.";
+				mes "Depois de 'Teleporte', vocÍ pode aprender 'Portal' que permite teleportar outros personagens tambÈm, para ·reas ‡ sua escolha.";
 				next;
 				break;
 			case 8:
@@ -598,14 +598,14 @@ prt_church,103,71,0	script	Kostario#pront	2_M_PHARMACIST,{
 //============================================================
 prt_maze02,100,69,0	script	Soldado#pront	8W_SOLDIER,{
 	mes "[Soldado]";
-	mes "Se eu fosse voc√™, n√£o entraria nessa floresta...";
-	mes "Olhe para o ch√£o... S√≥ d√° pra ver pegadas entrando, nenhuma saindo!";
+	mes "Se eu fosse vocÍ, n„o entraria nessa floresta...";
+	mes "Olhe para o ch„o... SÛ d· pra ver pegadas entrando, nenhuma saindo!";
 	close;
 }
 
 prt_maze02,110,69,0	script	Soldado#2pront	8W_SOLDIER,{
 	mes "[Soldado]";
-	mes "Eu j√° vi jovens demais entrarem nesta floresta e n√£o sairem nunca mais...";
+	mes "Eu j· vi jovens demais entrarem nesta floresta e n„o sairem nunca mais...";
 	mes "Eu nunca arriscaria minha vida desse jeito, mas cada um leva a vida que quer.";
 	close;
 }
