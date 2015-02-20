@@ -2409,13 +2409,13 @@ void npc_delsrcfile(const char* name)
 void npc_parsename(struct npc_data* nd, const char* name, const char* start, const char* buffer, const char* filepath) {
 	const char* p;
 	struct npc_data* dnd;// duplicate npc
-	char newname[NAME_LENGTH];
+	char newname[NPC_NAME_LENGTH];
 
 	// parse name
 	p = strstr(name,"::");
 	if( p ) { // <Display name>::<Unique name>
 		size_t len = p-name;
-		if( len > NAME_LENGTH ) {
+		if( len > NPC_NAME_LENGTH ) {
 			ShowWarning("npc_parsename: Display name of '%s' is too long (len=%u) in file '%s', line '%d'. Truncating to %u characters.\n", name, (unsigned int)len, filepath, strline(buffer,start-buffer), NAME_LENGTH);
 			safestrncpy(nd->name, name, sizeof(nd->name));
 		} else {
@@ -2423,12 +2423,12 @@ void npc_parsename(struct npc_data* nd, const char* name, const char* start, con
 			memset(nd->name+len, 0, sizeof(nd->name)-len);
 		}
 		len = strlen(p+2);
-		if( len > NAME_LENGTH )
+		if( len > NPC_NAME_LENGTH )
 			ShowWarning("npc_parsename: Unique name of '%s' is too long (len=%u) in file '%s', line '%d'. Truncating to %u characters.\n", name, (unsigned int)len, filepath, strline(buffer,start-buffer), NAME_LENGTH);
 		safestrncpy(nd->exname, p+2, sizeof(nd->exname));
 	} else {// <Display name>
 		size_t len = strlen(name);
-		if( len > NAME_LENGTH )
+		if( len > NPC_NAME_LENGTH )
 			ShowWarning("npc_parsename: Name '%s' is too long (len=%u) in file '%s', line '%d'. Truncating to %u characters.\n", name, (unsigned int)len, filepath, strline(buffer,start-buffer), NAME_LENGTH);
 		safestrncpy(nd->name, name, sizeof(nd->name));
 		safestrncpy(nd->exname, name, sizeof(nd->exname));
@@ -3167,7 +3167,7 @@ const char* npc_parse_duplicate(char* w1, char* w2, char* w3, char* w4, const ch
 }
 
 int npc_duplicate4instance(struct npc_data *snd, int16 m) {
-	char newname[NAME_LENGTH];
+	char newname[NPC_NAME_LENGTH];
 
 	if( m == -1 || map->list[m].instance_id == -1 )
 		return 1;
@@ -4572,8 +4572,8 @@ int do_init_npc(bool minimal) {
 		npc_viewdb2[i - MAX_NPC_CLASS2_START].class_ = i;
 
 	npc->ev_db = strdb_alloc(DB_OPT_DUP_KEY|DB_OPT_RELEASE_DATA, EVENT_NAME_LENGTH);
-	npc->ev_label_db = strdb_alloc(DB_OPT_DUP_KEY|DB_OPT_RELEASE_DATA, NAME_LENGTH);
-	npc->name_db = strdb_alloc(DB_OPT_BASE, NAME_LENGTH);
+	npc->ev_label_db = strdb_alloc(DB_OPT_DUP_KEY|DB_OPT_RELEASE_DATA, NPC_NAME_LENGTH);
+	npc->name_db = strdb_alloc(DB_OPT_BASE, NPC_NAME_LENGTH);
 	npc->path_db = strdb_alloc(DB_OPT_DUP_KEY|DB_OPT_RELEASE_DATA, 0);
 
 	npc_last_npd = NULL;
