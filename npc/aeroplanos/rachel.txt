@@ -1,0 +1,48 @@
+//    ________________________________________________________
+//   /                                                        \
+//   |       _           _   _   _                            |
+//   |      | |__  _ __ / \ | |_| |__   ___ _ __   __ _       |
+//   |      | '_ \| '__/ _ \| __| '_ \ / _ \ '_ \ / _` |      |
+//   |      | |_) | | / ___ \ |_| | | |  __/ | | | (_| |      |
+//   |      |_.__/|_|/_/   \_\__|_| |_|\___|_| |_|\__,_|      |
+//   |                                                        |
+//   |                    brAthena Script                     |
+//   |--------------------------------------------------------|
+//   | Nome do Script: rachel.txt                             |
+//   |--------------------------------------------------------|
+//   | Criado por: Herc/brA Dev. Team                         |
+//   |--------------------------------------------------------|
+//   | Versões Herc/brA: 1.0/1.0                              |
+//   |--------------------------------------------------------|
+//   | Descrição: Aeroplano de Rachel                         |
+//   |--------------------------------------------------------|
+//   | Changelog:                                             |
+//   | 1.0 Cabeçalho brAthena [Axl]                           |
+//   |--------------------------------------------------------|
+//   | - Anotações                                            |
+//   \________________________________________________________/
+
+ra_fild12,295,208,0	script	toairplane#rachel	WARPNPC,1,1,{
+	end;
+OnTouch:
+	mes "To use the airship, you are required to pay 1,200 zeny or a Free Airship Ticket.";
+	mes "Would you like to use the service?";
+	next;
+	if (select("Yes:No") == 1) {
+		if (countitem(7311) > 0) {
+			delitem 7311,1; //Free_Flying_Ship_Ticket
+			warp "airplane_01",245,60;
+			end;
+		}
+		if (Zeny >= 1200) {
+			Zeny -= 1200;
+			warp "airplane_01",245,60;
+			end;
+		}
+		mes "I am sorry, but you do not have enough money.";
+		mes "Please remember, you are required to pay 1,200 zeny to use the service.";
+		close;
+	}
+	mes "Thank you, please come again.";
+	close;
+}
