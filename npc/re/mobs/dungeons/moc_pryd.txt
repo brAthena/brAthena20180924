@@ -14,66 +14,66 @@
 //==================================================
 // moc_pryd01 - Inside Pyramid F1
 //==================================================
-moc_pryd01,0,0,0,0	monster	Familiar	1005,50,5000,0,0
-moc_pryd01,0,0,0,0	monster	Poporing	1031,20,5000,0,0
+moc_pryd01,0,0,0,0	monster	Familiar	FARMILIAR,50,5000,0,0
+moc_pryd01,0,0,0,0	monster	Poporing	POPORING,20,5000,0,0
 
 //==================================================
 // moc_pryd02 - Inside Pyramid F2
 //==================================================
-moc_pryd02,0,0,0,0	monster	Mummy	1041,30,5000,0,0
-moc_pryd02,0,0,0,0	monster	Soldier Skeleton	1028,30,5000,0,0
-moc_pryd02,0,0,0,0	monster	Archer Skeleton	1016,30,5000,0,0
-moc_pryd02,0,0,0,0	monster	Drainliar	1111,20,5000,0,0
-moc_pryd02,0,0,0,0	monster	Poporing	1031,20,5000,0,0
-moc_pryd02,0,0,0,0	monster	Isis	1029,5,5000,0,0
+moc_pryd02,0,0,0,0	monster	Mummy	MUMMY,30,5000,0,0
+moc_pryd02,0,0,0,0	monster	Soldier Skeleton	SOLDIER_SKELETON,30,5000,0,0
+moc_pryd02,0,0,0,0	monster	Archer Skeleton	ARCHER_SKELETON,30,5000,0,0
+moc_pryd02,0,0,0,0	monster	Drainliar	DRAINLIAR,20,5000,0,0
+moc_pryd02,0,0,0,0	monster	Poporing	POPORING,20,5000,0,0
+moc_pryd02,0,0,0,0	monster	Isis	ISIS,5,5000,0,0
 
 //==================================================
 // moc_pryd03 - Inside Pyramid F3
 //==================================================
-moc_pryd03,0,0,0,0	monster	Mummy	1041,70,5000,0,0
-moc_pryd03,0,0,0,0	monster	Verit	1032,20,5000,0,0
-moc_pryd03,0,0,0,0	monster	Matyr	1146,10,5000,0,0
-moc_pryd03,0,0,0,0	monster	Drainliar	1111,5,5000,0,0
-moc_pryd03,0,0,0,0	monster	Mimic	1191,5,5000,0,0
+moc_pryd03,0,0,0,0	monster	Mummy	MUMMY,70,5000,0,0
+moc_pryd03,0,0,0,0	monster	Verit	VERIT,20,5000,0,0
+moc_pryd03,0,0,0,0	monster	Matyr	MATYR,10,5000,0,0
+moc_pryd03,0,0,0,0	monster	Drainliar	DRAINLIAR,5,5000,0,0
+moc_pryd03,0,0,0,0	monster	Mimic	MIMIC,5,5000,0,0
 
 //==================================================
 // moc_pryd04 - Inside Pyramid F4
 //==================================================
-moc_pryd04,0,0,0,0	monster	Isis	1029,50,5000,0,0
-moc_pryd04,0,0,0,0	monster	Mummy	1041,25,5000,0,0
-moc_pryd04,0,0,0,0	monster	Matyr	1146,20,5000,0,0
-moc_pryd04,0,0,0,0	monster	Mimic	1191,15,5000,0,0
-moc_pryd04,0,0,0,0	monster	Ancient Mummy	1297,3,5000,0,0
-moc_pryd04,0,0,0,0	boss_monster	Osiris	1038,1,3600000,600000,0
+moc_pryd04,0,0,0,0	monster	Isis	ISIS,50,5000,0,0
+moc_pryd04,0,0,0,0	monster	Mummy	MUMMY,25,5000,0,0
+moc_pryd04,0,0,0,0	monster	Matyr	MATYR,20,5000,0,0
+moc_pryd04,0,0,0,0	monster	Mimic	MIMIC,15,5000,0,0
+moc_pryd04,0,0,0,0	monster	Ancient Mummy	ANCIENT_MUMMY,3,5000,0,0
+moc_pryd04,0,0,0,0	boss_monster	Osiris	OSIRIS,1,3600000,600000,0
 
 //==================================================
 // moc_pryd05 - Inside Pyramid B1
 //==================================================
-moc_pryd05,0,0,0,0	monster	Minorous	1149,60,5000,0,0
-moc_pryd05,0,0,0,0	monster	Verit	1032,50,5000,0,0
-moc_pryd05,0,0,0,0	monster	Mummy	1041,10,5000,0,0
+moc_pryd05,0,0,0,0	monster	Minorous	MINOROUS,60,5000,0,0
+moc_pryd05,0,0,0,0	monster	Verit	VERIT,50,5000,0,0
+moc_pryd05,0,0,0,0	monster	Mummy	MUMMY,10,5000,0,0
 
 //==================================================
 // moc_pryd06 - Inside Pyramid B2
 //==================================================
-moc_pryd06,0,0,0,0	monster	Mimic	1191,30,5000,0,0
-moc_pryd06,0,0,0,0	monster	Verit	1032,30,5000,0,0
-moc_pryd06,0,0,0,0	monster	Arclouze	1194,20,5000,0,0
-moc_pryd06,0,0,0,0	monster	Ancient Mummy	1297,20,5000,0,0
-moc_pryd06,102,85,1,1	boss_monster	Amon Ra	1511,1,3600000,600000,0
+moc_pryd06,0,0,0,0	monster	Mimic	MIMIC,30,5000,0,0
+moc_pryd06,0,0,0,0	monster	Verit	VERIT,30,5000,0,0
+moc_pryd06,0,0,0,0	monster	Arclouze	ARCLOUSE,20,5000,0,0
+moc_pryd06,0,0,0,0	monster	Ancient Mummy	ANCIENT_MUMMY,20,5000,0,0
+moc_pryd06,102,85,1,1	boss_monster	Amon Ra	AMON_RA,1,3600000,600000,0
 
 //==================================================
 // moc_prydn1 - Nightmare Mode B1
 //==================================================
-moc_prydn1,0,0,0,0	monster	Nightmare Minorous	2353,60,5000,0,0
-moc_prydn1,0,0,0,0	monster	Nightmare Mummy	2354,10,5000,0,0
-moc_prydn1,0,0,0,0	monster	Nightmare Verit	2355,50,5000,0,0
+moc_prydn1,0,0,0,0	monster	Nightmare Minorous	N_MINOROUS,60,5000,0,0
+moc_prydn1,0,0,0,0	monster	Nightmare Mummy	N_MUMMY,10,5000,0,0
+moc_prydn1,0,0,0,0	monster	Nightmare Verit	N_VERIT,50,5000,0,0
 
 //==================================================
 // moc_prydn2 - Nightmare Mode B2
 //==================================================
-moc_prydn2,0,0,0,0	monster	Nightmare Mimic	2356,30,5000,0,0
-moc_prydn2,0,0,0,0	monster	Nightmare Verit	2355,30,5000,0,0
-moc_prydn2,0,0,0,0	monster	Nightmare Arclouze	2358,20,5000,0,0
-moc_prydn2,0,0,0,0	monster	Nightmare Ancient Mummy	2360,20,5000,0,0
-moc_prydn2,102,85,1,1	boss_monster	Nightmare Amon Ra	2362,1,3600000,600000,0
+moc_prydn2,0,0,0,0	monster	Nightmare Mimic	N_MIMIC,30,5000,0,0
+moc_prydn2,0,0,0,0	monster	Nightmare Verit	N_VERIT,30,5000,0,0
+moc_prydn2,0,0,0,0	monster	Nightmare Arclouze	N_ARCLOUSE,20,5000,0,0
+moc_prydn2,0,0,0,0	monster	Nightmare Ancient Mummy	N_ANCIENT_MUMMY,20,5000,0,0
+moc_prydn2,102,85,1,1	boss_monster	Nightmare Amon Ra	N_AMON_RA,1,3600000,600000,0

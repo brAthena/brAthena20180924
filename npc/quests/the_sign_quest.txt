@@ -12430,15 +12430,15 @@ OnReset:
 	end;
 }
 
-que_sign02,0,0,0,0	monster	Ancient Mummy	1522,8,0,0,0
-que_sign02,0,0,0,0	monster	Evil Druid	1435,8,0,0,0
-que_sign02,0,0,0,0	monster	Ghoul	1423,20,0,0,0
-que_sign02,0,0,0,0	monster	Incubus	1580,8,0,0,0
-que_sign02,0,0,0,0	monster	Injustice	1446,8,0,0,0
-que_sign02,0,0,0,0	monster	Skeleton Prisoner	1479,15,0,0,0
-que_sign02,0,0,0,0	monster	Zombie Prisoner	1480,15,0,0,0
-que_sign02,0,0,0,0	monster	Wraith	1475,15,0,0,0
-que_sign02,0,0,0,0	monster	Wraith Dead	1566,8,0,0,0
+que_sign02,0,0,0,0	monster	Ancient Mummy	G_ANCIENT_MUMMY,8,0,0,0
+que_sign02,0,0,0,0	monster	Evil Druid	G_EVIL_DRUID,8,0,0,0
+que_sign02,0,0,0,0	monster	Ghoul	G_GHOUL,20,0,0,0
+que_sign02,0,0,0,0	monster	Incubus	G_INCUBUS,8,0,0,0
+que_sign02,0,0,0,0	monster	Injustice	G_INJUSTICE,8,0,0,0
+que_sign02,0,0,0,0	monster	Skeleton Prisoner	G_SKEL_PRISONER,15,0,0,0
+que_sign02,0,0,0,0	monster	Zombie Prisoner	G_ZOMBIE_PRISONER,15,0,0,0
+que_sign02,0,0,0,0	monster	Wraith	G_WRAITH,15,0,0,0
+que_sign02,0,0,0,0	monster	Wraith Dead	G_WRAITH_DEAD,8,0,0,0
 
 que_sign02,378,235,0	script	sign_w6	WARPNPC,1,1,{
 OnTouch:

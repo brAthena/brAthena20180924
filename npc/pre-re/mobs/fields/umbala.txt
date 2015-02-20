@@ -12,86 +12,86 @@
 //==================================================
 // um_fild01 - Luluka Forest
 //==================================================
-um_fild01,0,0,0,0	monster	Wootan Fighter	1499,10,0,0,0
-um_fild01,0,0,0,0	monster	Stem Worm	1215,15,0,0,0
-um_fild01,0,0,0,0	monster	Harpy	1376,2,0,0,0
-um_fild01,0,0,0,0	monster	Dryad	1493,65,0,0,0
-um_fild01,0,0,0,0	monster	Dustiness	1114,10,0,0,0
-um_fild01,0,0,0,0	monster	Green Plant	1080,10,180000,90000,1
-um_fild01,0,0,0,0	monster	Yellow Plant	1081,10,180000,90000,1
-um_fild01,0,0,0,0	monster	Shining Plant	1083,6,180000,90000,1
+um_fild01,0,0,0,0	monster	Wootan Fighter	WOOTAN_FIGHTER,10,0,0,0
+um_fild01,0,0,0,0	monster	Stem Worm	STEM_WORM,15,0,0,0
+um_fild01,0,0,0,0	monster	Harpy	HARPY,2,0,0,0
+um_fild01,0,0,0,0	monster	Dryad	DRYAD,65,0,0,0
+um_fild01,0,0,0,0	monster	Dustiness	DUSTINESS,10,0,0,0
+um_fild01,0,0,0,0	monster	Green Plant	GREEN_PLANT,10,180000,90000,1
+um_fild01,0,0,0,0	monster	Yellow Plant	YELLOW_PLANT,10,180000,90000,1
+um_fild01,0,0,0,0	monster	Shining Plant	SHINING_PLANT,6,180000,90000,1
 
 //==================================================
 // um_fild02 - Hoomga Forest
 //==================================================
-um_fild02,0,0,0,0	monster	Coco	1104,10,0,0,0
-um_fild02,0,0,0,0	monster	Choco	1214,5,0,0,0
-um_fild02,0,0,0,0	monster	Beetle King	1494,30,0,0,0
-um_fild02,0,0,0,0	monster	Dustiness	1114,20,0,0,0
-um_fild02,0,0,0,0	monster	Wootan Fighter	1499,26,0,0,0
-um_fild02,0,0,0,0	monster	Stone Shooter	1495,13,0,0,0
-um_fild02,169,215,10,10	monster	Stone Shooter	1495,1,120000,60000,0
-um_fild02,169,215,10,10	monster	Wootan Fighter	1499,2,120000,60000,0
-um_fild02,159,285,10,10	monster	Stone Shooter	1495,1,120000,60000,0
-um_fild02,159,285,10,10	monster	Wootan Fighter	1499,2,120000,60000,0
-um_fild02,99,303,10,10	monster	Stone Shooter	1495,1,120000,60000,0
-um_fild02,99,303,10,10	monster	Wootan Fighter	1499,2,120000,60000,0
-um_fild02,122,242,10,10	monster	Stone Shooter	1495,1,120000,60000,0
-um_fild02,122,242,10,10	monster	Wootan Fighter	1499,2,120000,60000,0
-um_fild02,124,198,10,10	monster	Stone Shooter	1495,1,120000,60000,0
-um_fild02,124,198,10,10	monster	Wootan Fighter	1499,2,120000,60000,0
-um_fild02,126,133,10,10	monster	Stone Shooter	1495,1,120000,60000,0
-um_fild02,126,133,10,10	monster	Wootan Fighter	1499,2,120000,60000,0
-um_fild02,159,171,10,10	monster	Stone Shooter	1495,1,120000,60000,0
-um_fild02,159,171,10,10	monster	Wootan Fighter	1499,2,120000,60000,0
-um_fild02,284,247,10,10	monster	Stone Shooter	1495,1,120000,60000,0
-um_fild02,284,247,10,10	monster	Wootan Fighter	1499,2,120000,60000,0
-um_fild02,330,262,10,10	monster	Stone Shooter	1495,1,120000,60000,0
-um_fild02,330,262,10,10	monster	Wootan Fighter	1499,2,120000,60000,0
-um_fild02,296,187,10,10	monster	Stone Shooter	1495,1,120000,60000,0
-um_fild02,296,187,10,10	monster	Wootan Fighter	1499,2,120000,60000,0
-um_fild02,285,105,10,10	monster	Stone Shooter	1495,1,120000,60000,0
-um_fild02,285,105,10,10	monster	Wootan Fighter	1499,2,120000,60000,0
-um_fild02,257,137,10,10	monster	Stone Shooter	1495,1,120000,60000,0
-um_fild02,257,137,10,10	monster	Wootan Fighter	1499,2,120000,60000,0
-um_fild02,360,320,20,30	monster	Flora	1118,3,180000,120000,0
-um_fild02,0,0,0,0	monster	Red Plant	1078,5,180000,90000,1
-um_fild02,0,0,0,0	monster	Yellow Plant	1081,5,180000,90000,1
+um_fild02,0,0,0,0	monster	Coco	COCO,10,0,0,0
+um_fild02,0,0,0,0	monster	Choco	CHOCO,5,0,0,0
+um_fild02,0,0,0,0	monster	Beetle King	KIND_OF_BEETLE,30,0,0,0
+um_fild02,0,0,0,0	monster	Dustiness	DUSTINESS,20,0,0,0
+um_fild02,0,0,0,0	monster	Wootan Fighter	WOOTAN_FIGHTER,26,0,0,0
+um_fild02,0,0,0,0	monster	Stone Shooter	STONE_SHOOTER,13,0,0,0
+um_fild02,169,215,10,10	monster	Stone Shooter	STONE_SHOOTER,1,120000,60000,0
+um_fild02,169,215,10,10	monster	Wootan Fighter	WOOTAN_FIGHTER,2,120000,60000,0
+um_fild02,159,285,10,10	monster	Stone Shooter	STONE_SHOOTER,1,120000,60000,0
+um_fild02,159,285,10,10	monster	Wootan Fighter	WOOTAN_FIGHTER,2,120000,60000,0
+um_fild02,99,303,10,10	monster	Stone Shooter	STONE_SHOOTER,1,120000,60000,0
+um_fild02,99,303,10,10	monster	Wootan Fighter	WOOTAN_FIGHTER,2,120000,60000,0
+um_fild02,122,242,10,10	monster	Stone Shooter	STONE_SHOOTER,1,120000,60000,0
+um_fild02,122,242,10,10	monster	Wootan Fighter	WOOTAN_FIGHTER,2,120000,60000,0
+um_fild02,124,198,10,10	monster	Stone Shooter	STONE_SHOOTER,1,120000,60000,0
+um_fild02,124,198,10,10	monster	Wootan Fighter	WOOTAN_FIGHTER,2,120000,60000,0
+um_fild02,126,133,10,10	monster	Stone Shooter	STONE_SHOOTER,1,120000,60000,0
+um_fild02,126,133,10,10	monster	Wootan Fighter	WOOTAN_FIGHTER,2,120000,60000,0
+um_fild02,159,171,10,10	monster	Stone Shooter	STONE_SHOOTER,1,120000,60000,0
+um_fild02,159,171,10,10	monster	Wootan Fighter	WOOTAN_FIGHTER,2,120000,60000,0
+um_fild02,284,247,10,10	monster	Stone Shooter	STONE_SHOOTER,1,120000,60000,0
+um_fild02,284,247,10,10	monster	Wootan Fighter	WOOTAN_FIGHTER,2,120000,60000,0
+um_fild02,330,262,10,10	monster	Stone Shooter	STONE_SHOOTER,1,120000,60000,0
+um_fild02,330,262,10,10	monster	Wootan Fighter	WOOTAN_FIGHTER,2,120000,60000,0
+um_fild02,296,187,10,10	monster	Stone Shooter	STONE_SHOOTER,1,120000,60000,0
+um_fild02,296,187,10,10	monster	Wootan Fighter	WOOTAN_FIGHTER,2,120000,60000,0
+um_fild02,285,105,10,10	monster	Stone Shooter	STONE_SHOOTER,1,120000,60000,0
+um_fild02,285,105,10,10	monster	Wootan Fighter	WOOTAN_FIGHTER,2,120000,60000,0
+um_fild02,257,137,10,10	monster	Stone Shooter	STONE_SHOOTER,1,120000,60000,0
+um_fild02,257,137,10,10	monster	Wootan Fighter	WOOTAN_FIGHTER,2,120000,60000,0
+um_fild02,360,320,20,30	monster	Flora	FLORA,3,180000,120000,0
+um_fild02,0,0,0,0	monster	Red Plant	RED_PLANT,5,180000,90000,1
+um_fild02,0,0,0,0	monster	Yellow Plant	YELLOW_PLANT,5,180000,90000,1
 
 //==================================================
 // um_fild03 - Kalala Swamp
 //==================================================
-um_fild03,0,0,0,0	monster	Parasite	1500,95,0,0,0
-um_fild03,0,0,0,0	monster	Dragon Tail	1321,20,0,0,0
-um_fild03,0,0,0,0	monster	Alligator	1271,10,0,0,0
-um_fild03,0,0,0,0	monster	Gryphon	1259,1,3500000,1900000,0
-um_fild03,0,0,0,0	monster	Blue Plant	1079,5,180000,90000,1
-um_fild03,0,0,0,0	monster	Green Plant	1080,10,180000,90000,1
-um_fild03,0,0,0,0	monster	Shining Plant	1083,2,180000,90000,1
+um_fild03,0,0,0,0	monster	Parasite	PARASITE,95,0,0,0
+um_fild03,0,0,0,0	monster	Dragon Tail	DRAGON_TAIL,20,0,0,0
+um_fild03,0,0,0,0	monster	Alligator	ALLIGATOR,10,0,0,0
+um_fild03,0,0,0,0	monster	Gryphon	GRYPHON,1,3500000,1900000,0
+um_fild03,0,0,0,0	monster	Blue Plant	BLUE_PLANT,5,180000,90000,1
+um_fild03,0,0,0,0	monster	Green Plant	GREEN_PLANT,10,180000,90000,1
+um_fild03,0,0,0,0	monster	Shining Plant	SHINING_PLANT,2,180000,90000,1
 
 //==================================================
 // um_fild04 - Hoomga Jungle
 //==================================================
-um_fild04,0,0,0,0	monster	Beetle King	1494,30,0,0,0
-um_fild04,0,0,0,0	monster	Horn	1128,15,0,0,0
-um_fild04,0,0,0,0	monster	Choco	1214,2,0,0,0
-um_fild04,0,0,0,0	monster	Wootan Shooter	1498,7,0,0,0
-um_fild04,264,293,10,10	monster	Horn	1128,2,1200000,60000,0
-um_fild04,264,293,10,10	monster	Beetle King	1494,4,120000,60000,0
-um_fild04,121,239,10,10	monster	Beetle King	1494,2,120000,60000,0
-um_fild04,91,79,10,10	monster	Beetle King	1494,2,120000,60000,0
-um_fild04,244,339,10,10	monster	Beetle King	1494,2,120000,60000,0
-um_fild04,295,93,10,10	monster	Beetle King	1494,2,120000,60000,0
-um_fild04,118,237,10,10	monster	Beetle King	1494,2,120000,60000,0
-um_fild04,118,237,10,10	monster	Horn	1128,1,120000,60000,0
-um_fild04,311,285,10,10	monster	Beetle King	1494,2,120000,60000,0
-um_fild04,311,285,10,10	monster	Horn	1128,1,120000,60000,0
-um_fild04,206,188,10,10	monster	Beetle King	1494,2,120000,60000,0
-um_fild04,206,188,10,10	monster	Horn	1128,1,120000,60000,0
-um_fild04,239,245,10,10	monster	Beetle King	1494,2,120000,60000,0
-um_fild04,239,245,10,10	monster	Horn	1128,1,120000,60000,0
-um_fild04,239,245,10,10	monster	Wootan Shooter	1498,1,300000,60000,0
-um_fild04,91,79,10,10	monster	Wootan Shooter	1498,1,300000,60000,0
-um_fild04,295,93,10,10	monster	Wootan Shooter	1498,1,300000,60000,0
-um_fild04,0,0,0,0	monster	Red Plant	1078,5,180000,90000,1
-um_fild04,0,0,0,0	monster	Yellow Plant	1081,5,180000,90000,1
+um_fild04,0,0,0,0	monster	Beetle King	KIND_OF_BEETLE,30,0,0,0
+um_fild04,0,0,0,0	monster	Horn	HORN,15,0,0,0
+um_fild04,0,0,0,0	monster	Choco	CHOCO,2,0,0,0
+um_fild04,0,0,0,0	monster	Wootan Shooter	WOOTAN_SHOOTER,7,0,0,0
+um_fild04,264,293,10,10	monster	Horn	HORN,2,1200000,60000,0
+um_fild04,264,293,10,10	monster	Beetle King	KIND_OF_BEETLE,4,120000,60000,0
+um_fild04,121,239,10,10	monster	Beetle King	KIND_OF_BEETLE,2,120000,60000,0
+um_fild04,91,79,10,10	monster	Beetle King	KIND_OF_BEETLE,2,120000,60000,0
+um_fild04,244,339,10,10	monster	Beetle King	KIND_OF_BEETLE,2,120000,60000,0
+um_fild04,295,93,10,10	monster	Beetle King	KIND_OF_BEETLE,2,120000,60000,0
+um_fild04,118,237,10,10	monster	Beetle King	KIND_OF_BEETLE,2,120000,60000,0
+um_fild04,118,237,10,10	monster	Horn	HORN,1,120000,60000,0
+um_fild04,311,285,10,10	monster	Beetle King	KIND_OF_BEETLE,2,120000,60000,0
+um_fild04,311,285,10,10	monster	Horn	HORN,1,120000,60000,0
+um_fild04,206,188,10,10	monster	Beetle King	KIND_OF_BEETLE,2,120000,60000,0
+um_fild04,206,188,10,10	monster	Horn	HORN,1,120000,60000,0
+um_fild04,239,245,10,10	monster	Beetle King	KIND_OF_BEETLE,2,120000,60000,0
+um_fild04,239,245,10,10	monster	Horn	HORN,1,120000,60000,0
+um_fild04,239,245,10,10	monster	Wootan Shooter	WOOTAN_SHOOTER,1,300000,60000,0
+um_fild04,91,79,10,10	monster	Wootan Shooter	WOOTAN_SHOOTER,1,300000,60000,0
+um_fild04,295,93,10,10	monster	Wootan Shooter	WOOTAN_SHOOTER,1,300000,60000,0
+um_fild04,0,0,0,0	monster	Red Plant	RED_PLANT,5,180000,90000,1
+um_fild04,0,0,0,0	monster	Yellow Plant	YELLOW_PLANT,5,180000,90000,1

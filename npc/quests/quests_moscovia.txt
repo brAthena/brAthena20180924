@@ -9325,9 +9325,9 @@ OnTimer30000:
 	donpcevent "1#rus27::OnDisable";
 	end;
 }
-mosk_que,0,0,0,0	monster	Freezer	1887,10,20000,0,0
-mosk_que,0,0,0,0	monster	Hatii Baby	1888,3,300000,0,0
-mosk_que,0,0,0,0	monster	Sasquatch	1243,15,10000,0,0
+mosk_que,0,0,0,0	monster	Freezer	FREEZER_R,10,20000,0,0
+mosk_que,0,0,0,0	monster	Hatii Baby	GARM_BABY_R,3,300000,0,0
+mosk_que,0,0,0,0	monster	Sasquatch	SASQUATCH,15,10000,0,0
 
 mosk_que,49,22,3	script	#rus27	-1,3,3,{
 	end;

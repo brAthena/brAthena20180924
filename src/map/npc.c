@@ -3467,20 +3467,21 @@ void npc_parse_mob2(struct spawn_data* mobspawn)
 const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const char* start, const char* buffer, const char* filepath, int *retval) {
 	int num, class_, m,x,y,xs,ys, i,j;
 	int mob_lv = -1, ai = -1, size = -1;
-	char mapname[32], mobname[NAME_LENGTH];
+	char mapname[32], mobname[NAME_LENGTH], mobname2[NAME_LENGTH];
 	struct spawn_data mobspawn, *data;
 	struct mob_db* db;
 
 	memset(&mobspawn, 0, sizeof(struct spawn_data));
+	memset(mobname2, '\0', sizeof(mobname2));
 
 	mobspawn.state.boss = (strcmp(w2,"boss_monster") == 0 ? 1 : 0);
 
 	// w1=<map name>,<x>,<y>,<xs>,<ys>
 	// w3=<mob name>{,<mob level>}
-	// w4=<mob id>,<amount>,<delay1>,<delay2>,<event>{,<mob size>,<mob ai>}
+	// w4=<mob id/mob name>,<amount>,<delay1>,<delay2>,<event>{,<mob size>,<mob ai>}
 	if( sscanf(w1, "%31[^,],%d,%d,%d,%d", mapname, &x, &y, &xs, &ys) < 3
 	 || sscanf(w3, "%23[^,],%d", mobname, &mob_lv) < 1
-	 || sscanf(w4, "%d,%d,%u,%u,%50[^,],%d,%d[^\t\r\n]", &class_, &num, &mobspawn.delay1, &mobspawn.delay2, mobspawn.eventname, &size, &ai) < 2
+	 || sscanf(w4, "%23[^,],%d,%u,%u,%50[^,],%d,%d[^\t\r\n]", mobname2, &num, &mobspawn.delay1, &mobspawn.delay2, mobspawn.eventname, &size, &ai) < 2
 	 ) {
 		ShowError("npc_parse_mob: Invalid mob definition in file '%s', line '%d'.\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer,start-buffer), w1, w2, w3, w4);
 		if (retval) *retval = EXIT_FAILURE;
@@ -3503,8 +3504,8 @@ const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const char* st
 	}
 
 	// check monster ID if exists!
-	if( mob->db_checkid(class_) == 0 ) {
-		ShowError("npc_parse_mob: Unknown mob ID %d in file '%s', line '%d'.\n", class_, filepath, strline(buffer,start-buffer));
+	if((class_ = mob->db_searchname(mobname2)) == 0 && (class_ = mob->db_checkid(atoi(mobname2))) == 0) {
+		ShowError("npc_parse_mob: Unknown mob %s in file '%s', line '%d'.\n", mobname2, filepath, strline(buffer,start-buffer));
 		if (retval) *retval = EXIT_FAILURE;
 		return strchr(start,'\n');// skip and continue
 	}

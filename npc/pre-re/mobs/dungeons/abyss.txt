@@ -14,47 +14,47 @@
 //==================================================
 // abyss_01 - Abyss Lakes Underground Cave F1
 //==================================================
-abyss_01,0,0,0,0	monster	Mimic	1191,10,600000,0,0
-abyss_01,0,0,0,0	monster	Ancient Mimic	1699,10,600000,0,0
-abyss_01,152,205,130,70	monster	Ferus	1714,10,0,0,0
-abyss_01,152,205,130,70	monster	Ferus	1717,25,300000,0,0
-abyss_01,152,205,130,70	monster	Novus	1715,3,0,0,0
-abyss_01,152,205,130,70	monster	Novus	1718,3,0,0,0
-abyss_01,103,93,85,70	monster	Ferus	1714,10,0,0,0
-abyss_01,103,93,85,70	monster	Ferus	1717,15,300000,0,0
-abyss_01,103,93,85,70	monster	Novus	1715,3,0,0,0
-abyss_01,103,93,85,70	monster	Novus	1718,3,0,0,0
-abyss_01,195,102,85,70	monster	Ferus	1714,10,0,0,0
-abyss_01,195,102,85,70	monster	Ferus	1717,15,300000,0,0
-abyss_01,195,102,85,70	monster	Novus	1715,3,0,0,0
-abyss_01,195,102,85,70	monster	Novus	1718,3,0,0,0
-abyss_01,110,170,15,15	monster	Penomena	1216,15,660000,300000,0
-abyss_01,195,147,5,10	monster	Penomena	1216,5,720000,300000,0
-abyss_01,140,100,15,5	monster	Penomena	1216,10,780000,300000,0
-abyss_01,260,40,14,14	monster	Dragon Egg	1721,3,1200000,600000,0
-abyss_01,150,160,50,50	monster	Dragon Egg	1721,5,1800000,600000,0
+abyss_01,0,0,0,0	monster	Mimic	MIMIC,10,600000,0,0
+abyss_01,0,0,0,0	monster	Ancient Mimic	ANCIENT_MIMIC,10,600000,0,0
+abyss_01,152,205,130,70	monster	Ferus	FERUS,10,0,0,0
+abyss_01,152,205,130,70	monster	Ferus	FERUS_,25,300000,0,0
+abyss_01,152,205,130,70	monster	Novus	NOVUS,3,0,0,0
+abyss_01,152,205,130,70	monster	Novus	NOVUS_,3,0,0,0
+abyss_01,103,93,85,70	monster	Ferus	FERUS,10,0,0,0
+abyss_01,103,93,85,70	monster	Ferus	FERUS_,15,300000,0,0
+abyss_01,103,93,85,70	monster	Novus	NOVUS,3,0,0,0
+abyss_01,103,93,85,70	monster	Novus	NOVUS_,3,0,0,0
+abyss_01,195,102,85,70	monster	Ferus	FERUS,10,0,0,0
+abyss_01,195,102,85,70	monster	Ferus	FERUS_,15,300000,0,0
+abyss_01,195,102,85,70	monster	Novus	NOVUS,3,0,0,0
+abyss_01,195,102,85,70	monster	Novus	NOVUS_,3,0,0,0
+abyss_01,110,170,15,15	monster	Penomena	PENOMENA,15,660000,300000,0
+abyss_01,195,147,5,10	monster	Penomena	PENOMENA,5,720000,300000,0
+abyss_01,140,100,15,5	monster	Penomena	PENOMENA,10,780000,300000,0
+abyss_01,260,40,14,14	monster	Dragon Egg	DRAGON_EGG,3,1200000,600000,0
+abyss_01,150,160,50,50	monster	Dragon Egg	DRAGON_EGG,5,1800000,600000,0
 
 //==================================================
 // abyss_02 - Abyss Lakes Underground Cave F2
 //==================================================
-abyss_02,0,0,0,0	monster	Mimic	1191,10,900000,0,0
-abyss_02,0,0,0,0	monster	Ancient Mimic	1699,10,900000,0,0
-abyss_02,0,0,0,0	monster	Ferus	1714,50,300000,0,0
-abyss_02,0,0,0,0	monster	Acidus	1713,10,600000,0,0
-abyss_02,0,0,0,0	monster	Acidus	1716,60,300000,0,0
-abyss_02,0,0,0,0	monster	Novus	1715,5,0,0,0
-abyss_02,0,0,0,0	monster	Novus	1718,5,0,0,0
-abyss_02,0,0,0,0	monster	Dragon Egg	1721,10,1800000,600000,0
+abyss_02,0,0,0,0	monster	Mimic	MIMIC,10,900000,0,0
+abyss_02,0,0,0,0	monster	Ancient Mimic	ANCIENT_MIMIC,10,900000,0,0
+abyss_02,0,0,0,0	monster	Ferus	FERUS,50,300000,0,0
+abyss_02,0,0,0,0	monster	Acidus	ACIDUS,10,600000,0,0
+abyss_02,0,0,0,0	monster	Acidus	ACIDUS_,60,300000,0,0
+abyss_02,0,0,0,0	monster	Novus	NOVUS,5,0,0,0
+abyss_02,0,0,0,0	monster	Novus	NOVUS_,5,0,0,0
+abyss_02,0,0,0,0	monster	Dragon Egg	DRAGON_EGG,10,1800000,600000,0
 
 //==================================================
 // abyss_03 - Abyss Lakes Underground Cave F3
 //==================================================
-abyss_03,0,0,0,0	monster	Mimic	1191,10,300000,0,0
-abyss_03,0,0,0,0	monster	Ancient Mimic	1699,10,300000,0,0
-abyss_03,0,0,0,0	monster	Acidus	1713,60,600000,0,0
-abyss_03,0,0,0,0	monster	Acidus	1716,10,300000,0,0
-abyss_03,0,0,0,0	monster	Ferus	1714,10,300000,0,0
-abyss_03,0,0,0,0	monster	Ferus	1717,10,300000,0,0
-abyss_03,0,0,0,0	monster	Dragon Egg	1721,10,1800000,600000,0
-abyss_03,0,0,0,0	monster	Hydrolancer	1720,3,3000000,2400000,0
-abyss_03,0,0,0,0	boss_monster	Detardeurus	1719,1,10800000,600000,0
+abyss_03,0,0,0,0	monster	Mimic	MIMIC,10,300000,0,0
+abyss_03,0,0,0,0	monster	Ancient Mimic	ANCIENT_MIMIC,10,300000,0,0
+abyss_03,0,0,0,0	monster	Acidus	ACIDUS,60,600000,0,0
+abyss_03,0,0,0,0	monster	Acidus	ACIDUS_,10,300000,0,0
+abyss_03,0,0,0,0	monster	Ferus	FERUS,10,300000,0,0
+abyss_03,0,0,0,0	monster	Ferus	FERUS_,10,300000,0,0
+abyss_03,0,0,0,0	monster	Dragon Egg	DRAGON_EGG,10,1800000,600000,0
+abyss_03,0,0,0,0	monster	Hydrolancer	HYDRO,3,3000000,2400000,0
+abyss_03,0,0,0,0	boss_monster	Detardeurus	DETALE,1,10800000,600000,0

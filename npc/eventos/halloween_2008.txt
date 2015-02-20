@@ -266,6 +266,6 @@ OnTouch:
 	end;
 }
 
-evt_zombie,0,0,0,0	monster	Zombie	3000,150,0,0,0
-evt_zombie,0,0,0,0	monster	Ghoul	3001,80,0,0,0
-evt_zombie,0,0,0,0	monster	Zombie Master	3002,20,0,0,0
+evt_zombie,0,0,0,0	monster	Zombie	EP14_MORS_BOSSB,150,0,0,0
+evt_zombie,0,0,0,0	monster	Ghoul	EP14_MORS_MOB1,80,0,0,0
+evt_zombie,0,0,0,0	monster	Zombie Master	EP14_MORS_MOB2,20,0,0,0

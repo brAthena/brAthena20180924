@@ -11,9 +11,9 @@
 //==================================================
 // nyd_dun01 - Yggdrasil Root Dungeon
 //==================================================
-nyd_dun01,0,0,0,0	monster	Draco	2013,40,0,0,0
-nyd_dun01,0,0,0,0	monster	Draco's Egg	2014,10,0,0,0
-nyd_dun01,0,0,0,0	monster	Aqua Elemental	2016,20,0,0,0
-nyd_dun01,0,0,0,0	monster	Dark Pinguicula	2015,10,0,0,0
-nyd_dun01,0,0,0,0	monster	Rata	2017,2,900000,0,0
-nyd_dun01,0,0,0,0	monster	Duneyrr	2018,2,900000,0,0
+nyd_dun01,0,0,0,0	monster	Draco	DRACO,40,0,0,0
+nyd_dun01,0,0,0,0	monster	Draco's Egg	DRACO_EGG,10,0,0,0
+nyd_dun01,0,0,0,0	monster	Aqua Elemental	AQUA_ELEMENTAL,20,0,0,0
+nyd_dun01,0,0,0,0	monster	Dark Pinguicula	PINGUICULA_D,10,0,0,0
+nyd_dun01,0,0,0,0	monster	Rata	RATA,2,900000,0,0
+nyd_dun01,0,0,0,0	monster	Duneyrr	DUNEYRR,2,900000,0,0
