@@ -751,6 +751,41 @@ typedef enum sc_type {
 	SC_MTF_PUMPKIN,
 	SC_MTF_HITFLEE,
 
+	/* buffspecial [Megasantos/brAthena} */
+	SC_STEAMPACK = 800,
+	SC_ATKER_ASPD,
+	SC_ATKER_MOVESPEED,
+	SC_ACARAJE,
+	SC_MVPCARD_TAOGUNKA,
+	SC_MVPCARD_MISTRESS,
+	SC_MVPCARD_ORCHERO,
+	SC_MVPCARD_ORCLORD,
+	SC_TARGET_ASPD,
+	SC_BUCHEDENOEL,
+	SC_POPECOOKIE,
+	SC_MAGIC_CANDY,
+	SC_MORA_BUFF,
+	SC_VITALIZE_POTION,
+	SC_G_LIFEPOTION,
+	SC_2011RWC,
+	SC_SKELSCROLL,
+	SC_DISTRUCTIONSCROLL,
+	SC_ROYALSCROLL,
+	SC_IMMUNITYSCROLL,
+	SC_MYSTICSCROLL,
+	SC_BATTLESCROLL,
+	SC_ARMORSCROLL,
+	SC_FREYJASCROLL,
+	SC_SOULSCROLL,
+	SC_PC_IZ_DUN05,
+	SC_OVERLAPEXPUP,
+	SC_SKF_CAST,
+	SC_SKF_ASPD,
+	SC_SKF_ATK,
+	SC_SKF_MATK,
+	SC_GM_BATTLE,
+	SC_GM_BATTLE2,
+
 	SC_MAX, //Automatically updated max, used in for's to check we are within bounds.
 } sc_type;
 
@@ -1060,16 +1095,16 @@ enum si_type {
 	SI_L_LIFEPOTION                          = 294,
 	SI_CRITICALPERCENT                       = 295,
 	SI_PLUSAVOIDVALUE                        = 296,
-	//SI_ATKER_ASPD                          = 297,
-	//SI_TARGET_ASPD                         = 298,
-	//SI_ATKER_MOVESPEED                     = 299,
+	SI_ATKER_ASPD                            = 297,
+	SI_TARGET_ASPD                           = 298,
+	SI_ATKER_MOVESPEED                       = 299,
 
 	SI_ATKER_BLOOD                           = 300,
 	SI_TARGET_BLOOD                          = 301,
 	SI_ARMOR_PROPERTY                        = 302,
 	//SI_REUSE_LIMIT_A                       = 303,
 	SI_HELLPOWER                             = 304,
-	//SI_STEAMPACK                           = 305,
+	SI_STEAMPACK                             = 305,
 	//SI_REUSE_LIMIT_B                       = 306,
 	//SI_REUSE_LIMIT_C                       = 307,
 	//SI_REUSE_LIMIT_D                       = 308,
@@ -2007,6 +2042,10 @@ struct status_interface {
 	struct status_data dummy;
 	int64 natural_heal_prev_tick;
 	unsigned int natural_heal_diff_tick;
+	/* buff especiais [Megasantos/brAthena] */
+	struct script_code *sc_script[SC_MAX];
+	void (*buff_script) (void);
+	void (*buffspecial_db)(void);
 	/* */
 	int (*init) (bool minimal);
 	void (*final) (void);

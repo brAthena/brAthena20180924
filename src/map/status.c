@@ -826,6 +826,45 @@ void initChangeTables(void) {
 	status->IconChangeTable[SC_L_LIFEPOTION] = SI_L_LIFEPOTION;
 	status->IconChangeTable[SC_ATKER_BLOOD] = SI_ATKER_BLOOD;
 	status->IconChangeTable[SC_TARGET_BLOOD] = SI_TARGET_BLOOD;
+	status->IconChangeTable[SC_STEAMPACK] = SI_STEAMPACK;
+	status->IconChangeTable[SC_ATKER_ASPD] = SI_ATKER_ASPD;
+	status->IconChangeTable[SC_ATKER_MOVESPEED] = SI_ATKER_MOVESPEED;
+	status->IconChangeTable[SC_ACARAJE] = SI_ACARAJE;
+	status->IconChangeTable[SC_MVPCARD_TAOGUNKA] = SI_MVPCARD_TAOGUNKA;
+	status->IconChangeTable[SC_MVPCARD_MISTRESS] = SI_MVPCARD_MISTRESS;
+	status->IconChangeTable[SC_MVPCARD_ORCHERO] = SI_MVPCARD_ORCHERO;
+	status->IconChangeTable[SC_MVPCARD_ORCLORD] = SI_MVPCARD_ORCLORD;
+	status->IconChangeTable[SC_TARGET_ASPD] = SI_TARGET_ASPD;
+	status->IconChangeTable[SC_BUCHEDENOEL] = SI_BUCHEDENOEL;
+	status->IconChangeTable[SC_POPECOOKIE] = SI_POPECOOKIE;
+	status->IconChangeTable[SC_MAGIC_CANDY] = SI_MAGIC_CANDY;
+	status->IconChangeTable[SC_MORA_BUFF] = SI_MORA_BUFF;
+	status->IconChangeTable[SC_VITALIZE_POTION] = SI_VITALIZE_POTION;
+	status->IconChangeTable[SC_G_LIFEPOTION] = SI_G_LIFEPOTION;
+	status->IconChangeTable[SC_2011RWC] = SI_2011RWC;
+	status->IconChangeTable[SC_SKELSCROLL] = SI_SKELSCROLL;
+	status->IconChangeTable[SC_DISTRUCTIONSCROLL] = SI_DISTRUCTIONSCROLL;
+	status->IconChangeTable[SC_ROYALSCROLL] = SI_ROYALSCROLL;
+	status->IconChangeTable[SC_IMMUNITYSCROLL] = SI_IMMUNITYSCROLL;
+	status->IconChangeTable[SC_MYSTICSCROLL] = SI_MYSTICSCROLL;
+	status->IconChangeTable[SC_BATTLESCROLL] = SI_BATTLESCROLL;
+	status->IconChangeTable[SC_ARMORSCROLL] = SI_ARMORSCROLL;
+	status->IconChangeTable[SC_FREYJASCROLL] = SI_FREYJASCROLL;
+	status->IconChangeTable[SC_SOULSCROLL] = SI_SOULSCROLL;
+	status->IconChangeTable[SC_PC_IZ_DUN05] = SI_PC_IZ_DUN05;
+	status->IconChangeTable[SC_OVERLAPEXPUP] = SI_OVERLAPEXPUP;
+	status->IconChangeTable[SC_SKF_CAST] = SI_SKF_CAST;
+	status->IconChangeTable[SC_SKF_ASPD] = SI_SKF_ASPD;
+	status->IconChangeTable[SC_SKF_ATK] = SI_SKF_ATK;
+	status->IconChangeTable[SC_SKF_MATK] = SI_SKF_MATK;
+	status->IconChangeTable[SC_GM_BATTLE] = SI_GM_BATTLE;
+	status->IconChangeTable[SC_GM_BATTLE2] = SI_GM_BATTLE2;
+	status->IconChangeTable[SC_MTF_ASPD] = SI_MTF_ASPD;
+	status->IconChangeTable[SC_MTF_RANGEATK] = SI_MTF_RANGEATK;
+	status->IconChangeTable[SC_MTF_MATK] = SI_MTF_MATK;
+	status->IconChangeTable[SC_MTF_CRIDAMAGE] = SI_MTF_CRIDAMAGE;
+	status->IconChangeTable[SC_MTF_MLEATKED] = SI_MTF_MLEATKED;
+	
 	// Mercenary Bonus Effects
 	status->IconChangeTable[SC_MER_FLEE] = SI_MER_FLEE;
 	status->IconChangeTable[SC_MER_ATK] = SI_MER_ATK;
@@ -943,9 +982,7 @@ void initChangeTables(void) {
 	status->ChangeFlagTable[SC_INCFLEE] |= SCB_FLEE;
 	status->ChangeFlagTable[SC_INCFLEERATE] |= SCB_FLEE;
 	status->ChangeFlagTable[SC_MTF_HITFLEE] |= SCB_HIT|SCB_FLEE;
-	status->ChangeFlagTable[SC_CRITICALPERCENT] |= SCB_CRI;
 	status->ChangeFlagTable[SC_INCASPDRATE] |= SCB_ASPD;
-	status->ChangeFlagTable[SC_PLUSAVOIDVALUE] |= SCB_FLEE2;
 	status->ChangeFlagTable[SC_INCMHPRATE] |= SCB_MAXHP;
 	status->ChangeFlagTable[SC_INCMSPRATE] |= SCB_MAXSP;
 	status->ChangeFlagTable[SC_INCMHP] |= SCB_MAXHP;
@@ -968,7 +1005,6 @@ void initChangeTables(void) {
 	status->ChangeFlagTable[SC_MATKFOOD] |= SCB_MATK;
 	status->ChangeFlagTable[SC_ARMORPROPERTY] |= SCB_ALL;
 	status->ChangeFlagTable[SC_ARMOR_RESIST] |= SCB_ALL;
-	status->ChangeFlagTable[SC_ATKER_BLOOD] |= SCB_ALL;
 	status->ChangeFlagTable[SC_WALKSPEED] |= SCB_SPEED;
 	status->ChangeFlagTable[SC_ITEMSCRIPT] |= SCB_ALL;
 	// Cash Items
@@ -1018,10 +1054,6 @@ void initChangeTables(void) {
 
 	status->ChangeFlagTable[SC_ALL_RIDING] = SCB_SPEED;
 	status->ChangeFlagTable[SC_WEDDING] = SCB_SPEED;
-
-	status->ChangeFlagTable[SC_MTF_ASPD] = SCB_ASPD|SCB_HIT;
-	status->ChangeFlagTable[SC_MTF_MATK] = SCB_MATK;
-	status->ChangeFlagTable[SC_MTF_MLEATKED] |= SCB_ALL;
 
 	status->ChangeFlagTable[SC_MOONSTAR] |= SCB_NONE;
 	status->ChangeFlagTable[SC_SUPER_STAR] |= SCB_NONE;
@@ -2538,6 +2570,10 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt) {
 			script->run(data->script,0,sd->bl.id,0);
 	}
 
+	for (index = 0; index < SC_MAX; ++index) // bonus de status [Shiraz]
+		if (sd && (sc->count && sc->data[index]) && status->sc_script[index])
+			script->run(status->sc_script[index], 0, sd->bl.id, npc->fake_nd->bl.id);
+
 	if( sd->pd ) { // Pet Bonus
 		struct pet_data *pd = sd->pd;
 		if( pd && pd->petDB && pd->petDB->equip_script && pd->pet.intimate >= battle_config.pet_equip_min_friendly )
@@ -2902,9 +2938,6 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt) {
 	if(sc->data[SC_SERVICEFORYOU])
 		sd->dsprate -= sc->data[SC_SERVICEFORYOU]->val3;
 
-	if(sc->data[SC_ATKER_BLOOD])
-		sd->dsprate -= sc->data[SC_ATKER_BLOOD]->val1;
-
 	//Underflow protections.
 	if(sd->dsprate < 0)
 		sd->dsprate = 0;
@@ -3005,8 +3038,6 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt) {
 			sd->subele[ELE_EARTH] += i;
 			sd->subele[ELE_FIRE] -= i;
 		}
-		if( sc->data[SC_MTF_MLEATKED] )
-			sd->subele[ELE_NEUTRAL] += 2;
 		if( sc->data[SC_FIRE_INSIGNIA] && sc->data[SC_FIRE_INSIGNIA]->val1 == 3 )
 			sd->magic_addele[ELE_FIRE] += 25;
 		if( sc->data[SC_WATER_INSIGNIA] && sc->data[SC_WATER_INSIGNIA]->val1 == 3 )
@@ -4776,8 +4807,6 @@ unsigned short status_calc_matk(struct block_list *bl, struct status_change *sc,
 		matk += matk * sc->data[SC_INCMATKRATE]->val1/100;
 	if (sc->data[SC_MOONLIT_SERENADE])
 		matk += matk * sc->data[SC_MOONLIT_SERENADE]->val2/100;
-	if (sc->data[SC_MTF_MATK])
-		matk += matk * 25 / 100;
 
 	return (unsigned short)cap_value(matk,0,USHRT_MAX);
 }
@@ -4792,8 +4821,6 @@ signed short status_calc_critical(struct block_list *bl, struct status_change *s
 		return (short)cap_value(critical,10,SHRT_MAX);
 	}
 
-	if (sc->data[SC_CRITICALPERCENT])
-		critical += sc->data[SC_CRITICALPERCENT]->val2;
 	if (sc->data[SC_EXPLOSIONSPIRITS])
 		critical += sc->data[SC_EXPLOSIONSPIRITS]->val2;
 	if (sc->data[SC_FORTUNE])
@@ -4827,8 +4854,6 @@ signed short status_calc_hit(struct block_list *bl, struct status_change *sc, in
 
 	if( !viewable ){
 		/* some statuses that are hidden in the status window */
-		if(sc->data[SC_MTF_ASPD])
-			hit += 5;
 		return (short)cap_value(hit,1,SHRT_MAX);
 	}
 
@@ -4973,8 +4998,6 @@ signed short status_calc_flee2(struct block_list *bl, struct status_change *sc, 
 		return (short)cap_value(flee2,10,SHRT_MAX);
 	}
 
-	if(sc->data[SC_PLUSAVOIDVALUE])
-		flee2 += sc->data[SC_PLUSAVOIDVALUE]->val2;
 	if(sc->data[SC_WHISTLE])
 		flee2 += sc->data[SC_WHISTLE]->val3*10;
 	if(sc->data[SC__UNLUCKY])
@@ -5570,8 +5593,6 @@ short status_calc_fix_aspd(struct block_list *bl, struct status_change *sc, int 
 		aspd -= 50; // +5 ASPD
 	if (sc->data[SC_FIGHTINGSPIRIT] && sc->data[SC_FIGHTINGSPIRIT]->val2)
 		aspd -= (bl->type==BL_PC?pc->checkskill((TBL_PC *)bl, RK_RUNEMASTERY):10) / 10 * 40;
-	if (sc->data[SC_MTF_ASPD])
-		aspd -= 10;
 
 	if (sc->data[SC_OVERED_BOOST]) // should be final and unmodifiable by any means
 		aspd = (200 - sc->data[SC_OVERED_BOOST]->val3) * 10;
@@ -6684,8 +6705,6 @@ int status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_typ
 		{
 			if( sd->reseff[type-SC_COMMON_MIN] > 0 )
 				rate -= rate*sd->reseff[type-SC_COMMON_MIN]/10000;
-			if( sd->sc.data[SC_TARGET_BLOOD] )
-				rate -= rate*sd->sc.data[SC_TARGET_BLOOD]->val1/100;
 		}
 
 		//Aegis accuracy
@@ -7506,8 +7525,6 @@ int status_change_start(struct block_list *src, struct block_list *bl, enum sc_t
 				if (sce->val2 > val2)
 					return 0;
 				break;
-			case SC_S_LIFEPOTION:
-			case SC_L_LIFEPOTION:
 			case SC_CASH_BOSS_ALARM:
 			case SC_STUN:
 			case SC_SLEEP:
@@ -7885,17 +7902,6 @@ int status_change_start(struct block_list *src, struct block_list *bl, enum sc_t
 				val4 = tick/10000;
 				if (!val4) val4 = 1;
 				tick_time = 10000; // [GodLesZ] tick time
-				break;
-			case SC_S_LIFEPOTION:
-			case SC_L_LIFEPOTION:
-				if( val1 == 0 ) return 0;
-				// val1 = heal percent/amout
-				// val2 = seconds between heals
-				// val4 = total of heals
-				if( val2 < 1 ) val2 = 1;
-				if( (val4 = tick/(val2 * 1000)) < 1 )
-					val4 = 1;
-				tick_time = val2 * 1000; // [GodLesZ] tick time
 				break;
 			case SC_CASH_BOSS_ALARM:
 				if( sd != NULL ) {
@@ -8437,16 +8443,8 @@ int status_change_start(struct block_list *src, struct block_list *bl, enum sc_t
 				if (val1 < 0)
 					val1 = 0;
 				break;
-			case SC_PLUSAVOIDVALUE:
-			case SC_CRITICALPERCENT:
-				val2 = val1*10; //Actual boost (since 100% = 1000)
-				break;
 			case SC_SUFFRAGIUM:
 				val2 = 15 * val1; //Speed cast decrease
-				break;
-			case SC_HEALPLUS:
-				if (val1 < 1)
-					val1 = 1;
 				break;
 			case SC_ILLUSION:
 				val2 = 5+val1; //Factor by which displayed damage is increased by
@@ -8480,16 +8478,6 @@ int status_change_start(struct block_list *src, struct block_list *bl, enum sc_t
 				val2 = 20*val1; //% of life to be revived with
 				break;
 
-			case SC_MANU_DEF:
-			case SC_MANU_ATK:
-			case SC_MANU_MATK:
-				val2 = 1; // Manuk group
-				break;
-			case SC_SPL_DEF:
-			case SC_SPL_ATK:
-			case SC_SPL_MATK:
-				val2 = 2; // Splendide group
-				break;
 				/**
 				* General
 				**/
@@ -9355,30 +9343,6 @@ int status_change_start(struct block_list *src, struct block_list *bl, enum sc_t
 				unit->skillcastcancel(bl, 0);
 			break;
 			/* */
-		case SC_ITEMSCRIPT:
-			if( sd ) {
-				switch( val1 ) {
-					case ITEMID_PHREEONI_CARD:
-						clif->status_change(bl, SI_FOOD_BASICHIT, 1, tick, 0, 0, 0);
-						break;
-					case ITEMID_GHOSTRING_CARD:
-						clif->status_change(bl,SI_ARMOR_PROPERTY,1,tick,0,0,0);
-						break;
-					case ITEMID_TAO_GUNKA_CARD:
-						clif->status_change(bl,SI_MVPCARD_TAOGUNKA,1,tick,0,0,0);
-						break;
-					case ITEMID_MISTRESS_CARD:
-						clif->status_change(bl,SI_MVPCARD_MISTRESS,1,tick,0,0,0);
-						break;
-					case ITEMID_ORC_HERO_CARD:
-						clif->status_change(bl,SI_MVPCARD_ORCHERO,1,tick,0,0,0);
-						break;
-					case ITEMID_ORC_LOAD_CARD:
-						clif->status_change(bl,SI_MVPCARD_ORCLORD,1,tick,0,0,0);
-						break;
-				}
-			}
-			break;
 	}
 
 	// Set option as needed.
@@ -9606,6 +9570,9 @@ int status_change_start(struct block_list *src, struct block_list *bl, enum sc_t
 
 	if (calc_flag)
 		status_calc_bl(bl,calc_flag);
+
+	if (sd && status->sc_script[type])
+		status_calc_pc(sd, 0);
 
 	if(sd && sd->pd)
 		pet->sc_check(sd, type); //Skotlex: Pet Status Effect Healing
@@ -10236,30 +10203,6 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 			if( sce->val2 )
 				status_change_end(bl, (sc_type)sce->val2, INVALID_TIMER);
 			break;
-		case SC_ITEMSCRIPT:
-			if( sd ) {
-				switch( sce->val1 ) {
-				case ITEMID_PHREEONI_CARD:
-					clif->sc_end(&sd->bl, sd->bl.id, SELF, SI_FOOD_BASICHIT);
-					break;
-				case ITEMID_GHOSTRING_CARD:
-					clif->sc_end(&sd->bl, sd->bl.id, SELF, SI_ARMOR_PROPERTY);
-					break;
-				case ITEMID_TAO_GUNKA_CARD:
-					clif->sc_end(&sd->bl, sd->bl.id, SELF, SI_MVPCARD_TAOGUNKA);
-					break;
-				case ITEMID_MISTRESS_CARD:
-					clif->sc_end(&sd->bl, sd->bl.id, SELF, SI_MVPCARD_MISTRESS);
-					break;
-				case ITEMID_ORC_HERO_CARD:
-					clif->sc_end(&sd->bl, sd->bl.id, SELF, SI_MVPCARD_ORCHERO);
-					break;
-				case ITEMID_ORC_LOAD_CARD:
-					clif->sc_end(&sd->bl, sd->bl.id, SELF, SI_MVPCARD_ORCLORD);
-					break;
-				}
-			}
-			break;
 		case SC_OVERED_BOOST:
 			switch( bl->type ){
 				case BL_HOM:
@@ -10485,6 +10428,9 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 
 	if (calc_flag)
 		status_calc_bl(bl,calc_flag);
+
+	if (sd && status->sc_script[type]) // shiraz
+		status_calc_pc(sd, 0);
 
 	if(opt_flag&4) //Out of hiding, invoke on place.
 		skill->unit_move(bl,timer->gettick(),1);
@@ -10715,19 +10661,6 @@ int status_change_timer(int tid, int64 tick, int id, intptr_t data) {
 					sc_timer_next(10000 + tick, status->change_timer, bl->id, data);
 				}
 				map->freeblock_unlock();
-				return 0;
-			}
-			break;
-
-		case SC_S_LIFEPOTION:
-		case SC_L_LIFEPOTION:
-			if( sd && --(sce->val4) >= 0 ) {
-				// val1 < 0 = per max% | val1 > 0 = exact amount
-				int hp = 0;
-				if( st->hp < st->max_hp )
-					hp = (sce->val1 < 0) ? (int)(sd->status.max_hp * -1 * sce->val1 / 100.) : sce->val1 ;
-				status->heal(bl, hp, 0, 2);
-				sc_timer_next((sce->val2 * 1000) + tick, status->change_timer, bl->id, data);
 				return 0;
 			}
 			break;
@@ -12211,6 +12144,69 @@ int status_readdb(void)
 	return 0;
 }
 
+void buff_script(void)
+{
+	int i;
+
+	for (i = 0; i < SC_MAX; ++i) // Shiraz
+	if (status->sc_script[i])
+		script->free_code(status->sc_script[i]);
+}
+
+/* buff especiais [Megasantos/brAthena] */
+void buffspecial_db(void) {
+	config_t buffspecial_conf;
+	config_setting_t *it = NULL, *buffspecial = NULL;
+#ifdef RENEWAL
+	const char *config_filename = "db/re/BuffSpecial.conf"; // FIXME hardcoded name
+#else
+#ifdef OLD_TIMES
+	const char *config_filename = "db/ot/BuffSpecial.conf"; // FIXME hardcoded name
+#else
+	const char *config_filename = "db/pre/BuffSpecial.conf"; // FIXME hardcoded name
+#endif
+#endif
+	int scname = 0, i = 0, sc_count = 0;
+	const char *str = NULL;
+
+	if (libconfig->read_file(&buffspecial_conf, config_filename)) {
+		ShowError("Erro ao ler %s\n", config_filename);
+		return;
+	}
+
+	status->buff_script();
+
+	buffspecial = libconfig->lookup(&buffspecial_conf, "specialbuff");
+	sc_count = libconfig->setting_length(buffspecial);
+	if (buffspecial != NULL && (it = libconfig->setting_get_elem(buffspecial, 0)) != NULL) {
+		for (i = 0; i < sc_count; ++i) {
+			config_setting_t *scbuff = libconfig->setting_get_elem(buffspecial, i);
+			int type = -1;
+			if (!libconfig->setting_lookup_string(scbuff, "Buff", &str)) {
+				ShowWarning("buffspecial_db: Status inexistente em '"CL_WHITE"%s"CL_RESET"', linha '%d', saltando.\n", config_setting_source_file(scbuff), config_setting_source_line(scbuff));
+				continue;
+			}
+			script->get_constant(str, &type);
+
+			if (type == SC_NONE) {
+				ShowWarning("buffspecial_db: Status '%s' desconhecido, saltando..\n", str);
+				continue;
+			}
+
+			if (!libconfig->setting_lookup_string(scbuff, "Script", &str)) {
+				ShowWarning("buffspecial_db: Script inexistente em '"CL_WHITE"%s"CL_RESET"', para status '"CL_WHITE"%s"CL_RESET"', na linha '%d', saltando.\n", config_setting_source_file(scbuff), str, config_setting_source_line(scbuff));
+				continue;
+			}
+			status->sc_script[type] = script->parse(str, config_filename, type, SCRIPT_IGNORE_EXTERNAL_BRACKETS, NULL);
+			scname++;
+		}
+		libconfig->destroy(&buffspecial_conf);
+	}
+	ShowConf("Leitura de '"CL_WHITE"%d"CL_RESET"' buffs em '"CL_WHITE"%s"CL_RESET"'.\n", scname, config_filename);
+}
+
+
+
 /*==========================================
 * Status db init and destroy.
 *------------------------------------------*/
@@ -12224,6 +12220,7 @@ int do_init_status(bool minimal) {
 	status->initChangeTables();
 	status->initDummyData();
 	status->readdb();
+	status->buffspecial_db();
 	status->calc_sigma();
 	status->natural_heal_prev_tick = timer->gettick();
 	status->data_ers = ers_new(sizeof(struct status_change_entry),"status.c::data_ers",ERS_OPT_NONE);
@@ -12231,6 +12228,7 @@ int do_init_status(bool minimal) {
 	return 0;
 }
 void do_final_status(void) {
+	status->buff_script();
 	ers_destroy(status->data_ers);
 }
 
@@ -12392,4 +12390,6 @@ void status_defaults(void) {
 	status->readdb_sizefix = status_readdb_sizefix;
 	status->readdb_refine = status_readdb_refine;
 	status->readdb_scconfig = status_readdb_scconfig;
+	status->buff_script = buff_script;
+	status->buffspecial_db = buffspecial_db;
 }
