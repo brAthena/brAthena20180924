@@ -1,15 +1,26 @@
-//===== Hercules Script ====================================== 
-//= Eclage Quests
-//===== By: ================================================== 
-//= Dastgir
-//===== Current Version: ===================================== 
-//= 1.0
-//===== Description: ========================================= 
-//= Quests of Eclage
-//= Contains All Quest of Eclage
-//===== Additional Comments: ================================= 
-//= 1.0 Converted from the official Aegis script. [Dastgir]
-//============================================================ 
+﻿//    ________________________________________________________
+//   /                                                        \
+//   |       _           _   _   _                            |
+//   |      | |__  _ __ / \ | |_| |__   ___ _ __   __ _       |
+//   |      | '_ \| '__/ _ \| __| '_ \ / _ \ '_ \ / _` |      |
+//   |      | |_) | | / ___ \ |_| | | |  __/ | | | (_| |      |
+//   |      |_.__/|_|/_/   \_\__|_| |_|\___|_| |_|\__,_|      |
+//   |                                                        |
+//   |                    brAthena Script                     |
+//   |--------------------------------------------------------|
+//   | Nome do Script: amatsu.txt                             |
+//   |--------------------------------------------------------|
+//   | Criado por: eA/rA/Herc/brA Dev. Team                   |
+//   |--------------------------------------------------------|
+//   | Versões Herc/brA: 1.1/1.0                              |
+//   |--------------------------------------------------------|
+//   | Descrição: NPC's da Cidade de Amatsu.                  |
+//   |--------------------------------------------------------|
+//   | Changelog:                                             |
+//   | 1.0 Cabeçalho brAthena [Axl]                           |
+//   |--------------------------------------------------------|
+//   | - Anotações                                            |
+//   \________________________________________________________/
 
 // Teleport Cats
 //============================================================
@@ -44,25 +55,25 @@ ecl_fild01,118,311,4	script	Teleport Cat No.1#1	4_M_BOSSCAT,{
 		mes "I'll see you later then";
 		close;
 	}
+	.@i = (.@menu/2)-1;
 	if (.@menu%2){
-		.@menu = (.@menu/2)-1;
-		if (Zeny < (.price[.@pindex[.@menu]]*1000)){
+		if (Zeny < (.price[.@pindex[.@i]]*1000)){
 			mes "[Teleport Cat]";
 			mes "I'm afraid it's not enough. Sorry, but it can't be done for free~";
 			close;
 		}
-		Zeny -= .price[.@pindex[.@menu]]*1000;
+		Zeny -= .price[.@pindex[.@i]]*1000;
 	}
 	else{
 		.@menu = (.@menu/2)-1;
-		if (countitem(Malang_Sp_Can) < .price[.@pindex[(.@menu/2)]] ){
+		if (countitem(Malang_Sp_Can) < .price[.@pindex[.@i]] ){
 			mes "[Teleport Cat]";
 			mes "I'm afraid it's not enough. Sorry, but it can't be done for free~";
 			close;
 		}
-		delitem Malang_Sp_Can,.price[.@pindex[(.@menu/2)]];
+		delitem Malang_Sp_Can,.price[.@pindex[.@i]];
 	}
-	warp .maps$[.@mindex],.x[.@mindex],.y[.@mindex];
+	warp .maps$[.@mindex[.@i]],.x[.@mindex[.@i]],.y[.@mindex[.@i]];
 	end;
 	
 OnInit:
