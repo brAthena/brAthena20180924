@@ -1007,7 +1007,7 @@ void Sql_brAthenaUpdateCheck(Sql* self) {
 	if( self == NULL )
 		return;/* return silently, build has no mysql connection */
 
-	if( !( ifp = fopen("sql-files/upgrades/index.txt", "r") ) ) {
+	if( !( ifp = fopen("sql/upgrades/index.txt", "r") ) ) {
 		ShowError("SQL upgrade index was not found!\n");
 		return;
 	}
@@ -1015,14 +1015,14 @@ void Sql_brAthenaUpdateCheck(Sql* self) {
 	StrBuf->Init(&buf);
 
 	while(fgets(line, sizeof(line), ifp)) {
-		char path[41];// "sql-files/upgrades/" (19) + "yyyy-mm-dd--hh-mm" (17) + ".sql" (4) + 1
+		char path[35];// "sql/upgrades/" (13) + "yyyy-mm-dd--hh-mm" (17) + ".sql" (4) + 1
 		char timestamp[11];// "1360186680" (10) + 1
 		FILE* ufp;/* upgrade fp */
 
 		if( line[0] == '\n' || line[0] == '\r' || ( line[0] == '/' && line[1] == '/' ) )/* skip \n, \r and "//" comments */
 			continue;
 
-		sprintf(path,"sql-files/upgrades/%s",line);
+		sprintf(path,"sql/upgrades/%s",line);
 
 		if( !( ufp = fopen(path, "r") ) ) {
 			ShowError("SQL upgrade file %s was not found!\n",path);
@@ -1060,7 +1060,7 @@ void Sql_brAthenaUpdateCheck(Sql* self) {
 }
 
 void Sql_brAthenaUpdateSkip(Sql* self,const char *filename) {
-	char path[41];// "sql-files/upgrades/" (19) + "yyyy-mm-dd--hh-mm" (17) + ".sql" (4) + 1
+	char path[35];// "sql/upgrades/" (13) + "yyyy-mm-dd--hh-mm" (17) + ".sql" (4) + 1
 	char timestamp[11];// "1360186680" (10) + 1
 	FILE* ifp;/* index fp */
 
@@ -1069,7 +1069,7 @@ void Sql_brAthenaUpdateSkip(Sql* self,const char *filename) {
 		return;
 	}
 
-	snprintf(path,41,"sql-files/upgrades/%s",filename);
+	snprintf(path,35,"sql/upgrades/%s",filename);
 
 	if( !( ifp = fopen(path, "r") ) ) {
 		ShowError("Upgrade file '%s' was not found!\n",filename);
