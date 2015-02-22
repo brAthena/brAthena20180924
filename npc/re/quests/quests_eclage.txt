@@ -8,13 +8,13 @@
 //   |                                                        |
 //   |                    brAthena Script                     |
 //   |--------------------------------------------------------|
-//   | Nome do Script: amatsu.txt                             |
+//   | Nome do Script: quests_eclage.txt                      |
 //   |--------------------------------------------------------|
 //   | Criado por: eA/rA/Herc/brA Dev. Team                   |
 //   |--------------------------------------------------------|
 //   | Versões Herc/brA: 1.1/1.0                              |
 //   |--------------------------------------------------------|
-//   | Descrição: NPC's da Cidade de Amatsu.                  |
+//   | Descrição: Quest's da Cidade de Eclage.                |
 //   |--------------------------------------------------------|
 //   | Changelog:                                             |
 //   | 1.0 Cabeçalho brAthena [Axl]                           |
