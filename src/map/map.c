@@ -3737,7 +3737,16 @@ int inter_config_read(char *cfgName) {
 			safestrncpy(map->server_db, w2, sizeof(map->server_db));
 		else if(strcmpi(w1,"default_codepage")==0)
 			safestrncpy(map->default_codepage, w2, sizeof(map->default_codepage));
-#include "../brA_hook/map/map_readstring.inc"
+		else if(strcmpi(w1,"brAdb_ip")==0)
+			safestrncpy(map->brAdb_ip, w2, sizeof(map->brAdb_ip));
+		else if(strcmpi(w1,"brAdb_port")==0)
+			map->brAdb_port=atoi(w2);
+		else if(strcmpi(w1,"brAdb_id")==0)
+			safestrncpy(map->brAdb_id, w2, sizeof(map->brAdb_id));
+		else if(strcmpi(w1,"brAdb_pw")==0)
+			safestrncpy(map->brAdb_pw, w2, sizeof(map->brAdb_pw));
+		else if(strcmpi(w1,"brAdb_name")==0)
+			safestrncpy(map->brA_dbname, w2, sizeof(map->brA_dbname));
 		else if(strcmpi(w1,"use_sql_item_db")==0) {
 			map->db_use_sql_item_db = config_switch(w2);
 			ShowStatus ("Using item database as SQL: '%s'\n", w2);
@@ -3779,7 +3788,72 @@ int inter_config_read(char *cfgName) {
 	return 0;
 }
 
-#include "../brA_hook/map/map_readsql.inc"
+/**
+ * brAthena Parser v2.0
+ * Função destinada a leitura de várias tabelas da database de itens, habilidades, monstros e etc.
+ **/
+void sv_readsqldb(char *table_name, int param_size, int max_allowed, bool (*sub_parse_row)(char *string[], int columns, int current))
+{
+	uint8 lines = 0;
+	uint16 count = 0;
+
+	if(SQL_ERROR == SQL->Query(map->brAmysql_handle, "SELECT * FROM `%s`", table_name)) {
+		Sql_ShowDebug(map->brAmysql_handle);
+		return;
+	}
+
+	while (SQL_SUCCESS == SQL->NextRow(map->brAmysql_handle)) {
+		char *str[100];
+		int8 j;
+		++lines;
+
+		if(count == max_allowed) {
+			ShowError("sv_readsqldb: Ultrapassado o limite de entradas (%d) na tabela \"%s\".\n", max_allowed, table_name);
+			break;
+		}
+
+		str[(param_size + 1)] = '\0';
+		for(j = 0; j < param_size; ++j) {
+			SQL->GetData(map->brAmysql_handle, j, &str[j], NULL);
+			if(str[j] == NULL)
+			str[j] = "";
+		}
+
+		if(!sub_parse_row(str, param_size, count))
+		continue;
+		count++;
+	}
+
+	ShowSQL("Leitura de '"CL_WHITE"%lu"CL_RESET"' entradas na tabela '"CL_WHITE"%s"CL_RESET"'.\n", count, table_name);
+	SQL->FreeResult(map->brAmysql_handle);
+}
+
+
+char *get_database_name(int database_id)
+{
+	char *db_name = NULL;
+
+	switch(database_id) {
+		case 0: db_name = "skill_db"; break;
+		case 1: db_name = "skill_require_db"; break;
+		case 2: db_name = "skill_cast_db"; break;
+		case 3: db_name = "skill_castnodex_db"; break;
+		case 4: db_name = "skill_unit_db"; break;
+		//case 5: livre
+		case 6: db_name = "produce_db"; break;
+		case 7: db_name = "create_arrow_db"; break;
+		case 8: db_name = "abra_db"; break;
+	#ifdef RENEWAL
+		case 9: db_name = "spellbook_db"; break;
+		case 10: db_name = "magicmushroom_db"; break;
+		case 11: db_name = "skill_reproduce_db"; break;
+		case 12: db_name = "skill_improvise_db"; break;
+		case 13: db_name = "skill_changematerial_db"; break;
+	#endif
+	}
+
+	return db_name;
+}
 
 /*=======================================
  *  MySQL Init
@@ -3801,7 +3875,18 @@ int map_sql_init(void)
 	return 0;
 }
 
-#include "../brA_hook/map/map_dbsqlinit.inc"
+int brAdb_sql_init(void)
+{
+	map->brAmysql_handle = SQL->Malloc();
+
+	ShowInfo("Conectando com o banco de dados geral....\n");
+
+	if(SQL_ERROR == SQL->Connect(map->brAmysql_handle, map->brAdb_id, map->brAdb_pw, map->brAdb_ip, map->brAdb_port, map->brA_dbname))
+		exit(EXIT_FAILURE);
+
+	ShowStatus("Conexao efetuada com sucesso no banco de dados '"CL_WHITE"%s"CL_RESET"'.\n", map->brA_dbname);
+	return 0;
+}
 
 int map_sql_close(void)
 {
@@ -3814,7 +3899,13 @@ int map_sql_close(void)
 	return 0;
 }
 
-#include "../brA_hook/map/map_dbsqlclose.inc"
+int brAmap_sql_close(void)
+{
+	ShowStatus("Fechando conexao com a database geral....\n");
+	SQL->Free(map->brAmysql_handle);
+	map->brAmysql_handle = NULL;
+	return 0;
+}
 
 /**
  * Merges two zones into a new one
@@ -5446,7 +5537,7 @@ int do_final(void) {
 	db_destroy(map->regen_db);
 
 	map->sql_close();
-#include "../brA_hook/map/map_sqlclose.inc"
+	map->brAsql_close();
 	ers_destroy(map->iterator_ers);
 	ers_destroy(map->flooritem_ers);
 
@@ -5859,7 +5950,7 @@ int do_init(int argc, char *argv[])
 		map->sql_init();
 		if (logs->config.sql_logs)
 			logs->sql_init();
-#include "../brA_hook/map/map_loadsqlinit.inc"
+			map->brAsql_init();
 	}
 
 	i = mapindex->init();
@@ -6010,7 +6101,12 @@ void map_defaults(void) {
 	sprintf(map->server_db,"ragnarok");
 	map->mysql_handle = NULL;
 	
-#include "../brA_hook/map/map_mysqlvar.inc"
+	map->brAdb_port = 3306;
+	sprintf(map->brAdb_ip,"127.0.0.1");
+	sprintf(map->brAdb_id,"ragnarok");
+	sprintf(map->brAdb_pw,"ragnarok");
+	sprintf(map->brA_dbname,"bra_db");
+	map->brAmysql_handle = NULL;
 
 	map->cpsd_active = false;
 	
@@ -6207,9 +6303,9 @@ void map_defaults(void) {
 	map->reloadnpc_sub = map_reloadnpc_sub;
 	map->inter_config_read = inter_config_read;
 	map->sql_init = map_sql_init;
-#include "../brA_hook/map/map_defsqlinit.inc"
+	map->brAsql_init = brAdb_sql_init;
 	map->sql_close = map_sql_close;
-#include "../brA_hook/map/map_defsqlclose.inc"
+	map->brAsql_close = brAmap_sql_close;
 	map->zone_mf_cache = map_zone_mf_cache;
 	map->zone_str2itemid = map_zone_str2itemid;
 	map->zone_str2skillid = map_zone_str2skillid;

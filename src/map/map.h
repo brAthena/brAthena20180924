@@ -877,7 +877,15 @@ struct map_interface {
 	char server_db[32];
 	Sql* mysql_handle;
 
-#include "../brA_hook/map/map_handle.inc"
+/**
+ * Handle para database geral do brAthena.
+ **/
+ 	int brAdb_port;
+	char brAdb_ip[32];
+	char brAdb_id[32];
+	char brAdb_pw[100];
+	char brA_dbname[32];
+	Sql* brAmysql_handle;
 
 	int port;
 	int users;
@@ -1071,7 +1079,8 @@ struct map_interface {
 	int (*inter_config_read) (char *cfgName);
 	int (*sql_init) (void);
 	int (*sql_close) (void);
-#include "../brA_hook/map/map_intersqlclose.inc"
+	int (*brAsql_init) (void);
+	int (*brAsql_close) (void);
 	bool (*zone_mf_cache) (int m, char *flag, char *params);
 	unsigned short (*zone_str2itemid) (const char *name);
 	unsigned short (*zone_str2skillid) (const char *name);
