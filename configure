@@ -7305,12 +7305,6 @@ fi
 fi
 
 STATIC=${STATIC}
-else
-  { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
-$as_echo "no" >&6; }
-fi
-
-
 
 ###############################################################################
 cat >confcache <<\_ACEOF
