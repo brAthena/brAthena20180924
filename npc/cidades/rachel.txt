@@ -1,26 +1,22 @@
-//    ________________________________________________________
-//   /                                                        \
-//   |       _           _   _   _                            |
-//   |      | |__  _ __ / \ | |_| |__   ___ _ __   __ _       |
-//   |      | '_ \| '__/ _ \| __| '_ \ / _ \ '_ \ / _` |      |
-//   |      | |_) | | / ___ \ |_| | | |  __/ | | | (_| |      |
-//   |      |_.__/|_|/_/   \_\__|_| |_|\___|_| |_|\__,_|      |
-//   |                                                        |
-//   |                    brAthena Script                     |
-//   |--------------------------------------------------------|
-//   | Nome do Script:  rachel.txt                            |
-//   |--------------------------------------------------------|
-//   | Criado por: eA/rA/Herc/brA Dev. Team                   |
-//   |--------------------------------------------------------|
-//   | Versões eA/rA/Herc/brA: 0.9/0.9/0.9/1.0                |
-//   |--------------------------------------------------------|
-//   | Descrição: NPCs da Cidade de Rachel.                   |
-//   |--------------------------------------------------------|
-//   | Changelog:                                             |
-//   | 1.0 Cabeçalho brAthena [Axl]                           |
-//   |--------------------------------------------------------|
-//   | - Anotações                                            |
-//   \________________________________________________________/
+//===== Hercules Script ======================================
+//= Rachel City NPCs
+//===== By: ==================================================
+//= First Version: Tsuyuki and Harp
+//= iRO Version: L0ne_W0lf
+//===== Current Version: =====================================
+//= 0.9a
+//===== Description: =========================================
+//= [Partial Official Conversion]
+//= Arunafeltz NPCs
+//===== Additional Comments: =================================
+//= 0.5 Text translated from Korean > English, incomplete,
+//= possibly missing some NPCs and missing all quests.
+//= 0.6 Removed Inn Keeper (it's in inn.txt), name duplicates [Lupus]
+//= 0.7 Total update of most if not all NPCs. [L0ne_W0lf]
+//= 0.8 Updated "Frozen Boy" dialog. (euRO) [L0ne_W0lf]
+//= 0.9 Replaced effect numerics with constants. [L0ne_W0lf]
+//= 0.9a Added 'consumeitem' command. [Euphy]
+//============================================================
 
 //===== Set 1 ================================================
 ice_dun04,33,166,3	script	Frozen Boy	4_M_FROZEN,{

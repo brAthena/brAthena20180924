@@ -1,26 +1,16 @@
-//    ________________________________________________________
-//   /                                                        \
-//   |       _           _   _   _                            |
-//   |      | |__  _ __ / \ | |_| |__   ___ _ __   __ _       |
-//   |      | '_ \| '__/ _ \| __| '_ \ / _ \ '_ \ / _` |      |
-//   |      | |_) | | / ___ \ |_| | | |  __/ | | | (_| |      |
-//   |      |_.__/|_|/_/   \_\__|_| |_|\___|_| |_|\__,_|      |
-//   |                                                        |
-//   |                    brAthena Script                     |
-//   |--------------------------------------------------------|
-//   | Nome do Script: lighthalzen.txt                        |
-//   |--------------------------------------------------------|
-//   | Criado por: eA/rA/Herc/brA Dev. Team                   |
-//   |--------------------------------------------------------|
-//   | Versões eA/rA/Herc/brA: 2.2/2.2/2.2/1.0                |
-//   |--------------------------------------------------------|
-//   | Descrição: NPCs da Cidade de Lighthalzen.              |
-//   |--------------------------------------------------------|
-//   | Changelog:                                             |
-//   | 1.0 Cabeçalho brAthena [Axl]                           |
-//   |--------------------------------------------------------|
-//   | - Anotações                                            |
-//   \________________________________________________________/
+//===== Hercules Script ======================================
+//= Lighthalzen City
+//===== By: ==================================================
+//=  erKURITA, Au{R}oN (Translated by Alan), $ephiroth
+//===== Current Version: =====================================
+//= 2.2
+//===== Description: =========================================
+//= Lighthalzen NPCs (Temporal names for now) [erKURITA]
+//===== Additional Comments: ==================================
+//= 2.0 Added missing Lab Staff#amano08 NPC. (bugreport:4319) [Gepard]
+//= 2.1 Commented out Duplicate NPCs. (bugreport:4555)
+//= 2.2 Added missing NPC found in AEGIS files. [L0ne_W0lf]
+//=============================================================
 
 lighthalzen,198,285,5	script	Jiwon#zen5	4_F_LGTGIRL,{
 	mes "[Jiwon]";
@@ -3190,7 +3180,7 @@ lhz_in01,221,131,7	script	Scientist#li_01	4_LGTSCIENCE,{
 
 // Lighthalzen Mushroom.
 // Don't really understand why it's there, but it's funny regardless.
-lhz_in01,157,54,0,0	monster	Red Mushroom	RED_MUSHROOM,1,120000,100000,0
+lhz_in01,157,54,0,0	monster	Red Mushroom	1085,1,120000,100000,0
 
 //=========================
 // Older Comments
