@@ -14,102 +14,102 @@
 //==================================================
 // ra_fild01 - Rachel Field
 //==================================================
-ra_fild01,0,0,0,0	monster	Muscipular	1780,60,0,0,1
-ra_fild01,173,170,106,80	monster	Geographer	1368,30,300000,120000,1
-ra_fild01,0,0,0,0	monster	Drosera	1781,20,0,0,1
-ra_fild01,0,0,0,0	monster	Galion	1783,5,0,0,0
-ra_fild01,0,0,0,0	monster	Gryphon	1259,3,3600000,0,1
+ra_fild01,0,0,0,0	monster	Muscipular	MUSCIPULAR,60,0,0,1
+ra_fild01,173,170,106,80	monster	Geographer	GEOGRAPHER,30,300000,120000,1
+ra_fild01,0,0,0,0	monster	Drosera	DROSERA,20,0,0,1
+ra_fild01,0,0,0,0	monster	Galion	GALION,5,0,0,0
+ra_fild01,0,0,0,0	monster	Gryphon	GRYPHON,3,3600000,0,1
 
 //==================================================
 // ra_fild02 - Rachel Field
 //==================================================
-ra_fild02,0,0,0,0	monster	Muscipular	1780,60,0,0,0
-ra_fild02,0,0,0,0	monster	Drosera	1781,20,0,0,0
-ra_fild02,0,0,0,0	monster	Galion	1783,15,0,0,0
-ra_fild02,0,0,0,0	boss_monster	Atroce	1785,1,14400000,600000,1
+ra_fild02,0,0,0,0	monster	Muscipular	MUSCIPULAR,60,0,0,0
+ra_fild02,0,0,0,0	monster	Drosera	DROSERA,20,0,0,0
+ra_fild02,0,0,0,0	monster	Galion	GALION,15,0,0,0
+ra_fild02,0,0,0,0	boss_monster	Atroce	ATROCE,1,14400000,600000,1
 
 //==================================================
 // ra_fild03 - Rachel Field
 //==================================================
-ra_fild03,0,0,0,0	monster	Galion	1783,35,0,0,0
-ra_fild03,0,0,0,0	monster	Drosera	1781,10,0,0,1
-ra_fild03,0,0,0,0	monster	Roween	1782,10,0,0,0
-ra_fild03,0,0,0,0	monster	Stapo	1784,10,0,0,0
-ra_fild03,0,0,0,0	boss_monster	Atroce	1785,1,10800000,600000,1
+ra_fild03,0,0,0,0	monster	Galion	GALION,35,0,0,0
+ra_fild03,0,0,0,0	monster	Drosera	DROSERA,10,0,0,1
+ra_fild03,0,0,0,0	monster	Roween	ROWEEN,10,0,0,0
+ra_fild03,0,0,0,0	monster	Stapo	STAPO,10,0,0,0
+ra_fild03,0,0,0,0	boss_monster	Atroce	ATROCE,1,10800000,600000,1
 
 //==================================================
 // ra_fild04 - Rachel Field
 //==================================================
-ra_fild04,0,0,0,0	monster	Roween	1782,60,0,0,0
-ra_fild04,0,0,0,0	monster	Stapo	1784,20,0,0,0
-ra_fild04,0,0,0,0	monster	Wild Rose	1261,10,0,0,0
-ra_fild04,0,0,0,0	monster	Galion	1783,3,0,0,0
-ra_fild04,0,0,0,0	boss_monster	Atroce	1785,1,18000000,600000,1
+ra_fild04,0,0,0,0	monster	Roween	ROWEEN,60,0,0,0
+ra_fild04,0,0,0,0	monster	Stapo	STAPO,20,0,0,0
+ra_fild04,0,0,0,0	monster	Wild Rose	WILD_ROSE,10,0,0,0
+ra_fild04,0,0,0,0	monster	Galion	GALION,3,0,0,0
+ra_fild04,0,0,0,0	boss_monster	Atroce	ATROCE,1,18000000,600000,1
 
 //==================================================
 // ra_fild05 - Rachel Field
 //==================================================
-ra_fild05,0,0,0,0	monster	Hill Wind	1680,70,0,0,0
-ra_fild05,0,0,0,0	monster	Drosera	1781,20,0,0,0
-ra_fild05,170,200,106,115	monster	Geographer	1368,10,0,0,1
+ra_fild05,0,0,0,0	monster	Hill Wind	HILL_WIND_1,70,0,0,0
+ra_fild05,0,0,0,0	monster	Drosera	DROSERA,20,0,0,0
+ra_fild05,170,200,106,115	monster	Geographer	GEOGRAPHER,10,0,0,1
 
 //==================================================
 // ra_fild06 - Rachel Field
 //==================================================
-ra_fild06,0,0,0,0	monster	Hill Wind	1680,50,0,0,0
-ra_fild06,0,0,0,0	monster	Anopheles	1627,20,0,0,0
-ra_fild06,0,0,0,0	monster	Drosera	1781,10,0,0,1
+ra_fild06,0,0,0,0	monster	Hill Wind	HILL_WIND_1,50,0,0,0
+ra_fild06,0,0,0,0	monster	Anopheles	ANOPHELES,20,0,0,0
+ra_fild06,0,0,0,0	monster	Drosera	DROSERA,10,0,0,1
 
 //==================================================
 // ra_fild07 - Rachel Field
 //==================================================
-ra_fild07,0,0,0,0	monster	Roween	1782,50,0,0,0
-ra_fild07,0,0,0,0	monster	Galion	1783,20,0,0,0
-ra_fild07,0,0,0,0	monster	Stapo	1784,10,0,0,1
+ra_fild07,0,0,0,0	monster	Roween	ROWEEN,50,0,0,0
+ra_fild07,0,0,0,0	monster	Galion	GALION,20,0,0,0
+ra_fild07,0,0,0,0	monster	Stapo	STAPO,10,0,0,1
 
 //==================================================
 // ra_fild08 - Rachel Field
 //==================================================
-ra_fild08,0,0,0,0	monster	Stapo	1784,100,0,0,1
-ra_fild08,0,0,0,0	monster	Drops	1113,40,0,0,0
-ra_fild08,0,0,0,0	monster	Drosera	1781,20,0,0,1
+ra_fild08,0,0,0,0	monster	Stapo	STAPO,100,0,0,1
+ra_fild08,0,0,0,0	monster	Drops	DROPS,40,0,0,0
+ra_fild08,0,0,0,0	monster	Drosera	DROSERA,20,0,0,1
 
 //==================================================
 // ra_fild09 - Rachel Field
 //==================================================
-ra_fild09,0,0,0,0	monster	Drosera	1781,60,0,0,1
-ra_fild09,0,0,0,0	monster	Metaling	1613,20,0,0,0
-ra_fild09,0,0,0,0	monster	Hill Wind	1680,10,0,0,0
-ra_fild09,0,0,0,0	monster	Harpy	1376,1,3600000,0,0
+ra_fild09,0,0,0,0	monster	Drosera	DROSERA,60,0,0,1
+ra_fild09,0,0,0,0	monster	Metaling	METALING,20,0,0,0
+ra_fild09,0,0,0,0	monster	Hill Wind	HILL_WIND_1,10,0,0,0
+ra_fild09,0,0,0,0	monster	Harpy	HARPY,1,3600000,0,0
 
 //==================================================
 // ra_fild10 - Rachel Field
 //==================================================
-ra_fild10,0,0,0,0	monster	Stapo	1784,30,0,0,1
-ra_fild10,0,0,0,0	monster	Galion	1783,20,0,0,0
-ra_fild10,0,0,0,0	monster	Roween	1782,10,0,0,0
+ra_fild10,0,0,0,0	monster	Stapo	STAPO,30,0,0,1
+ra_fild10,0,0,0,0	monster	Galion	GALION,20,0,0,0
+ra_fild10,0,0,0,0	monster	Roween	ROWEEN,10,0,0,0
 
 //==================================================
 // ra_fild11 - Rachel Field
 //==================================================
-ra_fild11,0,0,0,0	monster	Drops	1113,100,0,0,1
-ra_fild11,0,0,0,0	monster	Stapo	1784,40,0,0,0
-ra_fild11,0,0,0,0	monster	Roween	1782,2,0,0,0
-ra_fild11,0,0,0,0	monster	Yellow Plant	1081,15,0,0,1
-ra_fild11,0,0,0,0	monster	Red Plant	1078,5,0,0,1
+ra_fild11,0,0,0,0	monster	Drops	DROPS,100,0,0,1
+ra_fild11,0,0,0,0	monster	Stapo	STAPO,40,0,0,0
+ra_fild11,0,0,0,0	monster	Roween	ROWEEN,2,0,0,0
+ra_fild11,0,0,0,0	monster	Yellow Plant	YELLOW_PLANT,15,0,0,1
+ra_fild11,0,0,0,0	monster	Red Plant	RED_PLANT,5,0,0,1
 
 //==================================================
 // ra_fild12 - Rachel Field
 //==================================================
-ra_fild12,0,0,0,0	monster	Drops	1113,100,0,0,0
-ra_fild12,0,0,0,0	monster	Stapo	1784,40,0,0,1
-ra_fild12,0,0,0,0	monster	Poporing	1031,5,0,0,0
-ra_fild12,0,0,0,0	monster	Yellow Plant	1081,15,0,0,1
-ra_fild12,0,0,0,0	monster	Red Plant	1078,5,0,0,1
+ra_fild12,0,0,0,0	monster	Drops	DROPS,100,0,0,0
+ra_fild12,0,0,0,0	monster	Stapo	STAPO,40,0,0,1
+ra_fild12,0,0,0,0	monster	Poporing	POPORING,5,0,0,0
+ra_fild12,0,0,0,0	monster	Yellow Plant	YELLOW_PLANT,15,0,0,1
+ra_fild12,0,0,0,0	monster	Red Plant	RED_PLANT,5,0,0,1
 
 //==================================================
 // ra_fild13 - Rachel Field
 //==================================================
-ra_fild13,0,0,0,0	monster	Stapo	1784,60,0,0,1
-ra_fild13,0,0,0,0	monster	Drops	1113,40,0,0,0
-ra_fild13,0,0,0,0	monster	Roween	1782,5,0,0,0
+ra_fild13,0,0,0,0	monster	Stapo	STAPO,60,0,0,1
+ra_fild13,0,0,0,0	monster	Drops	DROPS,40,0,0,0
+ra_fild13,0,0,0,0	monster	Roween	ROWEEN,5,0,0,0
