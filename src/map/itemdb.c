@@ -1150,7 +1150,7 @@ void itemdb_read_packages(void) {
 		for(r = 0; r < itemdb->packages[cnt].random_qty; r++ ) {
 			if( itemdb->packages[cnt].random_groups[r].random_qty == 1 ) {
 				//item packages dont stop looping until something comes out of them, so if you have only one item in it the drop is guaranteed.
-				ShowWarning("itemdb_read_packages: em '%s' 'Random: %d' grupo tem apenas 1 opção aleatória, queda da taxa será de 100%!\n",itemdb_name(itemdb->packages[cnt].id),r+1);
+				ShowWarning("itemdb_read_packages: em '%s' 'Random: %d' grupo tem apenas 1 opção aleatória, queda da taxa será de 100%%!\n",itemdb_name(itemdb->packages[cnt].id),r+1);
 				itemdb->packages[cnt].random_groups[r].random_list[0].probability = 10000;
 			}
 		}

@@ -3826,7 +3826,7 @@ void sv_readsqldb(char *table_name, int param_size, int max_allowed, bool (*sub_
 		count++;
 	}
 
-	ShowSQL("Leitura de '"CL_WHITE"%lu"CL_RESET"' entradas na tabela '"CL_WHITE"%s"CL_RESET"'.\n", count, table_name);
+	ShowSQL("Leitura de '"CL_WHITE"%lu"CL_RESET"' entradas na tabela '"CL_WHITE"%s"CL_RESET"'.\n", (unsigned long)count, table_name);
 	SQL->FreeResult(map->brAmysql_handle);
 }
 

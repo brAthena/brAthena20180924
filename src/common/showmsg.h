@@ -104,8 +104,8 @@ extern int vShowMessage_(enum msg_type flag, const char *string, va_list ap);
 
 extern void ShowMessage(const char *, ...) __attribute__((format(printf, 1, 2)));
 extern void ShowStatus(const char *, ...) __attribute__((format(printf, 1, 2)));
-extern void ShowConf(const char *, ...); __attribute__((format(printf, 1, 2)));
-extern void ShowNpc(const char *, ...); __attribute__((format(printf, 1, 2)));
+extern void ShowConf(const char *, ...) __attribute__((format(printf, 1, 2)));
+extern void ShowNpc(const char *, ...) __attribute__((format(printf, 1, 2)));
 extern void ShowSQL(const char *, ...) __attribute__((format(printf, 1, 2)));
 extern void ShowInfo(const char *, ...) __attribute__((format(printf, 1, 2)));
 extern void ShowNotice(const char *, ...) __attribute__((format(printf, 1, 2)));

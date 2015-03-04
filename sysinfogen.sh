@@ -1,8 +1,8 @@
 #!/bin/sh
 
-# Copyright (c) Hercules Dev Team, licensed under GNU GPL.
-# See the LICENSE file
-# Base Author: Haru @ http://hercules.ws
+# Projeto brAthena
+# www.brathena.org
+# Base Author: Haru
 
 do_fail() {
 	echo 'Error writing output file'
@@ -40,11 +40,11 @@ cat > "$OUTFILE" << EOF
 EOF
 [ $? -eq 0 ] || do_fail
 
-HERC_PLATFORM="$( uname -s )"
-HERC_CORES="0"
-HERC_CPU="Unknown"
+BRATHENA_PLATFORM="$( uname -s )"
+BRATHENA_CORES="0"
+BRATHENA_CPU="Unknown"
 
-case $HERC_PLATFORM in
+case $BRATHENA_PLATFORM in
 	Linux)
 		DIST=''
 		DESCRIPTION=''
@@ -140,119 +140,119 @@ case $HERC_PLATFORM in
 		if [ -n "$DESCRIPTION" ]; then
 			DIST="$DESCRIPTION"
 		fi
-		HERC_OSVERSION="$DIST"
+		BRATHENA_OSVERSION="$DIST"
 
-		HERC_CPU="$( cat /proc/cpuinfo | grep "model name" | head -n 1 | cut -d: -f2- )"
-		HERC_CORES="$( grep '^processor' /proc/cpuinfo | wc -l )"
+		BRATHENA_CPU="$( cat /proc/cpuinfo | grep "model name" | head -n 1 | cut -d: -f2- )"
+		BRATHENA_CORES="$( grep '^processor' /proc/cpuinfo | wc -l )"
 		;;
 	Darwin)
-		HERC_PLATFORM="Mac OS X"
+		BRATHENA_PLATFORM="Mac OS X"
 		if type sw_vers >/dev/null 2>&1; then
-			HERC_OSVERSION="$( sw_vers -productName ) $( sw_vers -productVersion ) $( sw_vers -buildVersion )"
+			BRATHENA_OSVERSION="$( sw_vers -productName ) $( sw_vers -productVersion ) $( sw_vers -buildVersion )"
 		else
-			HERC_OSVERSION="Unknown"
+			BRATHENA_OSVERSION="Unknown"
 		fi
 		if type system_profiler >/dev/null 2>&1; then
 			HWDATA="$( system_profiler SPHardwareDataType )"
 			HWDATA_CPU="$( echo "$HWDATA" | grep "Processor Name:" | cut -d: -f2- )"
 			HWDATA_CPUSPEED="$( cleanstring "$( echo "$HWDATA" | grep "Processor Speed:" | cut -d: -f2- )" )"
-			HERC_CORES="$( echo "$HWDATA" | grep "Total Number of Cores:" | cut -d: -f2- )"
-			HERC_CPU="${HWDATA_CPU} (${HWDATA_CPUSPEED})"
+			BRATHENA_CORES="$( echo "$HWDATA" | grep "Total Number of Cores:" | cut -d: -f2- )"
+			BRATHENA_CPU="${HWDATA_CPU} (${HWDATA_CPUSPEED})"
 		fi
 		;;
 	SunOS)
-		HERC_PLATFORM="Solaris"
-		HERC_OSVERSION="${HERC_PLATFORM} $( uname -r ) ($( uname -p) $(uname -v))"
+		BRATHENA_PLATFORM="Solaris"
+		BRATHENA_OSVERSION="${BRATHENA_PLATFORM} $( uname -r ) ($( uname -p) $(uname -v))"
 		;;
 	AIX)
-		HERC_OSVERSION="AIX $( oslevel ) ($(`oslevel -r`))"
+		BRATHENA_OSVERSION="AIX $( oslevel ) ($(`oslevel -r`))"
 		;;
 	CYGWIN*)
-		HERC_PLATFORM="Cygwin Windows"
-		HERC_OSVERSION="$( cleanstring "$( uname -s )" )"
-		HERC_CPU="$( cat /proc/cpuinfo | grep "model name" | head -n 1 | cut -d: -f2- )"
-		HERC_CORES="$( grep '^processor' /proc/cpuinfo | wc -l )"
+		BRATHENA_PLATFORM="Cygwin Windows"
+		BRATHENA_OSVERSION="$( cleanstring "$( uname -s )" )"
+		BRATHENA_CPU="$( cat /proc/cpuinfo | grep "model name" | head -n 1 | cut -d: -f2- )"
+		BRATHENA_CORES="$( grep '^processor' /proc/cpuinfo | wc -l )"
 		;;
 	OpenBSD)
-		HERC_OSVERSION="${HERC_PLATFORM} $( uname -r ) ($( uname -p) $(uname -v))"
-		HERC_CPU="$( sysctl hw.model | cut -d= -f2- )"
-		HERC_CORES="$( sysctl hw.ncpu | cut -d= -f2- )"
+		BRATHENA_OSVERSION="${BRATHENA_PLATFORM} $( uname -r ) ($( uname -p) $(uname -v))"
+		BRATHENA_CPU="$( sysctl hw.model | cut -d= -f2- )"
+		BRATHENA_CORES="$( sysctl hw.ncpu | cut -d= -f2- )"
 		;;
 	FreeBSD)
-		HERC_OSVERSION="${HERC_PLATFORM} $( uname -r ) ($( uname -p))"
-		HERC_CPU="$( sysctl hw.model | cut -d: -f2- )"
-		HERC_CORES="$( sysctl hw.ncpu | cut -d: -f2- )"
+		BRATHENA_OSVERSION="${BRATHENA_PLATFORM} $( uname -r ) ($( uname -p))"
+		BRATHENA_CPU="$( sysctl hw.model | cut -d: -f2- )"
+		BRATHENA_CORES="$( sysctl hw.ncpu | cut -d: -f2- )"
 		;;
 	NetBSD)
-		HERC_OSVERSION="${HERC_PLATFORM} $( uname -r ) ($( uname -p))"
-		HERC_CPU="$( sysctl hw.model | cut -d= -f2- )"
-		HERC_CORES="$( sysctl hw.ncpu | cut -d= -f2- )"
+		BRATHENA_OSVERSION="${BRATHENA_PLATFORM} $( uname -r ) ($( uname -p))"
+		BRATHENA_CPU="$( sysctl hw.model | cut -d= -f2- )"
+		BRATHENA_CORES="$( sysctl hw.ncpu | cut -d= -f2- )"
 		;;
 	*)
-		HERC_OSVERSION="Unknown"
+		BRATHENA_OSVERSION="Unknown"
 		;;
 esac
 
 cat >> "$OUTFILE" << EOF
 // Platform (uname -s)
-#define SYSINFO_PLATFORM "$( cleanstring "${HERC_PLATFORM}" )"
+#define SYSINFO_PLATFORM "$( cleanstring "${BRATHENA_PLATFORM}" )"
 
 // Operating System version (Platform-dependent)
-#define SYSINFO_OSVERSION "$( cleanstring "${HERC_OSVERSION}" )"
+#define SYSINFO_OSVERSION "$( cleanstring "${BRATHENA_OSVERSION}" )"
 
 // CPU Model (Platform-dependent)
-#define SYSINFO_CPU "$( cleanstring "${HERC_CPU}" )"
+#define SYSINFO_CPU "$( cleanstring "${BRATHENA_CPU}" )"
 
 // CPU Cores (Platform-dependent)
-#define SYSINFO_CPUCORES ( $( cleanstring "${HERC_CORES}" ) )
+#define SYSINFO_CPUCORES ( $( cleanstring "${BRATHENA_CORES}" ) )
 
 EOF
 [ $? -eq 0 ] || do_fail
 
-HERC_ARCH="$( uname -m )"
+BRATHENA_ARCH="$( uname -m )"
 
 cat >> "$OUTFILE" << EOF
 // OS Architecture (uname -m)
-#define SYSINFO_ARCH "$( cleanstring "${HERC_ARCH}" )"
+#define SYSINFO_ARCH "$( cleanstring "${BRATHENA_ARCH}" )"
 
 EOF
 [ $? -eq 0 ] || do_fail
 
-HERC_CFLAGS="$@"
-HERC_CFLAGS="$( echo "${HERC_CFLAGS}" | sed 's/"//g' )"
+BRATHENA_CFLAGS="$@"
+BRATHENA_CFLAGS="$( echo "${BRATHENA_CFLAGS}" | sed 's/"//g' )"
 
 cat >> "$OUTFILE" << EOF
 // Compiler Flags
-#define SYSINFO_CFLAGS "$( cleanstring "${HERC_CFLAGS}" )"
+#define SYSINFO_CFLAGS "$( cleanstring "${BRATHENA_CFLAGS}" )"
 
 EOF
 [ $? -eq 0 ] || do_fail
 
-HERC_VCSREV=""
+BRATHENA_VCSREV=""
 if [ -d .git ]; then
-	HERC_VCSTYPE="VCSTYPE_GIT"
+	BRATHENA_VCSTYPE="VCSTYPE_GIT"
 	if type git >/dev/null 2>&1; then
-		HERC_VCSREV="$( git rev-parse HEAD )"
+		BRATHENA_VCSREV="$( git rev-parse HEAD )"
 	else
-		HERC_VCSREV="Unknown"
+		BRATHENA_VCSREV="Unknown"
 	fi
 elif [ -d .svn ]; then
-	HERC_VCSTYPE="VCSTYPE_SVN"
+	BRATHENA_VCSTYPE="VCSTYPE_SVN"
 	if type svnversion >/dev/null 2>&1; then
-		HERC_VCSREV="$( svnversion )"
+		BRATHENA_VCSREV="$( svnversion )"
 	else
-		HERC_VCSREV="Unknown"
+		BRATHENA_VCSREV="Unknown"
 	fi
 else
-	HERC_VCSTYPE="VCSTYPE_NONE"
+	BRATHENA_VCSTYPE="VCSTYPE_NONE"
 fi
 
 cat >> "$OUTFILE" << EOF
 // VCS Type
-#define SYSINFO_VCSTYPE ${HERC_VCSTYPE}
+#define SYSINFO_VCSTYPE ${BRATHENA_VCSTYPE}
 
 // VCS Revision
-#define SYSINFO_VCSREV "$( cleanstring "${HERC_VCSREV}" )"
+#define SYSINFO_VCSREV "$( cleanstring "${BRATHENA_VCSREV}" )"
 
 EOF
 [ $? -eq 0 ] || do_fail
