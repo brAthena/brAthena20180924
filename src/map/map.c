@@ -3799,6 +3799,9 @@ void sv_readsqldb(char *table_name, int param_size, int max_allowed, bool (*sub_
 	uint8 lines = 0;
 	uint16 count = 0;
 
+	if (table_name == NULL)
+		return;
+
 	if(SQL_ERROR == SQL->Query(map->brAmysql_handle, "SELECT * FROM `%s`", table_name)) {
 		Sql_ShowDebug(map->brAmysql_handle);
 		return;
