@@ -12163,7 +12163,7 @@ void buffspecial_db(void) {
 #ifdef OLD_TIMES
 	const char *config_filename = "db/ot/BuffSpecial.conf"; // FIXME hardcoded name
 #else
-	const char *config_filename = "db/pre/BuffSpecial.conf"; // FIXME hardcoded name
+	const char *config_filename = "db/pre-re/BuffSpecial.conf"; // FIXME hardcoded name
 #endif
 #endif
 	int scname = 0, i = 0, sc_count = 0;
