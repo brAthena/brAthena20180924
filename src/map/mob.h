@@ -368,7 +368,7 @@ struct mob_interface {
 	void (*name_constants) (void);
 	bool (*readdb_mobavail) (char *str[], int columns, int current);
 	int (*read_randommonster) (void);
-	bool (*parse_row_chatdb) (char **str, const char *source, int line, int *last_msg_id);
+	bool (*parse_row_chatdb) (char *str[], int columns, int current);
 	void (*readchatdb) (void);
 	bool (*parse_row_mobskilldb) (char **str, int columns, int current);
 	void (*readskilldb) (void);

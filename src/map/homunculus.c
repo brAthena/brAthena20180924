@@ -1213,7 +1213,7 @@ int8 homunculus_get_intimacy_grade(struct homun_data *hd) {
 
 void homunculus_skill_db_read(void) {
 	memset(homun->skill_tree,0,sizeof(homun->skill_tree));
-	sv->readdb(map->db_path, "homun_skill_tree.txt", ',', 13, 15, -1, homun->read_skill_db_sub);
+	sv_readsqldb(get_database_name(17), 15, -1, homun->read_skill_db_sub);
 
 }
 

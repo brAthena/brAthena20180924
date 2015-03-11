@@ -3833,7 +3833,6 @@ void sv_readsqldb(char *table_name, int param_size, int max_allowed, bool (*sub_
 	SQL->FreeResult(map->brAmysql_handle);
 }
 
-
 char *get_database_name(int database_id)
 {
 	char *db_name = NULL;
@@ -3844,17 +3843,31 @@ char *get_database_name(int database_id)
 		case 2: db_name = "skill_cast_db"; break;
 		case 3: db_name = "skill_castnodex_db"; break;
 		case 4: db_name = "skill_unit_db"; break;
-		//case 5: livre
 		case 6: db_name = "produce_db"; break;
 		case 7: db_name = "create_arrow_db"; break;
 		case 8: db_name = "abra_db"; break;
-	#ifdef RENEWAL
+#ifdef RENEWAL
 		case 9: db_name = "spellbook_db"; break;
 		case 10: db_name = "magicmushroom_db"; break;
 		case 11: db_name = "skill_reproduce_db"; break;
 		case 12: db_name = "skill_improvise_db"; break;
 		case 13: db_name = "skill_changematerial_db"; break;
-	#endif
+#endif
+		case 14: db_name = "elemental_db"; break;
+		case 15: db_name = "elemental_skill_db"; break;
+		case 16: db_name = "guild_skill_tree_db"; break;
+		case 17: db_name = "homun_skill_tree_db"; break;
+		case 18: db_name = "mercenary_db"; break;
+		case 19: db_name = "mercenary_skill_db"; break;
+		case 20: db_name = "mob_avail_db"; break;
+		case 21: db_name = "mob_chat_db"; break;
+		case 22: db_name = "mob_branch_db"; break;
+		case 23: db_name = "mob_poring_db"; break;
+		case 24: db_name = "mob_boss_db"; break;
+		case 25: db_name = "mob_pouch_db"; break;
+		case 26: db_name = "mob_classchange_db"; break;
+		case 27: db_name = "pet_db"; break;
+		case 28: db_name = "mob_item_ratio_db"; break;
 	}
 
 	return db_name;

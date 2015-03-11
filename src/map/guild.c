@@ -2247,9 +2247,8 @@ void do_init_guild(bool minimal) {
 	guild->expcache_ers = ers_new(sizeof(struct guild_expcache),"guild.c::expcache_ers",ERS_OPT_NONE);
 		
 	sv->readdb(map->db_path, "castle_db.txt", ',', 4, 5, -1, guild->read_castledb);
-
-	sv->readdb(map->db_path, "guild_skill_tree.txt", ',', 2+MAX_GUILD_SKILL_REQUIRE*2, 2+MAX_GUILD_SKILL_REQUIRE*2, -1, guild->read_guildskill_tree_db); //guild skill tree [Komurka]
-
+	sv_readsqldb(get_database_name(16), 2+MAX_GUILD_SKILL_REQUIRE*2, -1, guild->read_guildskill_tree_db);
+	
 	timer->add_func_list(guild->payexp_timer,"guild_payexp_timer");
 	timer->add_func_list(guild->send_xy_timer, "guild_send_xy_timer");
 	timer->add_interval(timer->gettick()+GUILD_PAYEXP_INVERVAL,guild->payexp_timer,0,0,GUILD_PAYEXP_INVERVAL);

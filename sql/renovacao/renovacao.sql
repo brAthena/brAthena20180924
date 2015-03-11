@@ -1,4 +1,4 @@
-﻿/*_________________________________________________________________________
+/*_________________________________________________________________________
  /                                                                         \
  |                  _           _   _   _                                  |
  |                 | |__  _ __ / \ | |_| |__   ___ _ __   __ _             |
@@ -16,10 +16,10 @@
 --
 
 CREATE TABLE IF NOT EXISTS `abra_db` (
-  `SkillID` smallint unsigned NOT NULL,
+  `SkillID` smallint(5) unsigned NOT NULL,
   `DummyName` varchar(40) NOT NULL,
-  `ReqHocusPocusLevel` tinyint NOT NULL DEFAULT 1,
-  `Rate` smallint unsigned NOT NULL DEFAULT 0,
+  `ReqHocusPocusLevel` tinyint(4) NOT NULL DEFAULT '1',
+  `Rate` smallint(5) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`SkillID`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
@@ -230,21 +230,49 @@ REPLACE INTO `abra_db` VALUES(329,'Beijo da Sorte',1,0);
 REPLACE INTO `abra_db` VALUES(330,'Dança Cigana',1,0);
 
 --
+-- Estrutura da tabela `castle_db`
+--
+
+CREATE TABLE IF NOT EXISTS `castle_db` (
+  `CastleID` tinyint(4) NOT NULL,
+  `MapName` varchar(20) NOT NULL,
+  `CastleName` varchar(30) NOT NULL,
+  `OnGuildBreakEventName` varchar(30) NOT NULL,
+  `Flag` tinyint(4) NOT NULL,
+  PRIMARY KEY (`CastleID`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `const_db`
+--
+
+CREATE TABLE IF NOT EXISTS `const_db` (
+  `Const` varchar(100) NOT NULL,
+  `Val` varchar(70) NOT NULL,
+  `Type` tinyint(4) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`Const`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura da tabela `create_arrow_db`
 --
 
 CREATE TABLE IF NOT EXISTS `create_arrow_db` (
-  `SourceID` smallint unsigned NOT NULL,
-  `MakeID1` smallint unsigned DEFAULT NULL,
-  `MakeAmount1` smallint unsigned DEFAULT NULL,
-  `MakeID2` smallint unsigned DEFAULT NULL,
-  `MakeAmount2` smallint unsigned DEFAULT NULL,
-  `MakeID3` smallint unsigned DEFAULT NULL,
-  `MakeAmount3` smallint unsigned DEFAULT NULL,
-  `MakeID4` smallint unsigned DEFAULT NULL,
-  `MakeAmount4` smallint unsigned DEFAULT NULL,
-  `MakeID5` smallint unsigned DEFAULT NULL,
-  `MakeAmount5` smallint unsigned DEFAULT NULL,
+  `SourceID` smallint(5) unsigned NOT NULL,
+  `MakeID1` smallint(5) unsigned DEFAULT NULL,
+  `MakeAmount1` smallint(5) unsigned DEFAULT NULL,
+  `MakeID2` smallint(5) unsigned DEFAULT NULL,
+  `MakeAmount2` smallint(5) unsigned DEFAULT NULL,
+  `MakeID3` smallint(5) unsigned DEFAULT NULL,
+  `MakeAmount3` smallint(5) unsigned DEFAULT NULL,
+  `MakeID4` smallint(5) unsigned DEFAULT NULL,
+  `MakeAmount4` smallint(5) unsigned DEFAULT NULL,
+  `MakeID5` smallint(5) unsigned DEFAULT NULL,
+  `MakeAmount5` smallint(5) unsigned DEFAULT NULL,
   PRIMARY KEY (`SourceID`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
@@ -386,38 +414,2213 @@ REPLACE INTO `create_arrow_db` VALUES(7752,1767,50,1761,50,NULL,NULL,NULL,NULL,N
 REPLACE INTO `create_arrow_db` VALUES(7753,1762,50,1770,10,1761,20,NULL,NULL,NULL,NULL);
 
 --
+-- Estrutura da tabela `elemental_db`
+--
+
+CREATE TABLE IF NOT EXISTS `elemental_db` (
+  `ID` smallint(5) unsigned NOT NULL,
+  `Sprite_Name` varchar(30) NOT NULL,
+  `Name` varchar(30) NOT NULL,
+  `LV` tinyint(4) NOT NULL,
+  `HP` smallint(5) unsigned NOT NULL,
+  `SP` smallint(5) unsigned NOT NULL,
+  `Range1` smallint(6) NOT NULL,
+  `ATK1` smallint(5) unsigned NOT NULL,
+  `ATK2` smallint(5) unsigned NOT NULL,
+  `DEF` tinyint(4) NOT NULL,
+  `MDEF` tinyint(4) NOT NULL,
+  `STR` smallint(6) NOT NULL,
+  `AGI` smallint(6) NOT NULL,
+  `VIT` smallint(6) NOT NULL,
+  `INT` smallint(6) NOT NULL,
+  `DEX` smallint(6) NOT NULL,
+  `LUK` smallint(6) NOT NULL,
+  `Range2` smallint(6) NOT NULL,
+  `Range3` smallint(6) NOT NULL,
+  `Scale` tinyint(4) NOT NULL,
+  `Race` tinyint(4) NOT NULL,
+  `Element` tinyint(4) NOT NULL,
+  `Speed` smallint(6) NOT NULL,
+  `aDelay` smallint(5) unsigned NOT NULL,
+  `aMotion` smallint(5) unsigned NOT NULL,
+  `dMotion` smallint(5) unsigned NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `elemental_db`
+--
+
+REPLACE INTO `elemental_db` VALUES(2114, 'EL_AGNI_S', 'Agni', 100, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 12, 0, 0, 83, 200, 504, 1020, 360);
+REPLACE INTO `elemental_db` VALUES(2115, 'EL_AGNI_M', 'Agni', 100, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 12, 1, 0, 83, 200, 504, 1020, 360);
+REPLACE INTO `elemental_db` VALUES(2116, 'EL_AGNI_L', 'Agni', 100, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 12, 2, 0, 83, 200, 504, 1020, 360);
+REPLACE INTO `elemental_db` VALUES(2117, 'EL_AQUA_S', 'Aqua', 100, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 12, 0, 0, 81, 200, 504, 1020, 360);
+REPLACE INTO `elemental_db` VALUES(2118, 'EL_AQUA_M', 'Aqua', 100, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 12, 1, 0, 81, 200, 504, 1020, 360);
+REPLACE INTO `elemental_db` VALUES(2119, 'EL_AQUA_L', 'Aqua', 100, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 5, 12, 2, 0, 81, 200, 504, 1020, 360);
+REPLACE INTO `elemental_db` VALUES(2120, 'EL_VENTUS_S', 'Ventus', 100, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 12, 0, 0, 84, 200, 504, 1020, 360);
+REPLACE INTO `elemental_db` VALUES(2121, 'EL_VENTUS_M', 'Ventus', 100, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 12, 1, 0, 84, 200, 504, 1020, 360);
+REPLACE INTO `elemental_db` VALUES(2122, 'EL_VENTUS_L', 'Ventus', 100, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 12, 2, 0, 84, 200, 504, 1020, 360);
+REPLACE INTO `elemental_db` VALUES(2123, 'EL_TERA_S', 'Tera', 100, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 12, 0, 0, 82, 200, 504, 1020, 360);
+REPLACE INTO `elemental_db` VALUES(2124, 'EL_TERA_M', 'Tera', 100, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 12, 1, 0, 82, 200, 504, 1020, 360);
+REPLACE INTO `elemental_db` VALUES(2125, 'EL_TERA_L', 'Tera', 100, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 12, 2, 0, 82, 200, 504, 1020, 360);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `elemental_skill_db`
+--
+
+CREATE TABLE IF NOT EXISTS `elemental_skill_db` (
+  `ElementalID` smallint(5) unsigned NOT NULL,
+  `SkillID` smallint(5) unsigned NOT NULL,
+  `SkillLevel` tinyint(4) NOT NULL,
+  `ReqMode` tinyint(4) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `elemental_skill_db`
+--
+
+REPLACE INTO `elemental_skill_db` VALUES(2114, 8413, 1, 1);
+REPLACE INTO `elemental_skill_db` VALUES(2114, 8401, 1, 2);
+REPLACE INTO `elemental_skill_db` VALUES(2114, 8425, 1, 4);
+REPLACE INTO `elemental_skill_db` VALUES(2115, 8414, 1, 1);
+REPLACE INTO `elemental_skill_db` VALUES(2115, 8402, 1, 2);
+REPLACE INTO `elemental_skill_db` VALUES(2115, 8426, 1, 4);
+REPLACE INTO `elemental_skill_db` VALUES(2116, 8415, 1, 1);
+REPLACE INTO `elemental_skill_db` VALUES(2116, 8403, 1, 2);
+REPLACE INTO `elemental_skill_db` VALUES(2116, 8428, 1, 4);
+REPLACE INTO `elemental_skill_db` VALUES(2117, 8416, 1, 1);
+REPLACE INTO `elemental_skill_db` VALUES(2117, 8404, 1, 2);
+REPLACE INTO `elemental_skill_db` VALUES(2117, 8430, 1, 4);
+REPLACE INTO `elemental_skill_db` VALUES(2118, 8417, 1, 1);
+REPLACE INTO `elemental_skill_db` VALUES(2118, 8405, 1, 2);
+REPLACE INTO `elemental_skill_db` VALUES(2118, 8431, 1, 4);
+REPLACE INTO `elemental_skill_db` VALUES(2119, 8418, 1, 1);
+REPLACE INTO `elemental_skill_db` VALUES(2119, 8406, 1, 2);
+REPLACE INTO `elemental_skill_db` VALUES(2119, 8433, 1, 4);
+REPLACE INTO `elemental_skill_db` VALUES(2120, 8419, 1, 1);
+REPLACE INTO `elemental_skill_db` VALUES(2120, 8407, 1, 2);
+REPLACE INTO `elemental_skill_db` VALUES(2120, 8434, 1, 4);
+REPLACE INTO `elemental_skill_db` VALUES(2121, 8420, 1, 1);
+REPLACE INTO `elemental_skill_db` VALUES(2121, 8408, 1, 2);
+REPLACE INTO `elemental_skill_db` VALUES(2121, 8435, 1, 4);
+REPLACE INTO `elemental_skill_db` VALUES(2122, 8421, 1, 1);
+REPLACE INTO `elemental_skill_db` VALUES(2122, 8409, 1, 2);
+REPLACE INTO `elemental_skill_db` VALUES(2122, 8437, 1, 4);
+REPLACE INTO `elemental_skill_db` VALUES(2123, 8422, 1, 1);
+REPLACE INTO `elemental_skill_db` VALUES(2123, 8410, 1, 2);
+REPLACE INTO `elemental_skill_db` VALUES(2123, 8439, 1, 4);
+REPLACE INTO `elemental_skill_db` VALUES(2124, 8423, 1, 1);
+REPLACE INTO `elemental_skill_db` VALUES(2124, 8411, 1, 2);
+REPLACE INTO `elemental_skill_db` VALUES(2124, 8440, 1, 4);
+REPLACE INTO `elemental_skill_db` VALUES(2125, 8424, 1, 1);
+REPLACE INTO `elemental_skill_db` VALUES(2125, 8412, 1, 2);
+REPLACE INTO `elemental_skill_db` VALUES(2125, 8442, 1, 4);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `exp_guild_db`
+--
+
+CREATE TABLE IF NOT EXISTS `exp_guild_db` (
+  `exp` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`exp`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `exp_homun_db`
+--
+
+CREATE TABLE IF NOT EXISTS `exp_homun_db` (
+  `exp` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`exp`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `guild_skill_tree_db`
+--
+
+CREATE TABLE IF NOT EXISTS `guild_skill_tree_db` (
+  `SkillID` smallint(5) unsigned NOT NULL,
+  `MaxLv` tinyint(4) NOT NULL,
+  `PrereqSkillID1` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `PrereqSkillLv1` tinyint(4) NOT NULL DEFAULT '0',
+  `PrereqSkillID2` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `PrereqSkillLv2` tinyint(4) NOT NULL DEFAULT '0',
+  `PrereqSkillID3` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `PrereqSkillLv3` tinyint(4) NOT NULL DEFAULT '0',
+  `PrereqSkillID4` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `PrereqSkillLv4` tinyint(4) NOT NULL DEFAULT '0',
+  `PrereqSkillID5` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `PrereqSkillLv5` tinyint(4) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`SkillID`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `guild_skill_tree_db`
+--
+
+REPLACE INTO `guild_skill_tree_db` VALUES(10000, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+REPLACE INTO `guild_skill_tree_db` VALUES(10001, 1, 10000, 1, 0, 0, 0, 0, 0, 0, 0, 0);
+REPLACE INTO `guild_skill_tree_db` VALUES(10002, 1, 10000, 1, 0, 0, 0, 0, 0, 0, 0, 0);
+REPLACE INTO `guild_skill_tree_db` VALUES(10003, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+REPLACE INTO `guild_skill_tree_db` VALUES(10004, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+REPLACE INTO `guild_skill_tree_db` VALUES(10005, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+REPLACE INTO `guild_skill_tree_db` VALUES(10006, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+REPLACE INTO `guild_skill_tree_db` VALUES(10007, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+REPLACE INTO `guild_skill_tree_db` VALUES(10008, 5, 10007, 1, 0, 0, 0, 0, 0, 0, 0, 0);
+REPLACE INTO `guild_skill_tree_db` VALUES(10009, 5, 10006, 1, 0, 0, 0, 0, 0, 0, 0, 0);
+REPLACE INTO `guild_skill_tree_db` VALUES(10010, 1, 10000, 1, 10004, 2, 0, 0, 0, 0, 0, 0);
+REPLACE INTO `guild_skill_tree_db` VALUES(10011, 3, 10000, 1, 10004, 5, 10010, 1, 0, 0, 0, 0);
+REPLACE INTO `guild_skill_tree_db` VALUES(10012, 1, 10011, 1, 0, 0, 0, 0, 0, 0, 0, 0);
+REPLACE INTO `guild_skill_tree_db` VALUES(10013, 1, 10000, 1, 10002, 1, 10004, 5, 10010, 1, 10011, 1);
+REPLACE INTO `guild_skill_tree_db` VALUES(10014, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `homunculus_db`
+--
+
+CREATE TABLE IF NOT EXISTS `homunculus_db` (
+  `Class` smallint(5) unsigned NOT NULL,
+  `EvoClass` smallint(5) unsigned NOT NULL,
+  `Name` varchar(30) NOT NULL,
+  `FoodID` smallint(5) unsigned NOT NULL,
+  `HungryDelay` int(5) unsigned NOT NULL,
+  `BaseSize` tinyint(4) NOT NULL DEFAULT '0',
+  `EvoSize` tinyint(4) NOT NULL,
+  `Race` tinyint(4) NOT NULL DEFAULT '0',
+  `Element` tinyint(4) NOT NULL DEFAULT '0',
+  `bAspd` smallint(5) unsigned NOT NULL,
+  `bHp` smallint(5) unsigned NOT NULL,
+  `bSp` smallint(6) NOT NULL,
+  `bSTR` tinyint(4) NOT NULL,
+  `bAGI` tinyint(4) NOT NULL,
+  `bVIT` tinyint(4) NOT NULL,
+  `bINT` tinyint(4) NOT NULL,
+  `bDEX` tinyint(4) NOT NULL,
+  `bLUK` tinyint(4) NOT NULL,
+  `gnHP` smallint(6) NOT NULL,
+  `gxHP` smallint(6) NOT NULL,
+  `gnSP` smallint(6) NOT NULL,
+  `gxSP` smallint(6) NOT NULL,
+  `gnSTR` tinyint(4) NOT NULL,
+  `gxSTR` tinyint(4) NOT NULL,
+  `gnAGI` tinyint(4) NOT NULL,
+  `gxAGI` tinyint(4) NOT NULL,
+  `gnVIT` tinyint(4) NOT NULL,
+  `gxVIT` tinyint(4) NOT NULL,
+  `gnINT` tinyint(4) NOT NULL,
+  `gxINT` tinyint(4) NOT NULL,
+  `gnDEX` tinyint(4) NOT NULL,
+  `gxDEX` tinyint(4) NOT NULL,
+  `gnLUK` tinyint(4) NOT NULL,
+  `gxLUK` tinyint(4) NOT NULL,
+  `enHP` tinyint(4) NOT NULL,
+  `exHP` tinyint(4) NOT NULL,
+  `enSP` tinyint(4) NOT NULL,
+  `exSP` tinyint(4) NOT NULL,
+  `enSTR` tinyint(4) NOT NULL,
+  `exSTR` tinyint(4) NOT NULL,
+  `enAGI` tinyint(4) NOT NULL,
+  `exAGI` tinyint(4) NOT NULL,
+  `enVIT` tinyint(4) NOT NULL,
+  `exVIT` tinyint(4) NOT NULL,
+  `enINT` tinyint(4) NOT NULL,
+  `exINT` tinyint(4) NOT NULL,
+  `enDEX` tinyint(4) NOT NULL,
+  `exDEX` tinyint(4) NOT NULL,
+  `enLUK` tinyint(4) NOT NULL,
+  `exLUK` tinyint(4) NOT NULL,
+  PRIMARY KEY (`Class`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `homun_skill_tree_db`
+--
+
+CREATE TABLE IF NOT EXISTS `homun_skill_tree_db` (
+  `Class` smallint(5) unsigned NOT NULL,
+  `SkillID` smallint(5) unsigned NOT NULL,
+  `MaxLv` tinyint(4) NOT NULL,
+  `PrereqSkillID1` smallint(5) unsigned NOT NULL,
+  `PrereqSkillLv1` tinyint(4) NOT NULL DEFAULT '0',
+  `PrereqSkillID2` smallint(5) unsigned NOT NULL,
+  `PrereqSkillLv2` tinyint(4) NOT NULL DEFAULT '0',
+  `PrereqSkillID3` smallint(5) unsigned NOT NULL,
+  `PrereqSkillLv3` tinyint(4) NOT NULL DEFAULT '0',
+  `PrereqSkillID4` smallint(5) unsigned NOT NULL,
+  `PrereqSkillLv4` tinyint(4) NOT NULL DEFAULT '0',
+  `PrereqSkillID5` smallint(5) unsigned NOT NULL,
+  `PrereqSkillLv5` tinyint(4) NOT NULL DEFAULT '0',
+  `IntimacyLvReq` smallint(5) unsigned NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `homun_skill_tree_db`
+--
+
+REPLACE INTO `homun_skill_tree_db` VALUES(6001, 8001, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+REPLACE INTO `homun_skill_tree_db` VALUES(6001, 8002, 5, 8001, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+REPLACE INTO `homun_skill_tree_db` VALUES(6001, 8003, 5, 8001, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+REPLACE INTO `homun_skill_tree_db` VALUES(6002, 8005, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+REPLACE INTO `homun_skill_tree_db` VALUES(6002, 8006, 5, 8005, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+REPLACE INTO `homun_skill_tree_db` VALUES(6002, 8007, 5, 8006, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+REPLACE INTO `homun_skill_tree_db` VALUES(6003, 8009, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+REPLACE INTO `homun_skill_tree_db` VALUES(6003, 8010, 5, 8009, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+REPLACE INTO `homun_skill_tree_db` VALUES(6003, 8011, 5, 8010, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+REPLACE INTO `homun_skill_tree_db` VALUES(6004, 8013, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+REPLACE INTO `homun_skill_tree_db` VALUES(6004, 8014, 5, 8013, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+REPLACE INTO `homun_skill_tree_db` VALUES(6004, 8015, 5, 8013, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+REPLACE INTO `homun_skill_tree_db` VALUES(6005, 8001, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+REPLACE INTO `homun_skill_tree_db` VALUES(6005, 8002, 5, 8001, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+REPLACE INTO `homun_skill_tree_db` VALUES(6005, 8003, 5, 8001, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+REPLACE INTO `homun_skill_tree_db` VALUES(6006, 8005, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+REPLACE INTO `homun_skill_tree_db` VALUES(6006, 8006, 5, 8005, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+REPLACE INTO `homun_skill_tree_db` VALUES(6006, 8007, 5, 8006, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+REPLACE INTO `homun_skill_tree_db` VALUES(6007, 8009, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+REPLACE INTO `homun_skill_tree_db` VALUES(6007, 8010, 5, 8009, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+REPLACE INTO `homun_skill_tree_db` VALUES(6007, 8011, 5, 8010, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+REPLACE INTO `homun_skill_tree_db` VALUES(6008, 8013, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+REPLACE INTO `homun_skill_tree_db` VALUES(6008, 8014, 5, 8013, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+REPLACE INTO `homun_skill_tree_db` VALUES(6008, 8015, 5, 8013, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+REPLACE INTO `homun_skill_tree_db` VALUES(6009, 8001, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+REPLACE INTO `homun_skill_tree_db` VALUES(6009, 8002, 5, 8001, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+REPLACE INTO `homun_skill_tree_db` VALUES(6009, 8003, 5, 8001, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+REPLACE INTO `homun_skill_tree_db` VALUES(6009, 8004, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 910);
+REPLACE INTO `homun_skill_tree_db` VALUES(6010, 8005, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+REPLACE INTO `homun_skill_tree_db` VALUES(6010, 8006, 5, 8005, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+REPLACE INTO `homun_skill_tree_db` VALUES(6010, 8007, 5, 8006, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+REPLACE INTO `homun_skill_tree_db` VALUES(6010, 8008, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 910);
+REPLACE INTO `homun_skill_tree_db` VALUES(6011, 8009, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+REPLACE INTO `homun_skill_tree_db` VALUES(6011, 8010, 5, 8009, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+REPLACE INTO `homun_skill_tree_db` VALUES(6011, 8011, 5, 8010, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+REPLACE INTO `homun_skill_tree_db` VALUES(6011, 8012, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 910);
+REPLACE INTO `homun_skill_tree_db` VALUES(6012, 8013, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+REPLACE INTO `homun_skill_tree_db` VALUES(6012, 8014, 5, 8013, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+REPLACE INTO `homun_skill_tree_db` VALUES(6012, 8015, 5, 8013, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+REPLACE INTO `homun_skill_tree_db` VALUES(6012, 8016, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 910);
+REPLACE INTO `homun_skill_tree_db` VALUES(6013, 8001, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+REPLACE INTO `homun_skill_tree_db` VALUES(6013, 8002, 5, 8001, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+REPLACE INTO `homun_skill_tree_db` VALUES(6013, 8003, 5, 8001, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+REPLACE INTO `homun_skill_tree_db` VALUES(6013, 8004, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 910);
+REPLACE INTO `homun_skill_tree_db` VALUES(6014, 8005, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+REPLACE INTO `homun_skill_tree_db` VALUES(6014, 8006, 5, 8005, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+REPLACE INTO `homun_skill_tree_db` VALUES(6014, 8007, 5, 8006, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+REPLACE INTO `homun_skill_tree_db` VALUES(6014, 8008, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 910);
+REPLACE INTO `homun_skill_tree_db` VALUES(6015, 8009, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+REPLACE INTO `homun_skill_tree_db` VALUES(6015, 8010, 5, 8009, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+REPLACE INTO `homun_skill_tree_db` VALUES(6015, 8011, 5, 8010, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+REPLACE INTO `homun_skill_tree_db` VALUES(6015, 8012, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 910);
+REPLACE INTO `homun_skill_tree_db` VALUES(6016, 8013, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+REPLACE INTO `homun_skill_tree_db` VALUES(6016, 8014, 5, 8013, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+REPLACE INTO `homun_skill_tree_db` VALUES(6016, 8015, 5, 8013, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+REPLACE INTO `homun_skill_tree_db` VALUES(6016, 8016, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 910);
+REPLACE INTO `homun_skill_tree_db` VALUES(6048, 8022, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+REPLACE INTO `homun_skill_tree_db` VALUES(6048, 8023, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+REPLACE INTO `homun_skill_tree_db` VALUES(6048, 8024, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+REPLACE INTO `homun_skill_tree_db` VALUES(6048, 8025, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+REPLACE INTO `homun_skill_tree_db` VALUES(6048, 8026, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+REPLACE INTO `homun_skill_tree_db` VALUES(6049, 8031, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+REPLACE INTO `homun_skill_tree_db` VALUES(6049, 8032, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+REPLACE INTO `homun_skill_tree_db` VALUES(6049, 8033, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+REPLACE INTO `homun_skill_tree_db` VALUES(6049, 8034, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+REPLACE INTO `homun_skill_tree_db` VALUES(6049, 8035, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+REPLACE INTO `homun_skill_tree_db` VALUES(6050, 8018, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+REPLACE INTO `homun_skill_tree_db` VALUES(6050, 8019, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+REPLACE INTO `homun_skill_tree_db` VALUES(6050, 8020, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+REPLACE INTO `homun_skill_tree_db` VALUES(6050, 8021, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+REPLACE INTO `homun_skill_tree_db` VALUES(6051, 8039, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+REPLACE INTO `homun_skill_tree_db` VALUES(6051, 8040, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+REPLACE INTO `homun_skill_tree_db` VALUES(6051, 8041, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+REPLACE INTO `homun_skill_tree_db` VALUES(6051, 8042, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+REPLACE INTO `homun_skill_tree_db` VALUES(6051, 8043, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+REPLACE INTO `homun_skill_tree_db` VALUES(6052, 8027, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+REPLACE INTO `homun_skill_tree_db` VALUES(6052, 8028, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+REPLACE INTO `homun_skill_tree_db` VALUES(6052, 8029, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+REPLACE INTO `homun_skill_tree_db` VALUES(6052, 8030, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+REPLACE INTO `homun_skill_tree_db` VALUES(6052, 8036, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+REPLACE INTO `homun_skill_tree_db` VALUES(6052, 8037, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+REPLACE INTO `homun_skill_tree_db` VALUES(6052, 8038, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `item_avail_db`
+--
+
+CREATE TABLE IF NOT EXISTS `item_avail_db` (
+  `ItemID` smallint(5) unsigned NOT NULL,
+  `SpriteID` smallint(5) unsigned NOT NULL,
+  PRIMARY KEY (`ItemID`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `item_bluebox_db`
+--
+
+CREATE TABLE IF NOT EXISTS `item_bluebox_db` (
+  `GroupID` tinyint(3) unsigned NOT NULL,
+  `ItemID` smallint(5) unsigned NOT NULL,
+  `Rate` tinyint(3) unsigned NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `item_buyingstore_db`
+--
+
+CREATE TABLE IF NOT EXISTS `item_buyingstore_db` (
+  `ItemID` smallint(5) unsigned NOT NULL,
+  PRIMARY KEY (`ItemID`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `item_cardalbum_db`
+--
+
+CREATE TABLE IF NOT EXISTS `item_cardalbum_db` (
+  `GroupID` tinyint(4) NOT NULL,
+  `ItemID` smallint(5) unsigned NOT NULL,
+  `Rate` smallint(6) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `item_combo_db`
+--
+
+CREATE TABLE IF NOT EXISTS `item_combo_db` (
+  `Combo` text NOT NULL,
+  `Script` text NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `item_delay_db`
+--
+
+CREATE TABLE IF NOT EXISTS `item_delay_db` (
+  `ItemID` smallint(5) unsigned NOT NULL,
+  `Delay` int(10) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`ItemID`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `item_findingore_db`
+--
+
+CREATE TABLE IF NOT EXISTS `item_findingore_db` (
+  `GroupID` tinyint(4) NOT NULL,
+  `ItemID` smallint(5) unsigned NOT NULL,
+  `Rate` smallint(6) NOT NULL,
+  PRIMARY KEY (`GroupID`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `item_giftbox_db`
+--
+
+CREATE TABLE IF NOT EXISTS `item_giftbox_db` (
+  `GroupID` tinyint(4) NOT NULL,
+  `ItemID` smallint(5) unsigned NOT NULL,
+  `Rate` smallint(6) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `item_stack_db`
+--
+
+CREATE TABLE IF NOT EXISTS `item_stack_db` (
+  `ItemID` smallint(5) unsigned NOT NULL,
+  `Amount` smallint(5) unsigned NOT NULL,
+  `Type` tinyint(4) NOT NULL,
+  PRIMARY KEY (`ItemID`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `item_violetbox_db`
+--
+
+CREATE TABLE IF NOT EXISTS `item_violetbox_db` (
+  `GroupID` tinyint(4) NOT NULL,
+  `ItemID` smallint(5) unsigned NOT NULL,
+  `Rate` smallint(5) unsigned NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `job_db1`
+--
+
+CREATE TABLE IF NOT EXISTS `job_db1` (
+  `JobID` smallint(5) unsigned NOT NULL,
+  `Weight` mediumint(9) NOT NULL DEFAULT '0',
+  `HPFactor` smallint(6) NOT NULL DEFAULT '0',
+  `HPMultiplicator` smallint(6) NOT NULL DEFAULT '0',
+  `SPFactor` smallint(6) NOT NULL DEFAULT '0',
+  `Unarmed` smallint(6) NOT NULL DEFAULT '0',
+  `Dagger` smallint(6) NOT NULL DEFAULT '0',
+  `Sword` smallint(6) NOT NULL DEFAULT '0',
+  `Two_Handed_Sword` smallint(6) NOT NULL DEFAULT '0',
+  `Spear` smallint(6) NOT NULL DEFAULT '0',
+  `Two_Handed_Spear` smallint(6) NOT NULL DEFAULT '0',
+  `Axe` smallint(6) NOT NULL DEFAULT '0',
+  `Two_Handed_Axe` smallint(6) NOT NULL DEFAULT '0',
+  `Mace` smallint(6) NOT NULL DEFAULT '0',
+  `Two_Handed_Mace` smallint(6) NOT NULL DEFAULT '0',
+  `Rod` smallint(6) NOT NULL DEFAULT '0',
+  `Bow` smallint(6) NOT NULL DEFAULT '0',
+  `Knuckle` smallint(6) NOT NULL DEFAULT '0',
+  `Instrument` smallint(6) NOT NULL DEFAULT '0',
+  `Whip` smallint(6) NOT NULL DEFAULT '0',
+  `Book` smallint(6) NOT NULL DEFAULT '0',
+  `Katar` smallint(6) NOT NULL DEFAULT '0',
+  `Revolver` smallint(6) NOT NULL DEFAULT '0',
+  `Rifle` smallint(6) NOT NULL DEFAULT '0',
+  `Gatling Gun` smallint(6) NOT NULL DEFAULT '0',
+  `Shotgun` smallint(6) NOT NULL DEFAULT '0',
+  `Grenade Launcher` smallint(6) NOT NULL DEFAULT '0',
+  `Fuuma Shuriken` smallint(6) NOT NULL DEFAULT '0',
+  `Two_Handed_Staff` smallint(6) NOT NULL DEFAULT '0',
+  `Shield` smallint(6) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`JobID`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `job_db2`
+--
+
+CREATE TABLE IF NOT EXISTS `job_db2` (
+  `JobID` smallint(4) unsigned NOT NULL,
+  `Level 1` tinyint(1) NOT NULL DEFAULT '0',
+  `Level 2` tinyint(1) NOT NULL DEFAULT '0',
+  `Level 3` tinyint(1) NOT NULL DEFAULT '0',
+  `Level 4` tinyint(1) NOT NULL DEFAULT '0',
+  `Level 5` tinyint(1) NOT NULL DEFAULT '0',
+  `Level 6` tinyint(1) NOT NULL DEFAULT '0',
+  `Level 7` tinyint(1) NOT NULL DEFAULT '0',
+  `Level 8` tinyint(1) NOT NULL DEFAULT '0',
+  `Level 9` tinyint(1) NOT NULL DEFAULT '0',
+  `Level 10` tinyint(2) NOT NULL DEFAULT '0',
+  `Level 11` tinyint(2) NOT NULL DEFAULT '0',
+  `Level 12` tinyint(2) NOT NULL DEFAULT '0',
+  `Level 13` tinyint(2) NOT NULL DEFAULT '0',
+  `Level 14` tinyint(2) NOT NULL DEFAULT '0',
+  `Level 15` tinyint(2) NOT NULL DEFAULT '0',
+  `Level 16` tinyint(2) NOT NULL DEFAULT '0',
+  `Level 17` tinyint(2) NOT NULL DEFAULT '0',
+  `Level 18` tinyint(2) NOT NULL DEFAULT '0',
+  `Level 19` tinyint(2) NOT NULL DEFAULT '0',
+  `Level 20` tinyint(2) NOT NULL DEFAULT '0',
+  `Level 21` tinyint(2) NOT NULL DEFAULT '0',
+  `Level 22` tinyint(2) NOT NULL DEFAULT '0',
+  `Level 23` tinyint(2) NOT NULL DEFAULT '0',
+  `Level 24` tinyint(2) NOT NULL DEFAULT '0',
+  `Level 25` tinyint(2) NOT NULL DEFAULT '0',
+  `Level 26` tinyint(2) NOT NULL DEFAULT '0',
+  `Level 27` tinyint(2) NOT NULL DEFAULT '0',
+  `Level 28` tinyint(2) NOT NULL DEFAULT '0',
+  `Level 29` tinyint(2) NOT NULL DEFAULT '0',
+  `Level 30` tinyint(2) NOT NULL DEFAULT '0',
+  `Level 31` tinyint(2) NOT NULL DEFAULT '0',
+  `Level 32` tinyint(2) NOT NULL DEFAULT '0',
+  `Level 33` tinyint(2) NOT NULL DEFAULT '0',
+  `Level 34` tinyint(2) NOT NULL DEFAULT '0',
+  `Level 35` tinyint(2) NOT NULL DEFAULT '0',
+  `Level 36` tinyint(2) NOT NULL DEFAULT '0',
+  `Level 37` tinyint(2) NOT NULL DEFAULT '0',
+  `Level 38` tinyint(2) NOT NULL DEFAULT '0',
+  `Level 39` tinyint(2) NOT NULL DEFAULT '0',
+  `Level 40` tinyint(2) NOT NULL DEFAULT '0',
+  `Level 41` tinyint(2) NOT NULL DEFAULT '0',
+  `Level 42` tinyint(2) NOT NULL DEFAULT '0',
+  `Level 43` tinyint(2) NOT NULL DEFAULT '0',
+  `Level 44` tinyint(2) NOT NULL DEFAULT '0',
+  `Level 45` tinyint(2) NOT NULL DEFAULT '0',
+  `Level 46` tinyint(2) NOT NULL DEFAULT '0',
+  `Level 47` tinyint(2) NOT NULL DEFAULT '0',
+  `Level 48` tinyint(2) NOT NULL DEFAULT '0',
+  `Level 49` tinyint(2) NOT NULL DEFAULT '0',
+  `Level 50` tinyint(2) NOT NULL DEFAULT '0',
+  `Level 51` tinyint(2) NOT NULL DEFAULT '0',
+  `Level 52` tinyint(2) NOT NULL DEFAULT '0',
+  `Level 53` tinyint(2) NOT NULL DEFAULT '0',
+  `Level 54` tinyint(2) NOT NULL DEFAULT '0',
+  `Level 55` tinyint(2) NOT NULL DEFAULT '0',
+  `Level 56` tinyint(2) NOT NULL DEFAULT '0',
+  `Level 57` tinyint(2) NOT NULL DEFAULT '0',
+  `Level 58` tinyint(2) NOT NULL DEFAULT '0',
+  `Level 59` tinyint(2) NOT NULL DEFAULT '0',
+  `Level 60` tinyint(2) NOT NULL DEFAULT '0',
+  `Level 61` tinyint(2) NOT NULL DEFAULT '0',
+  `Level 62` tinyint(2) NOT NULL DEFAULT '0',
+  `Level 63` tinyint(2) NOT NULL DEFAULT '0',
+  `Level 64` tinyint(2) NOT NULL DEFAULT '0',
+  `Level 65` tinyint(2) NOT NULL DEFAULT '0',
+  `Level 66` tinyint(2) NOT NULL DEFAULT '0',
+  `Level 67` tinyint(2) NOT NULL DEFAULT '0',
+  `Level 68` tinyint(2) NOT NULL DEFAULT '0',
+  `Level 69` tinyint(2) NOT NULL DEFAULT '0',
+  `Level 70` tinyint(2) NOT NULL DEFAULT '0',
+  `Level 71` tinyint(2) NOT NULL DEFAULT '0',
+  `Level 72` tinyint(2) NOT NULL DEFAULT '0',
+  `Level 73` tinyint(2) NOT NULL DEFAULT '0',
+  `Level 74` tinyint(2) NOT NULL DEFAULT '0',
+  `Level 75` tinyint(2) NOT NULL DEFAULT '0',
+  `Level 76` tinyint(2) NOT NULL DEFAULT '0',
+  `Level 77` tinyint(2) NOT NULL DEFAULT '0',
+  `Level 78` tinyint(2) NOT NULL DEFAULT '0',
+  `Level 79` tinyint(2) NOT NULL DEFAULT '0',
+  `Level 80` tinyint(2) NOT NULL DEFAULT '0',
+  `Level 81` tinyint(2) NOT NULL DEFAULT '0',
+  `Level 82` tinyint(2) NOT NULL DEFAULT '0',
+  `Level 83` tinyint(2) NOT NULL DEFAULT '0',
+  `Level 84` tinyint(2) NOT NULL DEFAULT '0',
+  `Level 85` tinyint(2) NOT NULL DEFAULT '0',
+  `Level 86` tinyint(2) NOT NULL DEFAULT '0',
+  `Level 87` tinyint(2) NOT NULL DEFAULT '0',
+  `Level 88` tinyint(2) NOT NULL DEFAULT '0',
+  `Level 89` tinyint(2) NOT NULL DEFAULT '0',
+  `Level 90` tinyint(2) NOT NULL DEFAULT '0',
+  `Level 91` tinyint(2) NOT NULL DEFAULT '0',
+  `Level 92` tinyint(2) NOT NULL DEFAULT '0',
+  `Level 93` tinyint(2) NOT NULL DEFAULT '0',
+  `Level 94` tinyint(2) NOT NULL DEFAULT '0',
+  `Level 95` tinyint(2) NOT NULL DEFAULT '0',
+  `Level 96` tinyint(2) NOT NULL DEFAULT '0',
+  `Level 97` tinyint(2) NOT NULL DEFAULT '0',
+  `Level 98` tinyint(2) NOT NULL DEFAULT '0',
+  `Level 99` tinyint(2) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`JobID`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `level_penalty_db`
+--
+
+CREATE TABLE IF NOT EXISTS `level_penalty_db` (
+  `Type` tinyint(4) NOT NULL DEFAULT '0',
+  `Race` tinyint(4) NOT NULL DEFAULT '0',
+  `Level difference` smallint(6) NOT NULL,
+  `Rate` smallint(6) NOT NULL DEFAULT '0'
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `magicmushroom_db`
+--
+
+CREATE TABLE IF NOT EXISTS `magicmushroom_db` (
+  `SkillID` smallint(5) unsigned NOT NULL,
+  PRIMARY KEY (`SkillID`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+REPLACE INTO `magicmushroom_db` VALUES(7);
+REPLACE INTO `magicmushroom_db` VALUES(8);
+REPLACE INTO `magicmushroom_db` VALUES(10);
+REPLACE INTO `magicmushroom_db` VALUES(24);
+REPLACE INTO `magicmushroom_db` VALUES(32);
+REPLACE INTO `magicmushroom_db` VALUES(33);
+REPLACE INTO `magicmushroom_db` VALUES(45);
+REPLACE INTO `magicmushroom_db` VALUES(61);
+REPLACE INTO `magicmushroom_db` VALUES(74);
+REPLACE INTO `magicmushroom_db` VALUES(110);
+REPLACE INTO `magicmushroom_db` VALUES(114);
+REPLACE INTO `magicmushroom_db` VALUES(142);
+REPLACE INTO `magicmushroom_db` VALUES(150);
+REPLACE INTO `magicmushroom_db` VALUES(151);
+REPLACE INTO `magicmushroom_db` VALUES(157);
+REPLACE INTO `magicmushroom_db` VALUES(249);
+REPLACE INTO `magicmushroom_db` VALUES(256);
+REPLACE INTO `magicmushroom_db` VALUES(261);
+REPLACE INTO `magicmushroom_db` VALUES(270);
+REPLACE INTO `magicmushroom_db` VALUES(326);
+REPLACE INTO `magicmushroom_db` VALUES(500);
+REPLACE INTO `magicmushroom_db` VALUES(527);
+REPLACE INTO `magicmushroom_db` VALUES(531);
+
+--
+-- Estrutura da tabela `mercenary_db`
+--
+
+CREATE TABLE IF NOT EXISTS `mercenary_db` (
+  `ID` smallint(5) unsigned NOT NULL,
+  `Sprite_Name` varchar(30) NOT NULL,
+  `Name` varchar(30) NOT NULL,
+  `LV` smallint(6) NOT NULL,
+  `HP` smallint(5) unsigned NOT NULL,
+  `SP` smallint(5) unsigned NOT NULL,
+  `Range1` tinyint(4) NOT NULL,
+  `ATK1` smallint(5) unsigned NOT NULL,
+  `ATK2` smallint(5) unsigned NOT NULL,
+  `DEF` tinyint(4) NOT NULL,
+  `MDEF` tinyint(4) NOT NULL,
+  `STR` smallint(6) NOT NULL,
+  `AGI` smallint(6) NOT NULL,
+  `VIT` smallint(6) NOT NULL,
+  `INT` smallint(6) NOT NULL,
+  `DEX` smallint(6) NOT NULL,
+  `LUK` smallint(6) NOT NULL,
+  `Range2` smallint(6) NOT NULL,
+  `Range3` smallint(6) NOT NULL,
+  `Scale` tinyint(4) NOT NULL,
+  `Race` tinyint(4) NOT NULL,
+  `Element` tinyint(4) NOT NULL,
+  `Speed` smallint(6) NOT NULL,
+  `aDelay` smallint(5) unsigned NOT NULL,
+  `aMotion` smallint(5) unsigned NOT NULL,
+  `dMotion` smallint(5) unsigned NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `mercenary_db`
+--
+
+REPLACE INTO `mercenary_db` VALUES(1191, 'MIMIC', 'Mímico', 51, 6120, 187, 2, 150, 900, 10, 40, 44, 121, 1, 60, 75, 110, 10, 12, 1, 0, 60, 100, 972, 500, 288);
+REPLACE INTO `mercenary_db` VALUES(1506, 'DISGUISE', 'Mascarado', 55, 7543, 180, 2, 279, 546, 18, 29, 0, 72, 45, 35, 48, 65, 10, 12, 1, 6, 82, 147, 516, 768, 384);
+REPLACE INTO `mercenary_db` VALUES(1275, 'ALICE', 'Alice', 62, 10000, 221, 2, 550, 700, 5, 5, 64, 64, 42, 85, 100, 130, 10, 12, 1, 7, 60, 200, 502, 2304, 480);
+REPLACE INTO `mercenary_db` VALUES(1965, 'M_WILD_ROSE', 'Rosa Selvagem', 38, 2980, 130, 2, 315, 360, 0, 15, 65, 85, 15, 35, 65, 80, 10, 12, 0, 2, 24, 100, 964, 864, 288);
+REPLACE INTO `mercenary_db` VALUES(1966, 'M_DOPPELGANGER', 'Doppelganger', 72, 7800, 200, 2, 1340, 1590, 60, 35, 88, 90, 30, 35, 125, 65, 10, 12, 1, 6, 67, 100, 480, 480, 288);
+REPLACE INTO `mercenary_db` VALUES(1967, 'M_YGNIZEM', 'Egnigem Cenia', 58, 11200, 320, 2, 823, 1212, 35, 8, 60, 35, 52, 18, 79, 20, 10, 12, 1, 7, 43, 145, 576, 432, 288);
+REPLACE INTO `mercenary_db` VALUES(2000, 'M_GAMEMASTER', 'Male Game Master', 50, 7000, 250, 1, 25, 0, 10, 10, 44, 121, 1, 60, 75, 110, 10, 12, 1, 7, 20, 200, 300, 384, 288);
+REPLACE INTO `mercenary_db` VALUES(2001, 'F_GAMEMASTER', 'Female Game Master', 50, 7000, 250, 1, 25, 0, 10, 10, 44, 121, 1, 60, 75, 110, 10, 12, 1, 7, 20, 200, 300, 384, 288);
+REPLACE INTO `mercenary_db` VALUES(2034, 'M_DESERT_WOLF_B', 'Baby Desert Wolf', 9, 164, 15, 1, 500, 600, 0, 0, 1, 9, 9, 5, 40, 40, 10, 12, 0, 2, 23, 100, 1600, 900, 240);
+REPLACE INTO `mercenary_db` VALUES(2037, 'VALKYRIE_A', 'Valkyrie Randgris', 90, 5000, 15, 1, 10, 160, 10, 20, 1, 20, 40, 0, 20, 20, 10, 12, 1, 8, 66, 100, 576, 576, 480);
+REPLACE INTO `mercenary_db` VALUES(2038, 'VALKYRIE_B', 'Valkyrie Randgris', 90, 10000, 15, 1, 300, 450, 10, 40, 1, 20, 80, 0, 80, 20, 10, 12, 1, 8, 66, 100, 576, 576, 480);
+REPLACE INTO `mercenary_db` VALUES(2058, 'M_MIMIC', 'Mimic', 51, 6120, 182, 1, 800, 950, 10, 40, 44, 121, 1, 60, 75, 110, 10, 12, 1, 0, 60, 100, 972, 500, 288);
+REPLACE INTO `mercenary_db` VALUES(2059, 'M_DISGUISE', 'Disguise', 55, 7543, 180, 2, 526, 693, 18, 29, 0, 72, 45, 35, 48, 65, 10, 12, 1, 6, 82, 147, 516, 768, 384);
+REPLACE INTO `mercenary_db` VALUES(2060, 'M_ALICE', 'Alice', 62, 10000, 221, 1, 700, 850, 5, 5, 64, 64, 42, 85, 100, 130, 10, 12, 1, 7, 60, 200, 502, 1999, 480);
+REPLACE INTO `mercenary_db` VALUES(2213, 'M_WANDER_MAN', 'Wander Man', 81, 8614, 220, 2, 1100, 1300, 60, 20, 80, 110, 63, 51, 85, 90, 10, 12, 1, 6, 24, 100, 672, 500, 192);
+REPLACE INTO `mercenary_db` VALUES(2214, 'M_WICKED_NYMPH', 'Wicked Nymph', 85, 6157, 256, 2, 420, 620, 30, 45, 40, 50, 40, 92, 60, 110, 10, 12, 1, 6, 67, 200, 637, 1008, 360);
+REPLACE INTO `mercenary_db` VALUES(2215, 'M_KASA', 'Kasa', 83, 9815, 234, 2, 1100, 1300, 60, 60, 85, 90, 71, 43, 85, 105, 10, 12, 2, 0, 63, 150, 800, 600, 288);
+REPLACE INTO `mercenary_db` VALUES(2216, 'M_SALAMANDER', 'Salamander', 87, 9517, 260, 2, 900, 1100, 60, 68, 90, 80, 65, 45, 87, 95, 10, 12, 2, 0, 63, 160, 140, 384, 288);
+REPLACE INTO `mercenary_db` VALUES(2217, 'M_TEDDY_BEAR', 'Teddy Bear', 85, 14493, 243, 1, 600, 800, 100, 70, 60, 20, 85, 50, 75, 130, 10, 12, 0, 0, 60, 200, 512, 780, 504);
+REPLACE INTO `mercenary_db` VALUES(2325, 'M_BAPHOMET_', 'Baphomet', 57, 7510, 204, 1, 810, 955, 70, 40, 52, 60, 36, 17, 57, 25, 10, 12, 0, 6, 27, 100, 868, 480, 120);
+REPLACE INTO `mercenary_db` VALUES(2326, 'M_GALAPAGO', 'Galapago', 45, 7513, 201, 1, 760, 915, 70, 40, 30, 28, 29, 18, 30, 16, 10, 12, 0, 2, 22, 165, 1430, 1080, 1080);
+REPLACE INTO `mercenary_db` VALUES(2342, 'MER_DIABOLIC', 'MER_DIABOLIC', 83, 9815, 234, 2, 1100, 1300, 60, 60, 85, 90, 71, 43, 85, 105, 10, 12, 0, 6, 47, 150, 1080, 780, 180);
+REPLACE INTO `mercenary_db` VALUES(2344, 'MER_WISH_MAIDEN', 'MER_WISH_MAIDEN', 83, 9815, 234, 2, 1100, 1300, 60, 60, 85, 90, 71, 43, 85, 105, 10, 12, 0, 6, 47, 150, 1080, 780, 180);
+REPLACE INTO `mercenary_db` VALUES(2345, 'MER_ZHERLTHSH', 'MER_ZHERLTHSH', 83, 9815, 234, 2, 1100, 1300, 60, 60, 85, 90, 71, 43, 85, 105, 10, 12, 0, 6, 47, 150, 1080, 780, 180);
+REPLACE INTO `mercenary_db` VALUES(2346, 'MER_KTULLANUX', 'MER_KTULLANUX', 83, 9815, 234, 2, 1100, 1300, 60, 60, 85, 90, 71, 43, 85, 105, 10, 12, 0, 6, 47, 150, 1080, 780, 180);
+REPLACE INTO `mercenary_db` VALUES(2347, 'MER_EDDGA', 'MER_EDDGA', 83, 9815, 234, 2, 1100, 1300, 60, 60, 85, 90, 71, 43, 85, 105, 10, 12, 0, 6, 47, 150, 1080, 780, 180);
+REPLACE INTO `mercenary_db` VALUES(2348, 'MER_CIVIL_SERVANT', 'MER_CIVIL_SERVANT', 83, 9815, 234, 2, 1100, 1300, 60, 60, 85, 90, 71, 43, 85, 105, 10, 12, 0, 6, 47, 150, 1080, 780, 180);
+REPLACE INTO `mercenary_db` VALUES(2349, 'MER_LOLI_RURI', 'MER_LOLI_RURI', 83, 9815, 234, 2, 1100, 1300, 60, 60, 85, 90, 71, 43, 85, 105, 10, 12, 0, 6, 47, 150, 1080, 780, 180);
+REPLACE INTO `mercenary_db` VALUES(2350, 'MER_SEDORA', 'MER_SEDORA', 83, 9815, 234, 2, 1100, 1300, 60, 60, 85, 90, 71, 43, 85, 105, 10, 12, 0, 6, 47, 150, 1080, 780, 180);
+REPLACE INTO `mercenary_db` VALUES(2351, 'MER_CHEPET', 'MER_CHEPET', 83, 9815, 234, 2, 1100, 1300, 60, 60, 85, 90, 71, 43, 85, 105, 10, 12, 0, 6, 47, 150, 1080, 780, 180);
+REPLACE INTO `mercenary_db` VALUES(2378, 'MER_ANTLER_SCARABA', 'MER_ANTLER_SCARABA', 136, 30000, 1, 1, 1418, 1828, 127, 102, 23, 99, 59, 129, 137, 45, 10, 12, 1, 4, 42, 200, 504, 624, 360);
+REPLACE INTO `mercenary_db` VALUES(6017, 'MER_ARCHER01', 'Mina', 20, 256, 200, 10, 170, 85, 7, 5, 1, 16, 5, 1, 28, 8, 10, 0, 0, 7, 20, 150, 700, 432, 300);
+REPLACE INTO `mercenary_db` VALUES(6018, 'MER_ARCHER02', 'Dororu', 30, 457, 70, 10, 228, 114, 11, 7, 1, 18, 8, 1, 40, 11, 10, 0, 0, 7, 20, 150, 700, 432, 300);
+REPLACE INTO `mercenary_db` VALUES(6019, 'MER_ARCHER03', 'Nami', 40, 732, 93, 10, 260, 130, 15, 9, 3, 21, 12, 4, 52, 17, 10, 0, 0, 7, 20, 150, 700, 432, 300);
+REPLACE INTO `mercenary_db` VALUES(6020, 'MER_ARCHER04', 'Elfin', 50, 1092, 116, 10, 310, 155, 18, 11, 5, 33, 17, 6, 60, 23, 10, 0, 0, 7, 20, 150, 575, 432, 300);
+REPLACE INTO `mercenary_db` VALUES(6021, 'MER_ARCHER05', 'Clara', 60, 2212, 280, 10, 360, 180, 20, 13, 5, 41, 17, 12, 75, 30, 10, 0, 0, 7, 20, 150, 575, 432, 300);
+REPLACE INTO `mercenary_db` VALUES(6022, 'MER_ARCHER06', 'Dali', 70, 3098, 353, 10, 424, 212, 21, 15, 11, 46, 24, 22, 83, 37, 10, 0, 0, 7, 20, 150, 575, 432, 300);
+REPLACE INTO `mercenary_db` VALUES(6023, 'MER_ARCHER07', 'Karaya', 80, 4051, 415, 10, 468, 234, 22, 16, 14, 55, 27, 26, 91, 44, 10, 0, 0, 7, 20, 150, 450, 432, 300);
+REPLACE INTO `mercenary_db` VALUES(6024, 'MER_ARCHER08', 'Hiyori', 90, 5039, 469, 10, 482, 241, 24, 18, 19, 65, 27, 27, 103, 49, 10, 0, 0, 7, 20, 150, 450, 432, 300);
+REPLACE INTO `mercenary_db` VALUES(6025, 'MER_ARCHER09', 'Kero', 95, 5572, 499, 10, 500, 250, 25, 20, 20, 71, 27, 28, 110, 51, 10, 0, 0, 7, 20, 150, 450, 432, 300);
+REPLACE INTO `mercenary_db` VALUES(6026, 'MER_ARCHER10', 'Sukye', 99, 7381, 642, 10, 816, 308, 49, 49, 21, 83, 27, 28, 123, 52, 10, 0, 0, 7, 20, 150, 450, 432, 300);
+REPLACE INTO `mercenary_db` VALUES(6027, 'MER_LANCER01', 'Rodin', 22, 2071, 100, 2, 168, 84, 30, 1, 27, 1, 4, 1, 30, 2, 10, 0, 0, 7, 20, 150, 700, 432, 300);
+REPLACE INTO `mercenary_db` VALUES(6028, 'MER_LANCER02', 'Lancer', 34, 2523, 131, 2, 208, 104, 33, 1, 37, 1, 4, 1, 37, 4, 10, 0, 0, 7, 20, 150, 700, 432, 300);
+REPLACE INTO `mercenary_db` VALUES(6029, 'MER_LANCER03', 'Nathan', 41, 3397, 161, 2, 248, 124, 36, 5, 45, 1, 22, 1, 40, 6, 10, 0, 0, 7, 20, 150, 700, 432, 300);
+REPLACE INTO `mercenary_db` VALUES(6030, 'MER_LANCER04', 'Roan', 55, 4580, 191, 2, 300, 150, 39, 5, 55, 2, 35, 1, 50, 8, 10, 0, 0, 7, 20, 150, 575, 432, 300);
+REPLACE INTO `mercenary_db` VALUES(6031, 'MER_LANCER05', 'Orizaro', 60, 5899, 221, 2, 350, 160, 42, 10, 65, 2, 39, 1, 60, 10, 10, 0, 0, 7, 20, 150, 575, 432, 300);
+REPLACE INTO `mercenary_db` VALUES(6032, 'MER_LANCER06', 'Thyla', 72, 7874, 252, 2, 370, 185, 46, 10, 75, 3, 15, 77, 61, 12, 10, 0, 0, 7, 20, 150, 575, 432, 300);
+REPLACE INTO `mercenary_db` VALUES(6033, 'MER_LANCER07', 'Ben', 81, 10260, 330, 2, 380, 190, 50, 15, 85, 3, 63, 20, 61, 14, 10, 0, 0, 7, 20, 150, 450, 432, 300);
+REPLACE INTO `mercenary_db` VALUES(6034, 'MER_LANCER08', 'Pinaka', 90, 13167, 366, 2, 400, 200, 55, 20, 95, 20, 74, 20, 63, 16, 10, 0, 0, 7, 20, 150, 450, 432, 300);
+REPLACE INTO `mercenary_db` VALUES(6035, 'MER_LANCER09', 'Kuhlmann', 95, 14648, 398, 2, 440, 220, 60, 25, 100, 25, 77, 25, 63, 18, 10, 0, 0, 7, 20, 150, 450, 432, 300);
+REPLACE INTO `mercenary_db` VALUES(6036, 'MER_LANCER10', 'Roux', 99, 18000, 413, 2, 700, 250, 70, 30, 120, 30, 90, 30, 70, 30, 10, 0, 0, 7, 20, 150, 450, 432, 300);
+REPLACE INTO `mercenary_db` VALUES(6037, 'MER_SWORDMAN01', 'David', 20, 502, 70, 2, 174, 87, 26, 0, 21, 27, 5, 1, 30, 3, 10, 0, 0, 7, 20, 150, 700, 432, 300);
+REPLACE INTO `mercenary_db` VALUES(6038, 'MER_SWORDMAN02', 'Ellen', 30, 979, 99, 2, 258, 129, 31, 0, 26, 38, 6, 1, 35, 3, 10, 0, 0, 7, 20, 150, 700, 432, 300);
+REPLACE INTO `mercenary_db` VALUES(6039, 'MER_SWORDMAN03', 'Luise', 40, 1555, 134, 2, 326, 163, 36, 3, 31, 45, 7, 6, 40, 6, 10, 0, 0, 7, 20, 150, 700, 432, 300);
+REPLACE INTO `mercenary_db` VALUES(6040, 'MER_SWORDMAN04', 'Frank', 50, 2397, 162, 2, 382, 191, 39, 5, 37, 59, 8, 6, 40, 6, 10, 0, 0, 7, 20, 150, 575, 432, 300);
+REPLACE INTO `mercenary_db` VALUES(6041, 'MER_SWORDMAN05', 'Ryan', 60, 3387, 195, 2, 406, 203, 42, 7, 48, 68, 9, 6, 45, 9, 10, 0, 0, 7, 20, 150, 575, 432, 300);
+REPLACE INTO `mercenary_db` VALUES(6042, 'MER_SWORDMAN06', 'Paolo', 70, 4495, 241, 2, 436, 218, 45, 12, 53, 79, 10, 12, 50, 9, 10, 0, 0, 7, 20, 150, 575, 432, 300);
+REPLACE INTO `mercenary_db` VALUES(6043, 'MER_SWORDMAN07', 'Jens', 80, 5889, 279, 2, 468, 234, 47, 15, 59, 88, 11, 12, 55, 12, 10, 0, 0, 7, 20, 150, 450, 432, 300);
+REPLACE INTO `mercenary_db` VALUES(6044, 'MER_SWORDMAN08', 'Thierry', 90, 7520, 325, 2, 500, 250, 49, 18, 70, 95, 12, 18, 60, 15, 10, 0, 0, 7, 20, 150, 450, 432, 300);
+REPLACE INTO `mercenary_db` VALUES(6045, 'MER_SWORDMAN09', 'Steven', 95, 9052, 348, 2, 524, 262, 51, 22, 80, 95, 18, 18, 60, 15, 10, 0, 0, 7, 20, 150, 450, 432, 300);
+REPLACE INTO `mercenary_db` VALUES(6046, 'MER_SWORDMAN10', 'Wayne', 99, 12355, 451, 2, 760, 280, 64, 30, 99, 105, 30, 30, 60, 30, 10, 0, 0, 7, 20, 150, 450, 432, 300);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `mercenary_skill_db`
+--
+
+CREATE TABLE IF NOT EXISTS `mercenary_skill_db` (
+  `MercenaryID` smallint(5) unsigned NOT NULL,
+  `SkillID` smallint(5) unsigned NOT NULL,
+  `SkillLevel` tinyint(4) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `mercenary_skill_db`
+--
+
+REPLACE INTO `mercenary_skill_db` VALUES(6017, 8207, 2);
+REPLACE INTO `mercenary_skill_db` VALUES(6017, 8233, 1);
+REPLACE INTO `mercenary_skill_db` VALUES(6018, 8208, 2);
+REPLACE INTO `mercenary_skill_db` VALUES(6018, 8224, 1);
+REPLACE INTO `mercenary_skill_db` VALUES(6019, 8214, 1);
+REPLACE INTO `mercenary_skill_db` VALUES(6019, 8223, 1);
+REPLACE INTO `mercenary_skill_db` VALUES(6020, 8237, 1);
+REPLACE INTO `mercenary_skill_db` VALUES(6020, 8222, 1);
+REPLACE INTO `mercenary_skill_db` VALUES(6020, 8227, 1);
+REPLACE INTO `mercenary_skill_db` VALUES(6021, 8207, 5);
+REPLACE INTO `mercenary_skill_db` VALUES(6021, 8232, 1);
+REPLACE INTO `mercenary_skill_db` VALUES(6021, 8213, 1);
+REPLACE INTO `mercenary_skill_db` VALUES(6022, 8207, 7);
+REPLACE INTO `mercenary_skill_db` VALUES(6022, 8209, 3);
+REPLACE INTO `mercenary_skill_db` VALUES(6022, 8234, 1);
+REPLACE INTO `mercenary_skill_db` VALUES(6023, 8208, 10);
+REPLACE INTO `mercenary_skill_db` VALUES(6023, 8230, 1);
+REPLACE INTO `mercenary_skill_db` VALUES(6023, 8212, 2);
+REPLACE INTO `mercenary_skill_db` VALUES(6024, 8223, 2);
+REPLACE INTO `mercenary_skill_db` VALUES(6024, 8232, 3);
+REPLACE INTO `mercenary_skill_db` VALUES(6024, 8211, 3);
+REPLACE INTO `mercenary_skill_db` VALUES(6025, 8207, 10);
+REPLACE INTO `mercenary_skill_db` VALUES(6025, 8214, 1);
+REPLACE INTO `mercenary_skill_db` VALUES(6025, 8210, 5);
+REPLACE INTO `mercenary_skill_db` VALUES(6026, 8214, 1);
+REPLACE INTO `mercenary_skill_db` VALUES(6026, 8215, 5);
+REPLACE INTO `mercenary_skill_db` VALUES(6026, 8223, 5);
+REPLACE INTO `mercenary_skill_db` VALUES(6026, 8233, 1);
+REPLACE INTO `mercenary_skill_db` VALUES(6027, 8216, 1);
+REPLACE INTO `mercenary_skill_db` VALUES(6027, 8226, 1);
+REPLACE INTO `mercenary_skill_db` VALUES(6028, 8217, 2);
+REPLACE INTO `mercenary_skill_db` VALUES(6028, 8236, 1);
+REPLACE INTO `mercenary_skill_db` VALUES(6029, 8216, 2);
+REPLACE INTO `mercenary_skill_db` VALUES(6029, 8221, 1);
+REPLACE INTO `mercenary_skill_db` VALUES(6029, 8229, 1);
+REPLACE INTO `mercenary_skill_db` VALUES(6030, 8219, 1);
+REPLACE INTO `mercenary_skill_db` VALUES(6030, 8225, 4);
+REPLACE INTO `mercenary_skill_db` VALUES(6031, 8216, 5);
+REPLACE INTO `mercenary_skill_db` VALUES(6031, 8220, 3);
+REPLACE INTO `mercenary_skill_db` VALUES(6032, 8223, 2);
+REPLACE INTO `mercenary_skill_db` VALUES(6032, 8217, 5);
+REPLACE INTO `mercenary_skill_db` VALUES(6033, 8221, 1);
+REPLACE INTO `mercenary_skill_db` VALUES(6033, 8233, 1);
+REPLACE INTO `mercenary_skill_db` VALUES(6034, 8235, 1);
+REPLACE INTO `mercenary_skill_db` VALUES(6034, 8216, 10);
+REPLACE INTO `mercenary_skill_db` VALUES(6034, 8232, 5);
+REPLACE INTO `mercenary_skill_db` VALUES(6035, 8217, 10);
+REPLACE INTO `mercenary_skill_db` VALUES(6035, 8220, 7);
+REPLACE INTO `mercenary_skill_db` VALUES(6035, 8219, 3);
+REPLACE INTO `mercenary_skill_db` VALUES(6036, 8223, 5);
+REPLACE INTO `mercenary_skill_db` VALUES(6036, 8220, 10);
+REPLACE INTO `mercenary_skill_db` VALUES(6036, 8221, 3);
+REPLACE INTO `mercenary_skill_db` VALUES(6036, 8218, 5);
+REPLACE INTO `mercenary_skill_db` VALUES(6037, 8201, 1);
+REPLACE INTO `mercenary_skill_db` VALUES(6037, 8234, 1);
+REPLACE INTO `mercenary_skill_db` VALUES(6038, 8232, 5);
+REPLACE INTO `mercenary_skill_db` VALUES(6038, 8202, 3);
+REPLACE INTO `mercenary_skill_db` VALUES(6039, 8223, 1);
+REPLACE INTO `mercenary_skill_db` VALUES(6039, 8228, 1);
+REPLACE INTO `mercenary_skill_db` VALUES(6040, 8225, 1);
+REPLACE INTO `mercenary_skill_db` VALUES(6040, 8202, 5);
+REPLACE INTO `mercenary_skill_db` VALUES(6041, 8201, 5);
+REPLACE INTO `mercenary_skill_db` VALUES(6041, 8225, 4);
+REPLACE INTO `mercenary_skill_db` VALUES(6041, 8228, 1);
+REPLACE INTO `mercenary_skill_db` VALUES(6042, 8223, 5);
+REPLACE INTO `mercenary_skill_db` VALUES(6042, 8237, 1);
+REPLACE INTO `mercenary_skill_db` VALUES(6042, 8234, 3);
+REPLACE INTO `mercenary_skill_db` VALUES(6043, 8201, 10);
+REPLACE INTO `mercenary_skill_db` VALUES(6043, 8233, 1);
+REPLACE INTO `mercenary_skill_db` VALUES(6043, 8235, 1);
+REPLACE INTO `mercenary_skill_db` VALUES(6044, 8223, 10);
+REPLACE INTO `mercenary_skill_db` VALUES(6044, 8203, 5);
+REPLACE INTO `mercenary_skill_db` VALUES(6044, 8231, 1);
+REPLACE INTO `mercenary_skill_db` VALUES(6044, 8204, 4);
+REPLACE INTO `mercenary_skill_db` VALUES(6045, 8203, 8);
+REPLACE INTO `mercenary_skill_db` VALUES(6045, 8225, 3);
+REPLACE INTO `mercenary_skill_db` VALUES(6045, 8205, 5);
+REPLACE INTO `mercenary_skill_db` VALUES(6046, 8223, 10);
+REPLACE INTO `mercenary_skill_db` VALUES(6046, 8203, 10);
+REPLACE INTO `mercenary_skill_db` VALUES(6046, 8201, 10);
+REPLACE INTO `mercenary_skill_db` VALUES(6046, 8206, 1);
+REPLACE INTO `mercenary_skill_db` VALUES(1191, 8233, 1);
+REPLACE INTO `mercenary_skill_db` VALUES(1191, 8220, 5);
+REPLACE INTO `mercenary_skill_db` VALUES(1191, 8201, 5);
+REPLACE INTO `mercenary_skill_db` VALUES(1506, 8223, 2);
+REPLACE INTO `mercenary_skill_db` VALUES(1506, 8225, 5);
+REPLACE INTO `mercenary_skill_db` VALUES(1506, 8236, 3);
+REPLACE INTO `mercenary_skill_db` VALUES(1275, 8232, 5);
+REPLACE INTO `mercenary_skill_db` VALUES(1275, 8202, 5);
+REPLACE INTO `mercenary_skill_db` VALUES(1275, 8217, 5);
+REPLACE INTO `mercenary_skill_db` VALUES(1275, 8226, 1);
+REPLACE INTO `mercenary_skill_db` VALUES(1965, 8201, 5);
+REPLACE INTO `mercenary_skill_db` VALUES(1966, 8223, 5);
+REPLACE INTO `mercenary_skill_db` VALUES(1966, 8201, 5);
+REPLACE INTO `mercenary_skill_db` VALUES(1966, 8221, 3);
+REPLACE INTO `mercenary_skill_db` VALUES(1967, 8223, 5);
+REPLACE INTO `mercenary_skill_db` VALUES(1967, 8201, 5);
+REPLACE INTO `mercenary_skill_db` VALUES(1967, 8221, 3);
+REPLACE INTO `mercenary_skill_db` VALUES(2000, 8226, 1);
+REPLACE INTO `mercenary_skill_db` VALUES(2000, 8227, 1);
+REPLACE INTO `mercenary_skill_db` VALUES(2000, 8238, 5);
+REPLACE INTO `mercenary_skill_db` VALUES(2000, 8239, 5);
+REPLACE INTO `mercenary_skill_db` VALUES(2000, 8240, 5);
+REPLACE INTO `mercenary_skill_db` VALUES(2001, 8226, 1);
+REPLACE INTO `mercenary_skill_db` VALUES(2001, 8227, 1);
+REPLACE INTO `mercenary_skill_db` VALUES(2001, 8238, 5);
+REPLACE INTO `mercenary_skill_db` VALUES(2001, 8239, 5);
+REPLACE INTO `mercenary_skill_db` VALUES(2001, 8240, 5);
+REPLACE INTO `mercenary_skill_db` VALUES(2058, 8233, 1);
+REPLACE INTO `mercenary_skill_db` VALUES(2058, 8220, 5);
+REPLACE INTO `mercenary_skill_db` VALUES(2058, 8201, 5);
+REPLACE INTO `mercenary_skill_db` VALUES(2059, 8223, 2);
+REPLACE INTO `mercenary_skill_db` VALUES(2059, 8225, 5);
+REPLACE INTO `mercenary_skill_db` VALUES(2059, 8236, 3);
+REPLACE INTO `mercenary_skill_db` VALUES(2060, 8232, 5);
+REPLACE INTO `mercenary_skill_db` VALUES(2060, 8202, 5);
+REPLACE INTO `mercenary_skill_db` VALUES(2060, 8217, 5);
+REPLACE INTO `mercenary_skill_db` VALUES(2060, 8226, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `mob_avail_db`
+--
+
+CREATE TABLE IF NOT EXISTS `mob_avail_db` (
+  `MobID` smallint(4) unsigned NOT NULL,
+  `SpriteID` smallint(6) DEFAULT NULL,
+  `Sex` tinyint(4) DEFAULT NULL,
+  `Hair_Style` tinyint(4) DEFAULT NULL,
+  `Hair_Color` smallint(3) unsigned DEFAULT NULL,
+  `Weapon` smallint(5) unsigned DEFAULT NULL,
+  `Shield` smallint(5) unsigned DEFAULT NULL,
+  `Head_Top` smallint(5) unsigned DEFAULT NULL,
+  `Head_Middle` smallint(5) unsigned DEFAULT NULL,
+  `Head_Bottom` smallint(5) unsigned DEFAULT NULL,
+  `Option` smallint(5) unsigned DEFAULT NULL,
+  `Dye_Color` smallint(3) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `mob_boss_db`
+--
+
+CREATE TABLE IF NOT EXISTS `mob_boss_db` (
+  `MobID` smallint(5) unsigned NOT NULL,
+  `DummyName` varchar(30) NOT NULL,
+  `Rate` int(10) unsigned NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `mob_boss_db`
+--
+
+REPLACE INTO `mob_boss_db` VALUES(0, 'Baphomet', 1039);
+REPLACE INTO `mob_boss_db` VALUES(1038, 'Osíris', 1000000);
+REPLACE INTO `mob_boss_db` VALUES(1039, 'Bafomé', 1000000);
+REPLACE INTO `mob_boss_db` VALUES(1046, 'Doppelganger', 1000000);
+REPLACE INTO `mob_boss_db` VALUES(1059, 'Abelha-Rainha', 1000000);
+REPLACE INTO `mob_boss_db` VALUES(1086, 'Besouro-Ladrão Dourado', 1000000);
+REPLACE INTO `mob_boss_db` VALUES(1087, 'Orc Herói', 1000000);
+REPLACE INTO `mob_boss_db` VALUES(1096, 'Angeling', 1000000);
+REPLACE INTO `mob_boss_db` VALUES(1112, 'Drake', 1000000);
+REPLACE INTO `mob_boss_db` VALUES(1115, 'Eddga', 1000000);
+REPLACE INTO `mob_boss_db` VALUES(1120, 'Ghostring', 1000000);
+REPLACE INTO `mob_boss_db` VALUES(1147, 'Maya', 1000000);
+REPLACE INTO `mob_boss_db` VALUES(1150, 'Flor do Luar', 1000000);
+REPLACE INTO `mob_boss_db` VALUES(1157, 'Faraó', 1000000);
+REPLACE INTO `mob_boss_db` VALUES(1159, 'Freeoni', 1000000);
+REPLACE INTO `mob_boss_db` VALUES(1190, 'Senhor dos Orcs', 1000000);
+REPLACE INTO `mob_boss_db` VALUES(1251, 'Cavaleiro da Tempestade', 1000000);
+REPLACE INTO `mob_boss_db` VALUES(1252, 'Hatii', 1000000);
+REPLACE INTO `mob_boss_db` VALUES(1272, 'Senhor das Trevas', 1000000);
+REPLACE INTO `mob_boss_db` VALUES(1312, 'General Tartaruga', 1000000);
+REPLACE INTO `mob_boss_db` VALUES(1373, 'Senhor dos Mortos', 1000000);
+REPLACE INTO `mob_boss_db` VALUES(1388, 'ArchAngeling', 1000000);
+REPLACE INTO `mob_boss_db` VALUES(1389, 'Drácula', 1000000);
+REPLACE INTO `mob_boss_db` VALUES(1418, 'Serpente Suprema', 1000000);
+REPLACE INTO `mob_boss_db` VALUES(1492, 'Samurai Encarnado', 1000000);
+REPLACE INTO `mob_boss_db` VALUES(1511, 'Amon Ra', 1000000);
+REPLACE INTO `mob_boss_db` VALUES(1582, 'Deviling', 1000000);
+REPLACE INTO `mob_boss_db` VALUES(1583, 'Tao Gunka', 1000000);
+REPLACE INTO `mob_boss_db` VALUES(1623, 'RSX-0806', 1000000);
+REPLACE INTO `mob_boss_db` VALUES(1630, 'Lady Branca', 1000000);
+REPLACE INTO `mob_boss_db` VALUES(1658, 'Egnigem Cenia', 1000000);
+REPLACE INTO `mob_boss_db` VALUES(1685, 'Vesper', 1000000);
+REPLACE INTO `mob_boss_db` VALUES(1688, 'Lady Tanee', 1000000);
+REPLACE INTO `mob_boss_db` VALUES(1708, 'Memória de Thanatos', 1000000);
+REPLACE INTO `mob_boss_db` VALUES(1719, 'Detardeurus', 1000000);
+REPLACE INTO `mob_boss_db` VALUES(1734, 'Kiel D-01', 1000000);
+REPLACE INTO `mob_boss_db` VALUES(1751, 'Valkyrie Randgris', 1000000);
+REPLACE INTO `mob_boss_db` VALUES(1768, 'Pesar Noturno', 1000000);
+REPLACE INTO `mob_boss_db` VALUES(1779, 'Ktullanux', 1000000);
+REPLACE INTO `mob_boss_db` VALUES(1785, 'Atroce', 1000000);
+REPLACE INTO `mob_boss_db` VALUES(1832, 'Ifrit', 1000000);
+REPLACE INTO `mob_boss_db` VALUES(1871, 'Bispo Decadente', 1000000);
+REPLACE INTO `mob_boss_db` VALUES(1873, 'Belzebu', 1000000);
+REPLACE INTO `mob_boss_db` VALUES(1885, 'Gorynych', 1000000);
+REPLACE INTO `mob_boss_db` VALUES(2022, 'Sombra de Nidhogg', 1000000);
+REPLACE INTO `mob_boss_db` VALUES(2068, 'Boitata', 1000000);
+REPLACE INTO `mob_boss_db` VALUES(2087, 'Scaraba Queen', 1000000);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `mob_branch_db`
+--
+
+CREATE TABLE IF NOT EXISTS `mob_branch_db` (
+  `MobID` smallint(5) unsigned NOT NULL,
+  `DummyName` varchar(30) NOT NULL,
+  `Rate` int(10) unsigned NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `mob_branch_db`
+--
+
+REPLACE INTO `mob_branch_db` VALUES(0, 'Scorpion', 1001);
+REPLACE INTO `mob_branch_db` VALUES(1001, 'Escorpião', 214285);
+REPLACE INTO `mob_branch_db` VALUES(1002, 'Poring', 1000000);
+REPLACE INTO `mob_branch_db` VALUES(1004, 'Zangão', 357142);
+REPLACE INTO `mob_branch_db` VALUES(1005, 'Familiar', 357142);
+REPLACE INTO `mob_branch_db` VALUES(1007, 'Fabre', 428571);
+REPLACE INTO `mob_branch_db` VALUES(1008, 'Pupa', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1009, 'Condor', 357142);
+REPLACE INTO `mob_branch_db` VALUES(1010, 'Salgueiro', 357142);
+REPLACE INTO `mob_branch_db` VALUES(1011, 'ChonChon', 357142);
+REPLACE INTO `mob_branch_db` VALUES(1012, 'Sapo de Rodda', 357142);
+REPLACE INTO `mob_branch_db` VALUES(1013, 'Lobo', 357142);
+REPLACE INTO `mob_branch_db` VALUES(1014, 'Esporo', 357142);
+REPLACE INTO `mob_branch_db` VALUES(1015, 'Zumbi', 357142);
+REPLACE INTO `mob_branch_db` VALUES(1016, 'Esqueleto Arqueiro', 214285);
+REPLACE INTO `mob_branch_db` VALUES(1018, 'Creamy', 357142);
+REPLACE INTO `mob_branch_db` VALUES(1019, 'PecoPeco', 357142);
+REPLACE INTO `mob_branch_db` VALUES(1020, 'Mandrágora', 357142);
+REPLACE INTO `mob_branch_db` VALUES(1023, 'Guerreiro Orc', 214285);
+REPLACE INTO `mob_branch_db` VALUES(1024, 'Rabo de Verme', 357142);
+REPLACE INTO `mob_branch_db` VALUES(1025, 'Jibóia', 357142);
+REPLACE INTO `mob_branch_db` VALUES(1026, 'Munak', 214285);
+REPLACE INTO `mob_branch_db` VALUES(1028, 'Esqueleto Soldado', 214285);
+REPLACE INTO `mob_branch_db` VALUES(1029, 'Isis', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1030, 'Anaconda', 214285);
+REPLACE INTO `mob_branch_db` VALUES(1031, 'Poporing', 357142);
+REPLACE INTO `mob_branch_db` VALUES(1032, 'Verit', 214285);
+REPLACE INTO `mob_branch_db` VALUES(1033, 'Salgueiro Ancião', 214285);
+REPLACE INTO `mob_branch_db` VALUES(1034, 'Sapo de Thara', 214285);
+REPLACE INTO `mob_branch_db` VALUES(1035, 'Mosca Caçadora', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1036, 'Carniçal', 214285);
+REPLACE INTO `mob_branch_db` VALUES(1037, 'Sorrateiro', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1040, 'Golem', 214285);
+REPLACE INTO `mob_branch_db` VALUES(1041, 'Múmia', 214285);
+REPLACE INTO `mob_branch_db` VALUES(1042, 'ChonChon de Aço', 357142);
+REPLACE INTO `mob_branch_db` VALUES(1044, 'Obeaune', 214285);
+REPLACE INTO `mob_branch_db` VALUES(1045, 'Cavalo-Marinho', 214285);
+REPLACE INTO `mob_branch_db` VALUES(1047, 'Ovo de PecoPeco', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1048, 'Ovo de Besouro-Ladrão', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1049, 'Picky', 357142);
+REPLACE INTO `mob_branch_db` VALUES(1050, 'Picky com Casca', 357142);
+REPLACE INTO `mob_branch_db` VALUES(1051, 'Besouro-Ladrão', 357142);
+REPLACE INTO `mob_branch_db` VALUES(1052, 'Rocker', 357142);
+REPLACE INTO `mob_branch_db` VALUES(1053, 'Besouro-Ladrão Fêmea', 357142);
+REPLACE INTO `mob_branch_db` VALUES(1054, 'Besouro-Ladrão Macho', 357142);
+REPLACE INTO `mob_branch_db` VALUES(1055, 'Muka', 357142);
+REPLACE INTO `mob_branch_db` VALUES(1056, 'Fumacento', 357142);
+REPLACE INTO `mob_branch_db` VALUES(1057, 'Yoyo', 357142);
+REPLACE INTO `mob_branch_db` VALUES(1058, 'Metaller', 214285);
+REPLACE INTO `mob_branch_db` VALUES(1060, 'Pé Grande', 214285);
+REPLACE INTO `mob_branch_db` VALUES(1061, 'Pesadelo', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1062, 'Poring Noel', 357142);
+REPLACE INTO `mob_branch_db` VALUES(1063, 'Lunático', 357142);
+REPLACE INTO `mob_branch_db` VALUES(1064, 'Megalodon', 214285);
+REPLACE INTO `mob_branch_db` VALUES(1065, 'Strouf', 214285);
+REPLACE INTO `mob_branch_db` VALUES(1066, 'Vadon', 357142);
+REPLACE INTO `mob_branch_db` VALUES(1067, 'Cornutus', 214285);
+REPLACE INTO `mob_branch_db` VALUES(1068, 'Hidra', 357142);
+REPLACE INTO `mob_branch_db` VALUES(1069, 'Peixe-Espada', 214285);
+REPLACE INTO `mob_branch_db` VALUES(1070, 'Kukre', 357142);
+REPLACE INTO `mob_branch_db` VALUES(1071, 'Esqueleto Pirata', 214285);
+REPLACE INTO `mob_branch_db` VALUES(1072, 'Kaho', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1073, 'Caranguejo', 214285);
+REPLACE INTO `mob_branch_db` VALUES(1074, 'Molusco', 357142);
+REPLACE INTO `mob_branch_db` VALUES(1076, 'Esqueleto', 357142);
+REPLACE INTO `mob_branch_db` VALUES(1077, 'Esporo Venenoso', 357142);
+REPLACE INTO `mob_branch_db` VALUES(1078, 'Planta Vermelha', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1079, 'Planta Azul', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1080, 'Planta Verde', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1081, 'Planta Amarela', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1082, 'Planta Branca', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1083, 'Planta Brilhante', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1084, 'Cogumelo Negro', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1085, 'Cogumelo Vermelho', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1088, 'Vocal', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1089, 'Sapo-Cururu', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1090, 'Mastering', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1091, 'Libélula', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1092, 'Lobo Errante', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1093, 'Eclipse', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1094, 'Ambernite', 357142);
+REPLACE INTO `mob_branch_db` VALUES(1095, 'Andre', 357142);
+REPLACE INTO `mob_branch_db` VALUES(1096, 'Angeling', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1097, 'Ovo de Andre', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1098, 'Anubis', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1099, 'Argiope', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1100, 'Argos', 214285);
+REPLACE INTO `mob_branch_db` VALUES(1101, 'Bafomé Jr.', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1102, 'Bathory', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1103, 'Caramelo', 214285);
+REPLACE INTO `mob_branch_db` VALUES(1104, 'Koko', 357142);
+REPLACE INTO `mob_branch_db` VALUES(1105, 'Deniro', 357142);
+REPLACE INTO `mob_branch_db` VALUES(1106, 'Lobo do Deserto', 214285);
+REPLACE INTO `mob_branch_db` VALUES(1107, 'Filhote de Lobo do Deserto', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1108, 'Deviace', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1109, 'Deviruchi', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1110, 'Dokebi', 214285);
+REPLACE INTO `mob_branch_db` VALUES(1111, 'Drainliar', 214285);
+REPLACE INTO `mob_branch_db` VALUES(1113, 'Drops', 357142);
+REPLACE INTO `mob_branch_db` VALUES(1114, 'Poeira', 214285);
+REPLACE INTO `mob_branch_db` VALUES(1116, 'Eggyra', 214285);
+REPLACE INTO `mob_branch_db` VALUES(1117, 'Druida Maligno', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1118, 'Flora', 214285);
+REPLACE INTO `mob_branch_db` VALUES(1119, 'Frilldora', 214285);
+REPLACE INTO `mob_branch_db` VALUES(1120, 'Ghostring', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1121, 'Giearth', 214285);
+REPLACE INTO `mob_branch_db` VALUES(1122, 'Goblin', 214285);
+REPLACE INTO `mob_branch_db` VALUES(1123, 'Goblin', 214285);
+REPLACE INTO `mob_branch_db` VALUES(1124, 'Goblin', 214285);
+REPLACE INTO `mob_branch_db` VALUES(1125, 'Goblin', 214285);
+REPLACE INTO `mob_branch_db` VALUES(1126, 'Goblin', 214285);
+REPLACE INTO `mob_branch_db` VALUES(1127, 'Hode', 214285);
+REPLACE INTO `mob_branch_db` VALUES(1128, 'Besouro-Chifre', 357142);
+REPLACE INTO `mob_branch_db` VALUES(1129, 'Horong', 214285);
+REPLACE INTO `mob_branch_db` VALUES(1130, 'Jakk', 214285);
+REPLACE INTO `mob_branch_db` VALUES(1131, 'Coringa', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1132, 'Khalitzburg', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1133, 'Cobold', 214285);
+REPLACE INTO `mob_branch_db` VALUES(1134, 'Cobold', 214285);
+REPLACE INTO `mob_branch_db` VALUES(1135, 'Cobold', 214285);
+REPLACE INTO `mob_branch_db` VALUES(1138, 'Magnólia', 214285);
+REPLACE INTO `mob_branch_db` VALUES(1139, 'Louva-a-Deus', 214285);
+REPLACE INTO `mob_branch_db` VALUES(1140, 'Marduk', 214285);
+REPLACE INTO `mob_branch_db` VALUES(1141, 'Marina', 214285);
+REPLACE INTO `mob_branch_db` VALUES(1142, 'Esfera Marinha', 214285);
+REPLACE INTO `mob_branch_db` VALUES(1143, 'Marionete', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1144, 'Marte', 214285);
+REPLACE INTO `mob_branch_db` VALUES(1145, 'Martin', 357142);
+REPLACE INTO `mob_branch_db` VALUES(1146, 'Matyr', 214285);
+REPLACE INTO `mob_branch_db` VALUES(1148, 'Medusa', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1149, 'Minorous', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1151, 'Névoa', 214285);
+REPLACE INTO `mob_branch_db` VALUES(1152, 'Orc Esqueleto', 214285);
+REPLACE INTO `mob_branch_db` VALUES(1153, 'Orc Zumbi', 214285);
+REPLACE INTO `mob_branch_db` VALUES(1154, 'Pasana', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1155, 'Petite', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1156, 'Petite Voador', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1158, 'Fen', 214285);
+REPLACE INTO `mob_branch_db` VALUES(1160, 'Piere', 357142);
+REPLACE INTO `mob_branch_db` VALUES(1161, 'Plankton', 357142);
+REPLACE INTO `mob_branch_db` VALUES(1163, 'Raydric', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1164, 'Requiem', 214285);
+REPLACE INTO `mob_branch_db` VALUES(1165, 'Arenoso', 214285);
+REPLACE INTO `mob_branch_db` VALUES(1166, 'Selvagem', 214285);
+REPLACE INTO `mob_branch_db` VALUES(1167, 'Bebê Selvagem', 357142);
+REPLACE INTO `mob_branch_db` VALUES(1169, 'Esqueleto Operário', 214285);
+REPLACE INTO `mob_branch_db` VALUES(1170, 'Sohee', 214285);
+REPLACE INTO `mob_branch_db` VALUES(1174, 'Percevejo', 357142);
+REPLACE INTO `mob_branch_db` VALUES(1175, 'Tarou', 357142);
+REPLACE INTO `mob_branch_db` VALUES(1176, 'Vitata', 214285);
+REPLACE INTO `mob_branch_db` VALUES(1177, 'Zenorc', 214285);
+REPLACE INTO `mob_branch_db` VALUES(1178, 'Zerom', 214285);
+REPLACE INTO `mob_branch_db` VALUES(1179, 'Sussurro', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1180, 'Nove Caudas', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1182, 'Cogumelo', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1185, 'Sussurro', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1186, 'Cochicho', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1188, 'Bongun', 214285);
+REPLACE INTO `mob_branch_db` VALUES(1189, 'Orc Arqueiro', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1191, 'Mímico', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1192, 'Alma Penada', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1193, 'Alarme', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1194, 'Arclouse', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1195, 'Rideword', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1196, 'Esqueleto Prisioneiro', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1197, 'Zumbi Prisioneiro', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1199, 'Punk', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1200, 'Jirtas', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1201, 'Rybio', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1202, 'Fendark', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1203, 'Mysteltainn', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1204, 'Tirfing', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1205, 'Executor', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1206, 'Anolian', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1207, 'Sting', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1208, 'Andarilho', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1209, 'Cãibra', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1211, 'Escaravelho', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1212, 'Mão de Ferro', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1213, 'Grand Orc', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1214, 'Choco', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1215, 'Talo de Verme', 214285);
+REPLACE INTO `mob_branch_db` VALUES(1216, 'Penomena', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1219, 'Cavaleiro do Abismo', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1242, 'Marin', 357142);
+REPLACE INTO `mob_branch_db` VALUES(1243, 'Sasquatch', 214285);
+REPLACE INTO `mob_branch_db` VALUES(1245, 'Goblin Natalino', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1246, 'Cookie Natalino', 214285);
+REPLACE INTO `mob_branch_db` VALUES(1248, 'Soldadinho de Chumbo', 214285);
+REPLACE INTO `mob_branch_db` VALUES(1249, 'Presente', 214285);
+REPLACE INTO `mob_branch_db` VALUES(1250, 'Chepet', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1253, 'Gárgula', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1254, 'Raggler', 214285);
+REPLACE INTO `mob_branch_db` VALUES(1255, 'Nereida', 214285);
+REPLACE INTO `mob_branch_db` VALUES(1256, 'Peste', 214285);
+REPLACE INTO `mob_branch_db` VALUES(1257, 'Injustiçado', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1258, 'Goblin Arqueiro', 214285);
+REPLACE INTO `mob_branch_db` VALUES(1259, 'Grifo', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1260, 'Moldura Maldita', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1261, 'Rosa Selvagem', 214285);
+REPLACE INTO `mob_branch_db` VALUES(1262, 'Dragão Mutante', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1263, 'Xamã do Vento', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1264, 'Tritão', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1265, 'Cookie', 214285);
+REPLACE INTO `mob_branch_db` VALUES(1266, 'Estrela do Mar', 357142);
+REPLACE INTO `mob_branch_db` VALUES(1267, 'Carat', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1268, 'Cavaleiro Sanguinário', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1269, 'Relógio', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1270, 'Gerente', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1271, 'Crocodilo', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1273, 'Senhora Orc', 214285);
+REPLACE INTO `mob_branch_db` VALUES(1274, 'Megalith', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1275, 'Alice', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1276, 'Raydric Arqueiro', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1277, 'Guardião da Floresta', 214285);
+REPLACE INTO `mob_branch_db` VALUES(1278, 'Golem Estalactítico', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1279, 'Trilobita', 214285);
+REPLACE INTO `mob_branch_db` VALUES(1280, 'Goblin a Vapor', 214285);
+REPLACE INTO `mob_branch_db` VALUES(1281, 'Verme Sábio', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1282, 'Cobold Arqueiro', 214285);
+REPLACE INTO `mob_branch_db` VALUES(1283, 'Quimera', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1289, 'Maya Macho', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1290, 'Esqueleto General', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1291, 'Aparição', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1292, 'Diabinho', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1293, 'Creamy Ameaçador', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1294, 'Mantis Assassino', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1295, 'Barão Coruja', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1296, 'Líder Cobold', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1297, 'Múmia Anciã', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1298, 'Zumbi Mestre', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1299, 'Líder Goblin', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1300, 'Lagarta', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1301, 'Am Mut', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1302, 'Ilusão das Trevas', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1303, 'Zangão Gigante', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1304, 'Aranha Gigante', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1305, 'Verme Ancião', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1306, 'Leib Olmai', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1307, 'Gato de Nove Caudas', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1308, 'Panzer Goblin', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1309, 'Gajomart', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1310, 'Majoruros', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1311, 'Gullinbursti', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1313, 'Yakuza', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1314, 'Batedor', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1315, 'Agressor', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1316, 'Soldado', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1317, 'Foca', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1318, 'Aquecedor', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1319, 'Congelador', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1320, 'Duque Coruja', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1321, 'Lavadeira', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1322, 'Coelho', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1323, 'Lontra', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1365, 'Apocalipse', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1366, 'Golem de Lava', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1367, 'Labareda', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1368, 'Planta Carnívora', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1369, 'Grand Peco', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1370, 'Succubus', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1371, 'Anjo Fajuto', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1372, 'Bode', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1374, 'Incubus', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1375, 'Papel', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1376, 'Harpia', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1377, 'Ancião', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1378, 'Pungus', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1379, 'Pesadelo Sombrio', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1380, 'Furador', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1381, 'Grizzly', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1382, 'Diabolik', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1383, 'Estrondo', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1384, 'Exterminador', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1385, 'Deletério', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1386, 'Rochoso', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1387, 'Ferrão', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1390, 'Violi', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1391, 'Pingu', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1392, 'Giro-Goblin', 214285);
+REPLACE INTO `mob_branch_db` VALUES(1400, 'Karakasa', 214285);
+REPLACE INTO `mob_branch_db` VALUES(1401, 'Shinobi', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1402, 'Sapo Venenoso', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1403, 'Soldado Atirador', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1404, 'Boneco de Miyabi', 214285);
+REPLACE INTO `mob_branch_db` VALUES(1405, 'Tengu', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1406, 'Kapha', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1408, 'Borboleta Sangrenta', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1409, 'Pirralho', 214285);
+REPLACE INTO `mob_branch_db` VALUES(1410, 'Pessegueira Encantada', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1412, 'Ermitão Maligno', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1413, 'Ermitão Selvagem', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1415, 'Filhote de Leopardo', 214285);
+REPLACE INTO `mob_branch_db` VALUES(1416, 'Ninfa Perversa', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1417, 'Zipper', 214285);
+REPLACE INTO `mob_branch_db` VALUES(1493, 'Dríade', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1494, 'Besouro-Rei', 214285);
+REPLACE INTO `mob_branch_db` VALUES(1495, 'Atirador de Pedras', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1497, 'Golem de Madeira', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1498, 'Atirador Wootan', 214285);
+REPLACE INTO `mob_branch_db` VALUES(1499, 'Guerreiro Wootan', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1500, 'Parasita', 214285);
+REPLACE INTO `mob_branch_db` VALUES(1503, 'Árvore Maldita', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1504, 'Dullahan', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1505, 'Loli Ruri', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1506, 'Mascarado', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1507, 'Serial Killer', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1508, 'Quve', 214285);
+REPLACE INTO `mob_branch_db` VALUES(1509, 'Lude', 214285);
+REPLACE INTO `mob_branch_db` VALUES(1510, 'Poltergeist', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1512, 'Yao Jun', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1513, 'Mao Guai', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1514, 'Zhu Po Long', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1515, 'Filhote de Hatii', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1516, 'Mi Gao', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1517, 'Jing Guai', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1519, 'Chung E', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1520, 'Bolinho de Massa', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1582, 'Deviling', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1584, 'Tamruan', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1586, 'Gato de Folha', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1587, 'Kraben', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1613, 'Metaling', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1614, 'Mineral', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1615, 'Obsidiana', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1616, 'Minérios', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1617, 'Fornalha Velha', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1618, 'Ungoliant', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1619, 'Porcellio', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1620, 'Nuvem Tóxica', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1621, 'Nuvem Venenosa', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1622, 'Ursinho', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1627, 'Anopheles', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1628, 'Holden', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1629, 'Vento da Colina', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1631, 'Donzela Verde', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1632, 'Gremlin', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1633, 'Beholder', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1634, 'Seyren Windsor', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1635, 'Eremes Guile', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1636, 'Howard Alt-Eisen', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1637, 'Margaretha Sorin', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1638, 'Cecil Damon', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1639, 'Kathryne Keyron', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1652, 'Egnigem Cenia', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1653, 'Wickebine Tres', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1654, 'Armeyer Dinze', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1655, 'Errende Ebecee', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1656, 'Kavach Icarus', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1657, 'Laurell Weinder', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1664, 'Canhão de Fóton', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1665, 'Canhão de Fóton', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1666, 'Canhão de Fóton', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1667, 'Canhão de Fóton', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1668, 'Archdam', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1669, 'Dimik', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1670, 'Dimik', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1671, 'Dimik', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1672, 'Dimik', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1673, 'Dimik', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1675, 'Venatu', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1676, 'Venatu', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1677, 'Venatu', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1678, 'Venatu', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1679, 'Venatu', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1680, 'Coluna de Vento', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1681, 'Gemini-S58', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1682, 'Exterminador', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1686, 'Filhote de Orc', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1687, 'Grove', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1692, 'Breeze', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1693, 'Plasma', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1694, 'Plasma', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1695, 'Plasma', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1696, 'Plasma', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1699, 'Mímico Antigo', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1703, 'Lady Solace', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1704, 'Odium de Thanatos', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1705, 'Despero de Thanatos', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1706, 'Maero de Thanatos', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1707, 'Pesar de Thanatos', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1713, 'Acidus', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1714, 'Ferus', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1715, 'Novus', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1717, 'Ferus', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1718, 'Novus', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1720, 'Hydrolancer', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1721, 'Ovo de Dragão', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1736, 'Aliot', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1737, 'Aliza', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1738, 'Constante', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1752, 'Skogul', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1753, 'Frus', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1754, 'Skeggiold', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1755, 'Skeggiold', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1769, 'Agav', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1770, 'Echio', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1771, 'Vanberk', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1772, 'Isilla', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1773, 'Hodremlin', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1774, 'Rastreador', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1775, 'Yeti', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1776, 'Siroma', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1777, 'Titã de Gelo', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1778, 'Gazeti', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1780, 'Muscipular', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1781, 'Drosera', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1782, 'Roween', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1783, 'Galion', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1784, 'Stapo', 142857);
+REPLACE INTO `mob_branch_db` VALUES(1789, 'Estalactite', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1796, 'Aunoe', 142857);
+REPLACE INTO `mob_branch_db` VALUES(1797, 'Fanat', 142857);
+REPLACE INTO `mob_branch_db` VALUES(1829, 'Espadachim Guardião', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1830, 'Arqueiro Guardião', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1831, 'Salamandra', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1833, 'Kasa', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1836, 'Magmaring', 214285);
+REPLACE INTO `mob_branch_db` VALUES(1837, 'Imp', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1838, 'Golpeador', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1839, 'Byorgue', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1864, 'Massacre', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1865, 'Zumbi Dilacerado', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1866, 'Cão Infernal', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1867, 'Banshee', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1869, 'Crânio Flamejante', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1870, 'Necromante', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1872, 'Mosca Infernal', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1880, 'Leshij', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1881, 'Les', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1882, 'Baba-Yaga', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1883, 'Kikimora', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1884, 'Mavka', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1918, 'Sombra da Inveja', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1919, 'Sombra da Gula', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1920, 'Sombra da Vaidade', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1921, 'Sombra da Ira', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1974, 'Senhora das Banshees', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1975, 'Mestre Beholder', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1976, 'Cobalto', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1977, 'Metaling Pesado', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1978, 'Apocalipse Infernal', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1979, 'Zakudam', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1986, 'Tatacho', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1987, 'Centopéia', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1988, 'Nepenthes', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1989, 'Leão da Montanha', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1990, 'Mamute Rochoso', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1991, 'Leão de Vinhas', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1992, 'Cornus', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1993, 'Naga', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1994, 'Vespa Vagalume', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1995, 'Pinguicula', 71428);
+REPLACE INTO `mob_branch_db` VALUES(1999, 'Larva de Centopéia', 71428);
+REPLACE INTO `mob_branch_db` VALUES(2013, 'Draco', 71428);
+REPLACE INTO `mob_branch_db` VALUES(2015, 'Pinguicula Sombria', 71428);
+REPLACE INTO `mob_branch_db` VALUES(2016, 'Elemental da Água', 71428);
+REPLACE INTO `mob_branch_db` VALUES(2017, 'Ratatosk', 71428);
+REPLACE INTO `mob_branch_db` VALUES(2018, 'Duneyrr', 71428);
+REPLACE INTO `mob_branch_db` VALUES(2019, 'Árvore Anciã', 71428);
+REPLACE INTO `mob_branch_db` VALUES(2020, 'Ryncho', 71428);
+REPLACE INTO `mob_branch_db` VALUES(2021, 'Phylla', 71428);
+REPLACE INTO `mob_branch_db` VALUES(2023, 'Sombra Obscura', 71428);
+REPLACE INTO `mob_branch_db` VALUES(2024, 'Golem de Bradium', 71428);
+REPLACE INTO `mob_branch_db` VALUES(2069, 'Iara', 71428);
+REPLACE INTO `mob_branch_db` VALUES(2070, 'Piranha', 71428);
+REPLACE INTO `mob_branch_db` VALUES(2071, 'Headless Mule', 71428);
+REPLACE INTO `mob_branch_db` VALUES(2072, 'Jaguar', 71428);
+REPLACE INTO `mob_branch_db` VALUES(2073, 'Toucan', 71428);
+REPLACE INTO `mob_branch_db` VALUES(2074, 'Curupira', 71428);
+REPLACE INTO `mob_branch_db` VALUES(2083, 'One-Horned Scaraba', 71428);
+REPLACE INTO `mob_branch_db` VALUES(2084, 'Two-Horned Scaraba', 71428);
+REPLACE INTO `mob_branch_db` VALUES(2085, 'Antler Scaraba', 71428);
+REPLACE INTO `mob_branch_db` VALUES(2086, 'Rake Scaraba', 71428);
+REPLACE INTO `mob_branch_db` VALUES(2088, 'Scaraba Egg', 71428);
+REPLACE INTO `mob_branch_db` VALUES(2089, 'Scaraba Egg', 71428);
+REPLACE INTO `mob_branch_db` VALUES(2090, 'Antler Scaraba Egg', 71428);
+REPLACE INTO `mob_branch_db` VALUES(2091, 'Rake Scaraba Egg', 71428);
+REPLACE INTO `mob_branch_db` VALUES(2092, 'Dolomedes', 71428);
+REPLACE INTO `mob_branch_db` VALUES(2093, 'Botaring', 142857);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `mob_chat_db`
+--
+
+CREATE TABLE IF NOT EXISTS `mob_chat_db` (
+  `Line_ID` tinyint(4) NOT NULL,
+  `Color_Code` int(10) unsigned DEFAULT NULL,
+  `Dialog` tinytext NOT NULL,
+  PRIMARY KEY (`Line_ID`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `mob_chat_db`
+--
+
+REPLACE INTO `mob_chat_db` VALUES(1, 0, 'Weakling! Challenge me if you have any courage!\n');
+REPLACE INTO `mob_chat_db` VALUES(2, 0, 'Impressive! I wonder how far your recklessness will take you.\n');
+REPLACE INTO `mob_chat_db` VALUES(3, 0, 'I almost pity how outmatched you are against me. Now prepare for my attack!\n');
+REPLACE INTO `mob_chat_db` VALUES(4, 0, 'My loyal servants! Welcome them with a painful death!\n');
+REPLACE INTO `mob_chat_db` VALUES(5, 0, 'Don''t you run away!\n');
+REPLACE INTO `mob_chat_db` VALUES(6, 0, 'You worthless humans. Your so-called holy powers have no effect on me!\n');
+REPLACE INTO `mob_chat_db` VALUES(7, 0, 'Useless underlings!...Well');
+REPLACE INTO `mob_chat_db` VALUES(8, 0, 'Pray to your gods!\n');
+REPLACE INTO `mob_chat_db` VALUES(9, 0, 'Do you still think you''re a match to me?!\n');
+REPLACE INTO `mob_chat_db` VALUES(10, 0, 'Vanish!\n');
+REPLACE INTO `mob_chat_db` VALUES(11, 0, 'Let''s see how long you can endure my power!\n');
+REPLACE INTO `mob_chat_db` VALUES(12, 0, 'Is this all you''ve got?!\n');
+REPLACE INTO `mob_chat_db` VALUES(13, 0, 'You''re tickling me!\n');
+REPLACE INTO `mob_chat_db` VALUES(14, 0, 'This is how you attack? Watch and learn');
+REPLACE INTO `mob_chat_db` VALUES(15, 0, 'It''s time to finish the game!\n');
+REPLACE INTO `mob_chat_db` VALUES(16, 0, 'Oh');
+REPLACE INTO `mob_chat_db` VALUES(17, 0, 'No');
+REPLACE INTO `mob_chat_db` VALUES(18, 0, 'I can never die! I''ll be coming back for you!\n');
+REPLACE INTO `mob_chat_db` VALUES(19, 0, 'I was born to conquer this world! None shall stop me!\n');
+REPLACE INTO `mob_chat_db` VALUES(20, 0, 'Your days are numbered!\n');
+REPLACE INTO `mob_chat_db` VALUES(21, 0, 'Pulse Strike! My fingers tear steel!\n');
+REPLACE INTO `mob_chat_db` VALUES(22, 0, 'Hahaha');
+REPLACE INTO `mob_chat_db` VALUES(23, 0, 'Enjoy your time on the mortal plane while you can');
+REPLACE INTO `mob_chat_db` VALUES(24, 0, 'When are you going to learn your lesson? In death?\n');
+REPLACE INTO `mob_chat_db` VALUES(25, 0, 'No... I can''t lose! I won''t beg for my life! I''m not running away! I don''t accept this as defeat!\n');
+REPLACE INTO `mob_chat_db` VALUES(26, 0, 'Argh... I... I''m weakening...\n');
+REPLACE INTO `mob_chat_db` VALUES(27, 0, 'What do you want from me?\n');
+REPLACE INTO `mob_chat_db` VALUES(28, 0, 'No! I didn''t do this! He''s the one who planned out all this!\n');
+REPLACE INTO `mob_chat_db` VALUES(29, 0, 'I just wanted to find peace..!  That''s why I have been fleeing away!\n');
+REPLACE INTO `mob_chat_db` VALUES(30, 0, 'Ahhhh!!! Now');
+REPLACE INTO `mob_chat_db` VALUES(31, 0, 'Annoying flies!! Get off of me!\n');
+REPLACE INTO `mob_chat_db` VALUES(32, 0, 'Suffer in Hell!\n');
+REPLACE INTO `mob_chat_db` VALUES(33, 0, 'Mwahahaha! Taste the anger of the earth!!!\n');
+REPLACE INTO `mob_chat_db` VALUES(34, 0, 'No... I won''t accept this as defeat!\n');
+REPLACE INTO `mob_chat_db` VALUES(35, 0, 'Will it ease your loneliness to hit me?  Why don''t you stay here with me forever');
+REPLACE INTO `mob_chat_db` VALUES(36, 0, 'You will forgot the meaning of time.  I wonder how long can you last in here...\n');
+REPLACE INTO `mob_chat_db` VALUES(37, 0, 'Is there anyone waiting for you outside of here?  Throw them all away');
+REPLACE INTO `mob_chat_db` VALUES(38, 0, 'Discard your life and stay confined here.  You will yearn for freedom in captivity !!\n');
+REPLACE INTO `mob_chat_db` VALUES(39, 0, 'How much will the outside world change if you stay here in solitude for one thousand years?\n');
+REPLACE INTO `mob_chat_db` VALUES(40, 0, 'Yes! Yearn for your freedom from this confined place');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `mob_classchange_db`
+--
+
+CREATE TABLE IF NOT EXISTS `mob_classchange_db` (
+  `MobID` smallint(5) unsigned NOT NULL,
+  `DummyName` varchar(30) NOT NULL,
+  `Rate` int(10) unsigned NOT NULL DEFAULT '0'
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `mob_classchange_db`
+--
+
+REPLACE INTO `mob_classchange_db` VALUES(0, 'Baphomet', 1039);
+REPLACE INTO `mob_classchange_db` VALUES(1038, 'Osíris', 1000000);
+REPLACE INTO `mob_classchange_db` VALUES(1039, 'Bafomé', 1000000);
+REPLACE INTO `mob_classchange_db` VALUES(1046, 'Doppelganger', 1000000);
+REPLACE INTO `mob_classchange_db` VALUES(1059, 'Abelha-Rainha', 1000000);
+REPLACE INTO `mob_classchange_db` VALUES(1086, 'Besouro-Ladrão Dourado', 1000000);
+REPLACE INTO `mob_classchange_db` VALUES(1087, 'Orc Herói', 1000000);
+REPLACE INTO `mob_classchange_db` VALUES(1112, 'Drake', 1000000);
+REPLACE INTO `mob_classchange_db` VALUES(1115, 'Eddga', 1000000);
+REPLACE INTO `mob_classchange_db` VALUES(1147, 'Maya', 1000000);
+REPLACE INTO `mob_classchange_db` VALUES(1150, 'Flor do Luar', 1000000);
+REPLACE INTO `mob_classchange_db` VALUES(1157, 'Faraó', 1000000);
+REPLACE INTO `mob_classchange_db` VALUES(1159, 'Freeoni', 1000000);
+REPLACE INTO `mob_classchange_db` VALUES(1190, 'Senhor dos Orcs', 1000000);
+REPLACE INTO `mob_classchange_db` VALUES(1251, 'Cavaleiro da Tempestade', 1000000);
+REPLACE INTO `mob_classchange_db` VALUES(1252, 'Hatii', 1000000);
+REPLACE INTO `mob_classchange_db` VALUES(1272, 'Senhor das Trevas', 1000000);
+REPLACE INTO `mob_classchange_db` VALUES(1312, 'General Tartaruga', 1000000);
+REPLACE INTO `mob_classchange_db` VALUES(1373, 'Senhor dos Mortos', 1000000);
+REPLACE INTO `mob_classchange_db` VALUES(1388, 'ArchAngeling', 1000000);
+REPLACE INTO `mob_classchange_db` VALUES(1389, 'Drácula', 1000000);
+REPLACE INTO `mob_classchange_db` VALUES(1418, 'Serpente Suprema', 1000000);
+REPLACE INTO `mob_classchange_db` VALUES(1492, 'Samurai Encarnado', 1000000);
+REPLACE INTO `mob_classchange_db` VALUES(1511, 'Amon Ra', 1000000);
+REPLACE INTO `mob_classchange_db` VALUES(1583, 'Tao Gunka', 1000000);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `mob_db`
+--
+
+CREATE TABLE IF NOT EXISTS `mob_db` (
+  `ID` mediumint(9) unsigned NOT NULL DEFAULT '0',
+  `Sprite` text NOT NULL,
+  `kName` text NOT NULL,
+  `iName` text NOT NULL,
+  `LV` tinyint(6) unsigned NOT NULL DEFAULT '0',
+  `HP` int(9) unsigned NOT NULL DEFAULT '0',
+  `SP` mediumint(9) unsigned NOT NULL DEFAULT '0',
+  `EXP` mediumint(9) unsigned NOT NULL DEFAULT '0',
+  `JEXP` mediumint(9) unsigned NOT NULL DEFAULT '0',
+  `Range1` tinyint(4) unsigned NOT NULL DEFAULT '0',
+  `ATK1` smallint(6) unsigned NOT NULL DEFAULT '0',
+  `ATK2` smallint(6) unsigned NOT NULL DEFAULT '0',
+  `DEF` smallint(6) unsigned NOT NULL DEFAULT '0',
+  `MDEF` smallint(6) unsigned NOT NULL DEFAULT '0',
+  `STR` smallint(6) unsigned NOT NULL DEFAULT '0',
+  `AGI` smallint(6) unsigned NOT NULL DEFAULT '0',
+  `VIT` smallint(6) unsigned NOT NULL DEFAULT '0',
+  `INT` smallint(6) unsigned NOT NULL DEFAULT '0',
+  `DEX` smallint(6) unsigned NOT NULL DEFAULT '0',
+  `LUK` smallint(6) unsigned NOT NULL DEFAULT '0',
+  `Range2` tinyint(4) unsigned NOT NULL DEFAULT '0',
+  `Range3` tinyint(4) unsigned NOT NULL DEFAULT '0',
+  `Scale` tinyint(4) unsigned NOT NULL DEFAULT '0',
+  `Race` tinyint(4) unsigned NOT NULL DEFAULT '0',
+  `Element` tinyint(4) unsigned NOT NULL DEFAULT '0',
+  `Mode` smallint(6) unsigned NOT NULL DEFAULT '0',
+  `Speed` smallint(6) unsigned NOT NULL DEFAULT '0',
+  `aDelay` smallint(6) unsigned NOT NULL DEFAULT '0',
+  `aMotion` smallint(6) unsigned NOT NULL DEFAULT '0',
+  `dMotion` smallint(6) unsigned NOT NULL DEFAULT '0',
+  `MEXP` mediumint(9) unsigned NOT NULL DEFAULT '0',
+  `MVP1id` smallint(9) unsigned NOT NULL DEFAULT '0',
+  `MVP1per` smallint(9) unsigned NOT NULL DEFAULT '0',
+  `MVP2id` smallint(9) unsigned NOT NULL DEFAULT '0',
+  `MVP2per` smallint(9) unsigned NOT NULL DEFAULT '0',
+  `MVP3id` smallint(9) unsigned NOT NULL DEFAULT '0',
+  `MVP3per` smallint(9) unsigned NOT NULL DEFAULT '0',
+  `Drop1id` smallint(9) unsigned NOT NULL DEFAULT '0',
+  `Drop1per` smallint(9) unsigned NOT NULL DEFAULT '0',
+  `Drop2id` smallint(9) unsigned NOT NULL DEFAULT '0',
+  `Drop2per` smallint(9) unsigned NOT NULL DEFAULT '0',
+  `Drop3id` smallint(9) unsigned NOT NULL DEFAULT '0',
+  `Drop3per` smallint(9) unsigned NOT NULL DEFAULT '0',
+  `Drop4id` smallint(9) unsigned NOT NULL DEFAULT '0',
+  `Drop4per` smallint(9) unsigned NOT NULL DEFAULT '0',
+  `Drop5id` smallint(9) unsigned NOT NULL DEFAULT '0',
+  `Drop5per` smallint(9) unsigned NOT NULL DEFAULT '0',
+  `Drop6id` smallint(9) unsigned NOT NULL DEFAULT '0',
+  `Drop6per` smallint(9) unsigned NOT NULL DEFAULT '0',
+  `Drop7id` smallint(9) unsigned NOT NULL DEFAULT '0',
+  `Drop7per` smallint(9) unsigned NOT NULL DEFAULT '0',
+  `Drop8id` smallint(9) unsigned NOT NULL DEFAULT '0',
+  `Drop8per` smallint(9) unsigned NOT NULL DEFAULT '0',
+  `Drop9id` smallint(9) unsigned NOT NULL DEFAULT '0',
+  `Drop9per` smallint(9) unsigned NOT NULL DEFAULT '0',
+  `DropCardid` smallint(9) unsigned NOT NULL DEFAULT '0',
+  `DropCardper` smallint(9) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`ID`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `mob_item_ratio_db`
+--
+
+CREATE TABLE IF NOT EXISTS `mob_item_ratio_db` (
+  `ItemID` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `Ratio` int(10) unsigned NOT NULL DEFAULT '0',
+  `MonsterID` smallint(5) unsigned NOT NULL DEFAULT '0'
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `mob_poring_db`
+--
+
+CREATE TABLE IF NOT EXISTS `mob_poring_db` (
+  `MobID` smallint(5) unsigned NOT NULL,
+  `DummyName` varchar(30) NOT NULL,
+  `Rate` int(10) unsigned NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `mob_poring_db`
+--
+
+REPLACE INTO `mob_poring_db` VALUES(0, 'Poring', 1002);
+REPLACE INTO `mob_poring_db` VALUES(1002, 'Poring', 1000000);
+REPLACE INTO `mob_poring_db` VALUES(1031, 'Poporing', 1000000);
+REPLACE INTO `mob_poring_db` VALUES(1062, 'Poring Noel', 200000);
+REPLACE INTO `mob_poring_db` VALUES(1090, 'Mastering', 400000);
+REPLACE INTO `mob_poring_db` VALUES(1096, 'Angeling', 200000);
+REPLACE INTO `mob_poring_db` VALUES(1113, 'Drops', 1000000);
+REPLACE INTO `mob_poring_db` VALUES(1120, 'Ghostring', 200000);
+REPLACE INTO `mob_poring_db` VALUES(1242, 'Marin', 1000000);
+REPLACE INTO `mob_poring_db` VALUES(1388, 'ArchAngeling', 200000);
+REPLACE INTO `mob_poring_db` VALUES(1582, 'Deviling', 200000);
+REPLACE INTO `mob_poring_db` VALUES(1613, 'Metaling', 1000000);
+REPLACE INTO `mob_poring_db` VALUES(1784, 'Stapo', 1000000);
+REPLACE INTO `mob_poring_db` VALUES(2093, 'Botaring', 400000);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `mob_pouch_db`
+--
+
+CREATE TABLE IF NOT EXISTS `mob_pouch_db` (
+  `MobID` smallint(5) unsigned NOT NULL,
+  `DummyName` varchar(30) NOT NULL,
+  `Rate` int(10) unsigned NOT NULL DEFAULT '0'
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `mob_pouch_db`
+--
+
+REPLACE INTO `mob_pouch_db` VALUES(0, 'Poring', 1002);
+REPLACE INTO `mob_pouch_db` VALUES(1001, 'Escorpião', 214285);
+REPLACE INTO `mob_pouch_db` VALUES(1002, 'Poring', 1000000);
+REPLACE INTO `mob_pouch_db` VALUES(1004, 'Zangão', 357142);
+REPLACE INTO `mob_pouch_db` VALUES(1005, 'Familiar', 357142);
+REPLACE INTO `mob_pouch_db` VALUES(1007, 'Fabre', 428571);
+REPLACE INTO `mob_pouch_db` VALUES(1008, 'Pupa', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1009, 'Condor', 357142);
+REPLACE INTO `mob_pouch_db` VALUES(1010, 'Salgueiro', 357142);
+REPLACE INTO `mob_pouch_db` VALUES(1011, 'ChonChon', 357142);
+REPLACE INTO `mob_pouch_db` VALUES(1012, 'Sapo de Rodda', 357142);
+REPLACE INTO `mob_pouch_db` VALUES(1013, 'Lobo', 357142);
+REPLACE INTO `mob_pouch_db` VALUES(1014, 'Esporo', 357142);
+REPLACE INTO `mob_pouch_db` VALUES(1015, 'Zumbi', 357142);
+REPLACE INTO `mob_pouch_db` VALUES(1016, 'Esqueleto Arqueiro', 214285);
+REPLACE INTO `mob_pouch_db` VALUES(1018, 'Creamy', 357142);
+REPLACE INTO `mob_pouch_db` VALUES(1019, 'PecoPeco', 357142);
+REPLACE INTO `mob_pouch_db` VALUES(1020, 'Mandrágora', 357142);
+REPLACE INTO `mob_pouch_db` VALUES(1023, 'Guerreiro Orc', 214285);
+REPLACE INTO `mob_pouch_db` VALUES(1024, 'Rabo de Verme', 357142);
+REPLACE INTO `mob_pouch_db` VALUES(1025, 'Jibóia', 357142);
+REPLACE INTO `mob_pouch_db` VALUES(1026, 'Munak', 214285);
+REPLACE INTO `mob_pouch_db` VALUES(1028, 'Esqueleto Soldado', 214285);
+REPLACE INTO `mob_pouch_db` VALUES(1029, 'Isis', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1030, 'Anaconda', 214285);
+REPLACE INTO `mob_pouch_db` VALUES(1031, 'Poporing', 357142);
+REPLACE INTO `mob_pouch_db` VALUES(1032, 'Verit', 214285);
+REPLACE INTO `mob_pouch_db` VALUES(1033, 'Salgueiro Ancião', 214285);
+REPLACE INTO `mob_pouch_db` VALUES(1034, 'Sapo de Thara', 214285);
+REPLACE INTO `mob_pouch_db` VALUES(1035, 'Mosca Caçadora', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1036, 'Carniçal', 214285);
+REPLACE INTO `mob_pouch_db` VALUES(1037, 'Sorrateiro', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1040, 'Golem', 214285);
+REPLACE INTO `mob_pouch_db` VALUES(1041, 'Múmia', 214285);
+REPLACE INTO `mob_pouch_db` VALUES(1042, 'ChonChon de Aço', 357142);
+REPLACE INTO `mob_pouch_db` VALUES(1044, 'Obeaune', 214285);
+REPLACE INTO `mob_pouch_db` VALUES(1045, 'Cavalo-Marinho', 214285);
+REPLACE INTO `mob_pouch_db` VALUES(1047, 'Ovo de PecoPeco', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1048, 'Ovo de Besouro-Ladrão', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1049, 'Picky', 357142);
+REPLACE INTO `mob_pouch_db` VALUES(1050, 'Picky com Casca', 357142);
+REPLACE INTO `mob_pouch_db` VALUES(1051, 'Besouro-Ladrão', 357142);
+REPLACE INTO `mob_pouch_db` VALUES(1052, 'Rocker', 357142);
+REPLACE INTO `mob_pouch_db` VALUES(1053, 'Besouro-Ladrão Fêmea', 357142);
+REPLACE INTO `mob_pouch_db` VALUES(1054, 'Besouro-Ladrão Macho', 357142);
+REPLACE INTO `mob_pouch_db` VALUES(1055, 'Muka', 357142);
+REPLACE INTO `mob_pouch_db` VALUES(1056, 'Fumacento', 357142);
+REPLACE INTO `mob_pouch_db` VALUES(1057, 'Yoyo', 357142);
+REPLACE INTO `mob_pouch_db` VALUES(1058, 'Metaller', 214285);
+REPLACE INTO `mob_pouch_db` VALUES(1060, 'Pé Grande', 214285);
+REPLACE INTO `mob_pouch_db` VALUES(1061, 'Pesadelo', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1062, 'Poring Noel', 357142);
+REPLACE INTO `mob_pouch_db` VALUES(1063, 'Lunático', 357142);
+REPLACE INTO `mob_pouch_db` VALUES(1064, 'Megalodon', 214285);
+REPLACE INTO `mob_pouch_db` VALUES(1065, 'Strouf', 214285);
+REPLACE INTO `mob_pouch_db` VALUES(1066, 'Vadon', 357142);
+REPLACE INTO `mob_pouch_db` VALUES(1067, 'Cornutus', 214285);
+REPLACE INTO `mob_pouch_db` VALUES(1068, 'Hidra', 357142);
+REPLACE INTO `mob_pouch_db` VALUES(1069, 'Peixe-Espada', 214285);
+REPLACE INTO `mob_pouch_db` VALUES(1070, 'Kukre', 357142);
+REPLACE INTO `mob_pouch_db` VALUES(1071, 'Esqueleto Pirata', 214285);
+REPLACE INTO `mob_pouch_db` VALUES(1072, 'Kaho', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1073, 'Caranguejo', 214285);
+REPLACE INTO `mob_pouch_db` VALUES(1074, 'Molusco', 357142);
+REPLACE INTO `mob_pouch_db` VALUES(1076, 'Esqueleto', 357142);
+REPLACE INTO `mob_pouch_db` VALUES(1077, 'Esporo Venenoso', 357142);
+REPLACE INTO `mob_pouch_db` VALUES(1078, 'Planta Vermelha', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1079, 'Planta Azul', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1080, 'Planta Verde', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1081, 'Planta Amarela', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1082, 'Planta Branca', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1083, 'Planta Brilhante', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1084, 'Cogumelo Negro', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1085, 'Cogumelo Vermelho', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1088, 'Vocal', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1089, 'Sapo-Cururu', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1090, 'Mastering', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1091, 'Libélula', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1092, 'Lobo Errante', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1093, 'Eclipse', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1094, 'Ambernite', 357142);
+REPLACE INTO `mob_pouch_db` VALUES(1095, 'Andre', 357142);
+REPLACE INTO `mob_pouch_db` VALUES(1096, 'Angeling', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1097, 'Ovo de Andre', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1099, 'Argiope', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1100, 'Argos', 214285);
+REPLACE INTO `mob_pouch_db` VALUES(1101, 'Bafomé Jr.', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1102, 'Bathory', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1103, 'Caramelo', 214285);
+REPLACE INTO `mob_pouch_db` VALUES(1104, 'Koko', 357142);
+REPLACE INTO `mob_pouch_db` VALUES(1105, 'Deniro', 357142);
+REPLACE INTO `mob_pouch_db` VALUES(1106, 'Lobo do Deserto', 214285);
+REPLACE INTO `mob_pouch_db` VALUES(1107, 'Filhote de Lobo do Deserto', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1108, 'Deviace', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1109, 'Deviruchi', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1110, 'Dokebi', 214285);
+REPLACE INTO `mob_pouch_db` VALUES(1111, 'Drainliar', 214285);
+REPLACE INTO `mob_pouch_db` VALUES(1113, 'Drops', 357142);
+REPLACE INTO `mob_pouch_db` VALUES(1114, 'Poeira', 214285);
+REPLACE INTO `mob_pouch_db` VALUES(1116, 'Eggyra', 214285);
+REPLACE INTO `mob_pouch_db` VALUES(1117, 'Druida Maligno', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1118, 'Flora', 214285);
+REPLACE INTO `mob_pouch_db` VALUES(1119, 'Frilldora', 214285);
+REPLACE INTO `mob_pouch_db` VALUES(1120, 'Ghostring', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1121, 'Giearth', 214285);
+REPLACE INTO `mob_pouch_db` VALUES(1122, 'Goblin', 214285);
+REPLACE INTO `mob_pouch_db` VALUES(1123, 'Goblin', 214285);
+REPLACE INTO `mob_pouch_db` VALUES(1124, 'Goblin', 214285);
+REPLACE INTO `mob_pouch_db` VALUES(1125, 'Goblin', 214285);
+REPLACE INTO `mob_pouch_db` VALUES(1126, 'Goblin', 214285);
+REPLACE INTO `mob_pouch_db` VALUES(1127, 'Hode', 214285);
+REPLACE INTO `mob_pouch_db` VALUES(1128, 'Besouro-Chifre', 357142);
+REPLACE INTO `mob_pouch_db` VALUES(1129, 'Horong', 214285);
+REPLACE INTO `mob_pouch_db` VALUES(1130, 'Jakk', 214285);
+REPLACE INTO `mob_pouch_db` VALUES(1131, 'Coringa', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1132, 'Khalitzburg', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1133, 'Cobold', 214285);
+REPLACE INTO `mob_pouch_db` VALUES(1134, 'Cobold', 214285);
+REPLACE INTO `mob_pouch_db` VALUES(1135, 'Cobold', 214285);
+REPLACE INTO `mob_pouch_db` VALUES(1138, 'Magnólia', 214285);
+REPLACE INTO `mob_pouch_db` VALUES(1139, 'Louva-a-Deus', 214285);
+REPLACE INTO `mob_pouch_db` VALUES(1140, 'Marduk', 214285);
+REPLACE INTO `mob_pouch_db` VALUES(1141, 'Marina', 214285);
+REPLACE INTO `mob_pouch_db` VALUES(1142, 'Esfera Marinha', 214285);
+REPLACE INTO `mob_pouch_db` VALUES(1143, 'Marionete', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1144, 'Marte', 214285);
+REPLACE INTO `mob_pouch_db` VALUES(1145, 'Martin', 357142);
+REPLACE INTO `mob_pouch_db` VALUES(1146, 'Matyr', 214285);
+REPLACE INTO `mob_pouch_db` VALUES(1148, 'Medusa', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1149, 'Minorous', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1151, 'Névoa', 214285);
+REPLACE INTO `mob_pouch_db` VALUES(1152, 'Orc Esqueleto', 214285);
+REPLACE INTO `mob_pouch_db` VALUES(1153, 'Orc Zumbi', 214285);
+REPLACE INTO `mob_pouch_db` VALUES(1154, 'Pasana', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1155, 'Petite', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1156, 'Petite Voador', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1158, 'Fen', 214285);
+REPLACE INTO `mob_pouch_db` VALUES(1160, 'Piere', 357142);
+REPLACE INTO `mob_pouch_db` VALUES(1161, 'Plankton', 357142);
+REPLACE INTO `mob_pouch_db` VALUES(1163, 'Raydric', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1164, 'Requiem', 214285);
+REPLACE INTO `mob_pouch_db` VALUES(1165, 'Arenoso', 214285);
+REPLACE INTO `mob_pouch_db` VALUES(1166, 'Selvagem', 214285);
+REPLACE INTO `mob_pouch_db` VALUES(1167, 'Bebê Selvagem', 357142);
+REPLACE INTO `mob_pouch_db` VALUES(1169, 'Esqueleto Operário', 214285);
+REPLACE INTO `mob_pouch_db` VALUES(1170, 'Sohee', 214285);
+REPLACE INTO `mob_pouch_db` VALUES(1174, 'Percevejo', 357142);
+REPLACE INTO `mob_pouch_db` VALUES(1175, 'Tarou', 357142);
+REPLACE INTO `mob_pouch_db` VALUES(1176, 'Vitata', 214285);
+REPLACE INTO `mob_pouch_db` VALUES(1177, 'Zenorc', 214285);
+REPLACE INTO `mob_pouch_db` VALUES(1178, 'Zerom', 214285);
+REPLACE INTO `mob_pouch_db` VALUES(1179, 'Sussurro', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1180, 'Nove Caudas', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1182, 'Cogumelo', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1185, 'Sussurro', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1186, 'Cochicho', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1188, 'Bongun', 214285);
+REPLACE INTO `mob_pouch_db` VALUES(1189, 'Orc Arqueiro', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1191, 'Mímico', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1192, 'Alma Penada', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1193, 'Alarme', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1194, 'Arclouse', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1195, 'Rideword', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1196, 'Esqueleto Prisioneiro', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1197, 'Zumbi Prisioneiro', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1199, 'Punk', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1200, 'Jirtas', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1201, 'Rybio', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1202, 'Fendark', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1203, 'Mysteltainn', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1204, 'Tirfing', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1205, 'Executor', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1206, 'Anolian', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1207, 'Sting', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1208, 'Andarilho', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1209, 'Cãibra', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1211, 'Escaravelho', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1212, 'Mão de Ferro', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1213, 'Grand Orc', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1214, 'Choco', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1215, 'Talo de Verme', 214285);
+REPLACE INTO `mob_pouch_db` VALUES(1216, 'Penomena', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1219, 'Cavaleiro do Abismo', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1242, 'Marin', 357142);
+REPLACE INTO `mob_pouch_db` VALUES(1243, 'Sasquatch', 214285);
+REPLACE INTO `mob_pouch_db` VALUES(1245, 'Goblin Natalino', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1246, 'Cookie Natalino', 214285);
+REPLACE INTO `mob_pouch_db` VALUES(1248, 'Soldadinho de Chumbo', 214285);
+REPLACE INTO `mob_pouch_db` VALUES(1249, 'Presente', 214285);
+REPLACE INTO `mob_pouch_db` VALUES(1250, 'Chepet', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1253, 'Gárgula', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1254, 'Raggler', 214285);
+REPLACE INTO `mob_pouch_db` VALUES(1255, 'Nereida', 214285);
+REPLACE INTO `mob_pouch_db` VALUES(1256, 'Peste', 214285);
+REPLACE INTO `mob_pouch_db` VALUES(1257, 'Injustiçado', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1258, 'Goblin Arqueiro', 214285);
+REPLACE INTO `mob_pouch_db` VALUES(1259, 'Grifo', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1260, 'Moldura Maldita', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1261, 'Rosa Selvagem', 214285);
+REPLACE INTO `mob_pouch_db` VALUES(1262, 'Dragão Mutante', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1263, 'Xamã do Vento', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1264, 'Tritão', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1265, 'Cookie', 214285);
+REPLACE INTO `mob_pouch_db` VALUES(1266, 'Estrela do Mar', 357142);
+REPLACE INTO `mob_pouch_db` VALUES(1267, 'Carat', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1268, 'Cavaleiro Sanguinário', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1269, 'Relógio', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1270, 'Gerente', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1271, 'Crocodilo', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1273, 'Senhora Orc', 214285);
+REPLACE INTO `mob_pouch_db` VALUES(1274, 'Megalith', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1275, 'Alice', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1276, 'Raydric Arqueiro', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1277, 'Guardião da Floresta', 214285);
+REPLACE INTO `mob_pouch_db` VALUES(1278, 'Golem Estalactítico', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1279, 'Trilobita', 214285);
+REPLACE INTO `mob_pouch_db` VALUES(1280, 'Goblin a Vapor', 214285);
+REPLACE INTO `mob_pouch_db` VALUES(1281, 'Verme Sábio', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1282, 'Cobold Arqueiro', 214285);
+REPLACE INTO `mob_pouch_db` VALUES(1283, 'Quimera', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1289, 'Maya Macho', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1290, 'Esqueleto General', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1291, 'Aparição', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1292, 'Diabinho', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1293, 'Creamy Ameaçador', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1294, 'Mantis Assassino', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1295, 'Barão Coruja', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1296, 'Líder Cobold', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1297, 'Múmia Anciã', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1298, 'Zumbi Mestre', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1299, 'Líder Goblin', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1300, 'Lagarta', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1301, 'Am Mut', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1302, 'Ilusão das Trevas', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1303, 'Zangão Gigante', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1304, 'Aranha Gigante', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1305, 'Verme Ancião', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1306, 'Leib Olmai', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1307, 'Gato de Nove Caudas', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1308, 'Panzer Goblin', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1309, 'Gajomart', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1310, 'Majoruros', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1311, 'Gullinbursti', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1313, 'Yakuza', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1314, 'Batedor', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1315, 'Agressor', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1316, 'Soldado', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1317, 'Foca', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1318, 'Aquecedor', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1319, 'Congelador', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1320, 'Duque Coruja', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1321, 'Lavadeira', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1322, 'Coelho', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1323, 'Lontra', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1365, 'Apocalipse', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1366, 'Golem de Lava', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1367, 'Labareda', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1368, 'Planta Carnívora', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1369, 'Grand Peco', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1370, 'Succubus', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1371, 'Anjo Fajuto', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1372, 'Bode', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1374, 'Incubus', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1375, 'Papel', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1376, 'Harpia', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1377, 'Ancião', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1378, 'Pungus', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1379, 'Pesadelo Sombrio', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1380, 'Furador', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1381, 'Grizzly', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1382, 'Diabolik', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1383, 'Estrondo', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1384, 'Exterminador', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1385, 'Deletério', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1386, 'Rochoso', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1387, 'Ferrão', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1390, 'Violi', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1391, 'Pingu', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1392, 'Giro-Goblin', 214285);
+REPLACE INTO `mob_pouch_db` VALUES(1400, 'Karakasa', 214285);
+REPLACE INTO `mob_pouch_db` VALUES(1401, 'Shinobi', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1402, 'Sapo Venenoso', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1403, 'Soldado Atirador', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1404, 'Boneco de Miyabi', 214285);
+REPLACE INTO `mob_pouch_db` VALUES(1405, 'Tengu', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1406, 'Kapha', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1408, 'Borboleta Sangrenta', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1409, 'Pirralho', 214285);
+REPLACE INTO `mob_pouch_db` VALUES(1410, 'Pessegueira Encantada', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1412, 'Ermitão Maligno', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1413, 'Ermitão Selvagem', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1415, 'Filhote de Leopardo', 214285);
+REPLACE INTO `mob_pouch_db` VALUES(1416, 'Ninfa Perversa', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1417, 'Zipper', 214285);
+REPLACE INTO `mob_pouch_db` VALUES(1493, 'Dríade', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1494, 'Besouro-Rei', 214285);
+REPLACE INTO `mob_pouch_db` VALUES(1495, 'Atirador de Pedras', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1497, 'Golem de Madeira', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1498, 'Atirador Wootan', 214285);
+REPLACE INTO `mob_pouch_db` VALUES(1499, 'Guerreiro Wootan', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1500, 'Parasita', 214285);
+REPLACE INTO `mob_pouch_db` VALUES(1503, 'Árvore Maldita', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1504, 'Dullahan', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1505, 'Loli Ruri', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1506, 'Mascarado', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1507, 'Serial Killer', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1508, 'Quve', 214285);
+REPLACE INTO `mob_pouch_db` VALUES(1509, 'Lude', 214285);
+REPLACE INTO `mob_pouch_db` VALUES(1510, 'Poltergeist', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1512, 'Yao Jun', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1513, 'Mao Guai', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1514, 'Zhu Po Long', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1515, 'Filhote de Hatii', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1516, 'Mi Gao', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1517, 'Jing Guai', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1519, 'Chung E', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1520, 'Bolinho de Massa', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1582, 'Deviling', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1584, 'Tamruan', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1586, 'Gato de Folha', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1587, 'Kraben', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1613, 'Metaling', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1614, 'Mineral', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1615, 'Obsidiana', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1616, 'Minérios', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1617, 'Fornalha Velha', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1618, 'Ungoliant', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1619, 'Porcellio', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1620, 'Nuvem Tóxica', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1621, 'Nuvem Venenosa', 71428);
+REPLACE INTO `mob_pouch_db` VALUES(1622, 'Ursinho', 142857);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `mob_race2_db`
+--
+
+CREATE TABLE IF NOT EXISTS `mob_race2_db` (
+  `Race2ID` tinyint(4) NOT NULL,
+  `MobID1` smallint(5) unsigned DEFAULT NULL,
+  `MobID2` smallint(5) unsigned DEFAULT NULL,
+  `MobID3` smallint(5) unsigned DEFAULT NULL,
+  `MobID4` smallint(5) unsigned DEFAULT NULL,
+  `MobID5` smallint(5) unsigned DEFAULT NULL,
+  `MobID6` smallint(5) unsigned DEFAULT NULL,
+  `MobID7` smallint(5) unsigned DEFAULT NULL,
+  `MobID8` smallint(5) unsigned DEFAULT NULL,
+  `MobID9` smallint(5) unsigned DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `mob_skill_db`
+--
+
+CREATE TABLE IF NOT EXISTS `mob_skill_db` (
+  `MOB_ID` smallint(6) NOT NULL,
+  `INFO` text NOT NULL,
+  `STATE` text NOT NULL,
+  `SKILL_ID` smallint(6) NOT NULL,
+  `SKILL_LV` tinyint(4) NOT NULL,
+  `RATE` smallint(4) NOT NULL,
+  `CASTTIME` mediumint(9) NOT NULL,
+  `DELAY` int(9) NOT NULL,
+  `CANCELABLE` text NOT NULL,
+  `TARGET` text NOT NULL,
+  `CONDITION` text NOT NULL,
+  `CONDITION_VALUE` text,
+  `VAL1` mediumint(9) DEFAULT NULL,
+  `VAL2` mediumint(9) DEFAULT NULL,
+  `VAL3` mediumint(9) DEFAULT NULL,
+  `VAL4` mediumint(9) DEFAULT NULL,
+  `VAL5` mediumint(9) DEFAULT NULL,
+  `EMOTION` text,
+  `CHAT` text
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `pet_db`
+--
+
+CREATE TABLE IF NOT EXISTS `pet_db` (
+  `MobID` smallint(5) unsigned NOT NULL,
+  `Name` varchar(30) NOT NULL,
+  `JName` varchar(30) NOT NULL,
+  `LureID` smallint(5) unsigned NOT NULL,
+  `EggID` smallint(5) unsigned NOT NULL,
+  `EquipID` smallint(5) unsigned NOT NULL,
+  `FoodID` smallint(5) unsigned NOT NULL,
+  `Fullness` smallint(5) unsigned NOT NULL,
+  `HungryDelay` smallint(5) unsigned NOT NULL,
+  `R_Hungry` smallint(5) unsigned NOT NULL,
+  `R_Full` smallint(5) unsigned NOT NULL,
+  `Intimate` smallint(5) unsigned NOT NULL,
+  `Die` smallint(5) unsigned NOT NULL,
+  `Capture` smallint(5) unsigned NOT NULL,
+  `Speed` smallint(5) unsigned NOT NULL,
+  `S_Performance` smallint(5) unsigned NOT NULL,
+  `Talk_Convert_Class` smallint(5) unsigned NOT NULL,
+  `Attack_Rate` smallint(5) unsigned NOT NULL,
+  `Defence_Attack_Rate` smallint(5) unsigned NOT NULL,
+  `Change_Target_Rate` smallint(5) unsigned NOT NULL,
+  `Pet_Script` text NOT NULL,
+  `Loyal_Script` text NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `pet_db`
+--
+
+REPLACE INTO `pet_db` VALUES(1002, 'PORING', 'Poring', 619, 9001, 10013, 531, 80, 60, 50, 100, 250, 20, 2000, 150, 1, 0, 350, 400, 800, '{  petloot 10; }', '{ bonus bLuk,2; bonus bCritical,1; }\n');
+REPLACE INTO `pet_db` VALUES(1113, 'DROPS', 'Drops', 620, 9002, 10013, 508, 80, 60, 40, 100, 250, 20, 1500, 150, 1, 0, 300, 400, 500, '{  petloot 10; }', '{ bonus bHit,3; bonus bAtk,3; }\n');
+REPLACE INTO `pet_db` VALUES(1031, 'POPORING', 'Poporing', 621, 9003, 10013, 511, 80, 60, 30, 100, 250, 20, 1000, 150, 1, 0, 300, 500, 400, '{  petloot 15; }', '{ bonus bLuk,2; bonus2 bSubEle,Ele_Poison,10; }\n');
+REPLACE INTO `pet_db` VALUES(1063, 'LUNATIC', 'Lunático', 622, 9004, 10007, 534, 80, 60, 40, 100, 250, 20, 1500, 150, 0, 0, 300, 300, 1000, '{  petskillbonus bLuk,3,10,50; }', '{ bonus bCritical,2; bonus bAtk,2; }\n');
+REPLACE INTO `pet_db` VALUES(1049, 'PICKY', 'Picky', 623, 9005, 10012, 507, 80, 60, 40, 100, 250, 20, 2000, 150, 1, 0, 500, 600, 50, '{  petskillbonus bStr,3,10,50;}', '{ bonus bStr,1; bonus bAtk,5; }\n');
+REPLACE INTO `pet_db` VALUES(1011, 'CHONCHON', 'ChonChon', 624, 9006, 10002, 537, 80, 60, 30, 100, 250, 20, 1500, 150, 1, 0, 500, 500, 250, '{  petskillbonus bAgi,4,10,50; }', '{ bonus bAgi,1; bonus bFlee,2; }\n');
+REPLACE INTO `pet_db` VALUES(1042, 'STEEL_CHONCHON', 'ChonChon de Aço', 625, 9007, 10002, 1002, 80, 60, 20, 100, 250, 20, 1000, 150, 1, 0, 500, 500, 200, '{  petskillbonus bAgiVit,4,20,40; }', '{ bonus bFlee,6; bonus bAgi,-1; }\n');
+REPLACE INTO `pet_db` VALUES(1035, 'HUNTER_FLY', 'Mosca Caçadora', 626, 9008, 10002, 716, 80, 60, 10, 100, 250, 20, 500, 150, 1, 0, 500, 500, 200, '{  petskillattack "NPC_WINDATTACK",888,2,0,10; }', '{ bonus bFlee,-5; bonus bFlee2,2; }\n');
+REPLACE INTO `pet_db` VALUES(1167, 'SAVAGE_BABE', 'Bebê Selvagem', 627, 9009, 10015, 537, 80, 60, 40, 100, 250, 20, 1500, 150, 0, 0, 500, 500, 200, '{  petskillbonus bVit,4,10,50; }', '{ bonus bVit,1; bonus bMaxHP,50; }\n');
+REPLACE INTO `pet_db` VALUES(1107, 'DESERT_WOLF_B', 'Filhote de Lobo do Deserto', 628, 9010, 10003, 537, 80, 60, 40, 100, 250, 20, 1000, 150, 0, 0, 400, 400, 400, '{  petskillattack "SM_PROVOKE",1,0,0,5;}', '{ bonus bInt,1; bonus bMaxSP,50; }\n');
+REPLACE INTO `pet_db` VALUES(1052, 'ROCKER', 'Rocker', 629, 9011, 10014, 537, 80, 60, 30, 100, 250, 20, 1500, 150, 0, 0, 350, 350, 600, '{  petskillbonus bAllStats,1,10,50; }', '{ bonus bHPrecovRate,5; bonus bMaxHP,25; }\n');
+REPLACE INTO `pet_db` VALUES(1014, 'SPORE', 'Esporo', 630, 9012, 10017, 537, 80, 60, 30, 100, 250, 20, 1500, 150, 0, 0, 350, 500, 500, '{  petrecovery SC_POISON,60; }', '{ bonus bHit,5; bonus bAtk,-2; }\n');
+REPLACE INTO `pet_db` VALUES(1077, 'POISON_SPORE', 'Esporo Venenoso', 631, 9013, 10017, 537, 80, 60, 20, 100, 250, 20, 1000, 150, 0, 0, 600, 200, 400, '{  petskillattack "NPC_POISON",20,0,0,10; }', '{ bonus bStr,1; bonus bInt,1; }\n');
+REPLACE INTO `pet_db` VALUES(1019, 'PECOPECO', 'PecoPeco', 632, 9014, 10010, 537, 80, 60, 30, 100, 250, 20, 1000, 150, 1, 0, 400, 500, 800, '{  petskillbonus bSpeedRate,25,20,20; }', '{ bonus bMaxHP,150; bonus bMaxSP,-10; }\n');
+REPLACE INTO `pet_db` VALUES(1056, 'SMOKIE', 'Fumacento', 633, 9015, 10019, 537, 80, 60, 30, 100, 250, 20, 1000, 150, 1, 0, 600, 600, 100, '{  petskillbonus bPerfectHide,1,3600,0; }', '{ bonus bAgi,1; bonus bFlee2,1; }\n');
+REPLACE INTO `pet_db` VALUES(1057, 'YOYO', 'Yoyo', 634, 9016, 10018, 532, 80, 60, 20, 100, 250, 20, 1000, 150, 1, 0, 300, 800, 400, '{  petloot 20; }', '{ bonus bCritical,3; bonus bLuk,-1; }\n');
+REPLACE INTO `pet_db` VALUES(1023, 'ORK_WARRIOR', 'Guerreiro Orc', 635, 9017, 10009, 537, 80, 60, 20, 100, 250, 20, 500, 150, 1, 0, 600, 200, 300, '{  petskillattack "NPC_PIERCINGATT",100,1,0,10; }', '{ bonus bAtk,10; bonus bDef,-3; }\n');
+REPLACE INTO `pet_db` VALUES(1026, 'MUNAK', 'Munak', 636, 9018, 10008, 537, 80, 60, 20, 100, 250, 20, 500, 150, 0, 0, 300, 750, 300, '{  petskillattack "NPC_DARKNESSATTACK",444,1,0,10; }', '{ bonus bInt,1; bonus bDef,1; }\n');
+REPLACE INTO `pet_db` VALUES(1110, 'DOKEBI', 'Dokebi', 637, 9019, 10005, 537, 80, 60, 20, 100, 250, 20, 500, 150, 0, 0, 300, 300, 800, '{  petskillattack "BS_HAMMERFALL",1,0,0,10; }', '{ bonus bMatkRate,1; bonus bAtkRate,-1; }\n');
+REPLACE INTO `pet_db` VALUES(1170, 'SOHEE', 'Sohee', 638, 9020, 10016, 537, 80, 60, 10, 100, 250, 20, 500, 150, 0, 0, 100, 1000, 200, '{  petskillsupport AL_HEAL,10,60,33,100; }', '{ bonus bStr,1; bonus bDex,1; }\n');
+REPLACE INTO `pet_db` VALUES(1029, 'ISIS', 'Isis', 639, 9021, 10006, 537, 80, 60, 10, 100, 250, 20, 500, 150, 0, 0, 650, 450, 150, '{  petskillsupport "PR_MAGNIFICAT",2,60,50,50; }', '{ bonus bMatkRate,-1; bonus bAtkRate,1; }\n');
+REPLACE INTO `pet_db` VALUES(1155, 'PETIT', 'Petite', 640, 9022, 10011, 537, 80, 60, 20, 100, 250, 20, 500, 150, 0, 0, 800, 400, 100, '{  petskillattack "WZ_HEAVENDRIVE",500,1,0,10; }', '{ bonus bDef,-2; bonus bMdef,-2; bonus bAspdRate,1; }\n');
+REPLACE INTO `pet_db` VALUES(1109, 'DEVIRUCHI', 'Deviruchi', 641, 9023, 10004, 711, 80, 60, 10, 100, 250, 20, 500, 150, 0, 0, 800, 200, 100, '{  petskillbonus bAgiDexStr,6,20,40; }', '{ bonus bMatkRate,1; bonus bAtkRate,1; bonus bMaxHPrate,-3; bonus bMaxSPrate,-3; }\n');
+REPLACE INTO `pet_db` VALUES(1101, 'BAPHOMET_', 'Bafomé Jr.', 642, 9024, 10001, 518, 80, 60, 10, 100, 250, 20, 200, 150, 0, 0, 1000, 100, 200, '{  petskillattack "NPC_DARKNESSATTACK",1776,4,0,5; }', '{ bonus bDef,1; bonus bMdef,1; bonus2 bResEff,Eff_Stun,-100; }\n');
+REPLACE INTO `pet_db` VALUES(1188, 'BON_GUN', 'Bongun', 659, 9025, 10020, 537, 80, 60, 30, 100, 250, 20, 500, 150, 1, 0, 600, 200, 400, '{  petskillattack "NPC_DARKNESSATTACK",555,1,1,1; }', '{ bonus bVit,1; bonus2 bResEff,Eff_Stun,100; }\n');
+REPLACE INTO `pet_db` VALUES(1200, 'ZHERLTHSH', 'Jirtas', 660, 9026, 0, 929, 80, 60, 10, 100, 250, 20, 300, 150, 0, 0, 1000, 100, 500, '{  petskillattack "AS_SONICBLOW",1,0,0,3; }', '{ bonus2 bAddRace,RC_DemiHuman,2; bonus2 bMagicAddRace,RC_DemiHuman,2; }\n');
+REPLACE INTO `pet_db` VALUES(1275, 'ALICE', 'Alice', 661, 9027, 0, 504, 80, 60, 20, 100, 250, 20, 800, 150, 0, 0, 100, 1000, 200, '{  petskillsupport "AL_HEAL",5,60,25,100; }', '{ bonus bMdef,1; bonus2 bSubRace,RC_DemiHuman,1; }\n');
+REPLACE INTO `pet_db` VALUES(1815, 'EVENT_RICECAKE', 'Bolinho de Arroz', 0, 9028, 0, 511, 80, 60, 50, 100, 250, 20, 2000, 150, 1, 0, 500, 500, 200, '{  petskillsupport "CR_DEFENDER",3,240,50,100; }', '{ bonus2 bSubEle,Ele_Neutral,1; bonus bMaxHPrate,-1; }\n');
+REPLACE INTO `pet_db` VALUES(1245, 'GOBLINE_XMAS', 'Goblin Natalino', 12225, 9029, 0, 911, 80, 60, 50, 100, 250, 20, 2000, 150, 0, 0, 300, 300, 800, '{  petskillattack "MG_SIGHT",5,0,5,5; }', '{ bonus bMaxHP,30; bonus2 bSubEle,Ele_Water,1; }\n');
+REPLACE INTO `pet_db` VALUES(1519, 'CHUNG_E', 'Chung E', 12395, 9030, 0, 6115, 80, 60, 50, 100, 250, 20, 2000, 150, 0, 0, 300, 300, 800, '{  petskillattack "CR_SHIELDCHARGE",5,0,5,5; }', '{ bonus bDef,1; bonus2 bSubRace,RC_DemiHuman,1; }\n');
+REPLACE INTO `pet_db` VALUES(1879, 'ECLIPSE_P', 'Coelho', 0, 9031, 0, 7766, 80, 60, 50, 100, 250, 20, 2000, 150, 0, 0, 300, 300, 800, '{  petskillattack "TF_THROWSTONE",1,0,5,5; }', '{}\n');
+REPLACE INTO `pet_db` VALUES(1122, 'GOBLIN_1', 'Goblin', 14569, 9032, 0, 7821, 80, 60, 50, 100, 250, 20, 800, 150, 0, 0, 300, 300, 800, '{  petskillattack "NPC_WINDATTACK",5,0,5,5; }', '{}\n');
+REPLACE INTO `pet_db` VALUES(1123, 'GOBLIN_2', 'Goblin', 14570, 9033, 0, 7821, 80, 60, 50, 100, 250, 20, 800, 150, 0, 0, 300, 300, 800, '{  petskillattack "NPC_FIREATTACK",5,0,5,5; }', '{}\n');
+REPLACE INTO `pet_db` VALUES(1125, 'GOBLIN_4', 'Goblin', 14571, 9034, 0, 7821, 80, 60, 50, 100, 250, 20, 800, 150, 0, 0, 300, 300, 800, '{  petskillattack "NPC_GROUNDATTACK",5,0,5,5; }', '{}\n');
+REPLACE INTO `pet_db` VALUES(1385, 'DELETER_', 'Deletério', 14572, 9035, 0, 7822, 80, 60, 20, 100, 250, 20, 800, 150, 0, 0, 300, 300, 800, '{  petskillattack "SM_MAGNUM",5,0,5,5; }', '{}\n');
+REPLACE INTO `pet_db` VALUES(1382, 'DIABOLIC', 'Diabolik', 14573, 9036, 0, 7823, 80, 60, 10, 100, 250, 20, 800, 150, 0, 0, 300, 300, 800, '{  petskillattack "WZ_METEOR",2,0,5,5; }', '{}\n');
+REPLACE INTO `pet_db` VALUES(1208, 'WANDER_MAN', 'Andarilho', 14574, 9037, 0, 7824, 80, 60, 20, 100, 250, 20, 800, 150, 0, 0, 300, 300, 800, '{  petskillattack "NPC_UNDEADATTACK",5,0,5,5; }', '{}\n');
+REPLACE INTO `pet_db` VALUES(1963, 'P_CHUNG_E', 'Boneca do Ano Novo', 0, 9038, 0, 554, 80, 60, 30, 100, 250, 20, 800, 150, 0, 0, 300, 300, 800, '{  petskillattack "CR_SHIELDCHARGE",5,0,5,5; }', '{}\n');
+REPLACE INTO `pet_db` VALUES(1040, 'GOLEM', 'Golem', 12371, 9053, 10035, 6111, 80, 60, 20, 100, 250, 20, 500, 150, 0, 0, 300, 300, 800, '{ }', '{ bonus bMaxHP,100; bonus bFlee,-5; }\n');
+REPLACE INTO `pet_db` VALUES(1143, 'MARIONETTE', 'Marionete', 12361, 9043, 10025, 6098, 80, 60, 10, 100, 250, 20, 500, 150, 0, 0, 300, 300, 800, '{ }', '{ bonus bSPrecovRate,3; }\n');
+REPLACE INTO `pet_db` VALUES(1148, 'MEDUSA', 'Medusa', 12368, 9050, 10032, 6108, 80, 60, 10, 100, 250, 20, 200, 150, 0, 0, 300, 300, 800, '{ }', '{ bonus bVit,1; bonus2 bResEff,Eff_Stone,500; }\n');
+REPLACE INTO `pet_db` VALUES(1179, 'WHISPER', 'Sussurro', 12363, 9045, 10027, 6100, 80, 60, 20, 100, 250, 20, 500, 150, 0, 0, 300, 300, 800, '{ }', '{ bonus bFlee,7; bonus bDef,-3; }\n');
+REPLACE INTO `pet_db` VALUES(1299, 'GOBLIN_LEADER', 'Líder Goblin', 12364, 9046, 10028, 6104, 80, 60, 10, 100, 250, 20, 50, 150, 0, 0, 300, 300, 800, '{ }', '{ bonus2 bAddRace,RC_DemiHuman,3; }\n');
+REPLACE INTO `pet_db` VALUES(1370, 'SUCCUBUS', 'Succubus', 12373, 9055, 10037, 6113, 80, 60, 10, 100, 250, 20, 200, 150, 0, 0, 300, 300, 800, '{ }', '{ bonus2 bHPDrainRate,50,5; }\n');
+REPLACE INTO `pet_db` VALUES(1374, 'INCUBUS', 'Incubus', 12370, 9052, 10034, 6110, 80, 60, 10, 100, 250, 20, 50, 150, 0, 0, 300, 300, 800, '{ }', '{ bonus bMaxSPrate,3; }\n');
+REPLACE INTO `pet_db` VALUES(1379, 'NIGHTMARE_TERROR', 'Pesadelo Sombrio', 12372, 9054, 10036, 6112, 80, 60, 10, 100, 250, 20, 200, 150, 0, 0, 300, 300, 800, '{ }', '{ bonus2 bResEff,Eff_Sleep,10000; }\n');
+REPLACE INTO `pet_db` VALUES(1401, 'SHINOBI', 'Shinobi', 12362, 9044, 10026, 6099, 80, 60, 20, 100, 250, 20, 500, 150, 0, 0, 300, 300, 800, '{ }', '{ bonus bAgi,2; }\n');
+REPLACE INTO `pet_db` VALUES(1404, 'MIYABI_NINGYO', 'Boneco de Miyabi', 12366, 9048, 10030, 6106, 80, 60, 15, 100, 250, 20, 200, 150, 0, 0, 300, 300, 800, '{ }', '{ bonus bInt,1; bonus bCastrate,-3; }\n');
+REPLACE INTO `pet_db` VALUES(1416, 'WICKED_NYMPH', 'Ninfa Perversa', 12365, 9047, 10029, 6105, 80, 60, 15, 100, 250, 20, 500, 150, 0, 0, 300, 300, 800, '{ }', '{ bonus bMaxSP,30; bonus bSPrecovRate,5; }\n');
+REPLACE INTO `pet_db` VALUES(1495, 'STONE_SHOOTER', 'Atirador de Pedras', 12369, 9051, 10033, 6109, 80, 60, 20, 100, 250, 20, 500, 150, 0, 0, 300, 300, 800, '{ }', '{ bonus2 bSubEle,Ele_Fire,3; }\n');
+REPLACE INTO `pet_db` VALUES(1504, 'DULLAHAN', 'Dullahan', 12367, 9049, 10031, 6107, 80, 60, 10, 100, 250, 20, 200, 150, 0, 0, 300, 300, 800, '{ }', '{ bonus bCritAtkRate,5; }\n');
+REPLACE INTO `pet_db` VALUES(1505, 'LOLI_RURI', 'Loli Ruri', 12360, 9042, 10024, 6097, 80, 60, 15, 100, 250, 20, 200, 150, 0, 0, 300, 300, 800, '{ }', '{ bonus bMaxHPrate,3; bonus3 bAutoSpellWhenHit,"AL_HEAL",1,50; }\n');
+REPLACE INTO `pet_db` VALUES(1513, 'CIVIL_SERVANT', 'Mao Guai', 12358, 9040, 10022, 6095, 80, 60, 10, 100, 250, 20, 500, 150, 0, 0, 300, 300, 800, '{ }', '{ bonus bMaxSP,10; }\n');
+REPLACE INTO `pet_db` VALUES(1586, 'LEAF_CAT', 'Gato de Folha', 12359, 9041, 10023, 6096, 80, 60, 20, 100, 250, 20, 200, 150, 0, 0, 300, 300, 800, '{ }', '{ bonus2 bSubRace,RC_Brute,3; }\n');
+REPLACE INTO `pet_db` VALUES(1630, 'BACSOJIN_', 'Lady Branca', 12357, 9039, 10021, 6094, 80, 60, 10, 100, 250, 20, 2000, 150, 0, 0, 300, 300, 800, '{ }', '{}\n');
+REPLACE INTO `pet_db` VALUES(1837, 'IMP', 'Imp', 12374, 9056, 10038, 6114, 80, 60, 10, 100, 250, 20, 200, 150, 0, 0, 300, 300, 800, '{ }', '{ bonus2 bSubEle,Ele_Fire,2; bonus2 bAddEle,Ele_Fire,2; }\n');
+REPLACE INTO `pet_db` VALUES(2057, 'E_CRAMP', 'Cãibra', 12408, 6221, 0, 0, 0, 0, 0, 0, 0, 0, 50, 0, 0, 0, 350, 400, 800, '{ }', '{} \n');
+REPLACE INTO `pet_db` VALUES(2081, 'E_HYDRA', 'Hydra', 12408, 6221, 0, 0, 0, 0, 0, 0, 0, 0, 50, 0, 0, 0, 350, 400, 800, '{ }', '{} \n');
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura da tabela `produce_db`
 --
 
 CREATE TABLE IF NOT EXISTS `produce_db` (
-  `ProduceItemID` smallint unsigned NOT NULL,
-  `ItemLV` smallint unsigned NOT NULL,
-  `RequireSkill` smallint unsigned NOT NULL,
-  `RequireSkillLv` tinyint NOT NULL,
-  `MaterialID1` smallint unsigned DEFAULT NULL,
-  `MaterialAmount1` tinyint DEFAULT NULL,
-  `MaterialID2` smallint unsigned DEFAULT NULL,
-  `MaterialAmount2` tinyint DEFAULT NULL,
-  `MaterialID3` smallint unsigned DEFAULT NULL,
-  `MaterialAmount3` tinyint DEFAULT NULL,
-  `MaterialID4` smallint unsigned DEFAULT NULL,
-  `MaterialAmount4` tinyint DEFAULT NULL,
-  `MaterialID5` smallint unsigned DEFAULT NULL,
-  `MaterialAmount5` tinyint DEFAULT NULL,
-  `MaterialID6` smallint unsigned DEFAULT NULL,
-  `MaterialAmount6` tinyint DEFAULT NULL,
-  `MaterialID7` smallint unsigned DEFAULT NULL,
-  `MaterialAmount7` tinyint DEFAULT NULL,
-  `MaterialID8` smallint unsigned DEFAULT NULL,
-  `MaterialAmount8` tinyint DEFAULT NULL,
-  `MaterialID9` smallint unsigned DEFAULT NULL,
-  `MaterialAmount9` tinyint DEFAULT NULL,
-  `MaterialID10` smallint unsigned DEFAULT NULL,
-  `MaterialAmount10` tinyint DEFAULT NULL,
-  `MaterialID11` smallint unsigned DEFAULT NULL,
-  `MaterialAmount11` tinyint DEFAULT NULL,
-  `MaterialID12` smallint unsigned DEFAULT NULL,
-  `MaterialAmount12` tinyint DEFAULT NULL
+  `ProduceItemID` smallint(5) unsigned NOT NULL,
+  `ItemLV` smallint(5) unsigned NOT NULL,
+  `RequireSkill` smallint(5) unsigned NOT NULL,
+  `RequireSkillLv` tinyint(4) NOT NULL,
+  `MaterialID1` smallint(5) unsigned DEFAULT NULL,
+  `MaterialAmount1` tinyint(4) DEFAULT NULL,
+  `MaterialID2` smallint(5) unsigned DEFAULT NULL,
+  `MaterialAmount2` tinyint(4) DEFAULT NULL,
+  `MaterialID3` smallint(5) unsigned DEFAULT NULL,
+  `MaterialAmount3` tinyint(4) DEFAULT NULL,
+  `MaterialID4` smallint(5) unsigned DEFAULT NULL,
+  `MaterialAmount4` tinyint(4) DEFAULT NULL,
+  `MaterialID5` smallint(5) unsigned DEFAULT NULL,
+  `MaterialAmount5` tinyint(4) DEFAULT NULL,
+  `MaterialID6` smallint(5) unsigned DEFAULT NULL,
+  `MaterialAmount6` tinyint(4) DEFAULT NULL,
+  `MaterialID7` smallint(5) unsigned DEFAULT NULL,
+  `MaterialAmount7` tinyint(4) DEFAULT NULL,
+  `MaterialID8` smallint(5) unsigned DEFAULT NULL,
+  `MaterialAmount8` tinyint(4) DEFAULT NULL,
+  `MaterialID9` smallint(5) unsigned DEFAULT NULL,
+  `MaterialAmount9` tinyint(4) DEFAULT NULL,
+  `MaterialID10` smallint(5) unsigned DEFAULT NULL,
+  `MaterialAmount10` tinyint(4) DEFAULT NULL,
+  `MaterialID11` smallint(5) unsigned DEFAULT NULL,
+  `MaterialAmount11` tinyint(4) DEFAULT NULL,
+  `MaterialID12` smallint(5) unsigned DEFAULT NULL,
+  `MaterialAmount12` tinyint(4) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 REPLACE INTO `produce_db` VALUES(1101,1,99,1,998,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
@@ -686,343 +2889,109 @@ REPLACE INTO `produce_db` VALUES(12437,29,2497,1,6285,0,645,5,656,5,1092,10,7455
 REPLACE INTO `produce_db` VALUES(12475,29,2497,1,6285,0,511,20,522,1,525,5,610,1,1092,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 
 --
--- Estrutura da tabela `spellbook_db`
+-- Estrutura da tabela `quest_db`
 --
 
-CREATE TABLE IF NOT EXISTS `spellbook_db` (
-  `SkillID` smallint unsigned NOT NULL,
-  `PreservePoints` tinyint NOT NULL,
-  `RequiredBook` smallint unsigned NOT NULL,
-  PRIMARY KEY (`SkillID`)
+CREATE TABLE IF NOT EXISTS `quest_db` (
+  `QuestID` int(10) unsigned NOT NULL,
+  `TimeLimit` int(10) unsigned NOT NULL,
+  `Target1` smallint(5) unsigned NOT NULL,
+  `Val1` smallint(5) unsigned NOT NULL,
+  `Target2` smallint(5) unsigned NOT NULL,
+  `Val2` smallint(5) unsigned NOT NULL,
+  `Target3` smallint(5) unsigned NOT NULL,
+  `Val3` smallint(5) unsigned NOT NULL,
+  `QuestTitle` tinytext
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
-
-REPLACE INTO `spellbook_db` VALUES(14,7,6190);
-REPLACE INTO `spellbook_db` VALUES(19,7,6189);
-REPLACE INTO `spellbook_db` VALUES(20,7,6191);
-REPLACE INTO `spellbook_db` VALUES(21,9,6197);
-REPLACE INTO `spellbook_db` VALUES(83,10,6194);
-REPLACE INTO `spellbook_db` VALUES(84,9,6198);
-REPLACE INTO `spellbook_db` VALUES(85,10,6193);
-REPLACE INTO `spellbook_db` VALUES(86,9,6199);
-REPLACE INTO `spellbook_db` VALUES(89,10,6192);
-REPLACE INTO `spellbook_db` VALUES(90,8,6201);
-REPLACE INTO `spellbook_db` VALUES(91,9,6200);
-REPLACE INTO `spellbook_db` VALUES(2210,8,6205);
-REPLACE INTO `spellbook_db` VALUES(2211,12,6204);
-REPLACE INTO `spellbook_db` VALUES(2213,22,6195);
-REPLACE INTO `spellbook_db` VALUES(2214,12,6203);
-REPLACE INTO `spellbook_db` VALUES(2216,12,6202);
-REPLACE INTO `spellbook_db` VALUES(2217,22,6196);
+-- --------------------------------------------------------
 
 --
--- Estrutura da tabela `magicmushroom_db`
+-- Estrutura da tabela `refine_db`
 --
 
-CREATE TABLE IF NOT EXISTS `magicmushroom_db` (
-  `SkillID` smallint unsigned NOT NULL,
-  PRIMARY KEY (`SkillID`)
+CREATE TABLE IF NOT EXISTS `refine_db` (
+  `Type` tinyint(4) NOT NULL,
+  `StatsPerLevel` smallint(5) unsigned NOT NULL,
+  `RandomBonusStartLevel` tinyint(4) NOT NULL DEFAULT '0',
+  `RandomBonusValue` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `Chance1` tinytext NOT NULL,
+  `Chance2` tinytext NOT NULL,
+  `Chance3` tinytext NOT NULL,
+  `Chance4` tinytext NOT NULL,
+  `Chance5` tinytext NOT NULL,
+  `Chance6` tinytext NOT NULL,
+  `Chance7` tinytext NOT NULL,
+  `Chance8` tinytext NOT NULL,
+  `Chance9` tinytext NOT NULL,
+  `Chance10` tinytext NOT NULL,
+  `Chance11` tinytext NOT NULL,
+  `Chance12` tinytext NOT NULL,
+  `Chance13` tinytext NOT NULL,
+  `Chance14` tinytext NOT NULL,
+  `Chance15` tinytext NOT NULL,
+  `Chance16` tinytext NOT NULL,
+  `Chance17` tinytext NOT NULL,
+  `Chance18` tinytext NOT NULL,
+  `Chance19` tinytext NOT NULL,
+  `Chance20` tinytext NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
-
-REPLACE INTO `magicmushroom_db` VALUES(7);
-REPLACE INTO `magicmushroom_db` VALUES(8);
-REPLACE INTO `magicmushroom_db` VALUES(10);
-REPLACE INTO `magicmushroom_db` VALUES(24);
-REPLACE INTO `magicmushroom_db` VALUES(32);
-REPLACE INTO `magicmushroom_db` VALUES(33);
-REPLACE INTO `magicmushroom_db` VALUES(45);
-REPLACE INTO `magicmushroom_db` VALUES(61);
-REPLACE INTO `magicmushroom_db` VALUES(74);
-REPLACE INTO `magicmushroom_db` VALUES(110);
-REPLACE INTO `magicmushroom_db` VALUES(114);
-REPLACE INTO `magicmushroom_db` VALUES(142);
-REPLACE INTO `magicmushroom_db` VALUES(150);
-REPLACE INTO `magicmushroom_db` VALUES(151);
-REPLACE INTO `magicmushroom_db` VALUES(157);
-REPLACE INTO `magicmushroom_db` VALUES(249);
-REPLACE INTO `magicmushroom_db` VALUES(256);
-REPLACE INTO `magicmushroom_db` VALUES(261);
-REPLACE INTO `magicmushroom_db` VALUES(270);
-REPLACE INTO `magicmushroom_db` VALUES(326);
-REPLACE INTO `magicmushroom_db` VALUES(500);
-REPLACE INTO `magicmushroom_db` VALUES(527);
-REPLACE INTO `magicmushroom_db` VALUES(531);
+-- --------------------------------------------------------
 
 --
--- Estrutura da tabela `skill_changematerial_db`
+-- Estrutura da tabela `sc_config`
 --
 
-CREATE TABLE IF NOT EXISTS `skill_changematerial_db` (
-  `ProductID` int unsigned NOT NULL,
-  `BaseRate` smallint unsigned NOT NULL DEFAULT '0',
-  `MakeAmount1` smallint DEFAULT NULL,
-  `MakeAmountRate1` smallint unsigned DEFAULT NULL,
-  `MakeAmount2` smallint DEFAULT NULL,
-  `MakeAmountRate2` smallint unsigned DEFAULT NULL,
-  `MakeAmount3` tinyint DEFAULT NULL,
-  `MakeAmountRate3` smallint unsigned DEFAULT NULL,
-  `MakeAmount4` tinyint DEFAULT NULL,
-  `MakeAmountRate4` smallint unsigned DEFAULT NULL,
-  `MakeAmount5` tinyint DEFAULT NULL,
-  `MakeAmountRate5` smallint unsigned DEFAULT NULL,
-  PRIMARY KEY (`ProductID`)
+CREATE TABLE IF NOT EXISTS `sc_config` (
+  `SC_NAME` varchar(70) NOT NULL,
+  `flag` smallint(5) unsigned NOT NULL,
+  PRIMARY KEY (`SC_NAME`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
-REPLACE INTO `skill_changematerial_db` VALUES(703,4,800,2,200,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-REPLACE INTO `skill_changematerial_db` VALUES(958,800,9,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-REPLACE INTO `skill_changematerial_db` VALUES(959,800,7,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-REPLACE INTO `skill_changematerial_db` VALUES(960,1000,6,800,9,200,NULL,NULL,NULL,NULL,NULL,NULL);
-REPLACE INTO `skill_changematerial_db` VALUES(961,800,3,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-REPLACE INTO `skill_changematerial_db` VALUES(962,1000,4,800,6,200,NULL,NULL,NULL,NULL,NULL,NULL);
-REPLACE INTO `skill_changematerial_db` VALUES(963,800,3,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-REPLACE INTO `skill_changematerial_db` VALUES(964,800,8,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-REPLACE INTO `skill_changematerial_db` VALUES(967,800,4,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-REPLACE INTO `skill_changematerial_db` VALUES(968,800,5,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-REPLACE INTO `skill_changematerial_db` VALUES(970,800,9,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-REPLACE INTO `skill_changematerial_db` VALUES(971,800,5,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-REPLACE INTO `skill_changematerial_db` VALUES(973,800,4,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-REPLACE INTO `skill_changematerial_db` VALUES(974,1000,4,800,6,200,NULL,NULL,NULL,NULL,NULL,NULL);
-REPLACE INTO `skill_changematerial_db` VALUES(991,1000,1,500,1,500,NULL,NULL,NULL,NULL,NULL,NULL);
-REPLACE INTO `skill_changematerial_db` VALUES(992,1000,1,500,1,500,NULL,NULL,NULL,NULL,NULL,NULL);
-REPLACE INTO `skill_changematerial_db` VALUES(999,1000,10,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-REPLACE INTO `skill_changematerial_db` VALUES(1003,500,1,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-REPLACE INTO `skill_changematerial_db` VALUES(1008,800,6,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-REPLACE INTO `skill_changematerial_db` VALUES(1009,800,4,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-REPLACE INTO `skill_changematerial_db` VALUES(1010,800,8,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-REPLACE INTO `skill_changematerial_db` VALUES(1011,800,4,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-REPLACE INTO `skill_changematerial_db` VALUES(1012,800,3,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-REPLACE INTO `skill_changematerial_db` VALUES(1013,9,800,13,200,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-REPLACE INTO `skill_changematerial_db` VALUES(1014,4,800,6,200,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-REPLACE INTO `skill_changematerial_db` VALUES(1016,1000,7,800,10,200,NULL,NULL,NULL,NULL,NULL,NULL);
-REPLACE INTO `skill_changematerial_db` VALUES(1019,800,2,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-REPLACE INTO `skill_changematerial_db` VALUES(1020,1000,4,800,6,200,NULL,NULL,NULL,NULL,NULL,NULL);
-REPLACE INTO `skill_changematerial_db` VALUES(1021,800,4,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-REPLACE INTO `skill_changematerial_db` VALUES(1022,1000,2,800,3,200,NULL,NULL,NULL,NULL,NULL,NULL);
-REPLACE INTO `skill_changematerial_db` VALUES(1024,800,4,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-REPLACE INTO `skill_changematerial_db` VALUES(1025,800,8,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-REPLACE INTO `skill_changematerial_db` VALUES(1026,800,4,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-REPLACE INTO `skill_changematerial_db` VALUES(1030,800,2,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-REPLACE INTO `skill_changematerial_db` VALUES(1033,1000,4,800,6,200,NULL,NULL,NULL,NULL,NULL,NULL);
-REPLACE INTO `skill_changematerial_db` VALUES(1034,1000,6,800,9,200,NULL,NULL,NULL,NULL,NULL,NULL);
-REPLACE INTO `skill_changematerial_db` VALUES(1035,1000,8,800,12,200,NULL,NULL,NULL,NULL,NULL,NULL);
-REPLACE INTO `skill_changematerial_db` VALUES(1037,800,6,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-REPLACE INTO `skill_changematerial_db` VALUES(1038,1000,1,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-REPLACE INTO `skill_changematerial_db` VALUES(1040,1000,8,800,12,200,NULL,NULL,NULL,NULL,NULL,NULL);
-REPLACE INTO `skill_changematerial_db` VALUES(1041,800,3,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-REPLACE INTO `skill_changematerial_db` VALUES(1042,800,6,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-REPLACE INTO `skill_changematerial_db` VALUES(1043,800,6,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-REPLACE INTO `skill_changematerial_db` VALUES(1045,800,8,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-REPLACE INTO `skill_changematerial_db` VALUES(1046,800,4,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-REPLACE INTO `skill_changematerial_db` VALUES(1049,800,6,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-REPLACE INTO `skill_changematerial_db` VALUES(1050,800,3,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-REPLACE INTO `skill_changematerial_db` VALUES(1051,800,7,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-REPLACE INTO `skill_changematerial_db` VALUES(1053,1000,6,800,9,200,NULL,NULL,NULL,NULL,NULL,NULL);
-REPLACE INTO `skill_changematerial_db` VALUES(1056,800,8,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-REPLACE INTO `skill_changematerial_db` VALUES(1058,800,5,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-REPLACE INTO `skill_changematerial_db` VALUES(1059,1000,5,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-REPLACE INTO `skill_changematerial_db` VALUES(1061,80,2,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-REPLACE INTO `skill_changematerial_db` VALUES(1061,1000,1,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-REPLACE INTO `skill_changematerial_db` VALUES(1064,800,8,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-REPLACE INTO `skill_changematerial_db` VALUES(1615,200,1,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-REPLACE INTO `skill_changematerial_db` VALUES(2267,1000,1,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-REPLACE INTO `skill_changematerial_db` VALUES(7063,1000,1,200,1,200,1,100,NULL,NULL,NULL,NULL);
-REPLACE INTO `skill_changematerial_db` VALUES(7166,1000,2,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-REPLACE INTO `skill_changematerial_db` VALUES(13269,1000,5,500,2,250,1,100,NULL,NULL,NULL,NULL);
-REPLACE INTO `skill_changematerial_db` VALUES(13270,1000,5,500,2,250,1,100,NULL,NULL,NULL,NULL);
-REPLACE INTO `skill_changematerial_db` VALUES(13271,1000,5,500,2,250,1,100,NULL,NULL,NULL,NULL);
-REPLACE INTO `skill_changematerial_db` VALUES(13272,1000,5,500,2,250,1,100,NULL,NULL,NULL,NULL);
-REPLACE INTO `skill_changematerial_db` VALUES(13273,1000,5,500,2,250,1,100,NULL,NULL,NULL,NULL);
-REPLACE INTO `skill_changematerial_db` VALUES(13274,1000,5,500,2,250,1,100,NULL,NULL,NULL,NULL);
-REPLACE INTO `skill_changematerial_db` VALUES(13275,1000,10,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-REPLACE INTO `skill_changematerial_db` VALUES(13276,1000,10,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-REPLACE INTO `skill_changematerial_db` VALUES(13277,1000,10,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-REPLACE INTO `skill_changematerial_db` VALUES(13278,1000,10,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-REPLACE INTO `skill_changematerial_db` VALUES(13279,1000,10,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-REPLACE INTO `skill_changematerial_db` VALUES(13280,1000,10,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-REPLACE INTO `skill_changematerial_db` VALUES(13281,1000,10,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-REPLACE INTO `skill_changematerial_db` VALUES(13282,1000,10,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-REPLACE INTO `skill_changematerial_db` VALUES(13283,1000,10,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+-- --------------------------------------------------------
 
 --
--- Estrutura da tabela `skill_improvise_db`
+-- Estrutura da tabela `size_fix_db`
 --
 
-CREATE TABLE IF NOT EXISTS `skill_improvise_db` (
-  `SkillID` smallint unsigned NOT NULL,
-  `Rate` smallint unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`SkillID`)
+CREATE TABLE IF NOT EXISTS `size_fix_db` (
+  `Unarmed` tinyint(3) unsigned NOT NULL,
+  `Knife` tinyint(3) unsigned NOT NULL,
+  `1HSword` tinyint(3) unsigned NOT NULL,
+  `2HSword` tinyint(3) unsigned NOT NULL,
+  `1HSpear` tinyint(3) unsigned NOT NULL,
+  `2HSpears` tinyint(3) unsigned NOT NULL,
+  `1HAxe` tinyint(3) unsigned NOT NULL,
+  `2HAxe` tinyint(3) unsigned NOT NULL,
+  `Mace` tinyint(3) unsigned NOT NULL,
+  `2HMace` tinyint(3) unsigned NOT NULL,
+  `Staff` tinyint(3) unsigned NOT NULL,
+  `Bow` tinyint(3) unsigned NOT NULL,
+  `Knuckle` tinyint(3) unsigned NOT NULL,
+  `MusicalInstrument` tinyint(3) unsigned NOT NULL,
+  `Whip` tinyint(3) unsigned NOT NULL,
+  `Book` tinyint(3) unsigned NOT NULL,
+  `Katar` tinyint(3) unsigned NOT NULL,
+  `Revolver` tinyint(3) unsigned NOT NULL,
+  `Rifle` tinyint(3) unsigned NOT NULL,
+  `Shotgun` tinyint(3) unsigned NOT NULL,
+  `GatlingGun` tinyint(3) unsigned NOT NULL,
+  `GrenadeLauncher` tinyint(3) unsigned NOT NULL,
+  `FuumaShuriken` tinyint(3) unsigned NOT NULL,
+  `2HStaff` tinyint(3) unsigned NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
-REPLACE INTO `skill_improvise_db` VALUES(11,6000);
-REPLACE INTO `skill_improvise_db` VALUES(12,4000);
-REPLACE INTO `skill_improvise_db` VALUES(13,6000);
-REPLACE INTO `skill_improvise_db` VALUES(14,6000);
-REPLACE INTO `skill_improvise_db` VALUES(15,6000);
-REPLACE INTO `skill_improvise_db` VALUES(17,6000);
-REPLACE INTO `skill_improvise_db` VALUES(18,4000);
-REPLACE INTO `skill_improvise_db` VALUES(19,6000);
-REPLACE INTO `skill_improvise_db` VALUES(20,6000);
-REPLACE INTO `skill_improvise_db` VALUES(21,4000);
-REPLACE INTO `skill_improvise_db` VALUES(80,4000);
-REPLACE INTO `skill_improvise_db` VALUES(83,4000);
-REPLACE INTO `skill_improvise_db` VALUES(84,6000);
-REPLACE INTO `skill_improvise_db` VALUES(85,4000);
-REPLACE INTO `skill_improvise_db` VALUES(86,6000);
-REPLACE INTO `skill_improvise_db` VALUES(89,4000);
-
---
--- Estrutura da tabela `skill_reproduce_db`
---
-
-CREATE TABLE IF NOT EXISTS `skill_reproduce_db` (
-  `SkillID` smallint unsigned NOT NULL,
-  PRIMARY KEY (`SkillID`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
-REPLACE INTO `skill_reproduce_db` VALUES(5);
-REPLACE INTO `skill_reproduce_db` VALUES(7);
-REPLACE INTO `skill_reproduce_db` VALUES(11);
-REPLACE INTO `skill_reproduce_db` VALUES(13);
-REPLACE INTO `skill_reproduce_db` VALUES(14);
-REPLACE INTO `skill_reproduce_db` VALUES(15);
-REPLACE INTO `skill_reproduce_db` VALUES(17);
-REPLACE INTO `skill_reproduce_db` VALUES(18);
-REPLACE INTO `skill_reproduce_db` VALUES(19);
-REPLACE INTO `skill_reproduce_db` VALUES(20);
-REPLACE INTO `skill_reproduce_db` VALUES(21);
-REPLACE INTO `skill_reproduce_db` VALUES(24);
-REPLACE INTO `skill_reproduce_db` VALUES(28);
-REPLACE INTO `skill_reproduce_db` VALUES(42);
-REPLACE INTO `skill_reproduce_db` VALUES(46);
-REPLACE INTO `skill_reproduce_db` VALUES(47);
-REPLACE INTO `skill_reproduce_db` VALUES(52);
-REPLACE INTO `skill_reproduce_db` VALUES(54);
-REPLACE INTO `skill_reproduce_db` VALUES(62);
-REPLACE INTO `skill_reproduce_db` VALUES(68);
-REPLACE INTO `skill_reproduce_db` VALUES(69);
-REPLACE INTO `skill_reproduce_db` VALUES(70);
-REPLACE INTO `skill_reproduce_db` VALUES(77);
-REPLACE INTO `skill_reproduce_db` VALUES(79);
-REPLACE INTO `skill_reproduce_db` VALUES(80);
-REPLACE INTO `skill_reproduce_db` VALUES(81);
-REPLACE INTO `skill_reproduce_db` VALUES(83);
-REPLACE INTO `skill_reproduce_db` VALUES(84);
-REPLACE INTO `skill_reproduce_db` VALUES(85);
-REPLACE INTO `skill_reproduce_db` VALUES(86);
-REPLACE INTO `skill_reproduce_db` VALUES(88);
-REPLACE INTO `skill_reproduce_db` VALUES(89);
-REPLACE INTO `skill_reproduce_db` VALUES(90);
-REPLACE INTO `skill_reproduce_db` VALUES(91);
-REPLACE INTO `skill_reproduce_db` VALUES(116);
-REPLACE INTO `skill_reproduce_db` VALUES(121);
-REPLACE INTO `skill_reproduce_db` VALUES(122);
-REPLACE INTO `skill_reproduce_db` VALUES(123);
-REPLACE INTO `skill_reproduce_db` VALUES(141);
-REPLACE INTO `skill_reproduce_db` VALUES(148);
-REPLACE INTO `skill_reproduce_db` VALUES(152);
-REPLACE INTO `skill_reproduce_db` VALUES(156);
-REPLACE INTO `skill_reproduce_db` VALUES(212);
-REPLACE INTO `skill_reproduce_db` VALUES(229);
-REPLACE INTO `skill_reproduce_db` VALUES(230);
-REPLACE INTO `skill_reproduce_db` VALUES(250);
-REPLACE INTO `skill_reproduce_db` VALUES(251);
-REPLACE INTO `skill_reproduce_db` VALUES(253);
-REPLACE INTO `skill_reproduce_db` VALUES(254);
-REPLACE INTO `skill_reproduce_db` VALUES(263);
-REPLACE INTO `skill_reproduce_db` VALUES(266);
-REPLACE INTO `skill_reproduce_db` VALUES(267);
-REPLACE INTO `skill_reproduce_db` VALUES(271);
-REPLACE INTO `skill_reproduce_db` VALUES(272);
-REPLACE INTO `skill_reproduce_db` VALUES(337);
-REPLACE INTO `skill_reproduce_db` VALUES(421);
-REPLACE INTO `skill_reproduce_db` VALUES(526);
-REPLACE INTO `skill_reproduce_db` VALUES(527);
-REPLACE INTO `skill_reproduce_db` VALUES(528);
-REPLACE INTO `skill_reproduce_db` VALUES(529);
-REPLACE INTO `skill_reproduce_db` VALUES(531);
-REPLACE INTO `skill_reproduce_db` VALUES(534);
-REPLACE INTO `skill_reproduce_db` VALUES(536);
-REPLACE INTO `skill_reproduce_db` VALUES(537);
-REPLACE INTO `skill_reproduce_db` VALUES(539);
-REPLACE INTO `skill_reproduce_db` VALUES(540);
-REPLACE INTO `skill_reproduce_db` VALUES(541);
-REPLACE INTO `skill_reproduce_db` VALUES(542);
-REPLACE INTO `skill_reproduce_db` VALUES(1001);
-REPLACE INTO `skill_reproduce_db` VALUES(1004);
-REPLACE INTO `skill_reproduce_db` VALUES(1006);
-REPLACE INTO `skill_reproduce_db` VALUES(1009);
-REPLACE INTO `skill_reproduce_db` VALUES(1015);
-REPLACE INTO `skill_reproduce_db` VALUES(2002);
-REPLACE INTO `skill_reproduce_db` VALUES(2005);
-REPLACE INTO `skill_reproduce_db` VALUES(2006);
-REPLACE INTO `skill_reproduce_db` VALUES(2022);
-REPLACE INTO `skill_reproduce_db` VALUES(2023);
-REPLACE INTO `skill_reproduce_db` VALUES(2034);
-REPLACE INTO `skill_reproduce_db` VALUES(2038);
-REPLACE INTO `skill_reproduce_db` VALUES(2040);
-REPLACE INTO `skill_reproduce_db` VALUES(2051);
-REPLACE INTO `skill_reproduce_db` VALUES(2054);
-REPLACE INTO `skill_reproduce_db` VALUES(2202);
-REPLACE INTO `skill_reproduce_db` VALUES(2203);
-REPLACE INTO `skill_reproduce_db` VALUES(2204);
-REPLACE INTO `skill_reproduce_db` VALUES(2210);
-REPLACE INTO `skill_reproduce_db` VALUES(2211);
-REPLACE INTO `skill_reproduce_db` VALUES(2212);
-REPLACE INTO `skill_reproduce_db` VALUES(2213);
-REPLACE INTO `skill_reproduce_db` VALUES(2214);
-REPLACE INTO `skill_reproduce_db` VALUES(2216);
-REPLACE INTO `skill_reproduce_db` VALUES(2233);
-REPLACE INTO `skill_reproduce_db` VALUES(2236);
-REPLACE INTO `skill_reproduce_db` VALUES(2239);
-REPLACE INTO `skill_reproduce_db` VALUES(2253);
-REPLACE INTO `skill_reproduce_db` VALUES(2254);
-REPLACE INTO `skill_reproduce_db` VALUES(2284);
-REPLACE INTO `skill_reproduce_db` VALUES(2288);
-REPLACE INTO `skill_reproduce_db` VALUES(2304);
-REPLACE INTO `skill_reproduce_db` VALUES(2310);
-REPLACE INTO `skill_reproduce_db` VALUES(2315);
-REPLACE INTO `skill_reproduce_db` VALUES(2316);
-REPLACE INTO `skill_reproduce_db` VALUES(2320);
-REPLACE INTO `skill_reproduce_db` VALUES(2323);
-REPLACE INTO `skill_reproduce_db` VALUES(2326);
-REPLACE INTO `skill_reproduce_db` VALUES(2327);
-REPLACE INTO `skill_reproduce_db` VALUES(2328);
-REPLACE INTO `skill_reproduce_db` VALUES(2330);
-REPLACE INTO `skill_reproduce_db` VALUES(2332);
-REPLACE INTO `skill_reproduce_db` VALUES(2336);
-REPLACE INTO `skill_reproduce_db` VALUES(2337);
-REPLACE INTO `skill_reproduce_db` VALUES(2343);
-REPLACE INTO `skill_reproduce_db` VALUES(2344);
-REPLACE INTO `skill_reproduce_db` VALUES(2413);
-REPLACE INTO `skill_reproduce_db` VALUES(2414);
-REPLACE INTO `skill_reproduce_db` VALUES(2418);
-REPLACE INTO `skill_reproduce_db` VALUES(2443);
-REPLACE INTO `skill_reproduce_db` VALUES(2444);
-REPLACE INTO `skill_reproduce_db` VALUES(2446);
-REPLACE INTO `skill_reproduce_db` VALUES(2447);
-REPLACE INTO `skill_reproduce_db` VALUES(2448);
-REPLACE INTO `skill_reproduce_db` VALUES(2449);
-REPLACE INTO `skill_reproduce_db` VALUES(2450);
-REPLACE INTO `skill_reproduce_db` VALUES(2454);
-REPLACE INTO `skill_reproduce_db` VALUES(2479);
-REPLACE INTO `skill_reproduce_db` VALUES(2480);
-REPLACE INTO `skill_reproduce_db` VALUES(2481);
-REPLACE INTO `skill_reproduce_db` VALUES(2482);
-REPLACE INTO `skill_reproduce_db` VALUES(2483);
-REPLACE INTO `skill_reproduce_db` VALUES(2490);
-REPLACE INTO `skill_reproduce_db` VALUES(2517);
-REPLACE INTO `skill_reproduce_db` VALUES(2518);
-
+-- --------------------------------------------------------
 
 --
 -- Estrutura da tabela `skill_castnodex_db`
 --
 
 CREATE TABLE IF NOT EXISTS `skill_castnodex_db` (
-  `SkillID` smallint unsigned NOT NULL,
-  `Cast` tinyint DEFAULT NULL,
-  `Delay` smallint DEFAULT NULL,
+  `SkillID` smallint(5) unsigned NOT NULL,
+  `Cast` tinyint(4) DEFAULT NULL,
+  `Delay` smallint(6) DEFAULT NULL,
   PRIMARY KEY (`SkillID`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
@@ -1066,180 +3035,18 @@ REPLACE INTO `skill_castnodex_db` VALUES(8238,7,NULL);
 REPLACE INTO `skill_castnodex_db` VALUES(8240,7,NULL);
 
 --
--- Estrutura da tabela `skill_unit_db`
---
-
-CREATE TABLE IF NOT EXISTS `skill_unit_db` (
-  `SkillID` smallint unsigned NOT NULL,
-  `UnitID` tinytext NOT NULL,
-  `UnitID2` tinytext DEFAULT NULL,
-  `Layout` tinytext NOT NULL,
-  `Range` tinytext NOT NULL,
-  `Interval` tinytext NOT NULL,
-  `Target` tinytext NOT NULL,
-  `Flag` tinytext NOT NULL,
-  PRIMARY KEY (`SkillID`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
-REPLACE INTO `skill_unit_db` VALUES(12,'0x7e',NULL,'0',' 0','-1','all',' 0x003');
-REPLACE INTO `skill_unit_db` VALUES(18,'0x7f',NULL,' -1',' 0','20','enemy',' 0x010');
-REPLACE INTO `skill_unit_db` VALUES(21,'0x86',NULL,'0',' 2','1000','enemy',' 0x018');
-REPLACE INTO `skill_unit_db` VALUES(25,'0x85',NULL,'1',' 0','-1','all',' 0x2003');
-REPLACE INTO `skill_unit_db` VALUES(27,'0x81','0x80','0',' 0','-1','all',' 0x00E');
-REPLACE INTO `skill_unit_db` VALUES(47,'0x86',NULL,'0',' 2:2:2:2:2:3:3:3:3:3','1000','enemy',' 0x080');
-REPLACE INTO `skill_unit_db` VALUES(70,'0x83',NULL,' -1',' 1','1000','all',' 0x018');
-REPLACE INTO `skill_unit_db` VALUES(79,'0x84',NULL,' -1',' 1','3000','enemy',' 0x018');
-REPLACE INTO `skill_unit_db` VALUES(80,'0x87','0x88','0',' 1','2000','enemy',' 0x006');
-REPLACE INTO `skill_unit_db` VALUES(83,'0x86',NULL,'0',' 3','1000','enemy',' 0x010');
-REPLACE INTO `skill_unit_db` VALUES(85,'0x86',NULL,'5',' 1:1:1:1:1:1:1:1:1:1:3','1250','enemy','0x018');
-REPLACE INTO `skill_unit_db` VALUES(87,'0x8d',NULL,' -1',' 0','-1','all',' 0x010');
-REPLACE INTO `skill_unit_db` VALUES(89,'0x86',NULL,'4',' 1',' 450','enemy',' 0x018');
-REPLACE INTO `skill_unit_db` VALUES(91,'0x86',NULL,'2',' 0','1000','enemy',' 0x010');
-REPLACE INTO `skill_unit_db` VALUES(92,'0x8e',NULL,'2',' 0','-1','enemy',' 0x010');
-REPLACE INTO `skill_unit_db` VALUES(115,'0x90',NULL,'0',' 1','1000','enemy',' 0x006');
-REPLACE INTO `skill_unit_db` VALUES(116,'0x93',NULL,'0',' 1','1000','enemy',' 0x006');
-REPLACE INTO `skill_unit_db` VALUES(117,'0x91',NULL,'0',' 1','1000','enemy',' 0x006');
-REPLACE INTO `skill_unit_db` VALUES(118,'0x94',NULL,'0',' 1','1000','enemy',' 0x006');
-REPLACE INTO `skill_unit_db` VALUES(119,'0x95',NULL,'0',' 1','1000','enemy',' 0x006');
-REPLACE INTO `skill_unit_db` VALUES(120,'0x96',NULL,'0',' 1','1000','enemy',' 0x006');
-REPLACE INTO `skill_unit_db` VALUES(121,'0x97',NULL,'0',' 1','1000','enemy',' 0x006');
-REPLACE INTO `skill_unit_db` VALUES(122,'0x8f',NULL,'0',' 1','1000','enemy',' 0x006');
-REPLACE INTO `skill_unit_db` VALUES(123,'0x98',NULL,'0',' 1','1000','enemy',' 0x006');
-REPLACE INTO `skill_unit_db` VALUES(125,'0x99',NULL,'0',' 1','1000','all',' 0x000');
-REPLACE INTO `skill_unit_db` VALUES(140,'0x92',NULL,' -1',' 1','1000','enemy',' 0x000');
-REPLACE INTO `skill_unit_db` VALUES(220,'0xb0',NULL,'0',' 0','-1','all',' 0x002');
-REPLACE INTO `skill_unit_db` VALUES(229,'0xb1',NULL,'0',' 1',' 500','enemy',' 0x006');
-REPLACE INTO `skill_unit_db` VALUES(254,'0x86',NULL,' -1',' 0',' 300','enemy',' 0x010');
-REPLACE INTO `skill_unit_db` VALUES(285,'0x9a',NULL,'3',' 0','-1','all',' 0x010');
-REPLACE INTO `skill_unit_db` VALUES(286,'0x9b',NULL,'3',' 0','-1','all',' 0x010');
-REPLACE INTO `skill_unit_db` VALUES(287,'0x9c',NULL,'3',' 0','-1','all',' 0x010');
-REPLACE INTO `skill_unit_db` VALUES(288,'0x9d',NULL,'3:3:4:4:5','0',' -1','all',' 0x010');
-REPLACE INTO `skill_unit_db` VALUES(306,'0x9e',NULL,'4',' 0','6000','enemy',' 0x200');
-REPLACE INTO `skill_unit_db` VALUES(307,'0x9f',NULL,'4',' 0','-1','enemy',' 0x220');
-REPLACE INTO `skill_unit_db` VALUES(308,'0xa0',NULL,'4',' 0','-1','enemy',' 0x200');
-REPLACE INTO `skill_unit_db` VALUES(309,'0xa1',NULL,'4',' 0','-1','party',' 0x200');
-REPLACE INTO `skill_unit_db` VALUES(310,'0xa2',NULL,'4',' 0','-1','party',' 0x200');
-REPLACE INTO `skill_unit_db` VALUES(311,'0xa3',NULL,'4',' 0','-1','all',' 0x200');
-REPLACE INTO `skill_unit_db` VALUES(312,'0xa4',NULL,'4',' 0','-1','party',' 0x240');
-REPLACE INTO `skill_unit_db` VALUES(313,'0xa5',NULL,'4',' 0','-1','party',' 0x200');
-REPLACE INTO `skill_unit_db` VALUES(317,'0xa6',NULL,'3',' 0','3000','enemy',' 0x400');
-REPLACE INTO `skill_unit_db` VALUES(319,'0xa7',NULL,'3',' 0','3000','all',' 0xC40');
-REPLACE INTO `skill_unit_db` VALUES(320,'0xa8',NULL,'3',' 0','3000','all',' 0xC40');
-REPLACE INTO `skill_unit_db` VALUES(321,'0xa9',NULL,'3',' 0','3000','all',' 0xC40');
-REPLACE INTO `skill_unit_db` VALUES(322,'0xaa',NULL,'3',' 0','6000','all',' 0xC40');
-REPLACE INTO `skill_unit_db` VALUES(325,'0xab',NULL,'3',' 0','3000','enemy',' 0x100');
-REPLACE INTO `skill_unit_db` VALUES(327,'0xac',NULL,'3',' 0','3000','all',' 0x940');
-REPLACE INTO `skill_unit_db` VALUES(328,'0xad',NULL,'3',' 0','3000','enemy',' 0x900');
-REPLACE INTO `skill_unit_db` VALUES(329,'0xae',NULL,'3',' 0','3000','all',' 0x940');
-REPLACE INTO `skill_unit_db` VALUES(330,'0xaf',NULL,'3',' 0','3000','all',' 0x940');
-REPLACE INTO `skill_unit_db` VALUES(336,'0xb2',NULL,'0','-1','-1','noone',' 0x000');
-REPLACE INTO `skill_unit_db` VALUES(339,'0x86',NULL,' -1',' 0',' 300','enemy',' 0x000');
-REPLACE INTO `skill_unit_db` VALUES(362,'0xb4',NULL,'0',' 2',' 300','all',' 0x000');
-REPLACE INTO `skill_unit_db` VALUES(369,'0xb3',NULL,' -1',' 0','10000','all','0x008');
-REPLACE INTO `skill_unit_db` VALUES(395,'0xb5',NULL,'4',' 0','-1','all',' 0x200');
-REPLACE INTO `skill_unit_db` VALUES(404,'0xb6',NULL,' -1',' 0','-1','all',' 0x000');
-REPLACE INTO `skill_unit_db` VALUES(405,'0xb7',NULL,'0',' 0','-1','enemy',' 0x000');
-REPLACE INTO `skill_unit_db` VALUES(409,'0xb2',NULL,'0','-1','-1','noone',' 0x000');
-REPLACE INTO `skill_unit_db` VALUES(410,'0xb2',NULL,'0','-1','-1','noone',' 0x000');
-REPLACE INTO `skill_unit_db` VALUES(428,'0x86',NULL,'0',' 1',' 100','enemy',' 0x000');
-REPLACE INTO `skill_unit_db` VALUES(429,'0x86',NULL,'0',' 1',' 100','enemy',' 0x000');
-REPLACE INTO `skill_unit_db` VALUES(430,'0x86',NULL,'0',' 1',' 100','enemy',' 0x000');
-REPLACE INTO `skill_unit_db` VALUES(484,'0xb8',NULL,'2',' 0',' 500','enemy',' 0x808');
-REPLACE INTO `skill_unit_db` VALUES(488,'0xb9',NULL,'3',' 0','-1','all',' 0x200');
-REPLACE INTO `skill_unit_db` VALUES(516,'0x86',NULL,'3',' 0',' 100','enemy',' 0x000');
-REPLACE INTO `skill_unit_db` VALUES(521,'0xbe',NULL,'0',' 1','1000','enemy',' 0x000');
-REPLACE INTO `skill_unit_db` VALUES(525,'0x86',NULL,'0',' 2',' 100','enemy',' 0x018');
-REPLACE INTO `skill_unit_db` VALUES(527,'0xbc',NULL,' -1',' 0','2000','enemy',' 0x018');
-REPLACE INTO `skill_unit_db` VALUES(535,'0xbd',NULL,' -1',' 0','20','enemy',' 0x010');
-REPLACE INTO `skill_unit_db` VALUES(538,'0xbb',NULL,'1:1:1:2:2:2:3:3:3:4','0','-1','all','0x010');
-REPLACE INTO `skill_unit_db` VALUES(541,'0x86',NULL,'0',' 3:3:4:4:5',' 100','enemy',' 0x018');
-REPLACE INTO `skill_unit_db` VALUES(653,'0xc6',NULL,'0',' 5:7:9:11:13:5:7:9:11:13',' 300','enemy',' 0x010');
-REPLACE INTO `skill_unit_db` VALUES(670,'0xc7',NULL,'1',' 4:7:10:13:16:19:22:25:28:31','1000','all','0x008');
-REPLACE INTO `skill_unit_db` VALUES(2044,'0xca',NULL,'0',' 2','1000','all',' 0x018');
-REPLACE INTO `skill_unit_db` VALUES(2032,'0xe1',NULL,'2',' 0','1000','enemy',' 0x018');
-REPLACE INTO `skill_unit_db` VALUES(2213,'0x86',NULL,'0',' 8',' 100','enemy',' 0x018');
-REPLACE INTO `skill_unit_db` VALUES(2216,'0xcb',NULL,' -1',' 0',' 100','enemy',' 0x018');
-REPLACE INTO `skill_unit_db` VALUES(2238,'0xd8',NULL,'0',' 2','1000','enemy',' 0x006');
-REPLACE INTO `skill_unit_db` VALUES(2239,'0xd9',NULL,'0',' 0','1000','enemy',' 0x006');
-REPLACE INTO `skill_unit_db` VALUES(2249,'0xd2',NULL,'0',' 2','1000','enemy',' 0x022');
-REPLACE INTO `skill_unit_db` VALUES(2250,'0xd3',NULL,'0',' 2','1000','enemy',' 0x022');
-REPLACE INTO `skill_unit_db` VALUES(2251,'0xd4',NULL,'0',' 2','1000','enemy',' 0x022');
-REPLACE INTO `skill_unit_db` VALUES(2252,'0xd5',NULL,'0',' 2','1000','enemy',' 0x022');
-REPLACE INTO `skill_unit_db` VALUES(2253,'0xd6',NULL,'0',' 1','1000','enemy',' 0x002');
-REPLACE INTO `skill_unit_db` VALUES(2254,'0xd7',NULL,'0',' 1','1000','enemy',' 0x002');
-REPLACE INTO `skill_unit_db` VALUES(2273,'0xe2',NULL,'2',' 0',' 500','friend','0x000');
-REPLACE INTO `skill_unit_db` VALUES(2274,'0xe3',NULL,'2',' 0',' 500','all',' 0x000');
-REPLACE INTO `skill_unit_db` VALUES(2299,'0xcc',NULL,'0',' 1','1000','all',' 0x006');
-REPLACE INTO `skill_unit_db` VALUES(2300,'0xcd',NULL,'0',' 1','1000','all',' 0x006');
-REPLACE INTO `skill_unit_db` VALUES(2301,'0xce',NULL,'2',' 0','-1','enemy',' 0x200E');
-REPLACE INTO `skill_unit_db` VALUES(2302,'0xcf',NULL,'2',' 0','-1','all',' 0x2002');
-REPLACE INTO `skill_unit_db` VALUES(2303,'0xd0',NULL,'3',' 0','-1','all',' 0x2018');
-REPLACE INTO `skill_unit_db` VALUES(2304,'0xd1',NULL,'0',' 2','1000','enemy',' 0x018');
-REPLACE INTO `skill_unit_db` VALUES(2319,'0xec',NULL,'0',' 3','5000','all',' 0x000');
-REPLACE INTO `skill_unit_db` VALUES(2414,'0xda',NULL,'0',' 0','-1','enemy',' 0x000');
-REPLACE INTO `skill_unit_db` VALUES(2418,'0xdb',NULL,'0',' 5',' 300','enemy',' 0x800');
-REPLACE INTO `skill_unit_db` VALUES(2419,'0xde',NULL,'0',' 1','1000','all','0x014');
-REPLACE INTO `skill_unit_db` VALUES(2443,'0xdc',NULL,'0',' 0','300','enemy',' 0x00A');
-REPLACE INTO `skill_unit_db` VALUES(2444,'0xdd',NULL,'0',' 0','1000','enemy',' 0x00A');
-REPLACE INTO `skill_unit_db` VALUES(2446,'0x86',NULL,'0',' 3:3:3:4:4','1000','enemy',' 0x018');
-REPLACE INTO `skill_unit_db` VALUES(2447,'0x86',NULL,'0',' 3:3:3:4:4','1000','enemy',' 0x018');
-REPLACE INTO `skill_unit_db` VALUES(2449,'0xdf',NULL,'0',' 3:3:4:4:5','500','enemy','0x018');
-REPLACE INTO `skill_unit_db` VALUES(2450,'0xe0',NULL,'3',' 0',' 500','enemy',' 0x010');
-REPLACE INTO `skill_unit_db` VALUES(2452,'0xe4',NULL,'0',' 3','3000','all',' 0x010');
-REPLACE INTO `skill_unit_db` VALUES(2453,'0xeb',NULL,'0',' 1:1:2:2:3','500','enemy','0x010');
-REPLACE INTO `skill_unit_db` VALUES(2465,'0xf1',NULL,'0',' 1','1000','all',' 0x010');
-REPLACE INTO `skill_unit_db` VALUES(2466,'0xf2',NULL,'0',' 1','1000','all',' 0x010');
-REPLACE INTO `skill_unit_db` VALUES(2467,'0xf3',NULL,'0',' 1','1000','all',' 0x010');
-REPLACE INTO `skill_unit_db` VALUES(2468,'0xf4',NULL,'0',' 1','1000','all',' 0x010');
-REPLACE INTO `skill_unit_db` VALUES(2479,'0xe5',NULL,'0',' 1','1000','enemy',' 0x006');
-REPLACE INTO `skill_unit_db` VALUES(2482,'0xe6','0x7f',' -1',' 2','-1','all',' 0x000');
-REPLACE INTO `skill_unit_db` VALUES(2484,'0x86',NULL,'0',' 2',' 100','enemy',' 0x080');
-REPLACE INTO `skill_unit_db` VALUES(2485,'0xe7',NULL,'0',' 3','2000','enemy',' 0x098');
-REPLACE INTO `skill_unit_db` VALUES(2487,'0xe8',NULL,'0',' 3','1000','enemy',' 0x000');
-REPLACE INTO `skill_unit_db` VALUES(2488,'0xe9',NULL,'0',' 3','1000','enemy',' 0x000');
-REPLACE INTO `skill_unit_db` VALUES(2490,'0xea',NULL,'0',' 1','1000','all',' 0x002');
-REPLACE INTO `skill_unit_db` VALUES(2555,'0x104',NULL,'0',' 1:2:2:3:3','500','enemy','0x006');
-REPLACE INTO `skill_unit_db` VALUES(3006,'0x86',NULL,'0',' 2',' 100','enemy',' 0x018');
-REPLACE INTO `skill_unit_db` VALUES(3008,'0x86',NULL,'0',' 2',' 100','enemy',' 0x018');
-REPLACE INTO `skill_unit_db` VALUES(3009,'0x86',NULL,'0',' 3',' 100','enemy',' 0x018');
-REPLACE INTO `skill_unit_db` VALUES(3020,'0xf8',NULL,'0',' 3',' 100','all',' 0x018');
-REPLACE INTO `skill_unit_db` VALUES(3010,'0xfc',NULL,'0',' 0','5000','enemy',' 0x018');
-REPLACE INTO `skill_unit_db` VALUES(5006,'0x101',NULL,'0',' 3','2000','enemy',' 0x018');
-REPLACE INTO `skill_unit_db` VALUES(5008,'0x7e',NULL,'0',' 0','-1','all',' 0x003');
-REPLACE INTO `skill_unit_db` VALUES(5010,'0xfe',NULL,'0',' 2','-1','enemy',' 0x000');
-REPLACE INTO `skill_unit_db` VALUES(8020,'0xf5',NULL,'0',' 3','2300:2100:1900:1700:1500','enemy',' 0x018');
-REPLACE INTO `skill_unit_db` VALUES(8033,'0x7e',NULL,'0',' 0','-1','all',' 0x003');
-REPLACE INTO `skill_unit_db` VALUES(8025,'0x86',NULL,'0',' 2:2:3:3:4','1000','enemy',' 0x018');
-REPLACE INTO `skill_unit_db` VALUES(8041,'0xf6',NULL,'1:1:2:2:3',' 0','2000','enemy',' 0x01A');
-REPLACE INTO `skill_unit_db` VALUES(8043,'0xf7',NULL,'1',' 0','-1','enemy',' 0x2018');
-REPLACE INTO `skill_unit_db` VALUES(8208,'0x86',NULL,'0',' 2','1000','enemy',' 0x080');
-REPLACE INTO `skill_unit_db` VALUES(8209,'0x90',NULL,'0',' 1','1000','enemy',' 0x006');
-REPLACE INTO `skill_unit_db` VALUES(8210,'0x93',NULL,'0',' 0','1000','enemy',' 0x006');
-REPLACE INTO `skill_unit_db` VALUES(8211,'0x95',NULL,'0',' 1','1000','enemy',' 0x006');
-REPLACE INTO `skill_unit_db` VALUES(8212,'0x97',NULL,'0',' 1','1000','enemy',' 0x006');
-REPLACE INTO `skill_unit_db` VALUES(8403,'0xed',NULL,' -1',' 1','1000','enemy',' 0x018 ');
-REPLACE INTO `skill_unit_db` VALUES(8406,'0xee',NULL,'1',' 0','-1','friend','0x2018');
-REPLACE INTO `skill_unit_db` VALUES(8409,'0xef',NULL,'0',' 1','-1','friend','0x2018');
-REPLACE INTO `skill_unit_db` VALUES(8412,'0xf0',NULL,'0',' 1','-1','friend','0x2018');
-REPLACE INTO `skill_unit_db` VALUES(10006,'0xc1',NULL,'2',' 0','-1','sameguild',' 0x040');
-REPLACE INTO `skill_unit_db` VALUES(10007,'0xc2',NULL,'2',' 0','-1','sameguild',' 0x040');
-REPLACE INTO `skill_unit_db` VALUES(10008,'0xc3',NULL,'2',' 0','-1','sameguild',' 0x040');
-REPLACE INTO `skill_unit_db` VALUES(10009,'0xc4',NULL,'2',' 0','-1','sameguild',' 0x040');
-
---
 -- Estrutura da tabela `skill_cast_db`
 --
 
 CREATE TABLE IF NOT EXISTS `skill_cast_db` (
-  `SkillID` smallint unsigned NOT NULL,
+  `SkillID` smallint(5) unsigned NOT NULL,
   `CastingTime` tinytext NOT NULL,
   `AfterCastActDelay` tinytext NOT NULL,
   `AfterCastWalkDelay` tinytext NOT NULL,
   `Duration1` tinytext NOT NULL,
   `Duration2` tinytext NOT NULL,
   `CoolDown` tinytext NOT NULL,
-  `FixedCastingTime` tinytext NOT NULL,
-  PRIMARY KEY (`SkillID`)
+  `FixedCastingTime` tinytext NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 REPLACE INTO `skill_cast_db` VALUES(6,'0','0','0','30000','0','0','0');
@@ -2030,28 +3837,123 @@ REPLACE INTO `skill_cast_db` VALUES(10011,'0','0','0','60000','300000','0','-1')
 REPLACE INTO `skill_cast_db` VALUES(10012,'0','0','0','0','300000','0','10000');
 REPLACE INTO `skill_cast_db` VALUES(10013,'0','0','0','0','300000','0','5000');
 REPLACE INTO `skill_cast_db` VALUES(10015,'0','0','0','0','300000','0','-1');
+
+--
+-- Estrutura da tabela `skill_changematerial_db`
+--
+
+CREATE TABLE IF NOT EXISTS `skill_changematerial_db` (
+  `ProductID` int(10) unsigned NOT NULL,
+  `BaseRate` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `MakeAmount1` smallint(6) DEFAULT NULL,
+  `MakeAmountRate1` smallint(5) unsigned DEFAULT NULL,
+  `MakeAmount2` smallint(6) DEFAULT NULL,
+  `MakeAmountRate2` smallint(5) unsigned DEFAULT NULL,
+  `MakeAmount3` tinyint(4) DEFAULT NULL,
+  `MakeAmountRate3` smallint(5) unsigned DEFAULT NULL,
+  `MakeAmount4` tinyint(4) DEFAULT NULL,
+  `MakeAmountRate4` smallint(5) unsigned DEFAULT NULL,
+  `MakeAmount5` tinyint(4) DEFAULT NULL,
+  `MakeAmountRate5` smallint(5) unsigned DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+REPLACE INTO `skill_changematerial_db` VALUES(703,4,800,2,200,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(958,800,9,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(959,800,7,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(960,1000,6,800,9,200,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(961,800,3,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(962,1000,4,800,6,200,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(963,800,3,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(964,800,8,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(967,800,4,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(968,800,5,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(970,800,9,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(971,800,5,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(973,800,4,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(974,1000,4,800,6,200,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(991,1000,1,500,1,500,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(992,1000,1,500,1,500,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(999,1000,10,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(1003,500,1,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(1008,800,6,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(1009,800,4,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(1010,800,8,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(1011,800,4,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(1012,800,3,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(1013,9,800,13,200,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(1014,4,800,6,200,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(1016,1000,7,800,10,200,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(1019,800,2,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(1020,1000,4,800,6,200,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(1021,800,4,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(1022,1000,2,800,3,200,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(1024,800,4,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(1025,800,8,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(1026,800,4,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(1030,800,2,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(1033,1000,4,800,6,200,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(1034,1000,6,800,9,200,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(1035,1000,8,800,12,200,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(1037,800,6,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(1038,1000,1,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(1040,1000,8,800,12,200,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(1041,800,3,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(1042,800,6,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(1043,800,6,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(1045,800,8,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(1046,800,4,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(1049,800,6,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(1050,800,3,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(1051,800,7,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(1053,1000,6,800,9,200,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(1056,800,8,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(1058,800,5,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(1059,1000,5,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(1061,80,2,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(1061,1000,1,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(1064,800,8,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(1615,200,1,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(2267,1000,1,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(7063,1000,1,200,1,200,1,100,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(7166,1000,2,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(13269,1000,5,500,2,250,1,100,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(13270,1000,5,500,2,250,1,100,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(13271,1000,5,500,2,250,1,100,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(13272,1000,5,500,2,250,1,100,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(13273,1000,5,500,2,250,1,100,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(13274,1000,5,500,2,250,1,100,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(13275,1000,10,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(13276,1000,10,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(13277,1000,10,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(13278,1000,10,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(13279,1000,10,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(13280,1000,10,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(13281,1000,10,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(13282,1000,10,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(13283,1000,10,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+
 --
 -- Estrutura da tabela `skill_db`
 --
 
 CREATE TABLE IF NOT EXISTS `skill_db` (
-  `SkillID` int(11) unsigned NOT NULL DEFAULT '0',
-  `Range` text NOT NULL,
-  `Hit` smallint(11) NOT NULL DEFAULT '0',
-  `Inf` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  `Element` text NOT NULL,
-  `Nk` text NOT NULL,
-  `Splash` text NOT NULL,
-  `Maxlv` int(11) unsigned NOT NULL DEFAULT '0',
+  `SkillID` smallint(5) unsigned NOT NULL,
+  `Range` tinytext NOT NULL,
+  `Hit` smallint(6) NOT NULL,
+  `Inf` smallint(6) NOT NULL,
+  `Element` tinytext NOT NULL,
+  `Nk` tinytext NOT NULL,
+  `Splash` tinytext NOT NULL,
+  `Maxlv` tinytext NOT NULL,
   `NumHits` text NOT NULL,
-  `CastInterrupted` text NOT NULL,
-  `Cast_Defence_Rate` smallint(6) unsigned NOT NULL DEFAULT '0',
-  `Inf2` text NOT NULL,
-  `MaxCount` text NOT NULL,
-  `AttackType` text NOT NULL,
-  `BlowCount` smallint(4) unsigned NOT NULL DEFAULT '0',
-  `Name` text NOT NULL,
-  `Description` text NOT NULL,
+  `CastInterrupted` tinytext NOT NULL,
+  `Cast_Defence_Rate` tinytext NOT NULL,
+  `Inf2` tinytext NOT NULL,
+  `MaxCount` tinytext NOT NULL,
+  `AttackType` tinytext NOT NULL,
+  `BlowCount` tinytext NOT NULL,
+  `Name` tinytext NOT NULL,
+  `Description` tinytext NOT NULL,
   PRIMARY KEY (`SkillID`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
@@ -3208,12 +5110,181 @@ REPLACE INTO `skill_db` VALUES(10014,'0',0,0,'0','0','0',1,'0','no',0,'0x10','0'
 REPLACE INTO `skill_db` VALUES(10015,'0',0,0,'0','0','0',1,'0','no',0,'0x10','0','none','0','GD_ITEMEMERGENCYCALL','Unknown Skill');
 
 --
+-- Estrutura da tabela `skill_improvise_db`
+--
+
+CREATE TABLE IF NOT EXISTS `skill_improvise_db` (
+  `SkillID` smallint(5) unsigned NOT NULL,
+  `Rate` smallint(5) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`SkillID`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+REPLACE INTO `skill_improvise_db` VALUES(11,6000);
+REPLACE INTO `skill_improvise_db` VALUES(12,4000);
+REPLACE INTO `skill_improvise_db` VALUES(13,6000);
+REPLACE INTO `skill_improvise_db` VALUES(14,6000);
+REPLACE INTO `skill_improvise_db` VALUES(15,6000);
+REPLACE INTO `skill_improvise_db` VALUES(17,6000);
+REPLACE INTO `skill_improvise_db` VALUES(18,4000);
+REPLACE INTO `skill_improvise_db` VALUES(19,6000);
+REPLACE INTO `skill_improvise_db` VALUES(20,6000);
+REPLACE INTO `skill_improvise_db` VALUES(21,4000);
+REPLACE INTO `skill_improvise_db` VALUES(80,4000);
+REPLACE INTO `skill_improvise_db` VALUES(83,4000);
+REPLACE INTO `skill_improvise_db` VALUES(84,6000);
+REPLACE INTO `skill_improvise_db` VALUES(85,4000);
+REPLACE INTO `skill_improvise_db` VALUES(86,6000);
+REPLACE INTO `skill_improvise_db` VALUES(89,4000);
+
+--
+-- Estrutura da tabela `skill_reproduce_db`
+--
+
+CREATE TABLE IF NOT EXISTS `skill_reproduce_db` (
+  `SkillID` smallint(5) unsigned NOT NULL,
+  PRIMARY KEY (`SkillID`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+REPLACE INTO `skill_reproduce_db` VALUES(5);
+REPLACE INTO `skill_reproduce_db` VALUES(7);
+REPLACE INTO `skill_reproduce_db` VALUES(11);
+REPLACE INTO `skill_reproduce_db` VALUES(13);
+REPLACE INTO `skill_reproduce_db` VALUES(14);
+REPLACE INTO `skill_reproduce_db` VALUES(15);
+REPLACE INTO `skill_reproduce_db` VALUES(17);
+REPLACE INTO `skill_reproduce_db` VALUES(18);
+REPLACE INTO `skill_reproduce_db` VALUES(19);
+REPLACE INTO `skill_reproduce_db` VALUES(20);
+REPLACE INTO `skill_reproduce_db` VALUES(21);
+REPLACE INTO `skill_reproduce_db` VALUES(24);
+REPLACE INTO `skill_reproduce_db` VALUES(28);
+REPLACE INTO `skill_reproduce_db` VALUES(42);
+REPLACE INTO `skill_reproduce_db` VALUES(46);
+REPLACE INTO `skill_reproduce_db` VALUES(47);
+REPLACE INTO `skill_reproduce_db` VALUES(52);
+REPLACE INTO `skill_reproduce_db` VALUES(54);
+REPLACE INTO `skill_reproduce_db` VALUES(62);
+REPLACE INTO `skill_reproduce_db` VALUES(68);
+REPLACE INTO `skill_reproduce_db` VALUES(69);
+REPLACE INTO `skill_reproduce_db` VALUES(70);
+REPLACE INTO `skill_reproduce_db` VALUES(77);
+REPLACE INTO `skill_reproduce_db` VALUES(79);
+REPLACE INTO `skill_reproduce_db` VALUES(80);
+REPLACE INTO `skill_reproduce_db` VALUES(81);
+REPLACE INTO `skill_reproduce_db` VALUES(83);
+REPLACE INTO `skill_reproduce_db` VALUES(84);
+REPLACE INTO `skill_reproduce_db` VALUES(85);
+REPLACE INTO `skill_reproduce_db` VALUES(86);
+REPLACE INTO `skill_reproduce_db` VALUES(88);
+REPLACE INTO `skill_reproduce_db` VALUES(89);
+REPLACE INTO `skill_reproduce_db` VALUES(90);
+REPLACE INTO `skill_reproduce_db` VALUES(91);
+REPLACE INTO `skill_reproduce_db` VALUES(116);
+REPLACE INTO `skill_reproduce_db` VALUES(121);
+REPLACE INTO `skill_reproduce_db` VALUES(122);
+REPLACE INTO `skill_reproduce_db` VALUES(123);
+REPLACE INTO `skill_reproduce_db` VALUES(141);
+REPLACE INTO `skill_reproduce_db` VALUES(148);
+REPLACE INTO `skill_reproduce_db` VALUES(152);
+REPLACE INTO `skill_reproduce_db` VALUES(156);
+REPLACE INTO `skill_reproduce_db` VALUES(212);
+REPLACE INTO `skill_reproduce_db` VALUES(229);
+REPLACE INTO `skill_reproduce_db` VALUES(230);
+REPLACE INTO `skill_reproduce_db` VALUES(250);
+REPLACE INTO `skill_reproduce_db` VALUES(251);
+REPLACE INTO `skill_reproduce_db` VALUES(253);
+REPLACE INTO `skill_reproduce_db` VALUES(254);
+REPLACE INTO `skill_reproduce_db` VALUES(263);
+REPLACE INTO `skill_reproduce_db` VALUES(266);
+REPLACE INTO `skill_reproduce_db` VALUES(267);
+REPLACE INTO `skill_reproduce_db` VALUES(271);
+REPLACE INTO `skill_reproduce_db` VALUES(272);
+REPLACE INTO `skill_reproduce_db` VALUES(337);
+REPLACE INTO `skill_reproduce_db` VALUES(421);
+REPLACE INTO `skill_reproduce_db` VALUES(526);
+REPLACE INTO `skill_reproduce_db` VALUES(527);
+REPLACE INTO `skill_reproduce_db` VALUES(528);
+REPLACE INTO `skill_reproduce_db` VALUES(529);
+REPLACE INTO `skill_reproduce_db` VALUES(531);
+REPLACE INTO `skill_reproduce_db` VALUES(534);
+REPLACE INTO `skill_reproduce_db` VALUES(536);
+REPLACE INTO `skill_reproduce_db` VALUES(537);
+REPLACE INTO `skill_reproduce_db` VALUES(539);
+REPLACE INTO `skill_reproduce_db` VALUES(540);
+REPLACE INTO `skill_reproduce_db` VALUES(541);
+REPLACE INTO `skill_reproduce_db` VALUES(542);
+REPLACE INTO `skill_reproduce_db` VALUES(1001);
+REPLACE INTO `skill_reproduce_db` VALUES(1004);
+REPLACE INTO `skill_reproduce_db` VALUES(1006);
+REPLACE INTO `skill_reproduce_db` VALUES(1009);
+REPLACE INTO `skill_reproduce_db` VALUES(1015);
+REPLACE INTO `skill_reproduce_db` VALUES(2002);
+REPLACE INTO `skill_reproduce_db` VALUES(2005);
+REPLACE INTO `skill_reproduce_db` VALUES(2006);
+REPLACE INTO `skill_reproduce_db` VALUES(2022);
+REPLACE INTO `skill_reproduce_db` VALUES(2023);
+REPLACE INTO `skill_reproduce_db` VALUES(2034);
+REPLACE INTO `skill_reproduce_db` VALUES(2038);
+REPLACE INTO `skill_reproduce_db` VALUES(2040);
+REPLACE INTO `skill_reproduce_db` VALUES(2051);
+REPLACE INTO `skill_reproduce_db` VALUES(2054);
+REPLACE INTO `skill_reproduce_db` VALUES(2202);
+REPLACE INTO `skill_reproduce_db` VALUES(2203);
+REPLACE INTO `skill_reproduce_db` VALUES(2204);
+REPLACE INTO `skill_reproduce_db` VALUES(2210);
+REPLACE INTO `skill_reproduce_db` VALUES(2211);
+REPLACE INTO `skill_reproduce_db` VALUES(2212);
+REPLACE INTO `skill_reproduce_db` VALUES(2213);
+REPLACE INTO `skill_reproduce_db` VALUES(2214);
+REPLACE INTO `skill_reproduce_db` VALUES(2216);
+REPLACE INTO `skill_reproduce_db` VALUES(2233);
+REPLACE INTO `skill_reproduce_db` VALUES(2236);
+REPLACE INTO `skill_reproduce_db` VALUES(2239);
+REPLACE INTO `skill_reproduce_db` VALUES(2253);
+REPLACE INTO `skill_reproduce_db` VALUES(2254);
+REPLACE INTO `skill_reproduce_db` VALUES(2284);
+REPLACE INTO `skill_reproduce_db` VALUES(2288);
+REPLACE INTO `skill_reproduce_db` VALUES(2304);
+REPLACE INTO `skill_reproduce_db` VALUES(2310);
+REPLACE INTO `skill_reproduce_db` VALUES(2315);
+REPLACE INTO `skill_reproduce_db` VALUES(2316);
+REPLACE INTO `skill_reproduce_db` VALUES(2320);
+REPLACE INTO `skill_reproduce_db` VALUES(2323);
+REPLACE INTO `skill_reproduce_db` VALUES(2326);
+REPLACE INTO `skill_reproduce_db` VALUES(2327);
+REPLACE INTO `skill_reproduce_db` VALUES(2328);
+REPLACE INTO `skill_reproduce_db` VALUES(2330);
+REPLACE INTO `skill_reproduce_db` VALUES(2332);
+REPLACE INTO `skill_reproduce_db` VALUES(2336);
+REPLACE INTO `skill_reproduce_db` VALUES(2337);
+REPLACE INTO `skill_reproduce_db` VALUES(2343);
+REPLACE INTO `skill_reproduce_db` VALUES(2344);
+REPLACE INTO `skill_reproduce_db` VALUES(2413);
+REPLACE INTO `skill_reproduce_db` VALUES(2414);
+REPLACE INTO `skill_reproduce_db` VALUES(2418);
+REPLACE INTO `skill_reproduce_db` VALUES(2443);
+REPLACE INTO `skill_reproduce_db` VALUES(2444);
+REPLACE INTO `skill_reproduce_db` VALUES(2446);
+REPLACE INTO `skill_reproduce_db` VALUES(2447);
+REPLACE INTO `skill_reproduce_db` VALUES(2448);
+REPLACE INTO `skill_reproduce_db` VALUES(2449);
+REPLACE INTO `skill_reproduce_db` VALUES(2450);
+REPLACE INTO `skill_reproduce_db` VALUES(2454);
+REPLACE INTO `skill_reproduce_db` VALUES(2479);
+REPLACE INTO `skill_reproduce_db` VALUES(2480);
+REPLACE INTO `skill_reproduce_db` VALUES(2481);
+REPLACE INTO `skill_reproduce_db` VALUES(2482);
+REPLACE INTO `skill_reproduce_db` VALUES(2483);
+REPLACE INTO `skill_reproduce_db` VALUES(2490);
+REPLACE INTO `skill_reproduce_db` VALUES(2517);
+REPLACE INTO `skill_reproduce_db` VALUES(2518);
+
+--
 -- Estrutura da tabela `skill_require_db`
 --
 
-
 CREATE TABLE IF NOT EXISTS `skill_require_db` (
-  `SkillID` smallint unsigned NOT NULL,
+  `SkillID` smallint(5) unsigned NOT NULL,
   `HPCost` tinytext NOT NULL,
   `MaxHPTrigger` tinytext NOT NULL,
   `SPCost` tinytext NOT NULL,
@@ -3221,30 +5292,30 @@ CREATE TABLE IF NOT EXISTS `skill_require_db` (
   `SPRateCost` tinytext NOT NULL,
   `ZenyCost` tinytext NOT NULL,
   `RequiredWeapons` tinytext NOT NULL,
-  `RequiredAmmoTypes` smallint unsigned NOT NULL DEFAULT '0',
+  `RequiredAmmoTypes` smallint(5) unsigned NOT NULL DEFAULT '0',
   `RequiredAmmoAmount` tinytext NOT NULL,
   `RequiredState` tinytext NOT NULL,
   `SpiritSphereCost` tinytext NOT NULL,
-  `RequiredItemID1` smallint unsigned NOT NULL DEFAULT '0',
+  `RequiredItemID1` smallint(5) unsigned NOT NULL DEFAULT '0',
   `RequiredItemAmount1` tinytext NOT NULL,
-  `RequiredItemID2` smallint unsigned NOT NULL DEFAULT '0',
-  `RequiredItemAmount2` smallint unsigned NOT NULL DEFAULT '0',
-  `RequiredItemID3` smallint unsigned NOT NULL DEFAULT '0',
-  `RequiredItemAmount3` smallint unsigned NOT NULL DEFAULT '0',
-  `RequiredItemID4` smallint unsigned NOT NULL DEFAULT '0',
-  `RequiredItemAmount4` smallint unsigned NOT NULL DEFAULT '0',
-  `RequiredItemID5` smallint unsigned NOT NULL DEFAULT '0',
-  `RequiredItemAmount5` smallint unsigned NOT NULL DEFAULT '0',
-  `RequiredItemID6` smallint unsigned NOT NULL DEFAULT '0',
-  `RequiredItemAmount6` smallint unsigned NOT NULL DEFAULT '0',
-  `RequiredItemID7` smallint unsigned NOT NULL DEFAULT '0',
-  `RequiredItemAmount7` smallint unsigned NOT NULL DEFAULT '0',
-  `RequiredItemID8` smallint unsigned NOT NULL DEFAULT '0',
-  `RequiredItemAmount8` smallint unsigned NOT NULL DEFAULT '0',
-  `RequiredItemID9` smallint unsigned NOT NULL DEFAULT '0',
-  `RequiredItemAmount9` smallint unsigned NOT NULL DEFAULT '0',
-  `RequiredItemID10` smallint unsigned NOT NULL DEFAULT '0',
-  `RequiredItemAmount10` smallint unsigned NOT NULL DEFAULT '0',
+  `RequiredItemID2` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `RequiredItemAmount2` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `RequiredItemID3` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `RequiredItemAmount3` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `RequiredItemID4` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `RequiredItemAmount4` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `RequiredItemID5` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `RequiredItemAmount5` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `RequiredItemID6` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `RequiredItemAmount6` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `RequiredItemID7` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `RequiredItemAmount7` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `RequiredItemID8` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `RequiredItemAmount8` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `RequiredItemID9` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `RequiredItemAmount9` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `RequiredItemID10` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `RequiredItemAmount10` smallint(5) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`SkillID`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
@@ -4121,4 +6192,201 @@ REPLACE INTO `skill_require_db` VALUES(10012,'0','0','1','0','0','0','99',0,'0',
 REPLACE INTO `skill_require_db` VALUES(10013,'0','0','1','0','0','0','99',0,'0','none','0',0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
 REPLACE INTO `skill_require_db` VALUES(10015,'0','0','1','0','0','0','99',0,'0','none','0',0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
 
+--
+-- Estrutura da tabela `skill_unit_db`
+--
 
+CREATE TABLE IF NOT EXISTS `skill_unit_db` (
+  `SkillID` smallint(5) unsigned NOT NULL,
+  `UnitID` tinytext NOT NULL,
+  `UnitID2` tinytext,
+  `Layout` tinytext NOT NULL,
+  `Range` tinytext NOT NULL,
+  `Interval` tinytext NOT NULL,
+  `Target` tinytext NOT NULL,
+  `Flag` tinytext NOT NULL,
+  PRIMARY KEY (`SkillID`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+REPLACE INTO `skill_unit_db` VALUES(12,'0x7e',NULL,'0',' 0','-1','all',' 0x003');
+REPLACE INTO `skill_unit_db` VALUES(18,'0x7f',NULL,' -1',' 0','20','enemy',' 0x010');
+REPLACE INTO `skill_unit_db` VALUES(21,'0x86',NULL,'0',' 2','1000','enemy',' 0x018');
+REPLACE INTO `skill_unit_db` VALUES(25,'0x85',NULL,'1',' 0','-1','all',' 0x2003');
+REPLACE INTO `skill_unit_db` VALUES(27,'0x81','0x80','0',' 0','-1','all',' 0x00E');
+REPLACE INTO `skill_unit_db` VALUES(47,'0x86',NULL,'0',' 2:2:2:2:2:3:3:3:3:3','1000','enemy',' 0x080');
+REPLACE INTO `skill_unit_db` VALUES(70,'0x83',NULL,' -1',' 1','1000','all',' 0x018');
+REPLACE INTO `skill_unit_db` VALUES(79,'0x84',NULL,' -1',' 1','3000','enemy',' 0x018');
+REPLACE INTO `skill_unit_db` VALUES(80,'0x87','0x88','0',' 1','2000','enemy',' 0x006');
+REPLACE INTO `skill_unit_db` VALUES(83,'0x86',NULL,'0',' 3','1000','enemy',' 0x010');
+REPLACE INTO `skill_unit_db` VALUES(85,'0x86',NULL,'5',' 1:1:1:1:1:1:1:1:1:1:3','1250','enemy','0x018');
+REPLACE INTO `skill_unit_db` VALUES(87,'0x8d',NULL,' -1',' 0','-1','all',' 0x010');
+REPLACE INTO `skill_unit_db` VALUES(89,'0x86',NULL,'4',' 1',' 450','enemy',' 0x018');
+REPLACE INTO `skill_unit_db` VALUES(91,'0x86',NULL,'2',' 0','1000','enemy',' 0x010');
+REPLACE INTO `skill_unit_db` VALUES(92,'0x8e',NULL,'2',' 0','-1','enemy',' 0x010');
+REPLACE INTO `skill_unit_db` VALUES(115,'0x90',NULL,'0',' 1','1000','enemy',' 0x006');
+REPLACE INTO `skill_unit_db` VALUES(116,'0x93',NULL,'0',' 1','1000','enemy',' 0x006');
+REPLACE INTO `skill_unit_db` VALUES(117,'0x91',NULL,'0',' 1','1000','enemy',' 0x006');
+REPLACE INTO `skill_unit_db` VALUES(118,'0x94',NULL,'0',' 1','1000','enemy',' 0x006');
+REPLACE INTO `skill_unit_db` VALUES(119,'0x95',NULL,'0',' 1','1000','enemy',' 0x006');
+REPLACE INTO `skill_unit_db` VALUES(120,'0x96',NULL,'0',' 1','1000','enemy',' 0x006');
+REPLACE INTO `skill_unit_db` VALUES(121,'0x97',NULL,'0',' 1','1000','enemy',' 0x006');
+REPLACE INTO `skill_unit_db` VALUES(122,'0x8f',NULL,'0',' 1','1000','enemy',' 0x006');
+REPLACE INTO `skill_unit_db` VALUES(123,'0x98',NULL,'0',' 1','1000','enemy',' 0x006');
+REPLACE INTO `skill_unit_db` VALUES(125,'0x99',NULL,'0',' 1','1000','all',' 0x000');
+REPLACE INTO `skill_unit_db` VALUES(140,'0x92',NULL,' -1',' 1','1000','enemy',' 0x000');
+REPLACE INTO `skill_unit_db` VALUES(220,'0xb0',NULL,'0',' 0','-1','all',' 0x002');
+REPLACE INTO `skill_unit_db` VALUES(229,'0xb1',NULL,'0',' 1',' 500','enemy',' 0x006');
+REPLACE INTO `skill_unit_db` VALUES(254,'0x86',NULL,' -1',' 0',' 300','enemy',' 0x010');
+REPLACE INTO `skill_unit_db` VALUES(285,'0x9a',NULL,'3',' 0','-1','all',' 0x010');
+REPLACE INTO `skill_unit_db` VALUES(286,'0x9b',NULL,'3',' 0','-1','all',' 0x010');
+REPLACE INTO `skill_unit_db` VALUES(287,'0x9c',NULL,'3',' 0','-1','all',' 0x010');
+REPLACE INTO `skill_unit_db` VALUES(288,'0x9d',NULL,'3:3:4:4:5','0',' -1','all',' 0x010');
+REPLACE INTO `skill_unit_db` VALUES(306,'0x9e',NULL,'4',' 0','6000','enemy',' 0x200');
+REPLACE INTO `skill_unit_db` VALUES(307,'0x9f',NULL,'4',' 0','-1','enemy',' 0x220');
+REPLACE INTO `skill_unit_db` VALUES(308,'0xa0',NULL,'4',' 0','-1','enemy',' 0x200');
+REPLACE INTO `skill_unit_db` VALUES(309,'0xa1',NULL,'4',' 0','-1','party',' 0x200');
+REPLACE INTO `skill_unit_db` VALUES(310,'0xa2',NULL,'4',' 0','-1','party',' 0x200');
+REPLACE INTO `skill_unit_db` VALUES(311,'0xa3',NULL,'4',' 0','-1','all',' 0x200');
+REPLACE INTO `skill_unit_db` VALUES(312,'0xa4',NULL,'4',' 0','-1','party',' 0x240');
+REPLACE INTO `skill_unit_db` VALUES(313,'0xa5',NULL,'4',' 0','-1','party',' 0x200');
+REPLACE INTO `skill_unit_db` VALUES(317,'0xa6',NULL,'3',' 0','3000','enemy',' 0x400');
+REPLACE INTO `skill_unit_db` VALUES(319,'0xa7',NULL,'3',' 0','3000','all',' 0xC40');
+REPLACE INTO `skill_unit_db` VALUES(320,'0xa8',NULL,'3',' 0','3000','all',' 0xC40');
+REPLACE INTO `skill_unit_db` VALUES(321,'0xa9',NULL,'3',' 0','3000','all',' 0xC40');
+REPLACE INTO `skill_unit_db` VALUES(322,'0xaa',NULL,'3',' 0','6000','all',' 0xC40');
+REPLACE INTO `skill_unit_db` VALUES(325,'0xab',NULL,'3',' 0','3000','enemy',' 0x100');
+REPLACE INTO `skill_unit_db` VALUES(327,'0xac',NULL,'3',' 0','3000','all',' 0x940');
+REPLACE INTO `skill_unit_db` VALUES(328,'0xad',NULL,'3',' 0','3000','enemy',' 0x900');
+REPLACE INTO `skill_unit_db` VALUES(329,'0xae',NULL,'3',' 0','3000','all',' 0x940');
+REPLACE INTO `skill_unit_db` VALUES(330,'0xaf',NULL,'3',' 0','3000','all',' 0x940');
+REPLACE INTO `skill_unit_db` VALUES(336,'0xb2',NULL,'0','-1','-1','noone',' 0x000');
+REPLACE INTO `skill_unit_db` VALUES(339,'0x86',NULL,' -1',' 0',' 300','enemy',' 0x000');
+REPLACE INTO `skill_unit_db` VALUES(362,'0xb4',NULL,'0',' 2',' 300','all',' 0x000');
+REPLACE INTO `skill_unit_db` VALUES(369,'0xb3',NULL,' -1',' 0','10000','all','0x008');
+REPLACE INTO `skill_unit_db` VALUES(395,'0xb5',NULL,'4',' 0','-1','all',' 0x200');
+REPLACE INTO `skill_unit_db` VALUES(404,'0xb6',NULL,' -1',' 0','-1','all',' 0x000');
+REPLACE INTO `skill_unit_db` VALUES(405,'0xb7',NULL,'0',' 0','-1','enemy',' 0x000');
+REPLACE INTO `skill_unit_db` VALUES(409,'0xb2',NULL,'0','-1','-1','noone',' 0x000');
+REPLACE INTO `skill_unit_db` VALUES(410,'0xb2',NULL,'0','-1','-1','noone',' 0x000');
+REPLACE INTO `skill_unit_db` VALUES(428,'0x86',NULL,'0',' 1',' 100','enemy',' 0x000');
+REPLACE INTO `skill_unit_db` VALUES(429,'0x86',NULL,'0',' 1',' 100','enemy',' 0x000');
+REPLACE INTO `skill_unit_db` VALUES(430,'0x86',NULL,'0',' 1',' 100','enemy',' 0x000');
+REPLACE INTO `skill_unit_db` VALUES(484,'0xb8',NULL,'2',' 0',' 500','enemy',' 0x808');
+REPLACE INTO `skill_unit_db` VALUES(488,'0xb9',NULL,'3',' 0','-1','all',' 0x200');
+REPLACE INTO `skill_unit_db` VALUES(516,'0x86',NULL,'3',' 0',' 100','enemy',' 0x000');
+REPLACE INTO `skill_unit_db` VALUES(521,'0xbe',NULL,'0',' 1','1000','enemy',' 0x000');
+REPLACE INTO `skill_unit_db` VALUES(525,'0x86',NULL,'0',' 2',' 100','enemy',' 0x018');
+REPLACE INTO `skill_unit_db` VALUES(527,'0xbc',NULL,' -1',' 0','2000','enemy',' 0x018');
+REPLACE INTO `skill_unit_db` VALUES(535,'0xbd',NULL,' -1',' 0','20','enemy',' 0x010');
+REPLACE INTO `skill_unit_db` VALUES(538,'0xbb',NULL,'1:1:1:2:2:2:3:3:3:4','0','-1','all','0x010');
+REPLACE INTO `skill_unit_db` VALUES(541,'0x86',NULL,'0',' 3:3:4:4:5',' 100','enemy',' 0x018');
+REPLACE INTO `skill_unit_db` VALUES(653,'0xc6',NULL,'0',' 5:7:9:11:13:5:7:9:11:13',' 300','enemy',' 0x010');
+REPLACE INTO `skill_unit_db` VALUES(670,'0xc7',NULL,'1',' 4:7:10:13:16:19:22:25:28:31','1000','all','0x008');
+REPLACE INTO `skill_unit_db` VALUES(2044,'0xca',NULL,'0',' 2','1000','all',' 0x018');
+REPLACE INTO `skill_unit_db` VALUES(2032,'0xe1',NULL,'2',' 0','1000','enemy',' 0x018');
+REPLACE INTO `skill_unit_db` VALUES(2213,'0x86',NULL,'0',' 8',' 100','enemy',' 0x018');
+REPLACE INTO `skill_unit_db` VALUES(2216,'0xcb',NULL,' -1',' 0',' 100','enemy',' 0x018');
+REPLACE INTO `skill_unit_db` VALUES(2238,'0xd8',NULL,'0',' 2','1000','enemy',' 0x006');
+REPLACE INTO `skill_unit_db` VALUES(2239,'0xd9',NULL,'0',' 0','1000','enemy',' 0x006');
+REPLACE INTO `skill_unit_db` VALUES(2249,'0xd2',NULL,'0',' 2','1000','enemy',' 0x022');
+REPLACE INTO `skill_unit_db` VALUES(2250,'0xd3',NULL,'0',' 2','1000','enemy',' 0x022');
+REPLACE INTO `skill_unit_db` VALUES(2251,'0xd4',NULL,'0',' 2','1000','enemy',' 0x022');
+REPLACE INTO `skill_unit_db` VALUES(2252,'0xd5',NULL,'0',' 2','1000','enemy',' 0x022');
+REPLACE INTO `skill_unit_db` VALUES(2253,'0xd6',NULL,'0',' 1','1000','enemy',' 0x002');
+REPLACE INTO `skill_unit_db` VALUES(2254,'0xd7',NULL,'0',' 1','1000','enemy',' 0x002');
+REPLACE INTO `skill_unit_db` VALUES(2273,'0xe2',NULL,'2',' 0',' 500','friend','0x000');
+REPLACE INTO `skill_unit_db` VALUES(2274,'0xe3',NULL,'2',' 0',' 500','all',' 0x000');
+REPLACE INTO `skill_unit_db` VALUES(2299,'0xcc',NULL,'0',' 1','1000','all',' 0x006');
+REPLACE INTO `skill_unit_db` VALUES(2300,'0xcd',NULL,'0',' 1','1000','all',' 0x006');
+REPLACE INTO `skill_unit_db` VALUES(2301,'0xce',NULL,'2',' 0','-1','enemy',' 0x200E');
+REPLACE INTO `skill_unit_db` VALUES(2302,'0xcf',NULL,'2',' 0','-1','all',' 0x2002');
+REPLACE INTO `skill_unit_db` VALUES(2303,'0xd0',NULL,'3',' 0','-1','all',' 0x2018');
+REPLACE INTO `skill_unit_db` VALUES(2304,'0xd1',NULL,'0',' 2','1000','enemy',' 0x018');
+REPLACE INTO `skill_unit_db` VALUES(2319,'0xec',NULL,'0',' 3','5000','all',' 0x000');
+REPLACE INTO `skill_unit_db` VALUES(2414,'0xda',NULL,'0',' 0','-1','enemy',' 0x000');
+REPLACE INTO `skill_unit_db` VALUES(2418,'0xdb',NULL,'0',' 5',' 300','enemy',' 0x800');
+REPLACE INTO `skill_unit_db` VALUES(2419,'0xde',NULL,'0',' 1','1000','all','0x014');
+REPLACE INTO `skill_unit_db` VALUES(2443,'0xdc',NULL,'0',' 0','300','enemy',' 0x00A');
+REPLACE INTO `skill_unit_db` VALUES(2444,'0xdd',NULL,'0',' 0','1000','enemy',' 0x00A');
+REPLACE INTO `skill_unit_db` VALUES(2446,'0x86',NULL,'0',' 3:3:3:4:4','1000','enemy',' 0x018');
+REPLACE INTO `skill_unit_db` VALUES(2447,'0x86',NULL,'0',' 3:3:3:4:4','1000','enemy',' 0x018');
+REPLACE INTO `skill_unit_db` VALUES(2449,'0xdf',NULL,'0',' 3:3:4:4:5','500','enemy','0x018');
+REPLACE INTO `skill_unit_db` VALUES(2450,'0xe0',NULL,'3',' 0',' 500','enemy',' 0x010');
+REPLACE INTO `skill_unit_db` VALUES(2452,'0xe4',NULL,'0',' 3','3000','all',' 0x010');
+REPLACE INTO `skill_unit_db` VALUES(2453,'0xeb',NULL,'0',' 1:1:2:2:3','500','enemy','0x010');
+REPLACE INTO `skill_unit_db` VALUES(2465,'0xf1',NULL,'0',' 1','1000','all',' 0x010');
+REPLACE INTO `skill_unit_db` VALUES(2466,'0xf2',NULL,'0',' 1','1000','all',' 0x010');
+REPLACE INTO `skill_unit_db` VALUES(2467,'0xf3',NULL,'0',' 1','1000','all',' 0x010');
+REPLACE INTO `skill_unit_db` VALUES(2468,'0xf4',NULL,'0',' 1','1000','all',' 0x010');
+REPLACE INTO `skill_unit_db` VALUES(2479,'0xe5',NULL,'0',' 1','1000','enemy',' 0x006');
+REPLACE INTO `skill_unit_db` VALUES(2482,'0xe6','0x7f',' -1',' 2','-1','all',' 0x000');
+REPLACE INTO `skill_unit_db` VALUES(2484,'0x86',NULL,'0',' 2',' 100','enemy',' 0x080');
+REPLACE INTO `skill_unit_db` VALUES(2485,'0xe7',NULL,'0',' 3','2000','enemy',' 0x098');
+REPLACE INTO `skill_unit_db` VALUES(2487,'0xe8',NULL,'0',' 3','1000','enemy',' 0x000');
+REPLACE INTO `skill_unit_db` VALUES(2488,'0xe9',NULL,'0',' 3','1000','enemy',' 0x000');
+REPLACE INTO `skill_unit_db` VALUES(2490,'0xea',NULL,'0',' 1','1000','all',' 0x002');
+REPLACE INTO `skill_unit_db` VALUES(2555,'0x104',NULL,'0',' 1:2:2:3:3','500','enemy','0x006');
+REPLACE INTO `skill_unit_db` VALUES(3006,'0x86',NULL,'0',' 2',' 100','enemy',' 0x018');
+REPLACE INTO `skill_unit_db` VALUES(3008,'0x86',NULL,'0',' 2',' 100','enemy',' 0x018');
+REPLACE INTO `skill_unit_db` VALUES(3009,'0x86',NULL,'0',' 3',' 100','enemy',' 0x018');
+REPLACE INTO `skill_unit_db` VALUES(3020,'0xf8',NULL,'0',' 3',' 100','all',' 0x018');
+REPLACE INTO `skill_unit_db` VALUES(3010,'0xfc',NULL,'0',' 0','5000','enemy',' 0x018');
+REPLACE INTO `skill_unit_db` VALUES(5006,'0x101',NULL,'0',' 3','2000','enemy',' 0x018');
+REPLACE INTO `skill_unit_db` VALUES(5008,'0x7e',NULL,'0',' 0','-1','all',' 0x003');
+REPLACE INTO `skill_unit_db` VALUES(5010,'0xfe',NULL,'0',' 2','-1','enemy',' 0x000');
+REPLACE INTO `skill_unit_db` VALUES(8020,'0xf5',NULL,'0',' 3','2300:2100:1900:1700:1500','enemy',' 0x018');
+REPLACE INTO `skill_unit_db` VALUES(8033,'0x7e',NULL,'0',' 0','-1','all',' 0x003');
+REPLACE INTO `skill_unit_db` VALUES(8025,'0x86',NULL,'0',' 2:2:3:3:4','1000','enemy',' 0x018');
+REPLACE INTO `skill_unit_db` VALUES(8041,'0xf6',NULL,'1:1:2:2:3',' 0','2000','enemy',' 0x01A');
+REPLACE INTO `skill_unit_db` VALUES(8043,'0xf7',NULL,'1',' 0','-1','enemy',' 0x2018');
+REPLACE INTO `skill_unit_db` VALUES(8208,'0x86',NULL,'0',' 2','1000','enemy',' 0x080');
+REPLACE INTO `skill_unit_db` VALUES(8209,'0x90',NULL,'0',' 1','1000','enemy',' 0x006');
+REPLACE INTO `skill_unit_db` VALUES(8210,'0x93',NULL,'0',' 0','1000','enemy',' 0x006');
+REPLACE INTO `skill_unit_db` VALUES(8211,'0x95',NULL,'0',' 1','1000','enemy',' 0x006');
+REPLACE INTO `skill_unit_db` VALUES(8212,'0x97',NULL,'0',' 1','1000','enemy',' 0x006');
+REPLACE INTO `skill_unit_db` VALUES(8403,'0xed',NULL,' -1',' 1','1000','enemy',' 0x018 ');
+REPLACE INTO `skill_unit_db` VALUES(8406,'0xee',NULL,'1',' 0','-1','friend','0x2018');
+REPLACE INTO `skill_unit_db` VALUES(8409,'0xef',NULL,'0',' 1','-1','friend','0x2018');
+REPLACE INTO `skill_unit_db` VALUES(8412,'0xf0',NULL,'0',' 1','-1','friend','0x2018');
+REPLACE INTO `skill_unit_db` VALUES(10006,'0xc1',NULL,'2',' 0','-1','sameguild',' 0x040');
+REPLACE INTO `skill_unit_db` VALUES(10007,'0xc2',NULL,'2',' 0','-1','sameguild',' 0x040');
+REPLACE INTO `skill_unit_db` VALUES(10008,'0xc3',NULL,'2',' 0','-1','sameguild',' 0x040');
+REPLACE INTO `skill_unit_db` VALUES(10009,'0xc4',NULL,'2',' 0','-1','sameguild',' 0x040');
+
+--
+-- Estrutura da tabela `spellbook_db`
+--
+
+CREATE TABLE IF NOT EXISTS `spellbook_db` (
+  `SkillID` smallint(5) unsigned NOT NULL,
+  `PreservePoints` tinyint(4) NOT NULL,
+  `RequiredBook` smallint(5) unsigned NOT NULL,
+  PRIMARY KEY (`SkillID`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+REPLACE INTO `spellbook_db` VALUES(14,7,6190);
+REPLACE INTO `spellbook_db` VALUES(19,7,6189);
+REPLACE INTO `spellbook_db` VALUES(20,7,6191);
+REPLACE INTO `spellbook_db` VALUES(21,9,6197);
+REPLACE INTO `spellbook_db` VALUES(83,10,6194);
+REPLACE INTO `spellbook_db` VALUES(84,9,6198);
+REPLACE INTO `spellbook_db` VALUES(85,10,6193);
+REPLACE INTO `spellbook_db` VALUES(86,9,6199);
+REPLACE INTO `spellbook_db` VALUES(89,10,6192);
+REPLACE INTO `spellbook_db` VALUES(90,8,6201);
+REPLACE INTO `spellbook_db` VALUES(91,9,6200);
+REPLACE INTO `spellbook_db` VALUES(2210,8,6205);
+REPLACE INTO `spellbook_db` VALUES(2211,12,6204);
+REPLACE INTO `spellbook_db` VALUES(2213,22,6195);
+REPLACE INTO `spellbook_db` VALUES(2214,12,6203);
+REPLACE INTO `spellbook_db` VALUES(2216,12,6202);
+REPLACE INTO `spellbook_db` VALUES(2217,22,6196);
+
+--
+-- Estrutura da tabela `statpoint_db`
+--
+
+CREATE TABLE IF NOT EXISTS `statpoint_db` (
+  `StatPoints` double unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`StatPoints`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;

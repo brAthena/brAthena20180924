@@ -4059,177 +4059,109 @@ bool mob_readdb_mobavail(char* str[], int columns, int current)
  *------------------------------------------*/
 int mob_read_randommonster(void)
 {
-	char line[1024];
-	char *str[10],*p;
-	int i,j;
-	const char* mobfile[] = {
-		DBPATH"mob_branch.txt",
-		DBPATH"mob_poring.txt",
-		DBPATH"mob_boss.txt",
-		"mob_pouch.txt",
-		"mob_classchange.txt"};
+	const char *mobfile[] = { get_database_name(22), get_database_name(23), get_database_name(24), get_database_name(25), get_database_name(26) };
+	int i, rows = 0;
 
 	memset(&summon, 0, sizeof(summon));
 
-	for (i = 0; i < ARRAYLENGTH(mobfile) && i < MAX_RANDOMMONSTER; i++) {
-		FILE *fp;
-		unsigned int count = 0;
-		mob->db_data[0]->summonper[i] = 1002; // Default fallback value, in case the database does not provide one
-		sprintf(line, "%s/%s", map->db_path, mobfile[i]);
-		fp=fopen(line,"r");
-		if(fp==NULL){
-			ShowError("can't read %s\n",line);
-			return -1;
+	for(i = 0; i < ARRAYLENGTH(mobfile) && i < MAX_RANDOMMONSTER; i++) {
+		mob->db_data[0]->summonper[i] = 1002;
+
+		if(SQL_ERROR == SQL->Query(map->brAmysql_handle, "SELECT * FROM `%s`", mobfile[i])) {
+			Sql_ShowDebug(map->brAmysql_handle);
+			continue;
 		}
-		while(fgets(line, sizeof(line), fp))
-		{
-			int class_;
-			if(line[0] == '/' && line[1] == '/')
-				continue;
-			memset(str,0,sizeof(str));
-			for(j=0,p=line;j<3 && p;j++){
-				str[j]=p;
-				p=strchr(p,',');
-				if(p) *p++=0;
-			}
 
-			if(str[0]==NULL || str[2]==NULL)
-				continue;
+		while(SQL_SUCCESS == SQL->NextRow(map->brAmysql_handle)) {
+			int class_, k = 0;
+			char *row[3];
+			rows++;
 
-			class_ = atoi(str[0]);
+			for(; k < 3; ++k)
+				SQL->GetData(map->brAmysql_handle, k, &row[k], NULL);
+
+			class_ = atoi(row[0]);
 			if(mob->db(class_) == mob->dummy)
 				continue;
-			count++;
-			mob->db_data[class_]->summonper[i]=atoi(str[2]);
-			if (i) {
-				if( summon[i].qty < ARRAYLENGTH(summon[i].class_) ) //MvPs
+			mob->db_data[class_]->summonper[i]=atoi(row[2]);
+			if(i) {
+				if(summon[i].qty < ARRAYLENGTH(summon[i].class_))
 					summon[i].class_[summon[i].qty++] = class_;
 				else {
-					ShowDebug("Can't store more random mobs from %s, increase size of mob.c:summon variable!\n", mobfile[i]);
+					ShowDebug("Nao foi possivel armazenar mais mobs aleatorios de %s!\n", mobfile[i]);
 					break;
 				}
 			}
 		}
-		if (i && !summon[i].qty) { //At least have the default here.
+
+		if(i && !summon[i].qty) {
 			summon[i].class_[0] = mob->db_data[0]->summonper[i];
 			summon[i].qty = 1;
 		}
-		fclose(fp);
-		ShowStatus("Done reading '"CL_WHITE"%u"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n",count,mobfile[i]);
+
+		ShowSQL("Leitura de '"CL_WHITE"%lu"CL_RESET"' entradas na tabela '"CL_WHITE"%s"CL_RESET"'.\n", rows, mobfile[i]);
+		rows = 0;
 	}
+
+	SQL->FreeResult(map->brAmysql_handle);
 	return 0;
 }
 
 /*==========================================
- * processes one mob_chat_db entry [SnakeDrak]
- * @param last_msg_id ensures that only one error message per mob id is printed
+ * Processes one mob_chat_db entry [SnakeDrak]
+ * Modificado por Shiraz
  *------------------------------------------*/
-bool mob_parse_row_chatdb(char** str, const char* source, int line, int* last_msg_id)
+bool mob_parse_row_chatdb(char *str[], int columns, int current)
 {
-	char* msg;
+	char *msg;
 	struct mob_chat *ms;
 	int msg_id;
 	size_t len;
 
 	msg_id = atoi(str[0]);
 
-	if (msg_id <= 0 || msg_id > MAX_MOB_CHAT)
-	{
-		if (msg_id != *last_msg_id) {
-			ShowError("mob_chat: Invalid chat ID: %d at %s, line %d\n", msg_id, source, line);
-			*last_msg_id = msg_id;
+	if(msg_id <= 0 || msg_id > MAX_MOB_CHAT) {
+		if(msg_id != current) {
+			ShowError("mob_parse_row_chatdb: Chat invalido ID: %d\n", msg_id);
+			current = msg_id;
 		}
 		return false;
 	}
 
-	if (mob->chat_db[msg_id] == NULL)
-		mob->chat_db[msg_id] = (struct mob_chat*)aCalloc(1, sizeof (struct mob_chat));
+	if(mob->chat_db[msg_id] == NULL)
+		mob->chat_db[msg_id] = (struct mob_chat *)aCalloc(1, sizeof(struct mob_chat));
 
 	ms = mob->chat_db[msg_id];
-	//MSG ID
 	ms->msg_id=msg_id;
-	//Color
 	ms->color=(unsigned int)strtoul(str[1],NULL,0);
-	//Message
 	msg = str[2];
 	len = strlen(msg);
 
-	while( len && ( msg[len-1]=='\r' || msg[len-1]=='\n' ) )
-	{// find EOL to strip
+	while(len && (msg[len-1]=='\r' || msg[len-1]=='\n'))
 		len--;
-	}
 
-	if(len>(CHAT_SIZE_MAX-1))
-	{
-		if (msg_id != *last_msg_id) {
-			ShowError("mob_chat: readdb: Message too long! Line %d, id: %d\n", line, msg_id);
-			*last_msg_id = msg_id;
+	if(len>(CHAT_SIZE_MAX-1)) {
+		if(msg_id != current) {
+			ShowError("mob_parse_row_chatdb: Mensagem muito longa! Row %d\n", current);
+			current = msg_id;
 		}
 		return false;
-	}
-	else if( !len )
-	{
-		ShowWarning("mob_parse_row_chatdb: Empty message for id %d.\n", msg_id);
+	} else if(!len) {
+		ShowWarning("mob_parse_row_chatdb: Mensagem vazia! Chat ID: %d.\n", msg_id);
 		return false;
 	}
 
-	msg[len] = 0;  // strip previously found EOL
+	msg[len] = 0;
 	safestrncpy(ms->msg, str[2], CHAT_SIZE_MAX);
 
 	return true;
 }
 
-/*==========================================
- * mob_chat_db.txt reading [SnakeDrak]
- *-------------------------------------------------------------------------*/
+/*=============================================
+ * Leitura mob_chat_db [Shiraz]
+ *---------------------------------------------*/
 void mob_readchatdb(void) {
-	char arc[]="mob_chat_db.txt";
-	uint32 lines=0, count=0;
-	char line[1024], filepath[256];
-	int i, tmp=0;
-	FILE *fp;
-	sprintf(filepath, "%s/%s", map->db_path, arc);
-	fp=fopen(filepath, "r");
-	if(fp == NULL) {
-		ShowWarning("mob_readchatdb: File not found \"%s\", skipping.\n", filepath);
-		return;
-	}
-
-	while(fgets(line, sizeof(line), fp)) {
-		char *str[3], *p, *np;
-		int j=0;
-
-		lines++;
-		if(line[0] == '/' && line[1] == '/')
-			continue;
-		memset(str, 0, sizeof(str));
-
-		p=line;
-		while(ISSPACE(*p))
-			++p;
-		if(*p == '\0')
-			continue;// empty line
-		for(i = 0; i <= 2; i++)
-		{
-			str[i] = p;
-			if(i<2 && (np = strchr(p, ',')) != NULL) {
-				*np = '\0'; p = np + 1; j++;
-			}
-		}
-
-		if( j < 2 || str[2]==NULL)
-		{
-			ShowError("mob_readchatdb: Insufficient number of fields for skill at %s, line %d\n", arc, lines);
-			continue;
-		}
-
-		if( !mob->parse_row_chatdb(str, filepath, lines, &tmp) )
-			continue;
-
-		count++;
-	}
-	fclose(fp);
-	ShowStatus("Done reading '"CL_WHITE"%"PRIu32""CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n", count, arc);
+	sv_readsqldb(get_database_name(21), 3, MAX_MOB_CHAT, &mob_parse_row_chatdb);
 }
 
 /*==========================================
@@ -4633,7 +4565,7 @@ void mob_load(bool minimal) {
 		mob->readdb();
 		return;
 	}
-	sv->readdb(map->db_path, "mob_item_ratio.txt", ',', 2, 2+MAX_ITEMRATIO_MOBS, -1, mob->readdb_itemratio); // must be read before mobdb
+	sv_readsqldb(get_database_name(28), 2+MAX_ITEMRATIO_MOBS, -1, mob->readdb_itemratio);
 	mob->readchatdb();
 	if (map->db_use_sql_mob_db) {
 		mob->read_sqldb();
@@ -4644,7 +4576,7 @@ void mob_load(bool minimal) {
 		mob->readdb();
 		mob->readskilldb();
 	}
-	sv->readdb(map->db_path, "mob_avail.txt", ',', 2, 12, -1, mob->readdb_mobavail);
+	sv_readsqldb(get_database_name(20), 12, -1, mob->readdb_mobavail);
 	mob->read_randommonster();
 	sv->readdb(map->db_path, DBPATH"mob_race2_db.txt", ',', 2, 20, -1, mob->readdb_race2);
 }

@@ -782,167 +782,138 @@ int elemental_ai_timer(int tid, int64 tick, int id, intptr_t data) {
 	return 0;
 }
 
+/*==========================================
+ * Leitura elemental_db SQL [Shiraz]
+ *------------------------------------------*/
 int read_elementaldb(void) {
-	FILE *fp;
-	char line[1024], *p;
-	char *str[26];
-	int i, j = 0, k = 0, ele;
 	struct s_elemental_db *db;
 	struct status_data *estatus;
+	int count = 0, ele;
 
-	sprintf(line, "%s/%s", map->db_path, "elemental_db.txt");
-	
-	if( runflag == MAPSERVER_ST_RUNNING ) //only necessary after we're up
-		memset(elemental->db,0,sizeof(elemental->db));
+	memset(elemental->db,0,sizeof(elemental->db));
 
-	fp = fopen(line, "r");
-	if( !fp ) {
-		ShowError("read_elementaldb : can't read elemental_db.txt\n");
+	if(SQL_ERROR == SQL->Query(map->brAmysql_handle, "SELECT * FROM `%s`", get_database_name(14))) {
+		Sql_ShowDebug(map->brAmysql_handle);
 		return -1;
 	}
 
-	while( fgets(line, sizeof(line), fp) && j < MAX_ELEMENTAL_CLASS ) {
-		k++;
-		if( line[0] == '/' && line[1] == '/' )
-			continue;
+	while(SQL_SUCCESS == SQL->NextRow(map->brAmysql_handle) && count < MAX_ELEMENTAL_CLASS) {
+		char *row[26];
+		int i;
 
-		if( line[0] == '\0' || line[0] == '\n' || line[0] == '\r')
-			continue;
+		for(i = 0; i != 26; ++i)
+			SQL->GetData(map->brAmysql_handle, i, &row[i], NULL);
 
-		i = 0;
-		p = strtok(line, ",");
-		while( p != NULL && i < 26 ) {
-			str[i++] = p;
-			p = strtok(NULL, ",");
-		}
-		if( i < 26 ) {
-			ShowError("read_elementaldb : Incorrect number of columns at elemental_db.txt line %d.\n", k);
-			continue;
-		}
-
-		db = &elemental->db[j];
-		db->class_ = atoi(str[0]);
-		safestrncpy(db->sprite, str[1], NAME_LENGTH);
-		safestrncpy(db->name, str[2], NAME_LENGTH);
-		db->lv = atoi(str[3]);
+		db = &elemental->db[count];
+		db->class_ = atoi(row[0]);
+		safestrncpy(db->sprite, row[1], NAME_LENGTH);
+		safestrncpy(db->name, row[2], NAME_LENGTH);
+		db->lv = atoi(row[3]);
 
 		estatus = &db->status;
 		db->vd.class_ = db->class_;
 
-		estatus->max_hp = atoi(str[4]);
-		estatus->max_sp = atoi(str[5]);
-		estatus->rhw.range = atoi(str[6]);
-		estatus->rhw.atk = atoi(str[7]);
-		estatus->rhw.atk2 = atoi(str[8]);
-		estatus->def = atoi(str[9]);
-		estatus->mdef = atoi(str[10]);
-		estatus->str = atoi(str[11]);
-		estatus->agi = atoi(str[12]);
-		estatus->vit = atoi(str[13]);
-		estatus->int_ = atoi(str[14]);
-		estatus->dex = atoi(str[15]);
-		estatus->luk = atoi(str[16]);
-		db->range2 = atoi(str[17]);
-		db->range3 = atoi(str[18]);
-		estatus->size = atoi(str[19]);
-		estatus->race = atoi(str[20]);
+		estatus->max_hp = atoi(row[4]);
+		estatus->max_sp = atoi(row[5]);
+		estatus->rhw.range = atoi(row[6]);
+		estatus->rhw.atk = atoi(row[7]);
+		estatus->rhw.atk2 = atoi(row[8]);
+		estatus->def = atoi(row[9]);
+		estatus->mdef = atoi(row[10]);
+		estatus->str = atoi(row[11]);
+		estatus->agi = atoi(row[12]);
+		estatus->vit = atoi(row[13]);
+		estatus->int_ = atoi(row[14]);
+		estatus->dex = atoi(row[15]);
+		estatus->luk = atoi(row[16]);
+		db->range2 = atoi(row[17]);
+		db->range3 = atoi(row[18]);
+		estatus->size = atoi(row[19]);
+		estatus->race = atoi(row[20]);
 
-		ele = atoi(str[21]);
+		ele = atoi(row[21]);
 		estatus->def_ele = ele%10;
 		estatus->ele_lv = ele/20;
+
 		if( estatus->def_ele >= ELE_MAX ) {
-			ShowWarning("Elemental %d has invalid element type %d (max element is %d)\n", db->class_, estatus->def_ele, ELE_MAX - 1);
+			ShowWarning("Elemental %d tem o tipo de elemento invalido %d (elemento maximo é %d)\n", db->class_, estatus->def_ele, ELE_MAX - 1);
 			estatus->def_ele = ELE_NEUTRAL;
 		}
+		
 		if( estatus->ele_lv < 1 || estatus->ele_lv > 4 ) {
-			ShowWarning("Elemental %d has invalid element level %d (max is 4)\n", db->class_, estatus->ele_lv);
+			ShowWarning("Elemental %d tem nivel de elemento invalido %d (maximo 4)\n", db->class_, estatus->ele_lv);
 			estatus->ele_lv = 1;
 		}
 
 		estatus->aspd_rate = 1000;
-		estatus->speed = atoi(str[22]);
-		estatus->adelay = atoi(str[23]);
-		estatus->amotion = atoi(str[24]);
-		estatus->dmotion = atoi(str[25]);
-
-		j++;
+		estatus->speed = atoi(row[22]);
+		estatus->adelay = atoi(row[23]);
+		estatus->amotion = atoi(row[24]);
+		estatus->dmotion = atoi(row[25]);
+		++count;
 	}
 
-	fclose(fp);
-	ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' elementals in '"CL_WHITE"db/elemental_db.txt"CL_RESET"'.\n",j);
-
+	ShowSQL("Leitura de '"CL_WHITE"%d"CL_RESET"' entradas na tabela '"CL_WHITE"%s"CL_RESET"'.\n", count, get_database_name(14));
+	SQL->FreeResult(map->brAmysql_handle);
 	return 0;
 }
 
+/*==========================================
+ * Leitura elemental_skilldb SQL [Shiraz]
+ *------------------------------------------*/
 int read_elemental_skilldb(void) {
-	FILE *fp;
-	char line[1024], *p;
-	char *str[4];
 	struct s_elemental_db *db;
-	int i, j = 0, k = 0, class_;
-	uint16 skill_id, skill_lv;
-	int skillmode;
+	int i, j = 0, k = 0, class_, skill_id, skill_lv, skillmode;
 
-	sprintf(line, "%s/%s", map->db_path, "elemental_skill_db.txt");
-	fp = fopen(line, "r");
-	if( !fp ) {
-		ShowError("read_elemental_skilldb : can't read elemental_skill_db.txt\n");
+	if(SQL_ERROR == SQL->Query(map->brAmysql_handle, "SELECT * FROM `%s`", get_database_name(15))) {
+		Sql_ShowDebug(map->brAmysql_handle);
 		return -1;
 	}
 
-	while( fgets(line, sizeof(line), fp) ) {
+	while(SQL_SUCCESS == SQL->NextRow(map->brAmysql_handle)) {
+		char *row[4];
 		k++;
-		if( line[0] == '/' && line[1] == '/' )
-			continue;
 
-		if( line[0] == '\0' || line[0] == '\n' || line[0] == '\r')
-			continue;
+		for(i = 0; i != 4; ++i)
+			SQL->GetData(map->brAmysql_handle, i, &row[i], NULL);
 
-		i = 0;
-		p = strtok(line, ",");
-		while( p != NULL && i < 4 ) {
-			str[i++] = p;
-			p = strtok(NULL, ",");
-		}
-		if( i < 4 ) {
-			ShowError("read_elemental_skilldb : Incorrect number of columns at elemental_skill_db.txt line %d.\n", k);
-			continue;
-		}
-
-		class_ = atoi(str[0]);
+		class_ = atoi(row[0]);
 		ARR_FIND(0, MAX_ELEMENTAL_CLASS, i, class_ == elemental->db[i].class_);
-		if( i == MAX_ELEMENTAL_CLASS ) {
-			ShowError("read_elemental_skilldb : Class not found in elemental_db for skill entry, line %d.\n", k);
+
+		if(i == MAX_ELEMENTAL_CLASS) {
+			ShowError("read_elemental_skilldb : Classe nao encontrada em elemental_db para a entrada de habilidade, linha %d.\n", k);
 			continue;
 		}
 
-		skill_id = atoi(str[1]);
-		if( skill_id < EL_SKILLBASE || skill_id >= EL_SKILLBASE + MAX_ELEMENTALSKILL ) {
-			ShowError("read_elemental_skilldb : Skill out of range, line %d.\n", k);
+		skill_id = atoi(row[1]);
+		if(skill_id < EL_SKILLBASE || skill_id >= EL_SKILLBASE + MAX_ELEMENTALSKILL) {
+			ShowError("read_elemental_skilldb : Habilidade fora do alcance, linha %d.\n", k);
 			continue;
 		}
 
 		db = &elemental->db[i];
-		skill_lv = atoi(str[2]);
+		skill_lv = atoi(row[2]);
 
-		skillmode = atoi(str[3]);
-		if( skillmode < EL_SKILLMODE_PASIVE || skillmode > EL_SKILLMODE_AGGRESSIVE ) {
-			ShowError("read_elemental_skilldb : Skillmode out of range, line %d.\n",k);
+		skillmode = atoi(row[3]);
+		if(skillmode < EL_SKILLMODE_PASIVE || skillmode > EL_SKILLMODE_AGGRESSIVE) {
+			ShowError("read_elemental_skilldb : Skillmode fora da faixa, linha %d.\n", k);
 			continue;
 		}
-		ARR_FIND( 0, MAX_ELESKILLTREE, i, db->skill[i].id == 0 || db->skill[i].id == skill_id );
-		if( i == MAX_ELESKILLTREE ) {
-			ShowWarning("Unable to load skill %d into Elemental %d's tree. Maximum number of skills per elemental has been reached.\n", skill_id, class_);
+
+		ARR_FIND(0, MAX_ELESKILLTREE, i, db->skill[i].id == 0 || db->skill[i].id == skill_id);
+		if(i == MAX_ELESKILLTREE) {
+			ShowWarning("Nao foi possivel carregar  arvore de habilidade %d em Elemental %d's. O numero maximo de habilidades por elemental foi atingido.\n", skill_id, class_);
 			continue;
 		}
+
 		db->skill[i].id = skill_id;
 		db->skill[i].lv = skill_lv;
 		db->skill[i].mode = skillmode;
 		j++;
 	}
 
-	fclose(fp);
-	ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"db/elemental_skill_db.txt"CL_RESET"'.\n",j);
+	ShowSQL("Leitura de '"CL_WHITE"%d"CL_RESET"' entradas na tabela '"CL_WHITE"%s"CL_RESET"'.\n", j, get_database_name(15));
+	SQL->FreeResult(map->brAmysql_handle);
 	return 0;
 }
 
