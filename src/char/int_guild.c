@@ -597,17 +597,30 @@ struct guild_castle* inter_guild_castle_fromsql(int castle_id)
 }
 
 
-// Read exp_guild.txt
-bool inter_guild_exp_parse_row(char* split[], int column, int current) {
-	int64 exp = strtoll(split[0], NULL, 10);
+/*==========================================
+ * Leitura exp_guild_db SQL [Shiraz]
+ *------------------------------------------*/
+int inter_guild_ReadEXP(void)
+{
+	int expGuild = 0;
+	char *row;
 
-	if (exp < 0 || exp >= UINT_MAX) {
-		ShowError("exp_guild: Invalid exp %"PRId64" (valid range: 0 - %u) at line %d\n", exp, UINT_MAX, current);
-		return false;
+	memset(inter_guild->exp, 0, sizeof(inter_guild->exp));
+
+	if(SQL_ERROR == SQL->Query(inter->sql_handle, "SELECT * FROM `%s`.`%s`", tmp_db_name, "exp_guild_db")) {
+		Sql_ShowDebug(inter->sql_handle);
+		return -1;
 	}
 
-	inter_guild->exp[current] = (unsigned int)exp;
-	return true;
+	while(SQL_SUCCESS == SQL->NextRow(inter->sql_handle)) {
+		SQL->GetData(inter->sql_handle, 0, &row, NULL);
+		inter_guild->exp[expGuild]=(unsigned int)atof(row);
+		expGuild++;
+	}
+
+	ShowSQL("Leitura de '"CL_WHITE"%d"CL_RESET"' entradas na tabela '"CL_WHITE"%s"CL_RESET"'.\n", expGuild, "exp_guild_db");
+	SQL->FreeResult(inter->sql_handle);
+	return 0;
 }
 
 
@@ -722,8 +735,7 @@ int inter_guild_sql_init(void)
 	inter_guild->guild_db= idb_alloc(DB_OPT_RELEASE_DATA);
 	inter_guild->castle_db = idb_alloc(DB_OPT_RELEASE_DATA);
 
-	//Read exp file
-	sv->readdb("db", DBPATH"exp_guild.txt", ',', 1, 1, MAX_GUILDLEVEL, inter_guild->exp_parse_row);
+	inter_guild_ReadEXP();
 
 	timer->add_func_list(inter_guild->save_timer, "inter_guild->save_timer");
 	timer->add(timer->gettick() + 10000, inter_guild->save_timer, 0, 0);
@@ -1902,7 +1914,6 @@ void inter_guild_defaults(void)
 	inter_guild->fromsql = inter_guild_fromsql;
 	inter_guild->castle_tosql = inter_guild_castle_tosql;
 	inter_guild->castle_fromsql = inter_guild_castle_fromsql;
-	inter_guild->exp_parse_row = inter_guild_exp_parse_row;
 	inter_guild->CharOnline = inter_guild_CharOnline;
 	inter_guild->CharOffline = inter_guild_CharOffline;
 	inter_guild->sql_init = inter_guild_sql_init;

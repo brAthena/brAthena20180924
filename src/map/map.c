@@ -3868,6 +3868,11 @@ char *get_database_name(int database_id)
 		case 26: db_name = "mob_classchange_db"; break;
 		case 27: db_name = "pet_db"; break;
 		case 28: db_name = "mob_item_ratio_db"; break;
+		case 29: db_name = "castle_db"; break;
+		case 30: db_name = "const_db"; break;
+		case 31: db_name = "exp_homun_db"; break;
+		case 32: db_name = "homunculus_db"; break;
+		case 33: db_name = "job_db2"; break;
 	}
 
 	return db_name;

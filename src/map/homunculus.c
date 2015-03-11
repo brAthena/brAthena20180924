@@ -1134,24 +1134,8 @@ bool homunculus_read_db_sub(char* str[], int columns, int current) {
 }
 
 void homunculus_read_db(void) {
-	int i;
-	const char *filename[]={DBPATH"homunculus_db.txt","homunculus_db2.txt"};
-
 	memset(homun->db,0,sizeof(homun->db));
-	for(i = 0; i<ARRAYLENGTH(filename); i++) {
-		if( i > 0 ) {
-			char filepath[256];
-
-			sprintf(filepath, "%s/%s", map->db_path, filename[i]);
-
-			if( !exists(filepath) ) {
-				continue;
-			}
-		}
-
-		sv->readdb(map->db_path, filename[i], ',', 50, 50, MAX_HOMUNCULUS_CLASS, homun->read_db_sub);
-	}
-
+	sv_readsqldb(get_database_name(32), 50, MAX_HOMUNCULUS_CLASS, homun->read_db_sub);
 }
 // <hom class>,<skill id>,<max level>[,<job level>],<req id1>,<req lv1>,<req id2>,<req lv2>,<req id3>,<req lv3>,<req id4>,<req lv4>,<req id5>,<req lv5>,<intimacy lv req>
 bool homunculus_read_skill_db_sub(char* split[], int columns, int current) {
@@ -1217,38 +1201,34 @@ void homunculus_skill_db_read(void) {
 
 }
 
+/*==========================================
+ * Leitura exp_homun_db SQL [Shiraz]
+ *------------------------------------------*/
 void homunculus_exp_db_read(void) {
-	char line[1024];
-	int i, j=0;
-	char *filename[]={
-		DBPATH"exp_homun.txt",
-		"exp_homun2.txt"};
+#define HLIMIT 9999999
+	int HomunLoop = 0;
+	char *row;
 
-	memset(homun->exptable,0,sizeof(homun->exptable));
-	for(i = 0; i < 2; i++) {
-		FILE *fp;
-		sprintf(line, "%s/%s", map->db_path, filename[i]);
-		if( (fp=fopen(line,"r")) == NULL) {
-			if(i != 0)
-				continue;
-			ShowError("can't read %s\n",line);
-			return;
-		}
-		while(fgets(line, sizeof(line), fp) && j < MAX_LEVEL) {
-			if(line[0] == '/' && line[1] == '/')
-				continue;
+	memset(homun->exptable, 0, sizeof(homun->exptable));
 
-			if (!(homun->exptable[j++] = (unsigned int)strtoul(line, NULL, 10)))
-				break;
-		}
-		// Last permitted level have to be 0!
-		if (homun->exptable[MAX_LEVEL - 1]) {
-			ShowWarning("homunculus_exp_db_read: Reached max level in exp_homun [%d]. Remaining lines were not read.\n ", MAX_LEVEL);
+	if(SQL_ERROR == SQL->Query(map->brAmysql_handle, "SELECT * FROM `%s`", get_database_name(31)))
+		Sql_ShowDebug(map->brAmysql_handle);
+
+	while(SQL_SUCCESS == SQL->NextRow(map->brAmysql_handle) && HomunLoop < MAX_LEVEL) {
+		SQL->GetData(map->brAmysql_handle, 0, &row, NULL);
+		homun->exptable[HomunLoop] = atoi(row);
+
+		if(homun->exptable[HomunLoop++] >= HLIMIT)
+			break;
+
+		if(homun->exptable[MAX_LEVEL - 1]) {
+			ShowWarning("homunculus_exp_db_read: Nivel maximo atingido em exp_homun_db [%d]. Linhas restantes nao foram lidas.\n ", MAX_LEVEL);
 			homun->exptable[MAX_LEVEL - 1] = 0;
 		}
-		fclose(fp);
-		ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' levels in '"CL_WHITE"%s"CL_RESET"'.\n", j, filename[i]);
 	}
+
+	ShowSQL("Leitura de '"CL_WHITE"%d"CL_RESET"' entradas na tabela '"CL_WHITE"%s"CL_RESET"'.\n", HomunLoop, get_database_name(31));
+	SQL->FreeResult(map->brAmysql_handle);
 }
 
 void homunculus_reload(void) {

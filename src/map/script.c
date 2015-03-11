@@ -2263,32 +2263,33 @@ void script_set_constant2(const char *name, int value, bool isparameter) {
 	script->str_data[n].val  = value;
 
 }
+
 /*==========================================
- * Reading constant databases
- * const.txt
+ * Leitura const_db SQL [Shiraz]
  *------------------------------------------*/
 void read_constdb(void) {
-	FILE *fp;
-	char line[1024],name[1024],val[1024];
-	int type;
+	int i, count = 0, type;
 
-	sprintf(line, "%s/const.txt", map->db_path);
-	fp=fopen(line, "r");
-	if(fp==NULL) {
-		ShowError("can't read %s\n", line);
-		return ;
+	if(SQL_ERROR == SQL->Query(map->brAmysql_handle, "SELECT * FROM `%s`", get_database_name(30))) {
+		Sql_ShowDebug(map->brAmysql_handle);
+		return;
 	}
-	while (fgets(line, sizeof(line), fp)) {
-		if (line[0] == '/' && line[1] == '/')
-			continue;
-		type = 0;
-		if (sscanf(line, "%1023[A-Za-z0-9_],%1023[-0-9xXA-Fa-f],%d", name, val, &type) >=2
-		 || sscanf(line, "%1023[A-Za-z0-9_] %1023[-0-9xXA-Fa-f] %d", name, val, &type) >=2
-		) {
-			script->set_constant(name, (int)strtol(val, NULL, 0), (bool)type);
-		}
+
+	while(SQL_SUCCESS == SQL->NextRow(map->brAmysql_handle)) {
+		char *row[3], in_line[1024], constant[1024], val[1024];
+
+		for(i = 0; i < 3; ++i)
+			SQL->GetData(map->brAmysql_handle, i, &row[i], NULL);
+			
+		sprintf(in_line, "%s %s %s", row[0], row[1], row[2]);
+		
+		if(sscanf(in_line, "%[A-Za-z0-9_] %[-0-9xXA-Fa-f] %d", constant, val, &type) >= 2)
+			script->set_constant(constant, (int)strtol(val, NULL, 0), (bool)type);
+		++count;
 	}
-	fclose(fp);
+
+	ShowSQL("Leitura de '"CL_WHITE"%d"CL_RESET"' entradas na tabela '"CL_WHITE"%s"CL_RESET"'.\n", count, get_database_name(30));
+	SQL->FreeResult(map->brAmysql_handle);
 }
 
 // Standard UNIX tab size is 8

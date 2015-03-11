@@ -21,6 +21,8 @@ struct accreg;
 #ifdef BRATHENA_CORE
 extern unsigned int party_share_level;
 
+extern char tmp_db_name[32];
+
 void inter_defaults(void);
 #endif // BRATHENA_CORE
 
