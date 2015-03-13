@@ -19078,10 +19078,10 @@ BUILDIN(qiclear) {
 	return true;
 }
 /**
- * packageitem({<optional container_item_id>})
+ * CreatePackage({<optional container_item_id>})
  * when no item id is provided it tries to assume it comes from the current item id being processed (if any)
  **/
-BUILDIN(packageitem) {
+BUILDIN(CreatePackage) {
 	struct item_data *data = NULL;
 	struct map_session_data *sd = NULL;
 	int nameid;
@@ -20235,7 +20235,7 @@ void script_parse_builtin(void) {
 		BUILDIN_DEF(qiget,"i"),
 		BUILDIN_DEF(qiclear,"i"),
 
-		BUILDIN_DEF(packageitem,"?"),
+		BUILDIN_DEF(CreatePackage,"?"),
 
 		BUILDIN_DEF(sit, "?"),
 		BUILDIN_DEF(stand, "?"),
