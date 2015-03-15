@@ -2217,7 +2217,8 @@ int skill_attack(int attack_type, struct block_list* src, struct block_list *dsr
 		}
 	}
 
-	if( dmg.flag&BF_MAGIC && ( (battle_config.eq_single_target_reflectable && (flag&0xFFF) == 1) ) ) {
+	if( dmg.flag&BF_MAGIC 
+		&& (skill_id != NPC_EARTHQUAKE || (battle_config.eq_single_target_reflectable && (flag & 0xFFF) == 1)) ) { /* Need more info cause NPC_EARTHQUAKE is ground type */
 		// Earthquake on multiple targets is not counted as a target skill. [Inkfish]
 		if( (dmg.damage || dmg.damage2) && (type = skill->magic_reflect(src, bl, src==dsrc)) ) {
 			//Magic reflection, switch caster/target
@@ -3950,7 +3951,7 @@ int skill_castend_damage_id(struct block_list* src, struct block_list *bl, uint1
 		case MS_MAGNUM:
 			if( flag&1 ) {
 				//Damage depends on distance, so add it to flag if it is > 1
-				skill->attack(skill->get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag|distance_bl(src, bl));
+				skill->attack(skill->get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag|SD_ANIMATION|distance_bl(src, bl));
 			}
 			break;
 
@@ -6926,6 +6927,7 @@ int skill_castend_nodamage_id(struct block_list *src, struct block_list *bl, uin
 					sc_start(src,bl,type,100,skill_lv,skill->get_time(skill_id,skill_lv)));
 			else {
 				clif->skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
+				map->freeblock_unlock();
 				return 0;
 			}
 			break;
@@ -6937,6 +6939,7 @@ int skill_castend_nodamage_id(struct block_list *src, struct block_list *bl, uin
 						sc_start(src,bl,type,100,skill_lv,skill->get_time(skill_id,skill_lv)));
 				else {
 					clif->skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
+					map->freeblock_unlock();
 					return 0;
 				}
 			}
@@ -6947,6 +6950,7 @@ int skill_castend_nodamage_id(struct block_list *src, struct block_list *bl, uin
 					sc_start(src,bl,type,100,skill_lv,skill->get_time(skill_id,skill_lv)));
 			else {
 				clif->skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
+				map->freeblock_unlock();
 				return 0;
 			}
 			break;
@@ -6956,6 +6960,7 @@ int skill_castend_nodamage_id(struct block_list *src, struct block_list *bl, uin
 					sc_start(src,bl,type,100,skill_lv,skill->get_time(skill_id,skill_lv)));
 			else {
 				clif->skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
+				map->freeblock_unlock();
 				return 0;
 			}
 			break;
@@ -7662,6 +7667,7 @@ int skill_castend_nodamage_id(struct block_list *src, struct block_list *bl, uin
 				clif->skill_nodamage(src,bl,skill_id,skill_lv,1);
 			else {
 				clif->skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
+				map->freeblock_unlock();
 				return 0;
 			}
 		}

@@ -9608,7 +9608,8 @@ int status_change_start(struct block_list *src, struct block_list *bl, enum sc_t
 			}
 			break;
 		case SC_CASH_BOSS_ALARM:
-			clif->bossmapinfo(sd->fd, map->id2boss(sce->val1), 0); // First Message
+			if( sd )
+				clif->bossmapinfo(sd->fd, map->id2boss(sce->val1), 0); // First Message
 			break;
 		case SC_MER_HP:
 			status_percent_heal(bl, 100, 0); // Recover Full HP
@@ -9752,7 +9753,6 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 	nullpo_ret(bl);
 
 	sc = status->get_sc(bl);
-	st = status->get_status_data(bl);
 
 	if(type < 0 || type >= SC_MAX || !sc || !(sce = sc->data[type]))
 		return 0;
@@ -9762,6 +9762,8 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 	if (sce->timer != tid && tid != INVALID_TIMER)
 		return 0;
 
+	st = status->get_status_data(bl);
+	
 	if( sd && sce->timer == INVALID_TIMER && !sd->state.loggingout )
 		chrif->del_scdata_single(sd->status.account_id,sd->status.char_id,type);
 
@@ -9943,7 +9945,9 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 					}
 
 					sce->val2 = 0;
-					skill->del_unitgroup(group,ALC_MARK);
+					
+					if( group )
+						skill->del_unitgroup(group,ALC_MARK);
 				}
 
 				if ((sce->val1&0xFFFF) == CG_MOONLIT)
@@ -10046,7 +10050,8 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 			if (sce->val3) { //Clear the group.
 				struct skill_unit_group* group = skill->id2group(sce->val3);
 				sce->val3 = 0;
-				skill->del_unitgroup(group,ALC_MARK);
+				if( group )
+					skill->del_unitgroup(group,ALC_MARK);
 			}
 			break;
 		case SC_HERMODE:
@@ -10092,10 +10097,12 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 				break;
 			// Note: vending/buying is closed by unit_remove_map, no
 			// need to do it here.
-			map->quit(sd);
-			// Because map->quit calls status_change_end with tid -1
-			// from here it's not neccesary to continue
-			return 1;
+			if( sd ) {
+				map->quit(sd);
+				// Because map->quit calls status_change_end with tid -1
+				// from here it's not neccesary to continue
+				return 1;
+			}
 			break;
 		case SC_STOP:
 			if( sce->val2 ) {
@@ -10201,7 +10208,8 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 				struct block_list *src = map->id2bl(sce->val2);
 				if(src) {
 					struct status_change *ssc = status->get_sc(src);
-					ssc->bs_counter--;
+					if( ssc )
+						ssc->bs_counter--;
 				}
 			}
 			break;
@@ -10521,6 +10529,8 @@ int status_change_timer(int tid, int64 tick, int id, intptr_t data) {
 		ShowError("status_change_timer: Mismatch for type %d: %d != %d (bl id %d)\n",type,tid,sce->timer, bl->id);
 		return 0;
 	}
+	
+	sce->timer = INVALID_TIMER;
 
 	sd = BL_CAST(BL_PC, bl);
 
@@ -10551,7 +10561,6 @@ int status_change_timer(int tid, int64 tick, int id, intptr_t data) {
 			}
 			sc_timer_next(sce->val2+tick, status->change_timer, bl->id, data);
 			return 0;
-			break;
 
 		case SC_SKA:
 			if(--(sce->val2)>0) {
@@ -10867,6 +10876,8 @@ int status_change_timer(int tid, int64 tick, int id, intptr_t data) {
 				}
 
 				if( !flag ) { // Random Skill Cast
+					map->freeblock_lock();
+
 					if (sd && !pc_issit(sd)) { //can't cast if sit
 						int mushroom_skill_id = 0;
 						unit->stop_attack(bl);
@@ -10890,7 +10901,10 @@ int status_change_timer(int tid, int64 tick, int id, intptr_t data) {
 					}
 
 					clif->emotion(bl,E_HEH);
-					sc_timer_next(4000+tick,status->change_timer,bl->id,data);
+					if( sc->data[type] )
+						sc_timer_next(4000+tick,status->change_timer,bl->id,data);
+
+					map->freeblock_unlock();
 				}
 				return 0;
 			}
@@ -10938,8 +10952,15 @@ int status_change_timer(int tid, int64 tick, int id, intptr_t data) {
 				int heal = st->max_hp * 3 / 100;
 				if (sc->count && sc->data[SC_AKAITSUKI] && heal)
 					heal = ~heal + 1;
+				
+				map->freeblock_lock();
+				
 				status->heal(bl, heal, 0, 2);
-				sc_timer_next(5000 + tick, status->change_timer, bl->id, data);
+				if( sc->data[type] ) {
+					sc_timer_next(5000 + tick, status->change_timer, bl->id, data);
+				}
+				map->freeblock_unlock();
+				
 				return 0;
 			}
 			break;
@@ -11057,8 +11078,8 @@ int status_change_timer(int tid, int64 tick, int id, intptr_t data) {
 				if ( sc->data[type] ) {
 					sc_timer_next(1000 + tick, status->change_timer, bl->id, data);
 				}
-				map->freeblock_unlock();
 				status->heal(src, damage*(5 + 5 * sce->val1)/100, 0, 0); // 5 + 5% per level
+				map->freeblock_unlock();
 				return 0;
 			}
 			break;
@@ -11165,6 +11186,7 @@ int status_change_timer(int tid, int64 tick, int id, intptr_t data) {
 					sc_timer_next(1000 + tick, status->change_timer, bl->id, data);
 				}
 				map->freeblock_unlock();
+				return 0;
 			}
 			break;
 
@@ -11245,12 +11267,13 @@ int status_change_timer(int tid, int64 tick, int id, intptr_t data) {
 		case SC_WATER_DROP:
 		case SC_WIND_CURTAIN:
 		case SC_STONE_SHIELD:
-			if(status->charge(bl, 0, sce->val2) && (sce->val4==-1 || (sce->val4-=sce->val3)>=0))
+			if(status->charge(bl, 0, sce->val2) && (sce->val4==-1 || (sce->val4-=sce->val3)>=0)) {
 				sc_timer_next(sce->val3 + tick, status->change_timer, bl->id, data);
-			else
+				return 0;
+			} else
 				if (bl->type == BL_ELEM)
 					elemental->change_mode(BL_CAST(BL_ELEM,bl),MAX_ELESKILLTREE);
-			return 0;
+			break;
 
 		case SC_STOMACHACHE:
 			if( --(sce->val4) > 0 ) {
@@ -11636,6 +11659,8 @@ int status_change_clear_buffs (struct block_list* bl, int type) {
 	if (!sc || !sc->count)
 		return 0;
 
+	map->freeblock_lock();
+	
 	if (type&6) //Debuffs
 		for (i = SC_COMMON_MIN; i <= SC_COMMON_MAX; i++)
 			status_change_end(bl, (sc_type)i, INVALID_TIMER);
@@ -11682,6 +11707,9 @@ int status_change_clear_buffs (struct block_list* bl, int type) {
 		}
 		status_change_end(bl, (sc_type)i, INVALID_TIMER);
 	}
+	
+	map->freeblock_unlock();
+	
 	return 0;
 }
 
