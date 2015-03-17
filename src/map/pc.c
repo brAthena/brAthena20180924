@@ -63,6 +63,35 @@
 #include "../common/timer.h"
 #include "../common/utils.h"
 
+#define EXP_TABLE_READ 11
+
+enum exp_flag
+{
+	EXP_BASE_FLAG = 1,
+	EXP_CLASS_FLAG
+};
+
+// Estrutura para level.
+struct exp_table_level
+{
+	int Level;
+	int exp;
+
+	struct exp_table_level* next;
+};
+
+struct exp_table
+{
+	struct exp_table_level* etl;
+
+	// Flags para leitura da tabela.
+	enum exp_flag flag_type;
+	int flag_class;
+};
+
+// Ponteiro para estrutura de banco para as flags.
+struct exp_table* exp_db = NULL;
+
 struct pc_interface pc_s;
 
 //Converts a class to its array index for CLASS_COUNT defined arrays.
@@ -6173,6 +6202,47 @@ unsigned int pc_maxjoblv(struct map_session_data *sd)
 /*==========================================
  * base level exp lookup.
  *------------------------------------------*/
+unsigned int pc_baseexp_sub(unsigned int class_, unsigned int base_level)
+{
+	int i, flag_class;
+
+	flag_class = (class_ >= JOB_NOVICE && class_ <= JOB_CRUSADER2 || class_ >= JOB_BABY && class_ <= JOB_BABY_CRUSADER2) ? 0 :
+		(class_ >= JOB_NOVICE_HIGH && class_ <= JOB_PALADIN2 || base_level <= 99) ? 1 :
+		(class_ >= JOB_RUNE_KNIGHT && class_ <= JOB_MAX) ? 2 : -1;
+	
+	// Restrições de classes para não ser necessário mais upar.
+	// @todo: Verificação dinamica para servidores de maiores leveis.
+	if (flag_class == -1 || (class_ >= JOB_SUPER_NOVICE && class_ <= JOB_NINJA && base_level >= 175) ||
+		class_ == JOB_REBELLION && base_level >= 160)
+	{
+		return 0;
+	}
+
+	for (i = 0; i < EXP_TABLE_READ; i++)
+	{
+		struct exp_table* e_tbl = (exp_db + i);
+		if (e_tbl->flag_type&EXP_CLASS_FLAG)
+			continue;
+
+		if (e_tbl->flag_class == flag_class)
+		{
+			struct exp_table_level* etl = e_tbl->etl, *last_read = NULL;
+
+			while (etl != NULL)
+			{
+				if (etl->Level == base_level)
+					return etl->exp;
+
+                last_read = etl;
+				etl = etl->next;
+			}
+
+			return last_read->exp;
+		}
+	}
+
+	return 0;
+}
 
 //Base exp needed for next level.
 unsigned int pc_nextbaseexp(struct map_session_data *sd)
@@ -6182,7 +6252,8 @@ unsigned int pc_nextbaseexp(struct map_session_data *sd)
 	if(sd->status.base_level>=pc->maxbaselv(sd) || sd->status.base_level<=0)
 		return 0;
 
-	return pc->exp_table[pc->class2idx(sd->status.class_)][0][sd->status.base_level-1];
+	// return pc->exp_table[pc->class2idx(sd->status.class_)][0][sd->status.base_level-1];
+    return pc->baseexp_sub(sd->status.class_, sd->status.base_level);
 }
 
 //Base exp needed for this level.
@@ -6191,7 +6262,8 @@ unsigned int pc_thisbaseexp(struct map_session_data *sd)
 	if(sd->status.base_level>pc->maxbaselv(sd) || sd->status.base_level<=1)
 		return 0;
 
-	return pc->exp_table[pc->class2idx(sd->status.class_)][0][sd->status.base_level-2];
+	// return pc->exp_table[pc->class2idx(sd->status.class_)][0][sd->status.base_level-2];
+    return pc->baseexp_sub(sd->status.class_, sd->status.base_level - 1);
 }
 
 
@@ -6201,7 +6273,56 @@ unsigned int pc_thisbaseexp(struct map_session_data *sd)
  *   0 = not found
  *   x = exp for level
  *------------------------------------------*/
+ 
+unsigned int pc_jobexp_sub(unsigned int class_, unsigned int job_level)
+{
+	int i, flag_class;
 
+	flag_class =
+		(class_ == JOB_TAEKWON || class_ >= JOB_SWORDMAN && class_ <= JOB_THIEF ||
+		class_ >= JOB_BABY_SWORDMAN && class_ <= JOB_BABY_THIEF) ? 3 :
+		(class_ >= JOB_SWORDMAN_HIGH && class_ <= JOB_THIEF_HIGH) ? 4 :
+		(class_ == JOB_GUNSLINGER || class_ == JOB_NINJA) ? 5 :
+		(class_ == JOB_NOVICE) ? 6 :
+		(class_ == JOB_NOVICE_HIGH) ? 7 :
+		(class_ == JOB_SOUL_LINKER) || (class_ >= JOB_KNIGHT && class_ <= JOB_CRUSADER2 ||
+		class_ >= JOB_BABY_KNIGHT && class_ <= JOB_BABY_CRUSADER2) ? 8 :
+		(class_ >= JOB_LORD_KNIGHT && class_ <= JOB_PALADIN2) ? 9 :
+		(class_ >= JOB_RUNE_KNIGHT && class_ <= JOB_BABY_MECHANIC2 || class_ == JOB_SUPER_NOVICE || class_ >= JOB_KAGEROU && class_ <= JOB_REBELLION) ? 10 : -1;
+
+	// Restrições de classes para não ser necessário mais upar.
+	// @todo: Verificação dinamica para servidores de maiores leveis.
+	if (flag_class == -1 || class_ == JOB_SUPER_NOVICE && job_level >= 60 || class_ == JOB_REBELLION && job_level >= 50)
+	{
+		return 0;
+	}
+
+	for (i = 0; i < EXP_TABLE_READ; i++)
+	{
+		struct exp_table* e_tbl = (exp_db + i);
+		if (e_tbl->flag_type&EXP_BASE_FLAG)
+			continue;
+
+        if (e_tbl->flag_class == flag_class)
+		{
+			struct exp_table_level* etl = e_tbl->etl, *last_read = NULL;
+ 
+			while (etl != NULL)
+            {
+				if (etl->Level == job_level)
+					return etl->exp;
+
+                last_read = etl;
+				etl = etl->next;
+			}
+
+			return last_read->exp;
+		}
+	}
+
+	return 0;
+}
+ 
 //Job exp needed for next level.
 unsigned int pc_nextjobexp(struct map_session_data *sd)
 {
@@ -6209,7 +6330,8 @@ unsigned int pc_nextjobexp(struct map_session_data *sd)
 
 	if(sd->status.job_level>=pc->maxjoblv(sd) || sd->status.job_level<=0)
 		return 0;
-	return pc->exp_table[pc->class2idx(sd->status.class_)][1][sd->status.job_level-1];
+	// return pc->exp_table[pc->class2idx(sd->status.class_)][1][sd->status.job_level-1];
+    return pc->jobexp_sub(sd->status.class_, sd->status.job_level);
 }
 
 //Job exp needed for this level.
@@ -6217,7 +6339,8 @@ unsigned int pc_thisjobexp(struct map_session_data *sd)
 {
 	if(sd->status.job_level>pc->maxjoblv(sd) || sd->status.job_level<=1)
 		return 0;
-	return pc->exp_table[pc->class2idx(sd->status.class_)][1][sd->status.job_level-2];
+	// return pc->exp_table[pc->class2idx(sd->status.class_)][1][sd->status.job_level-2];
+    return pc->jobexp_sub(sd->status.class_, sd->status.job_level-1);
 }
 
 /// Returns the value of the specified stat.
@@ -10333,6 +10456,70 @@ bool pc_readdb_levelpenalty(char* fields[], int columns, int current) {
 }
 
 /*==========================================
+ * Realiza a leitura das tabelas de experiencia. [brAthena]
+ * char *get_database_name(int database_id)
+ *             database_id => de 62 até 72
+ *------------------------------------------*/
+int pc_read_exp_fromsql(void)
+{
+	int i, database_id;
+
+	// Aloca o espaço necessário para a estrutura de experiência.
+	exp_db = (struct exp_table*) malloc(sizeof(struct exp_table) * EXP_TABLE_READ);
+
+	// Faz a leitura das 11 tabelas.
+	for (i = 0, database_id = 34; i < EXP_TABLE_READ; database_id = 34 + (++i))
+	{
+		struct exp_table* exp_tmp = (exp_db + i);
+		struct exp_table_level** etl = NULL;
+		int count = 0;
+
+		char* database_name = get_database_name(database_id);
+
+		if (SQL_ERROR == SQL->Query(map->mysql_handle, "SELECT * FROM `%s`", database_name))
+		{
+			Sql_ShowDebug(map->mysql_handle);
+			continue;
+		}
+
+        memset(exp_tmp, 0, sizeof(exp_tmp));
+		exp_tmp->flag_type = (i < 3 ? EXP_BASE_FLAG : EXP_CLASS_FLAG);
+		exp_tmp->flag_class = i;
+
+		exp_tmp->etl = NULL;
+
+		for (etl = &exp_tmp->etl; SQL_SUCCESS == SQL->NextRow(map->mysql_handle); etl = &(*etl)->next, count++)
+		{
+			char* Level = NULL,* exp = NULL;
+
+			if (*etl == NULL)
+			{
+				*etl = (struct exp_table_level*)malloc(sizeof(struct exp_table_level));
+				(*etl)->Level = 0;
+                (*etl)->exp = 0;
+				(*etl)->next = NULL;
+			}
+
+			// Caso não realize a leitura, pula para o próximo.
+			if (SQL_ERROR == SQL->GetData(map->mysql_handle, 0, &Level, NULL) ||
+				SQL_ERROR == SQL->GetData(map->mysql_handle, 1, &exp, NULL))
+			{
+				Sql_ShowDebug(map->mysql_handle);
+				continue;
+			}
+
+			(*etl)->Level = atoi(Level);
+			(*etl)->exp = atoi(exp);
+		}
+
+		ShowSQL("Leitura de '"CL_WHITE"%lu"CL_RESET"' entradas na tabela '"CL_WHITE"%s"CL_RESET"'.\n", count, database_name);
+		SQL->FreeResult(map->mysql_handle);
+	}
+
+	return 0;
+} 
+
+/*==========================================
  * pc DB reading.
  * exp.txt        - required experience values
  * skill_tree.txt - skill tree for every class
@@ -10951,6 +11138,7 @@ void do_init_pc(bool minimal) {
 	pc->at_db = idb_alloc(DB_OPT_RELEASE_DATA);
 	
 	pc->readdb();
+    pc->read_exp_fromsql();
 	
 	timer->add_func_list(pc->invincible_timer, "pc_invincible_timer");
 	timer->add_func_list(pc->eventtimer, "pc_eventtimer");
@@ -11123,8 +11311,10 @@ void pc_defaults(void) {
 	pc->gainexp = pc_gainexp;
 	pc->nextbaseexp = pc_nextbaseexp;
 	pc->thisbaseexp = pc_thisbaseexp;
+    pc->baseexp_sub = pc_baseexp_sub;
 	pc->nextjobexp = pc_nextjobexp;
 	pc->thisjobexp = pc_thisjobexp;
+    pc->jobexp_sub = pc_jobexp_sub;
 	pc->gets_status_point = pc_gets_status_point;
 	pc->need_status_point = pc_need_status_point;
 	pc->maxparameterincrease = pc_maxparameterincrease;
@@ -11215,6 +11405,7 @@ void pc_defaults(void) {
 	pc->set_hate_mob = pc_set_hate_mob;
 	
 	pc->readdb = pc_readdb;
+    pc->read_exp_fromsql = pc_read_exp_fromsql;
 	pc->map_day_timer = map_day_timer; // by [yor]
 	pc->map_night_timer = map_night_timer; // by [yor]
 	// Rental System

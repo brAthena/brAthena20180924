@@ -869,8 +869,10 @@ struct pc_interface {
 	bool (*gainexp) (struct map_session_data *sd, struct block_list *src, unsigned int base_exp, unsigned int job_exp, bool is_quest);
 	unsigned int (*nextbaseexp) (struct map_session_data *sd);
 	unsigned int (*thisbaseexp) (struct map_session_data *sd);
+    unsigned int (*baseexp_sub) (unsigned int class_,unsigned int job_level);
 	unsigned int (*nextjobexp) (struct map_session_data *sd);
 	unsigned int (*thisjobexp) (struct map_session_data *sd);
+    unsigned int (*jobexp_sub) (unsigned int class_,unsigned int job_level);
 	int (*gets_status_point) (int level);
 	int (*need_status_point) (struct map_session_data *sd,int type,int val);
 	int (*maxparameterincrease) (struct map_session_data* sd, int type);
@@ -959,6 +961,7 @@ struct pc_interface {
 	int (*set_hate_mob) (struct map_session_data *sd, int pos, struct block_list *bl);
 
 	int (*readdb) (void);
+    int (*read_exp_fromsql) (void);
 	int (*map_day_timer) (int tid, int64 tick, int id, intptr_t data); // by [yor]
 	int (*map_night_timer) (int tid, int64 tick, int id, intptr_t data); // by [yor]
 	// Rental System
