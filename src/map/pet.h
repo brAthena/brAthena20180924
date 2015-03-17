@@ -157,7 +157,7 @@ struct pet_interface {
 	int (*skill_bonus_timer) (int tid, int64 tick, int id, intptr_t data);
 	int (*recovery_timer) (int tid, int64 tick, int id, intptr_t data);
 	int (*skill_support_timer) (int tid, int64 tick, int id, intptr_t data);
-	int (*read_db) ();
+	void (*read_db) (void);
 };
 
 struct pet_interface *pet;

@@ -1163,86 +1163,139 @@ int pet_skill_support_timer(int tid, int64 tick, int id, intptr_t data) {
 }
 
 /*==========================================
- * Leitura pet_db SQL [Shiraz]
+ * Leitura pet_db [Megasantos/brAthena]
  *------------------------------------------*/
-int read_petdb()
-{
-	int nameid, j, rows = 0;
+void read_petdb(void) {
+	config_t pet_conf;
+	config_setting_t *pt = NULL, *petdb = NULL;
+#ifdef RENEWAL
+	const char *config_filename = "db/re/PetTable.conf"; // FIXME hardcoded name
+#else
+#ifdef OLD_TIMES
+	const char *config_filename = "db/ot/PetTable.conf"; // FIXME hardcoded name
+#else
+	const char *config_filename = "db/pre-re/PetTable.conf"; // FIXME hardcoded name
+#endif
+#endif
+	int i = 0, pet_count = 0, j;
+	const char *str = NULL;
 
-	for( j = 0; j < MAX_PET_DB; j++ ) {
-		if( pet->db[j].pet_script ) {
+	if (libconfig->read_file(&pet_conf, config_filename)) {
+		ShowError("Erro ao ler %s\n", config_filename);
+		return;
+	}
+
+	for (j = 0; j < MAX_PET_DB; j++) {
+		if (pet->db[j].pet_script) {
 			script->free_code(pet->db[j].pet_script);
 			pet->db[j].pet_script = NULL;
 		}
-		if( pet->db[j].equip_script ) {
+		if (pet->db[j].equip_script) {
 			script->free_code(pet->db[j].equip_script);
 			pet->db[j].equip_script = NULL;
 		}
 	}
 
-	memset(pet->db,0,sizeof(pet->db));
-
 	j = 0;
 
-	if(SQL_ERROR == SQL->Query(map->brAmysql_handle, "SELECT * FROM `%s`", get_database_name(27))) {
-		Sql_ShowDebug(map->brAmysql_handle);
-		return -1;
-	}
+	petdb = libconfig->lookup(&pet_conf, "pet_table");
+	pet_count = libconfig->setting_length(petdb);
 
-	while(SQL_SUCCESS == SQL->NextRow(map->brAmysql_handle)) {
-		char *str[22];
-		int q = 0;
-		rows++;
+	if (petdb != NULL && (pt = libconfig->setting_get_elem(petdb, 0)) != NULL) {
+		for (i = 0; i < pet_count; ++i) {
+			config_setting_t *pets = libconfig->setting_get_elem(petdb, i);
+			int nameid = 0, value = 0;
 
-		for(; q < 22; ++q)
-			SQL->GetData(map->brAmysql_handle, q, &str[q], NULL);
+			if (libconfig->setting_lookup_int(pets, "MobId", &value))	
+				pet->db[j].class_ = value;
 
-		if((nameid = atoi(str[0])) <= 0)
-			continue;
+			if (!mob->db_checkid(value)) {
+				ShowWarning("pet_db reading: Mob invalido %d, pet nao carregado!.\n", value);
+				continue;
+			}
 
-		if(!mob->db_checkid(nameid)) {
-			ShowWarning("pet_db reading: Mob invalido %d, pet nao carregado!.\n", nameid);
-			continue;
+			if (!libconfig->setting_lookup_string(pets, "AegisName", &str)) {
+				ShowWarning("read_petdb: nome inexistente em '"CL_WHITE"%s"CL_RESET"', linha '%d', saltando.\n", config_setting_source_file(pets), config_setting_source_line(pets));
+				return;
+			}
+			safestrncpy(pet->db[j].name, str, sizeof(pet->db[j].name));
+
+			if (!libconfig->setting_lookup_string(pets, "Name", &str)) {
+				ShowWarning("read_petdb: nome inexistente em '"CL_WHITE"%s"CL_RESET"', linha '%d', saltando.\n", config_setting_source_file(pets), config_setting_source_line(pets));
+				return;
+			}
+			safestrncpy(pet->db[j].jname, str, sizeof(pet->db[j].jname));
+
+			if (libconfig->setting_lookup_int(pets, "ItemID", &value) && value >= 0)
+				pet->db[j].itemID = value;
+
+			if (libconfig->setting_lookup_int(pets, "EggID", &value) && value >= 0)
+				pet->db[j].EggID = value;
+
+			if (libconfig->setting_lookup_int(pets, "EquipID", &value) && value >= 0)
+				pet->db[j].AcceID = value;
+
+			if (libconfig->setting_lookup_int(pets, "FoodID", &value) && value >= 0)
+				pet->db[j].FoodID = value;
+
+			if (libconfig->setting_lookup_int(pets, "Fullness", &value) && value >= 0)
+				pet->db[j].fullness = value;
+
+			if (libconfig->setting_lookup_int(pets, "HungryDelay", &value) && value >= 0)
+				pet->db[j].hungry_delay = value * 1000;
+	
+			if (libconfig->setting_lookup_int(pets, "R_Hungry", &value) && value >= 0)
+				pet->db[j].r_hungry = value;
+			if (pet->db[j].r_hungry <= 0)
+				pet->db[j].r_hungry = 1;
+
+			if (libconfig->setting_lookup_int(pets, "R_Full", &value) && value >= 0)
+				pet->db[j].r_full = value;
+
+			if (libconfig->setting_lookup_int(pets, "Intimate", &value) && value >= 0)
+				pet->db[j].intimate = value;
+
+			if (libconfig->setting_lookup_int(pets, "Die", &value) && value >= 0)
+				pet->db[j].die = value;
+
+			if (libconfig->setting_lookup_int(pets, "Capture", &value) && value >= 0)
+				pet->db[j].capture = value;
+
+			if (libconfig->setting_lookup_int(pets, "Speed", &value) && value >= 0)
+				pet->db[j].speed = value;
+
+			if (libconfig->setting_lookup_int(pets, "S_Performance", &value) && value >= 0)
+				pet->db[j].s_perfor = (char)value;
+
+			if (libconfig->setting_lookup_int(pets, "Talk_Convert_Class", &value) && value >= 0)
+				pet->db[j].talk_convert_class = value;
+
+			if (libconfig->setting_lookup_int(pets, "Attack_Rate", &value) && value >= 0)
+				pet->db[j].attack_rate = value;
+
+			if (libconfig->setting_lookup_int(pets, "Defence_Attack_Rate", &value) && value >= 0)
+				pet->db[j].defence_attack_rate = value;
+
+			if (libconfig->setting_lookup_int(pets, "Change_Target_Rate", &value) && value >= 0)
+				pet->db[j].change_target_rate = value;
+
+			if (libconfig->setting_lookup_string(pets, "Pet_Script", &str))
+				pet->db[j].pet_script = *str ? script->parse(str, config_filename, i, SCRIPT_IGNORE_EXTERNAL_BRACKETS, NULL) : NULL;
+
+			if (libconfig->setting_lookup_string(pets, "Equip_Script", &str))
+				pet->db[j].equip_script = *str ? script->parse(str, config_filename, i, SCRIPT_IGNORE_EXTERNAL_BRACKETS, NULL) : NULL;
+			j++;
+
+			if (j >= MAX_PET_DB)
+				ShowWarning("petdb: Numero maximo de pets atingido [%d].\n ", MAX_PET_DB);
+
+		
 		}
-
-		pet->db[j].class_ = nameid;
-		safestrncpy(pet->db[j].name,str[1],NAME_LENGTH);
-		safestrncpy(pet->db[j].jname,str[2],NAME_LENGTH);
-		pet->db[j].itemID=atoi(str[3]);
-		pet->db[j].EggID=atoi(str[4]);
-		pet->db[j].AcceID=atoi(str[5]);
-		pet->db[j].FoodID=atoi(str[6]);
-		pet->db[j].fullness=atoi(str[7]);
-		pet->db[j].hungry_delay=atoi(str[8])*1000;
-		pet->db[j].r_hungry=atoi(str[9]);
-		if(pet->db[j].r_hungry <= 0)
-			pet->db[j].r_hungry=1;
-		pet->db[j].r_full=atoi(str[10]);
-		pet->db[j].intimate=atoi(str[11]);
-		pet->db[j].die=atoi(str[12]);
-		pet->db[j].capture=atoi(str[13]);
-		pet->db[j].speed=atoi(str[14]);
-		pet->db[j].s_perfor=(char)atoi(str[15]);
-		pet->db[j].talk_convert_class=atoi(str[16]);
-		pet->db[j].attack_rate=atoi(str[17]);
-		pet->db[j].defence_attack_rate=atoi(str[18]);
-		pet->db[j].change_target_rate=atoi(str[19]);
-		pet->db[j].pet_script = NULL;
-		pet->db[j].equip_script = NULL;
-
-		if(*str[20])
-			pet->db[j].pet_script = script->parse(str[20], get_database_name(27), rows, 0, NULL);
-		if(*str[21])
-			pet->db[j].equip_script = script->parse(str[21], get_database_name(27), rows, 0, NULL);
-		j++;
+		libconfig->destroy(&pet_conf);	
 	}
-
-	if(j >= MAX_PET_DB)
-		ShowWarning("petdb: Numero maximo de pets atingido [%d].\n ", MAX_PET_DB);
-
-	ShowSQL("Leitura de '"CL_WHITE"%lu"CL_RESET"' entradas na tabela '"CL_WHITE"%s"CL_RESET"'.\n", rows, get_database_name(27));
-	SQL->FreeResult(map->brAmysql_handle);
-	return 0;
+	ShowConf("Leitura de '"CL_WHITE"%d"CL_RESET"' entradas na tabela '"CL_WHITE"%s"CL_RESET"'.\n", i, config_filename);
+	
+	
 }
 
 /*==========================================
