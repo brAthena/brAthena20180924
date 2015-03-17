@@ -10476,9 +10476,9 @@ int pc_read_exp_fromsql(void)
 
 		char* database_name = get_database_name(database_id);
 
-		if (SQL_ERROR == SQL->Query(map->mysql_handle, "SELECT * FROM `%s`", database_name))
+		if (SQL_ERROR == SQL->Query(map->brAmysql_handle, "SELECT * FROM `%s`", database_name))
 		{
-			Sql_ShowDebug(map->mysql_handle);
+			Sql_ShowDebug(map->brAmysql_handle);
 			continue;
 		}
 
@@ -10488,7 +10488,7 @@ int pc_read_exp_fromsql(void)
 
 		exp_tmp->etl = NULL;
 
-		for (etl = &exp_tmp->etl; SQL_SUCCESS == SQL->NextRow(map->mysql_handle); etl = &(*etl)->next, count++)
+		for (etl = &exp_tmp->etl; SQL_SUCCESS == SQL->NextRow(map->brAmysql_handle); etl = &(*etl)->next, count++)
 		{
 			char* Level = NULL,* exp = NULL;
 
@@ -10501,10 +10501,10 @@ int pc_read_exp_fromsql(void)
 			}
 
 			// Caso não realize a leitura, pula para o próximo.
-			if (SQL_ERROR == SQL->GetData(map->mysql_handle, 0, &Level, NULL) ||
-				SQL_ERROR == SQL->GetData(map->mysql_handle, 1, &exp, NULL))
+			if (SQL_ERROR == SQL->GetData(map->brAmysql_handle, 0, &Level, NULL) ||
+				SQL_ERROR == SQL->GetData(map->brAmysql_handle, 1, &exp, NULL))
 			{
-				Sql_ShowDebug(map->mysql_handle);
+				Sql_ShowDebug(map->brAmysql_handle);
 				continue;
 			}
 
@@ -10513,7 +10513,7 @@ int pc_read_exp_fromsql(void)
 		}
 
 		ShowSQL("Leitura de '"CL_WHITE"%lu"CL_RESET"' entradas na tabela '"CL_WHITE"%s"CL_RESET"'.\n", count, database_name);
-		SQL->FreeResult(map->mysql_handle);
+		SQL->FreeResult(map->brAmysql_handle);
 	}
 
 	return 0;
