@@ -63,34 +63,7 @@
 #include "../common/timer.h"
 #include "../common/utils.h"
 
-#define EXP_TABLE_READ 11
 
-enum exp_flag
-{
-	EXP_BASE_FLAG = 1,
-	EXP_CLASS_FLAG
-};
-
-// Estrutura para level.
-struct exp_table_level
-{
-	int Level;
-	int exp;
-
-	struct exp_table_level* next;
-};
-
-struct exp_table
-{
-	struct exp_table_level* etl;
-
-	// Flags para leitura da tabela.
-	enum exp_flag flag_type;
-	int flag_class;
-};
-
-// Ponteiro para estrutura de banco para as flags.
-struct exp_table* exp_db = NULL;
 
 struct pc_interface pc_s;
 
@@ -6212,7 +6185,7 @@ unsigned int pc_baseexp_sub(unsigned int class_, unsigned int base_level)
 	
 	// Restrições de classes para não ser necessário mais upar.
 	// @todo: Verificação dinamica para servidores de maiores leveis.
-	if (flag_class == -1 || (class_ >= JOB_SUPER_NOVICE && class_ <= JOB_NINJA && base_level >= 175) ||
+	if (flag_class == -1 || (class_ >= JOB_SUPER_NOVICE && class_ <= JOB_NINJA && base_level >= MAX_LEVEL) ||
 		class_ == JOB_REBELLION && base_level >= 160)
 	{
 		return 0;
@@ -6220,7 +6193,7 @@ unsigned int pc_baseexp_sub(unsigned int class_, unsigned int base_level)
 
 	for (i = 0; i < EXP_TABLE_READ; i++)
 	{
-		struct exp_table* e_tbl = (exp_db + i);
+		struct exp_table* e_tbl = (pc->exp_db + i);
 		if (e_tbl->flag_type&EXP_CLASS_FLAG)
 			continue;
 
@@ -6253,7 +6226,7 @@ unsigned int pc_nextbaseexp(struct map_session_data *sd)
 		return 0;
 
 	// return pc->exp_table[pc->class2idx(sd->status.class_)][0][sd->status.base_level-1];
-    return pc->baseexp_sub(sd->status.class_, sd->status.base_level);
+	return pc->baseexp_sub(sd->status.class_, sd->status.base_level);
 }
 
 //Base exp needed for this level.
@@ -6263,7 +6236,7 @@ unsigned int pc_thisbaseexp(struct map_session_data *sd)
 		return 0;
 
 	// return pc->exp_table[pc->class2idx(sd->status.class_)][0][sd->status.base_level-2];
-    return pc->baseexp_sub(sd->status.class_, sd->status.base_level - 1);
+	return pc->baseexp_sub(sd->status.class_, sd->status.base_level - 1);
 }
 
 
@@ -6299,7 +6272,7 @@ unsigned int pc_jobexp_sub(unsigned int class_, unsigned int job_level)
 
 	for (i = 0; i < EXP_TABLE_READ; i++)
 	{
-		struct exp_table* e_tbl = (exp_db + i);
+		struct exp_table* e_tbl = (pc->exp_db + i);
 		if (e_tbl->flag_type&EXP_BASE_FLAG)
 			continue;
 
@@ -6331,7 +6304,7 @@ unsigned int pc_nextjobexp(struct map_session_data *sd)
 	if(sd->status.job_level>=pc->maxjoblv(sd) || sd->status.job_level<=0)
 		return 0;
 	// return pc->exp_table[pc->class2idx(sd->status.class_)][1][sd->status.job_level-1];
-    return pc->jobexp_sub(sd->status.class_, sd->status.job_level);
+	return pc->jobexp_sub(sd->status.class_, sd->status.job_level);
 }
 
 //Job exp needed for this level.
@@ -6340,7 +6313,7 @@ unsigned int pc_thisjobexp(struct map_session_data *sd)
 	if(sd->status.job_level>pc->maxjoblv(sd) || sd->status.job_level<=1)
 		return 0;
 	// return pc->exp_table[pc->class2idx(sd->status.class_)][1][sd->status.job_level-2];
-    return pc->jobexp_sub(sd->status.class_, sd->status.job_level-1);
+	return pc->jobexp_sub(sd->status.class_, sd->status.job_level-1);
 }
 
 /// Returns the value of the specified stat.
@@ -10456,7 +10429,7 @@ bool pc_readdb_levelpenalty(char* fields[], int columns, int current) {
 }
 
 /*==========================================
- * Realiza a leitura das tabelas de experiencia. [brAthena]
+ * Realiza a leitura das tabelas de experiencia. [Carlos/brAthena]
  * char *get_database_name(int database_id)
  *             database_id => de 62 até 72
  *------------------------------------------*/
@@ -10465,12 +10438,12 @@ int pc_read_exp_fromsql(void)
 	int i, database_id;
 
 	// Aloca o espaço necessário para a estrutura de experiência.
-	exp_db = (struct exp_table*) malloc(sizeof(struct exp_table) * EXP_TABLE_READ);
+	pc->exp_db = (struct exp_table*) malloc(sizeof(struct exp_table) * EXP_TABLE_READ);
 
 	// Faz a leitura das 11 tabelas.
 	for (i = 0, database_id = 34; i < EXP_TABLE_READ; database_id = 34 + (++i))
 	{
-		struct exp_table* exp_tmp = (exp_db + i);
+		struct exp_table* exp_tmp = (pc->exp_db + i);
 		struct exp_table_level** etl = NULL;
 		int count = 0;
 
@@ -11138,7 +11111,7 @@ void do_init_pc(bool minimal) {
 	pc->at_db = idb_alloc(DB_OPT_RELEASE_DATA);
 	
 	pc->readdb();
-    pc->read_exp_fromsql();
+	pc->read_exp_fromsql();
 	
 	timer->add_func_list(pc->invincible_timer, "pc_invincible_timer");
 	timer->add_func_list(pc->eventtimer, "pc_eventtimer");
@@ -11209,6 +11182,8 @@ void pc_defaults(void) {
 	memcpy(pc->equip_pos, &equip_pos, sizeof(pc->equip_pos));
 	/* */
 	memcpy(pc->sg_info, sg_info, sizeof(pc->sg_info));
+	/* */
+	pc->exp_db = NULL;
 	/* */
 	pc->sc_display_ers = NULL;
 	/* */
@@ -11311,10 +11286,10 @@ void pc_defaults(void) {
 	pc->gainexp = pc_gainexp;
 	pc->nextbaseexp = pc_nextbaseexp;
 	pc->thisbaseexp = pc_thisbaseexp;
-    pc->baseexp_sub = pc_baseexp_sub;
+	pc->baseexp_sub = pc_baseexp_sub;
 	pc->nextjobexp = pc_nextjobexp;
 	pc->thisjobexp = pc_thisjobexp;
-    pc->jobexp_sub = pc_jobexp_sub;
+	pc->jobexp_sub = pc_jobexp_sub;
 	pc->gets_status_point = pc_gets_status_point;
 	pc->need_status_point = pc_need_status_point;
 	pc->maxparameterincrease = pc_maxparameterincrease;
@@ -11405,7 +11380,7 @@ void pc_defaults(void) {
 	pc->set_hate_mob = pc_set_hate_mob;
 	
 	pc->readdb = pc_readdb;
-    pc->read_exp_fromsql = pc_read_exp_fromsql;
+	pc->read_exp_fromsql = pc_read_exp_fromsql;
 	pc->map_day_timer = map_day_timer; // by [yor]
 	pc->map_night_timer = map_night_timer; // by [yor]
 	// Rental System
