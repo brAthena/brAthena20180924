@@ -12,15 +12,15 @@
 //   |--------------------------------------------------------|
 //   | Criado por: Herc/brA Dev. Team                         |
 //   |--------------------------------------------------------|
-//   | VersÃµes Herc/brA: 1.1/1.0                              |
+//   | Versões Herc/brA: 1.1/1.0                              |
 //   |--------------------------------------------------------|
-//   | DescriÃ§Ã£o: Quests repetÃ­veis para jogadores entre      |
+//   | Descrição: Quests repetíveis para jogadores entre      |
 //   | BaseLevel 121-130.                                     |
 //   |--------------------------------------------------------|
 //   | Changelog:                                             |
-//   | 1.0 Criado CabeÃ§alho [Megasantos]                      |
+//   | 1.0 Criado Cabeçalho [Megasantos]                      |
 //   |--------------------------------------------------------|
-//   | - AnotaÃ§Ãµes                                            |
+//   | - Anotações                                            |
 //   \________________________________________________________/
 
 moc_para01,44,81,3	script	Melody-Jack#1	4_M_MELODY,8,8,{
@@ -111,7 +111,7 @@ moc_para01,44,81,3	script	Melody-Jack#1	4_M_MELODY,8,8,{
 					if (questprogress(13120,PLAYTIME) == 1)
 						mes "I think I finished today's performance. I cannot relax what if monsters show up suddenly.";
 					else if (questprogress(13119,HUNTING) == 1) {
-						cutin "????????",3;  //retribution_card
+						cutin "½Å¹úÀÇ´ëÇàÀÚÄ«µå",3;  //retribution_card
 						mes "I do not like that creature not because Aigu doesn't like them... How dare you? Who is punishing whom?";
 						next;
 						mes "[Melody-Jack]";
@@ -125,7 +125,7 @@ moc_para01,44,81,3	script	Melody-Jack#1	4_M_MELODY,8,8,{
 						callsub S_Quest,13119,13120,1;
 					}
 					else {
-						cutin "????????",3;  //retribution_card
+						cutin "½Å¹úÀÇ´ëÇàÀÚÄ«µå",3;  //retribution_card
 						mes "As you know, Thanatos Tower is where Aigu cares the most. It is the most dangerous place in some ways.";
 						next;
 						mes "[Melody-Jack]";
@@ -143,7 +143,7 @@ moc_para01,44,81,3	script	Melody-Jack#1	4_M_MELODY,8,8,{
 					if (questprogress(13122,PLAYTIME) == 1)
 						mes "I think I finished today's performance. I can not relax... What if monsters show up suddenly?";
 					else if (questprogress(13121,HUNTING) == 1) {
-						cutin "?????",3;  //solace_card
+						cutin "À§·ÎÇÏ´ÂÀÚ",3;  //solace_card
 						mes "The building does not seem to be designed by human beings and a strange melody is always playing there.";
 						next;
 						mes "[Melody-Jack]";
@@ -157,7 +157,7 @@ moc_para01,44,81,3	script	Melody-Jack#1	4_M_MELODY,8,8,{
 						callsub S_Quest,13121,13122,1;
 					}
 					else {
-						cutin "?????",3;  //solace_card
+						cutin "À§·ÎÇÏ´ÂÀÚ",3;  //solace_card
 						mes "Beautiful melody. Maybe it sounds beautiful because creatures are playing.";
 						next;
 						mes "[Melody-Jack]";
@@ -175,7 +175,7 @@ moc_para01,44,81,3	script	Melody-Jack#1	4_M_MELODY,8,8,{
 					if (questprogress(13124,PLAYTIME) == 1)
 						mes "I think I finished today's performance. I can not relax... What if monsters show up suddenly?";
 					else if (questprogress(13123,HUNTING) == 1) {
-						cutin "????????",3;  //shelter_card
+						cutin "¾È½ÄÀ»ÁÖ´ÂÀÚÄ«µå",3;  //shelter_card
 						mes "Do you know an angel that turned into a monster? I do not know if it was an angel or not. But its appearance was an angel.";
 						next;
 						mes "[Melody-Jack]";
@@ -189,7 +189,7 @@ moc_para01,44,81,3	script	Melody-Jack#1	4_M_MELODY,8,8,{
 						callsub S_Quest,13123,13124,1;
 					}
 					else {
-						cutin "????????",3;  //shelter_card
+						cutin "¾È½ÄÀ»ÁÖ´ÂÀÚÄ«µå",3;  //shelter_card
 						mes "Do you know an angel that turned into a monster? I do not know if it was an angel or not. But its appearance was an angel.";
 						next;
 						mes "[Melody-Jack]";
@@ -208,7 +208,7 @@ moc_para01,44,81,3	script	Melody-Jack#1	4_M_MELODY,8,8,{
 					if (questprogress(13126,PLAYTIME) == 1)
 						mes "I finished my performance for today. I can not relax what if monsters show up suddenly.";
 					else if (questprogress(13125,HUNTING) == 1) {
-						cutin "???????",3;  //observation_card
+						cutin "°¨½ÃÇÏ´ÂÀÚÄ«µå",3;  //observation_card
 						mes "You may have felt they are watching once you stepped into the upper area of Thanatos Tower.";
 						next;
 						mes "[Melody-Jack]";
@@ -222,7 +222,7 @@ moc_para01,44,81,3	script	Melody-Jack#1	4_M_MELODY,8,8,{
 						callsub S_Quest,13125,13126,1;
 					}
 					else {
-						cutin "???????",3;  //observation_card
+						cutin "°¨½ÃÇÏ´ÂÀÚÄ«µå",3;  //observation_card
 						mes "You will meet them if Aigu requests. The Dame of Sentinels.";
 						next;
 						mes "[Melody-Jack]";
@@ -247,7 +247,7 @@ moc_para01,44,81,3	script	Melody-Jack#1	4_M_MELODY,8,8,{
 					if (questprogress(13128,PLAYTIME) == 1)
 						mes "You may take a rest for a day. You cleared enough but fanatic is increased.";
 					else if (questprogress(13127,HUNTING) == 1) {
-						cutin "?????",3;  //isilla_card
+						cutin "ÀÌ½Ç¶óÄ«µå",3;  //isilla_card
 						mes "Someone who believes they are right are the most dangerous. This world is full of fools.";
 						next;
 						mes "[Melody-Jack]";
@@ -261,7 +261,7 @@ moc_para01,44,81,3	script	Melody-Jack#1	4_M_MELODY,8,8,{
 						callsub S_Quest,13127,13128,1;
 					}
 					else {
-						cutin "??????",3;  //vanberk_card
+						cutin "ÆÇº£¸£Å©Ä«µå",3;  //vanberk_card
 						mes "Sanctuary in Rachel is prohibited to normal people from entering. You gotta know that.";
 						next;
 						mes "[Melody-Jack]";
@@ -280,7 +280,7 @@ moc_para01,44,81,3	script	Melody-Jack#1	4_M_MELODY,8,8,{
 					if (questprogress(13130,PLAYTIME) == 1)
 						mes "Unknown mosters are dangerous so clear them first. I will inform you if something happens.";
 					else if (questprogress(13129,HUNTING) == 1) {
-						cutin "??????",3;  //hodremlin_card
+						cutin "È£µå·½¸°Ä«µå",3;  //hodremlin_card
 						mes "Cold teeth might be approaching. Its teeth are faster than your hands.";
 						next;
 						mes "[Melody-Jack]";
@@ -294,7 +294,7 @@ moc_para01,44,81,3	script	Melody-Jack#1	4_M_MELODY,8,8,{
 						callsub S_Quest,13129,13130,1;
 					}
 					else {
-						cutin "??????",3;  //hodremlin_card
+						cutin "È£µå·½¸°Ä«µå",3;  //hodremlin_card
 						mes "Fanatics are a problem. A more serious problem is that they show up suddenly.";
 						next;
 						mes "[Melody-Jack]";
@@ -312,7 +312,7 @@ moc_para01,44,81,3	script	Melody-Jack#1	4_M_MELODY,8,8,{
 					if (questprogress(13132,PLAYTIME) == 1)
 						mes "If you can talk. There are no requests right now. Take a rest for the day.";
 					else if (questprogress(13131,HUNTING) == 1) {
-						cutin "?????",3;  //echio_card
+						cutin "¿¡Å°¿ÀÄ«µå",3;  //echio_card
 						mes "Full of madness here. I just feel disgusting.";
 						next;
 						mes "[Melody-Jack]";
@@ -326,7 +326,7 @@ moc_para01,44,81,3	script	Melody-Jack#1	4_M_MELODY,8,8,{
 						callsub S_Quest,13131,13132,1;
 					}
 					else {
-						cutin "?????",3;  //agav_card
+						cutin "¾Æ°¡ºêÄ«µå",3;  //agav_card
 						mes "It is true that it is getting more dangerous inside of Rachel sanctuary, but Aigu will not care for things we are not sure.";
 						next;
 						mes "[Melody-Jack]";
@@ -351,7 +351,7 @@ moc_para01,44,81,3	script	Melody-Jack#1	4_M_MELODY,8,8,{
 					if (questprogress(13134,PLAYTIME) == 1)
 						mes "Ragged Zombie is reduced. It is a good time to proceed Aigu's request for a minute.";
 					else if (questprogress(13133,HUNTING) == 1) {
-						cutin "???????",3;  //ragged_zombie_card
+						cutin "´©´õ±âÁ»ºñÄ«µå",3;  //ragged_zombie_card
 						mes "It is easy to meet everything on Nameless Island. So boring.";
 						next;
 						mes "[Melody-Jack]";
@@ -362,7 +362,7 @@ moc_para01,44,81,3	script	Melody-Jack#1	4_M_MELODY,8,8,{
 						callsub S_Quest,13133,13134,1;
 					}
 					else {
-						cutin "???????",3;  //ragged_zombie_card
+						cutin "´©´õ±âÁ»ºñÄ«µå",3;  //ragged_zombie_card
 						mes "The dead come back at night. Comes back sounds strange. Lets cut the crap.";
 						next;
 						mes "[Melody-Jack]";
@@ -380,7 +380,7 @@ moc_para01,44,81,3	script	Melody-Jack#1	4_M_MELODY,8,8,{
 					if (questprogress(13136,PLAYTIME) == 1)
 						mes "I know the request to Nameless Island is not easy but I will be happy if you join again.";
 					else if (questprogress(13135,HUNTING) == 1) {
-						cutin "???????",3;  //zombie_slaughter_card
+						cutin "Á»ºñ½½·¯ÅÍÄ«µå",3;  //zombie_slaughter_card
 						mes "It was not easy for me either to step into Nameless Island. I am not that patient.";
 						next;
 						mes "[Melody-Jack]";
@@ -391,7 +391,7 @@ moc_para01,44,81,3	script	Melody-Jack#1	4_M_MELODY,8,8,{
 						callsub S_Quest,13135,13136,1;
 					}
 					else {
-						cutin "???????",3;  //zombie_slaughter_card
+						cutin "Á»ºñ½½·¯ÅÍÄ«µå",3;  //zombie_slaughter_card
 						mes "They are dangerous unlike Ragged Zombie because they swing something sharp.";
 						next;
 						mes "[Melody-Jack]";
@@ -409,7 +409,7 @@ moc_para01,44,81,3	script	Melody-Jack#1	4_M_MELODY,8,8,{
 					if (questprogress(13138,PLAYTIME) == 1)
 						mes "Banshee is cleared. Request is solved anyway but it is not the end. It will be required again sooner or later.";
 					else if (questprogress(13137,HUNTING) == 1) {
-						cutin "????",3;  //banshee_card
+						cutin "¹ê½ÃÄ«µå",3;  //banshee_card
 						mes "You will see there are unwelcoming things while adventuring sometimes regardless of monsters and companions.";
 						next;
 						mes "[Melody-Jack]";
@@ -420,7 +420,7 @@ moc_para01,44,81,3	script	Melody-Jack#1	4_M_MELODY,8,8,{
 						callsub S_Quest,13137,13138,1;
 					}
 					else {
-						cutin "????",3;  //banshee_card
+						cutin "¹ê½ÃÄ«µå",3;  //banshee_card
 						mes "Please clear ^FF0000Banshee^000000 inside of Nameless Island. Do not say no. You know it is for Aigu as well.";
 						next;
 						mes "[Melody-Jack]";
@@ -444,7 +444,7 @@ moc_para01,44,81,3	script	Melody-Jack#1	4_M_MELODY,8,8,{
 					if (questprogress(13140,PLAYTIME) == 1)
 						mes "Green dragons and Red dragons remind me of watermelons.";
 					else if (questprogress(13139,HUNTING) == 1) {
-						cutin "???????",3;  //ferus_card
+						cutin "·¹µåÆä·¯½ºÄ«µå",3;  //ferus_card
 						mes "Abyss Lake... Do you possibly know how to get in there? You are not an adventurer with that information?";
 						next;
 						mes "[Melody-Jack]";
@@ -455,7 +455,7 @@ moc_para01,44,81,3	script	Melody-Jack#1	4_M_MELODY,8,8,{
 						callsub S_Quest,13139,13140,1;
 					}
 					else {
-						cutin "???????",3;  //ferus__card
+						cutin "±×¸°Æä·¯½ºÄ«µå",3;  //ferus__card
 						mes "Abyss Lake is full of dragons in and out. Dragons are not that special but there are so many.";
 						next;
 						mes "[Melody-Jack]";
@@ -473,7 +473,7 @@ moc_para01,44,81,3	script	Melody-Jack#1	4_M_MELODY,8,8,{
 					if (questprogress(13142,PLAYTIME) == 1)
 						mes "Take a rest. We should go and subdue Acidus dragons again.";
 					else if (questprogress(13141,HUNTING) == 1) {
-						cutin "????????",3;  //acidus__card
+						cutin "ºí·ç¾î½Ã´õ½ºÄ«µå",3;  //acidus__card
 						mes "Abyss Lake is not close. But it is worth visiting.";
 						next;
 						mes "[Melody-Jack]";
@@ -484,7 +484,7 @@ moc_para01,44,81,3	script	Melody-Jack#1	4_M_MELODY,8,8,{
 						callsub S_Quest,13141,13142,1;
 					}
 					else {
-						cutin "??????",3;  //acidus_card
+						cutin "°ñµå¾î½Ã´õ½º",3;  //acidus_card
 						mes "There is a cave where dragons are living inside of Abyss Lake. There are so many but flying things are annoying.";
 						next;
 						mes "[Melody-Jack]";
