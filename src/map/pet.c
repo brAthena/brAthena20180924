@@ -1204,7 +1204,7 @@ void read_petdb(void) {
 	if (petdb != NULL && (pt = libconfig->setting_get_elem(petdb, 0)) != NULL) {
 		for (i = 0; i < pet_count; ++i) {
 			config_setting_t *pets = libconfig->setting_get_elem(petdb, i);
-			int nameid = 0, value = 0;
+			int value = 0;
 
 			if (libconfig->setting_lookup_int(pets, "MobId", &value))	
 				pet->db[j].class_ = value;
