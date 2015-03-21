@@ -4099,7 +4099,7 @@ int mob_read_randommonster(void)
 			summon[i].qty = 1;
 		}
 
-		ShowSQL("Leitura de '"CL_WHITE"%lu"CL_RESET"' entradas na tabela '"CL_WHITE"%s"CL_RESET"'.\n", rows, mobfile[i]);
+		ShowSQL("Leitura de '"CL_WHITE"%d"CL_RESET"' entradas na tabela '"CL_WHITE"%s"CL_RESET"'.\n", rows, mobfile[i]);
 		rows = 0;
 	}
 
