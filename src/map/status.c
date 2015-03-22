@@ -12224,15 +12224,15 @@ void buffspecial_db(void) {
 	if (buffspecial != NULL && (it = libconfig->setting_get_elem(buffspecial, 0)) != NULL) {
 		for (i = 0; i < sc_count; ++i) {
 			config_setting_t *scbuff = libconfig->setting_get_elem(buffspecial, i);
-			int type = -1;
+			int type;
 			if (!libconfig->setting_lookup_string(scbuff, "Buff", &str)) {
 				ShowWarning("buffspecial_db: Status inexistente em '"CL_WHITE"%s"CL_RESET"', linha '%d', saltando.\n", config_setting_source_file(scbuff), config_setting_source_line(scbuff));
 				continue;
 			}
 			script->get_constant(str, &type);
 
-			if (type == SC_NONE) {
-				ShowWarning("buffspecial_db: Status '%s' desconhecido, saltando..\n", str);
+			if (type <= SC_NONE || type >= SC_MAX) {
+				ShowWarning("buffspecial_db: ID do efeito '%s' desconhecida, saltando..\n", str);
 				continue;
 			}
 
