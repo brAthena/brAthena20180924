@@ -934,7 +934,7 @@ int64 battle_calc_cardfix2(struct block_list *src, struct block_list *bl, int64 
 	sstatus = status->get_status_data(src);
 
 	if ( tsd ) {
-		if ( !(nk&NK_NO_CARDFIX_ATK) ) {
+		if ( !(nk&NK_NO_CARDFIX_DEF) ) {
 			// RaceAddTolerance
 			damage -= damage * tsd->race_tolerance[sstatus->race] / 100;
 			damage -= damage * tsd->race_tolerance[is_boss(src) ? RC_BOSS : RC_NONBOSS] / 100;
@@ -4312,6 +4312,8 @@ struct Damage battle_calc_weapon_attack(struct block_list *src,struct block_list
 			case GS_PIERCINGSHOT:
 			case AM_ACIDTERROR:
 			case AM_DEMONSTRATION:
+			case NJ_ISSEN:
+			case PA_SACRIFICE:
 				flag.distinct = 1;
 				break;
 			case PA_SHIELDCHAIN:
@@ -6471,8 +6473,8 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 				) {
 					if( t_bl->type == BL_PC && (sd->duel_group == ((TBL_PC*)t_bl)->duel_group) )
 						return (BCT_ENEMY&flag)?1:-1; // Duel targets can ONLY be your enemy, nothing else.
-					else
-						return 0; // You can't target anything out of your duel
+					else if ( src->type != BL_SKILL || (flag&BCT_ENEMY) )
+						return 0;
 				}
 			}
 			if( map_flag_gvg(m) && !sd->status.guild_id && t_bl->type == BL_MOB && ((TBL_MOB*)t_bl)->class_ == MOBID_EMPERIUM )
