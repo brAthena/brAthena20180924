@@ -28,6 +28,7 @@ enum E_LOGINSERVER_ST
 // supported encryption types: 1- passwordencrypt, 2- passwordencrypt2, 3- both
 #define PASSWORDENC 3
 #define PASSWD_LEN (32+1) // 23+1 for plaintext, 32+1 for md5-ed passwords
+#define MAC_LENGTH 18
 
 struct login_session_data {
 	int account_id;
@@ -50,6 +51,8 @@ struct login_session_data {
 	int has_client_hash;
 
 	int fd;
+
+	char mac_address[MAC_LENGTH];
 
 	time_t expiration_time;
 };

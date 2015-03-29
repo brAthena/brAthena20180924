@@ -1168,7 +1168,7 @@ int login_mmo_auth(struct login_session_data* sd, bool isServer) {
 		}
 	}
 
-	ShowNotice("Authentication accepted (account: %s, id: %d, ip: %s)\n", sd->userid, acc.account_id, ip);
+	ShowNotice("Authentication accepted (account: %s, id: %d, ip: %s mac: %s)\n", sd->userid, acc.account_id, ip, sd->mac_address);
 
 	// update session data
 	sd->account_id = acc.account_id;
@@ -1178,6 +1178,7 @@ int login_mmo_auth(struct login_session_data* sd, bool isServer) {
 	sd->sex = acc.sex;
 	sd->group_id = (uint8)acc.group_id;
 	sd->expiration_time = acc.expiration_time;
+	memcpy(acc.mac_address, sd->mac_address, sizeof(acc.mac_address));
 
 	// update account data
 	timestamp2string(acc.lastlogin, sizeof(acc.lastlogin), time(NULL), "%Y-%m-%d %H:%M:%S");
@@ -1436,7 +1437,9 @@ bool login_parse_client_login(int fd, struct login_session_data* sd, const char 
 	{
 		char *accname = (char *)RFIFOP(fd, 9);
 		char *token = (char *)RFIFOP(fd, 0x5C);
+		char *macaddress = (char *)RFIFOP(fd, 0x3c);
 		size_t uAccLen = strlen(accname);
+		size_t uMacaddress = MAC_LENGTH;
 		size_t uTokenLen = RFIFOREST(fd) - 0x5C;
 
 		version = RFIFOL(fd,4);
@@ -1447,6 +1450,7 @@ bool login_parse_client_login(int fd, struct login_session_data* sd, const char 
 		}
 
 		safestrncpy(username, accname, NAME_LENGTH);
+		safestrncpy(sd->mac_address, macaddress, uMacaddress);
 		safestrncpy(password, token, min(uTokenLen+1, PASSWD_LEN)); // Variable-length field, don't copy more than necessary
 		clienttype = RFIFOB(fd, 8);
 	}
@@ -1472,7 +1476,7 @@ bool login_parse_client_login(int fd, struct login_session_data* sd, const char 
 	safestrncpy(sd->userid, username, NAME_LENGTH);
 	if( israwpass )
 	{
-		ShowStatus("Request for connection of %s (ip: %s).\n", sd->userid, ip);
+		ShowStatus("Request for connection of %s (ip: %s mac: %s).\n", sd->userid, ip, sd->mac_address);
 		safestrncpy(sd->passwd, password, PASSWD_LEN);
 		if( login_config.use_md5_passwds )
 			MD5_String(sd->passwd, sd->passwd);
@@ -1480,7 +1484,7 @@ bool login_parse_client_login(int fd, struct login_session_data* sd, const char 
 	}
 	else
 	{
-		ShowStatus("Request for connection (passwdenc mode) of %s (ip: %s).\n", sd->userid, ip);
+		ShowStatus("Request for connection (passwdenc mode) of %s (ip: %s mac: %s).\n", sd->userid, ip, sd->mac_address);
 		bin2hex(sd->passwd, passhash, 16); // raw binary data here!
 		sd->passwdenc = PASSWORDENC;
 	}
@@ -1606,7 +1610,7 @@ int login_parse_login(int fd)
 		// Perform ip-ban check
 		if( login_config.ipban && ipban_check(ipl) )
 		{
-			ShowStatus("Connection refused: IP isn't authorized (deny/allow, ip: %s).\n", ip);
+			ShowStatus("Connection refused: IP isn't authorized (deny/allow, ip: %s mac: %s).\n", ip, sd->mac_address);
 			login_log(ipl, "unknown", -3, "ip banned");
 			login->login_error(fd, 3); // 3 = Rejected from Server
 			set_eof(fd);
