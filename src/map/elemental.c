@@ -783,78 +783,107 @@ int elemental_ai_timer(int tid, int64 tick, int id, intptr_t data) {
 }
 
 /*==========================================
- * Leitura elemental_db SQL [Shiraz]
+ * Leitura Elemental.conf - [GreenStage]
  *------------------------------------------*/
 int read_elementaldb(void) {
 	struct s_elemental_db *db;
-	struct status_data *estatus;
+	config_t elemental_config;
+	config_setting_t * ele_db = NULL;
+	int ele_count=0;
+	
 	int count = 0, ele;
 
+	const char *config_filename = "db/re/Elemental.conf";
 	memset(elemental->db,0,sizeof(elemental->db));
-
-	if(SQL_ERROR == SQL->Query(map->brAmysql_handle, "SELECT * FROM `%s`", get_database_name(14))) {
-		Sql_ShowDebug(map->brAmysql_handle);
+	
+	if (libconfig->read_file(&elemental_config, config_filename)) {
 		return -1;
 	}
+	
+	ele_db = libconfig->lookup(&elemental_config, "elemental_db");
+	
+	if(ele_db != NULL){
+		ele_count = libconfig->setting_length(ele_db);		
+		for(count = 0; count < ele_count && count < MAX_ELEMENTAL_CLASS; count++){
+			int int_value;
+			const char *str = NULL;			
+	
+			config_setting_t * elemental_ = libconfig->setting_get_elem(ele_db, count);
+			db = &elemental->db[count];
+			
+			if (!libconfig->setting_lookup_int(elemental_, "Id", &int_value)) {
+				ShowWarning("elemental_db: Membro %d de elemental_db sem id valido, ignorando...\n",count);
+				libconfig->setting_remove_elem(ele_db, count);
+				count--;
+				ele_count--;
+				continue;
+			}
+			if(elemental->search_index(int_value)!=-1){
+				ShowWarning("elemental_db: Membro %d de elemental_db com id já existente, ignorando...\n",count);
+				libconfig->setting_remove_elem(ele_db, count);
+				count--;
+				ele_count--;
+				continue;				
+			}
+			if (!libconfig->setting_lookup_string(elemental_, "AegisName", &str)) {
+				ShowWarning("elemental_db: Membro %d : AegisName não definido , ignorando...\n",count);
+				libconfig->setting_remove_elem(ele_db, count);
+				count--;
+				ele_count--;
+				continue;		
+			}
+			db->class_ = int_value;
+			safestrncpy(db->sprite,str,sizeof(db->sprite));
+			
+			// Set Name equal to AegisName if not previously defined in db file
+			if (!libconfig->setting_lookup_string(elemental_, "Name", &str))
+				safestrncpy(db->name, db->sprite, sizeof(db->name));
+			else 
+				safestrncpy(db->name, str,sizeof(db->name));
+			
+			db->lv               = (libconfig->setting_lookup_int(elemental_, "LV", &int_value) && int_value >= 0)? int_value : 0;
+			db->vd.class_        = db->class_;
+			db->status.max_hp    = (libconfig->setting_lookup_int(elemental_, "HP", &int_value) && int_value >= 0)? int_value : 0;
+			db->status.max_sp    = (libconfig->setting_lookup_int(elemental_, "SP", &int_value) && int_value >= 0)? int_value : 0;
+			db->status.rhw.range = (libconfig->setting_lookup_int(elemental_, "Range1", &int_value) && int_value >= 0)? int_value : 0;
+			db->status.rhw.atk   = (libconfig->setting_lookup_int(elemental_, "ATK1", &int_value) && int_value >= 0)? int_value : 0;
+			db->status.rhw.atk2  = (libconfig->setting_lookup_int(elemental_, "ATK2", &int_value) && int_value >= 0)? int_value : 0;
+			db->status.def       = (libconfig->setting_lookup_int(elemental_, "DEF", &int_value) && int_value >= 0)? int_value : 0;
+			db->status.mdef      = (libconfig->setting_lookup_int(elemental_, "LMDEF", &int_value) && int_value >= 0)? int_value : 0;
+			db->status.str       = (libconfig->setting_lookup_int(elemental_, "STR", &int_value) && int_value >= 0)? int_value : 0;
+			db->status.agi       = (libconfig->setting_lookup_int(elemental_, "AGI", &int_value) && int_value >= 0)? int_value : 0;
+			db->status.vit       = (libconfig->setting_lookup_int(elemental_, "VIT", &int_value) && int_value >= 0)? int_value : 0;
+			db->status.int_      = (libconfig->setting_lookup_int(elemental_, "INT", &int_value) && int_value >= 0)? int_value : 0;
+			db->status.dex       = (libconfig->setting_lookup_int(elemental_, "DEX", &int_value) && int_value >= 0)? int_value : 0;
+			db->status.luk       = (libconfig->setting_lookup_int(elemental_, "LUK", &int_value) && int_value >= 0)? int_value : 0;
+			db->range2           = (libconfig->setting_lookup_int(elemental_, "Range2", &int_value) && int_value >= 0)? int_value : 0;
+			db->range3           = (libconfig->setting_lookup_int(elemental_, "Range3", &int_value) && int_value >= 0)? int_value : 0;
+			db->status.size      = (libconfig->setting_lookup_int(elemental_, "Scale", &int_value) && int_value >= 0)? int_value : 0;
+			db->status.race      = (libconfig->setting_lookup_int(elemental_, "Race", &int_value) && int_value >= 0)? int_value : 0;
+			db->status.aspd_rate = 1000;
+			db->status.speed     = (libconfig->setting_lookup_int(elemental_, "Speed", &int_value) && int_value >= 0)? int_value : 200;
+			db->status.adelay    = (libconfig->setting_lookup_int(elemental_, "aDelay", &int_value) && int_value >= 0)? int_value : 504;
+			db->status.amotion   = (libconfig->setting_lookup_int(elemental_, "aMotion", &int_value) && int_value >= 0)? int_value : 1020;
+			db->status.dmotion   = (libconfig->setting_lookup_int(elemental_, "dMotion", &int_value) && int_value >= 0)? int_value : 360;	
+			ele                  = (libconfig->setting_lookup_int(elemental_, "Element", &int_value) && int_value >= 0)? int_value : 0;
+			db->status.def_ele   = ele%10;
+			db->status.ele_lv    = ele/20;
 
-	while(SQL_SUCCESS == SQL->NextRow(map->brAmysql_handle) && count < MAX_ELEMENTAL_CLASS) {
-		char *row[26];
-		int i;
+			if( db->status.def_ele >= ELE_MAX ) {
+				ShowWarning("Elemental %d tem o tipo de elemento invalido %d (elemento maximo é %d)\n", db->class_, db->status.def_ele, ELE_MAX - 1);
+				db->status.def_ele = ELE_NEUTRAL;
+			}
+			
+			if( db->status.ele_lv < 1 || db->status.ele_lv > 4 ) {
+				ShowWarning("Elemental %d tem nivel de elemento invalido %d (maximo 4)\n", db->class_, db->status.ele_lv);
+				db->status.ele_lv = 1;
+			}
 
-		for(i = 0; i != 26; ++i)
-			SQL->GetData(map->brAmysql_handle, i, &row[i], NULL);
-
-		db = &elemental->db[count];
-		db->class_ = atoi(row[0]);
-		safestrncpy(db->sprite, row[1], NAME_LENGTH);
-		safestrncpy(db->name, row[2], NAME_LENGTH);
-		db->lv = atoi(row[3]);
-
-		estatus = &db->status;
-		db->vd.class_ = db->class_;
-
-		estatus->max_hp = atoi(row[4]);
-		estatus->max_sp = atoi(row[5]);
-		estatus->rhw.range = atoi(row[6]);
-		estatus->rhw.atk = atoi(row[7]);
-		estatus->rhw.atk2 = atoi(row[8]);
-		estatus->def = atoi(row[9]);
-		estatus->mdef = atoi(row[10]);
-		estatus->str = atoi(row[11]);
-		estatus->agi = atoi(row[12]);
-		estatus->vit = atoi(row[13]);
-		estatus->int_ = atoi(row[14]);
-		estatus->dex = atoi(row[15]);
-		estatus->luk = atoi(row[16]);
-		db->range2 = atoi(row[17]);
-		db->range3 = atoi(row[18]);
-		estatus->size = atoi(row[19]);
-		estatus->race = atoi(row[20]);
-
-		ele = atoi(row[21]);
-		estatus->def_ele = ele%10;
-		estatus->ele_lv = ele/20;
-
-		if( estatus->def_ele >= ELE_MAX ) {
-			ShowWarning("Elemental %d tem o tipo de elemento invalido %d (elemento maximo é %d)\n", db->class_, estatus->def_ele, ELE_MAX - 1);
-			estatus->def_ele = ELE_NEUTRAL;
+	
 		}
-		
-		if( estatus->ele_lv < 1 || estatus->ele_lv > 4 ) {
-			ShowWarning("Elemental %d tem nivel de elemento invalido %d (maximo 4)\n", db->class_, estatus->ele_lv);
-			estatus->ele_lv = 1;
-		}
-
-		estatus->aspd_rate = 1000;
-		estatus->speed = atoi(row[22]);
-		estatus->adelay = atoi(row[23]);
-		estatus->amotion = atoi(row[24]);
-		estatus->dmotion = atoi(row[25]);
-		++count;
 	}
-
-	ShowSQL("Leitura de '"CL_WHITE"%d"CL_RESET"' entradas na tabela '"CL_WHITE"%s"CL_RESET"'.\n", count, get_database_name(14));
-	SQL->FreeResult(map->brAmysql_handle);
+	libconfig->destroy(&elemental_config);	
+	ShowConf("Leitura de '"CL_WHITE"%d"CL_RESET"' entradas na tabela '"CL_WHITE"%s"CL_RESET"'.\n", count, config_filename);
 	return 0;
 }
 
