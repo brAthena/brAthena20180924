@@ -3817,7 +3817,7 @@ void sv_readsqldb(char *table_name, int param_size, int max_allowed, bool (*sub_
 			break;
 		}
 
-		str[(param_size + 1)] = '\0';
+		str[(param_size + 1)] = NULL;
 		for(j = 0; j < param_size; ++j) {
 			SQL->GetData(map->brAmysql_handle, j, &str[j], NULL);
 			if(str[j] == NULL)

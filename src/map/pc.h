@@ -889,7 +889,7 @@ struct pc_interface {
 	bool (*gainexp) (struct map_session_data *sd, struct block_list *src, unsigned int base_exp, unsigned int job_exp, bool is_quest);
 	unsigned int (*nextbaseexp) (struct map_session_data *sd);
 	unsigned int (*thisbaseexp) (struct map_session_data *sd);
-	unsigned int (*baseexp_sub) (unsigned int class_,unsigned int job_level); // [Carlos/brAthena]
+	unsigned int (*baseexp_sub) (int class_,unsigned int job_level); // [Carlos/brAthena]
 	unsigned int (*nextjobexp) (struct map_session_data *sd);
 	unsigned int (*thisjobexp) (struct map_session_data *sd);
 	unsigned int (*jobexp_sub) (unsigned int class_,unsigned int job_level); // [Carlos/brAthena]

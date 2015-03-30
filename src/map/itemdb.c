@@ -964,13 +964,13 @@ void itemdb_read_packages(void) {
 			int rval = 0;
 			const char *name2;
 			if( !( t = libconfig->setting_get_member(it,"item") ) || !(itname = config_setting_get_string(t))) {
-				ShowWarning("itemdb_read_packages: Valor do campo 'item' inválido no item '%d' do pacote '%s'. Ignorando entrada...\n",c,name);
+				ShowWarning("itemdb_read_packages: Valor do campo 'item' incorreto no item '%d' do pacote '%s'. Ignorando entrada...\n",c,name);
 				libconfig->setting_remove_elem(itg, c - 1);
 				--c;
 				continue;
 			}
 			if(!(t = libconfig->setting_get_member(it,"name")) || !(name2 = config_setting_get_string(t))) {
-				ShowWarning("itemdb_read_packages: valor de 'name' inválido para o item '%s' no pacote '%s', padronizando para 'must'!\n",itname,name);
+				ShowWarning("itemdb_read_packages: valor de 'name' incorreto para o item '%s' no pacote '%s', padronizando para 'must'!\n",itname,name);
 				config_setting_remove_elem(itg,c-1);
 				--c;
 				continue;
@@ -1087,7 +1087,7 @@ void itemdb_read_packages(void) {
 
 			if((t = libconfig->setting_get_member(it, "probability"))) {
 				if((probability = (unsigned short)libconfig->setting_get_int(t)) > 10000 ) {
-					ShowWarning("itemdb_read_packages: taxa ('%d') inválida  para o item '%s' no pacote '%s'!\n",probability,itname,config_setting_name(itg));
+					ShowWarning("itemdb_read_packages: taxa ('%d') incorreta  para o item '%s' no pacote '%s'!\n",probability,itname,config_setting_name(itg));
 					probability = 10000;
 				}
 			}
@@ -1130,7 +1130,7 @@ void itemdb_read_packages(void) {
 				itemdb->packages[cnt].random_groups[gidx].random_list[r].id = data ? data->nameid : 0;
 				itemdb->packages[cnt].random_groups[gidx].random_list[r].qty = icnt;
 				if((itemdb->packages[cnt].random_groups[gidx].random_list[r].probability = probability) == 10000) {
-					ShowWarning("itemdb_read_packages: item '%s' em '%s' tem taxa de queda de 100%%!!!! definir este item como 'Random: 0' ou outros itens não vão cair!!!\n",itname,config_setting_name(itg));
+					ShowWarning("itemdb_read_packages: item '%s' em '%s' tem taxa de queda de 100%%!!!! definir este item como 'Random: 0' ou a queda de outros itens vai falhar!!!\n",itname,config_setting_name(itg));
 				}
 				itemdb->packages[cnt].random_groups[gidx].random_list[r].hour = hour;
 				itemdb->packages[cnt].random_groups[gidx].random_list[r].onair = onair == true ? 1 : 0;
@@ -1150,7 +1150,7 @@ void itemdb_read_packages(void) {
 		for(r = 0; r < itemdb->packages[cnt].random_qty; r++ ) {
 			if( itemdb->packages[cnt].random_groups[r].random_qty == 1 ) {
 				//item packages dont stop looping until something comes out of them, so if you have only one item in it the drop is guaranteed.
-				ShowWarning("itemdb_read_packages: em '%s' 'Random: %d' grupo tem apenas 1 opção aleatória, queda da taxa será de 100%%!\n",itemdb_name(itemdb->packages[cnt].id),r+1);
+				ShowWarning("itemdb_read_packages: em '%s' 'Random: %d' grupo tem apenas 1 entrada random, queda da taxa vai ser de 100%%!\n",itemdb_name(itemdb->packages[cnt].id),r+1);
 				itemdb->packages[cnt].random_groups[r].random_list[0].probability = 10000;
 			}
 		}

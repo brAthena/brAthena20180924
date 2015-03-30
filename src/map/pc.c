@@ -6175,18 +6175,18 @@ unsigned int pc_maxjoblv(struct map_session_data *sd)
 /*==========================================
  * base level exp lookup.
  *------------------------------------------*/
-unsigned int pc_baseexp_sub(unsigned int class_, unsigned int base_level)
+unsigned int pc_baseexp_sub(int class_, unsigned int base_level)
 {
 	int i, flag_class;
 
-	flag_class = (class_ >= JOB_NOVICE && class_ <= JOB_CRUSADER2 || class_ >= JOB_BABY && class_ <= JOB_BABY_CRUSADER2) ? 0 :
-		(class_ >= JOB_NOVICE_HIGH && class_ <= JOB_PALADIN2 || base_level <= 99) ? 1 :
+	flag_class = ((class_ >= JOB_NOVICE && class_ <= JOB_CRUSADER2) || (class_ >= JOB_BABY && class_ <= JOB_BABY_CRUSADER2)) ? 0 :
+		((class_ >= JOB_NOVICE_HIGH && class_ <= JOB_PALADIN2) || base_level <= 99) ? 1 :
 		(class_ >= JOB_RUNE_KNIGHT && class_ <= JOB_MAX) ? 2 : -1;
 	
 	// Restrições de classes para não ser necessário mais upar.
 	// @todo: Verificação dinamica para servidores de maiores leveis.
 	if (flag_class == -1 || (class_ >= JOB_SUPER_NOVICE && class_ <= JOB_NINJA && base_level >= MAX_LEVEL) ||
-		class_ == JOB_REBELLION && base_level >= 160)
+		(class_ == JOB_REBELLION && base_level >= 160))
 	{
 		return 0;
 	}
@@ -6252,20 +6252,20 @@ unsigned int pc_jobexp_sub(unsigned int class_, unsigned int job_level)
 	int i, flag_class;
 
 	flag_class =
-		(class_ == JOB_TAEKWON || class_ >= JOB_SWORDMAN && class_ <= JOB_THIEF ||
-		class_ >= JOB_BABY_SWORDMAN && class_ <= JOB_BABY_THIEF) ? 3 :
+		(class_ == JOB_TAEKWON || (class_ >= JOB_SWORDMAN && class_ <= JOB_THIEF) ||
+		(class_ >= JOB_BABY_SWORDMAN && class_ <= JOB_BABY_THIEF)) ? 3 :
 		(class_ >= JOB_SWORDMAN_HIGH && class_ <= JOB_THIEF_HIGH) ? 4 :
 		(class_ == JOB_GUNSLINGER || class_ == JOB_NINJA) ? 5 :
 		(class_ == JOB_NOVICE) ? 6 :
 		(class_ == JOB_NOVICE_HIGH) ? 7 :
-		(class_ == JOB_SOUL_LINKER) || (class_ >= JOB_KNIGHT && class_ <= JOB_CRUSADER2 ||
-		class_ >= JOB_BABY_KNIGHT && class_ <= JOB_BABY_CRUSADER2) ? 8 :
+		(class_ == JOB_SOUL_LINKER) || ((class_ >= JOB_KNIGHT && class_ <= JOB_CRUSADER2) ||
+		(class_ >= JOB_BABY_KNIGHT && class_ <= JOB_BABY_CRUSADER2)) ? 8 :
 		(class_ >= JOB_LORD_KNIGHT && class_ <= JOB_PALADIN2) ? 9 :
-		(class_ >= JOB_RUNE_KNIGHT && class_ <= JOB_BABY_MECHANIC2 || class_ == JOB_SUPER_NOVICE || class_ >= JOB_KAGEROU && class_ <= JOB_REBELLION) ? 10 : -1;
+		((class_ >= JOB_RUNE_KNIGHT && class_ <= JOB_BABY_MECHANIC2)|| class_ == JOB_SUPER_NOVICE || (class_ >= JOB_KAGEROU && class_ <= JOB_REBELLION)) ? 10 : -1;
 
 	// Restrições de classes para não ser necessário mais upar.
 	// @todo: Verificação dinamica para servidores de maiores leveis.
-	if (flag_class == -1 || class_ == JOB_SUPER_NOVICE && job_level >= 60 || class_ == JOB_REBELLION && job_level >= 50)
+	if (flag_class == -1 || (class_ == JOB_SUPER_NOVICE && job_level >= 60) || (class_ == JOB_REBELLION && job_level >= 50))
 	{
 		return 0;
 	}
@@ -10455,7 +10455,7 @@ int pc_read_exp_fromsql(void)
 			continue;
 		}
 
-        memset(exp_tmp, 0, sizeof(exp_tmp));
+        memset(exp_tmp, 0, sizeof(*exp_tmp));
 		exp_tmp->flag_type = (i < 3 ? EXP_BASE_FLAG : EXP_CLASS_FLAG);
 		exp_tmp->flag_class = i;
 
@@ -10485,7 +10485,7 @@ int pc_read_exp_fromsql(void)
 			(*etl)->exp = atoi(exp);
 		}
 
-		ShowSQL("Leitura de '"CL_WHITE"%lu"CL_RESET"' entradas na tabela '"CL_WHITE"%s"CL_RESET"'.\n", count, database_name);
+		ShowSQL("Leitura de '"CL_WHITE"%d"CL_RESET"' entradas na tabela '"CL_WHITE"%s"CL_RESET"'.\n", count, database_name);
 		SQL->FreeResult(map->brAmysql_handle);
 	}
 
