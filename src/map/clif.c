@@ -17217,6 +17217,10 @@ void clif_parse_CashShopBuy(int fd, struct map_session_data *sd) {
 							pc->getcash(sd, clif->cs.data[tab][j]->price * get_count,0);
 					} else /* create_egg succeeded so mark as success */
 						result = CSBR_SUCCESS;
+						
+					if(result == CSBR_SUCCESS) /* Add to cashshop Log - [GreenStage]*/
+						logs->cash_buy_sql(sd,"CashButton","",&item_tmp,get_count,clif->cs.data[tab][j]->price);
+
 				}
 			}
 		} else {

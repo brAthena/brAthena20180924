@@ -4089,9 +4089,10 @@ int pc_additem(struct map_session_data *sd,struct item *item_data,int amount,e_l
 		clif->additem(sd,i,amount,0);
 	}
 
-	if( !itemdb->isstackable2(data) && !item_data->unique_id )
+	if( !itemdb->isstackable2(data) && !item_data->unique_id ){
 		sd->status.inventory[i].unique_id = itemdb->unique_id(sd);
-
+		item_data->unique_id=sd->status.inventory[i].unique_id; /*Added to allow cashshop log Serial id*/
+	}
 	logs->pick_pc(sd, log_type, amount, &sd->status.inventory[i],sd->inventory_data[i]);
 
 	sd->weight += w;

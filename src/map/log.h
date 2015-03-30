@@ -98,7 +98,7 @@ struct log_interface {
 		bool sql_logs;
 		bool log_chat_woe_disable;
 		int rare_items_log,refine_items_log,price_items_log,amount_items_log;
-		int branch, mvpdrop, zeny, commands, npc, chat;
+		int branch, mvpdrop, zeny, commands, npc, chat, buycash;
 		char log_branch[64], log_pick[64], log_zeny[64], log_mvpdrop[64], log_gm[64], log_npc[64], log_chat[64];
 	} config;
 	/* */
@@ -127,6 +127,11 @@ struct log_interface {
 	void (*mvpdrop_sub) (struct map_session_data* sd, int monster_id, int* log_mvp);
 
 	int (*config_read) (const char* cfgName);
+	
+    // Cash Log - [GreenStage]
+	void (*cash_buy_sql) (struct map_session_data* sd,char * type, char * npc_name,struct item* itm , int amount,int price);
+	void (*cash_buy_sub_sql) (struct map_session_data* sd,char * type, char * npc_name,struct item* itm , int amount,int price);
+
 	void (*config_done) (void);
 	void (*sql_init) (void);
 	void (*sql_final) (void);

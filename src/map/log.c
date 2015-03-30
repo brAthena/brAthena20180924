@@ -113,6 +113,54 @@ void log_branch_sub_sql(struct map_session_data* sd) {
 	}
 	SQL->StmtFree(stmt);
 }
+
+//BrAthena 
+//Cash buying log - [GreenStage]
+void log_cash_buy_sql (struct map_session_data* sd,char * type,char * npc_name,struct item* itm , int amount,int price){
+	nullpo_retv(sd);
+
+	if( !logs->config.buycash )
+		return;
+	
+	logs->cash_buy_sub_sql(sd,type,npc_name,itm,amount,price);	
+	return;
+}
+void log_cash_buy_sub_sql (struct map_session_data* sd,char * type,char * npc_name,struct item* itm , int amount,int price){
+	struct item_data *i_data;
+	int tcost= price * amount;
+	char* sql_data,account_name[23], last_ip[20];
+	i_data = itemdb->exists(itm->nameid);
+	
+	if(i_data == NULL)
+		return;
+	
+	// Time to get Acc Name and Ip Info from login table.
+	if( SQL_ERROR == SQL->Query(map->mysql_handle,"SELECT `userid` ,`last_ip` FROM `login`  WHERE `account_id` ='%d'",sd->status.account_id)){
+		Sql_ShowDebug(map->mysql_handle);
+		return;		
+	}
+	if( SQL_SUCCESS != SQL->NextRow(map->mysql_handle) )
+	{	
+        Sql_ShowDebug(map->mysql_handle);
+		return;
+	}
+
+	SQL->GetData(map->mysql_handle,  0, &sql_data, NULL); 
+	safestrncpy(account_name,sql_data,sizeof(account_name));
+	SQL->GetData(map->mysql_handle,  1, &sql_data, NULL); 
+	safestrncpy(last_ip,sql_data,sizeof(last_ip));
+	
+	if( SQL_ERROR == SQL->Query(logs->mysql_handle, LOG_QUERY " INTO `cashitemshoplog` (`Date`, `Mapname`, `AccountID`, `AccountName`,`CharacterID`,`CharacterIPaddr`,`PosX`,`PosY`,`Type`,`NpcName`,`ItemID`,`ItemName`,`ItemCount`,`ItemSerial`,`ItemSlot1`,`ItemSlot2`,`ItemSlot3`,`ItemSlot4`,`ItemRefiningLevel`,`Cash_Price`,`Cash_View`,`Cash_Before`,`Cash_After`	)"
+	"VALUES (NOW(), '%s', '%d', '%s', '%d', '%s', '%d', '%d','%s','%s','%d','%s','%d','%"PRIu64"','%d','%d','%d','%d','%d','%d','%d','%d','%d')",
+	mapindex_id2name(sd->mapindex),sd->status.account_id,account_name,sd->status.char_id,last_ip,sd->bl.x,sd->bl.y,type,npc_name,itm->nameid,i_data->name,amount,itm->unique_id,itm->card[0], itm->card[1], itm->card[2], itm->card[3],itm->refine,price,tcost,sd->cashPoints + tcost,sd->cashPoints))
+	{
+		Sql_ShowDebug(logs->mysql_handle);
+		return;
+	}
+
+	
+}
+
 void log_branch_sub_txt(struct map_session_data* sd) {
 	char timestring[255];
 	time_t curtime;
@@ -443,6 +491,8 @@ int log_config_read(const char* cfgName) {
 				logs->config.mvpdrop = config_switch(w2);
 			else if( strcmpi(w1, "log_chat_woe_disable") == 0 )
 				logs->config.log_chat_woe_disable = (bool)config_switch(w2);
+			else if( strcmpi(w1, "log_buycash") == 0 )
+				logs->config.buycash = config_switch(w2);
 			else if( strcmpi(w1, "log_branch_db") == 0 )
 				safestrncpy(logs->config.log_branch, w2, sizeof(logs->config.log_branch));
 			else if( strcmpi(w1, "log_pick_db") == 0 )
@@ -537,6 +587,10 @@ void log_defaults(void) {
 	logs->branch_sub = log_branch_sub_txt;
 	logs->mvpdrop_sub = log_mvpdrop_sub_txt;
 
+	//CASH LOGS - GreenStage
+	logs->cash_buy_sql = log_cash_buy_sql;
+	logs->cash_buy_sub_sql = log_cash_buy_sub_sql;
+	
 	logs->config_read = log_config_read;
 	logs->config_done = log_config_complete;
 	logs->sql_init = log_sql_init;

@@ -1433,7 +1433,7 @@ int npc_cashshop_buylist(struct map_session_data *sd, int points, int count, uns
 
 		nameid = item_list[i*2+1];
 		amount = item_list[i*2+0];
-
+		ARR_FIND(0,shop_size,j,shop[j].nameid == nameid);
 		memset(&item_tmp,0,sizeof(item_tmp));
 
 		if( !pet->create_egg(sd,nameid) ) {
@@ -1441,6 +1441,8 @@ int npc_cashshop_buylist(struct map_session_data *sd, int points, int count, uns
 			item_tmp.identify = 1;
 			pc->additem(sd,&item_tmp,amount,LOG_TYPE_NPC);
 		}
+			// Add to cashshop Log - [GreenStage]
+			logs->cash_buy_sql(sd,"NPC",nd->name,&item_tmp,amount,shop[j].value);
 	}
 
 	return ERROR_TYPE_NONE;
