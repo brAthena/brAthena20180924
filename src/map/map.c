@@ -3874,17 +3874,17 @@ char *get_database_name(int database_id)
 		case 32: db_name = "homunculus_db"; break;
 		case 33: db_name = "job_db2"; break;
 			// Inicio - Leitura das tabelas de experiencia.
-		case 34: db_name = "expparameter"; break;            // Base: Classes Normais e Babys     
-		case 35: db_name = "expparameter2"; break;           // Base: base Transclasse
-		case 36: db_name = "expparameter3"; break;           // Base: base 3rd, Bebê 3rd, Classes expandidas Super Aprendiz, (até base 175)  Super Aprendiz expandido , Kagerou/Oboro , Rebelde (até base 160 somente)
-		case 37: db_name = "firstjobexpparameter"; break;    // Classe: Primeiras Classes, Bebê primeiras Classes e Taekwon
-		case 38: db_name = "firstjobexpparameter2"; break;   // Classe: TransClasses 1-1
-		case 39: db_name = "firstjobexpparameter3"; break;   // Classe: Ninja/Gunslinger
-		case 40: db_name = "novicejobexpparameter"; break;   // Classe: Aprendiz e Baby Aprendiz
-		case 41: db_name = "novicejobexpparameter2"; break;  // Classe: Aprendiz renascido
-		case 42: db_name = "secondjobexpparameter"; break;   // Classe: Segunda Classes e Bebê 2nd Classes e Soul Linker
-		case 43: db_name = "secondjobexpparameter2"; break;  // Classe: Transclasse 2-1
-		case 44: db_name = "thirdjobexpparameter"; break;    // Classe: 3rd classes, Bebê 3rds, Super Aprendiz (até job 60) Super Aprendiz expandido, Kagerou/Oboro , Rebeldes (somente até job 50)
+		case 34: db_name = "ExpParameter"; break;            // Base: Classes Normais e Babys     
+		case 35: db_name = "ExpParameter2"; break;           // Base: base Transclasse
+		case 36: db_name = "ExpParameter3"; break;           // Base: base 3rd, Bebê 3rd, Classes expandidas Super Aprendiz, (até base 175)  Super Aprendiz expandido , Kagerou/Oboro , Rebelde (até base 160 somente)
+		case 37: db_name = "FirstJobExpParameter"; break;    // Classe: Primeiras Classes, Bebê primeiras Classes e Taekwon
+		case 38: db_name = "FirstJobExpParameter2"; break;   // Classe: TransClasses 1-1
+		case 39: db_name = "FirstJobExpParameter3"; break;   // Classe: Ninja/Gunslinger
+		case 40: db_name = "NoviceJobExpParameter"; break;   // Classe: Aprendiz e Baby Aprendiz
+		case 41: db_name = "NoviceJobExpParameter2"; break;  // Classe: Aprendiz renascido
+		case 42: db_name = "SecondJobExpParameter"; break;   // Classe: Segunda Classes e Bebê 2nd Classes e Soul Linker
+		case 43: db_name = "SecondJobExpParameter2"; break;  // Classe: Transclasse 2-1
+		case 44: db_name = "ThirdJobExpParameter"; break;    // Classe: 3rd classes, Bebê 3rds, Super Aprendiz (até job 60) Super Aprendiz expandido, Kagerou/Oboro , Rebeldes (somente até job 50)
 			// Fim - Leitura das tabelas de experiência.
 	}
 
