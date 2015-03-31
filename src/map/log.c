@@ -114,8 +114,7 @@ void log_branch_sub_sql(struct map_session_data* sd) {
 	SQL->StmtFree(stmt);
 }
 
-//BrAthena 
-//Cash buying log - [GreenStage]
+//Cash buying log - [GreenStage/brAthena]
 void log_cash_buy_sql (struct map_session_data* sd,char * type,char * npc_name,struct item* itm , int amount,int price){
 	nullpo_retv(sd);
 
@@ -150,9 +149,9 @@ void log_cash_buy_sub_sql (struct map_session_data* sd,char * type,char * npc_na
 	SQL->GetData(map->mysql_handle,  1, &sql_data, NULL); 
 	safestrncpy(last_ip,sql_data,sizeof(last_ip));
 	
-	if( SQL_ERROR == SQL->Query(logs->mysql_handle, LOG_QUERY " INTO `cashitemshoplog` (`Date`, `Mapname`, `AccountID`, `AccountName`,`CharacterID`,`CharacterIPaddr`,`PosX`,`PosY`,`Type`,`NpcName`,`ItemID`,`ItemName`,`ItemCount`,`ItemSerial`,`ItemSlot1`,`ItemSlot2`,`ItemSlot3`,`ItemSlot4`,`ItemRefiningLevel`,`Cash_Price`,`Cash_View`,`Cash_Before`,`Cash_After`	)"
-	"VALUES (NOW(), '%s', '%d', '%s', '%d', '%s', '%d', '%d','%s','%s','%d','%s','%d','%"PRIu64"','%d','%d','%d','%d','%d','%d','%d','%d','%d')",
-	mapindex_id2name(sd->mapindex),sd->status.account_id,account_name,sd->status.char_id,last_ip,sd->bl.x,sd->bl.y,type,npc_name,itm->nameid,i_data->name,amount,itm->unique_id,itm->card[0], itm->card[1], itm->card[2], itm->card[3],itm->refine,price,tcost,sd->cashPoints + tcost,sd->cashPoints))
+	if( SQL_ERROR == SQL->Query(logs->mysql_handle, LOG_QUERY " INTO `CashItemShop` (`Date`, `Mapname`, `AccountID`, `AccountName`,`CharacterID`,`CharacterIPaddr`,`Type`,`PosX`,`PosY`,`NpcName`,`ItemID`,`ItemName`,`ItemCount`,`ItemSerial`,`ItemSlot1`,`ItemSlot2`,`ItemSlot3`,`ItemSlot4`,`ItemRefiningLevel`,`Cash_Price`,`Cash_View`,`Cash_Before`,`Cash_After`)"
+	"VALUES (NOW(), '%s','%d','%s','%d','%s','%s','%d','%d','%s','%d','%s','%d','%"PRIu64"','%d','%d','%d','%d','%d','%d','%d','%d','%d')",
+	mapindex_id2name(sd->mapindex), sd->status.account_id, account_name, sd->status.char_id, last_ip, type, sd->bl.x, sd->bl.y, npc_name, itm->nameid, i_data->name, amount, itm->unique_id, itm->card[0], itm->card[1], itm->card[2], itm->card[3], itm->refine, price, tcost, sd->cashPoints + tcost, sd->cashPoints))
 	{
 		Sql_ShowDebug(logs->mysql_handle);
 		return;
