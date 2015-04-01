@@ -8062,7 +8062,7 @@ REPLACE INTO `skill_db` VALUES(480,'5',8,1,'-1','0','0',5,'5','no',0,'0','0','we
 REPLACE INTO `skill_db` VALUES(481,'0',0,0,'0','0','0',5,'0','no',0,'0','0','none','0','HP_MANARECHARGE','Mana Recharge');
 REPLACE INTO `skill_db` VALUES(482,'0',6,4,'0','0x1','0',5,'1','no',0,'0','0','magic','0','PF_DOUBLECASTING','Double Casting');
 REPLACE INTO `skill_db` VALUES(483,'16',6,2,'0','0x1','1:2:3:4:5',1,'1','no',0,'0','0','none','0','HW_GANBANTEIN','Ganbantein');
-REPLACE INTO `skill_db` VALUES(484,'9',6,2,'2','0x91','0',5,'1','yes',0,'0','0','misc','0','HW_GRAVITATION','Gravitation Field');
+REPLACE INTO `skill_db` VALUES(484,'18',6,2,'2','0x91','0',5,'1','yes',0,'0','0','misc','0','HW_GRAVITATION','Gravitation Field');
 REPLACE INTO `skill_db` VALUES(485,'-2',6,1,'-1','0x8','0',10,'1','no',0,'0','0','weapon','0','WS_CARTTERMINATION','Cart Termination');
 REPLACE INTO `skill_db` VALUES(486,'0',6,4,'0','0x1','0',5,'1','no',0,'0','0','weapon','0','WS_OVERTHRUSTMAX','Maximum Power Thrust');
 REPLACE INTO `skill_db` VALUES(487,'0',6,4,'0','0x1','0',5,'1','no',0,'0','0','none','0','CG_LONGINGFREEDOM','Longing for Freedom');
