@@ -10888,7 +10888,7 @@ void clif_parse_UseSkillToId(int fd, struct map_session_data *sd)
 
 	if( sd->npc_id || sd->state.workinprogress&1 ){
 #ifdef RENEWAL
-		clif->msg(sd, 0x783); // TODO look for the client date that has this message.
+		clif->msg(sd, MSI_BUSY); // TODO look for the client date that has this message.
 #endif
 		return;
 	}
@@ -15285,7 +15285,7 @@ void clif_parse_ViewPlayerEquip(int fd, struct map_session_data* sd) {
 	if( tsd->status.show_equip || pc_has_permission(sd, PC_PERM_VIEW_EQUIPMENT) )
 		clif->viewequip_ack(sd, tsd);
 	else
-		clif_viewequip_fail(sd);
+		clif->msg(sd, MSI_OPEN_EQUIPEDITEM_REFUSED);
 }
 
 
@@ -15683,7 +15683,7 @@ void clif_parse_mercenary_action(int fd, struct map_session_data* sd)
 ///     3 = Your mercenary soldier has ran away.
 void clif_mercenary_message(struct map_session_data* sd, int message)
 {
-	clif->msg(sd, 1266 + message);
+	clif->msg(sd, MSI_MER_FINISH + message);
 }
 
 

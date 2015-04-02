@@ -54,7 +54,6 @@ struct channel_data;
 #define P2PTR(fd) RFIFO2PTR(fd)
 #define clif_menuskill_clear(sd) ((sd)->menuskill_id = (sd)->menuskill_val = (sd)->menuskill_val2 = 0)
 #define clif_disp_onlyself(sd,mes,len) clif->disp_message( &(sd)->bl, (mes), (len), SELF )
-#define clif_viewequip_fail( sd ) clif->msg( (sd), 0x54d );
 #define MAX_ROULETTE_LEVEL 7 /** client-defined value **/
 #define MAX_ROULETTE_COLUMNS 9 /** client-defined value **/
 
@@ -351,9 +350,13 @@ typedef enum useskill_fail_cause { // clif_skill_fail
 }useskill_fail_cause;
 
 enum clif_messages {
-	ITEM_CANT_OBTAIN_WEIGHT = 0x34, /* you cannot carry more items because you are overweight. */
-	SKILL_CANT_USE_AREA = 0x536,
-	ITEM_CANT_USE_AREA =  0x537,
+	MSI_CANT_GET_ITEM_BECAUSE_WEIGHT = 0x34, /* you cannot carry more items because you are overweight. */
+	MSI_IMPOSSIBLE_SKILL_AREA = 0x536,
+	MSI_IMPOSSIBLE_USEITEM_AREA =  0x537,
+	MSI_CANT_USE_WHEN_SITDOWN = 0x297,
+	MSI_BUSY = 0x783,
+	MSI_MER_FINISH = 0x4f2,
+	MSI_OPEN_EQUIPEDITEM_REFUSED = 0x54d,
 };
 
 /**

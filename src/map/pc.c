@@ -4284,7 +4284,7 @@ int pc_isUseitem(struct map_session_data *sd,int n)
 		return 0;
 
 	if( (item->item_usage.flag&INR_SITTING) && (pc_issit(sd) == 1) && (pc_get_group_level(sd) < item->item_usage.override) ) {
-		clif->msgtable(sd->fd,0x297);
+		clif->msgtable(sd->fd,MSI_CANT_USE_WHEN_SITDOWN);
 		//clif->colormes(sd->fd,COLOR_WHITE,msg_txt(1474));
 		return 0; // You cannot use this item while sitting.
 	}
@@ -4390,7 +4390,7 @@ int pc_isUseitem(struct map_session_data *sd,int n)
 
 	if( item->package || item->group ) {
 		if( pc_is90overweight(sd) ) {
-			clif->msgtable(sd->fd,ITEM_CANT_OBTAIN_WEIGHT);
+			clif->msgtable(sd->fd,MSI_CANT_GET_ITEM_BECAUSE_WEIGHT);
 			return 0;
 		}
 		if( !pc->inventoryblank(sd) ) {
@@ -4461,7 +4461,7 @@ int pc_useitem(struct map_session_data *sd,int n) {
 	if( sd->npc_id || sd->state.workinprogress&1 ){
 		/* TODO: add to clif->messages enum */
 #ifdef RENEWAL
-		clif->msg(sd, 0x783); // TODO look for the client date that has this message.
+		clif->msg(sd, MSI_BUSY); // TODO look for the client date that has this message.
 #endif
 		return 0;
 	}
@@ -4547,7 +4547,7 @@ int pc_useitem(struct map_session_data *sd,int n) {
 	/* on restricted maps the item is consumed but the effect is not used */
 	for(i = 0; i < map->list[sd->bl.m].zone->disabled_items_count; i++) {
 		if( map->list[sd->bl.m].zone->disabled_items[i] == nameid ) {
-			clif->msg(sd, ITEM_CANT_USE_AREA); // This item cannot be used within this area
+			clif->msg(sd, MSI_IMPOSSIBLE_USEITEM_AREA); // This item cannot be used within this area
 			if( battle_config.item_restricted_consumption_type && sd->status.inventory[n].expire_time == 0 ) {
 				clif->useitemack(sd,n,sd->status.inventory[n].amount-1,true);
 				pc->delitem(sd,n,1,1,0,LOG_TYPE_CONSUME);
