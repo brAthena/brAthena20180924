@@ -3578,13 +3578,7 @@ const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const char* st
 		return strchr(start,'\n');// skip and continue
 	}
 
-	//Use db names instead of the spawn file ones.
-	if(battle_config.override_mob_names==1)
-		strcpy(mobspawn.name,"--en--");
-	else if (battle_config.override_mob_names==2)
-		strcpy(mobspawn.name,"--ja--");
-	else
-		safestrncpy(mobspawn.name, mobname, sizeof(mobspawn.name));
+	safestrncpy(mobspawn.name, mobname, sizeof(mobspawn.name));
 
 	//Verify dataset.
 	if( !mob->parse_dataset(&mobspawn) ) {

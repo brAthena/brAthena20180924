@@ -2305,6 +2305,7 @@ void itemdb_reload(void) {
 		pc->checkitem(sd);
 	}
 	mapit->free(iter);
+	mob->reload_random();
 }
 void itemdb_name_constants(void) {
 	DBIterator *iter = db_iterator(itemdb->names);

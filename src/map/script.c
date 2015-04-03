@@ -14211,6 +14211,26 @@ BUILDIN(logmes)
 	return true;
 }
 
+BUILDIN(summon_rand)
+{
+	TBL_PC* sd;
+	int i;
+	int mob_id;
+	int16 map;
+	sd = script->rid2sd(st);
+	map = sd->bl.m;
+	if(script->current_item_id){
+		for(i=0;i<MAX_RANDOMMONSTER;i++){
+			if(summon[i].iteminfo->nameid == script->current_item_id){
+				mob_id = mob->once_spawn(sd,map, -1, -1,NULL,-i - 1,1,"", SZ_SMALL, AI_NONE);
+				script_pushint(st, mob_id);
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
 BUILDIN(summon)
 {
 	int class_, timeout=0;
@@ -20010,6 +20030,7 @@ void script_parse_builtin(void) {
 		BUILDIN_DEF(guildgetexp,"i"),
 		BUILDIN_DEF(guildchangegm,"is"),
 		BUILDIN_DEF(logmes,"s"), //this command actls as MES but rints info into LOG file either SQL/TXT [Lupus]
+		BUILDIN_DEF(summon_rand,""), // brAthena - Summon system reworked
 		BUILDIN_DEF(summon,"si??"), // summons a slave monster [Celest]
 		BUILDIN_DEF(isnight,""), // check whether it is night time [Celest]
 		BUILDIN_DEF_DEPRECATED(isday,""), // check whether it is day time [Celest] // DEPRECATED 2015-01-21 [Haru]

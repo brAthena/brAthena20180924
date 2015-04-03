@@ -18,7 +18,7 @@
 #include "../common/cbasetypes.h"
 #include "../common/mmo.h" // struct item
 
-#define MAX_RANDOMMONSTER 5
+#define MAX_RANDOMMONSTER 7
 
 // Change this to increase the table size in your mob_db to accommodate a larger mob database.
 // Be sure to note that IDs 4001 to 4048 are reserved for advanced/baby/expanded classes.
@@ -129,7 +129,6 @@ struct mob_db {
 	struct status_data status;
 	struct view_data vd;
 	unsigned int option;
-	int summonper[MAX_RANDOMMONSTER];
 	int maxskill;
 	struct mob_skill skill[MAX_MOBSKILL];
 	struct spawn_info spawn[10];
@@ -261,6 +260,12 @@ struct item_drop_list {
 	struct item_drop* item;            // linked list of drops
 };
 
+//Random Mob List - BrAthena
+struct {
+	int qty;	
+	struct item_data * iteminfo;
+	int  * class_; /*Lets save some memory , shall we?*/
+} summon[MAX_RANDOMMONSTER];
 
 #define mob_stop_walking(md, type) (unit->stop_walking(&(md)->bl, (type)))
 #define mob_stop_attack(md)        (unit->stop_attack(&(md)->bl))
@@ -368,6 +373,7 @@ struct mob_interface {
 	void (*name_constants) (void);
 	bool (*readdb_mobavail) (char *str[], int columns, int current);
 	int (*read_randommonster) (void);
+	void (*reload_random) (void);
 	bool (*parse_row_chatdb) (char *str[], int columns, int current);
 	void (*readchatdb) (void);
 	bool (*parse_row_mobskilldb) (char **str, int columns, int current);
@@ -378,6 +384,9 @@ struct mob_interface {
 	void (*load) (bool minimal);
 	void (*clear_spawninfo) ();
 	void (*destroy_mob_db) (int index);
+	//BrAthena
+	int dead_branch_list;
+	int class_change_list;
 };
 
 struct mob_interface *mob;

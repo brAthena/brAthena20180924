@@ -1952,7 +1952,7 @@ ACMD(monster)
 		number = 1;
 
 	if( !name[0] )
-		strcpy(name, "--ja--");
+		strcpy(name,mob->db(mob_id)->name);
 
 	// If value of atcommand_spawn_quantity_limit directive is greater than or equal to 1 and quantity of monsters is greater than value of the directive
 	if (battle_config.atc_spawn_quantity_limit && number > battle_config.atc_spawn_quantity_limit)
@@ -6034,7 +6034,6 @@ ACMD(mobsearch)
 	}
 	if (mob_id == atoi(mob_name))
 		strcpy(mob_name,mob->db(mob_id)->jname); // --ja--
-		//strcpy(mob_name,mob_db(mob_id)->name); // --en--
 
 	snprintf(atcmd_output, sizeof atcmd_output, msg_fd(fd,1220), mob_name, mapindex_id2name(sd->mapindex)); // Mob Search... %s %s
 	clif->message(fd, atcmd_output);
@@ -6289,7 +6288,7 @@ ACMD(summon)
 		return false;
 	}
 
-	md = mob->once_spawn_sub(&sd->bl, sd->bl.m, -1, -1, "--ja--", mob_id, "", SZ_SMALL, AI_NONE);
+	md = mob->once_spawn_sub(&sd->bl, sd->bl.m, -1, -1,NULL, mob_id, "", SZ_SMALL, AI_NONE);
 
 	if(!md)
 		return false;
@@ -6733,8 +6732,7 @@ ACMD(showmobs)
 	}
 
 	if(mob_id == atoi(mob_name))
-		strcpy(mob_name,mob->db(mob_id)->jname);    // --ja--
-	//strcpy(mob_name,mob_db(mob_id)->name);    // --en--
+		strcpy(mob_name,mob->db(mob_id)->jname);
 
 	snprintf(atcmd_output, sizeof atcmd_output, msg_fd(fd,1252), // Mob Search... %s %s
 			 mob_name, mapindex_id2name(sd->mapindex));

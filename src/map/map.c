@@ -3861,11 +3861,9 @@ char *get_database_name(int database_id)
 		case 19: db_name = "mercenary_skill_db"; break;
 		case 20: db_name = "mob_avail_db"; break;
 		case 21: db_name = "mob_chat_db"; break;
-		case 22: db_name = "mob_branch_db"; break;
-		case 23: db_name = "mob_poring_db"; break;
-		case 24: db_name = "mob_boss_db"; break;
-		case 25: db_name = "mob_pouch_db"; break;
-		case 26: db_name = "mob_classchange_db"; break;
+		//22 a 24 Vazio  
+		case 25: db_name = "MonsterSummonList"; break;
+		case 26: db_name = "ClassChange"; break;
 		case 27: db_name = "pet_db"; break;
 		case 28: db_name = "mob_item_ratio_db"; break;
 		case 29: db_name = "castle_db"; break;

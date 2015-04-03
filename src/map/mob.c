@@ -80,11 +80,6 @@ static struct item_drop_ratio *item_drop_ratio_db[MAX_ITEMDB];
 static struct eri *item_drop_ers; //For loot drops delay structures.
 static struct eri *item_drop_list_ers;
 
-static struct {
-	int qty;
-	int class_[350];
-} summon[MAX_RANDOMMONSTER];
-
 struct mob_db *mob_db(int index) {
 	if (index < 0 || index > MAX_MOB_DB || mob->db_data[index] == NULL)
 		return mob->dummy;
@@ -258,12 +253,12 @@ int mob_parse_dataset(struct spawn_data *data)
 		if( data->eventname[0] == '"' ) //Strip leading quotes
 			memmove(data->eventname, data->eventname+1, len-1);
 	}
-
-	if(strcmp(data->name,"--en--")==0)
-		safestrncpy(data->name, mob->db(data->class_)->name, sizeof(data->name));
-	else if(strcmp(data->name,"--ja--")==0)
-		safestrncpy(data->name, mob->db(data->class_)->jname, sizeof(data->name));
-
+	if(!data->name){
+		if(mob->db(data->class_) == NULL)
+			ShowError("mob_parse_dataset - Monstro [ID = %d] não existente na base de dados, ignorando...",data->class_);
+		else
+			safestrncpy(data->name,mob->db(data->class_)->name, sizeof(data->name));
+	}
 	return 1;
 }
 /*==========================================
@@ -323,21 +318,17 @@ int mob_get_random_id(int type, int flag, int lv)
 		return 0;
 	}
 	do {
-		if (type)
-			class_ = summon[type].class_[rnd()%summon[type].qty];
-		else //Dead branch
-			class_ = rnd() % MAX_MOB_DB;
+		class_ = summon[type].class_[rnd()%summon[type].qty];
 		monster = mob->db(class_);
 	} while ((monster == mob->dummy ||
 		mob->is_clone(class_) ||
-		(flag&1 && monster->summonper[type] <= rnd() % 1000000) ||
 		(flag&2 && lv < monster->lv) ||
 		(flag&4 && monster->status.mode&MD_BOSS) ||
 		(flag&8 && monster->spawn[0].qty < 1)
 	) && (i++) < MAX_MOB_DB);
 
-	if(i >= MAX_MOB_DB)  // no suitable monster found, use fallback for given list
-		class_ = mob->db_data[0]->summonper[type];
+	if(i >= MAX_MOB_DB)  // no suitable monster found, use poring
+		class_ = 1032;
 	return class_;
 }
 
@@ -440,12 +431,17 @@ struct mob_data *mob_once_spawn_sub(struct block_list *bl, int16 m, int16 x, int
 
 	if (mobname)
 		safestrncpy(data.name, mobname, sizeof(data.name));
-	else
-		if (battle_config.override_mob_names == 1)
-			strcpy(data.name, "--en--");
-		else
-			strcpy(data.name, "--ja--");
-
+	else{
+		if(mob->db(class_) == NULL){
+			ShowError("mob_once_spawn_sub : Monstro [id = %d] não existente na base de dados...\n",class_);
+			return NULL;
+		}
+		else{
+			ShowDebug("mob_once_spawn_sub : Monstro [id = %d] sem nome atribuido, procurando na base de dados...\n",class_);
+			safestrncpy(data.name,mob->db(class_)->name, sizeof(data.name));
+		}
+	}
+	
 	if (event)
 		safestrncpy(data.eventname, event, sizeof(data.eventname));
 
@@ -485,7 +481,9 @@ int mob_once_spawn(struct map_session_data* sd, int16 m, int16 x, int16 y, const
 	lv = (sd) ? sd->status.base_level : 255;
 
 	for (count = 0; count < amount; count++) {
+		int type = class_; 
 		int c = (class_ >= 0) ? class_ : mob->get_random_id(-class_ - 1, (battle_config.random_monster_checklv) ? 3 : 1, lv);
+		mobname= (type >= 0) ? mobname:mob->db(c)->name;
 		md = mob->once_spawn_sub((sd) ? &sd->bl : NULL, m, x, y, mobname, c, event, size, ai);
 
 		if (!md)
@@ -2579,7 +2577,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type) {
 
 		if( sd ) {
 			if( sd->mission_mobid == md->class_) { //TK_MISSION [Skotlex]
-				if( ++sd->mission_count >= 100 && (temp = mob->get_random_id(0, 0xE, sd->status.base_level)) ) {
+				if( ++sd->mission_count >= 100 && (temp = mob->get_random_id(mob->dead_branch_list, 0xE, sd->status.base_level)) ) {
 					pc->addfame(sd, 1);
 					sd->mission_mobid = temp;
 					pc_setglobalreg(sd,script->add_str("TK_MISSION_ID"), temp);
@@ -2925,13 +2923,8 @@ int mob_summonslave(struct mob_data *md2,int *value,int amount,uint16 skill_id)
 			data.x = md2->bl.x;
 			data.y = md2->bl.y;
 		}
-
-		//These two need to be loaded from the db for each slave.
-		if(battle_config.override_mob_names==1)
-			strcpy(data.name,"--en--");
-		else
-			strcpy(data.name,"--ja--");
-
+		strcpy(data.name,mob->db(data.class_)->name);
+		
 		if (!mob->parse_dataset(&data))
 			continue;
 
@@ -4054,56 +4047,91 @@ bool mob_readdb_mobavail(char* str[], int columns, int current)
 	return true;
 }
 
-/*==========================================
+/*==== * [BrAthena Modifications]===========
+ * Reload Mob Random Lists
+ *------------------------------------------*/
+void mob_reload_random(void){
+	int i;
+	for(i=0;i<MAX_RANDOMMONSTER;i++){
+		free(summon[i].class_);
+		summon[i].qty = 0;
+	}
+	mob->read_randommonster();
+	return;
+}
+
+/*==== * [BrAthena Modifications]===========
  * Reading of random monster data
  *------------------------------------------*/
 int mob_read_randommonster(void)
 {
-	const char *mobfile[] = { get_database_name(22), get_database_name(23), get_database_name(24), get_database_name(25), get_database_name(26) };
-	int i, rows = 0;
-
+	const char *mobfile[] = {get_database_name(25), get_database_name(26) };
+	const char *index [] = {"ItemName","SkillName"};
+ 	int i=-1, n, rows,j=0;
+	char last_group[25];
+	last_group[0]='\0';
+	
 	memset(&summon, 0, sizeof(summon));
 
-	for(i = 0; i < ARRAYLENGTH(mobfile) && i < MAX_RANDOMMONSTER; i++) {
-		mob->db_data[0]->summonper[i] = 1002;
-
-		if(SQL_ERROR == SQL->Query(map->brAmysql_handle, "SELECT * FROM `%s`", mobfile[i])) {
+	for(n=0, rows = 0;n < 2 ; n++, rows = 0){
+		//First , Lets get each summon list size*/
+		if(SQL_ERROR == SQL->Query(map->brAmysql_handle, "SELECT COUNT(*) FROM `%s` GROUP BY `%s`",mobfile[n],index[n])) {
 			Sql_ShowDebug(map->brAmysql_handle);
 			continue;
 		}
+		// Alloc class_ array space according to list size */
+		for(; SQL_SUCCESS == SQL->NextRow(map->brAmysql_handle);j++) {
+			char * count_str;
+			int count;
+			SQL->GetData(map->brAmysql_handle, 0,&count_str, NULL);
+			count = atoi(count_str);
+			summon[j].class_ = (int*) calloc(count,sizeof(int));
 
-		while(SQL_SUCCESS == SQL->NextRow(map->brAmysql_handle)) {
-			int class_, k = 0;
-			char *row[3];
+		}
+		SQL->FreeResult(map->brAmysql_handle);
+		
+		//Start Reading Lists
+		if(SQL_ERROR == SQL->Query(map->brAmysql_handle, "SELECT * FROM `%s` ORDER BY `%s`", mobfile[n],index[n])) {
+			Sql_ShowDebug(map->brAmysql_handle);
+			return 1;
+		}
+	
+		while(i < MAX_RANDOMMONSTER && (SQL_SUCCESS == SQL->NextRow(map->brAmysql_handle))) {
+			int class_,j = 0;
+			char *row[2];
 			rows++;
-
-			for(; k < 3; ++k)
-				SQL->GetData(map->brAmysql_handle, k, &row[k], NULL);
-
-			class_ = atoi(row[0]);
-			if(mob->db(class_) == mob->dummy)
+			
+			SQL->GetData(map->brAmysql_handle, 0, &row[0], NULL);
+			SQL->GetData(map->brAmysql_handle, 1, &row[1], NULL);
+			
+			if(!(class_=mob->db_searchname(row[1]))) /*No mob found, ignore row to avoid errors*/
 				continue;
-			mob->db_data[class_]->summonper[i]=atoi(row[2]);
-			if(i) {
-				if(summon[i].qty < ARRAYLENGTH(summon[i].class_))
-					summon[i].class_[summon[i].qty++] = class_;
-				else {
-					ShowDebug("Nao foi possivel armazenar mais mobs aleatorios de %s!\n", mobfile[i]);
-					break;
+	
+			if(strcmp(row[0],last_group)!=0){  /* New List Found!! Rework indexes */
+				i++;
+				summon[i].iteminfo=itemdb->search_name(row[0]);
+				if(n!=1 && summon[i].iteminfo==NULL){
+					ShowError("%s - item : %s não existente na base de dados\n",mobfile[n],row[0]);
+					return 2;
+				}
+				strcpy(last_group,row[0]);
+				//Avoid Source Bugs when adding new custom lists
+				if(strcmp(row[0],"Branch_Of_Dead_Tree") == 0)
+					mob->dead_branch_list = i;
+				else if(strcmp(row[0],"SA_CLASSCHANGE") == 0)
+					mob->class_change_list = i;
+				ShowSQL("Lista de monstros [%s] armazenada com id <%d>\n",last_group,-i -1); /*Helping user to know what class_ corresponds to each list*/
+				//Use a poring if no data found in the previous list.
+				if(i && !summon[i-1].qty) {
+					summon[i-1].class_[0] = 1032;
+					summon[i-1].qty = 1;
 				}
 			}
+			summon[i].class_[summon[i].qty++] = class_;
 		}
-
-		if(i && !summon[i].qty) {
-			summon[i].class_[0] = mob->db_data[0]->summonper[i];
-			summon[i].qty = 1;
-		}
-
-		ShowSQL("Leitura de '"CL_WHITE"%d"CL_RESET"' entradas na tabela '"CL_WHITE"%s"CL_RESET"'.\n", rows, mobfile[i]);
-		rows = 0;
+		ShowSQL("Leitura de '"CL_WHITE"%d"CL_RESET"' entradas na tabela '"CL_WHITE"%s"CL_RESET"'.\n", rows, mobfile[n]);
+		SQL->FreeResult(map->brAmysql_handle);
 	}
-
-	SQL->FreeResult(map->brAmysql_handle);
 	return 0;
 }
 
@@ -4600,6 +4628,7 @@ void mob_reload(void) {
 	}
 
 	mob->load(false);
+	mob->reload_random(); 
 }
 
 /**
@@ -4655,6 +4684,10 @@ void mob_destroy_mob_db(int index)
 int do_final_mob(void)
 {
 	int i;
+	
+	for(i=0;i<MAX_RANDOMMONSTER;i++)
+		free(summon[i].class_);
+	
 	if (mob->dummy)
 	{
 		aFree(mob->dummy);
@@ -4790,6 +4823,7 @@ void mob_defaults(void) {
 	mob->name_constants = mob_name_constants;
 	mob->readdb_mobavail = mob_readdb_mobavail;
 	mob->read_randommonster = mob_read_randommonster;
+	mob->reload_random = mob_reload_random;
 	mob->parse_row_chatdb = mob_parse_row_chatdb;
 	mob->readchatdb = mob_readchatdb;
 	mob->parse_row_mobskilldb = mob_parse_row_mobskilldb;

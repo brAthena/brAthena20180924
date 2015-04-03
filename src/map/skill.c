@@ -1574,13 +1574,12 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 		temp = 0;
 		do {
 			do {
-				class_ = rnd() % MAX_MOB_DB;
+				class_ = summon[2].class_[rnd()%summon[2].qty];
 			} while (!mob->db_checkid(class_));
 
-			rate = rnd() % 1000000;
 			monster = mob->db(class_);
 		} while (
-			(monster->status.mode&(MD_BOSS|MD_PLANT) || monster->summonper[0] <= rate) &&
+			monster->status.mode&(MD_BOSS|MD_PLANT) &&
 			(temp++) < 2000);
 		if (temp < 2000)
 			mob->class_change(dstmd,class_);
@@ -5599,7 +5598,7 @@ int skill_castend_nodamage_id(struct block_list *src, struct block_list *bl, uin
 			break;
 		case SA_SUMMONMONSTER:
 			clif->skill_nodamage(src,bl,skill_id,skill_lv,1);
-			if (sd) mob->once_spawn(sd, src->m, src->x, src->y," --ja--", -1, 1, "", SZ_SMALL, AI_NONE);
+			if (sd) mob->once_spawn(sd, src->m, src->x, src->y,NULL,-mob->dead_branch_list -1, 1, "", SZ_SMALL, AI_NONE);
 			break;
 		case SA_LEVELUP:
 			clif->skill_nodamage(src,bl,skill_id,skill_lv,1);
@@ -5623,7 +5622,7 @@ int skill_castend_nodamage_id(struct block_list *src, struct block_list *bl, uin
 					clif->skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 					break;
 				}
-				class_ = skill_id==SA_MONOCELL?1002:mob->get_random_id(4, 1, 0);
+				class_ = skill_id==SA_MONOCELL?1002:mob->get_random_id(mob->class_change_list, 1, 0);
 				clif->skill_nodamage(src,bl,skill_id,skill_lv,1);
 				mob->class_change(dstmd,class_);
 				if( tsc && dstmd->status.mode&MD_BOSS )
@@ -10602,7 +10601,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 				if (rnd()%100 < 50) {
 					clif->skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 				} else {
-					TBL_MOB* md = mob->once_spawn_sub(src, src->m, x, y, "--ja--",(skill_lv < 2 ? 1084+rnd()%2 : 1078+rnd()%6),"", SZ_SMALL, AI_NONE);
+					TBL_MOB* md = mob->once_spawn_sub(src, src->m, x, y,NULL,(skill_lv < 2 ? 1084+rnd()%2 : 1078+rnd()%6),"", SZ_SMALL, AI_NONE);
 					int i;
 					if (!md) break;
 					if ((i = skill->get_time(skill_id, skill_lv)) > 0)
