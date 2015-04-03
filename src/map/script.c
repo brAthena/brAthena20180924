@@ -14216,13 +14216,11 @@ BUILDIN(summon_rand)
 	TBL_PC* sd;
 	int i;
 	int mob_id;
-	int16 map;
 	sd = script->rid2sd(st);
-	map = sd->bl.m;
 	if(script->current_item_id){
-		for(i=0;i<MAX_RANDOMMONSTER;i++){
+		for(i = 0; i < MAX_RANDOMMONSTER; i++){
 			if(summon[i].iteminfo->nameid == script->current_item_id){
-				mob_id = mob->once_spawn(sd,map, -1, -1,NULL,-i - 1,1,"", SZ_SMALL, AI_NONE);
+				mob_id = mob->once_spawn(sd, sd->bl.m, -1, -1,NULL,-i - 1,1,"", SZ_SMALL, AI_NONE);
 				script_pushint(st, mob_id);
 				return true;
 			}

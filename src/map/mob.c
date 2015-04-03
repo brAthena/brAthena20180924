@@ -4097,7 +4097,7 @@ int mob_read_randommonster(void)
 		}
 	
 		while(i < MAX_RANDOMMONSTER && (SQL_SUCCESS == SQL->NextRow(map->brAmysql_handle))) {
-			int class_,j = 0;
+			int class_;
 			char *row[2];
 			rows++;
 			
