@@ -10331,7 +10331,7 @@ void clif_parse_NpcClicked(int fd,struct map_session_data *sd)
 	}
 	if( sd->npc_id || sd->state.workinprogress&2 ){
 #ifdef RENEWAL
-		clif->msg(sd, 0x783); // TODO look for the client date that has this message.
+		clif->msg(sd, MSI_BUSY); // TODO look for the client date that has this message.
 #endif
 		return;
 	}
@@ -10346,7 +10346,7 @@ void clif_parse_NpcClicked(int fd,struct map_session_data *sd)
 		case BL_NPC:
 			if( sd->ud.skill_id < RK_ENCHANTBLADE && sd->ud.skilltimer != INVALID_TIMER ) {// TODO: should only work with none 3rd job skills
 #ifdef RENEWAL
-				clif->msg(sd, 0x783);
+				clif->msg(sd, MSI_BUSY);
 #endif
 				break;
 			}
@@ -10698,7 +10698,7 @@ void clif_parse_ChangeCart(int fd,struct map_session_data *sd)
 
 #ifdef RENEWAL
 	if( sd->npc_id || sd->state.workinprogress&1 ){
-		clif->msg(sd, 0x783);
+		clif->msg(sd, MSI_BUSY);
 		return;
 	}
 #endif
@@ -10984,7 +10984,7 @@ void clif_parse_UseSkillToPosSub(int fd, struct map_session_data *sd, uint16 ski
 	
 #ifdef RENEWAL
 	if( sd->state.workinprogress&1 ){
-		clif->msg(sd, 0x783); // TODO look for the client date that has this message.
+		clif->msg(sd, MSI_BUSY); // TODO look for the client date that has this message.
 		return;
 	}
 #endif
