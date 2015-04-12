@@ -12164,6 +12164,7 @@ void status_read_job_db(void) { /* [malufett] */
 			}
 		}
 	}
+	ShowConf("Leitura de '"CL_WHITE"%d"CL_RESET"' classes em '"CL_WHITE"%s"CL_RESET"'.\n", i, config_filename);
 	libconfig->destroy(&job_db_conf);
 }
 

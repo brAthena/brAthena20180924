@@ -5046,50 +5046,46 @@ CREATE TABLE IF NOT EXISTS `mob_chat_db` (
   PRIMARY KEY (`Line_ID`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
---
--- Extraindo dados da tabela `mob_chat_db`
---
-
-REPLACE INTO `mob_chat_db` VALUES(1,0,'Weakling! Challenge me if you have any courage!\n');
-REPLACE INTO `mob_chat_db` VALUES(2,0,'Impressive! I wonder how far your recklessness will take you.\n');
-REPLACE INTO `mob_chat_db` VALUES(3,0,'I almost pity how outmatched you are against me. Now prepare for my attack!\n');
-REPLACE INTO `mob_chat_db` VALUES(4,0,'My loyal servants! Welcome them with a painful death!\n');
-REPLACE INTO `mob_chat_db` VALUES(5,0,'Don''t you run away!\n');
-REPLACE INTO `mob_chat_db` VALUES(6,0,'You worthless humans. Your so-called holy powers have no effect on me!\n');
-REPLACE INTO `mob_chat_db` VALUES(7,0,'Useless underlings!...Well');
-REPLACE INTO `mob_chat_db` VALUES(8,0,'Pray to your gods!\n');
-REPLACE INTO `mob_chat_db` VALUES(9,0,'Do you still think you''re a match to me?!\n');
-REPLACE INTO `mob_chat_db` VALUES(10,0,'Vanish!\n');
-REPLACE INTO `mob_chat_db` VALUES(11,0,'Let''s see how long you can endure my power!\n');
-REPLACE INTO `mob_chat_db` VALUES(12,0,'Is this all you''ve got?!\n');
-REPLACE INTO `mob_chat_db` VALUES(13,0,'You''re tickling me!\n');
-REPLACE INTO `mob_chat_db` VALUES(14,0,'This is how you attack? Watch and learn');
-REPLACE INTO `mob_chat_db` VALUES(15,0,'It''s time to finish the game!\n');
-REPLACE INTO `mob_chat_db` VALUES(16,0,'Oh');
-REPLACE INTO `mob_chat_db` VALUES(17,0,'No');
-REPLACE INTO `mob_chat_db` VALUES(18,0,'I can never die! I''ll be coming back for you!\n');
-REPLACE INTO `mob_chat_db` VALUES(19,0,'I was born to conquer this world! None shall stop me!\n');
-REPLACE INTO `mob_chat_db` VALUES(20,0,'Your days are numbered!\n');
-REPLACE INTO `mob_chat_db` VALUES(21,0,'Pulse Strike! My fingers tear steel!\n');
-REPLACE INTO `mob_chat_db` VALUES(22,0,'Hahaha');
-REPLACE INTO `mob_chat_db` VALUES(23,0,'Enjoy your time on the mortal plane while you can');
-REPLACE INTO `mob_chat_db` VALUES(24,0,'When are you going to learn your lesson? In death?\n');
-REPLACE INTO `mob_chat_db` VALUES(25,0,'No... I can''t lose! I won''t beg for my life! I''m not running away! I don''t accept this as defeat!\n');
-REPLACE INTO `mob_chat_db` VALUES(26,0,'Argh... I... I''m weakening...\n');
-REPLACE INTO `mob_chat_db` VALUES(27,0,'What do you want from me?\n');
-REPLACE INTO `mob_chat_db` VALUES(28,0,'No! I didn''t do this! He''s the one who planned out all this!\n');
-REPLACE INTO `mob_chat_db` VALUES(29,0,'I just wanted to find peace..!  That''s why I have been fleeing away!\n');
-REPLACE INTO `mob_chat_db` VALUES(30,0,'Ahhhh!!! Now');
-REPLACE INTO `mob_chat_db` VALUES(31,0,'Annoying flies!! Get off of me!\n');
-REPLACE INTO `mob_chat_db` VALUES(32,0,'Suffer in Hell!\n');
-REPLACE INTO `mob_chat_db` VALUES(33,0,'Mwahahaha! Taste the anger of the earth!!!\n');
-REPLACE INTO `mob_chat_db` VALUES(34,0,'No... I won''t accept this as defeat!\n');
-REPLACE INTO `mob_chat_db` VALUES(35,0,'Will it ease your loneliness to hit me?  Why don''t you stay here with me forever');
-REPLACE INTO `mob_chat_db` VALUES(36,0,'You will forgot the meaning of time.  I wonder how long can you last in here...\n');
-REPLACE INTO `mob_chat_db` VALUES(37,0,'Is there anyone waiting for you outside of here?  Throw them all away');
-REPLACE INTO `mob_chat_db` VALUES(38,0,'Discard your life and stay confined here.  You will yearn for freedom in captivity !!\n');
-REPLACE INTO `mob_chat_db` VALUES(39,0,'How much will the outside world change if you stay here in solitude for one thousand years?\n');
-REPLACE INTO `mob_chat_db` VALUES(40,0,'Yes! Yearn for your freedom from this confined place');
+REPLACE INTO `mob_chat_db` VALUES(1,0xFF0000,'Fraco! Me desafie se tiver alguma coragem!');
+REPLACE INTO `mob_chat_db` VALUES(2,0xFF0000,'Impressionante! Eu me pergunto até onde sua imprudencia irá levá-lo.');
+REPLACE INTO `mob_chat_db` VALUES(3,0xFF0000,'Tenho pena de você estar contra mim. Agora se prepare para meu ataque!');
+REPLACE INTO `mob_chat_db` VALUES(4,0xFF0000,'Meus servos fiéis! O recebam com uma morte dolorosa!');
+REPLACE INTO `mob_chat_db` VALUES(5,0xFF0000,'Não fuja!');
+REPLACE INTO `mob_chat_db` VALUES(6,0xFF0000,'Vocês, humanos inúteis. Seus poderes sagrados não tem efeito sobre mim!');
+REPLACE INTO `mob_chat_db` VALUES(7,0xFF0000,'Subalternos inúteis!... Tudo bem, eu tenho mais armas descartáveis para usar.');
+REPLACE INTO `mob_chat_db` VALUES(8,0xFF0000,'Reze para seus deuses!');
+REPLACE INTO `mob_chat_db` VALUES(9,0xFF0000,'Você ainda acha que é um jogo para mim?');
+REPLACE INTO `mob_chat_db` VALUES(10,0xFF0000,'Desapareça!');
+REPLACE INTO `mob_chat_db` VALUES(11,0xFF0000,'Vamos ver por quanto tempo você pode agüentar meu poder!');
+REPLACE INTO `mob_chat_db` VALUES(12,0xFF0000,'Isso é tudo que você tem?');
+REPLACE INTO `mob_chat_db` VALUES(13,0xFF0000,'Você está me fazendo cócegas!');
+REPLACE INTO `mob_chat_db` VALUES(14,0xFF0000,'Chama isso de ataque? Assista e aprenda, seus fracos!');
+REPLACE INTO `mob_chat_db` VALUES(15,0xFF0000,'É hora de terminar o jogo!');
+REPLACE INTO `mob_chat_db` VALUES(16,0xFF0000,'Ha! Você é mais forte do que eu pensava!');
+REPLACE INTO `mob_chat_db` VALUES(17,0xFF0000,'Não! Isso não poder estar acontecendo! Eu sou Satan Morroc, o Rei da Destruição!');
+REPLACE INTO `mob_chat_db` VALUES(18,0xFF0000,'Eu nunca morrei! Sempre estarei voltando para lhe pegar!');
+REPLACE INTO `mob_chat_db` VALUES(19,0xFF0000,'Eu nasci para conquistar este mundo! Nada poderá me impedir!');
+REPLACE INTO `mob_chat_db` VALUES(20,0xFF0000,'Seus dias estão contados!');
+REPLACE INTO `mob_chat_db` VALUES(21,0xFF0000,'Strike! Meus dedos dilaceradores de aço!');
+REPLACE INTO `mob_chat_db` VALUES(22,0xFF0000,'Hahaha! Me diga quem sou! Eo sou Bafomé! O herdeiro do inferno!');
+REPLACE INTO `mob_chat_db` VALUES(23,0xFF0000,'Aproveite sua vida enquanto pode! Sua esperança em breve irá se transformar em desespero!');
+REPLACE INTO `mob_chat_db` VALUES(24,0xFF0000,'Quando você aprenderá a lição? Quando morrer?');
+REPLACE INTO `mob_chat_db` VALUES(25,0xFF0000,'Não... Eu não posso perder! Não vou implorar por minha vida! Eu não estou fugindo! Eu não aceito isso como derrota!');
+REPLACE INTO `mob_chat_db` VALUES(26,0xFF0000,'Argh... Eu... Eu, estou enfraquecendo...');
+REPLACE INTO `mob_chat_db` VALUES(27,0xFF0000,'O que você quer de mim?');
+REPLACE INTO `mob_chat_db` VALUES(28,0xFF0000,'Não! Eu não fiz isso! Ele é quem planejou tudo isso!');
+REPLACE INTO `mob_chat_db` VALUES(29,0xFF0000,'Eu só queria encontrar a paz..!  É por isso que eu estava fugindo!');
+REPLACE INTO `mob_chat_db` VALUES(30,0xFF0000,'Ahhhh!!! Agora, só tenho que matá-lo!');
+REPLACE INTO `mob_chat_db` VALUES(31,0xFF0000,'Moscas irritantes!! Saiam de mim!');
+REPLACE INTO `mob_chat_db` VALUES(32,0xFF0000,'Sofra no Inferno!');
+REPLACE INTO `mob_chat_db` VALUES(33,0xFF0000,'Muahahaha! Sinta a fúria da terra!!!');
+REPLACE INTO `mob_chat_db` VALUES(34,0xFF0000,'Não... Eu não irei aceitar esta derrota!');
+REPLACE INTO `mob_chat_db` VALUES(35,0xFF0000,'Será que me bater irá aliviar a sua solidão? Por que você não fica aqui comigo para sempre, humano?');
+REPLACE INTO `mob_chat_db` VALUES(36,0xFF0000,'Você esqueceu o significado do tempo. Eu me pergunto quanto tempo você poderá durar aqui...');
+REPLACE INTO `mob_chat_db` VALUES(37,0xFF0000,'Existe alguém esperando por você? Desista de tudo, você é meu agora...');
+REPLACE INTO `mob_chat_db` VALUES(38,0xFF0000,'Esqueça sua vida e fique confinado aqui. Você vai desejar a liberdade preso em cativeiro cativeiro !!');
+REPLACE INTO `mob_chat_db` VALUES(39,0xFF0000,'Quais serão as mudanças no mundo exterior, enquanto você estiver aqui na solidão durante mil anos?');
+REPLACE INTO `mob_chat_db` VALUES(40,0xFF0000,'Sim! Desejar a sua liberdade neste local confinado, sua permanência aqui será eterna !!');
 
 --
 -- Estrutura da tabela `mob_db`
