@@ -23,6 +23,7 @@
 #include "mapif.h"
 #include "../common/malloc.h"
 #include "../common/mmo.h"
+#include "../common/nullpo.h"
 #include "../common/showmsg.h"
 #include "../common/socket.h"
 #include "../common/sql.h"
@@ -35,6 +36,7 @@ struct inter_storage_interface inter_storage_s;
 /// Save storage data to sql
 int inter_storage_tosql(int account_id, struct storage_data* p)
 {
+	nullpo_ret(p);
 	chr->memitemdata_to_sql(p->items, MAX_STORAGE, account_id, TABLE_STORAGE);
 	return 0;
 }
@@ -47,6 +49,7 @@ int inter_storage_fromsql(int account_id, struct storage_data* p)
 	int i;
 	int j;
 
+	nullpo_ret(p);
 	memset(p, 0, sizeof(struct storage_data)); //clean up memory
 	p->storage_amount = 0;
 
@@ -89,6 +92,7 @@ int inter_storage_fromsql(int account_id, struct storage_data* p)
 /// Save guild_storage data to sql
 int inter_storage_guild_storage_tosql(int guild_id, struct guild_storage* p)
 {
+	nullpo_ret(p);
 	chr->memitemdata_to_sql(p->items, MAX_GUILD_STORAGE, guild_id, TABLE_GUILD_STORAGE);
 	ShowInfo ("guild storage save to DB - guild: %d\n", guild_id);
 	return 0;
@@ -102,6 +106,7 @@ int inter_storage_guild_storage_fromsql(int guild_id, struct guild_storage* p)
 	int i;
 	int j;
 
+	nullpo_ret(p);
 	memset(p, 0, sizeof(struct guild_storage)); //clean up memory
 	p->storage_amount = 0;
 	p->guild_id = guild_id;
@@ -304,7 +309,8 @@ int mapif_parse_ItemBoundRetrieve_sub(int fd)
 	for( j = 0; j < MAX_SLOTS; ++j )
 		SQL->StmtBindColumn(stmt, 10+j, SQLDT_SHORT, &item.card[j], 0, NULL, NULL);
 
-	while( SQL_SUCCESS == SQL->StmtNextRow(stmt) ) {
+	while( SQL_SUCCESS == SQL->StmtNextRow(stmt)) {
+		Assert_retb(i >= MAX_INVENTORY);
 		memcpy(&items[i],&item,sizeof(struct item));
 		i++;
 	}

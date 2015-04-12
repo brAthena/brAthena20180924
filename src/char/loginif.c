@@ -21,6 +21,7 @@
 
 #include "../common/cbasetypes.h"
 #include "../common/core.h"
+#include "../common/nullpo.h"
 #include "../common/showmsg.h"
 #include "../common/socket.h"
 #include "../common/timer.h"
@@ -95,6 +96,7 @@ void do_final_loginif(void)
 
 void loginif_block_account(int account_id, int flag)
 {
+	Assert_retv(chr->login_fd != -1);
 	WFIFOHEAD(chr->login_fd,10);
 	WFIFOW(chr->login_fd,0) = 0x2724;
 	WFIFOL(chr->login_fd,2) = account_id;
@@ -104,6 +106,7 @@ void loginif_block_account(int account_id, int flag)
 
 void loginif_ban_account(int account_id, short year, short month, short day, short hour, short minute, short second)
 {
+	Assert_retv(chr->login_fd != -1);
 	WFIFOHEAD(chr->login_fd,18);
 	WFIFOW(chr->login_fd, 0) = 0x2725;
 	WFIFOL(chr->login_fd, 2) = account_id;
@@ -118,6 +121,7 @@ void loginif_ban_account(int account_id, short year, short month, short day, sho
 
 void loginif_unban_account(int account_id)
 {
+	Assert_retv(chr->login_fd != -1);
 	WFIFOHEAD(chr->login_fd,6);
 	WFIFOW(chr->login_fd,0) = 0x272a;
 	WFIFOL(chr->login_fd,2) = account_id;
@@ -126,6 +130,7 @@ void loginif_unban_account(int account_id)
 
 void loginif_changesex(int account_id)
 {
+	Assert_retv(chr->login_fd != -1);
 	WFIFOHEAD(chr->login_fd,6);
 	WFIFOW(chr->login_fd,0) = 0x2727;
 	WFIFOL(chr->login_fd,2) = account_id;
@@ -134,6 +139,8 @@ void loginif_changesex(int account_id)
 
 void loginif_auth(int fd, struct char_session_data* sd, uint32 ipl)
 {
+	Assert_retv(chr->login_fd != -1);
+	nullpo_retv(sd);
 	WFIFOHEAD(chr->login_fd,23);
 	WFIFOW(chr->login_fd,0) = 0x2712; // ask login-server to authenticate an account
 	WFIFOL(chr->login_fd,2) = sd->account_id;
@@ -147,6 +154,7 @@ void loginif_auth(int fd, struct char_session_data* sd, uint32 ipl)
 
 void loginif_send_users_count(int users)
 {
+	Assert_retv(chr->login_fd != -1);
 	WFIFOHEAD(chr->login_fd,6);
 	WFIFOW(chr->login_fd,0) = 0x2714;
 	WFIFOL(chr->login_fd,2) = users;
@@ -155,6 +163,7 @@ void loginif_send_users_count(int users)
 
 void loginif_connect_to_server(void)
 {
+	Assert_retv(chr->login_fd != -1);
 	WFIFOHEAD(chr->login_fd,86);
 	WFIFOW(chr->login_fd,0) = 0x2710;
 	memcpy(WFIFOP(chr->login_fd,2), chr->userid, NAME_LENGTH);

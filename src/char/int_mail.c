@@ -22,6 +22,7 @@
 #include "mapif.h"
 #include "../common/malloc.h"
 #include "../common/mmo.h"
+#include "../common/nullpo.h"
 #include "../common/showmsg.h"
 #include "../common/socket.h"
 #include "../common/sql.h"
@@ -37,6 +38,7 @@ static int inter_mail_fromsql(int char_id, struct mail_data* md)
 	char *data;
 	StringBuf buf;
 
+	nullpo_ret(md);
 	memset(md, 0, sizeof(struct mail_data));
 	md->amount = 0;
 	md->full = false;
@@ -121,6 +123,7 @@ int inter_mail_savemessage(struct mail_message* msg)
 	SqlStmt* stmt;
 	int j;
 
+	nullpo_ret(msg);
 	// build message save query
 	StrBuf->Init(&buf);
 	StrBuf->Printf(&buf, "INSERT INTO `%s` (`send_name`, `send_id`, `dest_name`, `dest_id`, `title`, `message`, `time`, `status`, `zeny`, `amount`, `nameid`, `refine`, `attribute`, `identify`, `unique_id`", mail_db);
@@ -158,6 +161,7 @@ static bool inter_mail_loadmessage(int mail_id, struct mail_message* msg)
 {
 	int j;
 	StringBuf buf;
+	nullpo_ret(msg);
 	memset(msg, 0, sizeof(struct mail_message)); // Initialize data
 
 	StrBuf->Init(&buf);
@@ -210,6 +214,7 @@ static bool inter_mail_loadmessage(int mail_id, struct mail_message* msg)
 
 void mapif_mail_sendinbox(int fd, int char_id, unsigned char flag, struct mail_data *md)
 {
+	nullpo_retv(md);
 	//FIXME: dumping the whole structure like this is unsafe [ultramage]
 	WFIFOHEAD(fd, sizeof(struct mail_data) + 9);
 	WFIFOW(fd,0) = 0x3848;
@@ -270,6 +275,7 @@ static bool inter_mail_DeleteAttach(int mail_id)
 
 void mapif_mail_sendattach(int fd, int char_id, struct mail_message *msg)
 {
+	nullpo_retv(msg);
 	WFIFOHEAD(fd, sizeof(struct item) + 12);
 	WFIFOW(fd,0) = 0x384a;
 	WFIFOW(fd,2) = sizeof(struct item) + 12;
@@ -409,6 +415,7 @@ void mapif_mail_send(int fd, struct mail_message* msg)
 {
 	int len = sizeof(struct mail_message) + 4;
 
+	nullpo_retv(msg);
 	WFIFOHEAD(fd,len);
 	WFIFOW(fd,0) = 0x384d;
 	WFIFOW(fd,2) = len;
@@ -456,6 +463,11 @@ void mapif_parse_mail_send(int fd)
 void inter_mail_sendmail(int send_id, const char* send_name, int dest_id, const char* dest_name, const char* title, const char* body, int zeny, struct item *item)
 {
 	struct mail_message msg;
+	nullpo_retv(send_name);
+	nullpo_retv(dest_name);
+	nullpo_retv(title);
+	nullpo_retv(body);
+	nullpo_retv(item);
 	memset(&msg, 0, sizeof(struct mail_message));
 
 	msg.send_id = send_id;
