@@ -399,7 +399,8 @@ struct Battle_Config {
 	int mob_sc_def_rate;
 	int pc_max_sc_def;
 	int mob_max_sc_def;
-
+	int enable_luk_influence,pc_luk_sc_def,mob_luk_sc_def;
+	
 	int sg_angel_skill_ratio;
 	int sg_miracle_skill_ratio;
 	int sg_miracle_skill_duration;
