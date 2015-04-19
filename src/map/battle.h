@@ -332,7 +332,8 @@ struct Battle_Config {
 	int area_size; // added by [MouseJstr]
 
 	int max_def, over_def_bonus; //added by [Skotlex]
-
+	int max_mdef;
+	
 	int zeny_from_mobs; // [Valaris]
 	int mobs_level_up; // [Valaris]
 	int mobs_level_up_exp_rate; // [Valaris]

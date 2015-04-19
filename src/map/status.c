@@ -2836,9 +2836,9 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt) {
 	}
 
 #ifndef RENEWAL
-	if (!battle_config.magic_defense_type && bstatus->mdef > battle_config.max_def) {
-		bstatus->mdef2 += battle_config.over_def_bonus*(bstatus->mdef -battle_config.max_def);
-		bstatus->mdef = (signed char)battle_config.max_def;
+	if (!battle_config.magic_defense_type && bstatus->mdef > battle_config.max_mdef) {
+		bstatus->mdef2 += battle_config.over_def_bonus*(bstatus->mdef -battle_config.max_mdef);
+		bstatus->mdef = (signed char)battle_config.max_mdef;
 	}
 #endif
 

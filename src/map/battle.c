@@ -6776,6 +6776,7 @@ static const struct battle_data {
 	{ "max_parameter",                      &battle_config.max_parameter,                   99,     10,     10000,          },
 	{ "max_baby_parameter",                 &battle_config.max_baby_parameter,              80,     10,     10000,          },
 	{ "max_def",                            &battle_config.max_def,                         99,     0,      INT_MAX,        },
+	{ "max_mdef",                           &battle_config.max_mdef,                        99,     0,      INT_MAX,        },
 	{ "over_def_bonus",                     &battle_config.over_def_bonus,                  0,      0,      1000,           },
 	{ "skill_log",                          &battle_config.skill_log,                       BL_NUL, BL_NUL, BL_ALL,         },
 	{ "battle_log",                         &battle_config.battle_log,                      0,      0,      1,              },
