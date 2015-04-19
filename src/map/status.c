@@ -4052,11 +4052,12 @@ int status_base_amotion_pc(struct map_session_data *sd, struct status_data *st) 
 
 	// raw delay adjustment from bAspd bonus
 	amotion += sd->bonus.aspd_add;
-#endif
+
 
 	/* angra manyu disregards aspd_base and similar */
 	if ( sd->equip_index[EQI_HAND_R] >= 0 && sd->status.inventory[sd->equip_index[EQI_HAND_R]].nameid == ITEMID_ANGRA_MANYU )
 		return 0;
+#endif
 
 	return amotion;
 }
@@ -4601,6 +4602,9 @@ unsigned short status_calc_batk(struct block_list *bl, struct status_change *sc,
 #ifndef RENEWAL
 	if(sc->data[SC_LKCONCENTRATION])
 		batk += batk * sc->data[SC_LKCONCENTRATION]->val2/100;
+#else
+	if ( sc->data[SC_NOEQUIPWEAPON] && bl->type != BL_PC )
+		batk -= batk * sc->data[SC_NOEQUIPWEAPON]->val2 / 100;
 #endif
 	if(sc->data[SC_SKE])
 		batk += batk * 3;
@@ -4680,7 +4684,7 @@ unsigned short status_calc_watk(struct block_list *bl, struct status_change *sc,
 	if(sc->data[SC_LKCONCENTRATION])
 		watk += watk * sc->data[SC_LKCONCENTRATION]->val2/100;
 #endif
-	if(sc->data[SC_INCATKRATE])
+	if(sc->data[SC_INCATKRATE] && bl->type != BL_MOB)
 		watk += watk * sc->data[SC_INCATKRATE]->val1/100;
 	if(sc->data[SC_PROVOKE])
 		watk += watk * sc->data[SC_PROVOKE]->val3/100;
@@ -4690,8 +4694,10 @@ unsigned short status_calc_watk(struct block_list *bl, struct status_change *sc,
 		watk += watk * sc->data[SC_HLIF_FLEET]->val3/100;
 	if(sc->data[SC_CURSE])
 		watk -= watk * 25/100;
+#ifndef RENEWAL
 	if(sc->data[SC_NOEQUIPWEAPON] && bl->type != BL_PC)
 		watk -= watk * sc->data[SC_NOEQUIPWEAPON]->val2/100;
+#endif
 	if(sc->data[SC__ENERVATION])
 		watk -= watk * sc->data[SC__ENERVATION]->val2 / 100;
 	if(sc->data[SC_RUSH_WINDMILL])
@@ -12296,7 +12302,7 @@ int status_readdb(void)
 	// read databases
 	sv_readsqldb(get_database_name(33),             100, -1, status->readdb_job2);
 	sv->readdb(map->db_path, DBPATH"size_fix.txt", ',', MAX_WEAPON_TYPE, MAX_WEAPON_TYPE, ARRAYLENGTH(status->atkmods), status->readdb_sizefix);
-	sv_readsqldb(get_database_name(50),	4+MAX_REFINE,	-1,	status->readdb_refine);
+    sv_readsqldb(get_database_name(50),    4+MAX_REFINE,    -1,    status->readdb_refine);
 	sv->readdb(map->db_path, "sc_config.txt",       ',', 2,                 2,                 SC_MAX,                   status->readdb_scconfig);
 	status->read_job_db();
 
