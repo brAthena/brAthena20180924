@@ -3912,84 +3912,41 @@ bool mob_parse_dbrow(char** str) {
 }
 
 /*==========================================
- * mob_db.txt reading
+ * Leitura mod_db SQL [Shiraz]
  *------------------------------------------*/
-bool mob_readdb_sub(char* fields[], int columns, int current) {
-	return mob->parse_dbrow(fields);
-}
-
 void mob_readdb(void) {
-	const char* filename[] = {
-		DBPATH"mob_db.txt",
-		"mob_db2.txt" };
-	int fi;
+	uint32 count = 0;
 
-	for( fi = 0; fi < ARRAYLENGTH(filename); ++fi ) {
-		if(fi > 0) {
-			char filepath[256];
-			sprintf(filepath, "%s/%s", map->db_path, filename[fi]);
-			if(!exists(filepath)) {
-				continue;
-			}
+	if(SQL_ERROR == SQL->Query(map->brAmysql_handle, "SELECT * FROM `%s`", get_database_name(47))) {
+		Sql_ShowDebug(map->brAmysql_handle);
+		return;
+	}
+
+	while(SQL_SUCCESS == SQL->NextRow(map->brAmysql_handle)) {
+		char line[1024];
+		char *str[31+2*MAX_MVP_DROP+2*MAX_MOB_DROP];
+		char *p;
+		int i;
+
+		for(i = 0, p = line; i < 31+2*MAX_MVP_DROP+2*MAX_MOB_DROP; i++) {
+			char *data;
+			size_t len;
+			SQL->GetData(map->brAmysql_handle, i, &data, &len);
+
+			strcpy(p, data);
+			str[i] = p;
+			p+= len + 1;
 		}
 
-		sv->readdb(map->db_path, filename[fi], ',', 31+2*MAX_MVP_DROP+2*MAX_MOB_DROP, 31+2*MAX_MVP_DROP+2*MAX_MOB_DROP, -1, mob->readdb_sub);
-	}
-	mob->name_constants();
-}
-
-/*==========================================
- * mob_db table reading
- *------------------------------------------*/
-int mob_read_sqldb(void) {
-	const char* mob_db_name[] = { 
-		map->mob_db_db,
-		map->mob_db2_db
-	};
-	int fi;
-
-	for( fi = 0; fi < ARRAYLENGTH(mob_db_name); ++fi ) {
-		uint32 lines = 0, count = 0;
-
-		// retrieve all rows from the mob database
-		if( SQL_ERROR == SQL->Query(map->mysql_handle, "SELECT * FROM `%s`", mob_db_name[fi]) ) {
-			Sql_ShowDebug(map->mysql_handle);
+		if(!mob->parse_dbrow(str))
 			continue;
-		}
-
-		// process rows one by one
-		while( SQL_SUCCESS == SQL->NextRow(map->mysql_handle) ) {
-			// wrap the result into a TXT-compatible format
-			char line[1024];
-			char* str[31+2*MAX_MVP_DROP+2*MAX_MOB_DROP];
-			char* p;
-			int i;
-
-			lines++;
-			for(i = 0, p = line; i < 31+2*MAX_MVP_DROP+2*MAX_MOB_DROP; i++)
-			{
-				char* data;
-				size_t len;
-				SQL->GetData(map->mysql_handle, i, &data, &len);
-
-				strcpy(p, data);
-				str[i] = p;
-				p+= len + 1;
-			}
-
-			if (!mob->parse_dbrow(str))
-				continue;
-
-			count++;
-		}
-
-		// free the query result
-		SQL->FreeResult(map->mysql_handle);
-
-		ShowStatus("Done reading '"CL_WHITE"%"PRIu32""CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n", count, mob_db_name[fi]);
+		count++;
 	}
+
+	ShowSQL("Leitura de '"CL_WHITE"%lu"CL_RESET"' entradas na tabela '"CL_WHITE"%s"CL_RESET"'.\n", count, get_database_name(47));
+	SQL->FreeResult(map->brAmysql_handle);
 	mob->name_constants();
-	return 0;
+	return;
 }
 
 void mob_name_constants(void) {
@@ -4453,84 +4410,38 @@ bool mob_parse_row_mobskilldb(char** str, int columns, int current)
 }
 
 /*==========================================
- * mob_skill_db.txt reading
+ * Leitura mod_skill_db SQL [Shiraz]
  *------------------------------------------*/
 void mob_readskilldb(void) {
-	const char* filename[] = {
-		DBPATH"mob_skill_db.txt",
-		"mob_skill_db2.txt" };
-	int fi;
+	uint32 count = 0;
 
-	if( battle_config.mob_skill_rate == 0 ) {
-		ShowStatus("Mob skill use disabled. Not reading mob skills.\n");
+	if(battle_config.mob_skill_rate == 0) {
+		ShowStatus("Habilidades de monstros foram desabilitadas.\n");
 		return;
 	}
 
-	for( fi = 0; fi < ARRAYLENGTH(filename); ++fi ) {
-		if(fi > 0) {
-			char filepath[256];
-			sprintf(filepath, "%s/%s", map->db_path, filename[fi]);
-			if(!exists(filepath)) {
-				continue;
-			}
+	if(SQL_ERROR == SQL->Query(map->brAmysql_handle, "SELECT * FROM `%s`", get_database_name(48))) {
+		Sql_ShowDebug(map->brAmysql_handle);
+		return;
+	}
+
+	while (SQL_SUCCESS == SQL->NextRow(map->brAmysql_handle)) {
+		char *str[19];
+		char *dummy = "";
+		int i;
+		for(i = 0; i < 19; ++i) {
+			SQL->GetData(map->brAmysql_handle, i, &str[i], NULL);
+			if(str[i] == NULL) str[i] = dummy;
 		}
 
-		sv->readdb(map->db_path, filename[fi], ',', 19, 19, -1, mob->parse_row_mobskilldb);
-	}
-}
-
-/**
- * mob_skill_db table reading [CalciumKid]
- * not overly sure if this is all correct
- * seems to work though...
- */
-int mob_read_sqlskilldb(void) {
-	const char* mob_skill_db_name[] = { 
-		map->mob_skill_db_db,
-		map->mob_skill_db2_db
-	};
-	int fi;
-
-	if( battle_config.mob_skill_rate == 0 ) {
-		ShowStatus("Mob skill use disabled. Not reading mob skills.\n");
-		return 0;
-	}
-
-
-	for( fi = 0; fi < ARRAYLENGTH(mob_skill_db_name); ++fi ) {
-		uint32 lines = 0, count = 0;
-
-		// retrieve all rows from the mob skill database
-		if( SQL_ERROR == SQL->Query(map->mysql_handle, "SELECT * FROM `%s`", mob_skill_db_name[fi]) ) {
-			Sql_ShowDebug(map->mysql_handle);
+		if(!mob->parse_row_mobskilldb(str, 19, count))
 			continue;
-		}
-
-		// process rows one by one
-		while( SQL_SUCCESS == SQL->NextRow(map->mysql_handle) ) {
-			// wrap the result into a TXT-compatible format
-			char* str[19];
-			char* dummy = "";
-			int i;
-			++lines;
-			for( i = 0; i < 19; ++i )
-			{
-				SQL->GetData(map->mysql_handle, i, &str[i], NULL);
-				if( str[i] == NULL ) str[i] = dummy; // get rid of NULL columns
-			}
-
-			if (!mob->parse_row_mobskilldb(str, 19, count))
-				continue;
-
-			count++;
-		}
-
-		// free the query result
-		SQL->FreeResult(map->mysql_handle);
-
-		ShowStatus("Done reading '"CL_WHITE"%"PRIu32""CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n", count, mob_skill_db_name[fi]);
+		count++;
 	}
-	return 0;
+
+	ShowSQL("Leitura de '"CL_WHITE"%lu"CL_RESET"' entradas na tabela '"CL_WHITE"%s"CL_RESET"'.\n", count, get_database_name(48));
+	SQL->FreeResult(map->brAmysql_handle);
+	return;
 }
 
 /*==========================================
@@ -4595,18 +4506,11 @@ void mob_load(bool minimal) {
 	}
 	sv_readsqldb(get_database_name(28), 2+MAX_ITEMRATIO_MOBS, -1, mob->readdb_itemratio);
 	mob->readchatdb();
-	if (map->db_use_sql_mob_db) {
-		mob->read_sqldb();
-	}
-	if (map->db_use_sql_mob_skill_db) {
-		mob->read_sqlskilldb();
-	} else {
-		mob->readdb();
-		mob->readskilldb();
-	}
+	mob->readdb();
+	mob->readskilldb();
 	sv_readsqldb(get_database_name(20), 12, -1, mob->readdb_mobavail);
 	mob->read_randommonster();
-	sv->readdb(map->db_path, DBPATH"mob_race2_db.txt", ',', 2, 20, -1, mob->readdb_race2);
+	sv_readsqldb(get_database_name(49),	20,	-1,	mob->readdb_race2);
 }
 
 void mob_reload(void) {
@@ -4817,9 +4721,7 @@ void mob_defaults(void) {
 	mob->drop_adjust = mob_drop_adjust;
 	mob->item_dropratio_adjust = item_dropratio_adjust;
 	mob->parse_dbrow = mob_parse_dbrow;
-	mob->readdb_sub = mob_readdb_sub;
 	mob->readdb = mob_readdb;
-	mob->read_sqldb = mob_read_sqldb;
 	mob->name_constants = mob_name_constants;
 	mob->readdb_mobavail = mob_readdb_mobavail;
 	mob->read_randommonster = mob_read_randommonster;
@@ -4828,7 +4730,6 @@ void mob_defaults(void) {
 	mob->readchatdb = mob_readchatdb;
 	mob->parse_row_mobskilldb = mob_parse_row_mobskilldb;
 	mob->readskilldb = mob_readskilldb;
-	mob->read_sqlskilldb = mob_read_sqlskilldb;
 	mob->readdb_race2 = mob_readdb_race2;
 	mob->readdb_itemratio = mob_readdb_itemratio;
 	mob->load = mob_load;

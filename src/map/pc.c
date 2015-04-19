@@ -10504,11 +10504,9 @@ int pc_read_exp_fromsql(void)
 
 /*==========================================
  * pc DB reading.
- * exp.txt        - required experience values
- * skill_tree.txt - skill tree for every class
- * attr_fix.txt   - elemental adjustment table
  *------------------------------------------*/
 int pc_readdb(void) {
+	char *row;
 	int i,j,k;
 	unsigned int count = 0;
 	FILE *fp;
@@ -10593,7 +10591,7 @@ int pc_readdb(void) {
 	memset(pc->skill_tree,0,sizeof(pc->skill_tree));
 	pc->read_skill_tree();
 #if defined(RENEWAL_DROP) || defined(RENEWAL_EXP)
-	sv->readdb(map->db_path, "re/level_penalty.txt", ',', 4, 4, -1, pc->readdb_levelpenalty);
+	sv_readsqldb(get_database_name(46),	4,	-1,	pc->readdb_levelpenalty);
 	for( k=1; k < 3; k++ ){ // fill in the blanks
 		for( j = 0; j < RC_MAX; j++ ){
 			int tmp = 0;
@@ -10663,33 +10661,30 @@ int pc_readdb(void) {
 	fclose(fp);
 	ShowStatus("Done reading '"CL_WHITE"%u"CL_RESET"' entries in '"CL_WHITE"%s/"DBPATH"%s"CL_RESET"'.\n",count,map->db_path,"attr_fix.txt");
 	count = 0;
+	
 	// reset then read statspoint
 	memset(pc->statp,0,sizeof(pc->statp));
 	i=1;
 
-	sprintf(line, "%s/"DBPATH"statpoint.txt", map->db_path);
-	fp=fopen(line,"r");
-	if(fp == NULL){
-		ShowWarning("Can't read '"CL_WHITE"%s"CL_RESET"'... Generating DB.\n",line);
-		//return 1;
-	} else {
-		while(fgets(line, sizeof(line), fp))
-		{
-			int stat;
-			if(line[0]=='/' && line[1]=='/')
-				continue;
-			if ((stat=(int)strtol(line,NULL,10))<0)
-				stat=0;
-			if (i > MAX_LEVEL)
-				break;
-			count++;
-			pc->statp[i]=stat;
-			i++;
-		}
-		fclose(fp);
+	if(SQL_ERROR == SQL->Query(map->brAmysql_handle, "SELECT * FROM `%s`", get_database_name(51)))
+		Sql_ShowDebug(map->brAmysql_handle);
 
-		ShowStatus("Done reading '"CL_WHITE"%u"CL_RESET"' entries in '"CL_WHITE"%s/"DBPATH"%s"CL_RESET"'.\n",count,map->db_path,"statpoint.txt");
+	while(SQL_SUCCESS == SQL->NextRow(map->brAmysql_handle)) {
+		int stat;
+		SQL->GetData(map->brAmysql_handle, 0, &row, NULL);
+
+		if(!(stat=atoi(row)))
+			stat = 0;
+
+		if(i > MAX_LEVEL)
+			break;
+
+		pc->statp[i] = stat;
+		i++;
 	}
+	ShowSQL("Leitura de '"CL_WHITE"%lu"CL_RESET"' entradas na tabela '"CL_WHITE"%s"CL_RESET"'.\n", (i > 1 ? i-1 : 0), get_database_name(51));
+	SQL->FreeResult(map->brAmysql_handle);
+	
 	// generate the remaining parts of the db if necessary
 	k = battle_config.use_statpoint_table; //save setting
 	battle_config.use_statpoint_table = 0; //temporarily disable to force pc->gets_status_point use default values

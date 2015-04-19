@@ -1267,127 +1267,71 @@ int itemdb_combo_split_atoi (char *str, int *val) {
 	
 	return i;
 }
-/**
- * <combo{:combo{:combo:{..}}}>,<{ script }>
- **/
+
+/*==========================================
+ * Leitura item_combo_db SQL [Shiraz]
+ *------------------------------------------*/
 void itemdb_read_combos() {
-	uint32 lines = 0, count = 0;
-	char line[1024];
-	
-	char filepath[256];
-	FILE* fp;
-	
-	sprintf(filepath, "%s/%s", map->db_path, DBPATH"item_combo_db.txt");
-	
-	if ((fp = fopen(filepath, "r")) == NULL) {
-		ShowError("itemdb_read_combos: File not found \"%s\".\n", filepath);
+	int items[MAX_ITEMS_PER_COMBO], v = 0, retcount = 0, rows = 0, i;
+	struct item_combo *combo = NULL;
+
+	if(SQL_ERROR == SQL->Query(map->brAmysql_handle, "SELECT * FROM `%s`", get_database_name(45))) {
+		Sql_ShowDebug(map->brAmysql_handle);
 		return;
 	}
-	
-	// process rows one by one
-	while(fgets(line, sizeof(line), fp)) {
-		char *str[2], *p;
-		
-		lines++;
 
-		if (line[0] == '/' && line[1] == '/')
-			continue;
-		
-		memset(str, 0, sizeof(str));
-		
-		p = line;
-		
-		p = trim(p);
+	while(SQL_SUCCESS == SQL->NextRow(map->brAmysql_handle)) {
+		char *row[2];
 
-		if (*p == '\0')
-			continue;// empty line
-		
-		if (!strchr(p,',')) {
-			/* is there even a single column? */
-			ShowError("itemdb_read_combos: Insufficient columns in line %d of \"%s\", skipping.\n", lines, filepath);
+		for(i = 0; i < 2; ++i)
+			SQL->GetData(map->brAmysql_handle, i, &row[i], NULL);
+
+		if((retcount = itemdb_combo_split_atoi(row[0], items)) < 2) {
+			ShowError("itemdb_read_combos: Não tem elementos suficientes (min:2).\n");
 			continue;
 		}
-		
-		str[0] = p;
-		p = strchr(p,',');
-		*p = '\0';
-		p++;
 
-		str[1] = p;
-		p = strchr(p,',');
-		p++;
-		
-		if (str[1][0] != '{') {
-			ShowError("itemdb_read_combos(#1): Invalid format (Script column) in line %d of \"%s\", skipping.\n", lines, filepath);
-			continue;
+		for(v = 0; v < retcount; v++) {
+			if(!itemdb_exists(items[v])) {
+				ShowError("itemdb_read_combos: Item desconhecido ID: %d.\n", items[v]);
+				break;
+			}
 		}
-		
-		/* no ending key anywhere (missing \}\) */
-		if ( str[1][strlen(str[1])-1] != '}' ) {
-			ShowError("itemdb_read_combos(#2): Invalid format (Script column) in line %d of \"%s\", skipping.\n", lines, filepath);
+
+		if(v < retcount)
 			continue;
-		} else {
-			int items[MAX_ITEMS_PER_COMBO];
-			int v = 0, retcount = 0;
-			struct item_combo *combo = NULL;
-			
-			if((retcount = itemdb->combo_split_atoi(str[0], items)) < 2) {
-				ShowError("itemdb_read_combos: line %d of \"%s\" doesn't have enough items to make for a combo (min:2), skipping.\n", lines, filepath);
-				continue;
-			}
-			
-			/* validate */
-			for(v = 0; v < retcount; v++) {
-				if( !itemdb->exists(items[v]) ) {
-					ShowError("itemdb_read_combos: line %d of \"%s\" contains unknown item ID %d, skipping.\n", lines, filepath,items[v]);
-					break;
-				}
-			}
-			/* failed at some item */
-			if( v < retcount )
-				continue;
-			
-			RECREATE(itemdb->combos, struct item_combo*, ++itemdb->combo_count);
-			
-			CREATE(combo, struct item_combo, 1);
-			
-			combo->count = retcount;
-			combo->script = script->parse(str[1], filepath, lines, 0, NULL);
-			combo->id = itemdb->combo_count - 1;
-			/* populate ->nameid field */
-			for( v = 0; v < retcount; v++ ) {
-				combo->nameid[v] = items[v];
-			}
-			
-			itemdb->combos[itemdb->combo_count - 1] = combo;
-			
-			/* populate the items to refer to this combo */
-			for( v = 0; v < retcount; v++ ) {
-				struct item_data * it;
-				int index;
-				
-				it = itemdb->exists(items[v]);
-				
-				index = it->combos_count;
-				
-				RECREATE(it->combos, struct item_combo*, ++it->combos_count);
-				
-				it->combos[index] = combo;
-			}
-			
+
+		RECREATE(itemdb->combos, struct item_combo *, ++itemdb->combo_count);
+
+		CREATE(combo, struct item_combo, 1);
+
+		combo->count = retcount;
+		combo->script = script->parse(row[1], "item_combo_db", rows, 0, NULL);
+		combo->id = itemdb->combo_count - 1;
+
+		for(v = 0; v < retcount; v++)
+			combo->nameid[v] = items[v];
+
+		itemdb->combos[itemdb->combo_count - 1] = combo;
+
+		for(v = 0; v < retcount; v++) {
+			struct item_data *it;
+			int index;
+
+			it = itemdb_exists(items[v]);
+			index = it->combos_count;
+
+			RECREATE(it->combos, struct item_combo *, ++it->combos_count);
+
+			it->combos[index] = combo;
 		}
-		
-		count++;
+		rows++;
 	}
-	
-	fclose(fp);
-	
-	ShowStatus("Done reading '"CL_WHITE"%"PRIu32""CL_RESET"' entries in '"CL_WHITE"item_combo_db"CL_RESET"'.\n", count);
-		
+
+	ShowSQL("Leitura de '"CL_WHITE"%lu"CL_RESET"' entradas na tabela '"CL_WHITE"%s"CL_RESET"'.\n", rows, get_database_name(45));
+	SQL->FreeResult(map->brAmysql_handle);
 	return;
 }
-
-
 
 /*======================================
  * Applies gender restrictions according to settings. [Skotlex]
@@ -1559,11 +1503,6 @@ int itemdb_validate_entry(struct item_data *entry, int n, const char *source) {
 	return item->nameid;
 }
 
-void itemdb_readdb_additional_fields(int itemid, config_setting_t *it, int n, const char *source)
-{
-    // do nothing. plugins can do own work
-}
-
 /**
  * Processes one itemdb entry from the sql backend, loading and inserting it
  * into the item database.
@@ -1667,383 +1606,22 @@ int itemdb_readdb_sql_sub(Sql *handle, int n, const char *source) {
 	return itemdb->validate_entry(&id, n, source);
 }
 
-/**
- * Processes one itemdb entry from the sql backend, loading and inserting it
- * into the item database.
- *
- * @param *it     Libconfig setting entry. It is expected to be valid and it
- *                won't be freed (it is care of the caller to do so if
- *                necessary)
- * @param n       Ordinal number of the entry, to be displayed in case of
- *                validation errors.
- * @param *source Source of the entry (file name), to be displayed in case of
- *                validation errors.
- * @return Nameid of the validated entry, or 0 in case of failure.
- */
-int itemdb_readdb_libconfig_sub(config_setting_t *it, int n, const char *source) {
-	struct item_data id = { 0 };
-	config_setting_t *t = NULL;
-	const char *str = NULL;
-	int i32 = 0;
-	bool inherit = false;
-
-	/*
-	 * // Mandatory fields
-	 * Id: ID
-	 * AegisName: "Aegis_Name"
-	 * Name: "Item Name"
-	 * // Optional fields
-	 * Type: Item Type
-	 * Buy: Buy Price
-	 * Sell: Sell Price
-	 * Weight: Item Weight
-	 * Atk: Attack
-	 * Matk: Attack
-	 * Def: Defense
-	 * Range: Attack Range
-	 * Slots: Slots
-	 * Job: Job mask
-	 * Upper: Upper mask
-	 * Gender: Gender
-	 * Loc: Equip location
-	 * WeaponLv: Weapon Level
-	 * EquipLv: Equip required level or [min, max]
-	 * Refine: Refineable
-	 * View: View ID
-	 * BindOnEquip: (true or false)
-	 * BuyingStore: (true or false)
-	 * Delay: Delay to use item
-	 * Trade: {
-	 *   override: Group to override
-	 *   nodrop: (true or false)
-	 *   notrade: (true or false)
-	 *   partneroverride: (true or false)
-	 *   noselltonpc: (true or false)
-	 *   nocart: (true or false)
-	 *   nostorage: (true or false)
-	 *   nogstorage: (true or false)
-	 *   nomail: (true or false)
-	 *   noauction: (true or false)
-	 * }
-	 * Nouse: {
-	 *   override: Group to override
-	 *   sitting: (true or false)
-	 * }
-	 * Stack: [Stackable Amount, Stack Type]
-	 * Sprite: SpriteID
-	 * Script: <"
-	 *     Script
-	 *     (it can be multi-line)
-	 * ">
-	 * OnEquipScript: <" OnEquip Script ">
-	 * OnUnequipScript: <" OnUnequip Script ">
-	 * Inherit: inherit or override
-	 */
-	if( !itemdb->lookup_const(it, "Id", &i32) ) {
-		ShowWarning("itemdb_readdb_libconfig_sub: Invalid or missing id in \"%s\", entry #%d, skipping.\n", source, n);
-		return 0;
-	}
-	id.nameid = (uint16)i32;
-
-	if( (t = libconfig->setting_get_member(it, "Inherit")) && (inherit = libconfig->setting_get_bool(t)) ) {
-		if( !itemdb->exists(id.nameid) ) {
-			ShowWarning("itemdb_readdb_libconfig_sub: Trying to inherit nonexistent item %d, default values will be used instead.\n", id.nameid);
-			inherit = false;
-		} else {
-			// Use old entry as default
-			struct item_data *old_entry = itemdb->load(id.nameid);
-			memcpy(&id, old_entry, sizeof(struct item_data));
-		}
-	}
-
-	if( !libconfig->setting_lookup_string(it, "AegisName", &str) || !*str ) {
-		if( !inherit ) {
-			ShowWarning("itemdb_readdb_libconfig_sub: Missing AegisName in item %d of \"%s\", skipping.\n", id.nameid, source);
-			return 0;
-		}
-	} else {
-		safestrncpy(id.name, str, sizeof(id.name));
-	}
-
-	if( !libconfig->setting_lookup_string(it, "Name", &str) || !*str ) {
-		if( !inherit ) {
-			ShowWarning("itemdb_readdb_libconfig_sub: Missing Name in item %d of \"%s\", skipping.\n", id.nameid, source);
-			return 0;
-		}
-	} else {
-		safestrncpy(id.jname, str, sizeof(id.jname));
-	}
-
-	if( itemdb->lookup_const(it, "Type", &i32) )
-		id.type = i32;
-	else if( !inherit )
-		id.type = IT_ETC;
-
-	if( itemdb->lookup_const(it, "Buy", &i32) )
-		id.value_buy = i32;
-	else if( !inherit )
-		id.value_buy = -1;
-	if( itemdb->lookup_const(it, "Sell", &i32) )
-		id.value_sell = i32;
-	else if( !inherit )
-		id.value_sell = -1;
-
-	if( itemdb->lookup_const(it, "Weight", &i32) && i32 >= 0 )
-		id.weight = i32;
-
-	if( itemdb->lookup_const(it, "Atk", &i32) && i32 >= 0 )
-		id.atk = i32;
-
-	if( itemdb->lookup_const(it, "Matk", &i32) && i32 >= 0 )
-		id.matk = i32;
-
-	if( itemdb->lookup_const(it, "Def", &i32) && i32 >= 0 )
-		id.def = i32;
-
-	if( itemdb->lookup_const(it, "Range", &i32) && i32 >= 0 )
-		id.range = i32;
-
-	if( itemdb->lookup_const(it, "Slots", &i32) && i32 >= 0 )
-		id.slot = i32;
-
-	if( itemdb->lookup_const(it, "Job", &i32) ) // This is an unsigned value, do not check for >= 0
-		itemdb->jobid2mapid(id.class_base, (unsigned int)i32);
-	else if( !inherit )
-		itemdb->jobid2mapid(id.class_base, UINT_MAX);
-
-	if( itemdb->lookup_const(it, "Upper", &i32) && i32 >= 0 )
-		id.class_upper = (unsigned int)i32;
-	else if( !inherit )
-		id.class_upper = ITEMUPPER_ALL;
-
-	if( itemdb->lookup_const(it, "Gender", &i32) && i32 >= 0 )
-		id.sex = i32;
-	else if( !inherit )
-		id.sex = 2;
-
-	if( itemdb->lookup_const(it, "Loc", &i32) && i32 >= 0 )
-		id.equip = i32;
-
-	if( itemdb->lookup_const(it, "WeaponLv", &i32) && i32 >= 0 )
-		id.wlv = i32;
-
-	if( (t = libconfig->setting_get_member(it, "EquipLv")) ) {
-		if( config_setting_is_aggregate(t) ) {
-			if( libconfig->setting_length(t) >= 2 )
-				id.elvmax = libconfig->setting_get_int_elem(t, 1);
-			if( libconfig->setting_length(t) >= 1 )
-				id.elv = libconfig->setting_get_int_elem(t, 0);
-		} else {
-			id.elv = libconfig->setting_get_int(t);
-		}
-	}
-
-	if( (t = libconfig->setting_get_member(it, "Refine")) )
-		id.flag.no_refine = libconfig->setting_get_bool(t) ? 0 : 1;
-
-	if( itemdb->lookup_const(it, "View", &i32) && i32 >= 0 )
-		id.look = i32;
-
-	if( (t = libconfig->setting_get_member(it, "BindOnEquip")) )
-		id.flag.bindonequip = libconfig->setting_get_bool(t) ? 1 : 0;
-	
-	if ( (t = libconfig->setting_get_member(it, "BuyingStore")) )
-		id.flag.buyingstore = libconfig->setting_get_bool(t) ? 1 : 0;
-
-	if ((t = libconfig->setting_get_member(it, "KeepAfterUse")))
-		id.flag.keepafteruse = libconfig->setting_get_bool(t) ? 1 : 0;
-
-	if (itemdb->lookup_const(it, "Delay", &i32) && i32 >= 0)
-		id.delay = i32;
-
-	if ( (t = libconfig->setting_get_member(it, "Trade")) ) {
-		if (config_setting_is_group(t)) {
-			config_setting_t *tt = NULL;
-
-			if ((tt = libconfig->setting_get_member(t, "override"))) {
-				id.gm_lv_trade_override = libconfig->setting_get_int(tt);
-			}
-
-			if ((tt = libconfig->setting_get_member(t, "nodrop"))) {
-				id.flag.trade_restriction &= ~ITR_NODROP;
-				if (libconfig->setting_get_bool(tt))
-					id.flag.trade_restriction |= ITR_NODROP;
-			}
-
-			if ((tt = libconfig->setting_get_member(t, "notrade"))) {
-				id.flag.trade_restriction &= ~ITR_NOTRADE;
-				if (libconfig->setting_get_bool(tt))
-					id.flag.trade_restriction |= ITR_NOTRADE;
-			}
-
-			if ((tt = libconfig->setting_get_member(t, "partneroverride"))) {
-				id.flag.trade_restriction &= ~ITR_PARTNEROVERRIDE;
-				if (libconfig->setting_get_bool(tt))
-					id.flag.trade_restriction |= ITR_PARTNEROVERRIDE;
-			}
-
-			if ((tt = libconfig->setting_get_member(t, "noselltonpc"))) {
-				id.flag.trade_restriction &= ~ITR_NOSELLTONPC;
-				if (libconfig->setting_get_bool(tt))
-					id.flag.trade_restriction |= ITR_NOSELLTONPC;
-			}
-
-			if ((tt = libconfig->setting_get_member(t, "nocart"))) {
-				id.flag.trade_restriction &= ~ITR_NOCART;
-				if (libconfig->setting_get_bool(tt))
-					id.flag.trade_restriction |= ITR_NOCART;
-			}
-
-			if ((tt = libconfig->setting_get_member(t, "nostorage"))) {
-				id.flag.trade_restriction &= ~ITR_NOSTORAGE;
-				if (libconfig->setting_get_bool(tt))
-					id.flag.trade_restriction |= ITR_NOSTORAGE;
-			}
-
-			if ((tt = libconfig->setting_get_member(t, "nogstorage"))) {
-				id.flag.trade_restriction &= ~ITR_NOGSTORAGE;
-				if (libconfig->setting_get_bool(tt))
-					id.flag.trade_restriction |= ITR_NOGSTORAGE;
-			}
-
-			if ((tt = libconfig->setting_get_member(t, "nomail"))) {
-				id.flag.trade_restriction &= ~ITR_NOMAIL;
-				if (libconfig->setting_get_bool(tt))
-					id.flag.trade_restriction |= ITR_NOMAIL;
-			}
-
-			if ((tt = libconfig->setting_get_member(t, "noauction"))) {
-				id.flag.trade_restriction &= ~ITR_NOAUCTION;
-				if (libconfig->setting_get_bool(tt))
-					id.flag.trade_restriction |= ITR_NOAUCTION;
-			}
-		} else { // Fallback to int if it's not a group
-			id.flag.trade_restriction = libconfig->setting_get_int(t);
-		}
-	}
-
-	if ((t = libconfig->setting_get_member(it, "Nouse"))) {
-		if (config_setting_is_group(t)) {
-			config_setting_t *nt = NULL;
-
-			if ((nt = libconfig->setting_get_member(t, "override"))) {
-				id.item_usage.override = libconfig->setting_get_int(nt);
-			}
-
-			if ((nt = libconfig->setting_get_member(t, "sitting"))) {
-				id.item_usage.flag &= ~INR_SITTING;
-				if (libconfig->setting_get_bool(nt))
-					id.item_usage.flag |= INR_SITTING;
-			}
-
-		} else { // Fallback to int if it's not a group
-			id.item_usage.flag = libconfig->setting_get_int(t);
-		}
-	}
-
-	if ((t = libconfig->setting_get_member(it, "Stack"))) {
-		if (config_setting_is_aggregate(t) && libconfig->setting_length(t) >= 1) {
-			int stack_flag = libconfig->setting_get_int_elem(t, 1);
-			int stack_amount = libconfig->setting_get_int_elem(t, 0);
-			if (stack_amount >= 0) {
-				id.stack.amount = cap_value(stack_amount, 0, USHRT_MAX);
-				id.stack.inventory = (stack_flag&1)!=0;
-				id.stack.cart = (stack_flag&2)!=0;
-				id.stack.storage = (stack_flag&4)!=0;
-				id.stack.guildstorage = (stack_flag&8)!=0;
-			}
-		}
-	}
-
-	if (itemdb->lookup_const(it, "Sprite", &i32) && i32 >= 0) {
-		id.flag.available = 1;
-		id.view_id = i32;
-	}
-	
-	if( libconfig->setting_lookup_string(it, "Script", &str) )
-		id.script = *str ? script->parse(str, source, -id.nameid, SCRIPT_IGNORE_EXTERNAL_BRACKETS, NULL) : NULL;
-
-	if( libconfig->setting_lookup_string(it, "OnEquipScript", &str) )
-		id.equip_script = *str ? script->parse(str, source, -id.nameid, SCRIPT_IGNORE_EXTERNAL_BRACKETS, NULL) : NULL;
-
-	if( libconfig->setting_lookup_string(it, "OnUnequipScript", &str) )
-		id.unequip_script = *str ? script->parse(str, source, -id.nameid, SCRIPT_IGNORE_EXTERNAL_BRACKETS, NULL) : NULL;
-
-	return itemdb->validate_entry(&id, n, source);
-}
-
-bool itemdb_lookup_const(const config_setting_t *it, const char *name, int *value)
-{
-	if (libconfig->setting_lookup_int(it, name, value))
-	{
-		return true;
-	}
-	else
-	{
-		const char *str = NULL;
-		if (libconfig->setting_lookup_string(it, name, &str))
-		{
-			if (*str && script->get_constant(str, value))
-				return true;
-		}
-	}
-	return false;
+/*==========================================
+* Unique item ID function
+* Only one operation by once
+*------------------------------------------*/
+uint64 itemdb_unique_id(struct map_session_data *sd) {
+	return ((uint64)sd->status.char_id << 32) | sd->status.uniqueitem_counter++;
 }
 
 /**
- * Reads from a libconfig-formatted itemdb file and inserts the found entries into the
- * item database, overwriting duplicate ones (i.e. item_db2 overriding item_db.)
- *
- * @param *filename File name, relative to the database path.
- * @return The number of found entries.
+ * Reads all item-related databases.
  */
-int itemdb_readdb_libconfig(const char *filename) {
-	bool duplicate[MAX_ITEMDB];
-	config_t item_db_conf;
-	config_setting_t *itdb, *it;
-	char filepath[256];
+void itemdb_read(bool minimal) {
 	int i = 0, count = 0;
+	DBData prev;
 	
-	sprintf(filepath, "%s/%s", map->db_path, filename);
-	memset(&duplicate,0,sizeof(duplicate));
-	if( libconfig->read_file(&item_db_conf, filepath) || !(itdb = libconfig->setting_get_member(item_db_conf.root, "item_db")) ) {
-		ShowError("can't read %s\n", filepath);
-		return 0;
-	}
-
-	while( (it = libconfig->setting_get_elem(itdb,i++)) ) {
-		int nameid = itemdb->readdb_libconfig_sub(it, i-1, filename);
-
-		if( !nameid )
-			continue;
-
-		itemdb->readdb_additional_fields(nameid, it, i - 1, filename);
-		count++;
-
-		if( duplicate[nameid] ) {
-			ShowWarning("itemdb_readdb:%s: duplicate entry of ID #%d (%s/%s)\n",
-					filename, nameid, itemdb_name(nameid), itemdb_jname(nameid));
-		} else
-			duplicate[nameid] = true;
-	}
-	libconfig->destroy(&item_db_conf);
-	ShowConf("Leitura de '"CL_WHITE"%d"CL_RESET"' entradas em '"CL_WHITE"%s"CL_RESET"'.\n", count, filename);
-		
-	return count;
-}
-
-/**
- * Reads from a sql itemdb table and inserts the found entries into the item
- * database, overwriting duplicate ones (i.e. item_db2 overriding item_db.)
- *
- * @param *tablename Table name to query.
- * @return The number of found entries.
- */
-int itemdb_readdb_sql(const char *tablename) {
-	int i = 0, count = 0;
-				
-	// retrieve all rows from the item database
-	if( SQL_ERROR == SQL->Query(map->mysql_handle, "SELECT `id`, `name_english`, `name_japanese`, `type`,"
+	if( SQL_ERROR == SQL->Query(map->brAmysql_handle, "SELECT `id`, `name_english`, `name_japanese`, `type`,"
 				" `price_buy`, `price_sell`, `weight`, `atk`,"
 				" `matk`, `defence`, `range`, `slots`,"
 				" `equip_jobs`, `equip_upper`, `equip_genders`, `equip_locations`,"
@@ -2052,63 +1630,24 @@ int itemdb_readdb_sql(const char *tablename) {
 				" `trade_flag`, `trade_group`, `nouse_flag`, `nouse_group`,"
 				" `stack_amount`, `stack_flag`, `sprite`, `script`,"
 				" `equip_script`, `unequip_script`"
-				"FROM `%s`", tablename) ) {
-		Sql_ShowDebug(map->mysql_handle);
-		return 0;
+				"FROM `%s`", get_database_name(52)) ) {
+		Sql_ShowDebug(map->brAmysql_handle);
+		return;
 	}
 
-	// process rows one by one
-	while( SQL_SUCCESS == SQL->NextRow(map->mysql_handle) ) {
-		if( itemdb->readdb_sql_sub(map->mysql_handle, i++, tablename) )
+	while( SQL_SUCCESS == SQL->NextRow(map->brAmysql_handle) ) {
+		if( itemdb->readdb_sql_sub(map->brAmysql_handle, i++, get_database_name(52)) )
 			count++;
 	}
 
-	// free the query result
-	SQL->FreeResult(map->mysql_handle);
-
-	ShowSQL("Leitura de '"CL_WHITE"%d"CL_RESET"' entradas na tabela '"CL_WHITE"%s"CL_RESET"'.\n", count, tablename);
-
-	return count;
-}
-
-/*==========================================
-* Unique item ID function
-* Only one operation by once
-*------------------------------------------*/
-uint64 itemdb_unique_id(struct map_session_data *sd) {
-
-	return ((uint64)sd->status.char_id << 32) | sd->status.uniqueitem_counter++;
-}
-
-/**
- * Reads all item-related databases.
- */
-void itemdb_read(bool minimal) {
-	int i;
-	DBData prev;
-	
-	if (map->db_use_sql_item_db) {
-		const char* item_db_name[] = {
-			map->item_db_db,
-			map->item_db2_db
-		};
-		for(i = 0; i < ARRAYLENGTH(item_db_name); i++)
-			itemdb->readdb_sql(item_db_name[i]);
-	} else {
-		const char* filename[] = {
-			DBPATH"item_db.conf",
-			"item_db2.conf",
-		};
-
-		for(i = 0; i < ARRAYLENGTH(filename); i++)
-			itemdb->readdb_libconfig(filename[i]);
-	}
+	ShowSQL("Leitura de '"CL_WHITE"%d"CL_RESET"' entradas na tabela '"CL_WHITE"%s"CL_RESET"'.\n", count, get_database_name(52));
+	SQL->FreeResult(map->brAmysql_handle);
 	
 	for( i = 0; i < ARRAYLENGTH(itemdb->array); ++i ) {
 		if( itemdb->array[i] ) {
 			if( itemdb->names->put(itemdb->names,DB->str2key(itemdb->array[i]->name),DB->ptr2data(itemdb->array[i]),&prev) ) {
 				struct item_data *data = DB->data2ptr(&prev);
-				ShowError("itemdb_read: duplicate AegisName '%s' in item ID %d and %d\n",itemdb->array[i]->name,itemdb->array[i]->nameid,data->nameid);
+				ShowError("itemdb_read: AegisName duplicado '%s'. Item ID %d e %d\n",itemdb->array[i]->name,itemdb->array[i]->nameid,data->nameid);
 			}
 		}
 	}
@@ -2120,7 +1659,7 @@ void itemdb_read(bool minimal) {
 	itemdb->read_groups();
 	itemdb->read_chains();
 	itemdb->read_packages();
-
+	return;
 }
 
 /**
@@ -2416,11 +1955,7 @@ void itemdb_defaults(void) {
 	itemdb->read_combos = itemdb_read_combos;
 	itemdb->gendercheck = itemdb_gendercheck;
 	itemdb->validate_entry = itemdb_validate_entry;
-	itemdb->readdb_additional_fields = itemdb_readdb_additional_fields;
 	itemdb->readdb_sql_sub = itemdb_readdb_sql_sub;
-	itemdb->readdb_libconfig_sub = itemdb_readdb_libconfig_sub;
-	itemdb->readdb_libconfig = itemdb_readdb_libconfig;
-	itemdb->readdb_sql = itemdb_readdb_sql;
 	itemdb->unique_id = itemdb_unique_id;
 	itemdb->read = itemdb_read;
 	itemdb->destroy_item_data = destroy_item_data;
@@ -2428,5 +1963,4 @@ void itemdb_defaults(void) {
 	itemdb->clear = itemdb_clear;
 	itemdb->id2combo = itemdb_id2combo;
 	itemdb->is_item_usable = itemdb_is_item_usable;
-	itemdb->lookup_const = itemdb_lookup_const;
 }

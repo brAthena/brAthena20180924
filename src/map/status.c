@@ -12284,7 +12284,7 @@ int status_readdb(void)
 		for(j = 0; j < MAX_WEAPON_TYPE; j++)
 			status->atkmods[i][j] = 100;
 
-	// refine_db.txt
+	// refine_db
 	for(i=0;i<ARRAYLENGTH(status->refine_info);i++) {
 		for(j=0;j<MAX_REFINE; j++) {
 			status->refine_info[i].chance[j] = 100;
@@ -12294,10 +12294,9 @@ int status_readdb(void)
 	}
 
 	// read databases
-	//
 	sv_readsqldb(get_database_name(33),             100, -1, status->readdb_job2);
 	sv->readdb(map->db_path, DBPATH"size_fix.txt", ',', MAX_WEAPON_TYPE, MAX_WEAPON_TYPE, ARRAYLENGTH(status->atkmods), status->readdb_sizefix);
-	sv->readdb(map->db_path, DBPATH"refine_db.txt", ',', 4+MAX_REFINE,      4+MAX_REFINE,      ARRAYLENGTH(status->refine_info), status->readdb_refine);
+	sv_readsqldb(get_database_name(50),	4+MAX_REFINE,	-1,	status->readdb_refine);
 	sv->readdb(map->db_path, "sc_config.txt",       ',', 2,                 2,                 SC_MAX,                   status->readdb_scconfig);
 	status->read_job_db();
 
