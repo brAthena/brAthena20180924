@@ -2836,9 +2836,9 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt) {
 	}
 
 #ifndef RENEWAL
-	if (!battle_config.magic_defense_type && bstatus->mdef > battle_config.max_def) {
-		bstatus->mdef2 += battle_config.over_def_bonus*(bstatus->mdef -battle_config.max_def);
-		bstatus->mdef = (signed char)battle_config.max_def;
+	if (!battle_config.magic_defense_type && bstatus->mdef > battle_config.max_mdef) {
+		bstatus->mdef2 += battle_config.over_def_bonus*(bstatus->mdef -battle_config.max_mdef);
+		bstatus->mdef = (signed char)battle_config.max_mdef;
 	}
 #endif
 
@@ -6632,6 +6632,8 @@ int status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_typ
 			sc_def = sc_def*battle_config.pc_sc_def_rate/100;
 			sc_def2 = sc_def2*battle_config.pc_sc_def_rate/100;
 		}
+		if(battle_config.enable_luk_influence)
+			sc_def += (battle_config.pc_max_sc_def*100 - sc_def)*st->luk/battle_config.pc_luk_sc_def;
 
 		sc_def = min(sc_def, battle_config.pc_max_sc_def*100);
 		sc_def2 = min(sc_def2, battle_config.pc_max_sc_def*100);
@@ -6646,6 +6648,8 @@ int status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_typ
 			sc_def = sc_def*battle_config.mob_sc_def_rate/100;
 			sc_def2 = sc_def2*battle_config.mob_sc_def_rate/100;
 		}
+		if(battle_config.enable_luk_influence)
+			sc_def += (battle_config.mob_max_sc_def*100 - sc_def)*st->luk/battle_config.mob_luk_sc_def;
 
 		sc_def = min(sc_def, battle_config.mob_max_sc_def*100);
 		sc_def2 = min(sc_def2, battle_config.mob_max_sc_def*100);
