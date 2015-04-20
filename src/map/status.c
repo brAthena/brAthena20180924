@@ -2836,9 +2836,9 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt) {
 	}
 
 #ifndef RENEWAL
-	if (!battle_config.magic_defense_type && bstatus->mdef > battle_config.max_mdef) {
-		bstatus->mdef2 += battle_config.over_def_bonus*(bstatus->mdef -battle_config.max_mdef);
-		bstatus->mdef = (signed char)battle_config.max_mdef;
+	if (!battle_config.magic_defense_type && bstatus->mdef > battle_config.max_def) {
+		bstatus->mdef2 += battle_config.over_def_bonus*(bstatus->mdef -battle_config.max_def);
+		bstatus->mdef = (signed char)battle_config.max_def;
 	}
 #endif
 
@@ -4052,7 +4052,6 @@ int status_base_amotion_pc(struct map_session_data *sd, struct status_data *st) 
 
 	// raw delay adjustment from bAspd bonus
 	amotion += sd->bonus.aspd_add;
-
 
 	/* angra manyu disregards aspd_base and similar */
 	if ( sd->equip_index[EQI_HAND_R] >= 0 && sd->status.inventory[sd->equip_index[EQI_HAND_R]].nameid == ITEMID_ANGRA_MANYU )
@@ -6633,12 +6632,10 @@ int status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_typ
 			sc_def = sc_def*battle_config.pc_sc_def_rate/100;
 			sc_def2 = sc_def2*battle_config.pc_sc_def_rate/100;
 		}
-		if(battle_config.enable_luk_influence)
-			sc_def += (battle_config.pc_max_sc_def*100 - sc_def)*st->luk/battle_config.pc_luk_sc_def;
-		
+
 		sc_def = min(sc_def, battle_config.pc_max_sc_def*100);
-		
 		sc_def2 = min(sc_def2, battle_config.pc_max_sc_def*100);
+
 		if (tick_def > 0 && battle_config.pc_sc_def_rate != 100) {
 			tick_def = tick_def*battle_config.pc_sc_def_rate/100;
 			tick_def2 = tick_def2*battle_config.pc_sc_def_rate/100;
@@ -6649,9 +6646,7 @@ int status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_typ
 			sc_def = sc_def*battle_config.mob_sc_def_rate/100;
 			sc_def2 = sc_def2*battle_config.mob_sc_def_rate/100;
 		}
-		if(battle_config.enable_luk_influence)
-			sc_def += (battle_config.mob_max_sc_def*100 - sc_def)*st->luk/battle_config.mob_luk_sc_def;
-		
+
 		sc_def = min(sc_def, battle_config.mob_max_sc_def*100);
 		sc_def2 = min(sc_def2, battle_config.mob_max_sc_def*100);
 
@@ -11996,18 +11991,11 @@ int status_get_sc_type(sc_type type) {
 	return status->sc_conf[type];
 }
 
-/*------------------------------------------
-* DB reading.
-* job_db1.txt    - weight, hp, sp, aspd
-* job_db2.txt    - job level stat bonuses
-* size_fix.txt   - size adjustment table for weapons
-* refine_db.txt  - refining data table
-*------------------------------------------*/
-void status_read_job_db(void) { /* [malufett] */
-	int i = 0;
-	config_t job_db_conf;
-	config_setting_t *jdb = NULL;
-	const char *config_filename = "db/"DBPATH"job_db.conf";
+void status_read_job_db_sub(int idx, const char *name, config_setting_t *jdb)
+{
+	config_setting_t *temp = NULL;
+	int i32 = 0;
+
 	struct {
 		const char *name;
 		int id;
@@ -12041,13 +12029,144 @@ void status_read_job_db(void) { /* [malufett] */
 #endif
 	};
 
+	if ((temp = libconfig->setting_get_member(jdb, "Inherit"))) {
+		int nidx = 0, iidx, w;
+		const char *iname;
+		while ((iname = libconfig->setting_get_string_elem(temp, nidx++))) {
+			int iclass, ave, total = 0;
+			if ((iclass = pc->check_job_name(iname)) == -1) {
+				ShowWarning("status_read_job_db: '%s' trying to inherit unknown '%s'!\n", name, iname);
+				continue;
+			}
+			iidx = pc->class2idx(iclass);
+			status->max_weight_base[idx] = status->max_weight_base[iidx];
+			memcpy(&status->aspd_base[idx], &status->aspd_base[iidx], sizeof(status->aspd_base[iidx]));
+			for (w = 1; w <= MAX_LEVEL && status->HP_table[iidx][w]; w++) {
+				status->HP_table[idx][w] = status->HP_table[iidx][w];
+				total += status->HP_table[idx][w];
+			}
+			ave = total / (w - 1);
+			for ( ; w <= pc->max_level[idx][0]; w++) {
+				status->HP_table[idx][w] = min(ave * w, battle_config.max_hp);
+			}
+			for (w = 1; w <= MAX_LEVEL && status->SP_table[iidx][w]; w++) {
+				status->SP_table[idx][w] = status->SP_table[iidx][w];
+				total += status->SP_table[idx][w];
+			}
+			ave = total / (w - 1);
+			for ( ; w <= pc->max_level[idx][0]; w++) {
+				status->SP_table[idx][w] = min(ave * w, battle_config.max_sp);
+			}
+		}
+	}
+	if ((temp = libconfig->setting_get_member(jdb, "InheritHP"))) {
+		int nidx = 0, iidx;
+		const char *iname;
+		while ((iname = libconfig->setting_get_string_elem(temp, nidx++))) {
+			int iclass, w, ave, total = 0;
+			if ((iclass = pc->check_job_name(iname)) == -1) {
+				ShowWarning("status_read_job_db: '%s' trying to inherit unknown '%s' HP!\n", name, iname);
+				continue;
+			}
+			iidx = pc->class2idx(iclass);
+			for (w = 1; w <= MAX_LEVEL && status->HP_table[iidx][w]; w++) {
+				status->HP_table[idx][w] = status->HP_table[iidx][w];
+				total += status->HP_table[idx][w];
+			}
+			ave = total / (w - 1);
+			for ( ; w <= pc->max_level[idx][0]; w++ ) {
+				status->HP_table[idx][w] = min(ave * w, battle_config.max_hp);
+			}
+		}
+	}
+	if ((temp = libconfig->setting_get_member(jdb, "InheritSP"))) {
+		int nidx = 0, iidx, ave, total = 0;
+		const char *iname;
+		while ((iname = libconfig->setting_get_string_elem(temp, nidx++))) {
+			int iclass, w;
+			if ((iclass = pc->check_job_name(iname)) == -1) {
+				ShowWarning("status_read_job_db: '%s' trying to inherit unknown '%s' SP!\n", name, iname);
+				continue;
+			}
+			iidx = pc->class2idx(iclass);
+			for (w = 1; w <= MAX_LEVEL && status->SP_table[iidx][w]; w++) {
+				status->SP_table[idx][w] = status->SP_table[iidx][w];
+				total += status->SP_table[idx][w];
+			}
+			ave = total / (w - 1);
+			for ( ; w <= pc->max_level[idx][0]; w++) {
+				status->SP_table[idx][w] = min(ave * w, battle_config.max_sp);
+			}
+		}
+	}
+
+	if (libconfig->setting_lookup_int(jdb, "Weight", &i32))
+		status->max_weight_base[idx] = i32;
+	else if (!status->max_weight_base[idx])
+		status->max_weight_base[idx] = 20000;
+
+	if ((temp = libconfig->setting_get_member(jdb, "BaseASPD"))) {
+		int widx = 0;
+		config_setting_t *wpn = NULL;
+		while ((wpn = libconfig->setting_get_elem(temp, widx++))) {
+			int w, wlen = ARRAYLENGTH(wnames);
+			const char *wname = config_setting_name(wpn);
+
+			ARR_FIND(0, wlen, w, strcmp(wnames[w].name, wname) == 0);
+			if (w != wlen) {
+				status->aspd_base[idx][wnames[w].id] = libconfig->setting_get_int(wpn);
+			} else {
+				ShowWarning("status_read_job_db: unknown weapon type '%s'!\n", wname);
+			}
+		}
+	}
+
+	if ((temp = libconfig->setting_get_member(jdb, "HPTable"))) {
+		int level = 0, ave, total = 0;
+		config_setting_t *hp = NULL;
+		while ((hp = libconfig->setting_get_elem(temp, level++))) {
+			status->HP_table[idx][level] = i32 = min(libconfig->setting_get_int(hp), battle_config.max_hp);
+			total += i32 - status->HP_table[idx][level - 1];
+		}
+		ave = total / (level - 1);
+		for ( ; level <= pc->max_level[idx][0]; level++ ) { /* limit only to possible maximum level of the given class */
+			status->HP_table[idx][level] = min(ave * level, battle_config.max_hp); /* some are still empty? then let's use the average increase */
+		}
+	}
+
+	if ((temp = libconfig->setting_get_member(jdb, "SPTable"))) {
+		int level = 0, ave, total = 0;
+		config_setting_t *sp = NULL;
+		while ((sp = libconfig->setting_get_elem(temp, level++))) {
+			status->SP_table[idx][level] = i32 = min(libconfig->setting_get_int(sp), battle_config.max_sp);
+			total += i32 - status->SP_table[idx][level - 1];
+		}
+		ave = total / (level - 1);
+		for ( ; level <= pc->max_level[idx][0]; level++ ) {
+			status->SP_table[idx][level] = min(ave * level, battle_config.max_sp);
+		}
+	}
+}
+
+/*------------------------------------------
+* DB reading.
+* job_db.conf    - weight, hp, sp, aspd
+* job_db2.txt    - job level stat bonuses
+* size_fix.txt   - size adjustment table for weapons
+* refine_db.txt  - refining data table
+*------------------------------------------*/
+void status_read_job_db(void) { /* [malufett] */
+	int i = 0;
+	config_t job_db_conf;
+	config_setting_t *jdb = NULL;
+	const char *config_filename = "db/"DBPATH"job_db.conf";
+
 	if ( libconfig->read_file(&job_db_conf, config_filename) ) {
 		ShowError("can't read %s\n", config_filename);
 		return;
 	}
 	while ( (jdb = libconfig->setting_get_elem(job_db_conf.root, i++)) ) {
-		int class_, idx, i32 = 0;
-		config_setting_t *temp = NULL;
+		int class_, idx;
 		const char *name = config_setting_name(jdb);
 
 		if ( (class_ = pc->check_job_name(name)) == -1 ) {
@@ -12056,125 +12175,8 @@ void status_read_job_db(void) { /* [malufett] */
 		}
 
 		idx = pc->class2idx(class_);
-		if ( (temp = libconfig->setting_get_member(jdb, "Inherit")) ) {
-			int nidx = 0, iidx, w;
-			const char *iname;
-			while ( (iname = libconfig->setting_get_string_elem(temp, nidx++)) ) {
-				int iclass, ave, total = 0;
-				if ( (iclass = pc->check_job_name(iname)) == -1 ) {
-					ShowWarning("status_read_job_db: '%s' trying to inherit unknown '%s'!\n", name, iname);
-					continue;
-				}
-				iidx = pc->class2idx(iclass);
-				status->max_weight_base[idx] = status->max_weight_base[iidx];
-				memcpy(&status->aspd_base[idx], &status->aspd_base[iidx], sizeof(status->aspd_base[iidx]));
-				for ( w = 1; w <= MAX_LEVEL && status->HP_table[iidx][w]; w++ ) {
-					status->HP_table[idx][w] = status->HP_table[iidx][w];
-					total += status->HP_table[idx][w];
-				}
-				ave = total / (w - 1);
-				for ( ; w <= pc->max_level[idx][0]; w++ ) {
-					status->HP_table[idx][w] = min(ave * w, battle_config.max_hp);
-				}
-				for ( w = 1; w <= MAX_LEVEL && status->SP_table[iidx][w]; w++ ) {
-					status->SP_table[idx][w] = status->SP_table[iidx][w];
-					total += status->SP_table[idx][w];
-				}
-				ave = total / (w - 1);
-				for ( ; w <= pc->max_level[idx][0]; w++ ) {
-					status->SP_table[idx][w] = min(ave * w, battle_config.max_sp);
-				}
-			}
-		}
-		if ( (temp = libconfig->setting_get_member(jdb, "InheritHP")) ) {
-			int nidx = 0, iidx;
-			const char *iname;
-			while ( (iname = libconfig->setting_get_string_elem(temp, nidx++)) ) {
-				int iclass, w, ave, total = 0;
-				if ( (iclass = pc->check_job_name(iname)) == -1 ) {
-					ShowWarning("status_read_job_db: '%s' trying to inherit unknown '%s' HP!\n", name, iname);
-					continue;
-				}
-				iidx = pc->class2idx(iclass);
-				for ( w = 1; w <= MAX_LEVEL && status->HP_table[iidx][w]; w++ ) {
-					status->HP_table[idx][w] = status->HP_table[iidx][w];
-					total += status->HP_table[idx][w];
-				}
-				ave = total / (w - 1);
-				for ( ; w <= pc->max_level[idx][0]; w++ ) {
-					status->HP_table[idx][w] = min(ave * w, battle_config.max_hp);
-				}
-			}
-		}
-		if ( (temp = libconfig->setting_get_member(jdb, "InheritSP")) ) {
-			int nidx = 0, iidx, ave, total = 0;
-			const char *iname;
-			while ( (iname = libconfig->setting_get_string_elem(temp, nidx++)) ) {
-				int iclass, w;
-				if ( (iclass = pc->check_job_name(iname)) == -1 ) {
-					ShowWarning("status_read_job_db: '%s' trying to inherit unknown '%s' SP!\n", name, iname);
-					continue;
-				}
-				iidx = pc->class2idx(iclass);
-				for ( w = 1; w <= MAX_LEVEL && status->SP_table[iidx][w]; w++ ) {
-					status->SP_table[idx][w] = status->SP_table[iidx][w];
-					total += status->SP_table[idx][w];
-				}
-				ave = total / (w - 1);
-				for ( ; w <= pc->max_level[idx][0]; w++ ) {
-					status->SP_table[idx][w] = min(ave * w, battle_config.max_sp);
-				}
-			}
-		}
-
-		if ( libconfig->setting_lookup_int(jdb, "Weight", &i32) )
-			status->max_weight_base[idx] = i32;
-		else if ( !status->max_weight_base[idx] )
-			status->max_weight_base[idx] = 20000;
-
-		if ( (temp = libconfig->setting_get_member(jdb, "BaseASPD")) ) {
-			int widx = 0;
-			config_setting_t *wpn = NULL;
-			while ( (wpn = libconfig->setting_get_elem(temp, widx++)) ) {
-				int w, wlen = ARRAYLENGTH(wnames);
-				const char *wname = config_setting_name(wpn);
-
-				ARR_FIND(0, wlen, w, strcmp(wnames[w].name, wname) == 0);
-				if ( w != wlen ) {
-					status->aspd_base[idx][wnames[w].id] = libconfig->setting_get_int(wpn);
-				} else {
-					ShowWarning("status_read_job_db: unknown weapon type '%s'!\n", wname);
-				}
-			}
-		}
-
-		if ( (temp = libconfig->setting_get_member(jdb, "HPTable")) ) {
-			int level = 0, ave, total = 0;
-			config_setting_t *hp = NULL;
-			while ( (hp = libconfig->setting_get_elem(temp, level++)) ) {
-				status->HP_table[idx][level] = i32 = min(libconfig->setting_get_int(hp), battle_config.max_hp);
-				total += i32 - status->HP_table[idx][level - 1];
-			}
-			ave = total / (level - 1);
-			for ( ; level <= pc->max_level[idx][0]; level++ ) { /* limit only to possible maximum level of the given class */
-				status->HP_table[idx][level] = min(ave * level, battle_config.max_hp); /* some are still empty? then let's use the average increase */
-			}
-		}
-
-		if ( (temp = libconfig->setting_get_member(jdb, "SPTable")) ) {
-			int level = 0, ave, total = 0;
-			config_setting_t *sp = NULL;
-			while ( (sp = libconfig->setting_get_elem(temp, level++)) ) {
-				status->SP_table[idx][level] = i32 = min(libconfig->setting_get_int(sp), battle_config.max_sp);
-				total += i32 - status->SP_table[idx][level - 1];
-			}
-			ave = total / (level - 1);
-			for ( ; level <= pc->max_level[idx][0]; level++ ) {
-				status->SP_table[idx][level] = min(ave * level, battle_config.max_sp);
-			}
-		}
+		status->read_job_db_sub(idx, name, jdb);
 	}
-	ShowConf("Leitura de '"CL_WHITE"%d"CL_RESET"' classes em '"CL_WHITE"%s"CL_RESET"'.\n", i, config_filename);
 	libconfig->destroy(&job_db_conf);
 }
 
@@ -12290,7 +12292,7 @@ int status_readdb(void)
 		for(j = 0; j < MAX_WEAPON_TYPE; j++)
 			status->atkmods[i][j] = 100;
 
-	// refine_db
+	// refine_db.txt
 	for(i=0;i<ARRAYLENGTH(status->refine_info);i++) {
 		for(j=0;j<MAX_REFINE; j++) {
 			status->refine_info[i].chance[j] = 100;
@@ -12300,9 +12302,10 @@ int status_readdb(void)
 	}
 
 	// read databases
+	//
 	sv_readsqldb(get_database_name(33),             100, -1, status->readdb_job2);
 	sv->readdb(map->db_path, DBPATH"size_fix.txt", ',', MAX_WEAPON_TYPE, MAX_WEAPON_TYPE, ARRAYLENGTH(status->atkmods), status->readdb_sizefix);
-    sv_readsqldb(get_database_name(50),    4+MAX_REFINE,    -1,    status->readdb_refine);
+	sv->readdb(map->db_path, DBPATH"refine_db.txt", ',', 4+MAX_REFINE,      4+MAX_REFINE,      ARRAYLENGTH(status->refine_info), status->readdb_refine);
 	sv->readdb(map->db_path, "sc_config.txt",       ',', 2,                 2,                 SC_MAX,                   status->readdb_scconfig);
 	status->read_job_db();
 
@@ -12551,6 +12554,7 @@ void status_defaults(void) {
 	status->readdb_refine = status_readdb_refine;
 	status->readdb_scconfig = status_readdb_scconfig;
 	status->read_job_db = status_read_job_db;
+	status->read_job_db_sub = status_read_job_db_sub;
 	status->buff_script = buff_script;
 	status->buffspecial_db = buffspecial_db;
 }
