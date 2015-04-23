@@ -243,7 +243,7 @@ void char_set_char_online(int map_id, int char_id, int account_id)
 	character = (struct online_char_data*)idb_ensure(chr->online_char_db, account_id, chr->create_online_char_data);
 	if( character->char_id != -1 && character->server > -1 && character->server != map_id )
 	{
-		ShowNotice("chr->set_char_online: Personagem %d:%d marcado no Servidor de mapas %d, porem o Servidor de mapas %d afirma ter (%d:%d) online!\n",
+		ShowNotice("chr->set_char_online: Personagem %d:%d marcado no servidor de mapas %d, mas o servidor %d afirma ter (%d:%d) online!\n",
 			character->account_id, character->char_id, character->server, map_id, account_id, char_id);
 		mapif->disconnectplayer(chr->server[character->server].fd, character->account_id, character->char_id, 2);
 	}
@@ -372,7 +372,7 @@ void char_set_all_offline(int id)
 	if (id < 0)
 		ShowNotice("Enviando todos os usuarios offline.\n");
 	else
-		ShowNotice("Enviado os usuarios do Servidor de mapas %d offline.\n",id);
+		ShowNotice("Enviado os usuarios do servidor de mapas %d offline.\n",id);
 	chr->online_char_db->foreach(chr->online_char_db,chr->db_kickoffline,id);
 
 	if (id >= 0 || chr->login_fd <= 0 || session[chr->login_fd]->flag.eof)
@@ -3164,7 +3164,7 @@ void char_parse_frommap_set_users(int fd, int id)
 		int cid = RFIFOL(fd,6+i*8+4);
 		struct online_char_data *character = idb_ensure(chr->online_char_db, aid, chr->create_online_char_data);
 		if (character->server > -1 && character->server != id) {
-			ShowNotice("set_users: Personagem (%d:%d) marcado no Servidor de mapas %d, but map server %d claims to have (%d:%d) online!\n",
+			ShowNotice("set_users: Personagem (%d:%d) marcado no servidor de mapas %d, mas o servidor %d afirma ter (%d:%d) online!\n",
 				character->account_id, character->char_id, character->server, id, aid, cid);
 			mapif->disconnectplayer(chr->server[character->server].fd, character->account_id, character->char_id, 2);
 		}
@@ -5630,7 +5630,7 @@ int char_config_read(const char* cfgName)
 			// Format is: id1,quantity1,stackable1,idN,quantityN,stackableN
 			if( i%3 )
 			{
-				ShowWarning("chr->config_read: Nao existem parametros suficientes os itens iniciais, ignorando ultimo item...\n");
+				ShowWarning("chr->config_read: Nao existem parametros suficientes nos itens iniciais, ignorando ultimo item...\n");
 				if( i%3 == 1 )
 					start_items[i-1] = 0;
 				else
