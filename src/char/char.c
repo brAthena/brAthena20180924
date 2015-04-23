@@ -243,7 +243,7 @@ void char_set_char_online(int map_id, int char_id, int account_id)
 	character = (struct online_char_data*)idb_ensure(chr->online_char_db, account_id, chr->create_online_char_data);
 	if( character->char_id != -1 && character->server > -1 && character->server != map_id )
 	{
-		ShowNotice("chr->set_char_online: Personagem %d:%d marcado no Servidor de mapass %d, porem o Servidor de mapass %d afirma ter (%d:%d) online!\n",
+		ShowNotice("chr->set_char_online: Personagem %d:%d marcado no Servidor de mapas %d, porem o Servidor de mapas %d afirma ter (%d:%d) online!\n",
 			character->account_id, character->char_id, character->server, map_id, account_id, char_id);
 		mapif->disconnectplayer(chr->server[character->server].fd, character->account_id, character->char_id, 2);
 	}
@@ -372,7 +372,7 @@ void char_set_all_offline(int id)
 	if (id < 0)
 		ShowNotice("Enviando todos os usuarios offline.\n");
 	else
-		ShowNotice("Enviado os usuarios do Servidor de mapass %d offline.\n",id);
+		ShowNotice("Enviado os usuarios do Servidor de mapas %d offline.\n",id);
 	chr->online_char_db->foreach(chr->online_char_db,chr->db_kickoffline,id);
 
 	if (id >= 0 || chr->login_fd <= 0 || session[chr->login_fd]->flag.eof)
@@ -2969,7 +2969,7 @@ void mapif_server_reset(int id)
 /// Called when the connection to a Map Server is disconnected.
 void mapif_on_disconnect(int id)
 {
-	ShowStatus("Servidor de mapass #%d foi desconectado.\n", id);
+	ShowStatus("Servidor de mapas #%d foi desconectado.\n", id);
 	mapif->server_reset(id);
 }
 
@@ -3023,7 +3023,7 @@ void char_send_maps(int fd, int id, int j)
 	int k,i;
 
 	if (j == 0) {
-		ShowWarning("Servidor de mapas %d falou. Nao ha Servidor de mapas.\n", id);
+		ShowWarning("Servidor de mapas %d falou.\n", id);
 	} else {
 		unsigned char buf[16384];
 		// Transmitting maps information to the other map-servers
@@ -3164,7 +3164,7 @@ void char_parse_frommap_set_users(int fd, int id)
 		int cid = RFIFOL(fd,6+i*8+4);
 		struct online_char_data *character = idb_ensure(chr->online_char_db, aid, chr->create_online_char_data);
 		if (character->server > -1 && character->server != id) {
-			ShowNotice("set_users: Personagem (%d:%d) marcado no Servidor de mapass %d, but map server %d claims to have (%d:%d) online!\n",
+			ShowNotice("set_users: Personagem (%d:%d) marcado no Servidor de mapas %d, but map server %d claims to have (%d:%d) online!\n",
 				character->account_id, character->char_id, character->server, id, aid, cid);
 			mapif->disconnectplayer(chr->server[character->server].fd, character->account_id, character->char_id, 2);
 		}
