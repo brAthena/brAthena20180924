@@ -85,7 +85,7 @@ int inter_storage_fromsql(int account_id, struct storage_data* p)
 	p->storage_amount = i;
 	SQL->FreeResult(inter->sql_handle);
 
-	ShowInfo("storage load complete from DB - id: %d (total: %d)\n", account_id, p->storage_amount);
+	ShowInfo("Carregamento de armazem completo - id: %d (total: %d)\n", account_id, p->storage_amount);
 	return 1;
 }
 
@@ -94,7 +94,7 @@ int inter_storage_guild_storage_tosql(int guild_id, struct guild_storage* p)
 {
 	nullpo_ret(p);
 	chr->memitemdata_to_sql(p->items, MAX_GUILD_STORAGE, guild_id, TABLE_GUILD_STORAGE);
-	ShowInfo ("guild storage save to DB - guild: %d\n", guild_id);
+	ShowInfo ("Armazem do cla salvo - cla: %d\n", guild_id);
 	return 0;
 }
 
@@ -143,7 +143,7 @@ int inter_storage_guild_storage_fromsql(int guild_id, struct guild_storage* p)
 	p->storage_amount = i;
 	SQL->FreeResult(inter->sql_handle);
 
-	ShowInfo("guild storage load complete from DB - id: %d (total: %d)\n", guild_id, p->storage_amount);
+	ShowInfo("Carregamento do armazem do cla completo - id: %d (total: %d)\n", guild_id, p->storage_amount);
 	return 0;
 }
 
@@ -233,7 +233,7 @@ int mapif_parse_SaveGuildStorage(int fd)
 	len = RFIFOW(fd,2);
 
 	if (sizeof(struct guild_storage) != len - 12) {
-		ShowError("inter storage: data size mismatch: %d != %"PRIuS"\n", len - 12, sizeof(struct guild_storage));
+		ShowError("inter storage: tamanho dos dados incompativeis: %d != %"PRIuS"\n", len - 12, sizeof(struct guild_storage));
 	} else {
 		if (SQL_ERROR == SQL->Query(inter->sql_handle, "SELECT `guild_id` FROM `%s` WHERE `guild_id`='%d'", guild_db, guild_id)) {
 			Sql_ShowDebug(inter->sql_handle);
