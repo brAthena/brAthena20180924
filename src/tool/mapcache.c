@@ -138,7 +138,7 @@ void cache_map(char *name, struct map_data *m)
 	// Fill the map header
 	safestrncpy(info.name, name, MAP_NAME_LENGTH);
 	if (strlen(name) > MAP_NAME_LENGTH) // It does not hurt to warn that there are maps with name longer than allowed.
-		ShowWarning("Map name '%s' (length %"PRIuS") is too long. Truncating to '%s' (lentgh %d).\n",
+		ShowWarning("Nome do mapa '%s' (tam %"PRIuS") muito extenso. Truncando '%s' (tam %d).\n",
 		            name, strlen(name), info.name, MAP_NAME_LENGTH);
 	info.xs = MakeShortLE(m->xs);
 	info.ys = MakeShortLE(m->ys);
@@ -166,7 +166,7 @@ int find_map(char *name)
 	fseek(map_cache_fp, sizeof(struct main_header), SEEK_SET);
 
 	for(i = 0; i < header.map_count; i++) {
-		if(fread(&info, sizeof(info), 1, map_cache_fp) != 1) printf("An error as occured in fread while reading map_cache\n");
+		if(fread(&info, sizeof(info), 1, map_cache_fp) != 1) printf("Ocorreu um erro durante a leitura do map_cache\n");
 		if(strcmp(name, info.name) == 0) // Map found
 			return 1;
 		else // Map not found, jump to the beginning of the next map info header
@@ -246,10 +246,10 @@ static CMDLINEARG(rebuild)
  */
 void cmdline_args_init_local(void)
 {
-	CMDLINEARG_DEF2(grf-list, grflist, "Alternative grf list file", CMDLINE_OPT_NORMAL|CMDLINE_OPT_PARAM);
-	CMDLINEARG_DEF2(map-list, maplist, "Alternative map list file", CMDLINE_OPT_NORMAL|CMDLINE_OPT_PARAM);
-	CMDLINEARG_DEF2(map-cache, mapcache, "Alternative map cache file", CMDLINE_OPT_NORMAL|CMDLINE_OPT_PARAM);
-	CMDLINEARG_DEF2(rebuild, rebuild, "Forces a rebuild of the map cache, rather than only adding missing maps", CMDLINE_OPT_NORMAL);
+	CMDLINEARG_DEF2(grf-list, grflist, "Alternativa lista de grf", CMDLINE_OPT_NORMAL|CMDLINE_OPT_PARAM);
+	CMDLINEARG_DEF2(map-list, maplist, "Alternativa lista de mapas", CMDLINE_OPT_NORMAL|CMDLINE_OPT_PARAM);
+	CMDLINEARG_DEF2(map-cache, mapcache, "Alternativo arquivo de cache", CMDLINE_OPT_NORMAL|CMDLINE_OPT_PARAM);
+	CMDLINEARG_DEF2(rebuild, rebuild, "Força uma reconstrução do cache do mapa, em vez de apenas adicionar mapas desaparecidos", CMDLINE_OPT_NORMAL);
 
 }
 
@@ -268,15 +268,15 @@ int do_init(int argc, char** argv)
 	cmdline->exec(argc, argv, CMDLINE_OPT_PREINIT);
 	cmdline->exec(argc, argv, CMDLINE_OPT_NORMAL);
 
-	ShowStatus("Initializing grfio with %s\n", grf_list_file);
+	ShowStatus("inicializando grfio com %s\n", grf_list_file);
 	grfio_init(grf_list_file);
 
 	// Attempt to open the map cache file and force rebuild if not found
-	ShowStatus("Opening map cache: %s\n", map_cache_file);
+	ShowStatus("Abrindo mapcache: %s\n", map_cache_file);
 	if(!rebuild) {
 		map_cache_fp = fopen(map_cache_file, "rb");
 		if(map_cache_fp == NULL) {
-			ShowNotice("Existing map cache not found, forcing rebuild mode\n");
+			ShowNotice("Existente mapcache nao encontrado, forcando o modo rebuild\n");
 			rebuild = 1;
 		} else
 			fclose(map_cache_fp);
@@ -286,15 +286,15 @@ int do_init(int argc, char** argv)
 	else
 		map_cache_fp = fopen(map_cache_file, "r+b");
 	if(map_cache_fp == NULL) {
-		ShowError("Failure when opening map cache file %s\n", map_cache_file);
+		ShowError("Falha ao abrir o mapcache %s\n", map_cache_file);
 		exit(EXIT_FAILURE);
 	}
 
 	// Open the map list
-	ShowStatus("Opening map list: %s\n", map_list_file);
+	ShowStatus("Abrindo a lista de mapas: %s\n", map_list_file);
 	list = fopen(map_list_file, "r");
 	if(list == NULL) {
-		ShowError("Failure when opening maps list file %s\n", map_list_file);
+		ShowError("Falha ao abrir a lista de mapas %s\n", map_list_file);
 		exit(EXIT_FAILURE);
 	}
 
@@ -303,7 +303,7 @@ int do_init(int argc, char** argv)
 		header.file_size = sizeof(struct main_header);
 		header.map_count = 0;
 	} else {
-		if(fread(&header, sizeof(struct main_header), 1, map_cache_fp) != 1){ printf("An error as occured while reading map_cache_fp \n"); }
+		if(fread(&header, sizeof(struct main_header), 1, map_cache_fp) != 1){ printf("Ocorreu um erro em map_cache_fp \n"); }
 		header.file_size = GetULong((unsigned char *)&(header.file_size));
 		header.map_count = GetUShort((unsigned char *)&(header.map_count));
 	}
@@ -323,28 +323,28 @@ int do_init(int argc, char** argv)
 		name[MAP_NAME_LENGTH_EXT-1] = '\0';
 		remove_extension(name);
 		if(find_map(name))
-			ShowInfo("Map '"CL_WHITE"%s"CL_RESET"' already in cache.\n", name);
+			ShowInfo("Mapa '"CL_WHITE"%s"CL_RESET"' ja esta em cache.\n", name);
 		else if(read_map(name, &map)) {
 			cache_map(name, &map);
-			ShowInfo("Map '"CL_WHITE"%s"CL_RESET"' successfully cached.\n", name);
+			ShowInfo("Mapa '"CL_WHITE"%s"CL_RESET"' adicionado com sucesso.\n", name);
 		} else
-			ShowError("Map '"CL_WHITE"%s"CL_RESET"' not found!\n", name);
+			ShowError("Mapa '"CL_WHITE"%s"CL_RESET"' nao encontrado!\n", name);
 
 	}
 
-	ShowStatus("Closing map list: %s\n", map_list_file);
+	ShowStatus("Fechando a lista de mapas: %s\n", map_list_file);
 	fclose(list);
 
 	// Write the main header and close the map cache
-	ShowStatus("Closing map cache: %s\n", map_cache_file);
+	ShowStatus("Fechando o mapcache: %s\n", map_cache_file);
 	fseek(map_cache_fp, 0, SEEK_SET);
 	fwrite(&header, sizeof(struct main_header), 1, map_cache_fp);
 	fclose(map_cache_fp);
 
-	ShowStatus("Finalizing grfio\n");
+	ShowStatus("Finalizando grfio\n");
 	grfio_final();
 
-	ShowInfo("%d maps now in cache\n", header.map_count);
+	ShowInfo("%d mapas em cache\n", header.map_count);
 
 	aFree(grf_list_file);
 	aFree(map_list_file);
