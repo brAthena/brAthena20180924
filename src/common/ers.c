@@ -199,7 +199,7 @@ static void *ers_obj_alloc_entry(ERS *self)
 	void *ret;
 
 	if (instance == NULL) {
-		ShowError("ers_obj_alloc_entry: NULL object, aborting entry freeing.\n");
+		ShowError("ers_obj_alloc_entry: Objeto NULL, abortando liberacao.\n");
 		return NULL;
 	}
 
@@ -239,10 +239,10 @@ static void ers_obj_free_entry(ERS *self, void *entry)
 	struct ers_list *reuse = (struct ers_list *)((unsigned char *)entry - sizeof(struct ers_list));
 
 	if (instance == NULL) {
-		ShowError("ers_obj_free_entry: NULL object, aborting entry freeing.\n");
+		ShowError("ers_obj_free_entry: Objeto NULL, abortando liberacao.\n");
 		return;
 	} else if (entry == NULL) {
-		ShowError("ers_obj_free_entry: NULL entry, nothing to free.\n");
+		ShowError("ers_obj_free_entry: Entrada NULL, nada para liberar.\n");
 		return;
 	}
 
@@ -260,7 +260,7 @@ static size_t ers_obj_entry_size(ERS *self)
 	struct ers_instance_t *instance = (struct ers_instance_t *)self;
 
 	if (instance == NULL) {
-		ShowError("ers_obj_entry_size: NULL object, aborting entry freeing.\n");
+		ShowError("ers_obj_entry_size: Objeto NULL, abortando liberacao.\n");
 		return 0;
 	}
 
@@ -272,13 +272,13 @@ static void ers_obj_destroy(ERS *self)
 	struct ers_instance_t *instance = (struct ers_instance_t *)self;
 
 	if (instance == NULL) {
-		ShowError("ers_obj_destroy: NULL object, aborting entry freeing.\n");
+		ShowError("ers_obj_destroy: Objeto NULL, abortando liberacao.\n");
 		return;
 	}
 
 	if (instance->Count > 0)
 		if (!(instance->Options & ERS_OPT_CLEAR))
-			ShowWarning("Memory leak detected at ERS '%s', %d objects not freed.\n", instance->Name, instance->Count);
+			ShowWarning("Vazamento de memoria detectado em ERS '%s', %d objetos nao foram liberados.\n", instance->Name, instance->Count);
 
 	if (--instance->Cache->ReferenceCount <= 0)
 		ers_free_cache(instance->Cache, true);
@@ -303,7 +303,7 @@ void ers_cache_size(ERS *self, unsigned int new_size) {
 	nullpo_retv(instance);
 
 	if( !(instance->Cache->Options&ERS_OPT_FLEX_CHUNK) ) {
-		ShowWarning("ers_cache_size: '%s' has adjusted its chunk size to '%d', however ERS_OPT_FLEX_CHUNK is missing!\n",instance->Name,new_size);
+		ShowWarning("ers_cache_size: '%s' ajustou o seu tamanho do bloco para '%d', mas ERS_OPT_FLEX_CHUNK esta ausente!\n",instance->Name,new_size);
 	}
 
 	instance->Cache->ChunkSize = new_size;
@@ -361,33 +361,33 @@ void ers_report(void) {
 		if( (instance->Options & ERS_OPT_WAIT) && !instance->Count )
 			continue;
 		instance_c_d++;
-		ShowMessage(CL_BOLD"[ERS Instance "CL_NORMAL""CL_WHITE"%s"CL_NORMAL""CL_BOLD" report]\n"CL_NORMAL, instance->Name);
-		ShowMessage("\tblock size        : %u\n", instance->Cache->ObjectSize);
-		ShowMessage("\tblocks being used : %u\n", instance->Count);
-		ShowMessage("\tpeak blocks       : %u\n", instance->Peak);
-		ShowMessage("\tmemory in use     : %.2f MB\n", instance->Count == 0 ? 0. : (double)((instance->Count * instance->Cache->ObjectSize)/1024)/1024);
+		ShowMessage(CL_BOLD"[ERS Instancia "CL_NORMAL""CL_WHITE"%s"CL_NORMAL""CL_BOLD"]\n"CL_NORMAL, instance->Name);
+		ShowMessage("\ttamanho do bloco        : %u\n", instance->Cache->ObjectSize);
+		ShowMessage("\tblocos em uso : %u\n", instance->Count);
+		ShowMessage("\tpico de blocos       : %u\n", instance->Peak);
+		ShowMessage("\tmemoria em uso     : %.2f MB\n", instance->Count == 0 ? 0. : (double)((instance->Count * instance->Cache->ObjectSize)/1024)/1024);
 	}
 #endif
 
 	for (cache = CacheList; cache; cache = cache->Next) {
 		cache_c++;
-		ShowMessage(CL_BOLD"[ERS Cache of size '"CL_NORMAL""CL_WHITE"%u"CL_NORMAL""CL_BOLD"' report]\n"CL_NORMAL, cache->ObjectSize);
-		ShowMessage("\tinstances          : %u\n", cache->ReferenceCount);
-		ShowMessage("\tblocks in use      : %u/%u\n", cache->UsedObjs, cache->UsedObjs+cache->Free);
-		ShowMessage("\tblocks unused      : %u\n", cache->Free);
-		ShowMessage("\tmemory in use      : %.2f MB\n", cache->UsedObjs == 0 ? 0. : (double)((cache->UsedObjs * cache->ObjectSize)/1024)/1024);
-		ShowMessage("\tmemory allocated   : %.2f MB\n", (cache->Free+cache->UsedObjs) == 0 ? 0. : (double)(((cache->UsedObjs+cache->Free) * cache->ObjectSize)/1024)/1024);
+		ShowMessage(CL_BOLD"[ERS Tamanho do cache '"CL_NORMAL""CL_WHITE"%u"CL_NORMAL""CL_BOLD"']\n"CL_NORMAL, cache->ObjectSize);
+		ShowMessage("\tinstancias          : %u\n", cache->ReferenceCount);
+		ShowMessage("\tblocos em uso      : %u/%u\n", cache->UsedObjs, cache->UsedObjs+cache->Free);
+		ShowMessage("\tblocos nao usados      : %u\n", cache->Free);
+		ShowMessage("\tmemoria em uso      : %.2f MB\n", cache->UsedObjs == 0 ? 0. : (double)((cache->UsedObjs * cache->ObjectSize)/1024)/1024);
+		ShowMessage("\tmemoria alocada   : %.2f MB\n", (cache->Free+cache->UsedObjs) == 0 ? 0. : (double)(((cache->UsedObjs+cache->Free) * cache->ObjectSize)/1024)/1024);
 		blocks_u += cache->UsedObjs;
 		blocks_a += cache->UsedObjs + cache->Free;
 		memory_b += cache->UsedObjs * cache->ObjectSize;
 		memory_t += (cache->UsedObjs+cache->Free) * cache->ObjectSize;
 	}
 #ifdef DEBUG
-	ShowInfo("ers_report: '"CL_WHITE"%u"CL_NORMAL"' instances in use, '"CL_WHITE"%u"CL_NORMAL"' displayed\n",instance_c,instance_c_d);
+	ShowInfo("ers_report: '"CL_WHITE"%u"CL_NORMAL"' instancias em uso, '"CL_WHITE"%u"CL_NORMAL"' exibido\n",instance_c,instance_c_d);
 #endif
-	ShowInfo("ers_report: '"CL_WHITE"%u"CL_NORMAL"' caches in use\n",cache_c);
-	ShowInfo("ers_report: '"CL_WHITE"%u"CL_NORMAL"' blocks in use, consuming '"CL_WHITE"%.2f MB"CL_NORMAL"'\n",blocks_u,(double)((memory_b)/1024)/1024);
-	ShowInfo("ers_report: '"CL_WHITE"%u"CL_NORMAL"' blocks total, consuming '"CL_WHITE"%.2f MB"CL_NORMAL"' \n",blocks_a,(double)((memory_t)/1024)/1024);
+	ShowInfo("ers_report: '"CL_WHITE"%u"CL_NORMAL"' caches em uso\n",cache_c);
+	ShowInfo("ers_report: '"CL_WHITE"%u"CL_NORMAL"' blocos em uso, consumindo '"CL_WHITE"%.2f MB"CL_NORMAL"'\n",blocks_u,(double)((memory_b)/1024)/1024);
+	ShowInfo("ers_report: '"CL_WHITE"%u"CL_NORMAL"' total de blocos, consumindo '"CL_WHITE"%.2f MB"CL_NORMAL"' \n",blocks_a,(double)((memory_t)/1024)/1024);
 }
 
 /**

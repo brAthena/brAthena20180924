@@ -38,8 +38,8 @@ void assert_report(const char *file, int line, const char *func, const char *tar
 		func = "unknown";
 
 	ShowError("--- %s --------------------------------------------\n", title);
-	ShowError("%s:%d: '%s' in function `%s'\n", file, line, targetname, func);
-	ShowError("--- end %s ----------------------------------------\n", title);
+	ShowError("%s:%d: '%s' na funcao `%s'\n", file, line, targetname, func);
+	ShowError("--- fim %s ----------------------------------------\n", title);
 }
 
 /**

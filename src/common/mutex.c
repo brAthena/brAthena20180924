@@ -63,7 +63,7 @@ ramutex *ramutex_create(void) {
 
 	m = (struct ramutex*)aMalloc( sizeof(struct ramutex) );
 	if (m == NULL) {
-		ShowFatalError("ramutex_create: OOM while allocating %"PRIuS" bytes.\n", sizeof(struct ramutex));
+		ShowFatalError("ramutex_create: OOM enquanto aloca %"PRIuS" bytes.\n", sizeof(struct ramutex));
 		return NULL;
 	}
 
@@ -137,7 +137,7 @@ racond *racond_create(void) {
 
 	c = (struct racond*)aMalloc( sizeof(struct racond) );
 	if (c == NULL) {
-		ShowFatalError("racond_create: OOM while allocating %"PRIuS" bytes\n", sizeof(struct racond));
+		ShowFatalError("racond_create: OOM enquanto aloca %"PRIuS" bytes\n", sizeof(struct racond));
 		return NULL;
 	}
 

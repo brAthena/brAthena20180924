@@ -595,7 +595,7 @@ void sysinfo_osversion_retrieve(void) {
 			else
 				StrBuf->AppendStr(&buf, " Server");
 		} else {
-			StrBuf->Printf(&buf, "Unknown Windows version %d.%d", osvi.dwMajorVersion, osvi.dwMinorVersion);
+			StrBuf->Printf(&buf, "Versao do windows desconhecida %d.%d", osvi.dwMajorVersion, osvi.dwMinorVersion);
 		}
 	}
 
@@ -667,13 +667,13 @@ void sysinfo_cpu_retrieve(void) {
 	if (si.wProcessorArchitecture == PROCESSOR_ARCHITECTURE_INTEL
 	 || si.wProcessorArchitecture == PROCESSOR_ARCHITECTURE_AMD64
 	) {
-		StrBuf->Printf(&buf, "%s CPU, Family %d, Model %d, Stepping %d",
+		StrBuf->Printf(&buf, "%s CPU, Familia %d, Modelo %d, Stepping %d",
 		               si.wProcessorArchitecture == PROCESSOR_ARCHITECTURE_INTEL ? "x86" : "x86_64",
 		               si.wProcessorLevel,
 		               (si.wProcessorRevision&0xff00)>>8,
 		               (si.wProcessorRevision&0xff));
 	} else {
-		StrBuf->AppendStr(&buf, "Unknown");
+		StrBuf->AppendStr(&buf, "Desconhecido");
 	}
 
 	sysinfo->p->cpu = aStrdup(StrBuf->Value(&buf));
@@ -707,7 +707,7 @@ void sysinfo_arch_retrieve(void) {
 	else if (si.wProcessorArchitecture == PROCESSOR_ARCHITECTURE_IA64) // Itanium
 		sysinfo->p->arch = aStrdup("IA-64");
 	else
-		sysinfo->p->arch = aStrdup("Unknown");
+		sysinfo->p->arch = aStrdup("Desconhecido");
 }
 
 /**
@@ -730,7 +730,7 @@ void sysinfo_vcsrevision_src_retrieve(void) {
 		return;
 	}
 	sysinfo->p->vcstype = VCSTYPE_NONE;
-	sysinfo->p->vcsrevision_src = aStrdup("Unknown");
+	sysinfo->p->vcsrevision_src = aStrdup("Desconhecido");
 }
 #endif // WIN32
 
@@ -752,7 +752,7 @@ void sysinfo_vcstype_name_retrieve(void) {
 			sysinfo->p->vcstype_name = aStrdup("SVN");
 			break;
 		default:
-			sysinfo->p->vcstype_name = aStrdup("Exported");
+			sysinfo->p->vcstype_name = aStrdup("Exportado");
 			break;
 	}
 }
@@ -964,7 +964,7 @@ void sysinfo_vcsrevision_reload(void) {
 	if (sysinfo_svn_get_revision(&sysinfo->p->vcsrevision_scripts)) {
 		return;
 	}
-	sysinfo->p->vcsrevision_scripts = aStrdup("Unknown");
+	sysinfo->p->vcsrevision_scripts = aStrdup("Desconhecido");
 }
 
 /**

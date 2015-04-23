@@ -91,7 +91,7 @@ void rathread_final(void) {
 	//
 	for(i = 1; i < RA_THREADS_MAX; i++){
 		if(l_threads[i].proc != NULL){
-			ShowWarning("rAthread_final: unterminated Thread (tid %u entryPoint %p) - forcing to terminate (kill)\n", i, l_threads[i].proc);
+			ShowWarning("thread_final: thread interminado (tid %u entryPoint %p) - forcando o encerramento (finalizando)\n", i, l_threads[i].proc);
 			rathread_destroy(&l_threads[i]);
 		}
 	}
@@ -186,7 +186,7 @@ rAthread *rathread_createEx(rAthreadProc entryPoint, void *param, size_t szStack
 	}
 
 	if(handle == NULL){
-		ShowError("rAthread: cannot create new thread (entryPoint: %p) - no free thread slot found!", entryPoint);
+		ShowError("thread: Nao foi possivel criar um novo thread (entryPoint: %p) - sem espaco livre!", entryPoint);
 		return NULL;
 	}
 

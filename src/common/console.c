@@ -151,7 +151,7 @@ CPCMD(help) {
  */
 CPCMD_C(malloc_usage,server) {
 	unsigned int val = (unsigned int)iMalloc->usage();
-	ShowInfo("malloc_usage: %.2f MB\n",(double)(val)/1024);
+	ShowInfo("malloc_uso: %.2f MB\n",(double)(val)/1024);
 }
 
 /**
@@ -160,7 +160,7 @@ CPCMD_C(malloc_usage,server) {
  **/
 CPCMD_C(skip,update) {
 	if( !line ) {
-		ShowDebug("usage example: sql update skip 2013-02-14--16-15.sql\n");
+		ShowDebug("exemplo de uso: sql update skip 2013-02-14--16-15.sql\n");
 		return;
 	}
 	Sql_brAthenaUpdateSkip(console->input->SQL, line);
@@ -345,7 +345,7 @@ void console_parse_sub(char *line) {
 	}
 
 	if( i == console->input->cmd_list_count ) {
-		ShowError("'"CL_WHITE"%s"CL_RESET"' is not a known command, type '"CL_WHITE"help"CL_RESET"' to list all commands\n",line);
+		ShowError("'"CL_WHITE"%s"CL_RESET"' nao e um comando conhecido, digite '"CL_WHITE"help"CL_RESET"' para listar todos os comandos\n",line);
 		return;
 	}
 
@@ -372,12 +372,12 @@ void console_parse_sub(char *line) {
 						ShowInfo("- '"CL_WHITE"%s"CL_RESET"' subs\n",sublist);
 						console->input->parse_list_subs(cmd,2);
 					} else {
-						ShowError("'"CL_WHITE"%s"CL_RESET"' doesn't possess any subcommands\n",sublist);
+						ShowError("'"CL_WHITE"%s"CL_RESET"' nao possui qualquer subcomando\n",sublist);
 					}
 					return;
 				}
-				ShowError("'"CL_WHITE"%s"CL_RESET"' is not a known subcommand of '"CL_WHITE"%s"CL_RESET"'\n",tok,cmd->cmd);
-				ShowError("type '"CL_WHITE"%s help"CL_RESET"' to list its subcommands\n",sublist);
+				ShowError("'"CL_WHITE"%s"CL_RESET"' nao e um subcomando conhecido de '"CL_WHITE"%s"CL_RESET"'\n",tok,cmd->cmd);
+				ShowError("digite '"CL_WHITE"%s help"CL_RESET"' para listar seus subcomandos\n",sublist);
 				return;
 			}
 			if( cmd->u.next[i]->next_count == 0 && cmd->u.next[i]->u.func ) {
@@ -392,7 +392,7 @@ void console_parse_sub(char *line) {
 				cmd = cmd->u.next[i];
 			len += snprintf(sublist + len,(CP_CMD_LENGTH * 5) - len,":%s", cmd->cmd);
 		}
-		ShowError("Is only a category, type '"CL_WHITE"%s help"CL_RESET"' to list its subcommands\n",sublist);
+		ShowError("E apenas uma categoria, digite '"CL_WHITE"%s help"CL_RESET"' para listar seus subcomandos\n",sublist);
 	}
 }
 void console_parse(char* line) {
@@ -468,7 +468,7 @@ void console_parse_init(void) {
 	console->input->ptcond = racond_create();
 
 	if( (console->input->pthread = rathread_create(console->input->pthread_main, NULL)) == NULL ){
-		ShowFatalError("console_parse_init: failed to spawn console_parse thread.\n");
+		ShowFatalError("console_parse_init: nao foi possivel gerar o console_parse.\n");
 		exit(EXIT_FAILURE);
 	}
 
