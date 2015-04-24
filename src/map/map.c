@@ -3892,6 +3892,7 @@ char *get_database_name(int database_id)
 		case 50: db_name = "refine_db"; break;
 		case 51: db_name = "statpoint_db"; break;
 		case 52: db_name = "item_db"; break;
+		case 53: db_name = "size_fix_db"; break;
 	}
 
 	return db_name;
