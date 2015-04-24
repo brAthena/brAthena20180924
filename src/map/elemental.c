@@ -337,7 +337,7 @@ int elemental_clean_single_effect(struct elemental_data *ed, uint16 skill_id) {
 				if( bl ) status_change_end(bl,type,INVALID_TIMER);
 				break;
 			default:
-				ShowWarning("Invalid SC=%d in elemental_clean_single_effect\n",type);
+				ShowWarning("SC invalido=%d em elemental_clean_single_effect\n",type);
 				break;
 		}
 	}

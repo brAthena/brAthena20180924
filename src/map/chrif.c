@@ -216,9 +216,9 @@ void chrif_setpasswd(char *pwd) {
 // security check, prints warning if using default password
 void chrif_checkdefaultlogin(void) {
 	if (strcmp(chrif->userid, "s1")==0 && strcmp(chrif->passwd, "p1")==0) {
-		ShowWarning("Using the default user/password s1/p1 is NOT RECOMMENDED.\n");
-		ShowNotice("Please edit your 'login' table to create a proper inter-server user/password (gender 'S')\n");
-		ShowNotice("and then edit your user/password in conf/map-server.conf (or conf/import/map_conf.txt)\n");
+		ShowWarning("Utilizar o usuario/senha padrao 's1/p1' nao e recomendado.\n");
+		ShowNotice("Por favor edite sua tabela 'login' para criar usuario/senha corretos para o inter-server (sexo 'S')\n");
+		ShowNotice("Apos isso, modifique usuario/senha utilizados no conf/map-server.conf (ou conf/import/map_conf.txt)\n");
 	}
 }
 
@@ -227,13 +227,13 @@ bool chrif_setip(const char* ip) {
 	char ip_str[16];
 
 	if ( !( chrif->ip = host2ip(ip) ) ) {
-		ShowWarning("Failed to Resolve Char Server Address! (%s)\n", ip);
+		ShowWarning("Falha ao tentar resolver o IP do servidor de personagem! (%s)\n", ip);
 		return false;
 	}
 
 	safestrncpy(chrif->ip_str, ip, sizeof(chrif->ip_str));
 
-	ShowInfo("Char Server IP Address : '"CL_WHITE"%s"CL_RESET"' -> '"CL_WHITE"%s"CL_RESET"'.\n", ip, ip2str(chrif->ip, ip_str));
+	ShowInfo("Endereco do servidor de personagem : '"CL_WHITE"%s"CL_RESET"' -> '"CL_WHITE"%s"CL_RESET"'.\n", ip, ip2str(chrif->ip, ip_str));
 
 	return true;
 }
@@ -263,7 +263,7 @@ bool chrif_save(struct map_session_data *sd, int flag) {
 		if ( chrif->isconnected() )
 			chrif->save_scdata(sd);
 		if ( !chrif->auth_logout(sd,flag == 1 ? ST_LOGOUT : ST_MAPCHANGE) )
-			ShowError("chrif_save: Failed to set up player %d:%d for proper quitting!\n", sd->status.account_id, sd->status.char_id);
+			ShowError("chrif_save: Falha ao definir jogador %d:%d para propriedade de logout!\n", sd->status.account_id, sd->status.char_id);
 	}
 
 	chrif_check(false); //Character is saved on reconnect.
@@ -304,7 +304,7 @@ bool chrif_save(struct map_session_data *sd, int flag) {
 
 // connects to char-server (plaintext)
 void chrif_connect(int fd) {
-	ShowStatus("Logging in to char server...\n");
+	ShowStatus("Logando no servidor de personagem...\n");
 	WFIFOHEAD(fd,60);
 	WFIFOW(fd,0) = 0x2af8;
 	memcpy(WFIFOP(fd,2), chrif->userid, NAME_LENGTH);
@@ -319,7 +319,7 @@ void chrif_connect(int fd) {
 void chrif_sendmap(int fd) {
 	int i;
 
-	ShowStatus("Sending maps to char server...\n");
+	ShowStatus("Enviando mapas para o servidor de personagem...\n");
 
 	// Sending normal maps, not instances
 	WFIFOHEAD(fd, 4 + instance->start_id * 4);
@@ -341,7 +341,7 @@ void chrif_recvmap(int fd) {
 	}
 
 	if (battle_config.etc_log)
-		ShowStatus("Received maps from %d.%d.%d.%d:%d (%d maps)\n", CONVIP(ip), port, j);
+		ShowStatus("Recebendo mapas de %d.%d.%d.%d:%d (%d mapas)\n", CONVIP(ip), port, j);
 
 	chrif->other_mapserver_count++;
 }
@@ -358,7 +358,7 @@ void chrif_removemap(int fd) {
 	chrif->other_mapserver_count--;
 
 	if(battle_config.etc_log)
-		ShowStatus("remove map of server %d.%d.%d.%d:%d (%d maps)\n", CONVIP(ip), port, j);
+		ShowStatus("Removendo mapas do servidor %d.%d.%d.%d:%d (%d mapas)\n", CONVIP(ip), port, j);
 }
 
 // received after a character has been "final saved" on the char-server
@@ -406,7 +406,7 @@ bool chrif_changemapserverack(int account_id, int login_id1, int login_id2, int 
 		return false;
 
 	if ( !login_id1 ) {
-		ShowError("chrif_changemapserverack: map server change failed.\n");
+		ShowError("chrif_changemapserverack: Falha na mudanca do servidor de mapas.\n");
 		clif->authfail_fd(node->fd, 0);
 	} else
 		clif->changemapserver(node->sd, map_index, x, y, ntohl(ip), ntohs(port));
@@ -424,20 +424,20 @@ void chrif_connectack(int fd) {
 	static bool char_init_done = false;
 
 	if (RFIFOB(fd,2)) {
-		ShowFatalError("Connection to char-server failed %d.\n", RFIFOB(fd,2));
+		ShowFatalError("Conexao com o servidor de personagem falhou %d.\n", RFIFOB(fd,2));
 		exit(EXIT_FAILURE);
 	}
 
-	ShowStatus("Successfully logged on to Char Server (Connection: '"CL_WHITE"%d"CL_RESET"').\n",fd);
+	ShowStatus("Conectado com sucesso ao servidor de personagem (Conexao: '"CL_WHITE"%d"CL_RESET"').\n",fd);
 	chrif->state = 1;
 	chrif->connected = 1;
 
 	chrif->sendmap(fd);
 
-	ShowNpc("Event '"CL_WHITE"OnInterIfInit"CL_RESET"' executed with '"CL_WHITE"%d"CL_RESET"' NPCs.\n", npc->event_doall("OnInterIfInit"));
+	ShowNpc("Evento '"CL_WHITE"OnInterIfInit"CL_RESET"' executado em '"CL_WHITE"%d"CL_RESET"' NPCs.\n", npc->event_doall("OnInterIfInit"));
 	if( !char_init_done ) {
 		char_init_done = true;
-		ShowNpc("Event '"CL_WHITE"OnInterIfInitOnce"CL_RESET"' executed with '"CL_WHITE"%d"CL_RESET"' NPCs.\n", npc->event_doall("OnInterIfInitOnce"));
+		ShowNpc("Evento '"CL_WHITE"OnInterIfInitOnce"CL_RESET"' executado em '"CL_WHITE"%d"CL_RESET"' NPCs.\n", npc->event_doall("OnInterIfInitOnce"));
 		guild->castle_map_init();
 	}
 
@@ -482,7 +482,7 @@ int chrif_reconnect(DBKey key, DBData *data, va_list ap) {
 /// Called when all the connection steps are completed.
 void chrif_on_ready(void) {
 	static bool once = false;
-	ShowStatus("Map Server is now online.\n");
+	ShowStatus("Servidor de mapas agora esta online.\n");
 
 	chrif->state = 2;
 
@@ -515,7 +515,7 @@ void chrif_on_ready(void) {
 void chrif_sendmapack(int fd)
 {
 	if (RFIFOB(fd,2)) {
-		ShowFatalError("chrif : send map list to char server failed %d\n", RFIFOB(fd,2));
+		ShowFatalError("chrif : falha ao enviar a lista de mapas para o servidor de personagem %d\n", RFIFOB(fd,2));
 		exit(EXIT_FAILURE);
 	}
 
@@ -578,7 +578,7 @@ void chrif_authok(int fd) {
 
 	//Check if both servers agree on the struct's size
 	if( RFIFOW(fd,2) - 25 != sizeof(struct mmo_charstatus) ) {
-		ShowError("chrif_authok: Data size mismatch! %d != %"PRIuS"\n", RFIFOW(fd,2) - 25, sizeof(struct mmo_charstatus));
+		ShowError("chrif_authok: Tamanho de dados incompativel! %d != %"PRIuS"\n", RFIFOW(fd,2) - 25, sizeof(struct mmo_charstatus));
 		return;
 	}
 
@@ -663,7 +663,7 @@ int auth_db_cleanup_sub(DBKey key, DBData *data, va_list ap) {
 	struct auth_node *node = DB->data2ptr(data);
 
 	if(DIFF_TICK(timer->gettick(),node->node_created)>60000) {
-		const char* states[] = { "Login", "Logout", "Map change" };
+		const char* states[] = { "Logou", "Deslogou", "Mudanca de mapa" };
 		switch (node->state) {
 			case ST_LOGOUT:
 				//Re-save attempt (->sd should never be null here).
@@ -672,7 +672,7 @@ int auth_db_cleanup_sub(DBKey key, DBData *data, va_list ap) {
 				break;
 			default:
 				//Clear data. any connected players should have timed out by now.
-				ShowInfo("auth_db: Node (state %s) timed out for %d:%d\n", states[node->state], node->account_id, node->char_id);
+				ShowInfo("auth_db: Node (estado %s) tempo esgotado para %d:%d\n", states[node->state], node->account_id, node->char_id);
 				chrif->char_offline_nsd(node->account_id, node->char_id);
 				chrif->auth_delete(node->account_id, node->char_id, node->state);
 				break;
@@ -735,7 +735,7 @@ bool chrif_searchcharid(int char_id) {
 bool chrif_changeemail(int id, const char *actual_email, const char *new_email) {
 
 	if (battle_config.etc_log)
-		ShowInfo("chrif_changeemail: account: %d, actual_email: '%s', new_email: '%s'.\n", id, actual_email, new_email);
+		ShowInfo("chrif_changeemail: conta: %d, email_atual: '%s', novo_email: '%s'.\n", id, actual_email, new_email);
 
 	chrif_check(false);
 
@@ -817,7 +817,7 @@ bool chrif_char_ask_name_answer(int acc, const char* player_name, uint16 type, u
 	sd = map->id2sd(acc);
 
 	if( acc < 0 || sd == NULL ) {
-		ShowError("chrif_char_ask_name_answer failed - player not online.\n");
+		ShowError("chrif_char_ask_name_answer falhou - jogador offline.\n");
 		return false;
 	}
 
@@ -1073,7 +1073,7 @@ void chrif_recvfamelist(int fd) {
 	}
 	total += num;
 
-	ShowInfo("Received Fame List of '"CL_WHITE"%d"CL_RESET"' characters.\n", total);
+	ShowInfo("Recebida a lista de fama de '"CL_WHITE"%d"CL_RESET"' personagens.\n", total);
 }
 
 /// fame ranking update confirmation
@@ -1162,12 +1162,12 @@ bool chrif_load_scdata(int fd) {
 	sd = map->id2sd(aid);
 
 	if ( !sd ) {
-		ShowError("chrif_load_scdata: Player of AID %d not found!\n", aid);
+		ShowError("chrif_load_scdata: Jogador de ID %d nao encontrado!\n", aid);
 		return false;
 	}
 
 	if ( sd->status.char_id != cid ) {
-		ShowError("chrif_load_scdata: Receiving data for account %d, char id does not matches (%d != %d)!\n", aid, sd->status.char_id, cid);
+		ShowError("chrif_load_scdata: Dados recebidos da conta %d, char id incompativel (%d != %d)!\n", aid, sd->status.char_id, cid);
 		return false;
 	}
 
@@ -1260,7 +1260,7 @@ bool chrif_char_online(struct map_session_data *sd) {
 /// Called when the connection to Char Server is disconnected.
 void chrif_on_disconnect(void) {
 	if( chrif->connected != 1 )
-		ShowWarning("Connection to Char Server lost.\n\n");
+		ShowWarning("Conexao com o servidor de personagem perdida.\n\n");
 	chrif->connected = 0;
 
 	chrif->other_mapserver_count = 0; //Reset counter. We receive ALL maps from all map-servers on reconnect.
@@ -1329,7 +1329,7 @@ int chrif_parse(int fd) {
 
 	// only process data from the char-server
 	if ( fd != chrif->fd ) {
-		ShowDebug("chrif_parse: Disconnecting invalid session #%d (is not the char-server)\n", fd);
+		ShowDebug("chrif_parse: Desconectando sessao invalida #%d\n", fd);
 		do_close(fd);
 		return 0;
 	}
@@ -1359,7 +1359,7 @@ int chrif_parse(int fd) {
 			if (r == 1) continue; // Treated in intif
 			if (r == 2) return 0; // Didn't have enough data (len==-1)
 
-			ShowWarning("chrif_parse: session #%d, intif->parse failed (unrecognized command 0x%.4x).\n", fd, cmd);
+			ShowWarning("chrif_parse: sessao #%d, intif->parse falhou (comando nao reconhecido 0x%.4x).\n", fd, cmd);
 			set_eof(fd);
 			return 0;
 		}
@@ -1400,7 +1400,7 @@ int chrif_parse(int fd) {
 			case 0x2b25: chrif->deadopt(RFIFOL(fd,2), RFIFOL(fd,6), RFIFOL(fd,10)); break;
 			case 0x2b27: chrif->authfail(fd); break;
 			default:
-				ShowError("chrif_parse : unknown packet (session #%d): 0x%x. Disconnecting.\n", fd, cmd);
+				ShowError("chrif_parse : Pacote desconhecido (sessao #%d): 0x%x. Desconectando.\n", fd, cmd);
 				set_eof(fd);
 				return 0;
 		}
@@ -1460,7 +1460,7 @@ int check_connect_char_server(int tid, int64 tick, int id, intptr_t data) {
 	static int displayed = 0;
 	if ( chrif->fd <= 0 || session[chrif->fd] == NULL ) {
 		if ( !displayed ) {
-			ShowStatus("Attempting to connect to Char Server. Please wait.\n");
+			ShowStatus("Tentando se conectar ao servidor de personagem. Por favor, aguarde.\n");
 			displayed = 1;
 		}
 
@@ -1544,7 +1544,7 @@ void chrif_save_scdata_single(int account_id, int char_id, short type, struct st
 void chrif_del_scdata_single(int account_id, int char_id, short type)
 {
 	if( !chrif->isconnected() ) {
-		ShowError("MAYDAY! failed to delete status %d from CID:%d/AID:%d\n",type,char_id,account_id);
+		ShowError("Falha ao deletar estado %d de CID:%d/AID:%d\n",type,char_id,account_id);
 		return;
 	}
 

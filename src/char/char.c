@@ -5856,7 +5856,7 @@ int do_init(int argc, char **argv) {
 		if (sockt->naddr_ > 1)
 			ShowStatus("Multiplas interfaces detectadas..  usando %s como nosso endereco de IP.\n", ip_str);
 		else
-			ShowStatus("Padronizando %s como endereco de IP\n", ip_str);
+			ShowStatus("Definindo %s como endereco de IP\n", ip_str);
 		if (!login_ip) {
 			safestrncpy(login_ip_str, ip_str, sizeof(login_ip_str));
 			login_ip = str2ip(login_ip_str);
