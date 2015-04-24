@@ -167,7 +167,7 @@ int itemdb_chain_item(unsigned short chain_id, int *rate) {
 	struct item_chain_entry *entry;
 	
 	if( chain_id >= itemdb->chain_count ) {
-		ShowError("itemdb_chain_item: unknown chain id %d\n", chain_id);
+		ShowError("itemdb_chain_item: chain id %d desconhecida\n", chain_id);
 		return UNKNOWN_ITEM_ID;
 	}
 	
@@ -282,7 +282,7 @@ int itemdb_searchrandomid(struct item_group *group) {
 	if (group->qty)
 		return group->nameid[rnd()%group->qty];
 	
-	ShowError("itemdb_searchrandomid: No item entries for group id %d\n", group->id);
+	ShowError("itemdb_searchrandomid: Sem entradas de itens para o grupo %d\n", group->id);
 	return UNKNOWN_ITEM_ID;
 }
 bool itemdb_in_group(struct item_group *group, int nameid) {
@@ -315,17 +315,17 @@ const char* itemdb_typename(int type)
 {
 	switch(type)
 	{
-		case IT_HEALING:        return "Potion/Food";
-		case IT_USABLE:         return "Usable";
+		case IT_HEALING:        return "Poção/Comida";
+		case IT_USABLE:         return "Usável";
 		case IT_ETC:            return "Etc.";
-		case IT_WEAPON:         return "Weapon";
-		case IT_ARMOR:          return "Armor";
-		case IT_CARD:           return "Card";
-		case IT_PETEGG:         return "Pet Egg";
-		case IT_PETARMOR:       return "Pet Accessory";
-		case IT_AMMO:           return "Arrow/Ammunition";
-		case IT_DELAYCONSUME:   return "Delay-Consume Usable";
-		case IT_CASH:           return "Cash Usable";
+		case IT_WEAPON:         return "Arma";
+		case IT_ARMOR:          return "Armadura";
+		case IT_CARD:           return "Carta";
+		case IT_PETEGG:         return "Ovo de Bichinho";
+		case IT_PETARMOR:       return "Acessório de Bicinho";
+		case IT_AMMO:           return "Flecha/Munição";
+		case IT_DELAYCONSUME:   return "[Delay] Item Consumível";
+		case IT_CASH:           return "Cash Usável";
 	}
 	return "Unknown Type";
 }
@@ -464,7 +464,7 @@ struct item_data* itemdb_search(int nameid)
 
 	if( id == NULL )
 	{
-		ShowWarning("itemdb_search: Item ID %d does not exists in the item_db. Using dummy data.\n", nameid);
+		ShowWarning("itemdb_search: Item ID %d nao existe na database. Usando dados falsos.\n", nameid);
 		id = &itemdb->dummy;
 		itemdb->dummy.nameid = nameid;
 	}
@@ -648,7 +648,7 @@ void itemdb_read_groups(void) {
 		const char *name = config_setting_name(itg);
 
 		if( !itemdb->name2id(name) ) {
-			ShowWarning("itemdb_read_groups: unknown group item '%s', skipping..\n",name);
+			ShowWarning("itemdb_read_groups: grupo de item desconhecido '%s', pulando..\n",name);
 			config_setting_remove(item_group_conf.root, name);
 			--i;
 			continue;
@@ -689,9 +689,9 @@ void itemdb_read_groups(void) {
 			
 			if( itname[0] == 'I' && itname[1] == 'D' && strlen(itname) < 8 ) {
 				if( !( data = itemdb->exists(atoi(itname+2)) ) )
-					ShowWarning("itemdb_read_groups: unknown item ID '%d' in group '%s'!\n",atoi(itname+2),config_setting_name(itg));
+					ShowWarning("itemdb_read_groups: item id desconhecido '%d' no grupo '%s'!\n",atoi(itname+2),config_setting_name(itg));
 			} else if( !( data = itemdb->name2id(itname) ) )
-				ShowWarning("itemdb_read_groups: unknown item '%s' in group '%s'!\n",itname,config_setting_name(itg));
+				ShowWarning("itemdb_read_groups: item desconhecido '%s' no grupo '%s'!\n",itname,config_setting_name(itg));
 			
 			itemdb->groups[count].nameid[ecount] = data ? data->nameid : 0;
 			if( repeat > 1 ) {
@@ -710,7 +710,7 @@ void itemdb_read_groups(void) {
 	libconfig->destroy(&item_group_conf);
 	aFree(gsize);
 	
-	ShowConf("Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n", count, config_filename);
+	ShowConf("Leitura de '"CL_WHITE"%d"CL_RESET"' entradas em '"CL_WHITE"%s"CL_RESET"'.\n", count, config_filename);
 }
 /* [Ind/Hercules] - HCache for Packages */
 void itemdb_write_cached_packages(const char *config_filename) {
@@ -930,7 +930,7 @@ void itemdb_read_packages(void) {
 	}
 	
 	if (libconfig->read_file(&item_packages_conf, config_filename)) {
-		ShowError("can't read %s\n", config_filename);
+		ShowError("Nao foi possivel abrir %s\n", config_filename);
 		return;
 	}
 	
@@ -1043,7 +1043,7 @@ void itemdb_read_packages(void) {
 			CREATE(itemdb->packages[cnt].random_groups, struct item_package_rand_group, itemdb->packages[cnt].random_qty);
 			for( c = 0; c < itemdb->packages[cnt].random_qty; c++ ) {
 				if( !rgroups[ i - 1 ][c] )
-					ShowError("itemdb_read_packages: package '%s' missing 'Random' field %d! there must not be gaps!\n",config_setting_name(itg),c+1);
+					ShowError("itemdb_read_packages: pacote '%s' faltando campo 'Random' %d!\n",config_setting_name(itg),c+1);
 				else
 					CREATE(itemdb->packages[cnt].random_groups[c].random_list, struct item_package_rand_entry, rgroups[ i - 1 ][c]);
 				itemdb->packages[cnt].random_groups[c].random_qty = 0;
@@ -1187,7 +1187,7 @@ void itemdb_read_chains(void) {
 	int i = 0, count = 0;
 	
 	if (libconfig->read_file(&item_chain_conf, config_filename)) {
-		ShowError("can't read %s\n", config_filename);
+		ShowError("Nao foi possivel abrir %s\n", config_filename);
 		return;
 	}
 
@@ -1213,9 +1213,9 @@ void itemdb_read_chains(void) {
 			const char *itname = config_setting_name(entry);
 			if( itname[0] == 'I' && itname[1] == 'D' && strlen(itname) < 8 ) {
 				if( !( data = itemdb->exists(atoi(itname+2)) ) )
-					ShowWarning("itemdb_read_chains: unknown item ID '%d' in chain '%s'!\n",atoi(itname+2),name);
+					ShowWarning("itemdb_read_chains: item id inexistente '%d' na chain '%s'!\n",atoi(itname+2),name);
 			} else if( !( data = itemdb->name2id(itname) ) )
-				ShowWarning("itemdb_read_chains: unknown item '%s' in chain '%s'!\n",itname,name);
+				ShowWarning("itemdb_read_chains: item inexistente '%s' na chain '%s'!\n",itname,name);
 			
 			if( prev )
 				prev->next = &itemdb->chains[count].items[c - 1];
@@ -1238,11 +1238,11 @@ void itemdb_read_chains(void) {
 	libconfig->destroy(&item_chain_conf);
 	
 	if( !script->get_constant("ITMCHAIN_ORE",&i) )
-		ShowWarning("itemdb_read_chains: failed to find 'ITMCHAIN_ORE' chain to link to cache!\n");
+		ShowWarning("itemdb_read_chains: falha em encontrar 'ITMCHAIN_ORE'\n");
 	else
 		itemdb->chain_cache[ECC_ORE] = i;
 	
-	ShowConf("Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n", count, config_filename);
+	ShowConf("Leitura de '"CL_WHITE"%d"CL_RESET"' entradas em '"CL_WHITE"%s"CL_RESET"'.\n", count, config_filename);
 }
 
 /**
@@ -1371,7 +1371,7 @@ int itemdb_validate_entry(struct item_data *entry, int n, const char *source) {
 	struct item_data *item;
 
 	if( entry->nameid <= 0 || entry->nameid >= MAX_ITEMDB ) {
-		ShowWarning("itemdb_validate_entry: Invalid item ID %d in entry %d of '%s', allowed values 0 < ID < %d (MAX_ITEMDB), skipping.\n",
+		ShowWarning("itemdb_validate_entry: Item invalido %d na entrada %d de '%s', valores permitidos 0 < ID < %d (MAX_ITEMDB), pulando.\n",
 				entry->nameid, n, source, MAX_ITEMDB);
 		if (entry->script) {
 			script->free_code(entry->script);
@@ -1392,7 +1392,7 @@ int itemdb_validate_entry(struct item_data *entry, int n, const char *source) {
 	 || (entry->type > IT_DELAYCONSUME && entry->type < IT_CASH ) || entry->type >= IT_MAX
 	) {
 		// catch invalid item types
-		ShowWarning("itemdb_validate_entry: Invalid item type %d for item %d in '%s'. IT_ETC will be used.\n",
+		ShowWarning("itemdb_validate_entry: Tipo de item invalido %d para o item %d em '%s'. IT_ETC sera usado.\n",
 		            entry->type, entry->nameid, source);
 		entry->type = IT_ETC;
 	} else if( entry->type == IT_DELAYCONSUME ) {
@@ -1411,31 +1411,31 @@ int itemdb_validate_entry(struct item_data *entry, int n, const char *source) {
 		entry->value_sell = entry->value_buy / 2;
 	}
 	if( entry->value_buy/124. < entry->value_sell/75. ) {
-		ShowWarning("itemdb_validate_entry: Buying/Selling [%d/%d] price of item %d (%s) in '%s' "
-		            "allows Zeny making exploit through buying/selling at discounted/overcharged prices!\n",
+		ShowWarning("itemdb_validate_entry: Compra/Venda [%d/%d] valor do item %d (%s) em '%s', "
+		            "isso gera um exploit com a habilidade super-faturar!\n",
 		            entry->value_buy, entry->value_sell, entry->nameid, entry->jname, source);
 	}
 
 	if( entry->slot > MAX_SLOTS ) {
-		ShowWarning("itemdb_validate_entry: Item %d (%s) in '%s' specifies %d slots, but the server only supports up to %d. Using %d slots.\n",
+		ShowWarning("itemdb_validate_entry: Item %d (%s) em '%s' especifica %d slots, mas o servidor suporta apenas %d. Usando %d slots.\n",
 		            entry->nameid, entry->jname, source, entry->slot, MAX_SLOTS, MAX_SLOTS);
 		entry->slot = MAX_SLOTS;
 	}
 
 	if (!entry->equip && itemdb->isequip2(entry)) {
-		ShowWarning("itemdb_validate_entry: Item %d (%s) in '%s' is an equipment with no equip-field! Making it an etc item.\n",
+		ShowWarning("itemdb_validate_entry: Item %d (%s) em '%s' e um equipamento sem o campo equip! Transformando em ETC.\n",
 		            entry->nameid, entry->jname, source);
 		entry->type = IT_ETC;
 	}
 
 	if (entry->flag.trade_restriction > ITR_ALL) {
-		ShowWarning("itemdb_validate_entry: Invalid trade restriction flag 0x%x for item %d (%s) in '%s', defaulting to none.\n",
+		ShowWarning("itemdb_validate_entry: Flag de restricao invalida 0x%x para o item %d (%s) em '%s', definindo como none.\n",
 		            entry->flag.trade_restriction, entry->nameid, entry->jname, source);
 		entry->flag.trade_restriction = ITR_NONE;
 	}
 
 	if (entry->gm_lv_trade_override < 0 || entry->gm_lv_trade_override > 100) {
-		ShowWarning("itemdb_validate_entry: Invalid trade-override GM level %d for item %d (%s) in '%s', defaulting to none.\n",
+		ShowWarning("itemdb_validate_entry: Level de GM invalido %d para o item %d (%s) em '%s', definindo como none.\n",
 		            entry->gm_lv_trade_override, entry->nameid, entry->jname, source);
 		entry->gm_lv_trade_override = 0;
 	}
@@ -1445,13 +1445,13 @@ int itemdb_validate_entry(struct item_data *entry, int n, const char *source) {
 	}
 
 	if (entry->item_usage.flag > INR_ALL) {
-		ShowWarning("itemdb_validate_entry: Invalid nouse flag 0x%x for item %d (%s) in '%s', defaulting to none.\n",
+		ShowWarning("itemdb_validate_entry: Flag nouse invalida 0x%x para o item %d (%s) em '%s', definindo como none.\n",
 		            entry->item_usage.flag, entry->nameid, entry->jname, source);
 		entry->item_usage.flag = INR_NONE;
 	}
 
 	if (entry->item_usage.override > 100) {
-		ShowWarning("itemdb_validate_entry: Invalid nouse-override GM level %d for item %d (%s) in '%s', defaulting to none.\n",
+		ShowWarning("itemdb_validate_entry: Level de GM (nouse flag) invalido %d para o item %d (%s) em '%s', definindo como none.\n",
 		            entry->item_usage.override, entry->nameid, entry->jname, source);
 		entry->item_usage.override = 0;
 	}
@@ -1461,7 +1461,7 @@ int itemdb_validate_entry(struct item_data *entry, int n, const char *source) {
 	}
 
 	if (entry->stack.amount > 0 && !itemdb->isstackable2(entry)) {
-		ShowWarning("itemdb_validate_entry: Item %d (%s) of type %d is not stackable, ignoring stack settings in '%s'.\n",
+		ShowWarning("itemdb_validate_entry: Item %d (%s) do tipo %d nao e stackavel, ignorando opcao de stack '%s'.\n",
 		            entry->nameid, entry->jname, entry->type, source);
 		memset(&entry->stack, '\0', sizeof(entry->stack));
 	}
@@ -1851,7 +1851,7 @@ void itemdb_name_constants(void) {
 	struct item_data *data;
 	
 #ifdef ENABLE_CASE_CHECK
-	script->parser_current_file = "Item Database (Likely an invalid or conflicting AegisName)";
+	script->parser_current_file = "Database de Item (Provavelmente um Nome Aegis inválido ou em Conflito)";
 #endif // ENABLE_CASE_CHECK
 	for( data = dbi_first(iter); dbi_exists(iter); data = dbi_next(iter) )
 		script->set_constant2(data->name,data->nameid,0);
