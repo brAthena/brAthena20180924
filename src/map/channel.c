@@ -298,7 +298,7 @@ void channel_join_sub(struct channel_data *chan, struct map_session_data *sd, bo
 
 	if (!stealth && (chan->options&HCS_OPT_ANNOUNCE_JOIN)) {
 		char message[60];
-		sprintf(message, "#%s '%s' joined",chan->name,sd->status.name);
+		sprintf(message, "#%s '%s' entrou",chan->name,sd->status.name);
 		clif->channel_msg(chan,sd,message);
 	}
 
@@ -431,7 +431,7 @@ void channel_leave(struct channel_data *chan, struct map_session_data *sd)
 		channel->delete(chan);
 	} else if (!channel->config->closing && (chan->options & HCS_OPT_ANNOUNCE_JOIN)) {
 		char message[60];
-		sprintf(message, "#%s '%s' left",chan->name,sd->status.name);
+		sprintf(message, "#%s '%s' saiu",chan->name,sd->status.name);
 		clif->channel_msg(chan,sd,message);
 	}
 
@@ -633,7 +633,7 @@ void read_channels_config(void)
 		if (k < channel->config->colors_count) {
 			channel->config->local_color = k;
 		} else {
-			ShowError("channels.conf: unknown color '%s' for 'map_local_channel_color', disabling '#%s'...\n",local_color,local_name);
+			ShowError("channels.conf: Cor desconhecida '%s' para 'map_local_channel_color', desabilitando '#%s'...\n",local_color,local_name);
 			channel->config->local = false;
 		}
 
@@ -647,7 +647,7 @@ void read_channels_config(void)
 		if( k < channel->config->colors_count ) {
 			channel->config->ally_color = k;
 		} else {
-			ShowError("channels.conf: unknown color '%s' for 'ally_channel_color', disabling '#%s'...\n",ally_color,ally_name);
+			ShowError("channels.conf: Cor desconhecida '%s' para 'ally_channel_color', desabilitando '#%s'...\n",ally_color,ally_name);
 			channel->config->ally = false;
 		}
 
@@ -661,13 +661,13 @@ void read_channels_config(void)
 
 				ARR_FIND(0, channel->config->colors_count, k, strcmpi(channel->config->colors_name[k],color) == 0);
 				if (k == channel->config->colors_count) {
-					ShowError("channels.conf: unknown color '%s' for channel '%s', skipping channel...\n",color,name);
+					ShowError("channels.conf: Cor desconhecida '%s' para o canal '%s', pulando canal...\n",color,name);
 					continue;
 				}
 				if (strcmpi(name, channel->config->local_name) == 0
 				 || strcmpi(name, channel->config->ally_name) == 0
 				 || strdb_exists(channel->db, name)) {
-					ShowError("channels.conf: duplicate channel '%s', skipping channel...\n",name);
+					ShowError("channels.conf: Canal duplicado '%s', pulando canal...\n",name);
 					continue;
 
 				}
