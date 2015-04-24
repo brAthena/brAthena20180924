@@ -84,11 +84,11 @@ int path_blownpos(int16 m,int16 x0,int16 y0,int16 dx,int16 dy,int count)
 	md = &map->list[m];
 
 	if( count>25 ){ //Cap to prevent too much processing...?
-		ShowWarning("path_blownpos: count too many %d !\n",count);
+		ShowWarning("path_blownpos: contagem muito extensa %d !\n",count);
 		count=25;
 	}
 	if( dx > 1 || dx < -1 || dy > 1 || dy < -1 ){
-		ShowError("path_blownpos: illegal dx=%d or dy=%d !\n",dx,dy);
+		ShowError("path_blownpos: ilegal dx=%d ou dy=%d !\n",dx,dy);
 		dx=(dx>0)?1:((dx<0)?-1:0);
 		dy=(dy>0)?1:((dy<0)?-1:0);
 	}
@@ -191,7 +191,7 @@ static int heap_update_node(struct node_heap *heap, struct path_node *node)
 	int i;
 	ARR_FIND(0, BHEAP_LENGTH(*heap), i, BHEAP_DATA(*heap)[i] == node);
 	if (i == BHEAP_LENGTH(*heap)) {
-		ShowError("heap_update_node: node not found\n");
+		ShowError("heap_update_node: node nao encontrado\n");
 		return 1;
 	}
 	BHEAP_UPDATE(*heap, i, NODE_MINTOPCMP, swap_ptr);
