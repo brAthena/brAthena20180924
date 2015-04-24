@@ -314,7 +314,7 @@ int mob_get_random_id(int type, int flag, int lv)
 	struct mob_db *monster;
 	int i=0, class_;
 	if(type < 0 || type >= MAX_RANDOMMONSTER) {
-		ShowError("mob_get_random_id: Invalid type (%d) of random monster.\n", type);
+		ShowError("mob_get_random_id: Tipo invalido (%d).\n", type);
 		return 0;
 	}
 	do {
@@ -394,7 +394,7 @@ bool mob_ksprotected(struct block_list *src, struct block_list *target) {
 		// Message to KS
 		if( DIFF_TICK(sd->ks_floodprotect_tick, tick) <= 0 )
 		{
-			sprintf(output, "[KS Warning!! - Owner : %s]", pl_sd->status.name);
+			sprintf(output, "[Aviso de KS!! - Dono : %s]", pl_sd->status.name);
 			clif_disp_onlyself(sd, output, strlen(output));
 
 			sd->ks_floodprotect_tick = tick + 2000;
@@ -403,7 +403,7 @@ bool mob_ksprotected(struct block_list *src, struct block_list *target) {
 		// Message to Owner
 		if( DIFF_TICK(pl_sd->ks_floodprotect_tick, tick) <= 0 )
 		{
-			sprintf(output, "[Watch out! %s is trying to KS you!]", sd->status.name);
+			sprintf(output, "[Atenção!! %s está tentando fazer KS em você!]", sd->status.name);
 			clif_disp_onlyself(pl_sd, output, strlen(output));
 
 			pl_sd->ks_floodprotect_tick = tick + 2000;
@@ -586,7 +586,7 @@ int mob_spawn_guardian_sub(int tid, int64 tick, int id, intptr_t data) {
 		return 0;
 
 	if( bl->type != BL_MOB ) {
-		ShowError("mob_spawn_guardian_sub: Block error!\n");
+		ShowError("mob_spawn_guardian_sub: Erro no bloco!\n");
 		return 0;
 	}
 
@@ -595,12 +595,12 @@ int mob_spawn_guardian_sub(int tid, int64 tick, int id, intptr_t data) {
 	g = guild->search((int)data);
 
 	if( g == NULL ) { //Liberate castle, if the guild is not found this is an error! [Skotlex]
-		ShowError("mob_spawn_guardian_sub: Couldn't load guild %d!\n", (int)data);
+		ShowError("mob_spawn_guardian_sub: Nao foi possivel carregar o cla %d!\n", (int)data);
 		//Not sure this is the best way, but otherwise we'd be invoking this for ALL guardians spawned later on.
 		if( md->class_ == MOBID_EMPERIUM && md->guardian_data ) {
 			md->guardian_data->g = NULL;
 			if( md->guardian_data->castle->guild_id ) {//Free castle up.
-				ShowNotice("Clearing ownership of castle %d (%s)\n", md->guardian_data->castle->castle_id, md->guardian_data->castle->castle_name);
+				ShowNotice("Limpando a propriedade do castelo %d (%s)\n", md->guardian_data->castle->castle_id, md->guardian_data->castle->castle_name);
 				guild->castledatasave(md->guardian_data->castle->castle_id, 1, 0);
 			}
 		} else {
@@ -636,7 +636,7 @@ int mob_spawn_guardian(const char* mapname, short x, short y, const char* mobnam
 
 	if(m<0)
 	{
-		ShowWarning("mob_spawn_guardian: Map [%s] not found.\n", mapname);
+		ShowWarning("mob_spawn_guardian: Mapa [%s] nao encontrado.\n", mapname);
 		return 0;
 	}
 	data.m = m;
@@ -651,12 +651,12 @@ int mob_spawn_guardian(const char* mapname, short x, short y, const char* mobnam
 	if( !has_index ) {
 		guardian = -1;
 	} else if( guardian < 0 || guardian >= MAX_GUARDIANS ) {
-		ShowError("mob_spawn_guardian: Invalid guardian index %d for guardian %d (castle map %s)\n", guardian, class_, map->list[m].name);
+		ShowError("mob_spawn_guardian: Indice de guardiao invalido %d para %d (mapa de castelo %s)\n", guardian, class_, map->list[m].name);
 		return 0;
 	}
 
 	if((x<=0 || y<=0) && !map->search_freecell(NULL, m, &x, &y, -1,-1, 1)) {
-		ShowWarning("mob_spawn_guardian: Couldn't locate a spawn cell for guardian class %d (index %d) at castle map %s\n",class_, guardian, map->list[m].name);
+		ShowWarning("mob_spawn_guardian: Nao foi possivel localizar a celula de invocacao do guardiao %d (indice %d) no mapa de castelo %s\n",class_, guardian, map->list[m].name);
 		return 0;
 	}
 	data.x = x;
@@ -668,11 +668,11 @@ int mob_spawn_guardian(const char* mapname, short x, short y, const char* mobnam
 
 	gc=guild->mapname2gc(map->list[m].name);
 	if (gc == NULL) {
-		ShowError("mob_spawn_guardian: No castle set at map %s\n", map->list[m].name);
+		ShowError("mob_spawn_guardian: Nenhum castelo definido no mapa %s\n", map->list[m].name);
 		return 0;
 	}
 	if (!gc->guild_id)
-		ShowWarning("mob_spawn_guardian: Spawning guardian %d on a castle with no guild (castle map %s)\n", class_, map->list[m].name);
+		ShowWarning("mob_spawn_guardian: Invocando guardiao %d em um castelo sem cla (mapa %s)\n", class_, map->list[m].name);
 	else
 		g = guild->search(gc->guild_id);
 
@@ -683,7 +683,7 @@ int mob_spawn_guardian(const char* mapname, short x, short y, const char* mobnam
 		        && md2->guardian_data
 		        && md2->guardian_data->number == guardian
 		) {
-			ShowError("mob_spawn_guardian: Attempted to spawn guardian in position %d which already has a guardian (castle map %s)\n", guardian, map->list[m].name);
+			ShowError("mob_spawn_guardian: Tentativa de invocar o guardiao %d porem ja existe neste mapa (mapa %s)\n", guardian, map->list[m].name);
 			return 0;
 		}
 	}
@@ -726,7 +726,7 @@ int mob_spawn_bg(const char* mapname, short x, short y, const char* mobname, int
 	int16 m;
 
 	if( (m = map->mapname2mapid(mapname)) < 0 ) {
-		ShowWarning("mob_spawn_bg: Map [%s] not found.\n", mapname);
+		ShowWarning("mob_spawn_bg: Mapa [%s] nao encontrado.\n", mapname);
 		return 0;
 	}
 
@@ -741,7 +741,7 @@ int mob_spawn_bg(const char* mapname, short x, short y, const char* mobname, int
 
 	data.class_ = class_;
 	if( (x <= 0 || y <= 0) && !map->search_freecell(NULL, m, &x, &y, -1,-1, 1) ) {
-		ShowWarning("mob_spawn_bg: Couldn't locate a spawn cell for guardian class %d (bg_id %d) at map %s\n",class_, bg_id, map->list[m].name);
+		ShowWarning("mob_spawn_bg: Nao foi possivel localizar uma celula para o guardiao %d (bg_id %d) no mapa %s\n",class_, bg_id, map->list[m].name);
 		return 0;
 	}
 
@@ -826,7 +826,7 @@ int mob_delayspawn(int tid, int64 tick, int id, intptr_t data) {
 	{
 		if( md->spawn_timer != tid )
 		{
-			ShowError("mob_delayspawn: Timer mismatch: %d != %d\n", tid, md->spawn_timer);
+			ShowError("mob_delayspawn: Timer incompativel: %d != %d\n", tid, md->spawn_timer);
 			return 0;
 		}
 		md->spawn_timer = INVALID_TIMER;
@@ -1354,7 +1354,7 @@ int mob_randomwalk(struct mob_data *md, int64 tick) {
 	if(i==retrycount){
 		md->move_fail_count++;
 		if(md->move_fail_count>1000){
-			ShowWarning("MOB can't move. random spawn %d, class = %d, at %s (%d,%d)\n",md->bl.id,md->class_,map->list[md->bl.m].name, md->bl.x, md->bl.y);
+			ShowWarning("Monstro nao pode se mover. Invocacao aleatoria %d, classe = %d, at %s (%d,%d)\n",md->bl.id,md->class_,map->list[md->bl.m].name, md->bl.x, md->bl.y);
 			md->move_fail_count=0;
 			mob->spawn(md);
 		}
@@ -1879,7 +1879,7 @@ int mob_timer_delete(int tid, int64 tick, int id, intptr_t data) {
 	{
 		if( md->deletetimer != tid )
 		{
-			ShowError("mob_timer_delete: Timer mismatch: %d != %d\n", tid, md->deletetimer);
+			ShowError("mob_timer_delete: Timer incompativel: %d != %d\n", tid, md->deletetimer);
 			return 0;
 		}
 		//for Alchemist CANNIBALIZE [Lupus]
@@ -2696,7 +2696,7 @@ int mob_guardian_guildchange(struct mob_data *md)
 	g = guild->search(md->guardian_data->castle->guild_id);
 	if (g == NULL) {
 		//Properly remove guardian info from Castle data.
-		ShowError("mob_guardian_guildchange: New Guild (id %d) does not exists!\n", md->guardian_data->castle->guild_id);
+		ShowError("mob_guardian_guildchange: novo cla (id %d) nao existe!\n", md->guardian_data->castle->guild_id);
 		if (md->guardian_data->number >= 0 && md->guardian_data->number < MAX_GUARDIANS)
 			guild->castledatasave(md->guardian_data->castle->castle_id, 10+md->guardian_data->number, 0);
 		unit->free(&md->bl,CLR_OUTSIGHT);
@@ -3581,8 +3581,8 @@ int mob_makedummymobdb(int class_)
 	//Initialize dummy data.
 	mob->dummy = (struct mob_db*)aCalloc(1, sizeof(struct mob_db)); //Initializing the dummy mob.
 	sprintf(mob->dummy->sprite,"DUMMY");
-	sprintf(mob->dummy->name,"Dummy");
-	sprintf(mob->dummy->jname,"Dummy");
+	sprintf(mob->dummy->name,"Falso");
+	sprintf(mob->dummy->jname,"Falso");
 	mob->dummy->lv=1;
 	mob->dummy->status.max_hp=1000;
 	mob->dummy->status.max_sp=1;
@@ -3646,10 +3646,10 @@ void item_dropratio_adjust(int nameid, int mob_id, int *rate_adjust)
 /* (mob_parse_dbrow)_cap_value */
 static inline int mob_parse_dbrow_cap_value(int class_, int min, int max, int value) {
 	if( value > max ) {
-		ShowError("mob_parse_dbrow: for class '%d', field value '%d' is higher than the maximum '%d'! capping...\n", class_, value, max);
+		ShowError("mob_parse_dbrow: Classe '%d', valor do campo '%d' e maior do que o maximo '%d'! definindo para o maximo...\n", class_, value, max);
 		return max;
 	} else if ( value < min ) {
-		ShowError("mob_parse_dbrow: for class '%d', field value '%d' is lower than the minimum '%d'! capping...\n", class_, value, min);
+		ShowError("mob_parse_dbrow: Classe '%d', valor do campo '%d' e menor do que o minimo '%d'! definindo para o minimo...\n", class_, value, min);
 		return min;
 	}
 	return value;
@@ -3667,16 +3667,16 @@ bool mob_parse_dbrow(char** str) {
 	class_ = atoi(str[0]);
 
 	if (class_ <= 1000 || class_ > MAX_MOB_DB) {
-		ShowError("mob_parse_dbrow: Invalid monster ID %d, must be in range %d-%d.\n", class_, 1000, MAX_MOB_DB);
+		ShowError("mob_parse_dbrow: ID do monstro invalido %d, alcance %d-%d.\n", class_, 1000, MAX_MOB_DB);
 		return false;
 	}
 	if (pc->db_checkid(class_)) {
-		ShowError("mob_parse_dbrow: Invalid monster ID %d, reserved for player classes.\n", class_);
+		ShowError("mob_parse_dbrow: ID do monstro invalido %d, reservado para classes de personagens.\n", class_);
 		return false;
 	}
 
 	if (class_ >= MOB_CLONE_START && class_ < MOB_CLONE_END) {
-		ShowError("mob_parse_dbrow: Invalid monster ID %d. Range %d-%d is reserved for player clones. Please increase MAX_MOB_DB (%d).\n", class_, MOB_CLONE_START, MOB_CLONE_END-1, MAX_MOB_DB);
+		ShowError("mob_parse_dbrow: ID do monstro invalido %d. Alcance %d-%d reservado para clones. Por favor aumente MAX_MOB_DB (%d).\n", class_, MOB_CLONE_START, MOB_CLONE_END-1, MAX_MOB_DB);
 		return false;
 	}
 
@@ -3753,11 +3753,11 @@ bool mob_parse_dbrow(char** str) {
 	mstatus->def_ele = i%10;
 	mstatus->ele_lv = i/20;
 	if (mstatus->def_ele >= ELE_MAX) {
-		ShowError("mob_parse_dbrow: Invalid element type %d for monster ID %d (max=%d).\n", mstatus->def_ele, class_, ELE_MAX-1);
+		ShowError("mob_parse_dbrow: Tipo de elemento invalido %d para o monstro %d (max=%d).\n", mstatus->def_ele, class_, ELE_MAX-1);
 		return false;
 	}
 	if (mstatus->ele_lv < 1 || mstatus->ele_lv > 4) {
-		ShowError("mob_parse_dbrow: Invalid element level %d for monster ID %d, must be in range 1-4.\n", mstatus->ele_lv, class_);
+		ShowError("mob_parse_dbrow: Nivel de elemento invalido %d para o monstro %d, alcance 1-4.\n", mstatus->ele_lv, class_);
 		return false;
 	}
 
@@ -3952,7 +3952,7 @@ void mob_readdb(void) {
 void mob_name_constants(void) {
 	int i;
 #ifdef ENABLE_CASE_CHECK
-	script->parser_current_file = "Mob Database (Likely an invalid or conflicting SpriteName)";
+	script->parser_current_file = "Banco de dados de Monstros (Provavelmente um nome de Sprite inválido ou em conflitantes)";
 #endif // ENABLE_CASE_CHECK
 	for (i = 0; i < MAX_MOB_DB; i++) {
 		if (mob->db_data[i] && !mob->is_clone(i))
@@ -3974,7 +3974,7 @@ bool mob_readdb_mobavail(char* str[], int columns, int current)
 
 	if(mob->db(class_) == mob->dummy) {
 		// invalid class (probably undefined in db)
-		ShowWarning("mob_readdb_mobavail: Unknown mob id %d.\n", class_);
+		ShowWarning("mob_readdb_mobavail: Monstro desconhecido (id %d).\n", class_);
 		return false;
 	}
 
@@ -4237,7 +4237,7 @@ bool mob_parse_row_mobskilldb(char** str, int columns, int current)
 	if (mob_id > 0 && mob->db(mob_id) == mob->dummy)
 	{
 		if (mob_id != last_mob_id) {
-			ShowError("mob_parse_row_mobskilldb: Non existant Mob id %d\n", mob_id);
+			ShowError("mob_parse_row_mobskilldb: Monstro inexistente (id %d)\n", mob_id);
 			last_mob_id = mob_id;
 		}
 		return false;
@@ -4259,7 +4259,7 @@ bool mob_parse_row_mobskilldb(char** str, int columns, int current)
 		if( i == MAX_MOBSKILL )
 		{
 			if (mob_id != last_mob_id) {
-				ShowError("mob_parse_row_mobskilldb: Too many skills for monster %d[%s]\n", mob_id, mob->db_data[mob_id]->sprite);
+				ShowError("mob_parse_row_mobskilldb: Muitas habilidades para o monstro %d[%s]\n", mob_id, mob->db_data[mob_id]->sprite);
 				last_mob_id = mob_id;
 			}
 			return false;
@@ -4271,7 +4271,7 @@ bool mob_parse_row_mobskilldb(char** str, int columns, int current)
 	if( j < ARRAYLENGTH(state) )
 		ms->state = state[j].id;
 	else {
-		ShowWarning("mob_parse_row_mobskilldb: Unrecognized state %s\n", str[2]);
+		ShowWarning("mob_parse_row_mobskilldb: Estado inexistente %s\n", str[2]);
 		ms->state = MSS_ANY;
 	}
 
@@ -4279,9 +4279,9 @@ bool mob_parse_row_mobskilldb(char** str, int columns, int current)
 	j=atoi(str[3]);
 	if ( !(sidx = skill->get_index(j) ) ) {
 		if (mob_id < 0)
-			ShowError("mob_parse_row_mobskilldb: Invalid Skill ID (%d) for all mobs\n", j);
+			ShowError("mob_parse_row_mobskilldb: Habilidade invalida (id %d) para todos os monstros\n", j);
 		else
-			ShowError("mob_parse_row_mobskilldb: Invalid Skill ID (%d) for mob %d (%s)\n", j, mob_id, mob->db_data[mob_id]->sprite);
+			ShowError("mob_parse_row_mobskilldb: Habilidade invalida (id %d) para o monstro %d (%s)\n", j, mob_id, mob->db_data[mob_id]->sprite);
 		return false;
 	}
 	ms->skill_id=j;
@@ -4314,20 +4314,20 @@ bool mob_parse_row_mobskilldb(char** str, int columns, int current)
 	if( j < ARRAYLENGTH(target) )
 		ms->target = target[j].id;
 	else {
-		ShowWarning("mob_parse_row_mobskilldb: Unrecognized target %s for %d\n", str[9], mob_id);
+		ShowWarning("mob_parse_row_mobskilldb: Alvo inexistente %s para %d\n", str[9], mob_id);
 		ms->target = MST_TARGET;
 	}
 
 	//Check that the target condition is right for the skill type. [Skotlex]
 	if ( skill->get_casttype2(sidx) == CAST_GROUND) {//Ground skill.
 		if (ms->target > MST_AROUND) {
-			ShowWarning("mob_parse_row_mobskilldb: Wrong mob skill target for ground skill %d (%s) for %s.\n",
+			ShowWarning("mob_parse_row_mobskilldb: Alvo incorreto para habilidade do tipo ground %d (%s) para %s.\n",
 				ms->skill_id, skill->db[sidx].name,
 				mob_id < 0?"all mobs":mob->db_data[mob_id]->sprite);
 			ms->target = MST_TARGET;
 		}
 	} else if (ms->target > MST_MASTER) {
-		ShowWarning("mob_parse_row_mobskilldb: Wrong mob skill target 'around' for non-ground skill %d (%s) for %s.\n",
+		ShowWarning("mob_parse_row_mobskilldb: Alvo incorreto para habilidades do tipo non-ground %d (%s) para %s.\n",
 			ms->skill_id, skill->db[sidx].name,
 			mob_id < 0?"all mobs":mob->db_data[mob_id]->sprite);
 		ms->target = MST_TARGET;
@@ -4338,7 +4338,7 @@ bool mob_parse_row_mobskilldb(char** str, int columns, int current)
 	if( j < ARRAYLENGTH(cond1) )
 		ms->cond1 = cond1[j].id;
 	else {
-		ShowWarning("mob_parse_row_mobskilldb: Unrecognized condition 1 %s for %d\n", str[10], mob_id);
+		ShowWarning("mob_parse_row_mobskilldb: Condicao 1 nao reconhecida %s para %d\n", str[10], mob_id);
 		ms->cond1 = -1;
 	}
 
@@ -4454,14 +4454,14 @@ bool mob_readdb_race2(char* fields[], int columns, int current)
 	race = atoi(fields[0]);
 
 	if (race < RC2_NONE || race >= RC2_MAX) {
-		ShowWarning("mob_readdb_race2: Unknown race2 %d.\n", race);
+		ShowWarning("mob_readdb_race2: race2 desconhecida %d.\n", race);
 		return false;
 	}
 
 	for (i = 1; i < columns; i++) {
 		int mobid = atoi(fields[i]);
 		if (mob->db(mobid) == mob->dummy) {
-			ShowWarning("mob_readdb_race2: Unknown mob id %d for race2 %d.\n", mobid, race);
+			ShowWarning("mob_readdb_race2: Monstro desconhecido (id %d) para race2 %d.\n", mobid, race);
 			continue;
 		}
 		mob->db_data[mobid]->race2 = race;
@@ -4479,7 +4479,7 @@ bool mob_readdb_itemratio(char* str[], int columns, int current)
 
 	if( itemdb->exists(nameid) == NULL )
 	{
-		ShowWarning("itemdb_read_itemratio: Invalid item id %d.\n", nameid);
+		ShowWarning("itemdb_read_itemratio: Item invalido (id %d).\n", nameid);
 		return false;
 	}
 

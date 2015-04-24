@@ -438,11 +438,11 @@ bool read_mercenarydb_sub(char* str[], int columns, int current) {
 	mstatus->def_ele = ele%10;
 	mstatus->ele_lv = ele/20;
 	if( mstatus->def_ele >= ELE_MAX ) {
-		ShowWarning("Mercenary %d has invalid element type %d (max element is %d)\n", db->class_, mstatus->def_ele, ELE_MAX - 1);
+		ShowWarning("Mercenario %d tem um tipo de elemento invalido %d (elemento max %d)\n", db->class_, mstatus->def_ele, ELE_MAX - 1);
 		mstatus->def_ele = ELE_NEUTRAL;
 	}
 	if( mstatus->ele_lv < 1 || mstatus->ele_lv > 4 ) {
-		ShowWarning("Mercenary %d has invalid element level %d (max is 4)\n", db->class_, mstatus->ele_lv);
+		ShowWarning("Mercenario %d tem um nivel de elemento invalido %d (nivel max 4)\n", db->class_, mstatus->ele_lv);
 		mstatus->ele_lv = 1;
 	}
 
@@ -472,14 +472,14 @@ bool read_mercenary_skilldb_sub(char* str[], int columns, int current)
 	ARR_FIND(0, MAX_MERCENARY_CLASS, i, class_ == mercenary->db[i].class_);
 	if( i == MAX_MERCENARY_CLASS )
 	{
-		ShowError("read_mercenary_skilldb : Class %d not found in mercenary_db for skill entry.\n", class_);
+		ShowError("read_mercenary_skilldb : Classe %d nao encontrada na database de mercenarios.\n", class_);
 		return false;
 	}
 	
 	skill_id = atoi(str[1]);
 	if( skill_id < MC_SKILLBASE || skill_id >= MC_SKILLBASE + MAX_MERCSKILL )
 	{
-		ShowError("read_mercenary_skilldb : Skill %d out of range.\n", skill_id);
+		ShowError("read_mercenary_skilldb : Habilidade %d fora de alcance.\n", skill_id);
 		return false;
 	}
 
