@@ -1,18 +1,18 @@
-// Status Change configuration database
+// Banco de Dados - Alteração de Estados
 //
-// Structure of Database:
+// Estrutura do banco de dados:
 // SC_NAME, flag
 //
-// flag    1  - SC cannot be removed by death.
-//         2  - SC cannot be saved.
-//         4  - SC cannot be reset by dispell.
-//         8  - SC cannot be reset by clearance.
-//         16 - SC considered as buff and be removed by Hermode and etc.
-//         32 - SC considered as debuff and be removed by Gospel and etc.
-//         64 - SC cannot be reset when MADO Gear is taken off.
-//        128 - SC cannot be reset by 'sc_end SC_ALL' and status change clear.
-//Example:
-//SC_ENDURE, 21 //SC_ENDURE: cannot be removed by death and dispell and cosidered as buff. (16 + 4 + 1 = 21)
+// flag    1  - SC não pode ser removido ao morte.
+//         2  - SC não pode ser salvo.
+//         4  - SC não pode ser afetado por desencantar.
+//         8  - SC não pode ser afetado por Gênese.
+//         16 - SC é considerado como buff e pode ser removido por Bastão de Hermod, etc.
+//         32 - SC é considerado como debuff e pode ser removido por Canto de Batalha, etc.
+//         64 - SC não pode ser redefinida quando M.E.C.H.A. é retirado.
+//        128 - SC não pode ser redefinida por 'sc_end SC_ALL' e status change clear.
+// Exemplo:
+// SC_ENDURE, 21 //SC_ENDURE: não pode ser removido ao morrer por desencantar e é considerado como buff. (16 + 4 + 1 = 21)
 
 SC_PROVOKE, 32
 SC_ENDURE, 21

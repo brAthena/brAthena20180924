@@ -1,13 +1,23 @@
-//======================================================================================
-// Map Index
-//======================================================================================
-//Contains the list of maps with their respective IDs for inter-server use.
-//IDs must never change, therefore any new maps need to be added at the end,
-//and old ones must not be removed, but may be replaced.
-//Format:
-//mapname<tab>index <- specifies index for this map
-//mapname <- map will use index of previous map +1
-//Note that map index 0 is special and reserved for "error" status. 
+//  _____________________________________________________________
+// /                                                             \
+// |          _           _   _   _                              |
+// |         | |__  _ __ / \ | |_| |__   ___ _ __   __ _         |
+// |         | '_ \| '__/ _ \| __| '_ \ / _ \ '_ \ / _` |        |
+// |         | |_) | | / ___ \ |_| | | |  __/ | | | (_| |        |
+// |         |_.__/|_|/_/   \_\__|_| |_|\___|_| |_|\__,_|        |
+// |                                                             |
+// |                       brAthena Script                       |
+// |-------------------------------------------------------------|
+// | Nome do Database: map_index.txt                             |
+// |-------------------------------------------------------------|
+// | Criado por: eA/rA/brA Dev. Team                             |
+// |-------------------------------------------------------------|
+// | Descrição: Database contendo nome dos mapas à serem gerados |
+// | pelo mapcache.                                              |
+// |-------------------------------------------------------------|
+// | Estrutura do Banco de Dados:                                |
+// | Nome do Mapa                                                |
+// \_____________________________________________________________/
 
 alb_ship 1
 alb2trea
