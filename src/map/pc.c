@@ -3608,7 +3608,7 @@ int pc_skill(TBL_PC* sd, int id, int level, int flag) {
 
 	if (!(index = skill->get_index(id))) {
 		ShowError("pc_skill: Habilidade com o id %d nao existe na database de habilidades\n", id);
-		return 0;.
+		return 0;
 	}
 	if( level > MAX_SKILL_LEVEL ) {
 		ShowError("pc_skill: Nivel da habilidade %d muito alto. O nivel suportado e %d\n", level, MAX_SKILL_LEVEL);
