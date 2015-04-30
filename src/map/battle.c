@@ -3339,9 +3339,10 @@ void battle_consume_ammo(TBL_PC*sd, int skill_id, int lv) {
 		if (!qty) qty = 1;
 	}
 
-	if(sd->equip_index[EQI_AMMO]>=0) //Qty check should have been done in skill_check_condition
-		pc->delitem(sd,sd->equip_index[EQI_AMMO],qty,0,1,LOG_TYPE_CONSUME);
-
+	if(sd->equip_index[EQI_AMMO]>=0){ //Qty check should have been done in skill_check_condition
+		logs->consume(sd,&sd->status.inventory[sd->equip_index[EQI_AMMO]],qty,(skill_id)?skill->db[skill->get_index(skill_id)].name : "Basic Attack");
+		pc->delitem(sd,sd->equip_index[EQI_AMMO],qty,0,1);
+	}
 	sd->state.arrow_atk = 0;
 }
 //Skill Range Criteria
@@ -4137,7 +4138,7 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 			if( sd ) {
 				if ( md.damage > sd->status.zeny )
 					md.damage = sd->status.zeny;
-				pc->payzeny(sd, (int)cap_value(md.damage,INT_MIN,INT_MAX),LOG_TYPE_STEAL,NULL);
+				pc->payzeny(sd, (int)cap_value(md.damage,INT_MIN,INT_MAX),"Steal",NULL);
 			}
 		break;
 	}
@@ -5996,7 +5997,8 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 		}
 
 		if( sd && sc->data[SC_FEARBREEZE] && sc->data[SC_FEARBREEZE]->val4 > 0 && sd->status.inventory[sd->equip_index[EQI_AMMO]].amount >= sc->data[SC_FEARBREEZE]->val4 && battle_config.arrow_decrement){
-			pc->delitem(sd,sd->equip_index[EQI_AMMO],sc->data[SC_FEARBREEZE]->val4,0,1,LOG_TYPE_CONSUME);
+			logs->consume(sd,&sd->status.inventory[sd->equip_index[EQI_AMMO]],sc->data[SC_FEARBREEZE]->val4,"Fear Breeze");
+			pc->delitem(sd,sd->equip_index[EQI_AMMO],sc->data[SC_FEARBREEZE]->val4,0,1);
 			sc->data[SC_FEARBREEZE]->val4 = 0;
 		}
 	}
@@ -7026,7 +7028,7 @@ static const struct battle_data {
 	{ "snovice_call_type",                  &battle_config.snovice_call_type,               0,      0,      1,              },
 	{ "guild_notice_changemap",             &battle_config.guild_notice_changemap,          2,      0,      2,              },
 	{ "feature.banking",                    &battle_config.feature_banking,                 1,      0,      1,              },
-	{ "feature.auction",                    &battle_config.feature_auction,                 0,      0,      2,              },
+	{ "feature.auction",                    &battle_config.feature_auction,                 1,      0,      2,              },
 	{ "idletime_criteria",                  &battle_config.idletime_criteria,            0x25,      1,      INT_MAX,        },
 
 	{ "mon_trans_disable_in_gvg",           &battle_config.mon_trans_disable_in_gvg,        0,      0,      1,              },

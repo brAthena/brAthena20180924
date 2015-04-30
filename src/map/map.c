@@ -5998,9 +5998,8 @@ int do_init(int argc, char *argv[])
 
 	if (!minimal) {
 		map->sql_init();
-		if (logs->config.sql_logs)
-			logs->sql_init();
-			map->brAsql_init();
+		logs->sql_init();
+		map->brAsql_init();
 	}
 
 	i = mapindex->init();

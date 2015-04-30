@@ -42,8 +42,8 @@ int mail_removeitem(struct map_session_data *sd, short flag)
 
 	if( sd->mail.amount )
 	{
-		if (flag) // Item send
-			pc->delitem(sd, sd->mail.index, sd->mail.amount, 1, 0, LOG_TYPE_MAIL);
+		if (flag) // Item send ,Log added in mail log, no need to repeat
+			pc->delitem(sd, sd->mail.index, sd->mail.amount, 1, 0);
 		else
 			clif->additem(sd, sd->mail.index, sd->mail.amount, 0);
 	}
@@ -60,7 +60,7 @@ int mail_removezeny(struct map_session_data *sd, short flag)
 
 	if (flag && sd->mail.zeny > 0)
 	{  //Zeny send
-		pc->payzeny(sd,sd->mail.zeny,LOG_TYPE_MAIL, NULL);
+		pc->payzeny(sd,sd->mail.zeny,"Mail", NULL);
 	}
 	sd->mail.zeny = 0;
 
@@ -144,13 +144,14 @@ void mail_getattachment(struct map_session_data* sd, int zeny, struct item* item
 {
 	if( item->nameid > 0 && item->amount > 0 )
 	{
-		pc->additem(sd, item, item->amount, LOG_TYPE_MAIL);
+		if (!pc->additem(sd, item, item->amount))
+			logs->item_getrem(1,sd, item, item->amount, "Mail");
 		clif->mail_getattachment(sd->fd, 0);
 	}
 
 	if( zeny > 0 )
 	{  //Zeny receive
-		pc->getzeny(sd, zeny,LOG_TYPE_MAIL, NULL);
+		pc->getzeny(sd, zeny,"Mail", NULL);
 	}
 }
 
@@ -174,12 +175,13 @@ void mail_deliveryfail(struct map_session_data *sd, struct mail_message *msg)
 	if( msg->item.amount > 0 )
 	{
 		// Item receive (due to failure)
-		pc->additem(sd, &msg->item, msg->item.amount, LOG_TYPE_MAIL);
+		pc->additem(sd, &msg->item, msg->item.amount);
+		logs->item_getrem(1,sd, &msg->item, msg->item.amount, "Mail");
 	}
 
 	if( msg->zeny > 0 )
 	{
-		pc->getzeny(sd,msg->zeny,LOG_TYPE_MAIL, NULL); //Zeny receive (due to failure)
+		pc->getzeny(sd,msg->zeny,"Mail", NULL); //Zeny receive (due to failure)
 	}
 
 	clif->mail_send(sd->fd, true);

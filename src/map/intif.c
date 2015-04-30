@@ -1736,10 +1736,11 @@ void intif_parse_MailReturn(int fd) {
 int intif_Mail_send(int account_id, struct mail_message *msg)
 {
 	int len = sizeof(struct mail_message) + 8;
-
+	
 	if (intif->CheckForCharServer())
 		return 0;
 
+	logs->mail(msg);
 	WFIFOHEAD(inter_fd,len);
 	WFIFOW(inter_fd,0) = 0x304d;
 	WFIFOW(inter_fd,2) = len;
@@ -1862,9 +1863,9 @@ void intif_parse_AuctionRegister(int fd) {
 		int zeny = auction.hours*battle_config.auction_feeperhour;
 
 		clif->auction_message(sd->fd, 4);
-		pc->additem(sd, &auction.item, auction.item.amount, LOG_TYPE_AUCTION);
+		pc->additem(sd, &auction.item, auction.item.amount);
 
-		pc->getzeny(sd, zeny, LOG_TYPE_AUCTION, NULL);
+		pc->getzeny(sd, zeny,"Auction", NULL);
 	}
 }
 
@@ -1955,7 +1956,7 @@ void intif_parse_AuctionBid(int fd) {
 
 	clif->auction_message(sd->fd, result);
 	if( bid > 0 ) {
-		pc->getzeny(sd, bid, LOG_TYPE_AUCTION,NULL);
+		pc->getzeny(sd, bid,"Auction",NULL);
 	}
 	if( result == 1 ) { // To update the list, display your buy list
 		clif->pAuction_cancelreg(fd, sd);

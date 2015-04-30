@@ -566,9 +566,12 @@ void trade_tradecommit(struct map_session_data *sd) {
 		{
 			n = sd->deal.item[trade_i].index;
 
-			flag = pc->additem(tsd, &sd->status.inventory[n], sd->deal.item[trade_i].amount,LOG_TYPE_TRADE);
-			if (flag == 0)
-				pc->delitem(sd, n, sd->deal.item[trade_i].amount, 1, 6, LOG_TYPE_TRADE);
+			flag = pc->additem(tsd, &sd->status.inventory[n], sd->deal.item[trade_i].amount);
+			if (flag == 0){
+				logs->trade(0,sd,tsd,&sd->status.inventory[n], sd->deal.item[trade_i].amount);
+				pc->delitem(sd, n, sd->deal.item[trade_i].amount, 1, 6);
+
+			}
 			else
 				clif->additem(sd, n, sd->deal.item[trade_i].amount, 0);
 			sd->deal.item[trade_i].index = 0;
@@ -578,9 +581,11 @@ void trade_tradecommit(struct map_session_data *sd) {
 		{
 			n = tsd->deal.item[trade_i].index;
 
-			flag = pc->additem(sd, &tsd->status.inventory[n], tsd->deal.item[trade_i].amount,LOG_TYPE_TRADE);
-			if (flag == 0)
-				pc->delitem(tsd, n, tsd->deal.item[trade_i].amount, 1, 6, LOG_TYPE_TRADE);
+			flag = pc->additem(sd, &tsd->status.inventory[n], tsd->deal.item[trade_i].amount);
+			if (flag == 0){
+				logs->trade(0,tsd,sd,&sd->status.inventory[n], sd->deal.item[trade_i].amount);
+				pc->delitem(tsd, n, tsd->deal.item[trade_i].amount, 1, 6);
+			}
 			else
 				clif->additem(tsd, n, tsd->deal.item[trade_i].amount, 0);
 			tsd->deal.item[trade_i].index = 0;
@@ -589,14 +594,16 @@ void trade_tradecommit(struct map_session_data *sd) {
 	}
 
 	if( sd->deal.zeny ) {
-		pc->payzeny(sd ,sd->deal.zeny, LOG_TYPE_TRADE, tsd);
-		pc->getzeny(tsd,sd->deal.zeny,LOG_TYPE_TRADE, sd);
+		logs->trade(sd->deal.zeny,sd,tsd,NULL,0);		
+		pc->payzeny(sd ,sd->deal.zeny,"Trade", tsd);
+		pc->getzeny(tsd,sd->deal.zeny,"Trade", sd);
 		sd->deal.zeny = 0;
 
 	}
 	if ( tsd->deal.zeny) {
-		pc->payzeny(tsd,tsd->deal.zeny,LOG_TYPE_TRADE, sd);
-		pc->getzeny(sd ,tsd->deal.zeny,LOG_TYPE_TRADE, tsd);
+		logs->trade(tsd->deal.zeny,tsd,sd,NULL,0);	
+		pc->payzeny(tsd,tsd->deal.zeny,"Trade", sd);
+		pc->getzeny(sd ,tsd->deal.zeny,"Trade", tsd);
 		tsd->deal.zeny = 0;
 	}
 

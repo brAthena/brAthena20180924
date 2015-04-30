@@ -168,21 +168,19 @@ void vending_purchasereq(struct map_session_data* sd, int aid, unsigned int uid,
 				return; //too many items
 		}
 	}
-
-	pc->payzeny(sd, (int)z, LOG_TYPE_VENDING, vsd);
+	pc->payzeny(sd, (int)z, "Vending", vsd);
 	if( battle_config.vending_tax )
 		z -= z * (battle_config.vending_tax/10000.);
-	pc->getzeny(vsd, (int)z, LOG_TYPE_VENDING, sd);
+	pc->getzeny(vsd, (int)z, "Vending", sd);
 
 	for( i = 0; i < count; i++ ) {
 		short amount = *(uint16*)(data + 4*i + 0);
 		short idx    = *(uint16*)(data + 4*i + 2);
 		idx -= 2;
-
-		// vending item
-		pc->additem(sd, &vsd->status.cart[idx], amount, LOG_TYPE_VENDING);
+		logs->vending(sd,vsd, &vsd->status.cart[idx],vsd->vending[vend_list[i]].value,amount);
+		pc->additem(sd, &vsd->status.cart[idx], amount);
 		vsd->vending[vend_list[i]].amount -= amount;
-		pc->cart_delitem(vsd, idx, amount, 0, LOG_TYPE_VENDING);
+		pc->cart_delitem(vsd, idx, amount, 0);
 		clif->vendingreport(vsd, idx, amount);
 
 		//print buyer's name

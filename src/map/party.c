@@ -953,7 +953,7 @@ int party_exp_share(struct party_data* p, struct block_list* src, unsigned int b
 		pc->gainexp(sd[i], src, base_exp, job_exp, false);
 
 		if (zeny) // zeny from mobs [Valaris]
-			pc->getzeny(sd[i],zeny,LOG_TYPE_PICKDROP_MONSTER,NULL);
+			pc->getzeny(sd[i],zeny,"Monster",NULL);
 	}
 	return 0;
 }
@@ -978,9 +978,9 @@ int party_share_loot(struct party_data* p, struct map_session_data* sd, struct i
 				if( (psd = p->data[i].sd) == NULL || sd->bl.m != psd->bl.m || pc_isdead(psd) || (battle_config.idle_no_share && pc_isidle(psd)) )
 					continue;
 
-				if (pc->additem(psd,item_data,item_data->amount,LOG_TYPE_PICKDROP_PLAYER))
+				if (pc->additem(psd,item_data,item_data->amount))
 					continue; //Chosen char can't pick up loot.
-
+				logs->pickdrop (psd,NULL,item_data,item_data->amount,"Party Pick","Floor");
 				//Successful pick.
 				p->itemc = i;
 				target = psd;
@@ -999,12 +999,13 @@ int party_share_loot(struct party_data* p, struct map_session_data* sd, struct i
 			}
 			while (count > 0) { //Pick a random member.
 				i = rnd()%count;
-				if (pc->additem(psd[i],item_data,item_data->amount,LOG_TYPE_PICKDROP_PLAYER)) {
+				if (pc->additem(psd[i],item_data,item_data->amount)) {
 					//Discard this receiver.
 					psd[i] = psd[count-1];
 					count--;
 				} else {
 					//Successful pick.
+					logs->pickdrop (psd[i],NULL,item_data,item_data->amount,"Party Pick","Floor");
 					target = psd[i];
 					break;
 				}
@@ -1014,8 +1015,9 @@ int party_share_loot(struct party_data* p, struct map_session_data* sd, struct i
 
 	if (!target) {
 		target = sd; //Give it to the char that picked it up
-		if ((i=pc->additem(sd,item_data,item_data->amount,LOG_TYPE_PICKDROP_PLAYER)))
+		if ((i=pc->additem(sd,item_data,item_data->amount)))
 			return i;
+		logs->pickdrop (sd,NULL,item_data,item_data->amount,"Pick","Floor");
 	}
 
 	if( p && battle_config.party_show_share_picker && battle_config.show_picker_item_type&(1<<itemdb_type(item_data->nameid)) )

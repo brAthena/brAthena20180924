@@ -2247,7 +2247,10 @@ int skill_attack(int attack_type, struct block_list* src, struct block_list *dsr
 				//Consume one Fragment per hit of the casted skill? [Skotlex]
 				type = tsd ? pc->search_inventory(tsd, ITEMID_FRAGMENT_OF_CRYSTAL) : 0;
 				if (type != INDEX_NOT_FOUND) {
-					if ( tsd ) pc->delitem(tsd, type, 1, 0, 1, LOG_TYPE_CONSUME);
+					if ( tsd ) {
+						logs->consume(tsd,&tsd->status.inventory[type],1,skill->db[skill->get_index(skill_id)].name);
+						pc->delitem(tsd, type, 1, 0, 1);
+					}
 					dmg.damage = dmg.damage2 = 0;
 					dmg.dmg_lv = ATK_MISS;
 					sc->data[SC_SOULLINK]->val3 = skill_id;
@@ -3148,8 +3151,10 @@ int skill_check_condition_mercenary(struct block_list *bl, int skill_id, int lv,
 
 	// Consume items
 	for (i = 0; i < ARRAYLENGTH(itemid); i++) {
-		if (index[i] != INDEX_NOT_FOUND)
-			pc->delitem(sd, index[i], amount[i], 0, 1, LOG_TYPE_CONSUME);
+		if (index[i] != INDEX_NOT_FOUND){
+			logs->consume(sd,&sd->status.inventory[index[i]],amount[i],skill->db[skill->get_index(skill_id)].name);
+			pc->delitem(sd, index[i], amount[i], 0, 1);
+		}
 	}
 
 	if( type&2 )
@@ -5652,7 +5657,7 @@ int skill_castend_nodamage_id(struct block_list *src, struct block_list *bl, uin
 			break;
 		case SA_FORTUNE:
 			clif->skill_nodamage(src,bl,skill_id,skill_lv,1);
-			if(sd) pc->getzeny(sd,status->get_lv(bl)*100,LOG_TYPE_STEAL,NULL);
+			if(sd) pc->getzeny(sd,status->get_lv(bl)*100,"Steal",NULL);
 			break;
 		case SA_TAMINGMONSTER:
 			clif->skill_nodamage(src,bl,skill_id,skill_lv,1);
@@ -6730,7 +6735,8 @@ int skill_castend_nodamage_id(struct block_list *src, struct block_list *bl, uin
 				item_tmp.identify = 1;
 				tbl.id = 0;
 				clif->takeitem(&sd->bl,&tbl);
-				eflag = pc->additem(sd,&item_tmp,1,LOG_TYPE_PRODUCE);
+				eflag = pc->additem(sd,&item_tmp,1);
+				logs->produce(sd,&item_tmp,1,skill->db[skill->get_index(skill_id)].name);
 				if(eflag) {
 					clif->additem(sd,0,0,eflag);
 					map->addflooritem(&item_tmp,1,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0);
@@ -7453,7 +7459,7 @@ int skill_castend_nodamage_id(struct block_list *src, struct block_list *bl, uin
 									memset(&item_tmp,0,sizeof(item_tmp));
 									item_tmp.nameid = skill->db[su->group->skill_id].itemid[i];
 									item_tmp.identify = 1;
-									if( item_tmp.nameid && (success=pc->additem(sd,&item_tmp,skill->db[su->group->skill_id].amount[i],LOG_TYPE_OTHER)) ) {
+									if( item_tmp.nameid && (success=pc->additem(sd,&item_tmp,skill->db[su->group->skill_id].amount[i])) ) {
 										clif->additem(sd,0,0,success);
 										map->addflooritem(&item_tmp,skill->db[su->group->skill_id].amount[i],sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0);
 									}
@@ -7465,7 +7471,7 @@ int skill_castend_nodamage_id(struct block_list *src, struct block_list *bl, uin
 							memset(&item_tmp,0,sizeof(item_tmp));
 							item_tmp.nameid = su->group->item_id?su->group->item_id:ITEMID_TRAP;
 							item_tmp.identify = 1;
-							if( item_tmp.nameid && (flag=pc->additem(sd,&item_tmp,1,LOG_TYPE_OTHER)) ) {
+							if( item_tmp.nameid && (flag=pc->additem(sd,&item_tmp,1)) ) {
 								clif->additem(sd,0,0,flag);
 								map->addflooritem(&item_tmp,1,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0);
 							}
@@ -13029,8 +13035,10 @@ int skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_id
 			sd->itemid = sd->itemindex = -1;
 			if( skill_id == WZ_EARTHSPIKE && sc && sc->data[SC_EARTHSCROLL] && rnd()%100 > sc->data[SC_EARTHSCROLL]->val2 ) // [marquis007]
 				; //Do not consume item.
-			else if( sd->status.inventory[i].expire_time == 0 )
-				pc->delitem(sd,i,1,0,0,LOG_TYPE_CONSUME); // Rental usable items are not consumed until expiration
+			else if( sd->status.inventory[i].expire_time == 0 ){
+				logs->consume(sd,&sd->status.inventory[i],1,skill->db[skill->get_index(skill_id)].name);
+				pc->delitem(sd,i,1,0,0); // Rental usable items are not consumed until expiration
+			}
 		}
 		return 1;
 	}
@@ -14162,7 +14170,7 @@ int skill_consume_requirement( struct map_session_data *sd, uint16 skill_id, uin
 				req.zeny = 0; //Zeny is reduced on skill->attack.
 			if( sd->status.zeny < req.zeny )
 				req.zeny = sd->status.zeny;
-			pc->payzeny(sd,req.zeny,LOG_TYPE_CONSUME,NULL);
+			pc->payzeny(sd,req.zeny,"Consume",NULL);
 		}
 	}
 
@@ -14204,8 +14212,10 @@ int skill_consume_requirement( struct map_session_data *sd, uint16 skill_id, uin
 					break;
 			}
 
-			if ((n = pc->search_inventory(sd,req.itemid[i])) != INDEX_NOT_FOUND)
-				pc->delitem(sd,n,req.amount[i],0,1,LOG_TYPE_CONSUME);
+			if ((n = pc->search_inventory(sd,req.itemid[i])) != INDEX_NOT_FOUND){
+				logs->consume(sd,&sd->status.inventory[n],req.amount[i],skill->db[skill->get_index(skill_id)].name);
+				pc->delitem(sd,n,req.amount[i],0,1);
+			}
 		}
 	}
 
@@ -15068,8 +15078,8 @@ void skill_repairweapon (struct map_session_data *sd, int idx) {
 	item->attribute = 0;/* clear broken state */
 
 	clif->equiplist(target_sd);
-
-	pc->delitem(sd,pc->search_inventory(sd,material),1,0,0,LOG_TYPE_CONSUME);
+	logs->consume(sd,&sd->status.inventory[pc->search_inventory(sd,material)],1,"Repair Weapon");
+	pc->delitem(sd,pc->search_inventory(sd,material),1,0,0);
 
 	clif->item_repaireffect(sd,idx,0);
 
@@ -15137,13 +15147,12 @@ void skill_weaponrefine (struct map_session_data *sd, int idx)
 				per += 100;
 			else
 				per += 5 * ((signed int)sd->status.job_level - 50);
-
-			pc->delitem(sd, i, 1, 0, 0, LOG_TYPE_OTHER);
+			logs->produce(sd,&sd->status.inventory[i],-1,"Craft Requirement");
+			pc->delitem(sd, i, 1, 0, 0);
 			if (per > rnd() % 1000) {
 				int ep = 0;
-				logs->pick_pc(sd, LOG_TYPE_OTHER, -1, item, ditem);
 				item->refine++;
-				logs->pick_pc(sd, LOG_TYPE_OTHER,  1, item, ditem);
+				logs->produce(sd, item, 1, "Sucess Refine");
 				if(item->equip) {
 					ep = item->equip;
 					pc->unequipitem(sd,idx,3);
@@ -15176,7 +15185,7 @@ void skill_weaponrefine (struct map_session_data *sd, int idx)
 				if(item->equip)
 					pc->unequipitem(sd,idx,3);
 				clif->refine(sd->fd,1,idx,item->refine);
-				pc->delitem(sd,idx,1,0,0, LOG_TYPE_OTHER);
+				pc->delitem(sd,idx,1,0,0);
 				clif->misceffect(&sd->bl,2);
 				clif->emotion(&sd->bl, E_OMG);
 			}
@@ -16877,12 +16886,14 @@ int skill_produce_mix(struct map_session_data *sd, uint16 skill_id, int nameid, 
 		if (j == INDEX_NOT_FOUND)
 			continue;
 		if( slot[i]==ITEMID_STAR_CRUMB ) {
-			pc->delitem(sd,j,1,1,0,LOG_TYPE_PRODUCE);
+			logs->produce(sd,&sd->status.inventory[j],-1,"Craft Requirement");
+			pc->delitem(sd,j,1,1,0);
 			sc++;
 		}
 		if( slot[i] >= ITEMID_FLAME_HEART && slot[i] <= ITEMID_GREAT_NATURE && ele == 0 ) {
 			static const int ele_table[4]={3,1,4,2};
-			pc->delitem(sd,j,1,1,0,LOG_TYPE_PRODUCE);
+			logs->produce(sd,&sd->status.inventory[j],-1,"Craft Requirement");
+			pc->delitem(sd,j,1,1,0);
 			ele=ele_table[slot[i]-994];
 		}
 	}
@@ -16928,7 +16939,8 @@ int skill_produce_mix(struct map_session_data *sd, uint16 skill_id, int nameid, 
 			if (j != INDEX_NOT_FOUND) {
 				y = sd->status.inventory[j].amount;
 				if(y>x)y=x;
-				pc->delitem(sd,j,y,0,0,LOG_TYPE_PRODUCE);
+				logs->produce(sd,&sd->status.inventory[j],-y,"Craft Requirement");
+				pc->delitem(sd,j,y,0,0);
 			} else
 				ShowError("skill_produce_mix: material item error\n");
 
@@ -17257,11 +17269,6 @@ int skill_produce_mix(struct map_session_data *sd, uint16 skill_id, int nameid, 
 			}
 		}
 
-#if 0 // TODO: update PICKLOG
-		if(log_config.produce > 0)
-			log_produce(sd,nameid,slot1,slot2,slot3,1);
-#endif // 0
-
 		if(equip){
 			clif->produce_effect(sd,0,nameid);
 			clif->misceffect(&sd->bl,3);
@@ -17346,10 +17353,11 @@ int skill_produce_mix(struct map_session_data *sd, uint16 skill_id, int nameid, 
 					for(j=0; j<5; j++){
 						if( rnd()%1000 < skill->changematerial_db[i].qty_rate[j] ){
 							tmp_item.amount = qty * skill->changematerial_db[i].qty[j];
-							if((flag = pc->additem(sd,&tmp_item,tmp_item.amount,LOG_TYPE_PRODUCE))) {
+							if((flag = pc->additem(sd,&tmp_item,tmp_item.amount))) {
 								clif->additem(sd,0,0,flag);
 								map->addflooritem(&tmp_item,tmp_item.amount,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0);
 							}
+							else logs->produce(sd,&tmp_item,tmp_item.amount,skill->db[skill->get_index(skill_id)].name);
 							k++;
 						}
 					}
@@ -17360,21 +17368,19 @@ int skill_produce_mix(struct map_session_data *sd, uint16 skill_id, int nameid, 
 				return 1;
 			}
 		} else if (tmp_item.amount) { //Success
-			if((flag = pc->additem(sd,&tmp_item,tmp_item.amount,LOG_TYPE_PRODUCE))) {
+			if((flag = pc->additem(sd,&tmp_item,tmp_item.amount))) {
 				clif->additem(sd,0,0,flag);
 				map->addflooritem(&tmp_item,tmp_item.amount,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0);
 			}
+			else logs->produce(sd,&tmp_item,tmp_item.amount,"Crafting Sucess");
+			
 			if( skill_id == GN_MIX_COOKING || skill_id == GN_MAKEBOMB || skill_id ==  GN_S_PHARMACY )
 				clif->msg_skill(sd,skill_id,0x627);
 			return 1;
 		}
+		
 	}
-	//Failure
-#if 0 // TODO: update PICKLOG
-	if(log_config.produce)
-		log_produce(sd,nameid,slot1,slot2,slot3,0);
-#endif // 0
-
+	logs->produce(sd,NULL,0,"Crafting Fail"); //Craft Failure Log
 	if(equip){
 		clif->produce_effect(sd,1,nameid);
 		clif->misceffect(&sd->bl,2);
@@ -17420,10 +17426,12 @@ int skill_produce_mix(struct map_session_data *sd, uint16 skill_id, int nameid, 
 					tmp_item.nameid = compensation[i];
 					tmp_item.amount = qty;
 					tmp_item.identify = 1;
-					if( pc->additem(sd,&tmp_item,tmp_item.amount,LOG_TYPE_PRODUCE) ) {
+					if( pc->additem(sd,&tmp_item,tmp_item.amount) ) {
 						clif->additem(sd,0,0,flag);
 						map->addflooritem(&tmp_item,tmp_item.amount,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0);
 					}
+					else logs->produce(sd,&tmp_item,tmp_item.amount,"Cooking");
+					
 					clif->msg_skill(sd,skill_id,0x628);
 				}
 				break;
@@ -17462,8 +17470,9 @@ int skill_arrow_create (struct map_session_data *sd, int nameid)
 
 	if(index < 0 || (j = pc->search_inventory(sd,nameid)) == INDEX_NOT_FOUND)
 		return 1;
-
-	pc->delitem(sd,j,1,0,0,LOG_TYPE_PRODUCE);
+	
+	logs->produce(sd,&sd->status.inventory[j],1,"Arrow Create");
+	pc->delitem(sd,j,1,0,0);
 	for(i=0;i<MAX_ARROW_RESOURCE;i++) {
 		memset(&tmp_item,0,sizeof(tmp_item));
 		tmp_item.identify = 1;
@@ -17477,10 +17486,11 @@ int skill_arrow_create (struct map_session_data *sd, int nameid)
 		}
 		if(tmp_item.nameid <= 0 || tmp_item.amount <= 0)
 			continue;
-		if((flag = pc->additem(sd,&tmp_item,tmp_item.amount,LOG_TYPE_PRODUCE))) {
+		if((flag = pc->additem(sd,&tmp_item,tmp_item.amount))) {
 			clif->additem(sd,0,0,flag);
 			map->addflooritem(&tmp_item,tmp_item.amount,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0);
 		}
+		else 	logs->produce(sd,&tmp_item,tmp_item.amount,"Arrow Create");
 	}
 
 	return 0;
@@ -17488,11 +17498,20 @@ int skill_arrow_create (struct map_session_data *sd, int nameid)
 int skill_poisoningweapon( struct map_session_data *sd, int nameid) {
 	sc_type type;
 	int chance, i;
+	struct item item_tmp;
 	nullpo_ret(sd);
-	if( nameid <= 0 || (i = pc->search_inventory(sd,nameid)) == INDEX_NOT_FOUND || pc->delitem(sd,i,1,0,0,LOG_TYPE_CONSUME) ) {
+	i = pc->search_inventory(sd,nameid);
+	
+	if( nameid <= 0 || i == INDEX_NOT_FOUND) {
 		clif->skill_fail(sd,GC_POISONINGWEAPON,USESKILL_FAIL_LEVEL,0);
 		return 0;
 	}
+	memcpy(&item_tmp,&sd->status.inventory[i],sizeof(item_tmp));
+	if (pc->delitem(sd,i,1,0,0)){
+		clif->skill_fail(sd,GC_POISONINGWEAPON,USESKILL_FAIL_LEVEL,0);
+		return 0;		
+	}
+	logs->consume(sd,&item_tmp,1,"EDP Poisoning");
 	switch( nameid )
 	{ // t_lv used to take duration from skill->get_time2
 		case ITEMID_POISON_PARALYSIS:     type = SC_PARALYSE;      break;
@@ -17543,18 +17562,23 @@ void skill_toggle_magicpower(struct block_list *bl, uint16 skill_id) {
 int skill_magicdecoy(struct map_session_data *sd, int nameid) {
 	int x, y, i, class_, skill_id;
 	struct mob_data *md;
+	struct item item_tmp;
 	nullpo_ret(sd);
 	skill_id = sd->menuskill_val;
-
 	if (nameid <= 0 || !itemdb_is_element(nameid) || (i = pc->search_inventory(sd,nameid)) == INDEX_NOT_FOUND
-	 || !skill_id || pc->delitem(sd,i,1,0,0,LOG_TYPE_CONSUME)
-	) {
+	 || !skill_id) {
 		clif->skill_fail(sd,NC_MAGICDECOY,USESKILL_FAIL_LEVEL,0);
 		return 0;
 	}
-
+	memcpy(&item_tmp,&sd->status.inventory[i],sizeof(item_tmp));
+	if(pc->delitem(sd,i,1,0,0)){
+		clif->skill_fail(sd,NC_MAGICDECOY,USESKILL_FAIL_LEVEL,0);
+		return 0;
+	
+	}
+	logs->consume(sd,&item_tmp,1,"NC_MAGICDECOY");
 	// Spawn Position
-	pc->delitem(sd,i,1,0,0,LOG_TYPE_CONSUME);
+	pc->delitem(sd,i,1,0,0);
 	x = sd->sc.comet_x;
 	y = sd->sc.comet_y;
 	sd->sc.comet_x = sd->sc.comet_y = 0;
@@ -17690,10 +17714,11 @@ int skill_elementalanalysis(struct map_session_data* sd, int n, uint16 skill_lv,
 				return 1;
 		}
 
-		if( pc->delitem(sd,idx,del_amount,0,1,LOG_TYPE_CONSUME) ) {
+		if( pc->delitem(sd,idx,del_amount,0,1) ) {
 			clif->skill_fail(sd,SO_EL_ANALYSIS,USESKILL_FAIL_LEVEL,0);
 			return 1;
 		}
+		logs->consume(sd,&sd->status.inventory[idx],del_amount,"Elemental Analysis");
 
 		if( skill_lv == 2 && rnd()%100 < 25 ) {
 			// At level 2 have a fail chance. You loose your items if it fails.
@@ -17708,11 +17733,12 @@ int skill_elementalanalysis(struct map_session_data* sd, int n, uint16 skill_lv,
 		tmp_item.identify = 1;
 
 		if (tmp_item.amount) {
-			int flag = pc->additem(sd,&tmp_item,tmp_item.amount,LOG_TYPE_CONSUME);
+			int flag = pc->additem(sd,&tmp_item,tmp_item.amount);
 			if (flag) {
 				clif->additem(sd,0,0,flag);
 				map->addflooritem(&tmp_item,tmp_item.amount,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0);
 			}
+			else logs->produce(sd,&tmp_item,tmp_item.amount,"Ele.Analysis");
 		}
 
 	}

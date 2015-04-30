@@ -1601,9 +1601,8 @@ bool mob_ai_sub_hard(struct mob_data *md, int64 tick) {
 			return true; //Busy attacking?
 
 		fitem = (struct flooritem_data *)tbl;
-		//Logs items, taken by (L)ooter Mobs [Lupus]
-		logs->pick_mob(md, LOG_TYPE_LOOT, fitem->item_data.amount, &fitem->item_data, NULL);
-
+		//Logs items, taken by Looter Mobs [GreenStage]
+		logs->pickdrop(NULL,md,&fitem->item_data,fitem->item_data.amount,"Loot","Floor");
 		if (md->lootitem_count < LOOTITEM_SIZE) {
 			memcpy (&md->lootitem[md->lootitem_count++], &fitem->item_data, sizeof(md->lootitem[0]));
 		} else {
@@ -1843,9 +1842,8 @@ void mob_item_drop(struct mob_data *md, struct item_drop_list *dlist, struct ite
 {
 	TBL_PC* sd;
 
-	//Logs items, dropped by mobs [Lupus]
-	logs->pick_mob(md, loot?LOG_TYPE_LOOT:LOG_TYPE_PICKDROP_MONSTER, -ditem->item_data.amount, &ditem->item_data, NULL);
-
+	//Logs items, dropped by mobs [GreenStage]
+	logs->pickdrop(NULL,md,&ditem->item_data,-ditem->item_data.amount,"Drop","Self");
 	sd = map->charid2sd(dlist->first_charid);
 	if( sd == NULL ) sd = map->charid2sd(dlist->second_charid);
 	if( sd == NULL ) sd = map->charid2sd(dlist->third_charid);
@@ -2292,7 +2290,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type) {
 				}
 			}
 			if(zeny) // zeny from mobs [Valaris]
-				pc->getzeny(tmpsd[i], zeny, LOG_TYPE_PICKDROP_MONSTER, NULL);
+				pc->getzeny(tmpsd[i], zeny,"Monster", NULL);
 		}
 	}
 
@@ -2449,7 +2447,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type) {
 			if( sd->bonus.get_zeny_num && rnd()%100 < sd->bonus.get_zeny_rate ) {
 				i = sd->bonus.get_zeny_num > 0 ? sd->bonus.get_zeny_num : -md->level * sd->bonus.get_zeny_num;
 				if (!i) i = 1;
-				pc->getzeny(sd, 1+rnd()%i, LOG_TYPE_PICKDROP_MONSTER, NULL);
+				pc->getzeny(sd, 1+rnd()%i, "Monster", NULL);
 			}
 		}
 
@@ -2544,13 +2542,13 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type) {
 					intif->broadcast(message, strlen(message)+1, BC_DEFAULT);
 				}
 
-				if((temp = pc->additem(mvp_sd,&item,1,LOG_TYPE_PICKDROP_PLAYER)) != 0) {
+				if((temp = pc->additem(mvp_sd,&item,1)) != 0) {
 					clif->additem(mvp_sd,0,0,temp);
 					map->addflooritem(&item,1,mvp_sd->bl.m,mvp_sd->bl.x,mvp_sd->bl.y,mvp_sd->status.char_id,(second_sd?second_sd->status.char_id:0),(third_sd?third_sd->status.char_id:0),1);
 				}
 
-				//Logs items, MVP prizes [Lupus]
-				logs->pick_mob(md, LOG_TYPE_MVP, -1, &item, data);
+				//BrAthena - Log MvP Prizes
+				logs->pickdrop(mvp_sd,md,&item,1,"MvP Award",md->name);
 				break;
 			}
 		}

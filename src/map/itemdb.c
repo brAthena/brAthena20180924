@@ -216,8 +216,9 @@ void itemdb_package_item(struct map_session_data *sd, struct item_package *packa
 		it.amount = get_count == 1 ? 1 : get_count;
 		
 		for( j = 0; j < package->must_items[i].qty; j += get_count ) {
-			if ( ( flag = pc->additem(sd, &it, get_count, LOG_TYPE_SCRIPT) ) )
+			if ( ( flag = pc->additem(sd, &it, get_count) ) )
 				clif->additem(sd, 0, 0, flag);
+			else logs->item_getrem(1, sd, &it, get_count, "Box");
 		}
 	}
 	
@@ -263,8 +264,9 @@ void itemdb_package_item(struct map_session_data *sd, struct item_package *packa
 					it.amount = get_count == 1 ? 1 : get_count;
 					
 					for( j = 0; j < entry->qty; j += get_count ) {
-						if ( ( flag = pc->additem(sd, &it, get_count, LOG_TYPE_SCRIPT) ) )
+						if ( ( flag = pc->additem(sd, &it, get_count) ) )
 							clif->additem(sd, 0, 0, flag);
+						else logs->item_getrem(1,sd, &it, get_count, "Box");
 					}
 					break;
 				}

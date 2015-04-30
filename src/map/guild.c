@@ -369,7 +369,7 @@ int guild_create(struct map_session_data *sd, const char *name)
 //Whether or not to create guild
 int guild_created(int account_id,int guild_id) {
 	struct map_session_data *sd=map->id2sd(account_id);
-
+	int idx = pc->search_inventory(sd,ITEMID_EMPERIUM);
 	if(sd==NULL)
 		return 0;
 	if(!guild_id) {
@@ -379,8 +379,11 @@ int guild_created(int account_id,int guild_id) {
 	//struct guild *g;
 	sd->status.guild_id=guild_id;
 	clif->guild_created(sd,0);
-	if(battle_config.guild_emperium_check)
-		pc->delitem(sd,pc->search_inventory(sd,ITEMID_EMPERIUM),1,0,0,LOG_TYPE_CONSUME); //emperium consumption
+	if(battle_config.guild_emperium_check){
+		if(idx != INDEX_NOT_FOUND )
+			logs->consume(sd,&sd->status.inventory[idx],1,"Guild Create");
+		pc->delitem(sd,idx,1,0,0); //emperium consumption
+	}
 	return 0;
 }
 

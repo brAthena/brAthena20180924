@@ -306,10 +306,11 @@ int pet_return_egg(struct map_session_data *sd, struct pet_data *pd)
 	tmp_item.card[1] = GetWord(pd->pet.pet_id,0);
 	tmp_item.card[2] = GetWord(pd->pet.pet_id,1);
 	tmp_item.card[3] = pd->pet.rename_flag;
-	if((flag = pc->additem(sd,&tmp_item,1,LOG_TYPE_OTHER))) {
+	if((flag = pc->additem(sd,&tmp_item,1))) {
 		clif->additem(sd,0,0,flag);
 		map->addflooritem(&tmp_item,1,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0);
 	}
+	else logs->item_getrem(1,sd, &tmp_item, 1, "Egg");
 	pd->pet.incubate = 1;
 	unit->free(&pd->bl,CLR_OUTSIGHT);
 
@@ -449,12 +450,14 @@ int pet_recv_petdata(int account_id,struct s_pet *p,int flag) {
 				break;
 		}
 		if(i >= MAX_INVENTORY) {
-			ShowError("pet_recv_petdata: Pet eclosao (%d:%s) abortada, ovo nao esta no inventario para remocao!\n",p->pet_id, p->name);
+			ShowError("pet_recv_petdata: Hatching pet (%d:%s) aborted, couldn't find egg in inventory for removal!\n",p->pet_id, p->name);
 			sd->status.pet_id = 0;
 			return 1;
 		}
-		if (!pet->birth_process(sd,p)) //Pet hatched. Delete egg.
-			pc->delitem(sd,i,1,0,0,LOG_TYPE_OTHER);
+		if (!pet->birth_process(sd,p)){ //Pet hatched. Delete egg.
+		logs->consume(sd,&sd->status.inventory[i],1,"Pet Created");
+		pc->delitem(sd,i,1,0,0);
+		}
 	} else {
 		pet->data_init(sd,p);
 		if(sd->pd && sd->bl.prev != NULL) {
@@ -480,7 +483,7 @@ int pet_select_egg(struct map_session_data *sd,short egg_index)
 	if(sd->status.inventory[egg_index].card[0] == CARD0_PET)
 		intif->request_petdata(sd->status.account_id, sd->status.char_id, MakeDWord(sd->status.inventory[egg_index].card[1], sd->status.inventory[egg_index].card[2]) );
 	else
-		ShowError("Ovo errado %d\n",egg_index);
+		ShowError("wrong egg item inventory %d\n",egg_index);
 
 	return 0;
 }
@@ -587,11 +590,11 @@ bool pet_get_egg(int account_id, short pet_class, int pet_id ) {
 	tmp_item.card[1] = GetWord(pet_id,0);
 	tmp_item.card[2] = GetWord(pet_id,1);
 	tmp_item.card[3] = 0; //New pets are not named.
-	if((ret = pc->additem(sd,&tmp_item,1,LOG_TYPE_PICKDROP_PLAYER))) {
+	if((ret = pc->additem(sd,&tmp_item,1))) {
 		clif->additem(sd,0,0,ret);
 		map->addflooritem(&tmp_item,1,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0);
 	}
-
+	else logs->item_getrem(1, sd, &tmp_item, 1, "Egg");
 	return true;
 }
 
@@ -687,7 +690,7 @@ int pet_equipitem(struct map_session_data *sd,int index) {
 		return 1;
 	}
 
-	pc->delitem(sd,index,1,0,0,LOG_TYPE_OTHER);
+	pc->delitem(sd,index,1,0,0);
 	pd->pet.equip = nameid;
 	status->set_viewdata(&pd->bl, pd->pet.class_); //Updates view_data.
 	clif->send_petdata(NULL, sd->pd, 3, sd->pd->vd.head_bottom);
@@ -718,7 +721,7 @@ int pet_unequipitem(struct map_session_data *sd, struct pet_data *pd) {
 	memset(&tmp_item,0,sizeof(tmp_item));
 	tmp_item.nameid = nameid;
 	tmp_item.identify = 1;
-	if((flag = pc->additem(sd,&tmp_item,1,LOG_TYPE_OTHER))) {
+	if((flag = pc->additem(sd,&tmp_item,1))) {
 		clif->additem(sd,0,0,flag);
 		map->addflooritem(&tmp_item,1,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0);
 	}
@@ -752,7 +755,8 @@ int pet_food(struct map_session_data *sd, struct pet_data *pd) {
 		clif->pet_food(sd, food_id, 0);
 		return 1;
 	}
-	pc->delitem(sd,i,1,0,0,LOG_TYPE_CONSUME);
+	logs->consume(sd,&sd->status.inventory[i],1,"Pet Feed");
+	pc->delitem(sd,i,1,0,0);
 
 	if (pd->pet.hungry > 90) {
 		pet->set_intimate(pd, pd->pet.intimate - pd->petDB->r_full);
@@ -809,7 +813,7 @@ int pet_randomwalk(struct pet_data *pd, int64 tick) {
 			if(i+1>=retrycount){
 				pd->move_fail_count++;
 				if(pd->move_fail_count>1000){
-					ShowWarning("PET nao se move. Posicao de espera %d, classe = %d\n",pd->bl.id,pd->pet.class_);
+					ShowWarning("PET can't move. hold position %d, class = %d\n",pd->bl.id,pd->pet.class_);
 					pd->move_fail_count=0;
 					pd->ud.canmove_tick = tick + 60000;
 					return 0;
@@ -1019,13 +1023,14 @@ int pet_lootitem_drop(struct pet_data *pd,struct map_session_data *sd)
 	for (i = 0; i < pd->loot->count; i++) {
 		struct item *it = &pd->loot->item[i];
 		if (sd) {
-			if ((flag = pc->additem(sd,it,it->amount,LOG_TYPE_PICKDROP_PLAYER))) {
+			if ((flag = pc->additem(sd,it,it->amount))) {
 				clif->additem(sd,0,0,flag);
 				ditem = ers_alloc(pet->item_drop_ers, struct item_drop);
 				memcpy(&ditem->item_data, it, sizeof(struct item));
 				ditem->next = dlist->item;
 				dlist->item = ditem;
 			}
+			else logs->pickdrop (sd,NULL,it,it->amount,"Pick","Floor");
 		} else {
 			ditem = ers_alloc(pet->item_drop_ers, struct item_drop);
 			memcpy(&ditem->item_data, it, sizeof(struct item));
@@ -1181,7 +1186,7 @@ void read_petdb(void) {
 	const char *str = NULL;
 
 	if (libconfig->read_file(&pet_conf, config_filename)) {
-		ShowError("Nao foi possivel abrir %s\n", config_filename);
+		ShowError("Erro ao ler %s\n", config_filename);
 		return;
 	}
 

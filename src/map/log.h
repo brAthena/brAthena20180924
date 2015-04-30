@@ -47,31 +47,17 @@ typedef enum e_log_chat_type {
 	LOG_CHAT_ALL         = 0xFF,
 } e_log_chat_type;
 
-typedef enum e_log_pick_type {
-	LOG_TYPE_NONE             = 0,
-	LOG_TYPE_TRADE            = 0x00001,
-	LOG_TYPE_VENDING          = 0x00002,
-	LOG_TYPE_PICKDROP_PLAYER  = 0x00004,
-	LOG_TYPE_PICKDROP_MONSTER = 0x00008,
-	LOG_TYPE_NPC              = 0x00010,
-	LOG_TYPE_SCRIPT           = 0x00020,
-	LOG_TYPE_STEAL            = 0x00040,
-	LOG_TYPE_CONSUME          = 0x00080,
-	LOG_TYPE_PRODUCE          = 0x00100,
-	LOG_TYPE_MVP              = 0x00200,
-	LOG_TYPE_COMMAND          = 0x00400,
-	LOG_TYPE_STORAGE          = 0x00800,
-	LOG_TYPE_GSTORAGE         = 0x01000,
-	LOG_TYPE_MAIL             = 0x02000,
-	LOG_TYPE_AUCTION          = 0x04000,
-	LOG_TYPE_BUYING_STORE     = 0x08000,
-	LOG_TYPE_OTHER            = 0x10000,
-	LOG_TYPE_BANK             = 0x20000,
-	// combinations
-	LOG_TYPE_LOOT             = LOG_TYPE_PICKDROP_MONSTER|LOG_TYPE_CONSUME,
-	// all
-	LOG_TYPE_ALL              = 0xFFFFF,
-} e_log_pick_type;
+typedef enum _log_action_type{
+	LOG_ACTION_GET = 0,
+	LOG_ACTION_DROP,
+	LOG_ACTION_MVP_AWARD,
+	LOG_ACTION_PARTY_SHARE,
+	LOG_ACTION_STEAL,
+	LOG_ACTION_LOOT,
+	LOG_ACTION_COMMAND_DEL,
+	LOG_ACTION_COMMAND_GET
+} log_action_type;
+
 
 /// filters for item logging
 typedef enum e_log_filter {
@@ -92,12 +78,14 @@ typedef enum e_log_filter {
 } e_log_filter;
 
 struct log_interface {
+	bool enable_logs;
 	struct {
-		e_log_pick_type enable_logs;
 		int filter;
 		bool sql_logs;
 		bool log_chat_woe_disable;
 		int rare_items_log,refine_items_log,price_items_log,amount_items_log;
+		int trade,mail,get_rem_item,gstorage,storage,produce,npc_buy_sell,
+			pc_pick_drop, mob_pick_drop,consume,vending,buyingstore,cards;
 		int branch, mvpdrop, zeny, commands, npc, chat, buycash;
 		char log_branch[64], log_pick[64], log_zeny[64], log_mvpdrop[64], log_gm[64], log_npc[64], log_chat[64];
 	} config;
@@ -109,17 +97,14 @@ struct log_interface {
 	char db_name[32];
 	Sql* mysql_handle;
 	/* */
-	void (*pick_pc) (struct map_session_data* sd, e_log_pick_type type, int amount, struct item* itm, struct item_data *data);
-	void (*pick_mob) (struct mob_data* md, e_log_pick_type type, int amount, struct item* itm, struct item_data *data);
-	void (*zeny) (struct map_session_data* sd, e_log_pick_type type, struct map_session_data* src_sd, int amount);
+	void (*zeny) (struct map_session_data* sd,char * type, struct map_session_data* src_sd, int amount);
 	void (*npc) (struct map_session_data* sd, const char *message);
 	void (*chat) (e_log_chat_type type, int type_id, int src_charid, int src_accid, const char *mapname, int x, int y, const char* dst_charname, const char* message);
 	void (*atcommand) (struct map_session_data* sd, const char* message);
 	void (*branch) (struct map_session_data* sd);
 	void (*mvpdrop) (struct map_session_data* sd, int monster_id, int* log_mvp);
 
-	void (*pick_sub) (int id, int16 m, e_log_pick_type type, int amount, struct item* itm, struct item_data *data);
-	void (*zeny_sub) (struct map_session_data* sd, e_log_pick_type type, struct map_session_data* src_sd, int amount);
+	void (*zeny_sub) (struct map_session_data* sd, char * type, struct map_session_data* src_sd, int amount);
 	void (*npc_sub) (struct map_session_data* sd, const char *message);
 	void (*chat_sub) (e_log_chat_type type, int type_id, int src_charid, int src_accid, const char *mapname, int x, int y, const char* dst_charname, const char* message);
 	void (*atcommand_sub) (struct map_session_data* sd, const char* message);
@@ -128,17 +113,68 @@ struct log_interface {
 
 	int (*config_read) (const char* cfgName);
 	
-    // Cash Log - [GreenStage]
-	void (*cash_buy_sql) (struct map_session_data* sd,char * type, char * npc_name,struct item* itm , int amount,int price);
-	void (*cash_buy_sub_sql) (struct map_session_data* sd,char * type, char * npc_name,struct item* itm , int amount,int price);
-
 	void (*config_done) (void);
 	void (*sql_init) (void);
 	void (*sql_final) (void);
 
-	char (*picktype2char) (e_log_pick_type type);
 	char (*chattype2char) (e_log_chat_type type);
 	bool (*should_log_item) (int nameid, int amount, int refine, struct item_data *id);
+
+	//BrAthena Log System
+	//Cash Log
+	void (*cash_buy_sql) (struct map_session_data* sd,char * type, char * npc_name,struct item* itm , int amount,int price);
+	void (*cash_buy_sub_sql) (struct map_session_data* sd,char * type, char * npc_name,struct item* itm , int amount,int price);
+
+	//Card Log
+	void (*card) ( struct map_session_data* sd,int slot,char * type, struct item* itm);
+	void (*card_sub_sql) ( struct map_session_data* sd,int slot,char * type, struct item* itm);
+	
+	//Trade Log
+	void (*trade) (int zeny, struct map_session_data* sd1, struct map_session_data* sd2,struct item *itm,int amount);
+	void (*trade_sub_sql) (int zeny, struct map_session_data* sd1, struct map_session_data* sd2,struct item *itm,int amount);
+
+	//Vending Purchase Log
+	void (*vending) (struct map_session_data* sd,struct map_session_data* vsd,struct item *itm, int zeny,int amount);
+	void (*vending_sub_sql) (struct map_session_data* sd,struct map_session_data* vsd,struct item *itm, int zeny,int amount);
+
+	//NPC Shop Buy/Sell Log
+	void (*npc_shop) (struct map_session_data* sd,char * name, struct item* itm , int unit_cost, int amount, int type);
+	void (*npc_shop_sub_sql) (struct map_session_data* sd,char * name, struct item* itm , int unit_cost, int amount, int type);
+	
+	//Player/Mob Pick/Drop Action Log
+	void (*pickdrop) (struct map_session_data* sd, struct mob_data *md, struct item* itm , int amount,char * type,char * from);
+	void (*pickdrop_sub_sql) (struct map_session_data* sd, struct mob_data *md, struct item* itm, int amount,char * type,char * from);
+	
+	//Script Item Add/Remove Log
+	void (*script_item) (struct map_session_data* sd, char * name,int amount,char type );
+	void (*script_item_sub_sql) (struct map_session_data* sd, char * name,int amount,char type );
+	
+	//Item Consume Log
+	void (*consume)  (struct map_session_data* sd,struct item* itm, int amount,char * type);
+	void (*consume_sub_sql)  (struct map_session_data* sd,struct item* itm, int amount, char * type);
+	
+	//Item Produce Log
+	void (*produce)  (struct map_session_data* sd,struct item* itm, int amount,char * type);
+	void (*produce_sub_sql)  (struct map_session_data* sd,struct item* itm, int amount, char * type);
+	
+	//Storage Log
+	void (*storage)  (struct map_session_data* sd,struct item* itm,int amount,char type);
+	void (*storage_sub_sql) (struct map_session_data* sd,struct item* itm,int amount,char type);
+	
+	//Guild Storage Log
+	void (*gstorage)  (struct map_session_data* sd,struct item* itm,int amount,char type);
+	void (*gstorage_sub_sql) (struct map_session_data* sd,struct item* itm,int amount,char type);
+
+	//Mail Log
+	void (*mail) (struct mail_message *msg);
+	void (*mail_sub_sql) (struct mail_message *msg);
+	
+	//BuyingStore Log
+	void (*buyingstore) (struct map_session_data* bsd,struct map_session_data* vsd,struct item *itm, int zeny,int amount);
+	void (*buyingstore_sub_sql) (struct map_session_data* bsd,struct map_session_data* vsd,struct item *itm, int zeny,int amount);
+	
+	void (*item_getrem)  (int tp,struct map_session_data* sd,struct item* itm,int amount,char * type);
+	void (*item_getrem_sub_sql)  (int tp,struct map_session_data* sd,struct item* itm,int amount,char * type);
 };
 
 struct log_interface *logs;

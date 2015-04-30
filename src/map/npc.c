@@ -1439,7 +1439,7 @@ int npc_cashshop_buylist(struct map_session_data *sd, int points, int count, uns
 		if( !pet->create_egg(sd,nameid) ) {
 			item_tmp.nameid = nameid;
 			item_tmp.identify = 1;
-			pc->additem(sd,&item_tmp,amount,LOG_TYPE_NPC);
+			pc->additem(sd,&item_tmp,amount);
 		}
 		
 		// Add to cashshop Log - [GreenStage]
@@ -1770,8 +1770,9 @@ int npc_cashshop_buy(struct map_session_data *sd, int nameid, int amount, int po
 		memset(&item_tmp, 0, sizeof(struct item));
 		item_tmp.nameid = nameid;
 		item_tmp.identify = 1;
-
-		pc->additem(sd,&item_tmp, amount, LOG_TYPE_NPC);
+		pc->additem(sd,&item_tmp, amount);
+		// Add to cashshop Log - [GreenStage] NEEDGRTEST
+		logs->cash_buy_sql(sd, "NPC", nd->name, &item_tmp, amount, shop[i].value);
 	}
 
 	return ERROR_TYPE_NONE;
@@ -1869,11 +1870,13 @@ int npc_buylist(struct map_session_data* sd, int n, unsigned short* item_list) {
 	if( pc->inventoryblank(sd) < new_ )
 		return 3; // Not enough space to store items
 	
-	pc->payzeny(sd,(int)z,LOG_TYPE_NPC, NULL);
+	pc->payzeny(sd,(int)z,"Npc", NULL);
 	
 	for( i = 0; i < n; ++i ) {
 		int nameid = item_list[i*2+1];
 		int amount = item_list[i*2+0];
+		
+		ARR_FIND(0,shop_size,j,shop[j].nameid == nameid);
 		
 		if (itemdb_type(nameid) == IT_PETEGG) {
 			pet->create_egg(sd, nameid);
@@ -1882,9 +1885,10 @@ int npc_buylist(struct map_session_data* sd, int n, unsigned short* item_list) {
 			memset(&item_tmp,0,sizeof(item_tmp));
 			item_tmp.nameid = nameid;
 			item_tmp.identify = 1;
-			
-			pc->additem(sd,&item_tmp,amount,LOG_TYPE_NPC);
-		}
+			pc->additem(sd,&item_tmp,amount);
+			//BrAthena Shop Log
+			logs->npc_shop(sd,nd->name,&item_tmp,shop[j].value,amount,LOG_ACTION_GET);
+		} 
 	}
 	
 	// custom merchant shop exp bonus
@@ -1984,12 +1988,13 @@ int npc_market_buylist(struct map_session_data* sd, unsigned short list_size, st
 	if( pc->inventoryblank(sd) < new_ ) /* TODO find official response for this */
 		return 1; // Not enough space to store items
 
-	pc->payzeny(sd,(int)z,LOG_TYPE_NPC, NULL);
+	pc->payzeny(sd,(int)z,"Npc", NULL);
 	
 	for( i = 0; i < list_size; ++i ) {
 		int nameid = p->list[i].ITID;
 		int amount = p->list[i].qty;
-		
+		int a;
+
 		j = npc_market_qty[i];
 		
 		if( p->list[i].qty > shop[j].qty ) /* wohoo someone tampered with the packet. */
@@ -1998,7 +2003,7 @@ int npc_market_buylist(struct map_session_data* sd, unsigned short list_size, st
 		shop[j].qty -= amount;
 		
 		npc->market_tosql(nd,j);
-		
+		ARR_FIND(0, shop_size, a, shop[a].nameid == nameid);
 		if (itemdb_type(nameid) == IT_PETEGG) {
 			pet->create_egg(sd, nameid);
 		} else {
@@ -2007,7 +2012,9 @@ int npc_market_buylist(struct map_session_data* sd, unsigned short list_size, st
 			item_tmp.nameid = nameid;
 			item_tmp.identify = 1;
 			
-			pc->additem(sd,&item_tmp,amount,LOG_TYPE_NPC);
+			pc->additem(sd,&item_tmp,amount);
+			//BrAthena Shop Log
+			logs->npc_shop(sd, nd->name, &item_tmp, shop[a].value, amount, LOG_ACTION_GET);
 		}
 	}
 
@@ -2125,24 +2132,26 @@ int npc_selllist(struct map_session_data* sd, int n, unsigned short* item_list) 
 
 	// delete items
 	for( i = 0; i < n; i++ ) {
-		int amount, idx;
+		int amount, idx, value;
 
 		idx    = item_list[i*2]-2;
 		amount = item_list[i*2+1];
-
+		value = pc->modifysellvalue(sd, sd->inventory_data[idx]->value_sell);
+						
 		if( sd->inventory_data[idx]->type == IT_PETEGG && sd->status.inventory[idx].card[0] == CARD0_PET ) {
 			if( pet->search_petDB_index(sd->status.inventory[idx].nameid, PET_EGG) >= 0 ) {
 				intif->delete_petdata(MakeDWord(sd->status.inventory[idx].card[1], sd->status.inventory[idx].card[2]));
 			}
 		}
-
-		pc->delitem(sd, idx, amount, 0, 6, LOG_TYPE_NPC);
+		//BrAthena Shop Log
+		logs->npc_shop(sd,nd->name,&sd->status.inventory[idx],value,amount,LOG_ACTION_DROP);
+		pc->delitem(sd, idx, amount, 0, 6);
 	}
 
 	if( z > MAX_ZENY )
 		z = MAX_ZENY;
 
-	pc->getzeny(sd, (int)z, LOG_TYPE_NPC, NULL);
+	pc->getzeny(sd, (int)z, "Npc", NULL);
 
 	// custom merchant shop exp bonus
 	if( battle_config.shop_exp > 0 && z > 0 && ( skill_t = pc->checkskill2(sd,skill_idx) ) > 0) {

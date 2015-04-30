@@ -1237,8 +1237,9 @@ ACMD(item)
 			item_tmp.identify = 1;
 			item_tmp.bound = (unsigned char)bound;
 
-			if ((flag = pc->additem(sd, &item_tmp, get_count, LOG_TYPE_COMMAND)))
+			if ((flag = pc->additem(sd, &item_tmp, get_count)))
 				clif->additem(sd, 0, 0, flag);
+			else logs->item_getrem(1, sd, &item_tmp, get_count, "Cmd");
 		}
 	}
 
@@ -1327,8 +1328,9 @@ ACMD(item2)
 			item_tmp.card[2] = c3;
 			item_tmp.card[3] = c4;
 
-			if ((flag = pc->additem(sd, &item_tmp, get_count, LOG_TYPE_COMMAND)))
+			if ((flag = pc->additem(sd, &item_tmp, get_count)))
 				clif->additem(sd, 0, 0, flag);
+			else logs->item_getrem(1, sd, &item_tmp, get_count, "Cmd");
 		}
 
 		if (flag == 0)
@@ -1350,7 +1352,8 @@ ACMD(itemreset)
 
 	for (i = 0; i < MAX_INVENTORY; i++) {
 		if (sd->status.inventory[i].amount && sd->status.inventory[i].equip == 0) {
-			pc->delitem(sd, i, sd->status.inventory[i].amount, 0, 0, LOG_TYPE_COMMAND);
+			logs->item_getrem(0, sd, &sd->status.inventory[i], -sd->status.inventory[i].amount, "Cmd");
+			pc->delitem(sd, i, sd->status.inventory[i].amount, 0, 0);
 		}
 	}
 	clif->message(fd, msg_fd(fd,20)); // All of your items have been removed.
@@ -2094,6 +2097,7 @@ ACMD(refine)
 			current_position = sd->status.inventory[idx].equip;
 			pc->unequipitem(sd, idx, 3);
 			clif->refine(fd, 0, idx, sd->status.inventory[idx].refine);
+			logs->produce(sd, &sd->status.inventory[idx], 1, "Sucess Refine");
 			clif->delitem(sd, idx, 1, 3);
 			clif->additem(sd, idx, 1, 0);
 			pc->equipitem(sd, idx, current_position);
@@ -2161,8 +2165,9 @@ ACMD(produce)
 		clif->produce_effect(sd, 0, item_id);
 		clif->misceffect(&sd->bl, 3);
 
-		if ((flag = pc->additem(sd, &tmp_item, 1, LOG_TYPE_COMMAND)))
+		if ((flag = pc->additem(sd, &tmp_item, 1)))
 			clif->additem(sd, 0, 0, flag);
+		else logs->produce(sd, &tmp_item, 1, "Crafting Sucess");
 	} else {
 		sprintf(atcmd_output, msg_fd(fd,169), item_id, item_data->name); // The item (%d: '%s') is not equipable.
 		clif->message(fd, atcmd_output);
@@ -2361,12 +2366,12 @@ ACMD(zeny)
 	}
 
 	if(zeny > 0){
-	    if((ret=pc->getzeny(sd,zeny,LOG_TYPE_COMMAND,NULL)) == 1)
+	    if((ret=pc->getzeny(sd,zeny,"Cmd",NULL)) == 1)
 			clif->message(fd, msg_fd(fd,149)); // Unable to increase the number/value.
 	}
 	else {
 	    if( sd->status.zeny < -zeny ) zeny = -sd->status.zeny;
-	    if((ret=pc->payzeny(sd,-zeny,LOG_TYPE_COMMAND,NULL)) == 1)
+		if ((ret = pc->payzeny(sd, -zeny, "Cmd", NULL)) == 1)
 			clif->message(fd, msg_fd(fd,41)); // Unable to decrease the number/value.
 	}
 
@@ -5213,7 +5218,7 @@ ACMD(clearcart)
 
 	for( i = 0; i < MAX_CART; i++ )
 		if(sd->status.cart[i].nameid > 0)
-			pc->cart_delitem(sd, i, sd->status.cart[i].amount, 1, LOG_TYPE_OTHER);
+			pc->cart_delitem(sd, i, sd->status.cart[i].amount, 1);
 
 	clif->clearcart(fd);
 	clif->updatestatus(sd,SP_CARTINFO);
@@ -5404,10 +5409,11 @@ void getring(struct map_session_data* sd) {
 	item_tmp.card[2] = sd->status.partner_id;
 	item_tmp.card[3] = sd->status.partner_id >> 16;
 
-	if((flag = pc->additem(sd,&item_tmp,1,LOG_TYPE_COMMAND))) {
+	if((flag = pc->additem(sd,&item_tmp,1))) {
 		clif->additem(sd,0,0,flag);
 		map->addflooritem(&item_tmp,1,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0);
 	}
+	else logs->item_getrem(1, sd, &item_tmp,1, "Cmd");
 }
 
 /*==========================================
@@ -8259,7 +8265,8 @@ ACMD(delitem) {
 		{// delete pet
 			intif->delete_petdata(MakeDWord(sd->status.inventory[idx].card[1], sd->status.inventory[idx].card[2]));
 		}
-		pc->delitem(sd, idx, delamount, 0, 0, LOG_TYPE_COMMAND);
+		logs->item_getrem(0, sd, &sd->status.inventory[idx], -delamount, "Cmd");
+		pc->delitem(sd, idx, delamount, 0, 0);
 
 		amount-= delamount;
 	}

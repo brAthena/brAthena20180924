@@ -156,7 +156,7 @@ const char* script_op2name(int op) {
 #endif // PCRE_SUPPORT
 
 	default:
-		ShowDebug("script_op2name: opcao inesperada=%d\n", op);
+		ShowDebug("script_op2name: unexpected op=%d\n", op);
 		return "???";
 	}
 #undef RETURN_OP_NAME
@@ -166,8 +166,8 @@ const char* script_op2name(int op) {
 static void script_dump_stack(struct script_state* st)
 {
 	int i;
-	ShowMessage("\tinicio = %d\n", st->start);
-	ShowMessage("\tfim   = %d\n", st->end);
+	ShowMessage("\tstart = %d\n", st->start);
+	ShowMessage("\tend   = %d\n", st->end);
 	ShowMessage("\tdefsp = %d\n", st->stack->defsp);
 	ShowMessage("\tsp    = %d\n", st->stack->sp);
 	for( i = 0; i < st->stack->sp; ++i )
@@ -218,15 +218,15 @@ void script_reportsrc(struct script_state *st) {
 	switch( bl->type ) {
 		case BL_NPC:
 			if( bl->m >= 0 )
-				ShowDebug("(NPC): %s em %s (%d,%d)\n", ((struct npc_data *)bl)->name, map->list[bl->m].name, bl->x, bl->y);
+				ShowDebug("Source (NPC): %s at %s (%d,%d)\n", ((struct npc_data *)bl)->name, map->list[bl->m].name, bl->x, bl->y);
 			else
-				ShowDebug("(NPC): %s (invisivel/nao esta no mapa)\n", ((struct npc_data *)bl)->name);
+				ShowDebug("Source (NPC): %s (invisible/not on a map)\n", ((struct npc_data *)bl)->name);
 			break;
 		default:
 			if( bl->m >= 0 )
-				ShowDebug("(Tipo %d): nome %s em %s (%d,%d)\n", bl->type, status->get_name(bl), map->list[bl->m].name, bl->x, bl->y);
+				ShowDebug("Source (Non-NPC type %d): name %s at %s (%d,%d)\n", bl->type, status->get_name(bl), map->list[bl->m].name, bl->x, bl->y);
 			else
-				ShowDebug("(Tipo %d): nome %s (invisivel/nao esta no mapa)\n", bl->type, status->get_name(bl));
+				ShowDebug("Source (Non-NPC type %d): name %s (invisible/not on a map)\n", bl->type, status->get_name(bl));
 			break;
 	}
 }
@@ -238,37 +238,37 @@ void script_reportdata(struct script_data* data)
 		return;
 	switch( data->type ) {
 		case C_NOP:// no value
-			ShowDebug("Dados: vazio (nil)\n");
+			ShowDebug("Data: nothing (nil)\n");
 			break;
 		case C_INT:// number
-			ShowDebug("Dados: valor numerico=%"PRId64"\n", data->u.num);
+			ShowDebug("Data: number value=%"PRId64"\n", data->u.num);
 			break;
 		case C_STR:
 		case C_CONSTSTR:// string
 			if( data->u.str ) {
-				ShowDebug("Dados: valor string=\"%s\"\n", data->u.str);
+				ShowDebug("Data: string value=\"%s\"\n", data->u.str);
 			} else {
-				ShowDebug("Dados: valor string=NULL\n");
+				ShowDebug("Data: string value=NULL\n");
 			}
 			break;
 		case C_NAME:// reference
 			if( reference_tovariable(data) ) {// variable
 				const char* name = reference_getname(data);
-				ShowDebug("Dados: nome da variavel='%s' indice=%d\n", name, reference_getindex(data));
+				ShowDebug("Data: variable name='%s' index=%d\n", name, reference_getindex(data));
 			} else if( reference_toconstant(data) ) {// constant
-				ShowDebug("Dados: nome da constante='%s' valor=%d\n", reference_getname(data), reference_getconstant(data));
+				ShowDebug("Data: constant name='%s' value=%d\n", reference_getname(data), reference_getconstant(data));
 			} else if( reference_toparam(data) ) {// param
-				ShowDebug("Dados: nome do parametro='%s' tipo=%d\n", reference_getname(data), reference_getparamtype(data));
+				ShowDebug("Data: param name='%s' type=%d\n", reference_getname(data), reference_getparamtype(data));
 			} else {// ???
-				ShowDebug("Dados: nome de referencia='%s' tipo=%s\n", reference_getname(data), script->op2name(data->type));
-				ShowDebug("Por favor reporte isso!!! - script->str_data.type=%s\n", script->op2name(script->str_data[reference_getid(data)].type));
+				ShowDebug("Data: reference name='%s' type=%s\n", reference_getname(data), script->op2name(data->type));
+				ShowDebug("Please report this!!! - script->str_data.type=%s\n", script->op2name(script->str_data[reference_getid(data)].type));
 			}
 			break;
 		case C_POS:// label
-			ShowDebug("Dados: label pos=%"PRId64"\n", data->u.num);
+			ShowDebug("Data: label pos=%"PRId64"\n", data->u.num);
 			break;
 		default:
-			ShowDebug("Dados: %s\n", script->op2name(data->type));
+			ShowDebug("Data: %s\n", script->op2name(data->type));
 			break;
 	}
 }
@@ -297,13 +297,13 @@ void script_reportfunc(struct script_state* st)
 
 	if (params > 0) {
 		int i;
-		ShowDebug("Funcao: %s (%d parametro%s):\n", script->get_str(id), params, ( params == 1 ) ? "" : "s");
+		ShowDebug("Function: %s (%d parameter%s):\n", script->get_str(id), params, ( params == 1 ) ? "" : "s");
 
 		for (i = 2; i <= script_lastdata(st); i++) {
 			script->reportdata(script_getdata(st,i));
 		}
 	} else {
-		ShowDebug("Funcao: %s (sem parametros)\n", script->get_str(id));
+		ShowDebug("Function: %s (no parameters)\n", script->get_str(id));
 	}
 }
 
@@ -329,7 +329,7 @@ void check_event(struct script_state *st, const char *evt)
 {
 	if( evt && evt[0] && !stristr(evt, "::On") )
 	{
-		ShowWarning("Evento de NPC: Parametro obsoleto! Por favor use 'NPCNAME::OnEVENT' em vez de '%s'.\n", evt);
+		ShowWarning("NPC event parameter deprecated! Please use 'NPCNAME::OnEVENT' instead of '%s'.\n", evt);
 		script->reportsrc(st);
 	}
 }
@@ -686,7 +686,7 @@ void set_label(int l,int pos, const char* script_pos)
 
 	if(script->str_data[l].type==C_INT || script->str_data[l].type==C_PARAM || script->str_data[l].type==C_FUNC) {
 		//Prevent overwriting constants values, parameters and built-in functions [Skotlex]
-		disp_error_message("set_label: nome da label invalido",script_pos);
+		disp_error_message("set_label: invalid label name",script_pos);
 		return;
 	}
 	if(script->str_data[l].label!=-1) {
@@ -723,7 +723,7 @@ const char* script_skip_space(const char* p)
 			for(;;)
 			{
 				if( *p == '\0' ) {
-					script->disp_warning_message("script:script->skip_space: bloco de comentario incorreto, esperado "CL_BOLD"*/"CL_NORM, p);
+					script->disp_warning_message("script:script->skip_space: end of file while parsing block comment. expected "CL_BOLD"*/"CL_NORM, p);
 					return p;
 				}
 				if( *p == '*' && p[1] == '/' )
@@ -777,7 +777,7 @@ int add_word(const char* p) {
 	// Check for a word
 	len = script->skip_word(p) - p;
 	if( len == 0 )
-		disp_error_message("script:add_word: palavra invalida. A palavra e composta por undercores e/ou caracteres alfanumericos e prefixos variaveis/sufixos validos.", p);
+		disp_error_message("script:add_word: invalid word. A word consists of undercores and/or alphanumeric characters, and valid variable prefixes/postfixes.", p);
 
 	// Duplicate the word
 	if( len+1 > script->word_size )
@@ -837,7 +837,7 @@ const char* parse_callfunc(const char* p, int require_paren, int is_custom)
 		script->addl(func);
 		arg = script->buildin[script->str_data[script->buildin_callsub_ref].val];
 		if( *arg == 0 )
-			disp_error_message("parse_callfunc: callsub nao tem argumentos, por favor reveja as definicoes.",p);
+			disp_error_message("parse_callfunc: callsub has no arguments, please review its definition",p);
 		if( *arg != '*' )
 			++arg; // count func as argument
 	} else {
@@ -845,7 +845,7 @@ const char* parse_callfunc(const char* p, int require_paren, int is_custom)
 		const char* name = script->get_str(func);
 		if( !is_custom && strdb_get(script->userfunc_db, name) == NULL ) {
 #endif
-			disp_error_message("parse_line: faltando nome da funcao ou chamando uma funcao indefinida",p);
+			disp_error_message("parse_line: expect command, missing function name or calling undeclared function",p);
 #ifdef SCRIPT_CALLFUNC_CHECK
 		} else {;
 			script->addl(script->buildin_callfunc_ref);
@@ -902,7 +902,7 @@ const char* parse_callfunc(const char* p, int require_paren, int is_custom)
 		--script->syntax.curly_count;
 	}
 	if( arg && *arg && *arg != '?' && *arg != '*' )
-		disp_error_message2("parse_callfunc: nao tem argumentos suficientes, esperado ','", p, script->config.warn_func_mismatch_paramnum);
+		disp_error_message2("parse_callfunc: not enough arguments, expected ','", p, script->config.warn_func_mismatch_paramnum);
 	if( script->syntax.curly[script->syntax.curly_count].type != TYPE_ARGLIST )
 		disp_error_message("parse_callfunc: DEBUG last curly is not an argument list",p);
 	if( script->syntax.curly[script->syntax.curly_count].flag == ARGLIST_PAREN ) {
@@ -7112,11 +7112,12 @@ BUILDIN(getitem) {
 	for (i = 0; i < amount; i += get_count) {
 		// if not pet egg
 		if (!pet->create_egg(sd, nameid)) {
-			if ((flag = pc->additem(sd, &it, get_count, LOG_TYPE_SCRIPT))) {
+			if ((flag = pc->additem(sd, &it, get_count))) {
 				clif->additem(sd, 0, 0, flag);
 				if( pc->candrop(sd,&it) )
 					map->addflooritem(&it,get_count,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0);
 			}
+			else logs->item_getrem(1, sd, &it, get_count, "Script");
 		}
 	}
 
@@ -7220,12 +7221,13 @@ BUILDIN(getitem2)
 		for (i = 0; i < amount; i += get_count) {
 			// if not pet egg
 			if (!pet->create_egg(sd, nameid)) {
-				if ((flag = pc->additem(sd, &item_tmp, get_count, LOG_TYPE_SCRIPT))) {
+				if ((flag = pc->additem(sd, &item_tmp, get_count))) {
 					clif->additem(sd, 0, 0, flag);
 					if( pc->candrop(sd,&item_tmp) )
 						map->addflooritem(&item_tmp,get_count,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0);
 				}
 			}
+			else logs->item_getrem(1, sd, &item_tmp, get_count, "Script");
 		}
 	}
 
@@ -7269,11 +7271,12 @@ BUILDIN(rentitem) {
 	it.expire_time = (unsigned int)(time(NULL) + seconds);
 	it.bound = 0;
 
-	if( (flag = pc->additem(sd, &it, 1, LOG_TYPE_SCRIPT)) )
+	if( (flag = pc->additem(sd, &it, 1)) )
 	{
 		clif->additem(sd, 0, 0, flag);
 		return false;
 	}
+	else logs->item_getrem(1, sd, &it, 1, "Script");
 
 	return true;
 }
@@ -7330,10 +7333,11 @@ BUILDIN(getnameditem) {
 	item_tmp.card[0]=CARD0_CREATE; //we don't use 255! because for example SIGNED WEAPON shouldn't get TOP10 BS Fame bonus [Lupus]
 	item_tmp.card[2]=tsd->status.char_id;
 	item_tmp.card[3]=tsd->status.char_id >> 16;
-	if(pc->additem(sd,&item_tmp,1,LOG_TYPE_SCRIPT)) {
+	if(pc->additem(sd,&item_tmp,1)) {
 		script_pushint(st,0);
 		return true; //Failed to add item, we will not drop if they don't fit
 	}
+	else logs->item_getrem(1, sd, &item_tmp, 1, "Script");
 
 	script_pushint(st,1);
 	return true;
@@ -7439,7 +7443,8 @@ void buildin_delitem_delete(struct map_session_data* sd, int idx, int* amount, b
 		{// delete associated pet
 			intif->delete_petdata(MakeDWord(inv->card[1], inv->card[2]));
 		}
-		pc->delitem(sd, idx, delamount, 0, 0, LOG_TYPE_SCRIPT);
+		else logs->item_getrem(1, sd, &sd->status.inventory[idx], delamount, "Script");
+		pc->delitem(sd, idx, delamount, 0, 0);
 	}
 
 	amount[0]-= delamount;
@@ -8462,9 +8467,6 @@ BUILDIN(successrefitem)
 	if (i >= 0) {
 		int ep = sd->status.inventory[i].equip;
 
-		//Logs items, got from (N)PC scripts [Lupus]
-		logs->pick_pc(sd, LOG_TYPE_SCRIPT, -1, &sd->status.inventory[i],sd->inventory_data[i]);
-
 		if (sd->status.inventory[i].refine >= MAX_REFINE)
 			return true;
 
@@ -8475,9 +8477,8 @@ BUILDIN(successrefitem)
 		clif->refine(sd->fd,0,i,sd->status.inventory[i].refine);
 		clif->delitem(sd,i,1,3);
 
-		//Logs items, got from (N)PC scripts [Lupus]
-		logs->pick_pc(sd, LOG_TYPE_SCRIPT, 1, &sd->status.inventory[i],sd->inventory_data[i]);
-
+		//Logs Sucessful Refine [GreenStage]
+		logs->produce(sd, &sd->status.inventory[i], 1, "Sucess Refine");
 		clif->additem(sd,i,1,0);
 		pc->equipitem(sd,i,ep);
 		clif->misceffect(&sd->bl,3);
@@ -8522,7 +8523,8 @@ BUILDIN(failedrefitem)
 		pc->unequipitem(sd,i,3); //recalculate bonus
 		clif->refine(sd->fd,1,i,sd->status.inventory[i].refine); //notify client of failure
 
-		pc->delitem(sd,i,1,0,2,LOG_TYPE_SCRIPT);
+		logs->produce(sd,&sd->status.inventory[i],-1,"Fail Refine");
+		pc->delitem(sd,i,1,0,2);
 
 		clif->misceffect(&sd->bl,2); // display failure effect
 	}
@@ -8551,7 +8553,6 @@ BUILDIN(downrefitem)
 		int ep = sd->status.inventory[i].equip;
 
 		//Logs items, got from (N)PC scripts [Lupus]
-		logs->pick_pc(sd, LOG_TYPE_SCRIPT, -1, &sd->status.inventory[i],sd->inventory_data[i]);
 
 		pc->unequipitem(sd,i,2); // status calc will happen in pc->equipitem() below
 		sd->status.inventory[i].refine -= down;
@@ -8561,7 +8562,7 @@ BUILDIN(downrefitem)
 		clif->delitem(sd,i,1,3);
 
 		//Logs items, got from (N)PC scripts [Lupus]
-		logs->pick_pc(sd, LOG_TYPE_SCRIPT, 1, &sd->status.inventory[i],sd->inventory_data[i]);
+		logs->produce(sd, &sd->status.inventory[i], 1, "Downgrade");
 
 		clif->additem(sd,i,1,0);
 		pc->equipitem(sd,i,ep);
@@ -8588,7 +8589,8 @@ BUILDIN(delequip)
 		i=pc->checkequip(sd,script->equip[num-1]);
 	if(i >= 0) {
 		pc->unequipitem(sd,i,3); //recalculate bonus
-		pc->delitem(sd,i,1,0,2,LOG_TYPE_SCRIPT);
+		logs->item_getrem(0, sd, &sd->status.inventory[i], -1, "Cmd");
+		pc->delitem(sd,i,1,0,2);
 		return true;
 	}
 
@@ -10992,7 +10994,7 @@ BUILDIN(homunculus_mutate)
 
 		if (m_class == HT_EVO && m_id == HT_S &&
 			sd->hd->homunculus.level >= 99 && i != INDEX_NOT_FOUND &&
-			!pc->delitem(sd, i, 1, 0, 0, LOG_TYPE_SCRIPT) ) {
+			!pc->delitem(sd, i, 1, 0, 0) ) {
 			sd->hd->homunculus.vaporize = HOM_ST_REST; // Remove morph state.
 			homun->call(sd); // Respawn homunculus.
 			homun->mutate(sd->hd, homun_id);
@@ -11032,7 +11034,7 @@ BUILDIN(homunculus_morphembryo)
 			item_tmp.nameid = ITEMID_STRANGE_EMBRYO;
 			item_tmp.identify = 1;
 
-			if ((i = pc->additem(sd, &item_tmp, 1, LOG_TYPE_SCRIPT))) {
+			if ((i = pc->additem(sd, &item_tmp, 1))) {
 				clif->additem(sd, 0, 0, i);
 				clif->emotion(&sd->hd->bl, E_SWT);
 			} else {
@@ -11479,7 +11481,7 @@ BUILDIN(warpwaitingpc)
 				// no zeny to cover set fee
 				break;
 			}
-			pc->payzeny(sd, cd->zeny, LOG_TYPE_NPC, NULL);
+			pc->payzeny(sd, cd->zeny, "Npc", NULL);
 		}
 
 		mapreg->setreg(reference_uid(script->add_str("$@warpwaitingpc"), i), sd->bl.id);
@@ -12271,11 +12273,12 @@ BUILDIN(successremovecards)
 			item_tmp.nameid   = sd->status.inventory[i].card[c];
 			item_tmp.identify = 1;
 
-			if((flag=pc->additem(sd,&item_tmp,1,LOG_TYPE_SCRIPT))) {
+			if((flag=pc->additem(sd,&item_tmp,1))) {
 				// get back the cart in inventory
 				clif->additem(sd,0,0,flag);
 				map->addflooritem(&item_tmp,1,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0);
 			}
+			else logs->card(sd, c, "Rem", &sd->status.inventory[i]);
 		}
 	}
 
@@ -12295,12 +12298,13 @@ BUILDIN(successremovecards)
 		for (j = sd->inventory_data[i]->slot; j < MAX_SLOTS; j++)
 			item_tmp.card[j]=sd->status.inventory[i].card[j];
 
-		pc->delitem(sd,i,1,0,3,LOG_TYPE_SCRIPT);
-		if ((flag=pc->additem(sd,&item_tmp,1,LOG_TYPE_SCRIPT))) {
+		pc->delitem(sd,i,1,0,3);
+		if ((flag=pc->additem(sd,&item_tmp,1))) {
 			//chk if can be spawn in inventory otherwise put on floor
 			clif->additem(sd,0,0,flag);
 			map->addflooritem(&item_tmp,1,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0);
 		}
+		else logs->item_getrem(1, sd, &item_tmp, 1, "C_Rem");
 
 		clif->misceffect(&sd->bl,3);
 	}
@@ -12346,7 +12350,7 @@ BUILDIN(failedremovecards)
 				item_tmp.nameid   = sd->status.inventory[i].card[c];
 				item_tmp.identify = 1;
 
-				if((flag=pc->additem(sd,&item_tmp,1,LOG_TYPE_SCRIPT))) {
+				if((flag=pc->additem(sd,&item_tmp,1))) {
 					clif->additem(sd,0,0,flag);
 					map->addflooritem(&item_tmp,1,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0);
 				}
@@ -12357,7 +12361,8 @@ BUILDIN(failedremovecards)
 	if (cardflag == 1) {
 		if (typefail == 0 || typefail == 2) {
 			// destroy the item
-			pc->delitem(sd,i,1,0,2,LOG_TYPE_SCRIPT);
+			logs->item_getrem(0, sd,&sd->status.inventory[i],-1, "C_Rem");
+			pc->delitem(sd,i,1,0,2);
 		} else if (typefail == 1) {
 			// destroy the card
 			int flag, j;
@@ -12375,12 +12380,13 @@ BUILDIN(failedremovecards)
 			for (j = sd->inventory_data[i]->slot; j < MAX_SLOTS; j++)
 				item_tmp.card[j]=sd->status.inventory[i].card[j];
 
-			pc->delitem(sd,i,1,0,2,LOG_TYPE_SCRIPT);
+			pc->delitem(sd,i,1,0,2);
 
-			if((flag=pc->additem(sd,&item_tmp,1,LOG_TYPE_SCRIPT))) {
+			if((flag=pc->additem(sd,&item_tmp,1))) {
 				clif->additem(sd,0,0,flag);
 				map->addflooritem(&item_tmp,1,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0);
 			}
+			else logs->item_getrem(1, sd, &item_tmp, 1, "C_Rem");
 		}
 		clif->misceffect(&sd->bl,2);
 	}
@@ -13069,7 +13075,8 @@ BUILDIN(clearitem)
 	if(sd==NULL) return true;
 	for (i=0; i<MAX_INVENTORY; i++) {
 		if (sd->status.inventory[i].amount) {
-			pc->delitem(sd, i, sd->status.inventory[i].amount, 0, 0, LOG_TYPE_SCRIPT);
+			logs->item_getrem(0, sd,&sd->status.inventory[i], sd->status.inventory[i].amount, "Script");
+			pc->delitem(sd, i, sd->status.inventory[i].amount, 0, 0);
 		}
 	}
 	return true;
@@ -18579,11 +18586,12 @@ BUILDIN(getrandgroupitem) {
 		for (i = 0; i < count; i += get_count) {
 			// if not pet egg
 			if (!pet->create_egg(sd, nameid)) {
-				if ((flag = pc->additem(sd, &it, get_count, LOG_TYPE_SCRIPT))) {
+				if ((flag = pc->additem(sd, &it, get_count))) {
 					clif->additem(sd, 0, 0, flag);
 					if( pc->candrop(sd,&it) )
 						map->addflooritem(&it,get_count,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0);
 				}
+				else logs->item_getrem(1, sd, &it, get_count, "Box");
 			}
 		}
 

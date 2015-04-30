@@ -225,8 +225,10 @@ int storage_storageadd(struct map_session_data* sd, int index, int amount) {
 	if( amount < 1 || amount > sd->status.inventory[index].amount )
 		return 0;
 
-	if( storage->additem(sd,&sd->status.inventory[index],amount) == 0 )
-		pc->delitem(sd,index,amount,0,4,LOG_TYPE_STORAGE);
+	if( storage->additem(sd,&sd->status.inventory[index],amount) == 0 ){
+		logs->storage(sd,&sd->status.inventory[index],amount,'D');
+		pc->delitem(sd,index,amount,0,4);
+	}
 	else
 		clif->dropitem(sd, index,0);
 
@@ -253,8 +255,10 @@ int storage_storageget(struct map_session_data* sd, int index, int amount)
 	if( amount < 1 || amount > sd->status.storage.items[index].amount )
 		return 0;
 
-	if( (flag = pc->additem(sd,&sd->status.storage.items[index],amount,LOG_TYPE_STORAGE)) == 0 )
+	if( (flag = pc->additem(sd,&sd->status.storage.items[index],amount)) == 0 ){
+		logs->storage(sd,&sd->status.storage.items[index],amount,'W');
 		storage->delitem(sd,index,amount);
+	}
 	else
 		clif->additem(sd,0,0,flag);
 
@@ -284,8 +288,10 @@ int storage_storageaddfromcart(struct map_session_data* sd, int index, int amoun
 	if( amount < 1 || amount > sd->status.cart[index].amount )
 		return 0;
 
-	if( storage->additem(sd,&sd->status.cart[index],amount) == 0 )
-		pc->cart_delitem(sd,index,amount,0,LOG_TYPE_STORAGE);
+	if( storage->additem(sd,&sd->status.cart[index],amount) == 0 ){
+		logs->storage(sd,&sd->status.cart[index],amount,'D');
+		pc->cart_delitem(sd,index,amount,0);
+	}
 
 	return 1;
 }
@@ -310,8 +316,10 @@ int storage_storagegettocart(struct map_session_data* sd, int index, int amount)
 	if( amount < 1 || amount > sd->status.storage.items[index].amount )
 		return 0;
 
-	if( (flag = pc->cart_additem(sd,&sd->status.storage.items[index],amount,LOG_TYPE_STORAGE)) == 0 )
+	if( (flag = pc->cart_additem(sd,&sd->status.storage.items[index],amount)) == 0 ){
+		logs->storage(sd,&sd->status.storage.items[index],amount,'W');
 		storage->delitem(sd,index,amount);
+	}
 	else {
 		clif->dropitem(sd, index,0);
 		clif->cart_additem_ack(sd,flag == 1?0x0:0x1);
@@ -532,8 +540,10 @@ int storage_guild_storageadd(struct map_session_data* sd, int index, int amount)
 		return 0;
 	}
 
-	if(gstorage->additem(sd,stor,&sd->status.inventory[index],amount)==0)
-		pc->delitem(sd,index,amount,0,4,LOG_TYPE_GSTORAGE);
+	if(gstorage->additem(sd,stor,&sd->status.inventory[index],amount)==0){
+		logs->gstorage(sd,&sd->status.inventory[index],amount,'D');
+		pc->delitem(sd,index,amount,0,4);
+	}
 	else
 		clif->dropitem(sd, index,0);
 
@@ -572,8 +582,10 @@ int storage_guild_storageget(struct map_session_data* sd, int index, int amount)
 		return 0;
 	}
 
-	if((flag = pc->additem(sd,&stor->items[index],amount,LOG_TYPE_GSTORAGE)) == 0)
+	if((flag = pc->additem(sd,&stor->items[index],amount)) == 0){
+		logs->gstorage(sd,&stor->items[index],amount,'W');
 		gstorage->delitem(sd,stor,index,amount);
+	}
 	else //inform fail
 		clif->additem(sd,0,0,flag);
 	//log_fromstorage(sd, index, 1);
@@ -607,9 +619,10 @@ int storage_guild_storageaddfromcart(struct map_session_data* sd, int index, int
 	if( amount < 1 || amount > sd->status.cart[index].amount )
 		return 0;
 
-	if(gstorage->additem(sd,stor,&sd->status.cart[index],amount)==0)
-		pc->cart_delitem(sd,index,amount,0,LOG_TYPE_GSTORAGE);
-
+	if(gstorage->additem(sd,stor,&sd->status.cart[index],amount)==0){
+		logs->gstorage(sd,&sd->status.cart[index],amount,'D');
+		pc->cart_delitem(sd,index,amount,0);
+	}
 	return 1;
 }
 
@@ -639,8 +652,10 @@ int storage_guild_storagegettocart(struct map_session_data* sd, int index, int a
 	if(amount < 1 || amount > stor->items[index].amount)
 		return 0;
 
-	if(pc->cart_additem(sd,&stor->items[index],amount,LOG_TYPE_GSTORAGE)==0)
+	if(pc->cart_additem(sd,&stor->items[index],amount)==0){
+		logs->gstorage(sd,&stor->items[index],amount,'W');
 		gstorage->delitem(sd,stor,index,amount);
+	}
 
 	return 1;
 }

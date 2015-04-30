@@ -835,17 +835,17 @@ struct pc_interface {
 	int (*checkadditem) (struct map_session_data *sd,int nameid,int amount);
 	int (*inventoryblank) (struct map_session_data *sd);
 	int (*search_inventory) (struct map_session_data *sd,int item_id);
-	int (*payzeny) (struct map_session_data *sd,int zeny, enum e_log_pick_type type, struct map_session_data *tsd);
-	int (*additem) (struct map_session_data *sd,struct item *item_data,int amount,e_log_pick_type log_type);
-	int (*getzeny) (struct map_session_data *sd,int zeny, enum e_log_pick_type type, struct map_session_data *tsd);
-	int (*delitem) (struct map_session_data *sd,int n,int amount,int type, short reason, e_log_pick_type log_type);
+	int (*payzeny) (struct map_session_data *sd,int zeny,char * type, struct map_session_data *tsd);
+	int (*additem) (struct map_session_data *sd,struct item *item_data,int amount);
+	int (*getzeny) (struct map_session_data *sd,int zeny, char * type, struct map_session_data *tsd);
+	int (*delitem) (struct map_session_data *sd,int n,int amount,int type, short reason);
 
 	// Special Shop System
 	int (*paycash) (struct map_session_data *sd, int price, int points);
 	int (*getcash) (struct map_session_data *sd, int cash, int points);
 
-	int (*cart_additem) (struct map_session_data *sd,struct item *item_data,int amount,e_log_pick_type log_type);
-	int (*cart_delitem) (struct map_session_data *sd,int n,int amount,int type,e_log_pick_type log_type);
+	int (*cart_additem) (struct map_session_data *sd,struct item *item_data,int amount);
+	int (*cart_delitem) (struct map_session_data *sd,int n,int amount,int type);
 	int (*putitemtocart) (struct map_session_data *sd,int idx,int amount);
 	int (*getitemfromcart) (struct map_session_data *sd,int idx,int amount);
 	int (*cartitem_amount) (struct map_session_data *sd,int idx,int amount);
@@ -1061,6 +1061,8 @@ struct pc_interface {
 	void (*autotrade_populate) (struct map_session_data *sd);
 
 	int (*check_job_name) (const char *name);
+	
+	void (*get_ip) (struct map_session_data *sd,char * str);
 };
 
 struct pc_interface *pc;

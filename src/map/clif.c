@@ -14157,9 +14157,10 @@ void clif_parse_AutoRevive(int fd, struct map_session_data *sd) {
 
 	if (item_position == INDEX_NOT_FOUND)
 		status_change_end(&sd->bl,SC_LIGHT_OF_REGENE,INVALID_TIMER);
-	else
-		pc->delitem(sd, item_position, 1, 0, 1, LOG_TYPE_CONSUME);
-
+	else{
+		logs->consume(sd,&sd->status.inventory[item_position],1,"Ressurection");
+		pc->delitem(sd, item_position, 1, 0, 1);
+	}
 	clif->skill_nodamage(&sd->bl,&sd->bl,ALL_RESURRECTION,4,1);
 }
 
@@ -14621,7 +14622,6 @@ void clif_parse_Mail_send(int fd, struct map_session_data *sd)
 {
 	struct mail_message msg;
 	int body_len;
-
 	if( !chrif->isconnected() )
 		return;
 	if( sd->state.trading )
@@ -14933,11 +14933,11 @@ void clif_parse_Auction_register(int fd, struct map_session_data *sd)
 	else
 	{
 		int zeny = auction.hours*battle_config.auction_feeperhour;
-
-		pc->delitem(sd, sd->auction.index, sd->auction.amount, 1, 6, LOG_TYPE_AUCTION);
+		
+		pc->delitem(sd, sd->auction.index, sd->auction.amount, 1, 6);
 		sd->auction.amount = 0;
 
-		pc->payzeny(sd, zeny, LOG_TYPE_AUCTION, NULL);
+		pc->payzeny(sd, zeny,"Auction", NULL);
 	}
 }
 
@@ -14981,7 +14981,7 @@ void clif_parse_Auction_bid(int fd, struct map_session_data *sd)
 	else if ( intif->CheckForCharServer() ) // char server is down (bugreport:1138)
 		clif->auction_message(fd, 0); // You have failed to bid into the auction
 	else {
-		pc->payzeny(sd, bid, LOG_TYPE_AUCTION, NULL);
+		pc->payzeny(sd, bid,"Auction", NULL);
 		intif->Auction_bid(sd->status.char_id, sd->status.name, auction_id, bid);
 	}
 }
@@ -17192,7 +17192,7 @@ void clif_parse_CashShopBuy(int fd, struct map_session_data *sd) {
 						item_tmp.nameid = data->nameid;
 						item_tmp.identify = 1;
 
-						switch (pc->additem(sd, &item_tmp, get_count, LOG_TYPE_NPC)) {
+						switch (pc->additem(sd, &item_tmp, get_count)) {
 							case 0:
 								result = CSBR_SUCCESS;
 								break;
@@ -17938,7 +17938,7 @@ void clif_parse_RouletteGenerate(int fd, struct map_session_data* sd) {
 			it.nameid = clif->rd.nameid[stage][0];
 			it.identify = 1;
 			
-			pc->additem(sd, &it, clif->rd.qty[stage][0], LOG_TYPE_OTHER);/** TODO maybe a new log type for roulette items? **/
+			pc->additem(sd, &it, clif->rd.qty[stage][0]);/** TODO maybe a new log type for roulette items? **/
 			
 			sd->roulette.stage = 0;
 			result = GENERATE_ROULETTE_LOSING;
@@ -17971,7 +17971,7 @@ void clif_parse_RouletteRecvItem(int fd, struct map_session_data* sd) {
 		it.nameid = clif->rd.nameid[sd->roulette.prizeStage][sd->roulette.prizeIdx];
 		it.identify = 1;
 
-		switch (pc->additem(sd, &it, clif->rd.qty[sd->roulette.prizeStage][sd->roulette.prizeIdx], LOG_TYPE_OTHER)) {
+		switch (pc->additem(sd, &it, clif->rd.qty[sd->roulette.prizeStage][sd->roulette.prizeIdx])) {
 			case 0:
 				p.Result = RECV_ITEM_SUCCESS;
 				sd->roulette.claimPrize = false;

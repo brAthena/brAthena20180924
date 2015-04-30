@@ -359,13 +359,14 @@ void buyingstore_trade(struct map_session_data* sd, int account_id, unsigned int
 		zeny = amount*pl_sd->buyingstore.items[listidx].price;
 
 		// move item
-		pc->additem(pl_sd, &sd->status.inventory[index], amount, LOG_TYPE_BUYING_STORE);
-		pc->delitem(sd, index, amount, 1, 0, LOG_TYPE_BUYING_STORE);
+		logs->buyingstore(pl_sd,sd,&sd->status.inventory[index],pl_sd->buyingstore.items[listidx].price,amount);
+		pc->additem(pl_sd, &sd->status.inventory[index], amount);
+		pc->delitem(sd, index, amount, 1, 0);
 		pl_sd->buyingstore.items[listidx].amount-= amount;
 
 		// pay up
-		pc->payzeny(pl_sd, zeny, LOG_TYPE_BUYING_STORE, sd);
-		pc->getzeny(sd, zeny, LOG_TYPE_BUYING_STORE, pl_sd);
+		pc->payzeny(pl_sd, zeny,"bStore", sd);
+		pc->getzeny(sd, zeny, "bStore", pl_sd);
 		pl_sd->buyingstore.zenylimit-= zeny;
 
 		// notify clients

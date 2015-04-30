@@ -30,35 +30,6 @@
 
 struct log_interface log_s;
 
-/// obtain log type character for item/zeny logs
-char log_picktype2char(e_log_pick_type type) {
-	switch( type ) {
-		case LOG_TYPE_TRADE:            return 'T';  // (T)rade
-		case LOG_TYPE_VENDING:          return 'V';  // (V)ending
-		case LOG_TYPE_PICKDROP_PLAYER:  return 'P';  // (P)player
-		case LOG_TYPE_PICKDROP_MONSTER: return 'M';  // (M)onster
-		case LOG_TYPE_NPC:              return 'S';  // NPC (S)hop
-		case LOG_TYPE_SCRIPT:           return 'N';  // (N)PC Script
-		case LOG_TYPE_STEAL:            return 'D';  // Steal/Snatcher
-		case LOG_TYPE_CONSUME:          return 'C';  // (C)onsumed
-		case LOG_TYPE_PRODUCE:          return 'O';  // Pr(O)duced/Ingredients
-		case LOG_TYPE_MVP:              return 'U';  // MVP Rewards
-		case LOG_TYPE_COMMAND:          return 'A';  // (A)dmin command
-		case LOG_TYPE_STORAGE:          return 'R';  // Sto(R)age
-		case LOG_TYPE_GSTORAGE:         return 'G';  // (G)uild storage
-		case LOG_TYPE_MAIL:             return 'E';  // (E)mail attachment
-		case LOG_TYPE_AUCTION:          return 'I';  // Auct(I)on
-		case LOG_TYPE_BUYING_STORE:     return 'B';  // (B)uying Store
-		case LOG_TYPE_LOOT:             return 'L';  // (L)oot (consumed monster pick/drop)
-		case LOG_TYPE_BANK:             return 'K';  // Ban(K) Transactions
-		case LOG_TYPE_OTHER:            return 'X';  // Other
-	}
-
-	// should not get here, fallback
-	ShowDebug("log_picktype2char: Tipo desconhecido %d.\n", type);
-	return 'X';
-}
-
 
 /// obtain log type character for chat logs
 char log_chattype2char(e_log_chat_type type) {
@@ -182,78 +153,476 @@ void log_branch(struct map_session_data* sd) {
 
 	logs->branch_sub(sd);
 }
-void log_pick_sub_sql(int id, int16 m, e_log_pick_type type, int amount, struct item* itm, struct item_data *data) {
-	if( SQL_ERROR == SQL->Query(logs->mysql_handle,
-	    LOG_QUERY " INTO `%s` (`time`, `char_id`, `type`, `nameid`, `amount`, `refine`, `card0`, `card1`, `card2`, `card3`, `map`, `unique_id`) "
-	    "VALUES (NOW(), '%d', '%c', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%s', '%"PRIu64"')",
-	    logs->config.log_pick, id, logs->picktype2char(type), itm->nameid, amount, itm->refine, itm->card[0], itm->card[1], itm->card[2], itm->card[3],
-	    map->list[m].name, itm->unique_id)
-	) {
-		Sql_ShowDebug(logs->mysql_handle);
-		return;
-	}
-}
-void log_pick_sub_txt(int id, int16 m, e_log_pick_type type, int amount, struct item* itm, struct item_data *data) {
-	char timestring[255];
-	time_t curtime;
-	FILE* logfp;
-	
-	if( ( logfp = fopen(logs->config.log_pick, "a") ) == NULL )
-		return;
-	time(&curtime);
-	strftime(timestring, sizeof(timestring), "%m/%d/%Y %H:%M:%S", localtime(&curtime));
-	fprintf(logfp,"%s - %d\t%c\t%d,%d,%d,%d,%d,%d,%d,%s,'%"PRIu64"'\n",
-	        timestring, id, logs->picktype2char(type), itm->nameid, amount, itm->refine, itm->card[0], itm->card[1], itm->card[2], itm->card[3],
-		map->list[m].name, itm->unique_id);
-	fclose(logfp);
-}
-/// logs item transactions (generic)
-void log_pick(int id, int16 m, e_log_pick_type type, int amount, struct item* itm, struct item_data *data) {
-	nullpo_retv(itm);
-	if( ( logs->config.enable_logs&type ) == 0 ) {// disabled
-		return;
-	}
 
-	if( !logs->should_log_item(itm->nameid, amount, itm->refine, data) )
-		return; //we skip logging this item set - it doesn't meet our logging conditions [Lupus]
-
-	logs->pick_sub(id,m,type,amount,itm,data);
-}
-
-/// logs item transactions (players)
-void log_pick_pc(struct map_session_data* sd, e_log_pick_type type, int amount, struct item* itm, struct item_data *data) {
+// Card Slot Insert/Remove Log - brAthena
+void log_card ( struct map_session_data* sd,int slot,char * type, struct item* itm){
 	nullpo_retv(sd);
-	log_pick(sd->status.char_id, sd->bl.m, type, amount, itm, data ? data : itemdb->exists(itm->nameid));
-}
 
-
-/// logs item transactions (monsters)
-void log_pick_mob(struct mob_data* md, e_log_pick_type type, int amount, struct item* itm, struct item_data *data) {
-	nullpo_retv(md);
-	log_pick(md->class_, md->bl.m, type, amount, itm, data ? data : itemdb->exists(itm->nameid));
+	if( !logs->config.cards )
+		return;
+	
+	logs->card_sub_sql(sd,slot,type,itm);
+	return;
 }
-void log_zeny_sub_sql(struct map_session_data* sd, e_log_pick_type type, struct map_session_data* src_sd, int amount) {
-	if( SQL_ERROR == SQL->Query(logs->mysql_handle, LOG_QUERY " INTO `%s` (`time`, `char_id`, `src_id`, `type`, `amount`, `map`) VALUES (NOW(), '%d', '%d', '%c', '%d', '%s')",
-							   logs->config.log_zeny, sd->status.char_id, src_sd->status.char_id, logs->picktype2char(type), amount, mapindex_id2name(sd->mapindex)) )
+void log_card_sub_sql( struct map_session_data* sd,int slot,char * type, struct item* itm){
+	char last_ip[20];
+	struct item_data *data = itemdb->exists(itm->nameid);
+	struct item_data *cd_data = itemdb->exists(itm->card[slot]);
+
+	if( !logs->should_log_item(itm->nameid, 1, itm->refine, data) && !logs->should_log_item(itm->card[slot], 1,0,cd_data))
+		return; 
+	
+	pc->get_ip(sd,last_ip);
+	
+	if( SQL_ERROR == SQL->Query(logs->mysql_handle, LOG_QUERY " INTO `Card_Log` (`Date`, `Mapname`,`PosX`,`PosY`, `AccountID`,`CharacterID`,`CharName`,`CharacterIPaddr`,`ItemID`,`ItemName`,`ItemSerial`,`Type`,`Slot`,`Card_ID`,`CardName`,`ItemSlot1`,`ItemSlot2`,`ItemSlot3`,`ItemSlot4`,`ItemRefiningLevel`)"
+	"VALUES (NOW(), '%s','%d','%d','%d','%d','%s','%s','%d','%s','%"PRIu64"','%s','%d','%d','%s','%d','%d','%d','%d','%d')",
+	mapindex_id2name(sd->mapindex), sd->bl.x, sd->bl.y, sd->status.account_id, sd->status.char_id,sd->status.name,last_ip,itm->nameid,
+	data->name,itm->unique_id,type,slot, itm->card[slot],cd_data->name, itm->card[0], itm->card[1], itm->card[2], itm->card[3], itm->refine))
 	{
 		Sql_ShowDebug(logs->mysql_handle);
 		return;
 	}
 }
-void log_zeny_sub_txt(struct map_session_data* sd, e_log_pick_type type, struct map_session_data* src_sd, int amount) {
-	char timestring[255];
-	time_t curtime;
-	FILE* logfp;
-	
-	if( ( logfp = fopen(logs->config.log_zeny, "a") ) == NULL )
+
+//Log Trades - BrAthena
+
+void log_trade (int zeny, struct map_session_data* sd1, struct map_session_data* sd2,struct item *itm,int amount){
+	nullpo_retv(sd1);
+	nullpo_retv(sd2);
+	if( !logs->config.trade )
 		return;
-	time(&curtime);
-	strftime(timestring, sizeof(timestring), "%m/%d/%Y %H:%M:%S", localtime(&curtime));
-	fprintf(logfp, "%s - %s[%d]\t%s[%d]\t%d\t\n", timestring, src_sd->status.name, src_sd->status.account_id, sd->status.name, sd->status.account_id, amount);
-	fclose(logfp);
+
+	logs->trade_sub_sql(zeny,sd1,sd2,itm,amount);
+	return;
 }
+void log_trade_sub_sql(int zeny, struct map_session_data* sd1, struct map_session_data* sd2,struct item *itm,int amount){
+	char last_ip1[20], last_ip2[20];
+	struct item_data *idata = (itm)? itemdb->search(itm->nameid) : NULL;
+	
+	if(itm && !logs->should_log_item(itm->nameid, amount, itm->refine, idata))
+		return;
+	
+	pc->get_ip(sd1,last_ip1);
+	pc->get_ip(sd2,last_ip2);
+	
+	if( SQL_ERROR == SQL->Query(logs->mysql_handle, LOG_QUERY " INTO `Trade_Log`"
+	"(`Date`, `Mapname`,"
+	"`P1_CharID`,`P1_Name`,`P1_PosX`,`P1_PosY`,`P1_IP`,"
+	"`P2_CharID`,`P2_Name`,`P2_PosX`,`P2_PosY`,`P2_IP`,"
+	"`Zeny`,`ItemID`,`ItemCount`,`ItemName`,`ItemSerial`,`ItemSlot1`,`ItemSlot2`,`ItemSlot3`,`ItemSlot4`,`ItemRefiningLevel`)"
+	"VALUES (NOW(),'%s', '%d','%s','%d','%d','%s',"
+					"'%d','%s','%d','%d','%s',"
+	"'%d','%d','%d','%s','%"PRIu64"','%d','%d','%d','%d','%d')",
+	mapindex_id2name(sd1->mapindex), sd1->status.char_id,sd1->status.name, sd1->bl.x, sd1->bl.y,last_ip1,
+	sd2->status.char_id,sd2->status.name, sd2->bl.x, sd2->bl.y,last_ip2,
+	zeny,(itm)? itm->nameid : 0,amount,(itm)? idata->name:"",(itm)? itm->unique_id :0,
+	(itm)? itm->card[0] : 0,(itm)? itm->card[1] : 0,(itm)? itm->card[2] : 0,(itm)? itm->card[3] : 0,(itm)? itm->refine : 0))
+	
+	{
+		Sql_ShowDebug(logs->mysql_handle);
+		return;
+	}
+	
+}
+//Vending Logs - BrAthena
+void log_vending (struct map_session_data* sd,struct map_session_data* vsd,struct item *itm, int zeny,int amount){
+	nullpo_retv(sd);
+	nullpo_retv(vsd);
+	nullpo_retv(itm);
+	if( !logs->config.vending )
+		return;
+
+	logs->vending_sub_sql(sd,vsd,itm,zeny,amount);
+	return;
+}
+void log_vending_sub_sql (struct map_session_data* sd,struct map_session_data* vsd,struct item *itm, int zeny,int amount){
+	char ip_sd[20], ip_vsd[20]="AutoTrade";
+	struct item_data *idata = itemdb->search(itm->nameid);
+	nullpo_retv(idata);	
+	
+	if(!logs->should_log_item(itm->nameid, amount, itm->refine, idata))
+		return;	
+	
+	pc->get_ip(sd,ip_sd);
+	if(!vsd->state.autotrade)
+		pc->get_ip(vsd,ip_vsd);
+
+	if( SQL_ERROR == SQL->Query(logs->mysql_handle, LOG_QUERY " INTO `Vending_Log`"
+	"(`Date`, `Mapname`,`Shop_Name`,"
+	"`Buyer_CharID`,`Buyer_Name`,`Buyer_IP`,"
+	"`Vendor_CharID`,`Vendor_Name`,`Vendor_PosX`,`Vendor_PosY`,`Vendor_IP`,"
+	"`ItemID`,`ItemName`,`Amount`,`Unit_Cost`,`Total_Cost`,`ItemSerial`,`ItemSlot1`,`ItemSlot2`,`ItemSlot3`,`ItemSlot4`,`ItemRefiningLevel`)"
+	"VALUES (NOW(),'%s','%s', '%d','%s','%s',"
+					"'%d','%s','%d','%d','%s',"
+	"'%d','%s','%d','%d','%d','%"PRIu64"','%d','%d','%d','%d','%d')",
+	mapindex_id2name(sd->mapindex),vsd->message, sd->status.char_id,sd->status.name,ip_sd,
+	vsd->status.char_id,vsd->status.name, vsd->bl.x, vsd->bl.y,ip_vsd,
+	itm->nameid,idata->name,amount,zeny,zeny*amount,itm->unique_id,
+	itm->card[0],itm->card[1],itm->card[2],itm->card[3],itm->refine))
+	
+	{
+		Sql_ShowDebug(logs->mysql_handle);
+		return;
+	}	
+}
+
+//NPC Buy/Sell Log - BrAthena
+void log_npc_shop (struct map_session_data* sd,char * name, struct item* itm , int unit_cost, int amount, int type){
+	nullpo_retv(sd);
+	nullpo_retv(itm);
+	if( !logs->config.npc_buy_sell )
+		return;
+	logs->npc_shop_sub_sql(sd,name,itm,unit_cost,amount,type);
+	return;
+}
+void log_npc_shop_sub_sql (struct map_session_data* sd,char * name, struct item* itm , int unit_cost, int amount, int type){
+	char ip_sd[20], action[5];
+	struct item_data* idata = itemdb->exists(itm->nameid);
+	nullpo_retv(idata);
+	pc->get_ip(sd,ip_sd);
+	
+	if(!logs->should_log_item(itm->nameid, amount, itm->refine, idata))
+		return;
+	
+	switch(type){
+		case LOG_ACTION_GET:
+			strcpy(action,"Buy");
+			break;
+		case LOG_ACTION_DROP:
+			strcpy(action,"Sell");
+			break;		
+		default:
+			strcpy(action,"Unknown");
+			break;
+	}
+	if( SQL_ERROR == SQL->Query(logs->mysql_handle, LOG_QUERY " INTO `NpcShop_Log`"
+	"(`Date`, `Mapname`,"
+	"`NPC_Name`,`Player_CharID`,`Player_Name`,`Player_IP`,`Player_PosX`,`Player_PosY`,`Player_Action`,"
+	"`ItemID`,`ItemName`,`Amount`,`Unit_Cost`,`Total_Cost`,`ItemSerial`,"
+	"`Slots`,`ItemRefiningLevel`)"
+	"VALUES (NOW(),'%s','%s', '%d','%s','%s','%d','%d','%s',"
+	"'%d','%s','%d','%d','%d','%"PRIu64"',"
+	"'%d','%d')",
+	mapindex_id2name(sd->mapindex),name, sd->status.char_id,sd->status.name,ip_sd,sd->bl.x, sd->bl.y,action,
+	itm->nameid,idata->name,amount,unit_cost,amount*unit_cost,itm->unique_id,
+	idata->slot,itm->refine))	
+	{
+		Sql_ShowDebug(logs->mysql_handle);
+		return;
+	}
+	
+}
+void log_pickdrop (struct map_session_data* sd, struct mob_data *md, struct item* itm ,int amount,char * type,char * from){
+	nullpo_retv(itm);
+	if( md && !sd && !logs->config.pc_pick_drop )
+		return;
+		
+	if(!sd && !logs->config.mob_pick_drop)
+		return;
+
+	logs->pickdrop_sub_sql (sd,md,itm,amount,type,from);
+	return;
+}
+void log_pickdrop_sub_sql (struct map_session_data* sd, struct mob_data *md, struct item* itm ,int amount,char * type,char * from){
+	ip_sd[20] = "",c_source[8],c_from[23]="";
+	struct block_list *src;
+	struct item_data* idata = itemdb->exists(itm->nameid);
+
+	if(!logs->should_log_item(itm->nameid, amount, itm->refine, idata))
+		return;
+	
+	if(sd){
+			pc->get_ip(sd,ip_sd);
+			src = &sd->bl;
+			strcpy(c_source,"Player");
+	}
+	else if(md){
+			src = &md->bl;
+			strcpy(c_source,"Monster");
+	}
+	else return;
+	
+	
+	if( SQL_ERROR == SQL->Query(logs->mysql_handle, LOG_QUERY " INTO `PickDrop_Log`"
+	"(`Date`,`Action`, `Mapname`,`PosX`,`PosY`,"
+	"`Subject`,`Source`,`AccountID`,`CharID`,`IP`,`Name`,"
+	"`ItemID`,`ItemName`,`Amount`,`ItemSerial`,"
+	"`ItemSlot1`,`ItemSlot2`,`ItemSlot3`,`ItemSlot4`,`ItemRefiningLevel`)"
+	"VALUES (NOW(),'%s','%s','%d','%d','%s','%s','%d','%d','%s','%s',"
+	"'%d','%s','%d','%"PRIu64"',"
+	"'%d','%d','%d','%d','%d')",
+	type,map->list[src->m].name,src->x,src->y,from,c_from,(sd)? sd->status.account_id : 0,
+	(sd)? sd->status.char_id : 0,ip_sd,(sd)? sd->status.name : md->name,
+	itm->nameid,idata->name,amount,itm->unique_id,
+	itm->card[0],itm->card[1],itm->card[2],itm->card[3],itm->refine))
+	{
+		Sql_ShowDebug(logs->mysql_handle);
+		return;
+	}
+}
+void log_consume (struct map_session_data* sd,struct item* itm, int amount,char * type){
+	nullpo_retv(itm);
+	nullpo_retv(sd);
+	if( !logs->config.consume )
+		return;
+
+	logs->consume_sub_sql (sd,itm,amount,type);
+	return;	
+}
+void log_consume_sub_sql (struct map_session_data* sd,struct item* itm, int amount,char * type){
+	char ip_sd[20], type_inf[20];
+	struct item_data* idata = itemdb->exists(itm->nameid);
+
+	if(!logs->should_log_item(itm->nameid, amount, itm->refine, idata))
+		return;
+	
+	pc->get_ip(sd,ip_sd);
+	safestrncpy(type_inf,type,20);
+	if( SQL_ERROR == SQL->Query(logs->mysql_handle, LOG_QUERY " INTO `ItemConsume_Log`"
+	"(`Date`, `Mapname`,`PosX`,`PosY`,`CharacterID`,`CharName`,"
+	"`CharacterIPaddr`,`ItemID`,`ItemName`,`ItemSerial`,`Amount`,`Type_`)"
+	"VALUES (NOW(),'%s','%d', '%d','%d','%s',"
+					"'%s','%d','%s','%"PRIu64"','%d','%s')",
+	mapindex_id2name(sd->mapindex),sd->bl.x, sd->bl.y,sd->status.char_id,sd->status.name,
+	ip_sd,itm->nameid,idata->name,itm->unique_id,amount,type_inf))
+	{
+		Sql_ShowDebug(logs->mysql_handle);
+		return;
+	}		
+}
+void log_produce (struct map_session_data* sd,struct item* itm, int amount,char * type){
+	nullpo_retv(sd);
+	if( !logs->config.produce )
+		return;
+
+	logs->produce_sub_sql (sd,itm,amount,type);
+	return;	
+}
+void log_produce_sub_sql (struct map_session_data* sd,struct item* itm, int amount,char * type){
+	char ip_sd[20], type_inf[20];
+	pc->get_ip(sd,ip_sd);
+	safestrncpy(type_inf,type,20);
+	
+
+	if(!itm){
+		if( SQL_ERROR == SQL->Query(logs->mysql_handle, LOG_QUERY " INTO `ItemProduce_Log`"
+		"(`Date`, `Mapname`,`PosX`,`PosY`,`CharacterID`,`CharName`,"
+		"`CharacterIPaddr`,`Type_`)"
+		"VALUES (NOW(),'%s','%d', '%d','%d','%s',"
+						"'%s','%s')",
+		mapindex_id2name(sd->mapindex),sd->bl.x, sd->bl.y,sd->status.char_id,sd->status.name,
+		ip_sd,type_inf))
+		{
+			Sql_ShowDebug(logs->mysql_handle);
+			return;
+		}		
+	}
+	else{
+		struct item_data* idata = itemdb->exists(itm->nameid);
+
+		if (!logs->should_log_item(itm->nameid, amount, itm->refine, idata))
+			return;
+
+		if( SQL_ERROR == SQL->Query(logs->mysql_handle, LOG_QUERY " INTO `ItemProduce_Log`"
+		"(`Date`, `Mapname`,`PosX`,`PosY`,`CharacterID`,`CharName`,"
+		"`CharacterIPaddr`,`ItemID`,`ItemName`,`ItemSerial`,`Amount`,`Type_`)"
+		"VALUES (NOW(),'%s','%d', '%d','%d','%s',"
+						"'%s','%d','%s','%"PRIu64"','%d','%s')",
+		mapindex_id2name(sd->mapindex),sd->bl.x, sd->bl.y,sd->status.char_id,sd->status.name,
+		ip_sd,itm->nameid,idata->name,itm->unique_id,amount,type_inf))
+		{
+			Sql_ShowDebug(logs->mysql_handle);
+			return;
+		}
+	}
+}
+void log_storage (struct map_session_data* sd,struct item* itm, int amount,char type){
+	nullpo_retv(sd);
+	nullpo_retv(itm);
+	if( !logs->config.storage )
+		return;
+
+	logs->storage_sub_sql(sd,itm,amount,type);
+	return;	
+}
+void log_storage_sub_sql (struct map_session_data* sd,struct item* itm, int amount,char type){
+	char ip_sd[20];
+	struct item_data *idata = itemdb->search(itm->nameid);	
+	
+	if(!logs->should_log_item(itm->nameid, amount, itm->refine, idata))
+		return;
+	
+	pc->get_ip(sd,ip_sd);
+	if( SQL_ERROR == SQL->Query(logs->mysql_handle, LOG_QUERY " INTO `Storage_Log`"
+	"(`Date`,`Type_`,`Mapname`,`PosX`,`PosY`,`AccountID`,`CharacterID`,`CharName`,"
+	"`CharacterIPaddr`,`ItemID`,`ItemName`,`ItemSerial`,`Amount`,`ItemSlot1`,"
+	"`ItemSlot2`,`ItemSlot3`,`ItemSlot4`,`ItemRefiningLevel`)"
+	"VALUES (NOW(),'%c','%s', '%d','%d','%d','%d','%s',"
+	"'%s','%d','%s','%"PRIu64"','%d','%d','%d','%d','%d','%d')",
+	type,mapindex_id2name(sd->mapindex),sd->bl.x, sd->bl.y,sd->status.account_id,
+	sd->status.char_id,sd->status.name,ip_sd,
+	itm->nameid,idata->name,itm->unique_id,amount,itm->card[0],itm->card[1],
+	itm->card[2],itm->card[3],itm->refine))
+	{
+		Sql_ShowDebug(logs->mysql_handle);
+		return;
+	}		
+	return;	
+}
+void log_gstorage (struct map_session_data* sd,struct item* itm, int amount,char type){
+	nullpo_retv(sd);
+	nullpo_retv(itm);
+	if( !logs->config.gstorage )
+		return;
+
+	logs->gstorage_sub_sql(sd,itm,amount,type);
+	return;	
+}
+void log_gstorage_sub_sql (struct map_session_data* sd,struct item* itm, int amount,char type){
+	char ip_sd[20];
+	struct item_data *idata = itemdb->search(itm->nameid);
+
+	if(!logs->should_log_item(itm->nameid, amount, itm->refine, idata))
+		return;
+	
+	pc->get_ip(sd,ip_sd);
+	if( SQL_ERROR == SQL->Query(logs->mysql_handle, LOG_QUERY " INTO `Guild_Storage_Log`"
+	"(`Date`,`Type_`,`Mapname`,`PosX`,`PosY`,`GuildID`,`GuildName`,`AccountID`,`CharacterID`,`CharName`,"
+	"`CharacterIPaddr`,`ItemID`,`ItemName`,`ItemSerial`,`Amount`,`ItemSlot1`,"
+	"`ItemSlot2`,`ItemSlot3`,`ItemSlot4`,`ItemRefiningLevel`)"
+	"VALUES (NOW(),'%c','%s', '%d','%d','%d','%s','%d','%d','%s',"
+	"'%s','%d','%s','%"PRIu64"','%d','%d','%d','%d','%d','%d')",
+	type,mapindex_id2name(sd->mapindex),sd->bl.x, sd->bl.y,	sd->guild->guild_id,
+	sd->guild->name,sd->status.account_id,
+	sd->status.char_id,sd->status.name,ip_sd,
+	itm->nameid,idata->name,itm->unique_id,amount,itm->card[0],itm->card[1],
+	itm->card[2],itm->card[3],itm->refine))
+	{
+		Sql_ShowDebug(logs->mysql_handle);
+		return;
+	}		
+	return;	
+}
+void log_mail (struct mail_message *msg){
+	nullpo_retv(msg);
+	if( !logs->config.mail )
+		return;
+	logs->mail_sub_sql(msg);
+	return;	
+}
+void log_mail_sub_sql (struct mail_message *msg){
+	
+	struct item * itm = &msg->item;
+	struct item_data *idata = (itm) ? itemdb->search(itm->nameid) : NULL;	
+
+	if( SQL_ERROR == SQL->Query(logs->mysql_handle, LOG_QUERY " INTO `Mail_Log`"
+	"(`Date`,`SenderID`,`SenderName`,`DestID`,`DestName`,`Zeny`,"
+	"`ItemID`,`ItemName`,`ItemSerial`,`Amount`,`ItemSlot1`,`ItemSlot2`,`ItemSlot3`,`ItemSlot4`,`ItemRefiningLevel`)"
+	"VALUES (NOW(),'%d','%s', '%d','%s','%d','%d','%s',"
+	"'%"PRIu64"','%d','%d','%d','%d','%d','%d')",
+	msg->send_id,msg->send_name,msg->dest_id,msg->dest_name,msg->zeny,
+	(itm)? itm->nameid :0,(itm)? idata->name : "",
+	(itm)? itm->unique_id : 0, (itm)? itm->amount : 0,
+	(itm)? itm->card[0] : 0 ,(itm)? itm->card[1] : 0,
+	(itm)? itm->card[2] : 0,(itm)? itm->card[3] : 0,
+	(itm)? itm->refine : 0))
+	{
+		Sql_ShowDebug(logs->mysql_handle);
+		return;
+	}		
+	return;	
+}
+
+void log_buyingstore (struct map_session_data* bsd,struct map_session_data* vsd,struct item *itm, int zeny,int amount){
+	nullpo_retv(bsd);
+	nullpo_retv(vsd);
+	nullpo_retv(itm);
+	if( !logs->config.buyingstore )
+		return;
+
+	logs->buyingstore_sub_sql(bsd,vsd,itm,zeny,amount);
+	return;
+}
+void log_buyingstore_sub_sql (struct map_session_data* bsd,struct map_session_data* vsd,struct item *itm, int zeny,int amount){
+	char ip_bsd[20] ="AutoTrade", ip_vsd[20];
+	struct item_data *idata = itemdb->search(itm->nameid);
+
+	if(!logs->should_log_item(itm->nameid, amount, itm->refine, idata))
+		return;
+	
+	pc->get_ip(vsd,ip_vsd);
+	if(!bsd->state.autotrade)
+		pc->get_ip(bsd,ip_bsd);
+
+	if( SQL_ERROR == SQL->Query(logs->mysql_handle, LOG_QUERY " INTO `BuyingStore_Log`"
+	"(`Date`, `Mapname`,`Shop_Name`,"
+	"`Buyer_CharID`,`Buyer_Name`,`Buyer_IP`,`Buyer_PosX`,`Buyer_PosY`,"
+	"`Vendor_CharID`,`Vendor_Name`,`Vendor_IP`,"
+	"`ItemID`,`ItemName`,`Amount`,`Unit_Cost`,`Total_Cost`,`ItemSerial`,`ItemSlot1`,`ItemSlot2`,`ItemSlot3`,`ItemSlot4`,`ItemRefiningLevel`)"
+	"VALUES (NOW(),'%s','%s', '%d','%s','%s','%d','%d',"
+					"'%d','%s','%s',"
+	"'%d','%s','%d','%d','%d','%"PRIu64"','%d','%d','%d','%d','%d')",
+	mapindex_id2name(vsd->mapindex),bsd->message,bsd->status.char_id,bsd->status.name,ip_bsd,bsd->bl.x, bsd->bl.y,
+	vsd->status.char_id,vsd->status.name,ip_vsd,
+	itm->nameid,idata->name,amount,zeny,zeny*amount,itm->unique_id,
+	itm->card[0],itm->card[1],itm->card[2],itm->card[3],itm->refine))
+	
+	{
+		Sql_ShowDebug(logs->mysql_handle);
+		return;
+	}	
+}
+void log_item_getrem (int tp,struct map_session_data* sd,struct item* itm,int amount,char * type){
+	nullpo_retv(sd);
+	nullpo_retv(itm);
+	if( !logs->config.get_rem_item )
+		return;
+
+	logs->item_getrem_sub_sql(tp,sd,itm,amount,type);
+	return;	
+}
+void log_item_getrem_sub_sql  (int tp,struct map_session_data* sd,struct item* itm,int amount,char * type){
+	char ip_sd[20],type_[4];
+	struct item_data *idata = itemdb->search(itm->nameid);
+	
+	if(!logs->should_log_item(itm->nameid, amount, itm->refine, idata))
+		return;	
+	
+	pc->get_ip(sd,ip_sd);
+	switch(tp){
+		case 0:
+			strcpy(type_,"Del");
+			break;
+		case 1:
+			strcpy(type_,"Get");
+			break;
+		default:
+			return;
+	}
+	if( SQL_ERROR == SQL->Query(logs->mysql_handle, LOG_QUERY " INTO `item_get_removelog`"
+	"(`Date`,`Type_`,`Source`, `Mapname`,`PosX`,`PosY`,`AccountID`,`CharID`,`CharName`,`CharIP`,"
+	"`ItemID`,`ItemName`,`Amount`,`ItemSerial`,`ItemSlot1`,`ItemSlot2`,`ItemSlot3`,`ItemSlot4`,`ItemRefiningLevel`)"
+	"VALUES (NOW(),'%s','%s', '%s','%d','%d','%d','%d','%s','%s',"
+	"'%d','%s','%d','%"PRIu64"','%d','%d','%d','%d','%d')",
+	type_,type,mapindex_id2name(sd->mapindex),sd->bl.x,sd->bl.y,sd->status.account_id,sd->status.char_id,sd->status.name,ip_sd,
+	itm->nameid,idata->name,amount,itm->unique_id,itm->card[0],itm->card[1],itm->card[2],itm->card[3],itm->refine))	
+	{
+		Sql_ShowDebug(logs->mysql_handle);
+		return;
+	}	
+	
+}
+void log_zeny_sub_sql(struct map_session_data* sd,char * type, struct map_session_data* src_sd, int amount) {
+	if( SQL_ERROR == SQL->Query(logs->mysql_handle, LOG_QUERY " INTO `%s` (`time`, `char_id`, `src_id`, `type`, `amount`, `map`) VALUES (NOW(), '%d', '%d', '%c', '%d', '%s')",
+							   logs->config.log_zeny, sd->status.char_id, src_sd->status.char_id,type, amount, mapindex_id2name(sd->mapindex)) )
+	{
+		Sql_ShowDebug(logs->mysql_handle);
+		return;
+	}
+}
+
 /// logs zeny transactions
-void log_zeny(struct map_session_data* sd, e_log_pick_type type, struct map_session_data* src_sd, int amount)
+void log_zeny(struct map_session_data* sd,char * type, struct map_session_data* src_sd, int amount)
 {
 	nullpo_retv(sd);
 
@@ -261,36 +630,6 @@ void log_zeny(struct map_session_data* sd, e_log_pick_type type, struct map_sess
 		return;
 
 	logs->zeny_sub(sd,type,src_sd,amount);
-}
-void log_mvpdrop_sub_sql(struct map_session_data* sd, int monster_id, int* log_mvp) {
-	if( SQL_ERROR == SQL->Query(logs->mysql_handle, LOG_QUERY " INTO `%s` (`mvp_date`, `kill_char_id`, `monster_id`, `prize`, `mvpexp`, `map`) VALUES (NOW(), '%d', '%d', '%d', '%d', '%s') ",
-							   logs->config.log_mvpdrop, sd->status.char_id, monster_id, log_mvp[0], log_mvp[1], mapindex_id2name(sd->mapindex)) )
-	{
-		Sql_ShowDebug(logs->mysql_handle);
-		return;
-	}
-}
-void log_mvpdrop_sub_txt(struct map_session_data* sd, int monster_id, int* log_mvp) {
-	char timestring[255];
-	time_t curtime;
-	FILE* logfp;
-	
-	if( ( logfp = fopen(logs->config.log_mvpdrop,"a") ) == NULL )
-		return;
-	time(&curtime);
-	strftime(timestring, sizeof(timestring), "%m/%d/%Y %H:%M:%S", localtime(&curtime));
-	fprintf(logfp,"%s - %s[%d:%d]\t%d\t%d,%d\n", timestring, sd->status.name, sd->status.account_id, sd->status.char_id, monster_id, log_mvp[0], log_mvp[1]);
-	fclose(logfp);
-}
-/// logs MVP monster rewards
-void log_mvpdrop(struct map_session_data* sd, int monster_id, int* log_mvp)
-{
-	nullpo_retv(sd);
-
-	if( !logs->config.mvpdrop )
-		return;
-
-	logs->mvpdrop_sub(sd,monster_id,log_mvp);
 }
 
 void log_atcommand_sub_sql(struct map_session_data* sd, const char* message) {
@@ -461,7 +800,7 @@ int log_config_read(const char* cfgName) {
 
 		if (sscanf(line, "%1023[^:]: %1023[^\r\n]", w1, w2) == 2) {
 			if( strcmpi(w1, "enable_logs") == 0 )
-				logs->config.enable_logs = (e_log_pick_type)config_switch(w2);
+				logs->enable_logs = (bool)config_switch(w2);
 			else if( strcmpi(w1, "sql_logs") == 0 )
 				logs->config.sql_logs = (bool)config_switch(w2);
 //start of common filter settings
@@ -490,8 +829,6 @@ int log_config_read(const char* cfgName) {
 				logs->config.mvpdrop = config_switch(w2);
 			else if( strcmpi(w1, "log_chat_woe_disable") == 0 )
 				logs->config.log_chat_woe_disable = (bool)config_switch(w2);
-			else if( strcmpi(w1, "log_buycash") == 0 )
-				logs->config.buycash = config_switch(w2);
 			else if( strcmpi(w1, "log_branch_db") == 0 )
 				safestrncpy(logs->config.log_branch, w2, sizeof(logs->config.log_branch));
 			else if( strcmpi(w1, "log_pick_db") == 0 )
@@ -506,6 +843,35 @@ int log_config_read(const char* cfgName) {
 				safestrncpy(logs->config.log_npc, w2, sizeof(logs->config.log_npc));
 			else if( strcmpi(w1, "log_chat_db") == 0 )
 				safestrncpy(logs->config.log_chat, w2, sizeof(logs->config.log_chat));
+			
+			else if( strcmpi(w1, "log_cards") == 0 )
+				logs->config.cards = config_switch(w2);
+			else if( strcmpi(w1, "log_buyingstore") == 0 )
+				logs->config.buyingstore = config_switch(w2);
+			else if( strcmpi(w1, "log_vending") == 0 )
+				logs->config.vending = config_switch(w2);
+			else if( strcmpi(w1, "log_consume") == 0 )
+				logs->config.consume = config_switch(w2);
+			else if( strcmpi(w1, "log_mob_pick_drop") == 0 )
+				logs->config.mob_pick_drop = config_switch(w2);	
+			else if( strcmpi(w1, "log_pc_pick_drop") == 0 )
+				logs->config.pc_pick_drop = config_switch(w2);	
+			else if( strcmpi(w1, "log_npc_buy_sell") == 0 )
+				logs->config.npc_buy_sell = config_switch(w2);
+			else if( strcmpi(w1, "log_produce") == 0 )
+				logs->config.produce = config_switch(w2);	
+			else if( strcmpi(w1, "log_storage") == 0 )
+				logs->config.storage = config_switch(w2);	
+			else if( strcmpi(w1, "log_gstorage") == 0 )
+				logs->config.gstorage = config_switch(w2);	
+			else if( strcmpi(w1, "log_get_remove_item") == 0 )
+				logs->config.get_rem_item = config_switch(w2);	
+			else if( strcmpi(w1, "log_mail") == 0 )
+				logs->config.mail = config_switch(w2);
+			else if( strcmpi(w1, "log_trade") == 0 )
+				logs->config.trade = config_switch(w2);	
+			else if( strcmpi(w1, "log_buycash") == 0 )
+				logs->config.buycash = config_switch(w2);			
 			//support the import command, just like any other config
 			else if( strcmpi(w1,"import") == 0 )
 				logs->config_read(w2);
@@ -519,7 +885,7 @@ int log_config_read(const char* cfgName) {
 	if( --count == 0 ) {// report final logging state
 		const char* target = logs->config.sql_logs ? "table" : "file";
 
-		if( logs->config.enable_logs && logs->config.filter ) {
+		if( logs->enable_logs && logs->config.filter ) {
 			ShowInfo("Registrando transacoes de itens para %s '%s'.\n", target, logs->config.log_pick);
 		}
 		if( logs->config.branch ) {
@@ -547,13 +913,11 @@ int log_config_read(const char* cfgName) {
 }
 void log_config_complete(void) {
 	if( logs->config.sql_logs ) {
-		logs->pick_sub = log_pick_sub_sql;
 		logs->zeny_sub = log_zeny_sub_sql;
 		logs->npc_sub = log_npc_sub_sql;
 		logs->chat_sub = log_chat_sub_sql;
 		logs->atcommand_sub = log_atcommand_sub_sql;
 		logs->branch_sub = log_branch_sub_sql;
-		logs->mvpdrop_sub = log_mvpdrop_sub_sql;
 	}
 }
 void log_defaults(void) {
@@ -568,34 +932,80 @@ void log_defaults(void) {
 	logs->mysql_handle = NULL;
 	/* */
 	
-	logs->pick_pc = log_pick_pc;
-	logs->pick_mob = log_pick_mob;
 	logs->zeny = log_zeny;
 	logs->npc = log_npc;
 	logs->chat = log_chat;
 	logs->atcommand = log_atcommand;
 	logs->branch = log_branch;
-	logs->mvpdrop = log_mvpdrop;
 	
 	/* will be modified in a few seconds once loading is complete. */
-	logs->pick_sub = log_pick_sub_txt;
-	logs->zeny_sub = log_zeny_sub_txt;
+
 	logs->npc_sub = log_npc_sub_txt;
 	logs->chat_sub = log_chat_sub_txt;
 	logs->atcommand_sub = log_atcommand_sub_txt;
 	logs->branch_sub = log_branch_sub_txt;
-	logs->mvpdrop_sub = log_mvpdrop_sub_txt;
-
-	//CASH LOGS - GreenStage
-	logs->cash_buy_sql = log_cash_buy_sql;
-	logs->cash_buy_sub_sql = log_cash_buy_sub_sql;
 	
 	logs->config_read = log_config_read;
 	logs->config_done = log_config_complete;
 	logs->sql_init = log_sql_init;
 	logs->sql_final = log_sql_final;
 
-	logs->picktype2char = log_picktype2char;
 	logs->chattype2char = log_chattype2char;
 	logs->should_log_item = should_log_item;
+	
+/*=======BrAthena Modifications================*/
+
+	//CashShop Log
+	logs->cash_buy_sql = log_cash_buy_sql;
+	logs->cash_buy_sub_sql = log_cash_buy_sub_sql;
+	
+	//Card Insert/Remove Log
+	logs->card = log_card;
+	logs->card_sub_sql = log_card_sub_sql;
+	
+	//Trade Logs
+	logs->trade = log_trade;
+	logs->trade_sub_sql = log_trade_sub_sql;
+
+	//Vending Purchase Log
+	logs->vending = log_vending;
+	logs->vending_sub_sql = log_vending_sub_sql;
+	
+	//NPC Shop Buy/Sell Log
+	logs->npc_shop = log_npc_shop;
+	logs->npc_shop_sub_sql = log_npc_shop_sub_sql;
+
+	//Player/Mob Pick/Drop Log
+	logs->pickdrop = log_pickdrop;
+	logs->pickdrop_sub_sql = log_pickdrop_sub_sql;
+	
+	//Item Consume Log
+	logs->consume = log_consume;
+	logs->consume_sub_sql = log_consume_sub_sql;
+	
+	//Item Produce Log
+	logs->produce = log_produce;
+	logs->produce_sub_sql = log_produce_sub_sql;	
+	
+	//Storage Log
+	logs->storage = log_storage;
+	logs->storage_sub_sql = log_storage_sub_sql;	
+	
+	//Guild Storage Log
+	logs->gstorage = log_gstorage;
+	logs->gstorage_sub_sql = log_gstorage_sub_sql;	
+
+	//Mail Log
+	logs->mail = log_mail;
+	logs->mail_sub_sql = log_mail_sub_sql;
+
+	//BuyingStore
+	logs->buyingstore = log_buyingstore;
+	logs->buyingstore_sub_sql = log_buyingstore_sub_sql;
+	
+	//Item Get/Remove log
+	logs->item_getrem = log_item_getrem;
+	logs->item_getrem_sub_sql = log_item_getrem_sub_sql;	
+	
+/*---------------------------------------------*/
 }
