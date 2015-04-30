@@ -324,7 +324,7 @@ void log_pickdrop (struct map_session_data* sd, struct mob_data *md, struct item
 	return;
 }
 void log_pickdrop_sub_sql (struct map_session_data* sd, struct mob_data *md, struct item* itm ,int amount,char * type,char * from){
-	ip_sd[20] = "",c_source[8],c_from[23]="";
+	char ip_sd[20] = "",c_source[8],c_from[23]="";
 	struct block_list *src;
 	struct item_data* idata = itemdb->exists(itm->nameid);
 
