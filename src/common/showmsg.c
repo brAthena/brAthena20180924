@@ -681,7 +681,7 @@ int vShowMessage_(enum msg_type flag, const char *string, va_list ap)
 			strcat(prefix,CL_WHITE"[Info]"CL_RESET":");
 			break;
 		case MSG_NOTICE: //Bright White (Less than a warning)
-			sprintf(prefix,CL_GREEN"[Noticia]"CL_RESET":", 161);
+			sprintf(prefix,CL_GREEN"[Noticia]"CL_RESET":");
 			break;
 		case MSG_WARNING: //Bright Yellow
 			strcat(prefix,CL_YELLOW"[Aviso]"CL_RESET":");
@@ -693,7 +693,7 @@ int vShowMessage_(enum msg_type flag, const char *string, va_list ap)
 			strcat(prefix,CL_RED"[Erro]"CL_RESET":");
 			break;
 		case MSG_FATALERROR: //Bright Red (Fatal errors, abort(); if possible)
-			sprintf(prefix, CL_LT_RED"[Erro Critico]"CL_RESET":", 161);
+			sprintf(prefix, CL_LT_RED"[Erro Critico]"CL_RESET":");
 			break;
 		default:
 			ShowError("Na funcao vShowMessage_() -> Flag inválido.\n");

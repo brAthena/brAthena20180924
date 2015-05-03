@@ -1330,7 +1330,7 @@ void itemdb_read_combos() {
 		rows++;
 	}
 
-	ShowSQL("Leitura de '"CL_WHITE"%lu"CL_RESET"' entradas na tabela '"CL_WHITE"%s"CL_RESET"'.\n", rows, get_database_name(45));
+	ShowSQL("Leitura de '"CL_WHITE"%d"CL_RESET"' entradas na tabela '"CL_WHITE"%s"CL_RESET"'.\n", rows, get_database_name(45));
 	SQL->FreeResult(map->brAmysql_handle);
 	return;
 }

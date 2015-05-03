@@ -5674,7 +5674,7 @@ int char_config_read(const char* cfgName)
 		} else if (strcmpi(w1, "fame_list_taekwon") == 0) {
 			fame_list_size_taekwon = atoi(w2);
 			if (fame_list_size_taekwon > MAX_FAME_LIST) {
-				ShowWarning("Tamanho Max. da lista de fama: (fame_list_taekwon)\n", MAX_FAME_LIST);
+				ShowWarning("Tamanho Max. da lista de fama: %d (fame_list_taekwon)\n", MAX_FAME_LIST);
 				fame_list_size_taekwon = MAX_FAME_LIST;
 			}
 		} else if (strcmpi(w1, "guild_exp_rate") == 0) {

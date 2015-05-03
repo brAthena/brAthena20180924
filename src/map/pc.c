@@ -10692,7 +10692,7 @@ int pc_readdb(void) {
 		pc->statp[i] = stat;
 		i++;
 	}
-	ShowSQL("Leitura de '"CL_WHITE"%lu"CL_RESET"' entradas na tabela '"CL_WHITE"%s"CL_RESET"'.\n", (i > 1 ? i-1 : 0), get_database_name(51));
+	ShowSQL("Leitura de '"CL_WHITE"%d"CL_RESET"' entradas na tabela '"CL_WHITE"%s"CL_RESET"'.\n", (i > 1 ? i-1 : 0), get_database_name(51));
 	SQL->FreeResult(map->brAmysql_handle);
 	
 	// generate the remaining parts of the db if necessary

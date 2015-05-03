@@ -612,9 +612,9 @@ void log_item_getrem_sub_sql  (int tp,struct map_session_data* sd,struct item* i
 	}	
 	
 }
-void log_zeny_sub_sql(struct map_session_data* sd,char * type, struct map_session_data* src_sd, int amount) {
-	if( SQL_ERROR == SQL->Query(logs->mysql_handle, LOG_QUERY " INTO `%s` (`time`, `char_id`, `src_id`, `type`, `amount`, `map`) VALUES (NOW(), '%d', '%d', '%c', '%d', '%s')",
-							   logs->config.log_zeny, sd->status.char_id, src_sd->status.char_id,type, amount, mapindex_id2name(sd->mapindex)) )
+void log_zeny_sub_sql(struct map_session_data *sd, char *type, struct map_session_data *src_sd, int amount) {
+	if( SQL_ERROR == SQL->Query(logs->mysql_handle, LOG_QUERY " INTO `%s` (`time`, `char_id`, `src_id`, `type`, `amount`, `map`) VALUES (NOW(), '%d', '%d', '%s', '%d', '%s')",
+							   logs->config.log_zeny, sd->status.char_id, src_sd->status.char_id, type, amount, mapindex_id2name(sd->mapindex)) )
 	{
 		Sql_ShowDebug(logs->mysql_handle);
 		return;

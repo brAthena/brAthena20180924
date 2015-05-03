@@ -22,6 +22,7 @@ struct item;
 struct item_data;
 struct map_session_data;
 struct mob_data;
+struct mail_message;
 
 /**
  * Defines

@@ -3913,7 +3913,7 @@ bool mob_parse_dbrow(char** str) {
  * Leitura mod_db SQL [Shiraz]
  *------------------------------------------*/
 void mob_readdb(void) {
-	uint32 count = 0;
+	int count = 0;
 
 	if(SQL_ERROR == SQL->Query(map->brAmysql_handle, "SELECT * FROM `%s`", get_database_name(47))) {
 		Sql_ShowDebug(map->brAmysql_handle);
@@ -3941,7 +3941,7 @@ void mob_readdb(void) {
 		count++;
 	}
 
-	ShowSQL("Leitura de '"CL_WHITE"%lu"CL_RESET"' entradas na tabela '"CL_WHITE"%s"CL_RESET"'.\n", count, get_database_name(47));
+	ShowSQL("Leitura de '"CL_WHITE"%d"CL_RESET"' entradas na tabela '"CL_WHITE"%s"CL_RESET"'.\n", count, get_database_name(47));
 	SQL->FreeResult(map->brAmysql_handle);
 	mob->name_constants();
 	return;
@@ -4411,7 +4411,7 @@ bool mob_parse_row_mobskilldb(char** str, int columns, int current)
  * Leitura mod_skill_db SQL [Shiraz]
  *------------------------------------------*/
 void mob_readskilldb(void) {
-	uint32 count = 0;
+	int count = 0;
 
 	if(battle_config.mob_skill_rate == 0) {
 		ShowStatus("Habilidades de monstros foram desabilitadas.\n");
@@ -4437,7 +4437,7 @@ void mob_readskilldb(void) {
 		count++;
 	}
 
-	ShowSQL("Leitura de '"CL_WHITE"%lu"CL_RESET"' entradas na tabela '"CL_WHITE"%s"CL_RESET"'.\n", count, get_database_name(48));
+	ShowSQL("Leitura de '"CL_WHITE"%d"CL_RESET"' entradas na tabela '"CL_WHITE"%s"CL_RESET"'.\n", count, get_database_name(48));
 	SQL->FreeResult(map->brAmysql_handle);
 	return;
 }
