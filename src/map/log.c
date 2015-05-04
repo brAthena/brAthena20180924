@@ -120,7 +120,7 @@ void log_cash_buy_sub_sql (struct map_session_data* sd,char * type,char * npc_na
 	SQL->GetData(map->mysql_handle,  1, &sql_data, NULL); 
 	safestrncpy(last_ip,sql_data,sizeof(last_ip));
 	
-	if( SQL_ERROR == SQL->Query(logs->mysql_handle, LOG_QUERY " INTO `CashItemShop` (`Date`, `Mapname`, `AccountID`, `AccountName`,`CharacterID`,`CharacterIPaddr`,`Type`,`PosX`,`PosY`,`NpcName`,`ItemID`,`ItemName`,`ItemCount`,`ItemSerial`,`ItemSlot1`,`ItemSlot2`,`ItemSlot3`,`ItemSlot4`,`ItemRefiningLevel`,`Cash_Price`,`Cash_View`,`Cash_Before`,`Cash_After`)"
+	if( SQL_ERROR == SQL->Query(logs->mysql_handle, LOG_QUERY " INTO `cashitemshop` (`Date`, `Mapname`, `AccountID`, `AccountName`,`CharacterID`,`CharacterIPaddr`,`Type`,`PosX`,`PosY`,`NpcName`,`ItemID`,`ItemName`,`ItemCount`,`ItemSerial`,`ItemSlot1`,`ItemSlot2`,`ItemSlot3`,`ItemSlot4`,`ItemRefiningLevel`,`Cash_Price`,`Cash_View`,`Cash_Before`,`Cash_After`)"
 	"VALUES (NOW(), '%s','%d','%s','%d','%s','%s','%d','%d','%s','%d','%s','%d','%"PRIu64"','%d','%d','%d','%d','%d','%d','%d','%d','%d')",
 	mapindex_id2name(sd->mapindex), sd->status.account_id, account_name, sd->status.char_id, last_ip, type, sd->bl.x, sd->bl.y, npc_name, itm->nameid, i_data->name, amount, itm->unique_id, itm->card[0], itm->card[1], itm->card[2], itm->card[3], itm->refine, price, tcost, sd->cashPoints + tcost, sd->cashPoints))
 	{
@@ -174,7 +174,7 @@ void log_card_sub_sql( struct map_session_data* sd,int slot,char * type, struct 
 	
 	pc->get_ip(sd,last_ip);
 	
-	if( SQL_ERROR == SQL->Query(logs->mysql_handle, LOG_QUERY " INTO `Card_Log` (`Date`, `Mapname`,`PosX`,`PosY`, `AccountID`,`CharacterID`,`CharName`,`CharacterIPaddr`,`ItemID`,`ItemName`,`ItemSerial`,`Type`,`Slot`,`Card_ID`,`CardName`,`ItemSlot1`,`ItemSlot2`,`ItemSlot3`,`ItemSlot4`,`ItemRefiningLevel`)"
+	if( SQL_ERROR == SQL->Query(logs->mysql_handle, LOG_QUERY " INTO `card_log` (`Date`, `Mapname`,`PosX`,`PosY`, `AccountID`,`CharacterID`,`CharName`,`CharacterIPaddr`,`ItemID`,`ItemName`,`ItemSerial`,`Type`,`Slot`,`Card_ID`,`CardName`,`ItemSlot1`,`ItemSlot2`,`ItemSlot3`,`ItemSlot4`,`ItemRefiningLevel`)"
 	"VALUES (NOW(), '%s','%d','%d','%d','%d','%s','%s','%d','%s','%"PRIu64"','%s','%d','%d','%s','%d','%d','%d','%d','%d')",
 	mapindex_id2name(sd->mapindex), sd->bl.x, sd->bl.y, sd->status.account_id, sd->status.char_id,sd->status.name,last_ip,itm->nameid,
 	data->name,itm->unique_id,type,slot, itm->card[slot],cd_data->name, itm->card[0], itm->card[1], itm->card[2], itm->card[3], itm->refine))
@@ -205,7 +205,7 @@ void log_trade_sub_sql(int zeny, struct map_session_data* sd1, struct map_sessio
 	pc->get_ip(sd1,last_ip1);
 	pc->get_ip(sd2,last_ip2);
 	
-	if( SQL_ERROR == SQL->Query(logs->mysql_handle, LOG_QUERY " INTO `Trade_Log`"
+	if( SQL_ERROR == SQL->Query(logs->mysql_handle, LOG_QUERY " INTO `trade_log`"
 	"(`Date`, `Mapname`,"
 	"`P1_CharID`,`P1_Name`,`P1_PosX`,`P1_PosY`,`P1_IP`,"
 	"`P2_CharID`,`P2_Name`,`P2_PosX`,`P2_PosY`,`P2_IP`,"
@@ -247,7 +247,7 @@ void log_vending_sub_sql (struct map_session_data* sd,struct map_session_data* v
 	if(!vsd->state.autotrade)
 		pc->get_ip(vsd,ip_vsd);
 
-	if( SQL_ERROR == SQL->Query(logs->mysql_handle, LOG_QUERY " INTO `Vending_Log`"
+	if( SQL_ERROR == SQL->Query(logs->mysql_handle, LOG_QUERY " INTO `vending_log`"
 	"(`Date`, `Mapname`,`Shop_Name`,"
 	"`Buyer_CharID`,`Buyer_Name`,`Buyer_IP`,"
 	"`Vendor_CharID`,`Vendor_Name`,`Vendor_PosX`,`Vendor_PosY`,`Vendor_IP`,"
@@ -295,7 +295,7 @@ void log_npc_shop_sub_sql (struct map_session_data* sd,char * name, struct item*
 			strcpy(action,"Unknown");
 			break;
 	}
-	if( SQL_ERROR == SQL->Query(logs->mysql_handle, LOG_QUERY " INTO `NpcShop_Log`"
+	if( SQL_ERROR == SQL->Query(logs->mysql_handle, LOG_QUERY " INTO `npcshop_log`"
 	"(`Date`, `Mapname`,"
 	"`NPC_Name`,`Player_CharID`,`Player_Name`,`Player_IP`,`Player_PosX`,`Player_PosY`,`Player_Action`,"
 	"`ItemID`,`ItemName`,`Amount`,`Unit_Cost`,`Total_Cost`,`ItemSerial`,"
@@ -343,7 +343,7 @@ void log_pickdrop_sub_sql (struct map_session_data* sd, struct mob_data *md, str
 	else return;
 	
 	
-	if( SQL_ERROR == SQL->Query(logs->mysql_handle, LOG_QUERY " INTO `PickDrop_Log`"
+	if( SQL_ERROR == SQL->Query(logs->mysql_handle, LOG_QUERY " INTO `pickdrop_log`"
 	"(`Date`,`Action`, `Mapname`,`PosX`,`PosY`,"
 	"`Subject`,`Source`,`AccountID`,`CharID`,`IP`,`Name`,"
 	"`ItemID`,`ItemName`,`Amount`,`ItemSerial`,"
@@ -378,7 +378,7 @@ void log_consume_sub_sql (struct map_session_data* sd,struct item* itm, int amou
 	
 	pc->get_ip(sd,ip_sd);
 	safestrncpy(type_inf,type,20);
-	if( SQL_ERROR == SQL->Query(logs->mysql_handle, LOG_QUERY " INTO `ItemConsume_Log`"
+	if( SQL_ERROR == SQL->Query(logs->mysql_handle, LOG_QUERY " INTO `itemconsume_log`"
 	"(`Date`, `Mapname`,`PosX`,`PosY`,`CharacterID`,`CharName`,"
 	"`CharacterIPaddr`,`ItemID`,`ItemName`,`ItemSerial`,`Amount`,`Type_`)"
 	"VALUES (NOW(),'%s','%d', '%d','%d','%s',"
@@ -405,7 +405,7 @@ void log_produce_sub_sql (struct map_session_data* sd,struct item* itm, int amou
 	
 
 	if(!itm){
-		if( SQL_ERROR == SQL->Query(logs->mysql_handle, LOG_QUERY " INTO `ItemProduce_Log`"
+		if( SQL_ERROR == SQL->Query(logs->mysql_handle, LOG_QUERY " INTO `itemproduce_log`"
 		"(`Date`, `Mapname`,`PosX`,`PosY`,`CharacterID`,`CharName`,"
 		"`CharacterIPaddr`,`Type_`)"
 		"VALUES (NOW(),'%s','%d', '%d','%d','%s',"
@@ -423,7 +423,7 @@ void log_produce_sub_sql (struct map_session_data* sd,struct item* itm, int amou
 		if (!logs->should_log_item(itm->nameid, amount, itm->refine, idata))
 			return;
 
-		if( SQL_ERROR == SQL->Query(logs->mysql_handle, LOG_QUERY " INTO `ItemProduce_Log`"
+		if( SQL_ERROR == SQL->Query(logs->mysql_handle, LOG_QUERY " INTO `itemproduce_log`"
 		"(`Date`, `Mapname`,`PosX`,`PosY`,`CharacterID`,`CharName`,"
 		"`CharacterIPaddr`,`ItemID`,`ItemName`,`ItemSerial`,`Amount`,`Type_`)"
 		"VALUES (NOW(),'%s','%d', '%d','%d','%s',"
@@ -453,7 +453,7 @@ void log_storage_sub_sql (struct map_session_data* sd,struct item* itm, int amou
 		return;
 	
 	pc->get_ip(sd,ip_sd);
-	if( SQL_ERROR == SQL->Query(logs->mysql_handle, LOG_QUERY " INTO `Storage_Log`"
+	if( SQL_ERROR == SQL->Query(logs->mysql_handle, LOG_QUERY " INTO `storage_log`"
 	"(`Date`,`Type_`,`Mapname`,`PosX`,`PosY`,`AccountID`,`CharacterID`,`CharName`,"
 	"`CharacterIPaddr`,`ItemID`,`ItemName`,`ItemSerial`,`Amount`,`ItemSlot1`,"
 	"`ItemSlot2`,`ItemSlot3`,`ItemSlot4`,`ItemRefiningLevel`)"
@@ -486,7 +486,7 @@ void log_gstorage_sub_sql (struct map_session_data* sd,struct item* itm, int amo
 		return;
 	
 	pc->get_ip(sd,ip_sd);
-	if( SQL_ERROR == SQL->Query(logs->mysql_handle, LOG_QUERY " INTO `Guild_Storage_Log`"
+	if( SQL_ERROR == SQL->Query(logs->mysql_handle, LOG_QUERY " INTO `guild_storage_log`"
 	"(`Date`,`Type_`,`Mapname`,`PosX`,`PosY`,`GuildID`,`GuildName`,`AccountID`,`CharacterID`,`CharName`,"
 	"`CharacterIPaddr`,`ItemID`,`ItemName`,`ItemSerial`,`Amount`,`ItemSlot1`,"
 	"`ItemSlot2`,`ItemSlot3`,`ItemSlot4`,`ItemRefiningLevel`)"
@@ -515,7 +515,7 @@ void log_mail_sub_sql (struct mail_message *msg){
 	struct item * itm = &msg->item;
 	struct item_data *idata = (itm) ? itemdb->search(itm->nameid) : NULL;	
 
-	if( SQL_ERROR == SQL->Query(logs->mysql_handle, LOG_QUERY " INTO `Mail_Log`"
+	if( SQL_ERROR == SQL->Query(logs->mysql_handle, LOG_QUERY " INTO `mail_log`"
 	"(`Date`,`SenderID`,`SenderName`,`DestID`,`DestName`,`Zeny`,"
 	"`ItemID`,`ItemName`,`ItemSerial`,`Amount`,`ItemSlot1`,`ItemSlot2`,`ItemSlot3`,`ItemSlot4`,`ItemRefiningLevel`)"
 	"VALUES (NOW(),'%d','%s', '%d','%s','%d','%d','%s',"
@@ -554,7 +554,7 @@ void log_buyingstore_sub_sql (struct map_session_data* bsd,struct map_session_da
 	if(!bsd->state.autotrade)
 		pc->get_ip(bsd,ip_bsd);
 
-	if( SQL_ERROR == SQL->Query(logs->mysql_handle, LOG_QUERY " INTO `BuyingStore_Log`"
+	if( SQL_ERROR == SQL->Query(logs->mysql_handle, LOG_QUERY " INTO `buyingstore_log`"
 	"(`Date`, `Mapname`,`Shop_Name`,"
 	"`Buyer_CharID`,`Buyer_Name`,`Buyer_IP`,`Buyer_PosX`,`Buyer_PosY`,"
 	"`Vendor_CharID`,`Vendor_Name`,`Vendor_IP`,"
