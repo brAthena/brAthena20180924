@@ -103,14 +103,12 @@ struct log_interface {
 	void (*chat) (e_log_chat_type type, int type_id, int src_charid, int src_accid, const char *mapname, int x, int y, const char* dst_charname, const char* message);
 	void (*atcommand) (struct map_session_data* sd, const char* message);
 	void (*branch) (struct map_session_data* sd);
-	void (*mvpdrop) (struct map_session_data* sd, int monster_id, int* log_mvp);
 
 	void (*zeny_sub) (struct map_session_data* sd, char * type, struct map_session_data* src_sd, int amount);
 	void (*npc_sub) (struct map_session_data* sd, const char *message);
 	void (*chat_sub) (e_log_chat_type type, int type_id, int src_charid, int src_accid, const char *mapname, int x, int y, const char* dst_charname, const char* message);
 	void (*atcommand_sub) (struct map_session_data* sd, const char* message);
 	void (*branch_sub) (struct map_session_data* sd);
-	void (*mvpdrop_sub) (struct map_session_data* sd, int monster_id, int* log_mvp);
 
 	int (*config_read) (const char* cfgName);
 	

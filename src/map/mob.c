@@ -2552,8 +2552,6 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type) {
 				break;
 			}
 		}
-
-		logs->mvpdrop(mvp_sd, md->class_, log_mvp);
 	}
 
 	if (type&2 && !sd && md->class_ == MOBID_EMPERIUM && md->guardian_data) {

@@ -24,8 +24,6 @@ CREATE TABLE IF NOT EXISTS `atcommandlog` (
   `command` varchar(255) NOT NULL DEFAULT ''
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
--- --------------------------------------------------------
-
 --
 -- Estrutura da tabela `branchlog`
 --
@@ -38,8 +36,6 @@ CREATE TABLE IF NOT EXISTS `branchlog` (
   `char_name` varchar(25) NOT NULL DEFAULT '',
   `map` varchar(11) NOT NULL DEFAULT ''
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
 
 --
 -- Estrutura da tabela `buyingstore_log`
@@ -71,8 +67,6 @@ CREATE TABLE IF NOT EXISTS `buyingstore_log` (
   `ItemRefiningLevel` tinyint(3) unsigned NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
--- --------------------------------------------------------
-
 --
 -- Estrutura da tabela `card_log`
 --
@@ -100,8 +94,6 @@ CREATE TABLE IF NOT EXISTS `card_log` (
   `ItemSlot4` smallint(11) NOT NULL DEFAULT '0',
   `ItemRefiningLevel` tinyint(3) unsigned NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
 
 --
 -- Estrutura da tabela `cashitemshop`
@@ -134,8 +126,6 @@ CREATE TABLE IF NOT EXISTS `cashitemshop` (
   `Cash_After` int(11) unsigned NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
--- --------------------------------------------------------
-
 --
 -- Estrutura da tabela `chatlog`
 --
@@ -153,8 +143,6 @@ CREATE TABLE IF NOT EXISTS `chatlog` (
   `dst_charname` varchar(25) NOT NULL DEFAULT '',
   `message` varchar(150) NOT NULL DEFAULT ''
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
 
 --
 -- Estrutura da tabela `guild_storage_log`
@@ -184,8 +172,6 @@ CREATE TABLE IF NOT EXISTS `guild_storage_log` (
   `ItemRefiningLevel` tinyint(3) unsigned NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
--- --------------------------------------------------------
-
 --
 -- Estrutura da tabela `itemconsume_log`
 --
@@ -206,8 +192,6 @@ CREATE TABLE IF NOT EXISTS `itemconsume_log` (
   `Type_` varchar(20) NOT NULL DEFAULT ''
 ) ENGINE=MyISAM AUTO_INCREMENT=180 DEFAULT CHARSET=latin1;
 
--- --------------------------------------------------------
-
 --
 -- Estrutura da tabela `itemproduce_log`
 --
@@ -227,8 +211,6 @@ CREATE TABLE IF NOT EXISTS `itemproduce_log` (
   `Amount` int(11) unsigned NOT NULL DEFAULT '0',
   `Type_` enum('Fail Refine','Craft Requirement','Crafting Sucess','Cooking','Arrow Create','Ele.Analysis','Sucess Refine','Downgrade') NOT NULL DEFAULT 'Craft Requirement'
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
 
 --
 -- Estrutura da tabela `item_get_removelog`
@@ -257,8 +239,6 @@ CREATE TABLE IF NOT EXISTS `item_get_removelog` (
   `ItemRefiningLevel` tinyint(3) unsigned NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM AUTO_INCREMENT=25 DEFAULT CHARSET=latin1;
 
--- --------------------------------------------------------
-
 --
 -- Estrutura da tabela `loginlog`
 --
@@ -270,8 +250,6 @@ CREATE TABLE IF NOT EXISTS `loginlog` (
   `rcode` tinyint(4) NOT NULL DEFAULT '0',
   `log` varchar(255) NOT NULL DEFAULT ''
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
 
 --
 -- Estrutura da tabela `mail_log`
@@ -296,24 +274,6 @@ CREATE TABLE IF NOT EXISTS `mail_log` (
   `ItemRefiningLevel` tinyint(3) unsigned NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
--- --------------------------------------------------------
-
---
--- Estrutura da tabela `mvplog`
---
-
-CREATE TABLE IF NOT EXISTS `mvplog` (
-  `mvp_id` mediumint(9) unsigned NOT NULL,
-  `mvp_date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `kill_char_id` int(11) NOT NULL DEFAULT '0',
-  `monster_id` smallint(6) NOT NULL DEFAULT '0',
-  `prize` int(11) NOT NULL DEFAULT '0',
-  `mvpexp` mediumint(9) NOT NULL DEFAULT '0',
-  `map` varchar(11) NOT NULL DEFAULT ''
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
 --
 -- Estrutura da tabela `npclog`
 --
@@ -327,8 +287,6 @@ CREATE TABLE IF NOT EXISTS `npclog` (
   `map` varchar(11) NOT NULL DEFAULT '',
   `mes` varchar(255) NOT NULL DEFAULT ''
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
 
 --
 -- Estrutura da tabela `npcshop_log`
@@ -354,8 +312,6 @@ CREATE TABLE IF NOT EXISTS `npcshop_log` (
   `Slots` tinyint(3) NOT NULL DEFAULT '0',
   `ItemRefiningLevel` tinyint(3) unsigned NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
 
 --
 -- Estrutura da tabela `pickdrop_log`
@@ -385,8 +341,6 @@ CREATE TABLE IF NOT EXISTS `pickdrop_log` (
   `ItemRefiningLevel` tinyint(3) unsigned NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
--- --------------------------------------------------------
-
 --
 -- Estrutura da tabela `storage_log`
 --
@@ -412,8 +366,6 @@ CREATE TABLE IF NOT EXISTS `storage_log` (
   `ItemSlot4` smallint(11) NOT NULL DEFAULT '0',
   `ItemRefiningLevel` tinyint(3) unsigned NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
 
 --
 -- Estrutura da tabela `trade_log`
@@ -444,8 +396,6 @@ CREATE TABLE IF NOT EXISTS `trade_log` (
   `ItemSlot4` smallint(11) NOT NULL DEFAULT '0',
   `ItemRefiningLevel` tinyint(3) unsigned NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
 
 --
 -- Estrutura da tabela `vending_log`
@@ -478,8 +428,6 @@ CREATE TABLE IF NOT EXISTS `vending_log` (
   `ItemRefiningLevel` tinyint(3) unsigned NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
--- --------------------------------------------------------
-
 --
 -- Estrutura da tabela `zenylog`
 --
@@ -489,7 +437,7 @@ CREATE TABLE IF NOT EXISTS `zenylog` (
   `time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `char_id` int(11) NOT NULL DEFAULT '0',
   `src_id` int(11) NOT NULL DEFAULT '0',
-  `type` enum('T','V','P','M','S','N','D','C','A','E','I','B') NOT NULL DEFAULT 'S',
+  `type` enum('Auction','Bank','Monster','Script','bStore','Steal','Cmd','Npc','Trade','Mail','Vending','Other') NOT NULL DEFAULT 'Other',
   `amount` int(11) NOT NULL DEFAULT '0',
   `map` varchar(11) NOT NULL DEFAULT ''
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
@@ -677,11 +625,6 @@ ALTER TABLE `item_get_removelog`
 --
 ALTER TABLE `mail_log`
   MODIFY `Index` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
---
--- AUTO_INCREMENT for table `mvplog`
---
-ALTER TABLE `mvplog`
-  MODIFY `mvp_id` mediumint(9) unsigned NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `npclog`
 --
