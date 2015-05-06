@@ -450,7 +450,7 @@ int pet_recv_petdata(int account_id,struct s_pet *p,int flag) {
 				break;
 		}
 		if(i >= MAX_INVENTORY) {
-			ShowError("pet_recv_petdata: Hatching pet (%d:%s) aborted, couldn't find egg in inventory for removal!\n",p->pet_id, p->name);
+			ShowError("pet_recv_petdata: Pet eclosao (%d:%s) abortada, ovo nao esta no inventario para remocao!\n", p->pet_id, p->name);
 			sd->status.pet_id = 0;
 			return 1;
 		}
@@ -813,7 +813,7 @@ int pet_randomwalk(struct pet_data *pd, int64 tick) {
 			if(i+1>=retrycount){
 				pd->move_fail_count++;
 				if(pd->move_fail_count>1000){
-					ShowWarning("PET can't move. hold position %d, class = %d\n",pd->bl.id,pd->pet.class_);
+					ShowWarning("PET nao se move. Posicao de espera %d, classe = %d\n",pd->bl.id,pd->pet.class_);
 					pd->move_fail_count=0;
 					pd->ud.canmove_tick = tick + 60000;
 					return 0;
@@ -1186,7 +1186,7 @@ void read_petdb(void) {
 	const char *str = NULL;
 
 	if (libconfig->read_file(&pet_conf, config_filename)) {
-		ShowError("Erro ao ler %s\n", config_filename);
+		ShowError("Nao foi possivel abrir %s\n", config_filename);
 		return;
 	}
 

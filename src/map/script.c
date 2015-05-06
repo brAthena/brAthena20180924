@@ -156,7 +156,7 @@ const char* script_op2name(int op) {
 #endif // PCRE_SUPPORT
 
 	default:
-		ShowDebug("script_op2name: unexpected op=%d\n", op);
+		ShowDebug("script_op2name: opcao inesperada=%d\n", op);
 		return "???";
 	}
 #undef RETURN_OP_NAME
@@ -166,8 +166,8 @@ const char* script_op2name(int op) {
 static void script_dump_stack(struct script_state* st)
 {
 	int i;
-	ShowMessage("\tstart = %d\n", st->start);
-	ShowMessage("\tend   = %d\n", st->end);
+	ShowMessage("\tinicio = %d\n", st->start);
+	ShowMessage("\tfim   = %d\n", st->end);
 	ShowMessage("\tdefsp = %d\n", st->stack->defsp);
 	ShowMessage("\tsp    = %d\n", st->stack->sp);
 	for( i = 0; i < st->stack->sp; ++i )
@@ -218,15 +218,15 @@ void script_reportsrc(struct script_state *st) {
 	switch( bl->type ) {
 		case BL_NPC:
 			if( bl->m >= 0 )
-				ShowDebug("Source (NPC): %s at %s (%d,%d)\n", ((struct npc_data *)bl)->name, map->list[bl->m].name, bl->x, bl->y);
+				ShowDebug("(NPC): %s em %s (%d,%d)\n", ((struct npc_data *)bl)->name, map->list[bl->m].name, bl->x, bl->y);
 			else
-				ShowDebug("Source (NPC): %s (invisible/not on a map)\n", ((struct npc_data *)bl)->name);
+				ShowDebug("(NPC): %s (invisivel/nao esta no mapa)\n", ((struct npc_data *)bl)->name);
 			break;
 		default:
 			if( bl->m >= 0 )
-				ShowDebug("Source (Non-NPC type %d): name %s at %s (%d,%d)\n", bl->type, status->get_name(bl), map->list[bl->m].name, bl->x, bl->y);
+				ShowDebug("(Tipo %d): nome %s em %s (%d,%d)\n", bl->type, status->get_name(bl), map->list[bl->m].name, bl->x, bl->y);
 			else
-				ShowDebug("Source (Non-NPC type %d): name %s (invisible/not on a map)\n", bl->type, status->get_name(bl));
+				ShowDebug("(Tipo %d): nome %s (invisivel/nao esta no mapa)\n", bl->type, status->get_name(bl));
 			break;
 	}
 }
@@ -238,37 +238,37 @@ void script_reportdata(struct script_data* data)
 		return;
 	switch( data->type ) {
 		case C_NOP:// no value
-			ShowDebug("Data: nothing (nil)\n");
+			ShowDebug("Dados: vazio (nil)\n");
 			break;
 		case C_INT:// number
-			ShowDebug("Data: number value=%"PRId64"\n", data->u.num);
+			ShowDebug("Dados: valor numerico=%"PRId64"\n", data->u.num);
 			break;
 		case C_STR:
 		case C_CONSTSTR:// string
 			if( data->u.str ) {
-				ShowDebug("Data: string value=\"%s\"\n", data->u.str);
+				ShowDebug("Dados: valor string=\"%s\"\n", data->u.str);
 			} else {
-				ShowDebug("Data: string value=NULL\n");
+				ShowDebug("Dados: valor string=NULL\n");
 			}
 			break;
 		case C_NAME:// reference
 			if( reference_tovariable(data) ) {// variable
 				const char* name = reference_getname(data);
-				ShowDebug("Data: variable name='%s' index=%d\n", name, reference_getindex(data));
+				ShowDebug("Dados: nome da variavel='%s' indice=%d\n", name, reference_getindex(data));
 			} else if( reference_toconstant(data) ) {// constant
-				ShowDebug("Data: constant name='%s' value=%d\n", reference_getname(data), reference_getconstant(data));
+				ShowDebug("Dados: nome da constante='%s' valor=%d\n", reference_getname(data), reference_getconstant(data));
 			} else if( reference_toparam(data) ) {// param
-				ShowDebug("Data: param name='%s' type=%d\n", reference_getname(data), reference_getparamtype(data));
+				ShowDebug("Dados: nome do parametro='%s' tipo=%d\n", reference_getname(data), reference_getparamtype(data));
 			} else {// ???
-				ShowDebug("Data: reference name='%s' type=%s\n", reference_getname(data), script->op2name(data->type));
-				ShowDebug("Please report this!!! - script->str_data.type=%s\n", script->op2name(script->str_data[reference_getid(data)].type));
+				ShowDebug("Dados: nome de referencia='%s' tipo=%s\n", reference_getname(data), script->op2name(data->type));
+				ShowDebug("Por favor reporte isso!!! - script->str_data.type=%s\n", script->op2name(script->str_data[reference_getid(data)].type));
 			}
 			break;
 		case C_POS:// label
-			ShowDebug("Data: label pos=%"PRId64"\n", data->u.num);
+			ShowDebug("Dados: label pos=%"PRId64"\n", data->u.num);
 			break;
 		default:
-			ShowDebug("Data: %s\n", script->op2name(data->type));
+			ShowDebug("Dados: %s\n", script->op2name(data->type));
 			break;
 	}
 }
@@ -297,13 +297,13 @@ void script_reportfunc(struct script_state* st)
 
 	if (params > 0) {
 		int i;
-		ShowDebug("Function: %s (%d parameter%s):\n", script->get_str(id), params, ( params == 1 ) ? "" : "s");
+		ShowDebug("Funcao: %s (%d parametro%s):\n", script->get_str(id), params, ( params == 1 ) ? "" : "s");
 
 		for (i = 2; i <= script_lastdata(st); i++) {
 			script->reportdata(script_getdata(st,i));
 		}
 	} else {
-		ShowDebug("Function: %s (no parameters)\n", script->get_str(id));
+		ShowDebug("Funcao: %s (sem parametros)\n", script->get_str(id));
 	}
 }
 
@@ -329,7 +329,7 @@ void check_event(struct script_state *st, const char *evt)
 {
 	if( evt && evt[0] && !stristr(evt, "::On") )
 	{
-		ShowWarning("NPC event parameter deprecated! Please use 'NPCNAME::OnEVENT' instead of '%s'.\n", evt);
+		ShowWarning("Evento de NPC: Parametro obsoleto! Por favor use 'NPCNAME::OnEVENT' em vez de '%s'.\n", evt);
 		script->reportsrc(st);
 	}
 }
@@ -686,7 +686,7 @@ void set_label(int l,int pos, const char* script_pos)
 
 	if(script->str_data[l].type==C_INT || script->str_data[l].type==C_PARAM || script->str_data[l].type==C_FUNC) {
 		//Prevent overwriting constants values, parameters and built-in functions [Skotlex]
-		disp_error_message("set_label: invalid label name",script_pos);
+		disp_error_message("set_label: nome da label invalido",script_pos);
 		return;
 	}
 	if(script->str_data[l].label!=-1) {
@@ -723,7 +723,7 @@ const char* script_skip_space(const char* p)
 			for(;;)
 			{
 				if( *p == '\0' ) {
-					script->disp_warning_message("script:script->skip_space: end of file while parsing block comment. expected "CL_BOLD"*/"CL_NORM, p);
+					script->disp_warning_message("script:script->skip_space: bloco de comentario incorreto, esperado "CL_BOLD"*/"CL_NORM, p);
 					return p;
 				}
 				if( *p == '*' && p[1] == '/' )
@@ -777,7 +777,7 @@ int add_word(const char* p) {
 	// Check for a word
 	len = script->skip_word(p) - p;
 	if( len == 0 )
-		disp_error_message("script:add_word: invalid word. A word consists of undercores and/or alphanumeric characters, and valid variable prefixes/postfixes.", p);
+		disp_error_message("script:add_word: palavra invalida. A palavra e composta por undercores e/ou caracteres alfanumericos e prefixos variaveis/sufixos validos.", p);
 
 	// Duplicate the word
 	if( len+1 > script->word_size )
@@ -837,7 +837,7 @@ const char* parse_callfunc(const char* p, int require_paren, int is_custom)
 		script->addl(func);
 		arg = script->buildin[script->str_data[script->buildin_callsub_ref].val];
 		if( *arg == 0 )
-			disp_error_message("parse_callfunc: callsub has no arguments, please review its definition",p);
+			disp_error_message("parse_callfunc: callsub nao tem argumentos, por favor reveja as definicoes.",p);
 		if( *arg != '*' )
 			++arg; // count func as argument
 	} else {
@@ -845,7 +845,7 @@ const char* parse_callfunc(const char* p, int require_paren, int is_custom)
 		const char* name = script->get_str(func);
 		if( !is_custom && strdb_get(script->userfunc_db, name) == NULL ) {
 #endif
-			disp_error_message("parse_line: expect command, missing function name or calling undeclared function",p);
+			disp_error_message("parse_line: faltando nome da funcao ou chamando uma funcao indefinida",p);
 #ifdef SCRIPT_CALLFUNC_CHECK
 		} else {;
 			script->addl(script->buildin_callfunc_ref);
@@ -902,7 +902,7 @@ const char* parse_callfunc(const char* p, int require_paren, int is_custom)
 		--script->syntax.curly_count;
 	}
 	if( arg && *arg && *arg != '?' && *arg != '*' )
-		disp_error_message2("parse_callfunc: not enough arguments, expected ','", p, script->config.warn_func_mismatch_paramnum);
+		disp_error_message2("parse_callfunc: nao tem argumentos suficientes, esperado ','", p, script->config.warn_func_mismatch_paramnum);
 	if( script->syntax.curly[script->syntax.curly_count].type != TYPE_ARGLIST )
 		disp_error_message("parse_callfunc: DEBUG last curly is not an argument list",p);
 	if( script->syntax.curly[script->syntax.curly_count].flag == ARGLIST_PAREN ) {
