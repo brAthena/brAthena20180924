@@ -519,12 +519,6 @@ ALTER TABLE `mail_log`
   ADD PRIMARY KEY (`Index`);
 
 --
--- Indexes for table `mvplog`
---
-ALTER TABLE `mvplog`
-  ADD PRIMARY KEY (`mvp_id`);
-
---
 -- Indexes for table `npclog`
 --
 ALTER TABLE `npclog`
