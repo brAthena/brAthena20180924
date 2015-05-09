@@ -502,6 +502,7 @@ void pc_rental_expire(struct map_session_data *sd, int i) {
 	}
 	
 	clif->rental_expired(sd->fd, i, sd->status.inventory[i].nameid);
+	logs->item_getrem(0, sd, &sd->status.inventory[i], -sd->status.inventory[i].amount, "Expired");
 	pc->delitem(sd, i, sd->status.inventory[i].amount, 0, 0);
 }
 void pc_inventory_rentals(struct map_session_data *sd)
