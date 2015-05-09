@@ -11261,7 +11261,7 @@ BUILDIN(changesex)
 	TBL_PC *sd = prepareChangeSex(st);
 	if (sd == NULL)
 		return false;
-	chrif->changesex(sd);
+	chrif->changesex(sd, true);
 	return true;
 }
 
@@ -11273,12 +11273,7 @@ BUILDIN(changecharsex)
 	TBL_PC *sd = prepareChangeSex(st);
 	if (sd == NULL)
 		return false;
-	if (sd->status.sex == 99)
-		sd->status.sex = 0;
-	sd->status.sex = sd->status.sex ? 0 : 1;
-	chrif->save(sd, 0);
-	if (sd->fd)
-		clif->authfail_fd(sd->fd, 15);
+	chrif->changesex(sd, false);
 	return true;
 }
 
