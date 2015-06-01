@@ -153,49 +153,49 @@ void skill_chk(uint16* skill_id) {
 // Skill DB
 int skill_get_hit( uint16 skill_id )               { skill_get (skill->db[skill_id].hit, skill_id); }
 int skill_get_inf( uint16 skill_id )               { skill_get (skill->db[skill_id].inf, skill_id); }
-int skill_get_ele( uint16 skill_id , uint16 skill_lv )      { skill_get (skill->db[skill_id].element[skill_glv(skill_lv-1)], skill_id); }
+int skill_get_ele( uint16 skill_id , uint16 skill_lv )      { Assert_ret(skill_lv > 0); skill_get (skill->db[skill_id].element[skill_glv(skill_lv-1)], skill_id); }
 int skill_get_nk( uint16 skill_id )                { skill_get (skill->db[skill_id].nk, skill_id); }
 int skill_get_max( uint16 skill_id )               { skill_get (skill->db[skill_id].max, skill_id); }
-int skill_get_range( uint16 skill_id , uint16 skill_lv )    { skill_get2 (skill->db[skill_id].range[skill_glv(skill_lv-1)], skill_id, skill_lv); }
-int skill_get_splash( uint16 skill_id , uint16 skill_lv )   { skill_get2 ( (skill->db[skill_id].splash[skill_glv(skill_lv-1)]>=0?skill->db[skill_id].splash[skill_glv(skill_lv-1)]:AREA_SIZE), skill_id, skill_lv);  }
-int skill_get_hp( uint16 skill_id ,uint16 skill_lv )        { skill_get2 (skill->db[skill_id].hp[skill_glv(skill_lv-1)], skill_id, skill_lv); }
-int skill_get_sp( uint16 skill_id ,uint16 skill_lv )        { skill_get2 (skill->db[skill_id].sp[skill_glv(skill_lv-1)], skill_id, skill_lv); }
-int skill_get_hp_rate(uint16 skill_id, uint16 skill_lv )    { skill_get2 (skill->db[skill_id].hp_rate[skill_glv(skill_lv-1)], skill_id, skill_lv); }
-int skill_get_sp_rate(uint16 skill_id, uint16 skill_lv )    { skill_get2 (skill->db[skill_id].sp_rate[skill_glv(skill_lv-1)], skill_id, skill_lv); }
+int skill_get_range( uint16 skill_id , uint16 skill_lv )    { Assert_ret(skill_lv > 0); skill_get2 (skill->db[skill_id].range[skill_glv(skill_lv-1)], skill_id, skill_lv); }
+int skill_get_splash( uint16 skill_id , uint16 skill_lv )   { Assert_ret(skill_lv > 0); skill_get2 ( (skill->db[skill_id].splash[skill_glv(skill_lv-1)]>=0?skill->db[skill_id].splash[skill_glv(skill_lv-1)]:AREA_SIZE), skill_id, skill_lv);  }
+int skill_get_hp( uint16 skill_id ,uint16 skill_lv )        { Assert_ret(skill_lv > 0); skill_get2 (skill->db[skill_id].hp[skill_glv(skill_lv-1)], skill_id, skill_lv); }
+int skill_get_sp( uint16 skill_id ,uint16 skill_lv )        { Assert_ret(skill_lv > 0); skill_get2 (skill->db[skill_id].sp[skill_glv(skill_lv-1)], skill_id, skill_lv); }
+int skill_get_hp_rate(uint16 skill_id, uint16 skill_lv )    { Assert_ret(skill_lv > 0); skill_get2 (skill->db[skill_id].hp_rate[skill_glv(skill_lv-1)], skill_id, skill_lv); }
+int skill_get_sp_rate(uint16 skill_id, uint16 skill_lv )    { Assert_ret(skill_lv > 0); skill_get2 (skill->db[skill_id].sp_rate[skill_glv(skill_lv-1)], skill_id, skill_lv); }
 int skill_get_state(uint16 skill_id)               { skill_get (skill->db[skill_id].state, skill_id); }
-int skill_get_spiritball(uint16 skill_id, uint16 skill_lv)  { skill_get2 (skill->db[skill_id].spiritball[skill_glv(skill_lv-1)], skill_id, skill_lv); }
+int skill_get_spiritball(uint16 skill_id, uint16 skill_lv)  { Assert_ret(skill_lv > 0); skill_get2 (skill->db[skill_id].spiritball[skill_glv(skill_lv-1)], skill_id, skill_lv); }
 int skill_get_itemid(uint16 skill_id, int idx)     { skill_get (skill->db[skill_id].itemid[idx], skill_id); }
 int skill_get_itemqty(uint16 skill_id, int idx)    { skill_get (skill->db[skill_id].amount[idx], skill_id); }
-int skill_get_zeny( uint16 skill_id ,uint16 skill_lv )      { skill_get2 (skill->db[skill_id].zeny[skill_glv(skill_lv-1)], skill_id, skill_lv); }
-int skill_get_num( uint16 skill_id ,uint16 skill_lv )       { skill_get2 (skill->db[skill_id].num[skill_glv(skill_lv-1)], skill_id, skill_lv); }
-int skill_get_cast( uint16 skill_id ,uint16 skill_lv )      { skill_get2 (skill->db[skill_id].cast[skill_glv(skill_lv-1)], skill_id, skill_lv); }
-int skill_get_delay( uint16 skill_id ,uint16 skill_lv )     { skill_get2 (skill->db[skill_id].delay[skill_glv(skill_lv-1)], skill_id, skill_lv); }
-int skill_get_walkdelay( uint16 skill_id ,uint16 skill_lv ) { skill_get2 (skill->db[skill_id].walkdelay[skill_glv(skill_lv-1)], skill_id, skill_lv); }
-int skill_get_time( uint16 skill_id ,uint16 skill_lv )      { skill_get2 (skill->db[skill_id].upkeep_time[skill_glv(skill_lv-1)], skill_id, skill_lv); }
-int skill_get_time2( uint16 skill_id ,uint16 skill_lv )     { skill_get2 (skill->db[skill_id].upkeep_time2[skill_glv(skill_lv-1)], skill_id, skill_lv); }
+int skill_get_zeny( uint16 skill_id ,uint16 skill_lv )      { Assert_ret(skill_lv > 0); skill_get2 (skill->db[skill_id].zeny[skill_glv(skill_lv-1)], skill_id, skill_lv); }
+int skill_get_num( uint16 skill_id ,uint16 skill_lv )       { Assert_ret(skill_lv > 0); skill_get2 (skill->db[skill_id].num[skill_glv(skill_lv-1)], skill_id, skill_lv); }
+int skill_get_cast( uint16 skill_id ,uint16 skill_lv )      { Assert_ret(skill_lv > 0); skill_get2 (skill->db[skill_id].cast[skill_glv(skill_lv-1)], skill_id, skill_lv); }
+int skill_get_delay( uint16 skill_id ,uint16 skill_lv )     { Assert_ret(skill_lv > 0); skill_get2 (skill->db[skill_id].delay[skill_glv(skill_lv-1)], skill_id, skill_lv); }
+int skill_get_walkdelay( uint16 skill_id ,uint16 skill_lv ) { Assert_ret(skill_lv > 0); skill_get2 (skill->db[skill_id].walkdelay[skill_glv(skill_lv-1)], skill_id, skill_lv); }
+int skill_get_time( uint16 skill_id ,uint16 skill_lv )      { Assert_ret(skill_lv > 0); skill_get2 (skill->db[skill_id].upkeep_time[skill_glv(skill_lv-1)], skill_id, skill_lv); }
+int skill_get_time2( uint16 skill_id ,uint16 skill_lv )     { Assert_ret(skill_lv > 0); skill_get2 (skill->db[skill_id].upkeep_time2[skill_glv(skill_lv-1)], skill_id, skill_lv); }
 int skill_get_castdef( uint16 skill_id )           { skill_get (skill->db[skill_id].cast_def_rate, skill_id); }
 int skill_get_weapontype( uint16 skill_id )        { skill_get (skill->db[skill_id].weapon, skill_id); }
 int skill_get_ammotype( uint16 skill_id )          { skill_get (skill->db[skill_id].ammo, skill_id); }
-int skill_get_ammo_qty( uint16 skill_id, uint16 skill_lv )  { skill_get2 (skill->db[skill_id].ammo_qty[skill_glv(skill_lv-1)], skill_id, skill_lv); }
+int skill_get_ammo_qty( uint16 skill_id, uint16 skill_lv )  { Assert_ret(skill_lv > 0); skill_get2 (skill->db[skill_id].ammo_qty[skill_glv(skill_lv-1)], skill_id, skill_lv); }
 int skill_get_inf2( uint16 skill_id )              { skill_get (skill->db[skill_id].inf2, skill_id); }
 int skill_get_castcancel( uint16 skill_id )        { skill_get (skill->db[skill_id].castcancel, skill_id); }
-int skill_get_maxcount( uint16 skill_id ,uint16 skill_lv )  { skill_get2 (skill->db[skill_id].maxcount[skill_glv(skill_lv-1)], skill_id, skill_lv); }
-int skill_get_blewcount( uint16 skill_id ,uint16 skill_lv ) { skill_get2 (skill->db[skill_id].blewcount[skill_glv(skill_lv-1)], skill_id, skill_lv); }
-int skill_get_mhp( uint16 skill_id ,uint16 skill_lv )       { skill_get2 (skill->db[skill_id].mhp[skill_glv(skill_lv-1)], skill_id, skill_lv); }
-int skill_get_castnodex( uint16 skill_id ,uint16 skill_lv ) { skill_get2 (skill->db[skill_id].castnodex[skill_glv(skill_lv-1)], skill_id, skill_lv); }
-int skill_get_delaynodex( uint16 skill_id ,uint16 skill_lv ){ skill_get2 (skill->db[skill_id].delaynodex[skill_glv(skill_lv-1)], skill_id, skill_lv); }
+int skill_get_maxcount( uint16 skill_id ,uint16 skill_lv )  { Assert_ret(skill_lv > 0); skill_get2 (skill->db[skill_id].maxcount[skill_glv(skill_lv-1)], skill_id, skill_lv); }
+int skill_get_blewcount( uint16 skill_id ,uint16 skill_lv ) { Assert_ret(skill_lv > 0); skill_get2 (skill->db[skill_id].blewcount[skill_glv(skill_lv-1)], skill_id, skill_lv); }
+int skill_get_mhp( uint16 skill_id ,uint16 skill_lv )       { Assert_ret(skill_lv > 0); skill_get2 (skill->db[skill_id].mhp[skill_glv(skill_lv-1)], skill_id, skill_lv); }
+int skill_get_castnodex( uint16 skill_id ,uint16 skill_lv ) { Assert_ret(skill_lv > 0); skill_get2 (skill->db[skill_id].castnodex[skill_glv(skill_lv-1)], skill_id, skill_lv); }
+int skill_get_delaynodex( uint16 skill_id ,uint16 skill_lv ){ Assert_ret(skill_lv > 0); skill_get2 (skill->db[skill_id].delaynodex[skill_glv(skill_lv-1)], skill_id, skill_lv); }
 int skill_get_type( uint16 skill_id )              { skill_get (skill->db[skill_id].skill_type, skill_id); }
 int skill_get_unit_id ( uint16 skill_id, int flag ){ skill_get (skill->db[skill_id].unit_id[flag], skill_id); }
 int skill_get_unit_interval( uint16 skill_id )     { skill_get (skill->db[skill_id].unit_interval, skill_id); }
-int skill_get_unit_range( uint16 skill_id, uint16 skill_lv ) { skill_get2 (skill->db[skill_id].unit_range[skill_glv(skill_lv-1)], skill_id, skill_lv); }
+int skill_get_unit_range( uint16 skill_id, uint16 skill_lv ) { Assert_ret(skill_lv > 0); skill_get2 (skill->db[skill_id].unit_range[skill_glv(skill_lv-1)], skill_id, skill_lv); }
 int skill_get_unit_target( uint16 skill_id )       { skill_get (skill->db[skill_id].unit_target&BCT_ALL, skill_id); }
 int skill_get_unit_bl_target( uint16 skill_id )    { skill_get (skill->db[skill_id].unit_target&BL_ALL, skill_id); }
 int skill_get_unit_flag( uint16 skill_id )         { skill_get (skill->db[skill_id].unit_flag, skill_id); }
-int skill_get_unit_layout_type( uint16 skill_id ,uint16 skill_lv ){ skill_get2 (skill->db[skill_id].unit_layout_type[skill_glv(skill_lv-1)], skill_id, skill_lv); }
-int skill_get_cooldown( uint16 skill_id, uint16 skill_lv )     { skill_get2 (skill->db[skill_id].cooldown[skill_glv(skill_lv-1)], skill_id, skill_lv); }
+int skill_get_unit_layout_type( uint16 skill_id ,uint16 skill_lv ){ Assert_ret(skill_lv > 0); skill_get2 (skill->db[skill_id].unit_layout_type[skill_glv(skill_lv-1)], skill_id, skill_lv); }
+int skill_get_cooldown( uint16 skill_id, uint16 skill_lv )     { Assert_ret(skill_lv > 0); skill_get2 (skill->db[skill_id].cooldown[skill_glv(skill_lv-1)], skill_id, skill_lv); }
 int skill_get_fixed_cast( uint16 skill_id ,uint16 skill_lv ) {
 #ifdef RENEWAL_CAST
-	skill_get2 (skill->db[skill_id].fixed_cast[skill_glv(skill_lv-1)], skill_id, skill_lv);
+	Assert_ret(skill_lv > 0); skill_get2 (skill->db[skill_id].fixed_cast[skill_glv(skill_lv-1)], skill_id, skill_lv);
 #else
 	return 0;
 #endif
@@ -4600,14 +4600,12 @@ int skill_castend_damage_id(struct block_list* src, struct block_list *bl, uint1
 				status_change_end(bl, SC_RUSH_WINDMILL, INVALID_TIMER);
 				status_change_end(bl, SC_ECHOSONG, INVALID_TIMER);
 				status_change_end(bl, SC_HARMONIZE, INVALID_TIMER);
+				status_change_end(bl, SC_NETHERWORLD, INVALID_TIMER);
 				status_change_end(bl, SC_SIREN, INVALID_TIMER);
-				status_change_end(bl, SC_DEEP_SLEEP, INVALID_TIMER);
-				status_change_end(bl, SC_SIRCLEOFNATURE, INVALID_TIMER);
 				status_change_end(bl, SC_GLOOMYDAY, INVALID_TIMER);
 				status_change_end(bl, SC_SONG_OF_MANA, INVALID_TIMER);
 				status_change_end(bl, SC_DANCE_WITH_WUG, INVALID_TIMER);
 				status_change_end(bl, SC_SATURDAY_NIGHT_FEVER, INVALID_TIMER);
-				status_change_end(bl, SC_LERADS_DEW, INVALID_TIMER);
 				status_change_end(bl, SC_MELODYOFSINK, INVALID_TIMER);
 				status_change_end(bl, SC_BEYOND_OF_WARCRY, INVALID_TIMER);
 				status_change_end(bl, SC_UNLIMITED_HUMMING_VOICE, INVALID_TIMER);
@@ -6573,6 +6571,7 @@ int skill_castend_nodamage_id(struct block_list *src, struct block_list *bl, uin
 				status_change_end(bl, SC_STUN, INVALID_TIMER);
 				status_change_end(bl, SC_WHITEIMPRISON, INVALID_TIMER);
 			}
+			status_change_end(bl, SC_NETHERWORLD, INVALID_TIMER);
 			//Is this equation really right? It looks so... special.
 			if( battle->check_undead(tstatus->race,tstatus->def_ele) ) {
 				status->change_start(src, bl, SC_BLIND,
@@ -12345,11 +12344,12 @@ int skill_unit_onplace_timer(struct skill_unit *src, struct block_list *bl, int6
 				skill->attack(BF_WEAPON,ss,&src->bl,bl,WM_SEVERE_RAINSTORM_MELEE,sg->skill_lv,tick,0);
 			break;
 		case UNT_NETHERWORLD:
-			if( !(status_get_mode(bl)&MD_BOSS)) {
-				if( !(tsc && tsc->data[type]) ){
-					sc_start(ss, bl, type, 100, sg->skill_lv, skill->get_time2(sg->skill_id,sg->skill_lv));
-				}
-			}
+			if ( battle->check_target(&src->bl, bl, BCT_PARTY) == -1 && bl->id != sg->src_id ) {
+				sc_start(ss, bl, type, 100, sg->skill_lv, skill->get_time2(sg->skill_id, sg->skill_lv));
+				sg->limit = 0;
+				clif->changetraplook(&src->bl, UNT_USED_TRAPS);
+				sg->unit_id = UNT_USED_TRAPS;
+ 			}
 			break;
 		case UNT_THORNS_TRAP:
 			if( tsc ) {
