@@ -26,8 +26,7 @@ else
   case `(set -o) 2>/dev/null` in #(
   *posix*) :
     set -o posix ;; #(
-  *) :
-     ;;
+  *) :  ;;
 esac
 fi
 
