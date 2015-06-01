@@ -1252,7 +1252,7 @@ OnInit:
 
 OnEnable:
 	enablenpc "Knight1";
-	if (!checkre(0)) {
+	if (!RENEWAL) {
 		.MyMobs = 12;
 		monster "job_knt",39,150,"Dustiness",1114,1,"Knight1::OnMyMobDead";
 		monster "job_knt",47,150,"Dustiness",1114,1,"Knight1::OnMyMobDead";
@@ -1318,7 +1318,7 @@ OnInit:
 
 OnEnable:
 	enablenpc "Knight2";
-	if (!checkre(0)) {
+	if (!RENEWAL) {
 		.MyMobs = 12;
 		monster "job_knt",43,42,"Desert Wolf",1106,1,"Knight2::OnMyMobDead";
 		monster "job_knt",43,62,"Desert Wolf",1106,1,"Knight2::OnMyMobDead";
@@ -1383,7 +1383,7 @@ OnInit:
 
 OnEnable:
 	enablenpc "Knight3";
-	if (!checkre(0)) {
+	if (!RENEWAL) {
 		.MyMobs = 7;
 		monster "job_knt",147,167,"Goblin Archer",1258,1,"Knight3::OnMyMobDead";
 		monster "job_knt",136,158,"Steam Goblin",1280,1,"Knight3::OnMyMobDead";
