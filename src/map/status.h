@@ -1697,49 +1697,6 @@ enum {
 	OPT3_CONTRACT         = 0x00020000,
 };
 
-enum {
-	OPTION_NOTHING      = 0x00000000,
-	OPTION_SIGHT        = 0x00000001,
-	OPTION_HIDE         = 0x00000002,
-	OPTION_CLOAK        = 0x00000004,
-	OPTION_FALCON       = 0x00000010,
-	OPTION_RIDING       = 0x00000020,
-	OPTION_INVISIBLE    = 0x00000040,
-	OPTION_ORCISH       = 0x00000800,
-	OPTION_WEDDING      = 0x00001000,
-	OPTION_RUWACH       = 0x00002000,
-	OPTION_CHASEWALK    = 0x00004000,
-	OPTION_FLYING       = 0x00008000, //Note that clientside Flying and Xmas are 0x8000 for clients prior to 2007.
-	OPTION_XMAS         = 0x00010000,
-	OPTION_TRANSFORM    = 0x00020000,
-	OPTION_SUMMER       = 0x00040000,
-	OPTION_DRAGON1      = 0x00080000,
-	OPTION_WUG          = 0x00100000,
-	OPTION_WUGRIDER     = 0x00200000,
-	OPTION_MADOGEAR     = 0x00400000,
-	OPTION_DRAGON2      = 0x00800000,
-	OPTION_DRAGON3      = 0x01000000,
-	OPTION_DRAGON4      = 0x02000000,
-	OPTION_DRAGON5      = 0x04000000,
-	OPTION_HANBOK       = 0x08000000,
-	OPTION_OKTOBERFEST  = 0x10000000,
-
-#ifndef NEW_CARTS
-	OPTION_CART1     = 0x00000008,
-	OPTION_CART2     = 0x00000080,
-	OPTION_CART3     = 0x00000100,
-	OPTION_CART4     = 0x00000200,
-	OPTION_CART5     = 0x00000400,
-
-	/*  compound constant for older carts */
-	OPTION_CART      = OPTION_CART1|OPTION_CART2|OPTION_CART3|OPTION_CART4|OPTION_CART5,
-#endif
-
-	// compound constants
-	OPTION_DRAGON    = OPTION_DRAGON1|OPTION_DRAGON2|OPTION_DRAGON3|OPTION_DRAGON4|OPTION_DRAGON5,
-	OPTION_COSTUME   = OPTION_WEDDING|OPTION_XMAS|OPTION_SUMMER|OPTION_HANBOK|OPTION_OKTOBERFEST,
-};
-
 //Defines for the manner system [Skotlex]
 enum manner_flags
 {
@@ -2021,6 +1978,8 @@ struct status_interface {
 	int current_equip_item_index;
 	int current_equip_card_id;
 	/* */
+
+BEGIN_ZEROED_BLOCK; /* Everything within this block will be memset to 0 when status_defaults() is executed */
 	int max_weight_base[CLASS_COUNT];
 	int HP_table[CLASS_COUNT][MAX_LEVEL + 1];
 	int SP_table[CLASS_COUNT][MAX_LEVEL + 1];
@@ -2037,6 +1996,8 @@ struct status_interface {
 	int atkmods[3][MAX_WEAPON_TYPE];//ATK weapon modification for size (size_fix.txt)
 	char job_bonus[CLASS_COUNT][MAX_LEVEL];
 	sc_conf_type sc_conf[SC_MAX];
+END_ZEROED_BLOCK; /* End */
+
 	struct eri *data_ers; //For sc_data entries
 	struct status_data dummy;
 	int64 natural_heal_prev_tick;

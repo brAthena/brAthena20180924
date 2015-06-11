@@ -361,7 +361,7 @@ void buyingstore_trade(struct map_session_data* sd, int account_id, unsigned int
 		// move item
 		logs->buyingstore(pl_sd,sd,&sd->status.inventory[index],pl_sd->buyingstore.items[listidx].price,amount);
 		pc->additem(pl_sd, &sd->status.inventory[index], amount);
-		pc->delitem(sd, index, amount, 1, 0);
+		pc->delitem(sd, index, amount, 1, DELITEM_NORMAL);
 		pl_sd->buyingstore.items[listidx].amount-= amount;
 
 		// pay up

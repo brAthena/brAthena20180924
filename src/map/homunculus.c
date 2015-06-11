@@ -592,7 +592,7 @@ bool homunculus_feed(struct map_session_data *sd, struct homun_data *hd) {
 		return false;
 	}
 	logs->consume(sd,&sd->status.inventory[i],1,"Homunculus Feed");
-	pc->delitem(sd,i,1,0,0);
+	pc->delitem(sd, i, 1, 0, DELITEM_NORMAL);
 
 	if ( hd->homunculus.hunger >= 91 ) {
 		homun->consume_intimacy(hd, 50);
@@ -737,7 +737,7 @@ bool homunculus_create(struct map_session_data *sd, struct s_homunculus *hom) {
 
 	nullpo_retr(false, sd);
 
-	Assert((sd->status.hom_id == 0 || sd->hd == 0) || sd->hd->master == sd);
+	Assert_retr(false, sd->status.hom_id == 0 || sd->hd == 0 || sd->hd->master == sd);
 
 	i = homun->db_search(hom->class_,HOMUNCULUS_CLASS);
 	if(i < 0) {

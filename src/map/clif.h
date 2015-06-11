@@ -57,6 +57,13 @@ struct channel_data;
 #define MAX_ROULETTE_LEVEL 7 /** client-defined value **/
 #define MAX_ROULETTE_COLUMNS 9 /** client-defined value **/
 
+#define RGB2BGR(c) ((c & 0x0000FF) << 16 | (c & 0x00FF00) | (c & 0xFF0000) >> 16)
+
+#define COLOR_RED     0xff0000U
+#define COLOR_GREEN   0x00ff00U
+#define COLOR_WHITE   0xffffffU
+#define COLOR_DEFAULT COLOR_GREEN
+
 /**
  * Enumerations
  **/
@@ -350,13 +357,30 @@ typedef enum useskill_fail_cause { // clif_skill_fail
 }useskill_fail_cause;
 
 enum clif_messages {
-	MSI_CANT_GET_ITEM_BECAUSE_WEIGHT = 0x34, /* you cannot carry more items because you are overweight. */
-	MSI_IMPOSSIBLE_SKILL_AREA = 0x536,
-	MSI_IMPOSSIBLE_USEITEM_AREA =  0x537,
-	MSI_CANT_USE_WHEN_SITDOWN = 0x297,
-	MSI_BUSY = 0x783,
-	MSI_MER_FINISH = 0x4f2,
-	MSI_OPEN_EQUIPEDITEM_REFUSED = 0x54d,
+	MSG_ITEM_CANT_OBTAIN_WEIGHT  = 0x034, ///< You cannot carry more items because you are overweight.
+	MSG_ITEM_NEED_STANDING       = 0x297, ///< You cannot use this item while sitting.
+	MSG_MERCENARY_EXPIRED        = 0x4f2, ///< The mercenary contract has expired.
+	MSG_MERCENARY_DIED           = 0x4f3, ///< The mercenary has died.
+	MSG_MERCENARY_RELEASED       = 0x4f4, ///< You have released the mercenary.
+	MSG_MERCENARY_ESCAPED        = 0x4f5, ///< The mercenary has run away.
+	MSG_SKILL_CANT_USE_AREA      = 0x536, ///< This skill cannot be used within this area
+	MSG_ITEM_CANT_USE_AREA       = 0x537, ///< This item cannot be used within this area.
+	MSG_EQUIP_NOT_PUBLIC         = 0x54d, ///< This character's equipment information is not open to the public.
+	MSG_ITEM_NEED_MADO           = 0x59b, ///< Item can only be used when Mado Gear is mounted.
+	MSG_ITEM_NEED_CART           = 0x5ef, ///< Usable only when cart is put on
+	MSG_RUNE_STONE_MAX_AMOUNT    = 0x61b, ///< Cannot create Rune stone more than the maximum amount.
+	MSG_SKILL_POINTS_LEFT_JOB1   = 0x61e, ///< You must consume all '%d' remaining points in your 1st Job tab.
+	MSG_SKILL_POINTS_LEFT_JOB2   = 0x61f, ///< You must consume all '%d' remaining points in your 2nd Job tab. 1st Tab is already done.
+	MSG_SKILL_ITEM_NOT_FOUND     = 0x623, // FIXME[Haru]: This seems to be 0x622 in the msgstringtable files I found.
+	MSG_SKILL_SUCCESS            = 0x627, // FIXME[Haru]: This seems to be 0x626 in the msgstringtable files I found.
+	MSG_SKILL_FAILURE            = 0x628, // FIXME[Haru]: This seems to be 0x627 in the msgstringtable files I found.
+	MSG_SKILL_ITEM_NEED_IDENTIFY = 0x62d, ///< Unable to use unchecked items as materials.
+	MSG_ITEM_CANT_EQUIP_LVL      = 0x6ed, // FIXME[Haru]: This seems to be 0x6ee in the msgstringtable files I found.
+	MSG_ITEM_CANT_USE_LVL        = 0x6ee, // FIXME[Haru]: This seems to be 0x6ef in the msgstringtable files I found.
+	MSG_COOKING_LIST_FAIL        = 0x625, // FIXME[Haru]: This might be a wrong message ID. Not sure what it should be.
+	MSG_SECONDS_UNTIL_USE        = 0x746, ///< %d seconds left until you can use
+	MSG_NPC_WORK_IN_PROGRESS     = 0x783, // FIXME[Haru]: This seems to be 0x784 in the msgstringtable files I found.
+	MSG_REINS_CANT_USE_MOUNTED   = 0x78b, // FIXME[Haru]: This seems to be 0x785 in the msgstringtalbe files I found.
 };
 
 /**
@@ -373,16 +397,6 @@ enum cashshop_error {
 	// Unofficial type names
 	ERROR_TYPE_QUANTITY         = 7, ///< You can purchase up to 10 items. (ERROR_TYPE_QUANTITY)
 	ERROR_TYPE_NOT_ALL          = 8, ///< Some items could not be purchased. (ERROR_TYPE_NOT_ALL)
-};
-
-/**
- * Color Table
- **/
-enum clif_colors {
-	COLOR_RED,
-	COLOR_DEFAULT,
-	COLOR_WHITE,
-	COLOR_MAX
 };
 
 enum CASH_SHOP_TABS {
@@ -505,6 +519,20 @@ enum CLOSE_ROULETTE_ACK {
 };
 
 /**
+ * Reason for item deletion (clif->delitem)
+ */
+enum delitem_reason {
+	DELITEM_NORMAL         = 0, /// Normal
+	DELITEM_SKILLUSE       = 1, /// Item used for a skill
+	DELITEM_FAILREFINE     = 2, /// Refine failed
+	DELITEM_MATERIALCHANGE = 3, /// Material changed
+	DELITEM_TOSTORAGE      = 4, /// Moved to storage
+	DELITEM_TOCART         = 5, /// Moved to cart
+	DELITEM_SOLD           = 6, /// Item sold
+	DELITEM_ANALYSIS       = 7, /// Consumed by Four Spirit Analysis (SO_EL_ANALYSIS) skill
+};
+
+/**
  * Structures
  **/
 typedef void (*pFunc)(int, struct map_session_data *); //cant help but put it first
@@ -528,7 +556,6 @@ struct cdelayed_damage {
  * Vars
  **/
 struct s_packet_db packet_db[MAX_PACKET_DB + 1];
-unsigned int color_table[COLOR_MAX];
 
 /**
  * Clif.c Interface
@@ -806,18 +833,16 @@ struct clif_interface {
 	void (*disp_message) (struct block_list* src, const char* mes, size_t len, enum send_target target);
 	void (*broadcast) (struct block_list* bl, const char* mes, size_t len, int type, enum send_target target);
 	void (*broadcast2) (struct block_list* bl, const char* mes, size_t len, unsigned int fontColor, short fontType, short fontSize, short fontAlign, short fontY, enum send_target target);
-	void (*messagecolor) (struct block_list* bl, unsigned int color, const char* msg);
+	void (*messagecolor_self) (int fd, uint32 color, const char *msg);
+	void (*messagecolor) (struct block_list* bl, uint32 color, const char* msg);
 	void (*disp_overhead) (struct block_list *bl, const char* mes);
-	void (*msg) (struct map_session_data* sd, unsigned short id);
-	void (*msg_value) (struct map_session_data* sd, unsigned short id, int value);
-	void (*msg_skill) (struct map_session_data* sd, uint16 skill_id, int msg_id);
-	void (*msgtable) (int fd, int line);
-	void (*msgtable_num) (int fd, int line, int num);
+	void (*msgtable) (struct map_session_data* sd, unsigned short msg_id);
+	void (*msgtable_num) (struct map_session_data *sd, unsigned short msg_id, int value);
+	void (*msgtable_skill) (struct map_session_data *sd, uint16 skill_id, int msg_id);
 	void (*message) (const int fd, const char* mes);
 	void (*messageln) (const int fd, const char* mes);
 	/* message+s(printf) */
 	void (*messages) (const int fd, const char *mes, ...) __attribute__((format(printf, 2, 3)));
-	int (*colormes) (int fd, enum clif_colors color, const char* msg);
 	bool (*process_message) (struct map_session_data *sd, int format, char **name_, size_t *namelen_, char **message_, size_t *messagelen_);
 	void (*wisexin) (struct map_session_data *sd,int type,int flag);
 	void (*wisall) (struct map_session_data *sd,int type,int flag);

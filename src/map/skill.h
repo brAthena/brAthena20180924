@@ -1739,6 +1739,7 @@ struct skill_unit {
 	int limit;
 	int val1,val2;
 	short alive,range;
+	int prev;
 };
 
 struct skill_unit_group_tickset {
@@ -1841,6 +1842,7 @@ struct skill_interface {
 	struct eri *cd_ers; // ERS Storage for skill cool down managers [Ind]
 	struct eri *cd_entry_ers; // ERS Storage for skill cool down entries [Ind]
 	/* */
+BEGIN_ZEROED_BLOCK; // This block will be zeroed in skill_defaults() as well as skill_readdb()
 	struct s_skill_db db[MAX_SKILL_DB];
 	struct s_skill_produce_db produce_db[MAX_SKILL_PRODUCE_DB];
 	struct s_skill_arrow_db arrow_db[MAX_SKILL_ARROW_DB];
@@ -1850,6 +1852,7 @@ struct skill_interface {
 	struct s_skill_changematerial_db changematerial_db[MAX_SKILL_PRODUCE_DB];
 	struct s_skill_spellbook_db spellbook_db[MAX_SKILL_SPELLBOOK_DB];
 	bool reproduce_db[MAX_SKILL_DB];
+END_ZEROED_BLOCK;
 	struct s_skill_unit_layout unit_layout[MAX_SKILL_UNIT_LAYOUT];
 	/* */
 	int enchant_eff[5];

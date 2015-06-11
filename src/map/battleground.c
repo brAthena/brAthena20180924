@@ -217,7 +217,7 @@ int bg_team_get_id(struct block_list *bl) {
 		{
 			struct map_session_data *msd;
 			struct mob_data *md = (TBL_MOB*)bl;
-			if( md->special_state.ai && (msd = map->id2sd(md->master_id)) != NULL )
+			if (md->special_state.ai != AI_NONE && (msd = map->id2sd(md->master_id)) != NULL)
 				return msd->bg_id;
 			return md->bg_id;
 		}
@@ -544,11 +544,10 @@ void bg_match_over(struct bg_arena *arena, bool canceled) {
 				bg->team_leave(sd, 0);
 				bg->queue_pc_cleanup(sd);
 			}
-			if( canceled )
-				clif->colormes(sd->fd,COLOR_RED,"BG Cancelada: jogadores insuficientes");
-			else {
+			if (canceled)
+				clif->messagecolor_self(sd->fd, COLOR_RED, "BG Cancelada: jogadores insuficientes");
+			else
 				pc_setglobalreg(sd, script->add_str(arena->delay_var), (unsigned int)time(NULL));
-			}
 		}
 	}
 
@@ -772,7 +771,7 @@ enum BATTLEGROUNDS_QUEUE_ACK bg_canqueue(struct map_session_data *sd, struct bg_
 			sprintf(response, "Você é um desertor! Aguarde %d minuto(s) para jogar novamente.",(tick-tsec)/60);
 		else
 			sprintf(response, "Você é um desertor! Aguarde %d segundo(s) para jogar novamente.",(tick-tsec));
-		clif->colormes(sd->fd,COLOR_RED,response);
+		clif->messagecolor_self(sd->fd, COLOR_RED, response);
 		return BGQA_FAIL_DESERTER;
 	}
 
@@ -782,7 +781,7 @@ enum BATTLEGROUNDS_QUEUE_ACK bg_canqueue(struct map_session_data *sd, struct bg_
 			sprintf(response, "Você não pode entrar a esta arena tão rápido. Tente outra arena ou aguarde %d minuto(s)",(tick-tsec)/60);
 		else
 			sprintf(response, "Você não pode entrar a esta arena tão rápido. Tente outra arena ou aguarde %d segundo(s)",(tick-tsec));
-		clif->colormes(sd->fd,COLOR_RED,response);
+		clif->messagecolor_self(sd->fd, COLOR_RED, response);
 		return BGQA_FAIL_COOLDOWN;
 	}
 
@@ -806,7 +805,7 @@ enum BATTLEGROUNDS_QUEUE_ACK bg_canqueue(struct map_session_data *sd, struct bg_
 						sprintf(response, "Não foi possível aplicar: não há membros suficientes em sua equipe / clã que entraram no modo individual, o mínimo é %d",arena->min_team_players);
 					else
 						sprintf(response, "Não foi possível aplicar: não há membros suficientes em sua equipe / clã, o mínimo é %d",arena->min_team_players);
-					clif->colormes(sd->fd,COLOR_RED,response);
+					clif->messagecolor_self(sd->fd, COLOR_RED, response);
 					return BGQA_FAIL_TEAM_COUNT;
 				}
 			}
@@ -838,7 +837,7 @@ enum BATTLEGROUNDS_QUEUE_ACK bg_canqueue(struct map_session_data *sd, struct bg_
 							sprintf(response, "Não foi possível aplicar: não há membros suficientes em sua equipe / grupo que entraram no modo individual, o mínimo é %d",arena->min_team_players);
 						else
 							sprintf(response, "Não foi possível aplicar: não há membros suficientes em sua equipe / grupo, o mínimo é %d",arena->min_team_players);
-						clif->colormes(sd->fd,COLOR_RED,response);
+						clif->messagecolor_self(sd->fd, COLOR_RED, response);
 						return BGQA_FAIL_TEAM_COUNT;
 					}
 				} else

@@ -1848,13 +1848,13 @@ int map_quit(struct map_session_data *sd) {
 	for( i = 0; i < EQI_MAX; i++ ) {
 		if( sd->equip_index[ i ] >= 0 )
 			if( !pc->isequip( sd , sd->equip_index[ i ] ) )
-				pc->unequipitem( sd , sd->equip_index[ i ] , 2 );
+				pc->unequipitem(sd, sd->equip_index[i], PCUNEQUIPITEM_FORCE);
 	}
 
 	// Return loot to owner
 	if( sd->pd ) pet->lootitem_drop(sd->pd, sd);
 
-	if( sd->state.storage_flag == 1 ) sd->state.storage_flag = 0; // No need to Double Save Storage on Quit.
+	if( sd->state.storage_flag == STORAGE_FLAG_NORMAL ) sd->state.storage_flag = STORAGE_FLAG_CLOSED; // No need to Double Save Storage on Quit.
 
 	if( sd->ed ) {
 		elemental->clean_effect(sd->ed);
@@ -6188,10 +6188,7 @@ void map_defaults(void) {
 	map->bl_list_size = 0;
 	
 	//all in a big chunk, respects order
-	memset(&map->bl_head,0,sizeof(map->bl_head)
-		   + sizeof(map->zone_all)
-		   + sizeof(map->zone_pk)
-		   );
+	memset(ZEROED_BLOCK_POS(map), 0, ZEROED_BLOCK_SIZE(map));
 	
 	map->cpsd = NULL;
 	map->list = NULL;

@@ -412,7 +412,7 @@ unsigned int calc_hash_ci(const char* p) {
 /// Looks up string using the provided id.
 const char* script_get_str(int id)
 {
-	Assert( id >= LABEL_START && id < script->str_size );
+	Assert_retr(NULL, id >= LABEL_START && id < script->str_size);
 	return script->str_buf+script->str_data[id].str;
 }
 
@@ -468,7 +468,7 @@ const char *script_casecheck_add_str_sub(struct casecheck_data *ccd, const char 
 		int i;
 		for (i = ccd->str_hash[h]; ; i = ccd->str_data[i].next) {
 			const char *s = NULL;
-			Assert( i >= 0 && i < ccd->str_size );
+			Assert_retb(i >= 0 && i < ccd->str_size);
 			s = ccd->str_buf+ccd->str_data[i].str;
 			if (strcasecmp(s,p) == 0) {
 				return s; // string already in list
@@ -7454,7 +7454,7 @@ void buildin_delitem_delete(struct map_session_data* sd, int idx, int* amount, b
 			intif->delete_petdata(MakeDWord(inv->card[1], inv->card[2]));
 		}
 		else logs->item_getrem(1, sd, &sd->status.inventory[idx], delamount, "Script");
-		pc->delitem(sd, idx, delamount, 0, 0);
+		pc->delitem(sd, idx, delamount, 0, DELITEM_NORMAL);
 	}
 
 	amount[0]-= delamount;
@@ -8115,6 +8115,23 @@ BUILDIN(strnpcinfo) {
 	return true;
 }
 
+/**
+ * charid2rid: Returns the RID associated to the given character ID
+ */
+BUILDIN(charid2rid)
+{
+	int cid = script_getnum(st, 2);
+	TBL_PC *sd = map->charid2sd(cid);
+
+	if (sd == NULL) {
+		script_pushint(st, 0);
+		return true;
+	}
+
+	script_pushint(st, sd->status.account_id);
+	return true;
+}
+
 /*==========================================
  * GetEquipID(Pos);     Pos: 1-SCRIPT_EQUIP_TABLE_SIZE
  *------------------------------------------*/
@@ -8482,10 +8499,10 @@ BUILDIN(successrefitem)
 
 		sd->status.inventory[i].refine += up;
 		sd->status.inventory[i].refine = cap_value( sd->status.inventory[i].refine, 0, MAX_REFINE);
-		pc->unequipitem(sd,i,2); // status calc will happen in pc->equipitem() below
+		pc->unequipitem(sd, i, PCUNEQUIPITEM_FORCE); // status calc will happen in pc->equipitem() below
 
 		clif->refine(sd->fd,0,i,sd->status.inventory[i].refine);
-		clif->delitem(sd,i,1,3);
+		clif->delitem(sd, i, 1, DELITEM_MATERIALCHANGE);
 
 		//Logs Sucessful Refine [GreenStage]
 		logs->produce(sd, &sd->status.inventory[i], 1, "Sucess Refine");
@@ -8530,11 +8547,11 @@ BUILDIN(failedrefitem)
 		i=pc->checkequip(sd,script->equip[num-1]);
 	if(i >= 0) {
 		sd->status.inventory[i].refine = 0;
-		pc->unequipitem(sd,i,3); //recalculate bonus
+		pc->unequipitem(sd, i, PCUNEQUIPITEM_RECALC|PCUNEQUIPITEM_FORCE); //recalculate bonus
 		clif->refine(sd->fd,1,i,sd->status.inventory[i].refine); //notify client of failure
 
 		logs->produce(sd,&sd->status.inventory[i],-1,"Fail Refine");
-		pc->delitem(sd,i,1,0,2);
+		pc->delitem(sd, i, 1, 0, DELITEM_FAILREFINE);
 
 		clif->misceffect(&sd->bl,2); // display failure effect
 	}
@@ -8564,12 +8581,12 @@ BUILDIN(downrefitem)
 
 		//Logs items, got from (N)PC scripts [Lupus]
 
-		pc->unequipitem(sd,i,2); // status calc will happen in pc->equipitem() below
+		pc->unequipitem(sd, i, PCUNEQUIPITEM_FORCE); // status calc will happen in pc->equipitem() below
 		sd->status.inventory[i].refine -= down;
 		sd->status.inventory[i].refine = cap_value( sd->status.inventory[i].refine, 0, MAX_REFINE);
 
 		clif->refine(sd->fd,2,i,sd->status.inventory[i].refine);
-		clif->delitem(sd,i,1,3);
+		clif->delitem(sd, i, 1, DELITEM_MATERIALCHANGE);
 
 		//Logs items, got from (N)PC scripts [Lupus]
 		logs->produce(sd, &sd->status.inventory[i], 1, "Downgrade");
@@ -8598,9 +8615,9 @@ BUILDIN(delequip)
 	if (num > 0 && num <= ARRAYLENGTH(script->equip))
 		i=pc->checkequip(sd,script->equip[num-1]);
 	if(i >= 0) {
-		pc->unequipitem(sd,i,3); //recalculate bonus
+		pc->unequipitem(sd, i, PCUNEQUIPITEM_RECALC|PCUNEQUIPITEM_FORCE); //recalculate bonus
 		logs->item_getrem(0, sd, &sd->status.inventory[i], -1, "Cmd");
-		pc->delitem(sd,i,1,0,2);
+		pc->delitem(sd, i, 1, 0, DELITEM_FAILREFINE);
 		return true;
 	}
 
@@ -8856,7 +8873,7 @@ BUILDIN(autobonus3) {
 BUILDIN(skill) {
 	int id;
 	int level;
-	int flag = 1;
+	int flag = SKILL_GRANT_TEMPORARY;
 	TBL_PC* sd;
 
 	sd = script->rid2sd(st);
@@ -8884,7 +8901,7 @@ BUILDIN(skill) {
 BUILDIN(addtoskill) {
 	int id;
 	int level;
-	int flag = 2;
+	int flag = SKILL_GRANT_TEMPSTACK;
 	TBL_PC* sd;
 
 	sd = script->rid2sd(st);
@@ -9729,8 +9746,7 @@ BUILDIN(monster)
 	if (script_hasdata(st, 10))
 	{
 		ai = script_getnum(st, 10);
-		if (ai > 4)
-		{
+		if (ai > AI_FLORA) {
 			ShowWarning("buildin_monster: Attempted to spawn non-existing ai %d for monster class %d\n", ai, class_);
 			return false;
 		}
@@ -9834,7 +9850,7 @@ BUILDIN(areamonster) {
 
 	if (script_hasdata(st, 12)) {
 		ai = script_getnum(st, 12);
-		if (ai > 4) {
+		if (ai > AI_FLORA) {
 			ShowWarning("buildin_monster: Attempted to spawn non-existing ai %d for monster class %d\n", ai, class_);
 			return false;
 		}
@@ -11004,7 +11020,7 @@ BUILDIN(homunculus_mutate)
 
 		if (m_class == HT_EVO && m_id == HT_S &&
 			sd->hd->homunculus.level >= 99 && i != INDEX_NOT_FOUND &&
-			!pc->delitem(sd, i, 1, 0, 0) ) {
+			!pc->delitem(sd, i, 1, 0, DELITEM_NORMAL) ) {
 			sd->hd->homunculus.vaporize = HOM_ST_REST; // Remove morph state.
 			homun->call(sd); // Respawn homunculus.
 			homun->mutate(sd->hd, homun_id);
@@ -11191,7 +11207,7 @@ BUILDIN(resetskill)
 	sd=script->rid2sd(st);
 	if( sd == NULL )
 		return false;
-	pc->resetskill(sd,1);
+	pc->resetskill(sd, PCRESETSKILL_RESYNC);
 	return true;
 }
 
@@ -11204,7 +11220,7 @@ BUILDIN(skillpointcount)
 	sd=script->rid2sd(st);
 	if( sd == NULL )
 		return false;
-	script_pushint(st,sd->status.skill_point + pc->resetskill(sd,2));
+	script_pushint(st,sd->status.skill_point + pc->resetskill(sd, PCRESETSKILL_RECOUNT));
 	return true;
 }
 
@@ -11246,10 +11262,10 @@ static TBL_PC *prepareChangeSex(struct script_state* st)
 	if (sd == NULL)
 		return NULL;
 
-	pc->resetskill(sd, 4);
+	pc->resetskill(sd, PCRESETSKILL_CHSEX);
 	// to avoid any problem with equipment and invalid sex, equipment is unequiped.
 	for (i=0; i<EQI_MAX; i++)
-		if (sd->equip_index[i] >= 0) pc->unequipitem(sd, sd->equip_index[i], 3);
+		if (sd->equip_index[i] >= 0) pc->unequipitem(sd, sd->equip_index[i], PCUNEQUIPITEM_RECALC|PCUNEQUIPITEM_FORCE);
 	return sd;
 }
 
@@ -12303,7 +12319,7 @@ BUILDIN(successremovecards)
 		for (j = sd->inventory_data[i]->slot; j < MAX_SLOTS; j++)
 			item_tmp.card[j]=sd->status.inventory[i].card[j];
 
-		pc->delitem(sd,i,1,0,3);
+		pc->delitem(sd, i, 1, 0, DELITEM_MATERIALCHANGE);
 		if ((flag=pc->additem(sd,&item_tmp,1))) {
 			//chk if can be spawn in inventory otherwise put on floor
 			clif->additem(sd,0,0,flag);
@@ -12367,7 +12383,7 @@ BUILDIN(failedremovecards)
 		if (typefail == 0 || typefail == 2) {
 			// destroy the item
 			logs->item_getrem(0, sd,&sd->status.inventory[i],-1, "C_Rem");
-			pc->delitem(sd,i,1,0,2);
+			pc->delitem(sd, i, 1, 0, DELITEM_FAILREFINE);
 		} else if (typefail == 1) {
 			// destroy the card
 			int flag, j;
@@ -12385,7 +12401,7 @@ BUILDIN(failedremovecards)
 			for (j = sd->inventory_data[i]->slot; j < MAX_SLOTS; j++)
 				item_tmp.card[j]=sd->status.inventory[i].card[j];
 
-			pc->delitem(sd,i,1,0,2);
+			pc->delitem(sd, i, 1, 0, DELITEM_FAILREFINE);
 
 			if((flag=pc->additem(sd,&item_tmp,1))) {
 				clif->additem(sd,0,0,flag);
@@ -13081,7 +13097,7 @@ BUILDIN(clearitem)
 	for (i=0; i<MAX_INVENTORY; i++) {
 		if (sd->status.inventory[i].amount) {
 			logs->item_getrem(0, sd,&sd->status.inventory[i], sd->status.inventory[i].amount, "Script");
-			pc->delitem(sd, i, sd->status.inventory[i].amount, 0, 0);
+			pc->delitem(sd, i, sd->status.inventory[i].amount, 0, DELITEM_NORMAL);
 		}
 	}
 	return true;
@@ -13510,7 +13526,7 @@ BUILDIN(nude)
 		if( sd->equip_index[ i ] >= 0 ) {
 			if( !calcflag )
 				calcflag = 1;
-			pc->unequipitem( sd , sd->equip_index[ i ] , 2);
+			pc->unequipitem(sd, sd->equip_index[i], PCUNEQUIPITEM_FORCE);
 		}
 	}
 
@@ -13857,7 +13873,7 @@ BUILDIN(npcstop) {
 
 	if( nd ) {
 		unit->bl2ud2(&nd->bl); // ensure nd->ud is safe to edit
-		unit->stop_walking(&nd->bl,1|4);
+		unit->stop_walking(&nd->bl, STOPWALKING_FLAG_FIXPOS|STOPWALKING_FLAG_NEXTCELL);
 	}
 
 	return true;
@@ -14500,7 +14516,7 @@ BUILDIN(unequip)
 	if (sd != NULL && num >= 1 && num <= ARRAYLENGTH(script->equip)) {
 		int i = pc->checkequip(sd,script->equip[num-1]);
 		if (i >= 0)
-			pc->unequipitem(sd,i,1|2);
+			pc->unequipitem(sd, i, PCUNEQUIPITEM_RECALC|PCUNEQUIPITEM_FORCE);
 	}
 	return true;
 }
@@ -15506,8 +15522,25 @@ BUILDIN(compare)
 	return true;
 }
 
-// [zBuffer] List of mathematics commands --->
-BUILDIN(sqrt)
+BUILDIN(strcmp)
+{
+	const char *str1 = script_getstr(st,2);
+	const char *str2 = script_getstr(st,3);
+	script_pushint(st,strcmp(str1, str2));
+	return true;
+}
+
+// List of mathematics commands --->
+BUILDIN(log10)
+{
+	double i, a;
+	i = script_getnum(st,2);
+	a = log10(i);
+	script_pushint(st,(int)a);
+	return true;
+}
+
+BUILDIN(sqrt) //[zBuffer]
 {
 	double i, a;
 	i = script_getnum(st,2);
@@ -15516,7 +15549,7 @@ BUILDIN(sqrt)
 	return true;
 }
 
-BUILDIN(pow)
+BUILDIN(pow) //[zBuffer]
 {
 	double i, a, b;
 	a = script_getnum(st,2);
@@ -15526,7 +15559,7 @@ BUILDIN(pow)
 	return true;
 }
 
-BUILDIN(distance)
+BUILDIN(distance) //[zBuffer]
 {
 	int x0, y0, x1, y1;
 
@@ -15539,7 +15572,7 @@ BUILDIN(distance)
 	return true;
 }
 
-// <--- [zBuffer] List of mathematics commands
+// <--- List of mathematics commands
 
 BUILDIN(min)
 {
@@ -16472,7 +16505,7 @@ BUILDIN(unitstop) {
 	if( bl != NULL ) {
 		unit->bl2ud2(bl); // ensure ((TBL_NPC*)bl)->ud is safe to edit
 		unit->stop_attack(bl);
-		unit->stop_walking(bl,4);
+		unit->stop_walking(bl, STOPWALKING_FLAG_NEXTCELL);
 		if( bl->type == BL_MOB )
 			((TBL_MOB*)bl)->target_id = 0;
 	}
@@ -17290,8 +17323,10 @@ BUILDIN(waitingroom2bg) {
 		script_pushint(st,0);
 		return true;
 	}
-
+	
+	Assert_retr(false, cd->users < MAX_CHAT_USERS);
 	n = cd->users; // This is always < MAX_CHAT_USERS
+	
 	for (i = 0; i < n && i < MAX_BG_MEMBERS; i++) {
 		struct map_session_data *sd = cd->usersd[i];
 		if (sd != NULL && bg->team_join(bg_id, sd))
@@ -17396,7 +17431,7 @@ BUILDIN(bg_monster_set_team) {
 	md->bg_id = bg_id;
 
 	mob_stop_attack(md);
-	mob_stop_walking(md, 0);
+	mob_stop_walking(md, STOPWALKING_FLAG_NONE);
 	md->target_id = md->attacked_id = 0;
 	clif->charnameack(0, &md->bl);
 
@@ -18198,7 +18233,7 @@ BUILDIN(setcashmount)
 	if ((sd = script->rid2sd(st)) == NULL)
 		return true;
 	if (pc_hasmount(sd)) {
-		clif->msgtable(sd->fd, 0X78b);
+		clif->msgtable(sd, MSG_REINS_CANT_USE_MOUNTED);
 		script_pushint(st,0);//can't mount with one of these
 	} else {
 		if (sd->sc.data[SC_ALL_RIDING])
@@ -19848,6 +19883,7 @@ void script_parse_builtin(void) {
 		BUILDIN_DEF(getguildmember,"i?"),
 		BUILDIN_DEF(strcharinfo,"i"),
 		BUILDIN_DEF(strnpcinfo,"i"),
+		BUILDIN_DEF(charid2rid,"i"),
 		BUILDIN_DEF(getequipid,"i"),
 		BUILDIN_DEF(getequipname,"i"),
 		BUILDIN_DEF(getbrokenid,"i"), // [Valaris]
@@ -20081,14 +20117,16 @@ void script_parse_builtin(void) {
 		BUILDIN_DEF(countstr,"ss?"),
 		BUILDIN_DEF(setnpcdisplay,"sv??"),
 		BUILDIN_DEF(compare,"ss"), // Lordalfa - To bring strstr to scripting Engine.
+		BUILDIN_DEF(strcmp,"ss"),
 		BUILDIN_DEF(getiteminfo,"ii"), //[Lupus] returns Items Buy / sell Price, etc info
 		BUILDIN_DEF(setiteminfo,"iii"), //[Lupus] set Items Buy / sell Price, etc info
 		BUILDIN_DEF(getequipcardid,"ii"), //[Lupus] returns CARD ID or other info from CARD slot N of equipped item
-		// [zBuffer] List of mathematics commands --->
-		BUILDIN_DEF(sqrt,"i"),
-		BUILDIN_DEF(pow,"ii"),
-		BUILDIN_DEF(distance,"iiii"),
-		// <--- [zBuffer] List of mathematics commands
+		// List of mathematics commands --->
+		BUILDIN_DEF(log10,"i"),
+		BUILDIN_DEF(sqrt,"i"), //[zBuffer]
+		BUILDIN_DEF(pow,"ii"), //[zBuffer]
+		BUILDIN_DEF(distance,"iiii"), //[zBuffer]
+		// <--- List of mathematics commands
 		BUILDIN_DEF(min, "i*"),
 		BUILDIN_DEF(max, "i*"),
 		BUILDIN_DEF(md5,"s"),

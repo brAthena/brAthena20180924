@@ -72,16 +72,6 @@ enum MOBID {
 	MOBID_MAGICDECOY_WIND = 2046,
 };
 
-// The following system marks a different job ID system used by the map server,
-// which makes a lot more sense than the normal one. [Skotlex]
-// These marks the "level" of the job.
-#define JOBL_2_1 0x100 //256
-#define JOBL_2_2 0x200 //512
-#define JOBL_2 0x300
-#define JOBL_UPPER 0x1000 //4096
-#define JOBL_BABY 0x2000  //8192
-#define JOBL_THIRD 0x4000 //16384
-
 // For filtering and quick checking.
 #define MAPID_BASEMASK 0x00ff
 #define MAPID_UPPERMASK 0x0fff
@@ -908,15 +898,15 @@ struct map_interface {
 	DBMap* regen_db;  // int id -> struct block_list* (status_natural_heal processing)
 	DBMap* zone_db;   // string => struct map_zone_data
 	DBMap* iwall_db;
-	/* order respected by map_defaults() in order to zero */
-	/* from block_free until zone_pk */
 	struct block_list **block_free;
 	int block_free_count, block_free_lock, block_free_list_size;
 	struct block_list **bl_list;
 	int bl_list_count, bl_list_size;
+BEGIN_ZEROED_BLOCK; // This block is zeroed in map_defaults()
 	struct block_list bl_head;
 	struct map_zone_data zone_all;/* used as a base on all maps */
 	struct map_zone_data zone_pk;/* used for (pk_mode) */
+END_ZEROED_BLOCK;
 	/* */
 	struct map_session_data *cpsd;
 	struct map_data *list;

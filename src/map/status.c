@@ -1233,7 +1233,7 @@ int status_damage(struct block_list *src,struct block_list *target,int64 in_hp, 
 
 				if(d_bl &&((d_bl->type == BL_MER && ((TBL_MER *)d_bl)->master && ((TBL_MER *)d_bl)->master->bl.id == target->id)
 						   || (d_bl->type == BL_PC && ((TBL_PC *)d_bl)->devotion[sce->val2] == target->id)) && check_distance_bl(target, d_bl, sce->val3)) {
-					clif->damage(d_bl, d_bl, 0, 0, hp, 0, 0, 0);
+					clif->damage(d_bl, d_bl, 0, 0, hp, 0, BDT_NORMAL, 0);
 					status_fix_damage(NULL, d_bl, hp, 0);
 					return 0;
 				}
@@ -1300,7 +1300,7 @@ int status_damage(struct block_list *src,struct block_list *target,int64 in_hp, 
 	}
 
 	if( src && target->type == BL_PC && (((TBL_PC*)target)->disguise) > 0 ) {// stop walking when attacked in disguise to prevent walk-delay bug
-		unit->stop_walking( target, 1 );
+		unit->stop_walking(target, STOPWALKING_FLAG_FIXPOS);
 	}
 
 	if (st->hp || (flag&8)) {
@@ -1383,7 +1383,7 @@ int status_damage(struct block_list *src,struct block_list *target,int64 in_hp, 
 		unit->remove_map(target,CLR_DEAD,ALC_MARK);
 	else { //Some death states that would normally be handled by unit_remove_map
 		unit->stop_attack(target);
-		unit->stop_walking(target,1);
+		unit->stop_walking(target, STOPWALKING_FLAG_FIXPOS);
 		unit->skillcastcancel(target,0);
 		clif->clearunit_area(target,CLR_DEAD);
 		skill->unit_move(target,timer->gettick(),4);
@@ -1635,13 +1635,13 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, uin
 
 			for(i = 0; i < map->list[src->m].zone->disabled_skills_count; i++) {
 				if( skill_id == map->list[src->m].zone->disabled_skills[i]->nameid && (map->list[src->m].zone->disabled_skills[i]->type&src->type) ) {
-					if( src->type == BL_PC )
-						clif->msg((TBL_PC*)src, MSI_IMPOSSIBLE_SKILL_AREA); // This skill cannot be used within this area
-					else if( src->type == BL_MOB && map->list[src->m].zone->disabled_skills[i]->subtype != MZS_NONE ) {
-						if( st->mode&MD_BOSS ) { /** is boss **/
+					if (src->type == BL_PC) {
+						clif->msgtable((TBL_PC*)src, MSG_SKILL_CANT_USE_AREA); // This skill cannot be used within this area
+					} else if (src->type == BL_MOB && map->list[src->m].zone->disabled_skills[i]->subtype != MZS_NONE) {
+						if( st->mode&MD_BOSS ) { /* is boss */
 							if( !( map->list[src->m].zone->disabled_skills[i]->subtype&MZS_BOSS ) )
 								break;
-						} else { /** is not boss **/
+						} else { /* is not boss */
 							if( map->list[src->m].zone->disabled_skills[i]->subtype&MZS_BOSS )
 								break;
 						}
@@ -1695,10 +1695,15 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, uin
 			return 0;
 
 		if (sc->data[SC_DC_WINKCHARM] && target && !flag) { //Prevents skill usage
-			if( unit->bl2ud(src) && (unit->bl2ud(src))->walktimer == INVALID_TIMER )
-				unit->walktobl(src, map->id2bl(sc->data[SC_DC_WINKCHARM]->val2), 3, 1);
-			clif->emotion(src, E_LV);
-			return 0;
+			struct block_list *winkcharm_target = map->id2bl(sc->data[SC_DC_WINKCHARM]->val2);
+			if (winkcharm_target != NULL) {
+				if (unit->bl2ud(src) && (unit->bl2ud(src))->walktimer == INVALID_TIMER)
+					unit->walktobl(src, map->id2bl(sc->data[SC_DC_WINKCHARM]->val2), 3, 1);
+				clif->emotion(src, E_LV);
+				return 0;
+			} else {
+				status_change_end(src, SC_DC_WINKCHARM, INVALID_TIMER);
+			}
 		}
 
 		if (sc->data[SC_BLADESTOP]) {
@@ -1913,7 +1918,7 @@ int status_calc_mob_(struct mob_data* md, enum e_status_calc_opt opt) {
 	if (battle_config.slaves_inherit_speed && md->master_id)
 		flag|=8;
 
-	if (md->master_id && md->special_state.ai>1)
+	if (md->master_id && md->special_state.ai > AI_ATTACK)
 		flag|=16;
 
 	if (!flag)
@@ -1949,8 +1954,8 @@ int status_calc_mob_(struct mob_data* md, enum e_status_calc_opt opt) {
 		//Max HP setting from Summon Flora/marine Sphere
 		struct unit_data *ud = unit->bl2ud(mbl);
 		//Remove special AI when this is used by regular mobs.
-		if (mbl->type == BL_MOB && !((TBL_MOB*)mbl)->special_state.ai)
-			md->special_state.ai = 0;
+		if (mbl->type == BL_MOB && ((TBL_MOB*)mbl)->special_state.ai == AI_NONE)
+			md->special_state.ai = AI_NONE;
 		if (ud) {
 			// different levels of HP according to skill level
 			if (ud->skill_id == AM_SPHEREMINE) {
@@ -2220,40 +2225,11 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt) {
 	sd->def_rate = sd->def2_rate = sd->mdef_rate = sd->mdef2_rate = 100;
 	sd->regen.state.block = 0;
 
-	// zeroed arrays, order follows the order in pc.h.
-	// add new arrays to the end of zeroed area in pc.h (see comments) and size here. [zzo]
-	memset (sd->param_bonus, 0, sizeof(sd->param_bonus)
-		+ sizeof(sd->param_equip)
-		+ sizeof(sd->subele)
-		+ sizeof(sd->subrace)
-		+ sizeof(sd->subrace2)
-		+ sizeof(sd->subsize)
-		+ sizeof(sd->reseff)
-		+ sizeof(sd->weapon_coma_ele)
-		+ sizeof(sd->weapon_coma_race)
-		+ sizeof(sd->weapon_atk)
-		+ sizeof(sd->weapon_atk_rate)
-		+ sizeof(sd->arrow_addele)
-		+ sizeof(sd->arrow_addrace)
-		+ sizeof(sd->arrow_addsize)
-		+ sizeof(sd->magic_addele)
-		+ sizeof(sd->magic_addrace)
-		+ sizeof(sd->magic_addsize)
-		+ sizeof(sd->magic_atk_ele)
-		+ sizeof(sd->critaddrace)
-		+ sizeof(sd->expaddrace)
-		+ sizeof(sd->ignore_mdef)
-		+ sizeof(sd->ignore_def)
-		+ sizeof(sd->sp_gain_race)
-		+ sizeof(sd->sp_gain_race_attack)
-		+ sizeof(sd->hp_gain_race_attack)
-#ifdef RENEWAL
-		+ sizeof(sd->race_tolerance)
-#endif
-		);
+	// zeroed arrays
+	memset(ZEROED_BLOCK_POS(sd), 0, ZEROED_BLOCK_SIZE(sd));
 
-	memset (&sd->right_weapon.overrefine, 0, sizeof(sd->right_weapon) - sizeof(sd->right_weapon.atkmods));
-	memset (&sd->left_weapon.overrefine, 0, sizeof(sd->left_weapon) - sizeof(sd->left_weapon.atkmods));
+	memset(ZEROED_BLOCK_POS(&(sd->right_weapon)), 0, ZEROED_BLOCK_SIZE(&(sd->right_weapon)));
+	memset(ZEROED_BLOCK_POS(&(sd->left_weapon)), 0, ZEROED_BLOCK_SIZE(&(sd->left_weapon)));
 
 	if (sd->special_state.intravision && !sd->sc.data[SC_CLAIRVOYANCE]) //Clear intravision as long as nothing else is using it
 		clif->sc_end(&sd->bl,sd->bl.id,SELF,SI_CLAIRVOYANCE);
@@ -2286,38 +2262,6 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt) {
 	bstatus->aspd_rate = 1000;
 	bstatus->ele_lv = 1;
 	bstatus->race = RC_DEMIHUMAN;
-
-	//zero up structures...
-	memset(&sd->autospell,0,sizeof(sd->autospell)
-		+ sizeof(sd->autospell2)
-		+ sizeof(sd->autospell3)
-		+ sizeof(sd->addeff)
-		+ sizeof(sd->addeff2)
-		+ sizeof(sd->addeff3)
-		+ sizeof(sd->skillatk)
-		+ sizeof(sd->skillusesprate)
-		+ sizeof(sd->skillusesp)
-		+ sizeof(sd->skillheal)
-		+ sizeof(sd->skillheal2)
-		+ sizeof(sd->hp_loss)
-		+ sizeof(sd->sp_loss)
-		+ sizeof(sd->hp_regen)
-		+ sizeof(sd->sp_regen)
-		+ sizeof(sd->skillblown)
-		+ sizeof(sd->skillcast)
-		+ sizeof(sd->add_def)
-		+ sizeof(sd->add_mdef)
-		+ sizeof(sd->add_mdmg)
-		+ sizeof(sd->add_drop)
-		+ sizeof(sd->itemhealrate)
-		+ sizeof(sd->subele2)
-		+ sizeof(sd->skillcooldown)
-		+ sizeof(sd->skillfixcast)
-		+ sizeof(sd->skillvarcast)
-		+ sizeof(sd->skillfixcastrate)
-		+ sizeof(sd->def_set_race)
-		+ sizeof(sd->mdef_set_race)
-		);
 
 	memset (&sd->bonus, 0,sizeof(sd->bonus));
 
@@ -3182,6 +3126,8 @@ int status_calc_homunculus_(struct homun_data *hd, enum e_status_calc_opt opt) {
 	hstatus->aspd_rate = 1000;
 
 #ifdef RENEWAL
+	hstatus->def = 0;
+
 	amotion = hd->homunculusDB->baseASPD;
 	amotion = amotion - amotion * (hstatus->dex + hom->dex_value) / 1000 - (hstatus->agi + hom->agi_value) * amotion / 250;
 #else
@@ -3195,7 +3141,6 @@ int status_calc_homunculus_(struct homun_data *hd, enum e_status_calc_opt opt) {
 
 	hstatus->amotion = cap_value(amotion, battle_config.max_aspd, 2000);
 	hstatus->adelay = hstatus->amotion; //It seems adelay = amotion for Homunculus.
-
 
 	hstatus->max_hp = hom->max_hp;
 	hstatus->max_sp = hom->max_sp;
@@ -3657,7 +3602,7 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag) {
 		if (!(st->mode&MD_CANATTACK))
 			unit->stop_attack(bl);
 		if (!(st->mode&MD_CANMOVE))
-			unit->stop_walking(bl,1);
+			unit->stop_walking(bl, STOPWALKING_FLAG_FIXPOS);
 	}
 
 	// No status changes alter these yet.
@@ -4149,7 +4094,7 @@ void status_calc_misc(struct block_list *bl, struct status_data *st, int level) 
 	if ( bl->type == BL_HOM ) {
 		st->def2 = status_get_homvit(bl) + status_get_homagi(bl) / 2;
 		st->mdef2 = (status_get_homvit(bl) + status_get_homint(bl)) / 2;
-		st->def += status_get_homvit(bl) + level / 2;
+		st->def += status_get_homvit(bl) + level / 2; // Increase. Already initialized in status_calc_homunculus_
 		st->mdef = (int)(((float)status_get_homvit(bl) + level) / 4 + (float)status_get_homint(bl) / 2);
 		st->hit = level + st->dex + 150;
 		st->flee = level + status_get_homagi(bl);
@@ -6050,7 +5995,7 @@ int status_get_party_id(struct block_list *bl) {
 		struct mob_data *md=(TBL_MOB*)bl;
 		if( md->master_id > 0 ) {
 			struct map_session_data *msd;
-			if (md->special_state.ai && (msd = map->id2sd(md->master_id)) != NULL)
+			if (md->special_state.ai != AI_NONE && (msd = map->id2sd(md->master_id)) != NULL)
 				return msd->status.party_id;
 			return -md->master_id;
 		}
@@ -6093,7 +6038,7 @@ int status_get_guild_id(struct block_list *bl) {
 			// Guardian guild data may not been available yet, castle data is always set
 			return (md->guardian_data->g)?md->guardian_data->g->guild_id:md->guardian_data->castle->guild_id;
 		}
-		if( md->special_state.ai && (msd = map->id2sd(md->master_id)) != NULL )
+		if (md->special_state.ai != AI_NONE && (msd = map->id2sd(md->master_id)) != NULL)
 			return msd->status.guild_id; //Alchemist's mobs [Skotlex]
 		break;
 	}
@@ -6135,7 +6080,7 @@ int status_get_emblem_id(struct block_list *bl) {
 		struct mob_data *md = (struct mob_data *)bl;
 		if (md->guardian_data) //Guardian's guild [Skotlex]
 			return (md->guardian_data->g) ? md->guardian_data->g->emblem_id:0;
-		if (md->special_state.ai && (msd = map->id2sd(md->master_id)) != NULL)
+		if (md->special_state.ai != AI_NONE && (msd = map->id2sd(md->master_id)) != NULL)
 			return msd->guild_emblem_id; //Alchemist's mobs [Skotlex]
 				 }
 				 break;
@@ -6607,9 +6552,6 @@ int status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_typ
 	case SC_COLD:
 		tick_def2 = bst->vit*100 + status->get_lv(bl)*20;
 		break;
-	case SC_VACUUM_EXTREME:
-		tick_def2 = bst->str*50;
-		break;
 	case SC_MANDRAGORA:
 		sc_def = (st->vit + st->luk)*20;
 		break;
@@ -7066,7 +7008,7 @@ int status_change_start(struct block_list *src, struct block_list *bl, enum sc_t
 				i = sd->equip_index[EQI_HAND_R];
 				if (i>=0 && sd->inventory_data[i] && sd->inventory_data[i]->type == IT_WEAPON) {
 					opt_flag|=2;
-					pc->unequipitem(sd,i,3);
+					pc->unequipitem(sd, i, PCUNEQUIPITEM_RECALC|PCUNEQUIPITEM_FORCE);
 				}
 				if (!opt_flag) return 0;
 			}
@@ -7082,7 +7024,7 @@ int status_change_start(struct block_list *src, struct block_list *bl, enum sc_t
 					i = sd->equip_index[EQI_HAND_L];
 					if ( i < 0 || !sd->inventory_data[i] || sd->inventory_data[i]->type != IT_ARMOR )
 						return 0;
-					pc->unequipitem(sd,i,3);
+					pc->unequipitem(sd, i, PCUNEQUIPITEM_RECALC|PCUNEQUIPITEM_FORCE);
 				}
 				if (tick == 1) return 1; //Minimal duration: Only strip without causing the SC
 				break;
@@ -7094,7 +7036,7 @@ int status_change_start(struct block_list *src, struct block_list *bl, enum sc_t
 				i = sd->equip_index[EQI_ARMOR];
 				if ( i < 0 || !sd->inventory_data[i] )
 					return 0;
-				pc->unequipitem(sd,i,3);
+				pc->unequipitem(sd, i, PCUNEQUIPITEM_RECALC|PCUNEQUIPITEM_FORCE);
 			}
 			if (tick == 1) return 1; //Minimal duration: Only strip without causing the SC
 			break;
@@ -7106,7 +7048,7 @@ int status_change_start(struct block_list *src, struct block_list *bl, enum sc_t
 				i = sd->equip_index[EQI_HEAD_TOP];
 				if ( i < 0 || !sd->inventory_data[i] )
 					return 0;
-				pc->unequipitem(sd,i,3);
+				pc->unequipitem(sd, i, PCUNEQUIPITEM_RECALC|PCUNEQUIPITEM_FORCE);
 			}
 			if (tick == 1) return 1; //Minimal duration: Only strip without causing the SC
 			break;
@@ -7176,12 +7118,12 @@ int status_change_start(struct block_list *src, struct block_list *bl, enum sc_t
 				if( !(sd->bonus.unstripable_equip&EQP_ACC_L) ) {
 					i = sd->equip_index[EQI_ACC_L];
 					if( i >= 0 && sd->inventory_data[i] && sd->inventory_data[i]->type == IT_ARMOR )
-						pc->unequipitem(sd,i,3); //L-Accessory
+						pc->unequipitem(sd, i, PCUNEQUIPITEM_RECALC|PCUNEQUIPITEM_FORCE); //L-Accessory
 				}
 				if( !(sd->bonus.unstripable_equip&EQP_ACC_R) ) {
 					i = sd->equip_index[EQI_ACC_R];
 					if( i >= 0 && sd->inventory_data[i] && sd->inventory_data[i]->type == IT_ARMOR )
-						pc->unequipitem(sd,i,3); //R-Accessory
+						pc->unequipitem(sd, i, PCUNEQUIPITEM_RECALC|PCUNEQUIPITEM_FORCE); //R-Accessory
 				}
 				if( i < 0 )
 					return 0;
@@ -7629,7 +7571,7 @@ int status_change_start(struct block_list *src, struct block_list *bl, enum sc_t
 					struct map_session_data *tsd;
 					if( sd ) {
 						int i;
-						for( i = 0; i < 5; i++ ) {
+						for( i = 0; i < MAX_PC_DEVOTION; i++ ) {
 							if( sd->devotion[i] && (tsd = map->id2sd(sd->devotion[i])) )
 								status->change_start(bl, &tsd->bl, type, 10000, val1, val2, val3, val4, tick, SCFLAG_ALL);
 						}
@@ -7728,7 +7670,7 @@ int status_change_start(struct block_list *src, struct block_list *bl, enum sc_t
 					struct map_session_data *tsd;
 					if( sd ) {
 						int i;
-						for( i = 0; i < 5; i++ ) {
+						for( i = 0; i < MAX_PC_DEVOTION; i++ ) {
 							if( sd->devotion[i] && (tsd = map->id2sd(sd->devotion[i])) )
 								status->change_start(bl, &tsd->bl, type, 10000, val1, val2, 0, 0, tick, SCFLAG_ALL);
 						}
@@ -7975,7 +7917,7 @@ int status_change_start(struct block_list *src, struct block_list *bl, enum sc_t
 
 					if( bl->type&(BL_PC|BL_MER) ) {
 						if( sd ) {
-							for( i = 0; i < 5; i++ ) {
+							for( i = 0; i < MAX_PC_DEVOTION; i++ ) {
 								if( sd->devotion[i] && (tsd = map->id2sd(sd->devotion[i])) )
 									status->change_start(bl, &tsd->bl, type, 10000, val1, val2, 0, 0, tick, SCFLAG_ALL);
 							}
@@ -7995,7 +7937,7 @@ int status_change_start(struct block_list *src, struct block_list *bl, enum sc_t
 					if (sd) {
 						struct map_session_data *tsd;
 						int i;
-						for (i = 0; i < 5; i++) {
+						for (i = 0; i < MAX_PC_DEVOTION; i++) {
 							//See if there are devoted characters, and pass the status to them. [Skotlex]
 							if (sd->devotion[i] && (tsd = map->id2sd(sd->devotion[i])))
 								status->change_start(bl, &tsd->bl,type,10000,val1,5+val1*5,val3,val4,tick,SCFLAG_NOAVOID);
@@ -8031,7 +7973,7 @@ int status_change_start(struct block_list *src, struct block_list *bl, enum sc_t
 			case SC_BERSERK:
 				if( val3 == SC__BLOODYLUST )
 					sc_start(src,bl,(sc_type)val3,100,val1,tick);
-				if( !val3 && !(!sc->data[SC_ENDURE] || !sc->data[SC_ENDURE]->val4) )
+				if (!val3 && (!sc->data[SC_ENDURE] || !sc->data[SC_ENDURE]->val4))
 					sc_start4(src, bl, SC_ENDURE, 100,10,0,0,2, tick);
 				//HP healing is performing after the calc_status call.
 				//Val2 holds HP penalty
@@ -8870,6 +8812,9 @@ int status_change_start(struct block_list *src, struct block_list *bl, enum sc_t
 				else
 					val2 = val2 / 4 * val1; // STAT DEF increase: [(Caster VIT / 4) x Skill Level]
 				break;
+			case SC_GENTLETOUCH_ENERGYGAIN:
+				val2 = 10 + 5 * val1;
+				break;
 			case SC_PYROTECHNIC_OPTION:
 				val2 = 60;
 				break;
@@ -9283,7 +9228,7 @@ int status_change_start(struct block_list *src, struct block_list *bl, enum sc_t
 	switch (type) {
 		case SC_VACUUM_EXTREME:
 			if(!map_flag_gvg(bl->m))
-				unit->stop_walking(bl,1);
+				unit->stop_walking(bl, STOPWALKING_FLAG_FIXPOS);
 			break;
 		case SC_FREEZE:
 		case SC_STUN:
@@ -9318,11 +9263,11 @@ int status_change_start(struct block_list *src, struct block_list *bl, enum sc_t
 		case SC_NEEDLE_OF_PARALYZE:
 		case SC_DEATHBOUND:
 		case SC_NETHERWORLD:
-			unit->stop_walking(bl,1);
+			unit->stop_walking(bl, STOPWALKING_FLAG_FIXPOS);
 			break;
 		case SC_ANKLESNARE:
 			if( battle_config.skill_trap_type || !map_flag_gvg(bl->m) )
-				unit->stop_walking(bl,1);
+				unit->stop_walking(bl, STOPWALKING_FLAG_FIXPOS);
 			break;
 		case SC_HIDING:
 		case SC_CLOAKING:
@@ -9845,7 +9790,7 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 				if( bl->type == BL_PC ) {
 					// Clear Status from others
 					int i;
-					for( i = 0; i < 5; i++ ) {
+					for( i = 0; i < MAX_PC_DEVOTION; i++ ) {
 						if( sd->devotion[i] && (tsd = map->id2sd(sd->devotion[i])) && tsd->sc.data[type] )
 							status_change_end(&tsd->bl, type, INVALID_TIMER);
 					}
@@ -10117,7 +10062,7 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 				struct block_list* src = map->id2bl(sce->val2);
 				if( tid == -1 || !src)
 					break; // Terminated by Damage
-				status_fix_damage(src,bl,400*sce->val1,clif->damage(bl,bl,0,0,400*sce->val1,0,0,0));
+				status_fix_damage(src,bl,400*sce->val1,clif->damage(bl,bl,0,0,400*sce->val1,0,BDT_NORMAL,0));
 			}
 			break;
 		case SC_WUGDASH:
@@ -10126,7 +10071,7 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 				if (ud) {
 					ud->state.running = 0;
 					if (ud->walktimer != -1)
-						unit->stop_walking(bl,1);
+						unit->stop_walking(bl, STOPWALKING_FLAG_FIXPOS);
 				}
 			}
 			break;
@@ -10169,15 +10114,11 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 				map->foreachinrange(status->change_timer_sub, bl, battle_config.area_size,BL_CHAR, bl, sce, SC_CURSEDCIRCLE_TARGET, timer->gettick());
 			break;
 		case SC_RAISINGDRAGON:
-			if( sd && sce->val2 && !pc_isdead(sd) ) {
+			if ( sd && sce->val2 && !pc_isdead(sd) ) {
 				int i;
-				i = min(sd->spiritball,5);
-				pc->delspiritball(sd, sd->spiritball, 0);
+				if ( (i = (sd->spiritball - 5)) > 0 )
+					pc->delspiritball(sd, i, 0);
 				status_change_end(bl, SC_EXPLOSIONSPIRITS, INVALID_TIMER);
-				while( i > 0 ) {
-					pc->addspiritball(sd, skill->get_time(MO_CALLSPIRITS, pc->checkskill(sd,MO_CALLSPIRITS)), 5);
-					--i;
-				}
 			}
 			break;
 		case SC_CURSEDCIRCLE_TARGET:
@@ -10595,7 +10536,7 @@ int status_change_timer(int tid, int64 tick, int id, intptr_t data) {
 		case SC_STONE:
 			if(sc->opt1 == OPT1_STONEWAIT && sce->val3) {
 				sce->val4 = 0;
-				unit->stop_walking(bl,1);
+				unit->stop_walking(bl, STOPWALKING_FLAG_FIXPOS);
 				unit->stop_attack(bl);
 				sc->opt1 = OPT1_STONE;
 				clif->changeoption(bl);
@@ -10641,15 +10582,16 @@ int status_change_timer(int tid, int64 tick, int id, intptr_t data) {
 			break;
 
 		case SC_KNOWLEDGE:
-			if (!sd) break;
-			if (bl->m == sd->feel_map[0].m
-			 || bl->m == sd->feel_map[1].m
-			 || bl->m == sd->feel_map[2].m
-			) {
-				//Timeout will be handled by pc->setpos
-				sce->timer = INVALID_TIMER;
-				return 0;
-			}
+		{
+			int i;
+			for (i = 0; i < MAX_PC_FEELHATE; i++) {
+				if (bl->m == sd->feel_map[i].m) {
+					//Timeout will be handled by pc->setpos
+					sce->timer = INVALID_TIMER;
+					return 0;
+				}
+ 			}
+		}
 			break;
 
 		case SC_BLOODING:
@@ -10823,7 +10765,7 @@ int status_change_timer(int tid, int64 tick, int id, intptr_t data) {
 		case SC_PYREXIA:
 			if( --(sce->val4) > 0 ) {
 				map->freeblock_lock();
-				clif->damage(bl,bl,status_get_amotion(bl),status_get_dmotion(bl)+500,100,0,0,0);
+				clif->damage(bl,bl,status_get_amotion(bl),status_get_dmotion(bl)+500,100,0,BDT_NORMAL,0);
 				status_fix_damage(NULL,bl,100,0);
 				if( sc->data[type] ) {
 					sc_timer_next(3000+tick,status->change_timer,bl->id,data);
@@ -10839,7 +10781,7 @@ int status_change_timer(int tid, int64 tick, int id, intptr_t data) {
 				damage += st->vit * (sce->val1 - 3);
 				unit->skillcastcancel(bl,2);
 				map->freeblock_lock();
-				status->damage(bl, bl, damage, 0, clif->damage(bl,bl,status_get_amotion(bl),status_get_dmotion(bl)+500,damage,1,0,0), 1);
+				status->damage(bl, bl, damage, 0, clif->damage(bl,bl,status_get_amotion(bl),status_get_dmotion(bl)+500,damage,1,BDT_NORMAL,0), 1);
 				if( sc->data[type] ) {
 					sc_timer_next(1000 + tick, status->change_timer, bl->id, data );
 				}
@@ -10901,7 +10843,7 @@ int status_change_timer(int tid, int64 tick, int id, intptr_t data) {
 			if( --(sce->val4) > 0 ) {
 				//Damage is every 10 seconds including 3%sp drain.
 				map->freeblock_lock();
-				clif->damage(bl,bl,status_get_amotion(bl),1,1,0,0,0);
+				clif->damage(bl,bl,status_get_amotion(bl),1,1,0,BDT_NORMAL,0);
 				status->damage(NULL, bl, 1, st->max_sp * 3 / 100, 0, 0); //cancel dmg only if cancelable
 				if( sc->data[type] ) {
 					sc_timer_next(10000 + tick, status->change_timer, bl->id, data );
@@ -10958,7 +10900,7 @@ int status_change_timer(int tid, int64 tick, int id, intptr_t data) {
 				int damage = 1000 + 3 * status_get_max_hp(bl) / 100; // Deals fixed (1000 + 3%*MaxHP)
 
 				map->freeblock_lock();
-				clif->damage(bl,bl,0,0,damage,1,9,0); //damage is like endure effect with no walk delay
+				clif->damage(bl,bl,0,0,damage,1,BDT_MULTIENDURE,0); //damage is like endure effect with no walk delay
 				status->damage(src, bl, damage, 0, 0, 1);
 
 				if( sc->data[type]){ // Target still lives. [LimitLine]
@@ -11060,7 +11002,7 @@ int status_change_timer(int tid, int64 tick, int id, intptr_t data) {
 					break;
 				map->freeblock_lock();
 				damage =  sce->val3;
-				status->damage(src, bl, damage, 0, clif->damage(bl,bl,st->amotion,st->dmotion+200,damage,1,0,0), 1);
+				status->damage(src, bl, damage, 0, clif->damage(bl,bl,st->amotion,st->dmotion+200,damage,1,BDT_NORMAL,0), 1);
 				unit->skillcastcancel(bl,1);
 				if ( sc->data[type] ) {
 					sc_timer_next(1000 + tick, status->change_timer, bl->id, data);
@@ -11168,7 +11110,7 @@ int status_change_timer(int tid, int64 tick, int id, intptr_t data) {
 				int damage = st->max_hp / 100; // Suggestion 1% each second
 				if( damage >= st->hp ) damage = st->hp - 1; // Do not kill, just keep you with 1 hp minimum
 				map->freeblock_lock();
-				status_fix_damage(NULL,bl,damage,clif->damage(bl,bl,0,0,damage,0,0,0));
+				status_fix_damage(NULL,bl,damage,clif->damage(bl,bl,0,0,damage,0,BDT_NORMAL,0));
 				if( sc->data[type] ) {
 					sc_timer_next(1000 + tick, status->change_timer, bl->id, data);
 				}
@@ -11266,7 +11208,7 @@ int status_change_timer(int tid, int64 tick, int id, intptr_t data) {
 			if( --(sce->val4) > 0 ) {
 				status->charge(bl,0,sce->val2); // Reduce 8 every 10 seconds.
 				if( sd && !pc_issit(sd) ) {     // Force to sit every 10 seconds.
-					pc_stop_walking(sd,1|4);
+					pc_stop_walking(sd, STOPWALKING_FLAG_FIXPOS|STOPWALKING_FLAG_NEXTCELL);
 					pc_stop_attack(sd);
 					pc_setsit(sd);
 					clif->sitting(bl);
@@ -12042,10 +11984,10 @@ void status_read_job_db_sub(int idx, const char *name, config_setting_t *jdb)
 	};
 
 	if ((temp = libconfig->setting_get_member(jdb, "Inherit"))) {
-		int nidx = 0, iidx, w;
+		int nidx = 0;
 		const char *iname;
 		while ((iname = libconfig->setting_get_string_elem(temp, nidx++))) {
-			int iclass, ave, total = 0;
+			int i, iidx, iclass, avg_increment, base;
 			if ((iclass = pc->check_job_name(iname)) == -1) {
 				ShowWarning("status_read_job_db: '%s' trying to inherit unknown '%s'!\n", name, iname);
 				continue;
@@ -12053,62 +11995,63 @@ void status_read_job_db_sub(int idx, const char *name, config_setting_t *jdb)
 			iidx = pc->class2idx(iclass);
 			status->max_weight_base[idx] = status->max_weight_base[iidx];
 			memcpy(&status->aspd_base[idx], &status->aspd_base[iidx], sizeof(status->aspd_base[iidx]));
-			for (w = 1; w <= MAX_LEVEL && status->HP_table[iidx][w]; w++) {
-				status->HP_table[idx][w] = status->HP_table[iidx][w];
-				total += status->HP_table[idx][w];
+
+			for (i = 1; i <= MAX_LEVEL && status->HP_table[iidx][i]; i++) {
+				status->HP_table[idx][i] = status->HP_table[iidx][i];
 			}
-			ave = total / (w - 1);
-			for ( ; w <= pc->max_level[idx][0]; w++) {
-				status->HP_table[idx][w] = min(ave * w, battle_config.max_hp);
+			base = (i > 1 ? status->HP_table[idx][1] : 35); // Safe value if none are specified
+			avg_increment = (i > 2 ? (status->HP_table[idx][i] - base) / (i-1) : 5); // Safe value if none are specified
+			for ( ; i <= pc->max_level[idx][0]; i++) {
+				status->HP_table[idx][i] = min(base + avg_increment * i, battle_config.max_hp);
 			}
-			total = 0;
-			for (w = 1; w <= MAX_LEVEL && status->SP_table[iidx][w]; w++) {
-				status->SP_table[idx][w] = status->SP_table[iidx][w];
-				total += status->SP_table[idx][w];
+
+			for (i = 1; i <= MAX_LEVEL && status->SP_table[iidx][i]; i++) {
+				status->SP_table[idx][i] = status->SP_table[iidx][i];
 			}
-			ave = total / (w - 1);
-			for ( ; w <= pc->max_level[idx][0]; w++) {
-				status->SP_table[idx][w] = min(ave * w, battle_config.max_sp);
+			base = (i > 1 ? status->SP_table[idx][1] : 10); // Safe value if none are specified
+			avg_increment = (i > 2 ? (status->SP_table[idx][i] - base) / (i-1) : 1); // Safe value if none are specified
+			for ( ; i <= pc->max_level[idx][0]; i++) {
+				status->SP_table[idx][i] = min(base + avg_increment * i, battle_config.max_sp);
 			}
 		}
 	}
 	if ((temp = libconfig->setting_get_member(jdb, "InheritHP"))) {
-		int nidx = 0, iidx;
+		int nidx = 0;
 		const char *iname;
 		while ((iname = libconfig->setting_get_string_elem(temp, nidx++))) {
-			int iclass, w, ave, total = 0;
+			int i, iidx, iclass, avg_increment, base;
 			if ((iclass = pc->check_job_name(iname)) == -1) {
 				ShowWarning("status_read_job_db: '%s' trying to inherit unknown '%s' HP!\n", name, iname);
 				continue;
 			}
 			iidx = pc->class2idx(iclass);
-			for (w = 1; w <= MAX_LEVEL && status->HP_table[iidx][w]; w++) {
-				status->HP_table[idx][w] = status->HP_table[iidx][w];
-				total += status->HP_table[idx][w];
+			for (i = 1; i <= MAX_LEVEL && status->HP_table[iidx][i]; i++) {
+				status->HP_table[idx][i] = status->HP_table[iidx][i];
 			}
-			ave = total / (w - 1);
-			for ( ; w <= pc->max_level[idx][0]; w++ ) {
-				status->HP_table[idx][w] = min(ave * w, battle_config.max_hp);
+			base = (i > 1 ? status->HP_table[idx][1] : 35); // Safe value if none are specified
+			avg_increment = (i > 2 ? (status->HP_table[idx][i] - base) / (i-1) : 5); // Safe value if none are specified
+			for ( ; i <= pc->max_level[idx][0]; i++) {
+				status->HP_table[idx][i] = min(base + avg_increment * i, battle_config.max_hp);
 			}
 		}
 	}
 	if ((temp = libconfig->setting_get_member(jdb, "InheritSP"))) {
-		int nidx = 0, iidx, ave, total = 0;
+		int nidx = 0;
 		const char *iname;
 		while ((iname = libconfig->setting_get_string_elem(temp, nidx++))) {
-			int iclass, w;
+			int i, iidx, iclass, avg_increment, base;
 			if ((iclass = pc->check_job_name(iname)) == -1) {
 				ShowWarning("status_read_job_db: '%s' trying to inherit unknown '%s' SP!\n", name, iname);
 				continue;
 			}
 			iidx = pc->class2idx(iclass);
-			for (w = 1; w <= MAX_LEVEL && status->SP_table[iidx][w]; w++) {
-				status->SP_table[idx][w] = status->SP_table[iidx][w];
-				total += status->SP_table[idx][w];
+			for (i = 1; i <= MAX_LEVEL && status->SP_table[iidx][i]; i++) {
+				status->SP_table[idx][i] = status->SP_table[iidx][i];
 			}
-			ave = total / (w - 1);
-			for ( ; w <= pc->max_level[idx][0]; w++) {
-				status->SP_table[idx][w] = min(ave * w, battle_config.max_sp);
+			base = (i > 1 ? status->SP_table[idx][1] : 10); // Safe value if none are specified
+			avg_increment = (i > 2 ? (status->SP_table[idx][i] - base) / (i-1) : 1); // Safe value if none are specified
+			for ( ; i <= pc->max_level[idx][0]; i++) {
+				status->SP_table[idx][i] = min(avg_increment * i, battle_config.max_sp);
 			}
 		}
 	}
@@ -12135,28 +12078,30 @@ void status_read_job_db_sub(int idx, const char *name, config_setting_t *jdb)
 	}
 
 	if ((temp = libconfig->setting_get_member(jdb, "HPTable"))) {
-		int level = 0, ave, total = 0;
+		int level = 0, avg_increment, base;
 		config_setting_t *hp = NULL;
-		while ((hp = libconfig->setting_get_elem(temp, level++))) {
-			status->HP_table[idx][level] = i32 = min(libconfig->setting_get_int(hp), battle_config.max_hp);
-			total += i32 - status->HP_table[idx][level - 1];
+		while (level <= MAX_LEVEL && (hp = libconfig->setting_get_elem(temp, level))) {
+			i32 = libconfig->setting_get_int(hp);
+			status->HP_table[idx][++level] = min(i32, battle_config.max_hp);
 		}
-		ave = total / (level - 1);
-		for ( ; level <= pc->max_level[idx][0]; level++ ) { /* limit only to possible maximum level of the given class */
-			status->HP_table[idx][level] = min(ave * level, battle_config.max_hp); /* some are still empty? then let's use the average increase */
+		base = (level > 0 ? status->HP_table[idx][1] : 35); // Safe value if none are specified
+		avg_increment = (level > 1 ? (status->HP_table[idx][level] - base) / level : 5); // Safe value if none are specified
+		for (++level; level <= pc->max_level[idx][0]; ++level) { /* limit only to possible maximum level of the given class */
+			status->HP_table[idx][level] = min(base + avg_increment * level, battle_config.max_hp); /* some are still empty? then let's use the average increase */
 		}
 	}
 
 	if ((temp = libconfig->setting_get_member(jdb, "SPTable"))) {
-		int level = 0, ave, total = 0;
+		int level = 0, avg_increment, base;
 		config_setting_t *sp = NULL;
-		while ((sp = libconfig->setting_get_elem(temp, level++))) {
-			status->SP_table[idx][level] = i32 = min(libconfig->setting_get_int(sp), battle_config.max_sp);
-			total += i32 - status->SP_table[idx][level - 1];
+		while (level <= MAX_LEVEL && (sp = libconfig->setting_get_elem(temp, level))) {
+			i32 = libconfig->setting_get_int(sp);
+			status->SP_table[idx][++level] = min(i32, battle_config.max_sp);
 		}
-		ave = total / (level - 1);
+		base = (level > 0 ? status->SP_table[idx][1] : 10); // Safe value if none are specified
+		avg_increment = (level > 1 ? (status->SP_table[idx][level] - base) / level : 1);
 		for ( ; level <= pc->max_level[idx][0]; level++ ) {
-			status->SP_table[idx][level] = min(ave * level, battle_config.max_sp);
+			status->SP_table[idx][level] = min(base + avg_increment * level, battle_config.max_sp);
 		}
 	}
 }
@@ -12426,21 +12371,8 @@ void status_defaults(void) {
 	status->current_equip_item_index = 0; //Contains inventory index of an equipped item. To pass it into the EQUP_SCRIPT [Lupus]
 	status->current_equip_card_id = 0;    //To prevent card-stacking (from jA) [Skotlex]
 
-	memset(status->max_weight_base,0,sizeof(status->max_weight_base)
-		   + sizeof(status->HP_table)
-		   + sizeof(status->SP_table)
-		   + sizeof(status->aspd_base)
-		   + sizeof(status->Skill2SCTable)
-		   + sizeof(status->IconChangeTable)
-		   + sizeof(status->ChangeFlagTable)
-		   + sizeof(status->SkillChangeTable)
-		   + sizeof(status->RelevantBLTypes)
-		   + sizeof(status->DisplayType)
-		   + sizeof(status->refine_info)
-		   + sizeof(status->atkmods)
-		   + sizeof(status->job_bonus)
-		   + sizeof(status->sc_conf)
-		   );
+	// These macros are used instead of a sum of sizeof(), to ensure that padding won't interfere with our size, and code won't rot when adding more fields
+	memset(ZEROED_BLOCK_POS(status), 0, ZEROED_BLOCK_SIZE(status));
 
 	status->data_ers = NULL;
 	memset(&status->dummy, 0, sizeof(status->dummy));

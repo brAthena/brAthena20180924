@@ -100,7 +100,7 @@ bool chat_createpcchat(struct map_session_data* sd, const char* title, const cha
 		return false;
 	}
 
-	pc_stop_walking(sd,1);
+	pc_stop_walking(sd, STOPWALKING_FLAG_FIXPOS);
 
 	cd = chat->create(&sd->bl, title, pass, limit, pub, 0, "", 0, 1, MAX_LEVEL);
 	if( cd ) {
@@ -108,7 +108,7 @@ bool chat_createpcchat(struct map_session_data* sd, const char* title, const cha
 		cd->usersd[0] = sd;
 		pc_setchatid(sd,cd->bl.id);
 		pc_stop_attack(sd);
-		clif->createchat(sd,0);
+		clif->createchat(sd,0); // 0 = success
 		clif->dispchat(cd,0);
 		return true;
 	}
@@ -157,7 +157,7 @@ bool chat_joinchat(struct map_session_data* sd, int chatid, const char* pass) {
 		return false;
 	}
 
-	pc_stop_walking(sd,1);
+	pc_stop_walking(sd, STOPWALKING_FLAG_FIXPOS);
 	cd->usersd[cd->users] = sd;
 	cd->users++;
 
@@ -346,7 +346,7 @@ bool chat_kickchat(struct map_session_data* sd, const char* kickusername) {
 
 	idb_iput(cd->kick_list,cd->usersd[i]->status.char_id,1);
 
-	chat->leave(cd->usersd[i],1);
+	chat->leave(cd->usersd[i], true);
 	return true;
 }
 
@@ -447,7 +447,7 @@ bool chat_npckickall(struct chat_data* cd)
 	nullpo_ret(cd);
 
 	while( cd->users > 0 )
-		chat->leave(cd->usersd[cd->users-1],0);
+		chat->leave(cd->usersd[cd->users-1], false);
 
 	return true;
 }

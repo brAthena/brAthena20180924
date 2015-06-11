@@ -449,9 +449,9 @@ int elemental_action(struct elemental_data *ed, struct block_list *bl, int64 tic
 			ed->ud.skill_lv = skill_lv;
 
 			if( skill->get_inf(skill_id) & INF_GROUND_SKILL )
-				ed->ud.skilltimer = timer->add( tick+status->get_speed(&ed->bl)*walk_dist, skill->castend_pos, ed->bl.id, 0 );
+				ed->ud.skilltimer = timer->add(tick+(int64)status->get_speed(&ed->bl)*walk_dist, skill->castend_pos, ed->bl.id, 0);
 			else
-				ed->ud.skilltimer = timer->add( tick+status->get_speed(&ed->bl)*walk_dist, skill->castend_id, ed->bl.id, 0 );
+				ed->ud.skilltimer = timer->add(tick+(int64)status->get_speed(&ed->bl)*walk_dist, skill->castend_id, ed->bl.id, 0);
 		}
 		return 1;
 
@@ -567,7 +567,7 @@ int elemental_unlocktarget(struct elemental_data *ed) {
 
 	ed->target_id = 0;
 	elemental_stop_attack(ed);
-	elemental_stop_walking(ed,1);
+	elemental_stop_walking(ed, STOPWALKING_FLAG_FIXPOS);
 	return 0;
 }
 

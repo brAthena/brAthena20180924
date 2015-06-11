@@ -68,24 +68,28 @@ static struct view_data npc_viewdb2[MAX_NPC_CLASS2_END-MAX_NPC_CLASS2_START];
 /* for speedup */
 unsigned int npc_market_qty[MAX_INVENTORY];
 
-static struct script_event_s
-{
+static struct script_event_s {
 	//Holds pointers to the commonly executed scripts for speedup. [Skotlex]
 	struct event_data *event[UCHAR_MAX];
 	const char *event_name[UCHAR_MAX];
 	uint8 event_count;
 } script_event[NPCE_MAX];
 
-struct view_data* npc_get_viewdata(int class_)
+/**
+ * Returns the viewdata for normal npc classes.
+ * @param class_ The NPC class ID.
+ * @return The viewdata, or NULL if the ID is invalid.
+ */
+struct view_data *npc_get_viewdata(int class_)
 {
 	//Returns the viewdata for normal npc classes.
-	if( class_ == INVISIBLE_CLASS )
+	if (class_ == INVISIBLE_CLASS)
 		return &npc_viewdb[0];
-	if (npc->db_checkid(class_) || class_ == WARP_CLASS){
-		if( class_ > MAX_NPC_CLASS2_START ){
-			return &npc_viewdb2[class_-MAX_NPC_CLASS2_START];
-		}else{
+	if (npc->db_checkid(class_)) {
+		if (class_ < MAX_NPC_CLASS) {
 			return &npc_viewdb[class_];
+		} else if (class_ >= MAX_NPC_CLASS2_START && class_ < MAX_NPC_CLASS2_END) {
+			return &npc_viewdb2[class_-MAX_NPC_CLASS2_START];
 		}
 	}
 	return NULL;
@@ -95,7 +99,16 @@ struct view_data* npc_get_viewdata(int class_)
 //Since new npcs are added all the time, the max valid value is the one before the first mob (Scorpion = 1001)
 bool npc_db_checkid(int id)
 {
-    return ((id >= 46 && id <= 125) || id == HIDDEN_WARP_CLASS || (id > 400 && id < MAX_NPC_CLASS) || id == INVISIBLE_CLASS || (id > MAX_NPC_CLASS2_START && id < MAX_NPC_CLASS2_END));
+	if (id >= WARP_CLASS && id <= 125) // First subrange
+		return true;
+	if (id == HIDDEN_WARP_CLASS || id == INVISIBLE_CLASS) // Special IDs not included in the valid ranges
+		return true;
+	if (id > 400 && id < MAX_NPC_CLASS) // Second subrange
+		return true;
+	if (id >= MAX_NPC_CLASS2_START && id < MAX_NPC_CLASS2_END) // Second range
+		return true;
+	// Anything else is invalid
+	return false;
 }
 
 /// Returns a new npc id that isn't being used in id_db.
@@ -191,7 +204,7 @@ int npc_enable_sub(struct block_list *bl, va_list ap)
 			if (sd->npc_id != 0)
 				return 0;
 
-			pc_stop_walking(sd,1);
+			pc_stop_walking(sd, STOPWALKING_FLAG_FIXPOS);
 			npc->click(sd,nd);
 		}
 	}
@@ -1574,8 +1587,8 @@ bool npc_trader_open(struct map_session_data *sd, struct npc_data *nd) {
 				}
 			
 				/* nothing to display, no items available */
-				if( i == nd->u.scr.shop->items ) {
-					clif->colormes(sd->fd,COLOR_RED, msg_sd(sd,881));
+				if (i == nd->u.scr.shop->items) {
+					clif->messagecolor_self(sd->fd, COLOR_RED, msg_sd(sd,881));
 					return false;
 				}
 
@@ -2145,7 +2158,7 @@ int npc_selllist(struct map_session_data* sd, int n, unsigned short* item_list) 
 		}
 		//BrAthena Shop Log
 		logs->npc_shop(sd,nd->name,&sd->status.inventory[idx],value,amount,LOG_ACTION_DROP);
-		pc->delitem(sd, idx, amount, 0, 6);
+		pc->delitem(sd, idx, amount, 0, DELITEM_SOLD);
 	}
 
 	if( z > MAX_ZENY )
@@ -3545,7 +3558,7 @@ const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const char* st
 		return strchr(start, '\n');
 	}
 
-	if (mobspawn.state.ai > 4 && ai != -1) {
+	if (mobspawn.state.ai >= AI_MAX && ai != -1) {
 		ShowError("npc_parse_mob: AI invalida %d para o monstro %d no arquivo '%s', linha '%d'.\n", mobspawn.state.ai, class_, filepath, strline(buffer, start - buffer));
 		if (retval) *retval = EXIT_FAILURE;
 		return strchr(start, '\n');
@@ -3568,7 +3581,7 @@ const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const char* st
 		mobspawn.level = mob_lv;
 	if (size > 0 && size <= 2)
 		mobspawn.state.size = size;
-	if (ai > 0 && ai <= 4)
+	if (ai > AI_NONE && ai < AI_MAX)
 		mobspawn.state.ai = ai;
 
 	if (mobspawn.num > 1 && battle_config.mob_count_rate != 100) {
@@ -3814,14 +3827,15 @@ const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, const char
 	}
 	else if (!strcmpi(w3,"battleground")) {
 		struct map_zone_data *zone;
-		if( state ) {
-			if( sscanf(w4, "%d", &state) == 1 )
+		if (state) {
+			if (w4 && sscanf(w4, "%d", &state) == 1)
 				map->list[m].flag.battleground = state;
 			else
 				map->list[m].flag.battleground = 1; // Default value
-		} else
+		} else {
 			map->list[m].flag.battleground = 0;
-
+		}
+		
 		if( map->list[m].flag.battleground && map->list[m].flag.pvp ) {
 			map->list[m].flag.pvp = 0;
 			ShowWarning("npc_parse_mapflag: Voce nao pode definir PvP e BG para o mesmo mapa! Removendo PvP de %s do arquivo '%s', linha '%d'.\n", map->list[m].name, filepath, strline(buffer,start-buffer));
