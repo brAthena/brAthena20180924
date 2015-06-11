@@ -12266,7 +12266,7 @@ int status_readdb(void)
 
 	// read databases
 	//
-	sv_readsqldb(get_database_name(33), 100, -1, status->readdb_job2);
+	sv->readdb(map->db_path, "job_db2.txt",         ',', 1,                 1+MAX_LEVEL,       -1,                       status->readdb_job2);
 	sv_readsqldb(get_database_name(53),25, MAX_WEAPON_TYPE, status->readdb_sizefix);
 	sv_readsqldb(get_database_name(50), 4+MAX_REFINE, -1, status->readdb_refine);
 	sv->readdb(map->db_path, "sc_config.txt",       ',', 2,                 2,                 SC_MAX,                   status->readdb_scconfig);

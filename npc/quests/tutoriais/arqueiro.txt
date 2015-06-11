@@ -1034,7 +1034,7 @@ pay_arche,103,165,5	script	Reidin Corse#tu	4_M_REIDIN_KURS,{
 				close;
 			}
 		} else if((tu_archer01 == 14) || (tu_archer01 == 15)){
-			if (RENEWAL? && (countitem(906) < 10 || countitem(921) < 10)) {
+			if (RENEWAL && (countitem(906) < 10 || countitem(921) < 10)) {
 				mes "Remember, you";
 				mes "need to head into";
 				mes "the forest east of Payon and get me";
