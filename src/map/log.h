@@ -141,8 +141,8 @@ struct log_interface {
 	void (*npc_shop_sub_sql) (struct map_session_data* sd,char * name, struct item* itm , int unit_cost, int amount, int type);
 	
 	//Player/Mob Pick/Drop Action Log
-	void (*pickdrop) (struct map_session_data* sd, struct mob_data *md, struct item* itm , int amount,char * type,char * from);
-	void (*pickdrop_sub_sql) (struct map_session_data* sd, struct mob_data *md, struct item* itm, int amount,char * type,char * from);
+	void (*pickdrop) (struct map_session_data *sd, struct mob_data *md, struct item *itm, int amount, char *type, char *from);
+	void (*pickdrop_sub_sql) (struct map_session_data *sd, struct mob_data *md, struct item *itm, int amount, char *type, char *from);
 	
 	//Script Item Add/Remove Log
 	void (*script_item) (struct map_session_data* sd, char * name,int amount,char type );

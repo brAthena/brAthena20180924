@@ -65,7 +65,7 @@ CREATE TABLE IF NOT EXISTS `buyingstore_log` (
   `ItemSlot3` smallint(11) NOT NULL DEFAULT '0',
   `ItemSlot4` smallint(11) NOT NULL DEFAULT '0',
   `ItemRefiningLevel` tinyint(3) unsigned NOT NULL DEFAULT '0'
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=latin1;
 
 --
 -- Estrutura da tabela `card_log`
@@ -170,7 +170,7 @@ CREATE TABLE IF NOT EXISTS `guild_storage_log` (
   `ItemSlot3` smallint(11) NOT NULL DEFAULT '0',
   `ItemSlot4` smallint(11) NOT NULL DEFAULT '0',
   `ItemRefiningLevel` tinyint(3) unsigned NOT NULL DEFAULT '0'
-) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=latin1;
 
 --
 -- Estrutura da tabela `itemconsume_log`
@@ -190,7 +190,7 @@ CREATE TABLE IF NOT EXISTS `itemconsume_log` (
   `ItemSerial` bigint(20) unsigned NOT NULL DEFAULT '0',
   `Amount` int(11) unsigned NOT NULL DEFAULT '0',
   `Type_` varchar(20) NOT NULL DEFAULT ''
-) ENGINE=MyISAM AUTO_INCREMENT=180 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=latin1;
 
 --
 -- Estrutura da tabela `itemproduce_log`
@@ -237,7 +237,7 @@ CREATE TABLE IF NOT EXISTS `item_get_removelog` (
   `ItemSlot3` smallint(11) NOT NULL DEFAULT '0',
   `ItemSlot4` smallint(11) NOT NULL DEFAULT '0',
   `ItemRefiningLevel` tinyint(3) unsigned NOT NULL DEFAULT '0'
-) ENGINE=MyISAM AUTO_INCREMENT=25 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=latin1;
 
 --
 -- Estrutura da tabela `loginlog`
@@ -272,7 +272,7 @@ CREATE TABLE IF NOT EXISTS `mail_log` (
   `ItemSlot3` smallint(11) NOT NULL DEFAULT '0',
   `ItemSlot4` smallint(11) NOT NULL DEFAULT '0',
   `ItemRefiningLevel` tinyint(3) unsigned NOT NULL DEFAULT '0'
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=latin1;
 
 --
 -- Estrutura da tabela `npclog`
@@ -324,12 +324,12 @@ CREATE TABLE IF NOT EXISTS `pickdrop_log` (
   `Mapname` varchar(24) NOT NULL DEFAULT '',
   `PosX` smallint(4) NOT NULL DEFAULT '0',
   `PosY` smallint(4) NOT NULL DEFAULT '0',
-  `Subject` enum('Player','Monster') NOT NULL DEFAULT 'Player',
+  `Subject` varchar(24) NOT NULL DEFAULT '',
   `Name` varchar(30) NOT NULL DEFAULT '',
   `AccountID` int(11) unsigned NOT NULL DEFAULT '0',
   `CharID` int(11) unsigned NOT NULL DEFAULT '0',
-  `IP` int(11) unsigned NOT NULL DEFAULT '0',
-  `Source` varchar(24) NOT NULL DEFAULT '',
+  `IP` varchar(20) NOT NULL DEFAULT '',
+  `Source` enum('Player','Monster') NOT NULL DEFAULT 'Player',
   `ItemID` int(11) unsigned NOT NULL DEFAULT '0',
   `ItemName` varchar(23) NOT NULL DEFAULT '',
   `Amount` int(11) unsigned NOT NULL DEFAULT '0',
@@ -339,7 +339,7 @@ CREATE TABLE IF NOT EXISTS `pickdrop_log` (
   `ItemSlot3` smallint(11) NOT NULL DEFAULT '0',
   `ItemSlot4` smallint(11) NOT NULL DEFAULT '0',
   `ItemRefiningLevel` tinyint(3) unsigned NOT NULL DEFAULT '0'
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=latin1;
 
 --
 -- Estrutura da tabela `storage_log`
@@ -365,7 +365,7 @@ CREATE TABLE IF NOT EXISTS `storage_log` (
   `ItemSlot3` smallint(11) NOT NULL DEFAULT '0',
   `ItemSlot4` smallint(11) NOT NULL DEFAULT '0',
   `ItemRefiningLevel` tinyint(3) unsigned NOT NULL DEFAULT '0'
-) ENGINE=MyISAM AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=latin1;
 
 --
 -- Estrutura da tabela `trade_log`
@@ -395,7 +395,7 @@ CREATE TABLE IF NOT EXISTS `trade_log` (
   `ItemSlot3` smallint(11) NOT NULL DEFAULT '0',
   `ItemSlot4` smallint(11) NOT NULL DEFAULT '0',
   `ItemRefiningLevel` tinyint(3) unsigned NOT NULL DEFAULT '0'
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=latin1;
 
 --
 -- Estrutura da tabela `vending_log`
@@ -426,7 +426,7 @@ CREATE TABLE IF NOT EXISTS `vending_log` (
   `ItemSlot3` smallint(11) NOT NULL DEFAULT '0',
   `ItemSlot4` smallint(11) NOT NULL DEFAULT '0',
   `ItemRefiningLevel` tinyint(3) unsigned NOT NULL DEFAULT '0'
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=latin1;
 
 --
 -- Estrutura da tabela `zenylog`
@@ -578,7 +578,7 @@ ALTER TABLE `branchlog`
 -- AUTO_INCREMENT for table `buyingstore_log`
 --
 ALTER TABLE `buyingstore_log`
-  MODIFY `Index` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+  MODIFY `Index` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=0;
 --
 -- AUTO_INCREMENT for table `card_log`
 --
@@ -598,12 +598,12 @@ ALTER TABLE `chatlog`
 -- AUTO_INCREMENT for table `guild_storage_log`
 --
 ALTER TABLE `guild_storage_log`
-  MODIFY `Index` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
+  MODIFY `Index` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=0;
 --
 -- AUTO_INCREMENT for table `itemconsume_log`
 --
 ALTER TABLE `itemconsume_log`
-  MODIFY `Index` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=180;
+  MODIFY `Index` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=0;
 --
 -- AUTO_INCREMENT for table `itemproduce_log`
 --
@@ -613,12 +613,12 @@ ALTER TABLE `itemproduce_log`
 -- AUTO_INCREMENT for table `item_get_removelog`
 --
 ALTER TABLE `item_get_removelog`
-  MODIFY `Index` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=25;
+  MODIFY `Index` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=0;
 --
 -- AUTO_INCREMENT for table `mail_log`
 --
 ALTER TABLE `mail_log`
-  MODIFY `Index` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+  MODIFY `Index` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=0;
 --
 -- AUTO_INCREMENT for table `npclog`
 --
@@ -633,22 +633,22 @@ ALTER TABLE `npcshop_log`
 -- AUTO_INCREMENT for table `pickdrop_log`
 --
 ALTER TABLE `pickdrop_log`
-  MODIFY `Index` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+  MODIFY `Index` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=0;
 --
 -- AUTO_INCREMENT for table `storage_log`
 --
 ALTER TABLE `storage_log`
-  MODIFY `Index` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=24;
+  MODIFY `Index` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=0;
 --
 -- AUTO_INCREMENT for table `trade_log`
 --
 ALTER TABLE `trade_log`
-  MODIFY `Index` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+  MODIFY `Index` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=0;
 --
 -- AUTO_INCREMENT for table `vending_log`
 --
 ALTER TABLE `vending_log`
-  MODIFY `Index` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+  MODIFY `Index` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=0;
 --
 -- AUTO_INCREMENT for table `zenylog`
 --

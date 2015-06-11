@@ -312,50 +312,51 @@ void log_npc_shop_sub_sql (struct map_session_data* sd,char * name, struct item*
 	}
 	
 }
-void log_pickdrop (struct map_session_data* sd, struct mob_data *md, struct item* itm ,int amount,char * type,char * from){
+void log_pickdrop(struct map_session_data *sd, struct mob_data *md, struct item *itm, int amount, char *type, char *from)
+{
 	nullpo_retv(itm);
+
 	if( md && !sd && !logs->config.pc_pick_drop )
 		return;
-		
+
 	if(!sd && !logs->config.mob_pick_drop)
 		return;
 
-	logs->pickdrop_sub_sql (sd,md,itm,amount,type,from);
+	logs->pickdrop_sub_sql(sd, md, itm, amount, type, from);
 	return;
 }
-void log_pickdrop_sub_sql (struct map_session_data* sd, struct mob_data *md, struct item* itm ,int amount,char * type,char * from){
-	char ip_sd[20] = "",c_source[8],c_from[23]="";
+void log_pickdrop_sub_sql(struct map_session_data *sd, struct mob_data *md, struct item *itm, int amount, char *type, char *from)
+{
+	struct item_data *idata = itemdb->exists(itm->nameid);
 	struct block_list *src;
-	struct item_data* idata = itemdb->exists(itm->nameid);
+	char ip_sd[20] = "", c_source[8];
 
 	if(!logs->should_log_item(itm->nameid, amount, itm->refine, idata))
 		return;
-	
+
 	if(sd){
-			pc->get_ip(sd,ip_sd);
-			src = &sd->bl;
-			strcpy(c_source,"Player");
+		pc->get_ip(sd,ip_sd);
+		src = &sd->bl;
+		strcpy(c_source,"Player");
 	}
 	else if(md){
-			src = &md->bl;
-			strcpy(c_source,"Monster");
+		src = &md->bl;
+		strcpy(c_source,"Monster");
 	}
 	else return;
-	
-	
+
 	if( SQL_ERROR == SQL->Query(logs->mysql_handle, LOG_QUERY " INTO `pickdrop_log`"
-	"(`Date`,`Action`, `Mapname`,`PosX`,`PosY`,"
-	"`Subject`,`Source`,`AccountID`,`CharID`,`IP`,`Name`,"
-	"`ItemID`,`ItemName`,`Amount`,`ItemSerial`,"
-	"`ItemSlot1`,`ItemSlot2`,`ItemSlot3`,`ItemSlot4`,`ItemRefiningLevel`)"
-	"VALUES (NOW(),'%s','%s','%d','%d','%s','%s','%d','%d','%s','%s',"
-	"'%d','%s','%d','%"PRIu64"',"
-	"'%d','%d','%d','%d','%d')",
-	type,map->list[src->m].name,src->x,src->y,from,c_from,(sd)? sd->status.account_id : 0,
-	(sd)? sd->status.char_id : 0,ip_sd,(sd)? sd->status.name : md->name,
-	itm->nameid,idata->name,amount,itm->unique_id,
-	itm->card[0],itm->card[1],itm->card[2],itm->card[3],itm->refine))
-	{
+		"(`Date`,`Action`, `Mapname`,`PosX`,`PosY`,"
+		"`Subject`,`Name`,`AccountID`,`CharID`,`IP`,`Source`,"
+		"`ItemID`,`ItemName`,`Amount`,`ItemSerial`,"
+		"`ItemSlot1`,`ItemSlot2`,`ItemSlot3`,`ItemSlot4`,`ItemRefiningLevel`)"
+		"VALUES (NOW(),'%s','%s','%d','%d','%s','%s','%d','%d','%s','%s',"
+		"'%d','%s','%d','%"PRIu64"',"
+		"'%d','%d','%d','%d','%d')",
+		type,map->list[src->m].name,src->x,src->y,from,(sd)?sd->status.name:md->name,(sd)?sd->status.account_id:0,
+		(sd)?sd->status.char_id:0,ip_sd,c_source,
+		itm->nameid,idata->jname,amount,itm->unique_id,
+		itm->card[0],itm->card[1],itm->card[2],itm->card[3],itm->refine)) {
 		Sql_ShowDebug(logs->mysql_handle);
 		return;
 	}
