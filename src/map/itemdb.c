@@ -1509,6 +1509,376 @@ int itemdb_validate_entry(struct item_data *entry, int n, const char *source) {
  * Processes one itemdb entry from the sql backend, loading and inserting it
  * into the item database.
  *
+ * @param *it     Libconfig setting entry. It is expected to be valid and it
+ *                won't be freed (it is care of the caller to do so if
+ *                necessary)
+ * @param n       Ordinal number of the entry, to be displayed in case of
+ *                validation errors.
+ * @param *source Source of the entry (file name), to be displayed in case of
+ *                validation errors.
+ * @return Nameid of the validated entry, or 0 in case of failure.
+ */
+int itemdb_readdb_libconfig_sub(config_setting_t *it, int n, const char *source) {
+	struct item_data id = { 0 };
+	config_setting_t *t = NULL;
+	const char *str = NULL;
+	int i32 = 0;
+	bool inherit = false;
+
+	/*
+	 * // Mandatory fields
+	 * Id: ID
+	 * AegisName: "Aegis_Name"
+	 * Name: "Item Name"
+	 * // Optional fields
+	 * Type: Item Type
+	 * Buy: Buy Price
+	 * Sell: Sell Price
+	 * Weight: Item Weight
+	 * Atk: Attack
+	 * Matk: Attack
+	 * Def: Defense
+	 * Range: Attack Range
+	 * Slots: Slots
+	 * Job: Job mask
+	 * Upper: Upper mask
+	 * Gender: Gender
+	 * Loc: Equip location
+	 * WeaponLv: Weapon Level
+	 * EquipLv: Equip required level or [min, max]
+	 * Refine: Refineable
+	 * View: View ID
+	 * BindOnEquip: (true or false)
+	 * BuyingStore: (true or false)
+	 * Delay: Delay to use item
+	 * Trade: {
+	 *   override: Group to override
+	 *   nodrop: (true or false)
+	 *   notrade: (true or false)
+	 *   partneroverride: (true or false)
+	 *   noselltonpc: (true or false)
+	 *   nocart: (true or false)
+	 *   nostorage: (true or false)
+	 *   nogstorage: (true or false)
+	 *   nomail: (true or false)
+	 *   noauction: (true or false)
+	 * }
+	 * Nouse: {
+	 *   override: Group to override
+	 *   sitting: (true or false)
+	 * }
+	 * Stack: [Stackable Amount, Stack Type]
+	 * Sprite: SpriteID
+	 * Script: <"
+	 *     Script
+	 *     (it can be multi-line)
+	 * ">
+	 * OnEquipScript: <" OnEquip Script ">
+	 * OnUnequipScript: <" OnUnequip Script ">
+	 * Inherit: inherit or override
+	 */
+	if( !itemdb->lookup_const(it, "Id", &i32) ) {
+		ShowWarning("itemdb_readdb_libconfig_sub: ID invalido ou inexistente de \"%s\", entrada #%d, pulando.\n", source, n);
+		return 0;
+	}
+	id.nameid = (uint16)i32;
+
+	if( (t = libconfig->setting_get_member(it, "Inherit")) && (inherit = libconfig->setting_get_bool(t)) ) {
+		if( !itemdb->exists(id.nameid) ) {
+			ShowWarning("itemdb_readdb_libconfig_sub: Tentando herdar item existente %d, usando valor padrao...\n", id.nameid);
+			inherit = false;
+		} else {
+			// Use old entry as default
+			struct item_data *old_entry = itemdb->load(id.nameid);
+			memcpy(&id, old_entry, sizeof(struct item_data));
+		}
+	}
+
+	if( !libconfig->setting_lookup_string(it, "AegisName", &str) || !*str ) {
+		if( !inherit ) {
+			ShowWarning("itemdb_readdb_libconfig_sub: Faltando AegisName no item %d de \"%s\", pulando.\n", id.nameid, source);
+			return 0;
+		}
+	} else {
+		safestrncpy(id.name, str, sizeof(id.name));
+	}
+
+	if( !libconfig->setting_lookup_string(it, "Name", &str) || !*str ) {
+		if( !inherit ) {
+			ShowWarning("itemdb_readdb_libconfig_sub: Faltando Name no item %d de \"%s\", pulando.\n", id.nameid, source);
+			return 0;
+		}
+	} else {
+		safestrncpy(id.jname, str, sizeof(id.jname));
+	}
+
+	if( itemdb->lookup_const(it, "Type", &i32) )
+		id.type = i32;
+	else if( !inherit )
+		id.type = IT_ETC;
+
+	if( itemdb->lookup_const(it, "Buy", &i32) )
+		id.value_buy = i32;
+	else if( !inherit )
+		id.value_buy = -1;
+	if( itemdb->lookup_const(it, "Sell", &i32) )
+		id.value_sell = i32;
+	else if( !inherit )
+		id.value_sell = -1;
+
+	if( itemdb->lookup_const(it, "Weight", &i32) && i32 >= 0 )
+		id.weight = i32;
+
+	if( itemdb->lookup_const(it, "Atk", &i32) && i32 >= 0 )
+		id.atk = i32;
+
+	if( itemdb->lookup_const(it, "Matk", &i32) && i32 >= 0 )
+		id.matk = i32;
+
+	if( itemdb->lookup_const(it, "Def", &i32) && i32 >= 0 )
+		id.def = i32;
+
+	if( itemdb->lookup_const(it, "Range", &i32) && i32 >= 0 )
+		id.range = i32;
+
+	if( itemdb->lookup_const(it, "Slots", &i32) && i32 >= 0 )
+		id.slot = i32;
+
+	if( itemdb->lookup_const(it, "Job", &i32) ) // This is an unsigned value, do not check for >= 0
+		itemdb->jobid2mapid(id.class_base, (unsigned int)i32);
+	else if( !inherit )
+		itemdb->jobid2mapid(id.class_base, UINT_MAX);
+
+	if( itemdb->lookup_const(it, "Upper", &i32) && i32 >= 0 )
+		id.class_upper = (unsigned int)i32;
+	else if( !inherit )
+		id.class_upper = ITEMUPPER_ALL;
+
+	if( itemdb->lookup_const(it, "Gender", &i32) && i32 >= 0 )
+		id.sex = i32;
+	else if( !inherit )
+		id.sex = 2;
+
+	if( itemdb->lookup_const(it, "Loc", &i32) && i32 >= 0 )
+		id.equip = i32;
+
+	if( itemdb->lookup_const(it, "WeaponLv", &i32) && i32 >= 0 )
+		id.wlv = i32;
+
+	if( (t = libconfig->setting_get_member(it, "EquipLv")) ) {
+		if( config_setting_is_aggregate(t) ) {
+			if( libconfig->setting_length(t) >= 2 )
+				id.elvmax = libconfig->setting_get_int_elem(t, 1);
+			if( libconfig->setting_length(t) >= 1 )
+				id.elv = libconfig->setting_get_int_elem(t, 0);
+		} else {
+			id.elv = libconfig->setting_get_int(t);
+		}
+	}
+
+	if( (t = libconfig->setting_get_member(it, "Refine")) )
+		id.flag.no_refine = libconfig->setting_get_bool(t) ? 0 : 1;
+
+	if( itemdb->lookup_const(it, "View", &i32) && i32 >= 0 )
+		id.look = i32;
+
+	if( (t = libconfig->setting_get_member(it, "BindOnEquip")) )
+		id.flag.bindonequip = libconfig->setting_get_bool(t) ? 1 : 0;
+	
+	if ( (t = libconfig->setting_get_member(it, "BuyingStore")) )
+		id.flag.buyingstore = libconfig->setting_get_bool(t) ? 1 : 0;
+
+	if ((t = libconfig->setting_get_member(it, "KeepAfterUse")))
+		id.flag.keepafteruse = libconfig->setting_get_bool(t) ? 1 : 0;
+
+	if (itemdb->lookup_const(it, "Delay", &i32) && i32 >= 0)
+		id.delay = i32;
+
+	if ( (t = libconfig->setting_get_member(it, "Trade")) ) {
+		if (config_setting_is_group(t)) {
+			config_setting_t *tt = NULL;
+
+			if ((tt = libconfig->setting_get_member(t, "override"))) {
+				id.gm_lv_trade_override = libconfig->setting_get_int(tt);
+			}
+
+			if ((tt = libconfig->setting_get_member(t, "nodrop"))) {
+				id.flag.trade_restriction &= ~ITR_NODROP;
+				if (libconfig->setting_get_bool(tt))
+					id.flag.trade_restriction |= ITR_NODROP;
+			}
+
+			if ((tt = libconfig->setting_get_member(t, "notrade"))) {
+				id.flag.trade_restriction &= ~ITR_NOTRADE;
+				if (libconfig->setting_get_bool(tt))
+					id.flag.trade_restriction |= ITR_NOTRADE;
+			}
+
+			if ((tt = libconfig->setting_get_member(t, "partneroverride"))) {
+				id.flag.trade_restriction &= ~ITR_PARTNEROVERRIDE;
+				if (libconfig->setting_get_bool(tt))
+					id.flag.trade_restriction |= ITR_PARTNEROVERRIDE;
+			}
+
+			if ((tt = libconfig->setting_get_member(t, "noselltonpc"))) {
+				id.flag.trade_restriction &= ~ITR_NOSELLTONPC;
+				if (libconfig->setting_get_bool(tt))
+					id.flag.trade_restriction |= ITR_NOSELLTONPC;
+			}
+
+			if ((tt = libconfig->setting_get_member(t, "nocart"))) {
+				id.flag.trade_restriction &= ~ITR_NOCART;
+				if (libconfig->setting_get_bool(tt))
+					id.flag.trade_restriction |= ITR_NOCART;
+			}
+
+			if ((tt = libconfig->setting_get_member(t, "nostorage"))) {
+				id.flag.trade_restriction &= ~ITR_NOSTORAGE;
+				if (libconfig->setting_get_bool(tt))
+					id.flag.trade_restriction |= ITR_NOSTORAGE;
+			}
+
+			if ((tt = libconfig->setting_get_member(t, "nogstorage"))) {
+				id.flag.trade_restriction &= ~ITR_NOGSTORAGE;
+				if (libconfig->setting_get_bool(tt))
+					id.flag.trade_restriction |= ITR_NOGSTORAGE;
+			}
+
+			if ((tt = libconfig->setting_get_member(t, "nomail"))) {
+				id.flag.trade_restriction &= ~ITR_NOMAIL;
+				if (libconfig->setting_get_bool(tt))
+					id.flag.trade_restriction |= ITR_NOMAIL;
+			}
+
+			if ((tt = libconfig->setting_get_member(t, "noauction"))) {
+				id.flag.trade_restriction &= ~ITR_NOAUCTION;
+				if (libconfig->setting_get_bool(tt))
+					id.flag.trade_restriction |= ITR_NOAUCTION;
+			}
+		} else { // Fallback to int if it's not a group
+			id.flag.trade_restriction = libconfig->setting_get_int(t);
+		}
+	}
+
+	if ((t = libconfig->setting_get_member(it, "Nouse"))) {
+		if (config_setting_is_group(t)) {
+			config_setting_t *nt = NULL;
+
+			if ((nt = libconfig->setting_get_member(t, "override"))) {
+				id.item_usage.override = libconfig->setting_get_int(nt);
+			}
+
+			if ((nt = libconfig->setting_get_member(t, "sitting"))) {
+				id.item_usage.flag &= ~INR_SITTING;
+				if (libconfig->setting_get_bool(nt))
+					id.item_usage.flag |= INR_SITTING;
+			}
+
+		} else { // Fallback to int if it's not a group
+			id.item_usage.flag = libconfig->setting_get_int(t);
+		}
+	}
+
+	if ((t = libconfig->setting_get_member(it, "Stack"))) {
+		if (config_setting_is_aggregate(t) && libconfig->setting_length(t) >= 1) {
+			int stack_flag = libconfig->setting_get_int_elem(t, 1);
+			int stack_amount = libconfig->setting_get_int_elem(t, 0);
+			if (stack_amount >= 0) {
+				id.stack.amount = cap_value(stack_amount, 0, USHRT_MAX);
+				id.stack.inventory = (stack_flag&1)!=0;
+				id.stack.cart = (stack_flag&2)!=0;
+				id.stack.storage = (stack_flag&4)!=0;
+				id.stack.guildstorage = (stack_flag&8)!=0;
+			}
+		}
+	}
+
+	if (itemdb->lookup_const(it, "Sprite", &i32) && i32 >= 0) {
+		id.flag.available = 1;
+		id.view_id = i32;
+	}
+	
+	if( libconfig->setting_lookup_string(it, "Script", &str) )
+		id.script = *str ? script->parse(str, source, -id.nameid, SCRIPT_IGNORE_EXTERNAL_BRACKETS, NULL) : NULL;
+
+	if( libconfig->setting_lookup_string(it, "OnEquipScript", &str) )
+		id.equip_script = *str ? script->parse(str, source, -id.nameid, SCRIPT_IGNORE_EXTERNAL_BRACKETS, NULL) : NULL;
+
+	if( libconfig->setting_lookup_string(it, "OnUnequipScript", &str) )
+		id.unequip_script = *str ? script->parse(str, source, -id.nameid, SCRIPT_IGNORE_EXTERNAL_BRACKETS, NULL) : NULL;
+
+	return itemdb->validate_entry(&id, n, source);
+}
+
+bool itemdb_lookup_const(const config_setting_t *it, const char *name, int *value)
+{
+	if (libconfig->setting_lookup_int(it, name, value))
+	{
+		return true;
+	}
+	else
+	{
+		const char *str = NULL;
+		if (libconfig->setting_lookup_string(it, name, &str))
+		{
+			if (*str && script->get_constant(str, value))
+				return true;
+		}
+	}
+	return false;
+}
+
+/**
+ * Reads from a libconfig-formatted itemdb file and inserts the found entries into the
+ * item database, overwriting duplicate ones (i.e. item_db2 overriding item_db.)
+ *
+ * @param *filename File name, relative to the database path.
+ * @return The number of found entries.
+ */
+int itemdb_readdb_libconfig(const char *filename) {
+	bool duplicate[MAX_ITEMDB];
+	config_t item_db_conf;
+	config_setting_t *itdb, *it;
+	char filepath[256];
+	int i = 0, count = 0;
+	
+	sprintf(filepath, "%s/%s", map->db_path, filename);
+	memset(&duplicate,0,sizeof(duplicate));
+	if( libconfig->read_file(&item_db_conf, filepath) || !(itdb = libconfig->setting_get_member(item_db_conf.root, "item_db")) ) {
+		ShowError("Nao foi possivel carregar %s\n", filepath);
+		return 0;
+	}
+
+	while( (it = libconfig->setting_get_elem(itdb,i++)) ) {
+		int nameid = itemdb->readdb_libconfig_sub(it, i-1, filename);
+
+		if( !nameid )
+			continue;
+
+		itemdb->readdb_additional_fields(nameid, it, i - 1, filename);
+		count++;
+
+		if( duplicate[nameid] ) {
+			ShowWarning("itemdb_readdb:%s: entrada duplicada de #%d (%s/%s)\n",
+					filename, nameid, itemdb_name(nameid), itemdb_jname(nameid));
+		} else
+			duplicate[nameid] = true;
+	}
+	libconfig->destroy(&item_db_conf);
+	ShowStatus("Leitura de '"CL_WHITE"%d"CL_RESET"' entrada em '"CL_WHITE"%s"CL_RESET"'.\n", count, filename);
+		
+	return count;
+}
+
+void itemdb_readdb_additional_fields(int itemid, config_setting_t *it, int n, const char *source)
+{
+    // do nothing. plugins can do own work
+}
+
+/**
+ * Processes one itemdb entry from the sql backend, loading and inserting it
+ * into the item database.
+ *
  * @param *handle MySQL connection handle. It is expected to have data
  *                available (i.e. already queried) and it won't be freed (it
  *                is care of the caller to do so)
@@ -1620,8 +1990,11 @@ uint64 itemdb_unique_id(struct map_session_data *sd) {
  * Reads all item-related databases.
  */
 void itemdb_read(bool minimal) {
-	int i = 0, count = 0;
+	int i = 0;
 	DBData prev;
+
+#ifdef USE_SQL_ITEM_DB
+	int count = 0;
 	
 	if( SQL_ERROR == SQL->Query(map->brAmysql_handle, "SELECT `id`, `name_english`, `name_japanese`, `type`,"
 				" `price_buy`, `price_sell`, `weight`, `atk`,"
@@ -1644,6 +2017,10 @@ void itemdb_read(bool minimal) {
 
 	ShowSQL("Leitura de '"CL_WHITE"%d"CL_RESET"' entradas na tabela '"CL_WHITE"%s"CL_RESET"'.\n", count, get_database_name(52));
 	SQL->FreeResult(map->brAmysql_handle);
+#else
+	const char *filename = DBPATH"item_db.conf";
+	itemdb->readdb_libconfig(filename);
+#endif
 	
 	for( i = 0; i < ARRAYLENGTH(itemdb->array); ++i ) {
 		if( itemdb->array[i] ) {
@@ -1661,7 +2038,7 @@ void itemdb_read(bool minimal) {
 	itemdb->read_groups();
 	itemdb->read_chains();
 	itemdb->read_packages();
-	return;
+
 }
 
 /**
@@ -1957,7 +2334,10 @@ void itemdb_defaults(void) {
 	itemdb->read_combos = itemdb_read_combos;
 	itemdb->gendercheck = itemdb_gendercheck;
 	itemdb->validate_entry = itemdb_validate_entry;
+	itemdb->readdb_additional_fields = itemdb_readdb_additional_fields;
 	itemdb->readdb_sql_sub = itemdb_readdb_sql_sub;
+	itemdb->readdb_libconfig_sub = itemdb_readdb_libconfig_sub;
+	itemdb->readdb_libconfig = itemdb_readdb_libconfig;
 	itemdb->unique_id = itemdb_unique_id;
 	itemdb->read = itemdb_read;
 	itemdb->destroy_item_data = destroy_item_data;
@@ -1965,4 +2345,5 @@ void itemdb_defaults(void) {
 	itemdb->clear = itemdb_clear;
 	itemdb->id2combo = itemdb_id2combo;
 	itemdb->is_item_usable = itemdb_is_item_usable;
+	itemdb->lookup_const = itemdb_lookup_const;
 }

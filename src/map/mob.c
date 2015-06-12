@@ -3911,6 +3911,7 @@ bool mob_parse_dbrow(char** str) {
  * Leitura mod_db SQL [Shiraz]
  *------------------------------------------*/
 void mob_readdb(void) {
+#ifdef USE_SQL_MOB_DB
 	int count = 0;
 
 	if(SQL_ERROR == SQL->Query(map->brAmysql_handle, "SELECT * FROM `%s`", get_database_name(47))) {
@@ -3941,8 +3942,22 @@ void mob_readdb(void) {
 
 	ShowSQL("Leitura de '"CL_WHITE"%d"CL_RESET"' entradas na tabela '"CL_WHITE"%s"CL_RESET"'.\n", count, get_database_name(47));
 	SQL->FreeResult(map->brAmysql_handle);
+#else
+	char filepath[256];
+	sprintf(filepath, "%s/%s", map->db_path, DBPATH"mob_db.txt");
+	
+	if(!exists(filepath))
+		return;
+	
+	sv->readdb(map->db_path, DBPATH"mob_db.txt", ',', 31+2*MAX_MVP_DROP+2*MAX_MOB_DROP, 31+2*MAX_MVP_DROP+2*MAX_MOB_DROP, -1, mob->readdb_sub);
+#endif
+
 	mob->name_constants();
 	return;
+}
+
+bool mob_readdb_sub(char* fields[], int columns, int current) {
+	return mob->parse_dbrow(fields);
 }
 
 void mob_name_constants(void) {
@@ -4717,6 +4732,7 @@ void mob_defaults(void) {
 	mob->drop_adjust = mob_drop_adjust;
 	mob->item_dropratio_adjust = item_dropratio_adjust;
 	mob->parse_dbrow = mob_parse_dbrow;
+	mob->readdb_sub = mob_readdb_sub;
 	mob->readdb = mob_readdb;
 	mob->name_constants = mob_name_constants;
 	mob->readdb_mobavail = mob_readdb_mobavail;

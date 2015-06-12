@@ -374,6 +374,7 @@ struct mob_interface {
 	unsigned int (*drop_adjust) (int baserate, int rate_adjust, unsigned short rate_min, unsigned short rate_max);
 	void (*item_dropratio_adjust) (int nameid, int mob_id, int *rate_adjust);
 	bool (*parse_dbrow) (char **str);
+	bool (*readdb_sub) (char *fields[], int columns, int current);
 	void (*readdb) (void);
 	void (*name_constants) (void);
 	bool (*readdb_mobavail) (char *str[], int columns, int current);
