@@ -1315,12 +1315,12 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 						sc_start(src, bl, SC_STUN, 100, skill_lv, 5000); // 5 seconds until I get official
 						sc_start(src, bl, SC_BLOODING, 100, skill_lv, 10000);
 						break;
-					case ITEMID_MELON_BOMB:
-						sc_start(src, bl, SC_MELON_BOMB, 100, skill_lv, 60000); // Reduces ASPD and movement speed
+					case ITEMID_MELON_BOMB: // Causa dano reduzindo a Velocidade de Ataque e de Movimento.
+						sc_start(src, bl, SC_MELON_BOMB, 10000, skill_lv, 60000);
 						break;
-					case ITEMID_BANANA_BOMB:
-						sc_start(src, bl, SC_BANANA_BOMB, 100, skill_lv, 60000); // Reduces LUK? Needed confirm it, may be it's bugged in kRORE?
-						sc_start(src, bl, SC_BANANA_BOMB_SITDOWN_POSTDELAY, (sd? sd->status.job_level:0) + sstatus->dex / 6 + tstatus->agi / 4 - tstatus->luk / 5 - status->get_lv(bl) + status->get_lv(src), skill_lv, 1000); // Sit down for 3 seconds.
+					case ITEMID_BANANA_BOMB: // Causa dano, -20 de SOR e tem chance de fazer o alvo se sentar por 3 segundos.
+						sc_start(src, bl, SC_BANANA_BOMB, 10000, skill_lv, 60000);
+						sc_start(src, bl, SC_BANANA_BOMB_SITDOWN_POSTDELAY, (sd? sd->status.job_level:0) + sstatus->dex / 6 + tstatus->agi / 4 - tstatus->luk / 5 - status->get_lv(bl) + status->get_lv(src), skill_lv, 3000); // Sit down for 3 seconds.
 						break;
 				}
 				sd->itemid = -1;

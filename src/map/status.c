@@ -757,6 +757,9 @@ void initChangeTables(void) {
 	add_sc( NPC_WIDECOLD         , SC_COLD           );
 	add_sc( NPC_WIDE_DEEP_SLEEP  , SC_DEEP_SLEEP     );
 	add_sc( NPC_WIDESIREN        , SC_SIREN          );
+	
+	set_sc( GN_SLINGITEM_RANGEMELEEATK, SC_BANANA_BOMB     , SI_BANANA_BOMB     , SCB_LUK );
+	set_sc( GN_SLINGITEM_RANGEMELEEATK, SC_MELON_BOMB     , SI_MELON_BOMB     , SCB_ASPD|SCB_SPEED );
 
 	set_sc_with_vfx( GN_ILLUSIONDOPING   , SC_ILLUSIONDOPING    , SI_ILLUSIONDOPING     , SCB_HIT );
 
@@ -4494,7 +4497,7 @@ unsigned short status_calc_luk(struct block_list *bl, struct status_change *sc, 
 	if(sc->data[SC__STRIPACCESSARY] && bl->type != BL_PC)
 		luk -= luk * sc->data[SC__STRIPACCESSARY]->val2 / 100;
 	if(sc->data[SC_BANANA_BOMB])
-		luk -= luk * sc->data[SC_BANANA_BOMB]->val1 / 100;
+		luk -= sc->data[SC_BANANA_BOMB]->val1;
 
 	return (unsigned short)cap_value(luk,0,USHRT_MAX);
 }
@@ -8919,7 +8922,7 @@ int status_change_start(struct block_list *src, struct block_list *bl, enum sc_t
 				break;
 			case SC_MELON_BOMB:
 			case SC_BANANA_BOMB:
-				val1 = 15;
+				val1 = 20;
 				break;
 			case SC_STOMACHACHE:
 				val2 = 8; // SP consume.
@@ -10087,6 +10090,7 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 			}
 			break;
 		case SC_SITDOWN_FORCE:
+		case SC_BANANA_BOMB_SITDOWN_POSTDELAY:
 			if( sd && pc_issit(sd) ) {
 				pc->setstand(sd);
 				clif->standing(bl);
