@@ -6764,7 +6764,7 @@ unsigned int pc_nextbaseexp(struct map_session_data *sd)
 		return 0;
 
 	// return pc->exp_table[pc->class2idx(sd->status.class_)][0][sd->status.base_level-1];
-	return pc->baseexp_sub(sd->status.class_, sd->status.base_level);
+	return pc->exp_table[pc->class2idx(sd->status.class_)][0][sd->status.base_level-1];
 }
 
 //Base exp needed for this level.
@@ -6774,7 +6774,7 @@ unsigned int pc_thisbaseexp(struct map_session_data *sd)
 		return 0;
 
 	// return pc->exp_table[pc->class2idx(sd->status.class_)][0][sd->status.base_level-2];
-	return pc->baseexp_sub(sd->status.class_, sd->status.base_level - 1);
+	return pc->exp_table[pc->class2idx(sd->status.class_)][0][sd->status.base_level-2];
 }
 
 
@@ -6842,7 +6842,7 @@ unsigned int pc_nextjobexp(struct map_session_data *sd)
 	if(sd->status.job_level>=pc->maxjoblv(sd) || sd->status.job_level<=0)
 		return 0;
 	// return pc->exp_table[pc->class2idx(sd->status.class_)][1][sd->status.job_level-1];
-	return pc->jobexp_sub(sd->status.class_, sd->status.job_level);
+	return pc->exp_table[pc->class2idx(sd->status.class_)][1][sd->status.job_level-1];
 }
 
 //Job exp needed for this level.
@@ -6851,7 +6851,7 @@ unsigned int pc_thisjobexp(struct map_session_data *sd)
 	if(sd->status.job_level>pc->maxjoblv(sd) || sd->status.job_level<=1)
 		return 0;
 	// return pc->exp_table[pc->class2idx(sd->status.class_)][1][sd->status.job_level-2];
-	return pc->jobexp_sub(sd->status.class_, sd->status.job_level-1);
+	return pc->exp_table[pc->class2idx(sd->status.class_)][1][sd->status.job_level-2];
 }
 
 /// Returns the value of the specified stat.

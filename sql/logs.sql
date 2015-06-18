@@ -332,7 +332,7 @@ CREATE TABLE IF NOT EXISTS `pickdrop_log` (
   `Source` enum('Player','Monster') NOT NULL DEFAULT 'Player',
   `ItemID` int(11) unsigned NOT NULL DEFAULT '0',
   `ItemName` varchar(23) NOT NULL DEFAULT '',
-  `Amount` int(11) unsigned NOT NULL DEFAULT '0',
+  `Amount` int(11) NOT NULL DEFAULT '0',
   `ItemSerial` bigint(20) unsigned NOT NULL DEFAULT '0',
   `ItemSlot1` smallint(11) NOT NULL DEFAULT '0',
   `ItemSlot2` smallint(11) NOT NULL DEFAULT '0',
