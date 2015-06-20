@@ -12,7 +12,7 @@
 #ifndef CHAR_GEOIP_H
 #define CHAR_GEOIP_H
 
-#include "../common/cbasetypes.h"
+#include "common/cbasetypes.h"
 
 /**
  * GeoIP information
@@ -21,6 +21,7 @@ struct s_geoip {
 	unsigned char *cache; // GeoIP.dat information see geoip->init()
 	bool active;
 };
+
 
 /**
  * geoip interface

@@ -13,6 +13,8 @@
 
 #include "nullpo.h"
 
+#include "common/showmsg.h"
+
 #include <stdio.h>
 #include <stdarg.h>
 #include <stdlib.h>
@@ -20,8 +22,6 @@
 #ifdef __GNUC__
 #include <execinfo.h>
 #endif
-
-#include "../common/showmsg.h"
 
 struct nullpo_interface nullpo_s;
 
@@ -50,11 +50,11 @@ void assert_report(const char *file, int line, const char *func, const char *tar
 	ShowError("--- %s --------------------------------------------\n", title);
 	ShowError("%s:%d: '%s' na funcao `%s'\n", file, line, targetname, func);
 #ifdef __GNUC__
-	size = backtrace (array, 10);
-	strings = backtrace_symbols (array, size);
+	size = (int)backtrace(array, 10);
+	strings = backtrace_symbols(array, size);
 	for (i = 0; i < size; i++)
 		ShowError("%s\n", strings[i]);
-	free (strings);
+	free(strings);
 #endif
 	ShowError("--- fim %s ----------------------------------------\n", title);
 }

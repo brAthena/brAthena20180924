@@ -12,8 +12,8 @@
 #ifndef MAP_LOG_H
 #define MAP_LOG_H
 
-#include "../common/cbasetypes.h"
-#include "../common/sql.h"
+#include "common/cbasetypes.h"
+#include "common/sql.h"
 
 /**
  * Declarations

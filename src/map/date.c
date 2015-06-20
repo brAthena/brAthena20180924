@@ -13,9 +13,9 @@
 
 #include "date.h"
 
-#include <time.h>
+#include "common/cbasetypes.h"
 
-#include "../common/cbasetypes.h"
+#include <time.h>
 
 int date_get_year(void)
 {

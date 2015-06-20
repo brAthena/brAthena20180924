@@ -12,7 +12,7 @@
 #ifndef MAP_MAIL_H
 #define MAP_MAIL_H
 
-#include "../common/cbasetypes.h"
+#include "common/cbasetypes.h"
 
 struct item;
 struct mail_message;

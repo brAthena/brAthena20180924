@@ -12,7 +12,7 @@
 #ifndef MAP_DATE_H
 #define MAP_DATE_H
 
-#include "../common/cbasetypes.h"
+#include "common/cbasetypes.h"
 
 #ifdef BRATHENA_CORE
 // TODO: Interface

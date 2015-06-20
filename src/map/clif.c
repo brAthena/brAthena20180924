@@ -11,14 +11,8 @@
 
 #define BRATHENA_CORE
 
-#include "../config/core.h" // ANTI_MAYAP_CHEAT, RENEWAL, SECURE_NPCTIMEOUT
+#include "config/core.h" // ANTI_MAYAP_CHEAT, RENEWAL, SECURE_NPCTIMEOUT
 #include "clif.h"
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdarg.h>
-#include <time.h>
 
 #include "atcommand.h"
 #include "battle.h"
@@ -49,19 +43,25 @@
 #include "trade.h"
 #include "unit.h"
 #include "vending.h"
-#include "../common/cbasetypes.h"
-#include "../common/conf.h"
-#include "../common/ers.h"
-#include "../common/grfio.h"
-#include "../common/malloc.h"
-#include "../common/mmo.h" // NEW_CARTS
-#include "../common/nullpo.h"
-#include "../common/random.h"
-#include "../common/showmsg.h"
-#include "../common/socket.h"
-#include "../common/strlib.h"
-#include "../common/timer.h"
-#include "../common/utils.h"
+#include "common/cbasetypes.h"
+#include "common/conf.h"
+#include "common/ers.h"
+#include "common/grfio.h"
+#include "common/malloc.h"
+#include "common/mmo.h" // NEW_CARTS
+#include "common/nullpo.h"
+#include "common/random.h"
+#include "common/showmsg.h"
+#include "common/socket.h"
+#include "common/strlib.h"
+#include "common/timer.h"
+#include "common/utils.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stdarg.h>
+#include <time.h>
 
 struct clif_interface clif_s;
 

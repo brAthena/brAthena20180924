@@ -12,7 +12,7 @@
 #ifndef LOGIN_LOGINLOG_H
 #define LOGIN_LOGINLOG_H
 
-#include "../common/cbasetypes.h"
+#include "common/cbasetypes.h"
 
 #ifdef BRATHENA_CORE
 // TODO: Interface

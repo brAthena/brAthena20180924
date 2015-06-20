@@ -18,7 +18,7 @@
  * cached at compile time)
  */
 
-#include "../common/cbasetypes.h"
+#include "common/cbasetypes.h"
 
 struct sysinfo_private;
 

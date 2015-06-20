@@ -12,7 +12,7 @@
 #ifndef MAP_DUEL_H
 #define MAP_DUEL_H
 
-#include "../common/cbasetypes.h"
+#include "common/cbasetypes.h"
 
 struct map_session_data;
 

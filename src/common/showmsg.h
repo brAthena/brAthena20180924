@@ -12,10 +12,10 @@
 #ifndef COMMON_SHOWMSG_H
 #define COMMON_SHOWMSG_H
 
-#include <stdarg.h>
+#include "common/cbasetypes.h"
 
-#include "../common/cbasetypes.h"
-#include "../../3rdparty/libconfig/libconfig.h"
+#include <libconfig/libconfig.h>
+#include <stdarg.h>
 
 
 // for help with the console colors look here:
