@@ -3976,9 +3976,9 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 #else
 			short totaldef = tstatus->def2 + (short)status->get_def(target);
 #endif
-			md.damage = ( (sd?pc->checkskill(sd,NC_MAINFRAME):10) + 8 ) * ( skill_lv + 1 ) * ( status_get_sp(src) + sstatus->vit );
+			md.damage = ( (sd?pc->checkskill(sd,NC_MAINFRAME):10) + 8 ) * ( skill_lv + 1 ) * ( status_get_sp(src) + sstatus->vit ) - totaldef;
 			RE_LVL_MDMOD(100);
-			md.damage += status_get_hp(src) - totaldef;
+			md.damage += status_get_hp(src);
 		}
 		break;
 	case NC_MAGMA_ERUPTION:
