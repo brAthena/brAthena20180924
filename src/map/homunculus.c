@@ -1206,7 +1206,7 @@ void homunculus_skill_db_read(void) {
  * Leitura exp_homun_db SQL [Shiraz]
  *------------------------------------------*/
 void homunculus_exp_db_read(void) {
-#define HLIMIT 9999999
+#define HLIMIT 4294967295
 	int HomunLoop = 0;
 	char *row;
 
