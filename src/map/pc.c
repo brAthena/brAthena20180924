@@ -1390,6 +1390,14 @@ int pc_reg_received(struct map_session_data *sd)
 		clif->changeoption(&sd->bl);
 	}
 
+	// Security
+	if( pc_readaccountreg(sd,script->add_str("#SECURITYCODE")) > 0) {
+		clif->message(sd->fd, "Item Security System ENABLE : Use @security for more options.");
+		sd->state.secure_items = 1;
+	}
+	else
+		clif->message(sd->fd, "Item Security System DISABLE : Use @security for more options.");	
+	
 	if( npc->motd ) /* [Ind/Hercules] */
 		script->run(npc->motd->u.scr.script, 0, sd->bl.id, npc->fake_nd->bl.id);
 	

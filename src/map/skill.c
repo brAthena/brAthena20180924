@@ -521,6 +521,10 @@ int skillnotok (uint16 skill_id, struct map_session_data *sd)
 			break;
 		case MC_VENDING:
 		case ALL_BUYING_STORE:
+			if( sd->state.secure_items ) { // Security
+				clif->message(sd->fd, "You can't open shop. Blocked with @security");
+				return 1;
+			}
 			if( npc->isnear(&sd->bl) ) {
 				// uncomment for more verbose message.
 				//char output[150];

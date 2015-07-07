@@ -454,6 +454,11 @@ int guild_storage_additem(struct map_session_data* sd, struct guild_storage* sto
 		return 1;
 	}
 
+	if( sd->state.secure_items ) { // Security
+		clif->message(sd->fd, "You can't store items on Guild Storage. Blocked with @security");
+		return 1;
+	}
+
 	if( item_data->bound && item_data->bound != IBT_GUILD && !pc_can_give_bound_items(sd) ) {
 		clif->message(sd->fd, msg_sd(sd,294));
 		return 1;

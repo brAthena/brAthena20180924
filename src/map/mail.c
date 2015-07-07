@@ -69,6 +69,11 @@ int mail_removezeny(struct map_session_data *sd, short flag)
 }
 
 unsigned char mail_setitem(struct map_session_data *sd, int idx, int amount) {
+	
+	if( sd->state.secure_items ) { // Security
+		clif->message(sd->fd, "You can't attach. Blocked with @security");
+		return 1;
+	}
 
 	if( pc_istrading(sd) )
 		return 1;

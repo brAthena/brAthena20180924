@@ -43,6 +43,11 @@ bool buyingstore_setup(struct map_session_data* sd, unsigned char slots)
 	{// custom: mute limitation
 		return false;
 	}
+	
+	if( sd->state.secure_items ) { // Security
+		clif->message(sd->fd, "You can't open Buying. Blocked with @security");
+		return false;
+	}
 
 	if( map->list[sd->bl.m].flag.novending ) {
 		// custom: no vending maps
