@@ -15507,7 +15507,6 @@ int skill_graffitiremover (struct block_list *bl, va_list ap) {
 	struct skill_unit *su=NULL;
 
 	nullpo_ret(bl);
-	nullpo_ret(ap);
 
 	if(bl->type != BL_SKILL)
 		return 0;
