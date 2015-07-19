@@ -44,19 +44,9 @@ void trade_traderequest(struct map_session_data *sd, struct map_session_data *ta
 		clif->message (sd->fd, msg_sd(sd,272));
 		return; //Can't trade in notrade mapflag maps.
 	}
-	
-	if( sd->state.secure_items ) { // Security
-		clif->message(sd->fd, "You can't trade. Blocked with @security");
-		return;
-	}
 
 	if (target_sd == NULL || sd == target_sd) {
 		clif->tradestart(sd, 1); // character does not exist
-		return;
-	}
-	
-	if( target_sd->state.secure_items ) {
-		clif->message(sd->fd, "Target can't trade. Blocked with @security");
 		return;
 	}
 

@@ -19693,28 +19693,6 @@ BUILDIN(channelmes)
 	return true;
 }
 
-// Security
-BUILDIN(setsecurity)
-{
-	struct map_session_data *sd = script_rid2sd(st);
-	int value = script_getnum(st,2);
-	if( sd == NULL )
-		return true;
-
-	sd->state.secure_items = (value)?1:0;
-	return true;
-}
-
-BUILDIN(getsecurity)
-{
-	struct map_session_data *sd = script_rid2sd(st);
-	if( sd == NULL )
-		return true;
-
-	script_pushint(st,sd->state.secure_items);
-	return true;
-}
-
 /** place holder for the translation macro **/
 BUILDIN(_) {
 	return true;
@@ -20353,8 +20331,6 @@ void script_parse_builtin(void) {
 		BUILDIN_DEF(shopcount, "i"),
 
 		BUILDIN_DEF(channelmes, "ss"),
-		BUILDIN_DEF(setsecurity,"i"), // Security
-		BUILDIN_DEF(getsecurity,""), // Security
 		BUILDIN_DEF(_,"s"),
 	};
 	int i, len = ARRAYLENGTH(BUILDIN);

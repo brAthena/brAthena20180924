@@ -10427,10 +10427,7 @@ void clif_parse_NpcBuyListSend(int fd, struct map_session_data* sd)
 
 	if( sd->state.trading || !sd->npc_shopid || pc_has_permission(sd,PC_PERM_DISABLE_STORE) )
 		result = 1;
-	else if( sd->state.secure_items ) { // Security
-		clif->message(sd->fd, "You can't buy. Blocked with @security");
-		result = 1;
-	} else
+	else
 		result = npc->buylist(sd,n,item_list);
 
 	sd->npc_shopid = 0; //Clear shop data.
@@ -10466,10 +10463,7 @@ void clif_parse_NpcSellListSend(int fd,struct map_session_data *sd)
 
 	if (sd->state.trading || !sd->npc_shopid)
 		fail = 1;
-	else if( sd->state.secure_items ) { // Security
-		clif->message(sd->fd, "You can't sell. Blocked with @security");
-		fail = 1;
-	} else
+	else
 		fail = npc->selllist(sd,n,item_list);
 
 	sd->npc_shopid = 0; //Clear shop data.
@@ -12466,11 +12460,6 @@ void clif_parse_OpenVending(int fd, struct map_session_data* sd) {
 		return;
 	}
 	
-	if( sd->state.secure_items ) { // Security
-		clif->message(sd->fd, "You can't open vending. Blocked with @security");
-		return;
-	}
-
 	if( message[0] == '\0' ) // invalid input
 		return;
 
@@ -14844,12 +14833,6 @@ void clif_parse_Auction_setitem(int fd, struct map_session_data *sd)
 		clif->auction_setitem(sd->fd, idx, true);
 		return;
 	}
-	
-	if( sd->state.secure_items ) { // Security
-		clif->auction_setitem(sd->fd, idx, true);
-		clif->message(sd->fd, "You can't open auction. Blocked with @security");
-		return;
-	}
 
 	if( !pc_can_give_items(sd) || sd->status.inventory[idx].expire_time ||
 			!sd->status.inventory[idx].identify ||
@@ -15179,10 +15162,7 @@ void clif_parse_cashshop_buy(int fd, struct map_session_data *sd)
 
 	if( sd->state.trading || !sd->npc_shopid || pc_has_permission(sd,PC_PERM_DISABLE_STORE) )
 		fail = 1;
-	else if( sd->state.secure_items ) { // Security
-		clif->message(sd->fd, "You can't shop. Blocked with @security");
-		fail = 1;
-	} else {
+	else
 #if PACKETVER < 20101116
 		short nameid = RFIFOW(fd,2);
 		short amount = RFIFOW(fd,4);

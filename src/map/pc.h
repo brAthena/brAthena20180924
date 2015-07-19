@@ -205,7 +205,6 @@ struct map_session_data {
 		unsigned int killable : 1;
 		unsigned int doridori : 1;
 		unsigned int ignoreAll : 1;
-		unsigned int secure_items : 1; // Security
 		unsigned int debug_remove_map : 1; // temporary state to track double remove_map's [FlavioJS]
 		unsigned int buyingstore : 1;
 		unsigned int lesseffect : 1;
