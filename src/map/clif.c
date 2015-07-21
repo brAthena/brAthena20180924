@@ -15163,6 +15163,7 @@ void clif_parse_cashshop_buy(int fd, struct map_session_data *sd)
 	if( sd->state.trading || !sd->npc_shopid || pc_has_permission(sd,PC_PERM_DISABLE_STORE) )
 		fail = 1;
 	else
+	{
 #if PACKETVER < 20101116
 		short nameid = RFIFOW(fd,2);
 		short amount = RFIFOW(fd,4);
