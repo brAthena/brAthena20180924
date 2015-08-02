@@ -1551,6 +1551,7 @@ int itemdb_readdb_libconfig_sub(config_setting_t *it, int n, const char *source)
 	 * BindOnEquip: (true or false)
 	 * BuyingStore: (true or false)
 	 * Delay: Delay to use item
+	 * ForceSerial: (true or false)
 	 * Trade: {
 	 *   override: Group to override
 	 *   nodrop: (true or false)
@@ -1684,6 +1685,9 @@ int itemdb_readdb_libconfig_sub(config_setting_t *it, int n, const char *source)
 
 	if( (t = libconfig->setting_get_member(it, "BindOnEquip")) )
 		id.flag.bindonequip = libconfig->setting_get_bool(t) ? 1 : 0;
+	
+	if( (t = libconfig->setting_get_member(it, "ForceSerial")) )
+		id.flag.force_serial = libconfig->setting_get_bool(t) ? 1 : 0;
 	
 	if ( (t = libconfig->setting_get_member(it, "BuyingStore")) )
 		id.flag.buyingstore = libconfig->setting_get_bool(t) ? 1 : 0;
@@ -1950,14 +1954,15 @@ int itemdb_readdb_sql_sub(Sql *handle, int n, const char *source) {
 	SQL->GetData(handle, 19, &data, NULL); id.flag.no_refine = data && atoi(data) ? 0 : 1;
 	SQL->GetData(handle, 20, &data, NULL); id.look = data ? atoi(data) : 0;
 	SQL->GetData(handle, 21, &data, NULL); id.flag.bindonequip = data && atoi(data) ? 1 : 0;
-	SQL->GetData(handle, 22, &data, NULL); id.flag.buyingstore = data && atoi(data) ? 1 : 0;
-	SQL->GetData(handle, 23, &data, NULL); id.delay = data ? atoi(data) : 0;
-	SQL->GetData(handle, 24, &data, NULL); id.flag.trade_restriction = data ? atoi(data) : ITR_NONE;
-	SQL->GetData(handle, 25, &data, NULL); id.gm_lv_trade_override = data ? atoi(data) : 0;
-	SQL->GetData(handle, 26, &data, NULL); id.item_usage.flag = data ? atoi(data) : INR_NONE;
-	SQL->GetData(handle, 27, &data, NULL); id.item_usage.override = data ? atoi(data) : 0;
-	SQL->GetData(handle, 28, &data, NULL); id.stack.amount = data ? atoi(data) : 0;
-	SQL->GetData(handle, 29, &data, NULL);
+	SQL->GetData(handle, 22, &data, NULL); id.flag.force_serial = data && atoi(data) ? 1 : 0;
+	SQL->GetData(handle, 23, &data, NULL); id.flag.buyingstore = data && atoi(data) ? 1 : 0;
+	SQL->GetData(handle, 24, &data, NULL); id.delay = data ? atoi(data) : 0;
+	SQL->GetData(handle, 25, &data, NULL); id.flag.trade_restriction = data ? atoi(data) : ITR_NONE;
+	SQL->GetData(handle, 26, &data, NULL); id.gm_lv_trade_override = data ? atoi(data) : 0;
+	SQL->GetData(handle, 27, &data, NULL); id.item_usage.flag = data ? atoi(data) : INR_NONE;
+	SQL->GetData(handle, 28, &data, NULL); id.item_usage.override = data ? atoi(data) : 0;
+	SQL->GetData(handle, 29, &data, NULL); id.stack.amount = data ? atoi(data) : 0;
+	SQL->GetData(handle, 30, &data, NULL);
 	if (data) {
 		int stack_flag = atoi(data);
 		id.stack.inventory = (stack_flag&1)!=0;
@@ -2001,7 +2006,7 @@ void itemdb_read(bool minimal) {
 				" `matk`, `defence`, `range`, `slots`,"
 				" `equip_jobs`, `equip_upper`, `equip_genders`, `equip_locations`,"
 				" `weapon_level`, `equip_level_min`, `equip_level_max`, `refineable`,"
-				" `view`, `bindonequip`, `buyingstore`, `delay`,"
+				" `view`, `bindonequip`, `forceserial`, `buyingstore`, `delay`,"
 				" `trade_flag`, `trade_group`, `nouse_flag`, `nouse_group`,"
 				" `stack_amount`, `stack_flag`, `sprite`, `script`,"
 				" `equip_script`, `unequip_script`"

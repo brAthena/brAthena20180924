@@ -17209,17 +17209,26 @@ BUILDIN(changequest) {
 
 BUILDIN(questactive) {
 	struct map_session_data *sd = script->rid2sd(st);
-	int quest_progress = 0;
+	int qid, i;
 
-	if (sd == NULL)
+	if (sd == NULL) {
+		ShowError("questactive: no player attached!");
 		return false;
+	}
+	
+	qid = script_getnum(st, 2);
 
-	if (quest->check(sd, script_getnum(st, 2), HAVEQUEST) == Q_ACTIVE)
+	ARR_FIND(0, sd->avail_quests, i, sd->quest_log[i].quest_id == qid );
+	
+	if( i >= sd->avail_quests ) {
+		script_pushint(st, 0);
+		return true;
+	}
+
+	if(sd->quest_log[i].state == Q_ACTIVE)
 		script_pushint(st, 1);
 	else
 		script_pushint(st, 0);
-
-	script_pushint(st, quest_progress);
 
 	return true;
 }
@@ -19693,6 +19702,48 @@ BUILDIN(channelmes)
 	return true;
 }
 
+/** By Cydh
+Display script message
+showscript "<message>"{,<GID>};
+*/
+BUILDIN(showscript) {
+	struct block_list *bl = NULL;
+	const char *msg = script_getstr(st, 2);
+	int id = 0;
+
+	if (script_hasdata(st, 3)) {
+		id = script_getnum(st, 3);
+		bl = map->id2bl(id);
+	}
+	else {
+		bl = st->rid ? map->id2bl(st->rid) : map->id2bl(st->oid);
+	}
+
+	if (!bl) {
+		ShowError("buildin_showscript: Script not attached. (id=%d, rid=%d, oid=%d)\n", id, st->rid, st->oid);
+		script_pushint(st, 0);
+		return false;
+	}
+
+	clif->ShowScript(bl, msg);
+
+	script_pushint(st, 1);
+
+	return true;
+}
+
+BUILDIN(mergeitem)
+{
+	struct map_session_data *sd = script->rid2sd(st);
+
+	if (sd == NULL)
+		return true;
+
+	clif->openmergeitem(sd->fd, sd);
+
+	return true;
+}
+
 /** place holder for the translation macro **/
 BUILDIN(_) {
 	return true;
@@ -20331,6 +20382,10 @@ void script_parse_builtin(void) {
 		BUILDIN_DEF(shopcount, "i"),
 
 		BUILDIN_DEF(channelmes, "ss"),
+		BUILDIN_DEF(showscript, "s?"),
+		
+		BUILDIN_DEF(mergeitem,""),
+		
 		BUILDIN_DEF(_,"s"),
 	};
 	int i, len = ARRAYLENGTH(BUILDIN);

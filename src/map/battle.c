@@ -3591,7 +3591,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 			}
 		}
 #ifndef HMAP_ZONE_DAMAGE_CAP_TYPE
-		if( target && skill_id ) {
+		if (skill_id) {
 			for(i = 0; i < map->list[target->m].zone->capped_skills_count; i++) {
 				if( skill_id == map->list[target->m].zone->capped_skills[i]->nameid && (map->list[target->m].zone->capped_skills[i]->type & target->type) ) {
 					if( target->type == BL_MOB && map->list[target->m].zone->capped_skills[i]->subtype != MZS_NONE ) {
@@ -4065,7 +4065,7 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 		}
 	}
 #ifndef HMAP_ZONE_DAMAGE_CAP_TYPE
-	if( target && skill_id ) {
+	if (skill_id) {
 		for(i = 0; i < map->list[target->m].zone->capped_skills_count; i++) {
 			if( skill_id == map->list[target->m].zone->capped_skills[i]->nameid && (map->list[target->m].zone->capped_skills[i]->type & target->type) ) {
 				if( target->type == BL_MOB && map->list[target->m].zone->capped_skills[i]->subtype != MZS_NONE ) {
@@ -5274,7 +5274,7 @@ struct Damage battle_calc_weapon_attack(struct block_list *src,struct block_list
 	if(skill_id == CR_GRANDCROSS || skill_id == NPC_GRANDDARKNESS)
 		return wd; //Enough, rest is not needed.
 #ifndef HMAP_ZONE_DAMAGE_CAP_TYPE
-	if( target && skill_id ) {
+	if (skill_id) {
 		for(i = 0; i < map->list[target->m].zone->capped_skills_count; i++) {
 			if( skill_id == map->list[target->m].zone->capped_skills[i]->nameid && (map->list[target->m].zone->capped_skills[i]->type & target->type) ) {
 				if( target->type == BL_MOB && map->list[target->m].zone->capped_skills[i]->subtype != MZS_NONE ) {

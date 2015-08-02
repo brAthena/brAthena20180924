@@ -5720,54 +5720,30 @@ void clif_solved_charname(int fd, int charid, const char* name)
 /// 017b <packet len>.W { <name id>.W }*
 void clif_use_card(struct map_session_data *sd,int idx)
 {
-	int i,c,ep;
-	int fd=sd->fd;
+	int i, c;
+	int fd;
 
 	nullpo_retv(sd);
-	if (idx < 0 || idx >= MAX_INVENTORY) //Crash-fix from bad packets.
+	fd = sd->fd;
+	if (sd->state.trading != 0)
+		return;
+	if (!pc->can_insert_card(sd, idx))
 		return;
 
-	if (!sd->inventory_data[idx] || sd->inventory_data[idx]->type != IT_CARD)
-		return; //Avoid parsing invalid item indexes (no card/no item)
+	WFIFOHEAD(fd, MAX_INVENTORY * 2 + 4);
+	WFIFOW(fd, 0) = 0x17b;
 
-	ep=sd->inventory_data[idx]->equip;
-	WFIFOHEAD(fd,MAX_INVENTORY * 2 + 4);
-	WFIFOW(fd,0)=0x17b;
-
-	for(i=c=0;i<MAX_INVENTORY;i++){
-		int j;
-
-		if(sd->inventory_data[i] == NULL)
+	for (i = c = 0; i < MAX_INVENTORY; i++) {
+		if (!pc->can_insert_card_into(sd, idx, i))
 			continue;
-		if(sd->inventory_data[i]->type!=IT_WEAPON && sd->inventory_data[i]->type!=IT_ARMOR)
-			continue;
-		if(itemdb_isspecial(sd->status.inventory[i].card[0])) //Can't slot it
-			continue;
-
-		if (sd->status.inventory[i].identify == 0) //Not identified
-			continue;
-
-		if ((sd->inventory_data[i]->equip&ep) == 0) //Not equippable on this part.
-			continue;
-
-		if(sd->inventory_data[i]->type==IT_WEAPON && ep==EQP_SHIELD) //Shield card won't go on left weapon.
-			continue;
-
-		ARR_FIND( 0, sd->inventory_data[i]->slot, j, sd->status.inventory[i].card[j] == 0 );
-		if (j == sd->inventory_data[i]->slot) // No room
-			continue;
-
-		if( sd->status.inventory[i].equip > 0 ) // Do not check items that are already equipped
-			continue;
-
-		WFIFOW(fd,4+c*2)=i+2;
+		WFIFOW(fd, 4 + c * 2) = i + 2;
 		c++;
 	}
 
-	if( !c ) return; // no item is available for card insertion
+	if (!c) return; // no item is available for card insertion
 
-	WFIFOW(fd,2)=4+c*2;
-	WFIFOSET(fd,WFIFOW(fd,2));
+	WFIFOW(fd, 2) = 4 + c * 2;
+	WFIFOSET(fd, WFIFOW(fd, 2));
 }
 
 
@@ -11395,8 +11371,6 @@ void clif_parse_AutoSpell(int fd,struct map_session_data *sd)
 /// 017a <card index>.W
 void clif_parse_UseCard(int fd,struct map_session_data *sd)
 {
-	if (sd->state.trading != 0)
-		return;
 	clif->use_card(sd,RFIFOW(fd,2)-2);
 }
 
@@ -11405,8 +11379,6 @@ void clif_parse_UseCard(int fd,struct map_session_data *sd)
 /// 017c <card index>.W <equip index>.W
 void clif_parse_InsertCard(int fd,struct map_session_data *sd)
 {
-	if (sd->state.trading != 0)
-		return;
 	pc->insert_card(sd,RFIFOW(fd,2)-2,RFIFOW(fd,4)-2);
 }
 
@@ -12747,7 +12719,7 @@ bool clif_sub_guild_invite(int fd, struct map_session_data *sd, struct map_sessi
 		return false;
 	}
 
-	if ( t_sd && t_sd->state.noask ) {// @noask [LuzZza]
+	if (t_sd->state.noask) {// @noask [LuzZza]
 		clif->noask_sub(sd, t_sd, 2);
 		return false;
 	}
@@ -18130,6 +18102,157 @@ void clif_roulette_generate_ack(struct map_session_data *sd, unsigned char resul
 	clif->send(&p,sizeof(p), &sd->bl, SELF);
 }
 
+/** 
+* Stackable items merger 
+**/
+void clif_openmergeitem(int fd, struct map_session_data *sd)
+{
+	int i = 0, n = 0, j = 0;
+	struct merge_item merge_items[MAX_INVENTORY];
+	struct merge_item *merge_items_[MAX_INVENTORY] = {0};
+
+	memset(&merge_items,'\0',sizeof(merge_items));
+
+	for (i = 0; i < MAX_INVENTORY; i++) {
+		struct item *item_data = &sd->status.inventory[i];
+
+		if (item_data->nameid == 0 || !itemdb->isstackable(item_data->nameid))
+			continue;
+
+		merge_items[n].nameid = item_data->nameid;
+		merge_items[n].position = i + 2;
+		n++;
+
+
+	}
+
+	qsort(merge_items,n,sizeof(struct merge_item),clif->comparemergeitem);
+
+	for (i = 0, j = 0; i < n; i++) {
+		if (i > 0 && merge_items[i].nameid == merge_items[i-1].nameid)
+		{
+			merge_items_[j] = &merge_items[i];
+			j++;
+			continue;
+		}
+
+		if (i < n - 1 && merge_items[i].nameid == merge_items[i+1].nameid)
+		{
+			merge_items_[j] = &merge_items[i];
+			j++;
+			continue;
+		}
+	}
+
+	WFIFOHEAD(fd,2*j+4);
+	WFIFOW(fd,0) = 0x96d;
+	WFIFOW(fd,2) = 2*j+4;
+	for ( i = 0; i < j; i++ )
+		WFIFOW(fd,i*2+4) = merge_items_[i]->position;
+	WFIFOSET(fd,2*j+4);
+}
+
+int clif_comparemergeitem(const void *a, const void *b)
+{
+	const struct merge_item *a_ = a;
+	const struct merge_item *b_ = b;
+
+	if (a_->nameid == b_->nameid)
+	 return 0;
+	return a_->nameid > b_->nameid ? -1 : 1;
+}
+
+void clif_ackmergeitems(int fd, struct map_session_data *sd)
+{
+	int i = 0, n = 0, length = 0, count = 0;
+	int16 nameid = 0, indexes[MAX_INVENTORY] = {0}, amounts[MAX_INVENTORY] = {0};
+	struct item item_data;
+
+	length = (RFIFOW(fd,2) - 4)/2;
+	
+	if (length >= MAX_INVENTORY || length < 2) {
+		WFIFOHEAD(fd,7);
+		WFIFOW(fd,0) = 0x96f;
+		WFIFOW(fd,2) = 0;
+		WFIFOW(fd,4) = 0;
+		WFIFOB(fd,6) = MERGEITEM_FAILD;
+		WFIFOSET(fd,7);
+		return;
+	}
+
+	for (i = 0, n = 0; i < length; i++) {
+		int16 idx = RFIFOW(fd,i*2+4) - 2;
+		struct item *it = NULL;
+
+		if (idx < 0 || idx >= MAX_INVENTORY)
+			continue;
+
+		it = &sd->status.inventory[idx];
+
+		if (it->nameid == 0 || !itemdb->isstackable(it->nameid))
+			continue;
+
+		if (nameid == 0)
+			nameid = it->nameid;
+
+		if (nameid != it->nameid)
+			continue;
+
+		count += it->amount;
+		indexes[n] = idx;
+		amounts[n] = it->amount;
+		n++;
+	}
+
+
+	if (n < 2 || count == 0) {
+		WFIFOHEAD(fd,7);
+		WFIFOW(fd,0) = 0x96f;
+		WFIFOW(fd,2) = 0;
+		WFIFOW(fd,4) = 0;
+		WFIFOB(fd,6) = MERGEITEM_FAILD;
+		WFIFOSET(fd,7);
+		return;
+	}
+
+	if (count > MAX_AMOUNT) {
+		WFIFOHEAD(fd,7);
+		WFIFOW(fd,0) = 0x96f;
+		WFIFOW(fd,2) = 0;
+		WFIFOW(fd,4) = 0;
+		WFIFOB(fd,6) = MERGEITEM_MAXCOUNTFAILD;
+		WFIFOSET(fd,7);
+		return;
+	}
+
+	for (i = 0; i < n; i++)
+		pc->delitem(sd,indexes[i],amounts[i],0,DELITEM_NORMAL);
+
+
+	memset(&item_data,'\0',sizeof(item_data));
+
+	item_data.nameid = nameid;
+	item_data.identify = 1;
+	item_data.unique_id = itemdb->unique_id(sd);
+	pc->additem(sd,&item_data,count);
+	
+	ARR_FIND(0,MAX_INVENTORY,i,item_data.unique_id == sd->status.inventory[i].unique_id);
+
+	WFIFOHEAD(fd,7);
+	WFIFOW(fd,0) = 0x96f;
+	WFIFOW(fd,2) = i+2;
+	WFIFOW(fd,4) = count;
+	WFIFOB(fd,6) = MERGEITEM_SUCCESS;
+	WFIFOSET(fd,7);
+	
+}
+
+void clif_cancelmergeitem (int fd, struct map_session_data *sd)
+{
+	//Track The merge item cancelation ?
+	return;
+}
+
 /* */
 unsigned short clif_decrypt_cmd( int cmd, struct map_session_data *sd ) {
 	if( sd ) {
@@ -18911,6 +19034,11 @@ void clif_defaults(void) {
 	/* */
 	clif->parse_roulette_db = clif_parse_roulette_db;
 	clif->roulette_generate_ack = clif_roulette_generate_ack;
+	/* Merge Items */
+	clif->openmergeitem = clif_openmergeitem;
+	clif->cancelmergeitem = clif_cancelmergeitem;
+	clif->comparemergeitem = clif_comparemergeitem;
+	clif->ackmergeitems = clif_ackmergeitems;
 	/*------------------------
 	 *- Parse Incoming Packet
 	 *------------------------*/

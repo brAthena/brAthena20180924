@@ -422,6 +422,7 @@ struct item_data {
 		unsigned buyingstore : 1;
 		unsigned bindonequip : 1;
 		unsigned keepafteruse : 1;
+		unsigned force_serial : 1;
 	} flag;
 	struct {// item stacking limitation
 		unsigned short amount;

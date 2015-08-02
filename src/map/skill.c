@@ -2720,7 +2720,7 @@ int skill_attack(int attack_type, struct block_list* src, struct block_list *dsr
 		}
 
 		/* monsters with skill lv higher than MAX_SKILL_LEVEL may get this value beyond the max depending on conditions, we cap to the system's limit */
-		if( dsrc && dsrc->type == BL_MOB && skill_lv > MAX_SKILL_LEVEL && dmg.blewcount > 25 )
+		if (dsrc->type == BL_MOB && skill_lv > MAX_SKILL_LEVEL && dmg.blewcount > 25)
 			dmg.blewcount = 25;
 
 		//blown-specific handling
@@ -15507,7 +15507,6 @@ int skill_graffitiremover (struct block_list *bl, va_list ap) {
 	struct skill_unit *su=NULL;
 
 	nullpo_ret(bl);
-	nullpo_ret(ap);
 
 	if(bl->type != BL_SKILL)
 		return 0;
@@ -15538,7 +15537,6 @@ int skill_detonator(struct block_list *bl, va_list ap) {
 	int unit_id;
 
 	nullpo_ret(bl);
-	nullpo_ret(ap);
 	src = va_arg(ap,struct block_list *);
 
 	if( bl->type != BL_SKILL )
@@ -17933,6 +17931,9 @@ int skill_blockpc_start_(struct map_session_data *sd, uint16 skill_id, int tick)
 		}
 
 		if( i != cd->cursor ) {/* duplicate, update necessary */
+			// Don't do anything if there's already a tick longer than the incoming one
+			if (DIFF_TICK32(cd->entry[i]->started + cd->entry[i]->duration, now) > tick)
+				return 0;
 			cd->entry[i]->duration = tick;
 #if PACKETVER >= 20120604
 			cd->entry[i]->total = tick;

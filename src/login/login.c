@@ -1229,15 +1229,15 @@ void login_kick(struct login_session_data* sd)
 
 void login_auth_ok(struct login_session_data* sd)
 {
-	int fd = sd->fd;
+	int fd = 0;
 	uint32 ip;
-
 	uint8 server_num, n;
 	uint32 subnet_char_ip;
 	struct login_auth_node* node;
 	int i;
 
 	nullpo_retv(sd);
+	fd = sd->fd;
 	ip = session[fd]->client_addr;
 	if( runflag != LOGINSERVER_ST_RUNNING )
 	{
@@ -1430,11 +1430,13 @@ void login_login_error(int fd, uint8 status)
 	WFIFOSET(fd,23);
 }
 
+void login_parse_ping(int fd, struct login_session_data* sd) __attribute__((nonnull (2)));
 void login_parse_ping(int fd, struct login_session_data* sd)
 {
 	RFIFOSKIP(fd,26);
 }
 
+void login_parse_client_md5(int fd, struct login_session_data* sd) __attribute__((nonnull (2)));
 void login_parse_client_md5(int fd, struct login_session_data* sd)
 {
 	sd->has_client_hash = 1;
@@ -1443,6 +1445,7 @@ void login_parse_client_md5(int fd, struct login_session_data* sd)
 	RFIFOSKIP(fd,18);
 }
 
+bool login_parse_client_login(int fd, struct login_session_data* sd, const char *const ip) __attribute__((nonnull (2)));
 bool login_parse_client_login(int fd, struct login_session_data* sd, const char *const ip)
 {
 	uint32 version;
@@ -1525,6 +1528,7 @@ bool login_parse_client_login(int fd, struct login_session_data* sd, const char 
 	return false;
 }
 
+void login_send_coding_key(int fd, struct login_session_data* sd) __attribute__((nonnull (2)));
 void login_send_coding_key(int fd, struct login_session_data* sd)
 {
 	WFIFOHEAD(fd,4 + sd->md5keylen);
@@ -1534,6 +1538,7 @@ void login_send_coding_key(int fd, struct login_session_data* sd)
 	WFIFOSET(fd,WFIFOW(fd,2));
 }
 
+void login_parse_request_coding_key(int fd, struct login_session_data* sd) __attribute__((nonnull (2)));
 void login_parse_request_coding_key(int fd, struct login_session_data* sd)
 {
 	memset(sd->md5key, '\0', sizeof(sd->md5key));
@@ -1551,6 +1556,7 @@ void login_char_server_connection_status(int fd, struct login_session_data* sd, 
 	WFIFOSET(fd,3);
 }
 
+void login_parse_request_connection(int fd, struct login_session_data* sd, const char *const ip) __attribute__((nonnull (2, 3)));
 void login_parse_request_connection(int fd, struct login_session_data* sd, const char *const ip)
 {
 	char server_name[20];
