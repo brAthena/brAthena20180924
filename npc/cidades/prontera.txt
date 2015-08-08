@@ -24,14 +24,14 @@
 
 // Prontera
 //============================================================
-prontera,160,330,0	script	Soldado#pront::prtguard	8W_SOLDIER,{
-	mes "[Soldado]";
+prontera,160,330,0	script	Guarda#pront::prtguard	8W_SOLDIER,{
+	mes "[Guarda]";
 	mes "Bem vindo à Prontera.";
 	close;
 }
-prontera,223,99,1	duplicate(prtguard)	Soldado#2pront	8W_SOLDIER
-prontera,229,104,5	duplicate(prtguard)	Soldado#3pront	8W_SOLDIER
-prontera,47,339,5	duplicate(prtguard)	Soldado#4pront	8W_SOLDIER
+prontera,223,99,1	duplicate(prtguard)	Guarda#2pront	8W_SOLDIER
+prontera,229,104,5	duplicate(prtguard)	Guarda#3pront	8W_SOLDIER
+prontera,47,339,5	duplicate(prtguard)	Guarda#4pront	8W_SOLDIER
 
 prontera,101,288,3	script	Homem#pront	4W_M_02,{
 	mes "[Homem]";

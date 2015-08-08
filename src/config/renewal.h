@@ -17,11 +17,6 @@
  * Para desabilitar uma configuração, comente a linha que contém o #define com //
  **/
 
-/// Modo Old times do emulador
-/// Suporte específico do old-times, como fórmulas do old-times.
-/// Para o funcionamento correto do modo old-times remova o comentário da definição OLD_TIMES e DISABLE_RENEWAL.
-//#define OLD_TIMES
-
 /**
  * Retire o comentário da definição para desativar todas as definições abaixo.
  * Fazendo isso o emulador vai estar configurado para características pré-renovação.

@@ -34,11 +34,7 @@
 #ifdef RENEWAL
 	#define DBPATH "re/"
 #else
-#ifdef OLD_TIMES
-	#define DBPATH "ot/"
-#else
 	#define DBPATH "pre-re/"
-#endif
 #endif
 
 /**

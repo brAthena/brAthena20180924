@@ -13549,7 +13549,85 @@ REPLACE INTO `item_db` VALUES(22540, 'Runstone_Luxanima', 'Lux Anima Rune', 11, 
 REPLACE INTO `item_db` VALUES(22777, 'Buff_Gift_Set', 'Buff Gift Set', 2, 20, 10, 100, 0, 0, 0, 0, 0, 4294967295, 63, 2, 0, 0, 0, NULL, 0, 0, 0, 0, 0, 499, NULL, 0, NULL, 0, NULL, 0, 'getitem 14534,5; getitem 12215,5; getitem 12216,5;', '', '');
 REPLACE INTO `item_db` VALUES(22837, 'Integer_Time', 'Integer Time', 2, 0, 0, 0, 0, 0, 0, 0, 0, 4294967295, 63, 2, 0, 0, 50, NULL, 0, 0, 0, 0, 0, 507, NULL, 0, NULL, 0, NULL, 0, 'TmpRouletteBronze += 1;', '', '');
 
--- --------------------------------------------------------
+--
+-- Estrutura da tabela `level_penalty_db`
+--
+
+CREATE TABLE IF NOT EXISTS `level_penalty_db` (
+  `Type` tinyint(4) NOT NULL DEFAULT '0',
+  `Race` tinyint(4) NOT NULL DEFAULT '0',
+  `Level difference` smallint(6) NOT NULL,
+  `Rate` smallint(6) NOT NULL DEFAULT '0'
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+REPLACE INTO `level_penalty_db` VALUES(1,11,16,40);
+REPLACE INTO `level_penalty_db` VALUES(1,11,15,115);
+REPLACE INTO `level_penalty_db` VALUES(1,11,14,120);
+REPLACE INTO `level_penalty_db` VALUES(1,11,13,125);
+REPLACE INTO `level_penalty_db` VALUES(1,11,12,130);
+REPLACE INTO `level_penalty_db` VALUES(1,11,11,135);
+REPLACE INTO `level_penalty_db` VALUES(1,11,10,140);
+REPLACE INTO `level_penalty_db` VALUES(1,11,9,135);
+REPLACE INTO `level_penalty_db` VALUES(1,11,8,130);
+REPLACE INTO `level_penalty_db` VALUES(1,11,7,125);
+REPLACE INTO `level_penalty_db` VALUES(1,11,6,120);
+REPLACE INTO `level_penalty_db` VALUES(1,11,5,115);
+REPLACE INTO `level_penalty_db` VALUES(1,11,4,110);
+REPLACE INTO `level_penalty_db` VALUES(1,11,3,105);
+REPLACE INTO `level_penalty_db` VALUES(1,11,0,100);
+REPLACE INTO `level_penalty_db` VALUES(1,11,-1,100);
+REPLACE INTO `level_penalty_db` VALUES(1,11,-6,95);
+REPLACE INTO `level_penalty_db` VALUES(1,11,-11,90);
+REPLACE INTO `level_penalty_db` VALUES(1,11,-16,85);
+REPLACE INTO `level_penalty_db` VALUES(1,11,-21,60);
+REPLACE INTO `level_penalty_db` VALUES(1,11,-26,35);
+REPLACE INTO `level_penalty_db` VALUES(1,11,-31,10);
+REPLACE INTO `level_penalty_db` VALUES(1,10,0,100);
+REPLACE INTO `level_penalty_db` VALUES(2,11,16,50);
+REPLACE INTO `level_penalty_db` VALUES(2,11,13,60);
+REPLACE INTO `level_penalty_db` VALUES(2,11,10,70);
+REPLACE INTO `level_penalty_db` VALUES(2,11,7,80);
+REPLACE INTO `level_penalty_db` VALUES(2,11,4,90);
+REPLACE INTO `level_penalty_db` VALUES(2,11,0,100);
+REPLACE INTO `level_penalty_db` VALUES(2,11,-4,90);
+REPLACE INTO `level_penalty_db` VALUES(2,11,-7,80);
+REPLACE INTO `level_penalty_db` VALUES(2,11,-10,70);
+REPLACE INTO `level_penalty_db` VALUES(2,11,-13,60);
+REPLACE INTO `level_penalty_db` VALUES(2,11,-16,50);
+REPLACE INTO `level_penalty_db` VALUES(2,10,0,100);
+
+--
+-- Estrutura da tabela `magicmushroom_db`
+--
+
+CREATE TABLE IF NOT EXISTS `magicmushroom_db` (
+  `SkillID` smallint(5) unsigned NOT NULL,
+  PRIMARY KEY (`SkillID`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+REPLACE INTO `magicmushroom_db` VALUES(7);
+REPLACE INTO `magicmushroom_db` VALUES(8);
+REPLACE INTO `magicmushroom_db` VALUES(10);
+REPLACE INTO `magicmushroom_db` VALUES(24);
+REPLACE INTO `magicmushroom_db` VALUES(32);
+REPLACE INTO `magicmushroom_db` VALUES(33);
+REPLACE INTO `magicmushroom_db` VALUES(45);
+REPLACE INTO `magicmushroom_db` VALUES(61);
+REPLACE INTO `magicmushroom_db` VALUES(74);
+REPLACE INTO `magicmushroom_db` VALUES(110);
+REPLACE INTO `magicmushroom_db` VALUES(114);
+REPLACE INTO `magicmushroom_db` VALUES(142);
+REPLACE INTO `magicmushroom_db` VALUES(150);
+REPLACE INTO `magicmushroom_db` VALUES(151);
+REPLACE INTO `magicmushroom_db` VALUES(157);
+REPLACE INTO `magicmushroom_db` VALUES(249);
+REPLACE INTO `magicmushroom_db` VALUES(256);
+REPLACE INTO `magicmushroom_db` VALUES(261);
+REPLACE INTO `magicmushroom_db` VALUES(270);
+REPLACE INTO `magicmushroom_db` VALUES(326);
+REPLACE INTO `magicmushroom_db` VALUES(500);
+REPLACE INTO `magicmushroom_db` VALUES(527);
+REPLACE INTO `magicmushroom_db` VALUES(531);
 
 --
 -- Estrutura da tabela `mercenary_db`
@@ -23785,7 +23863,99 @@ REPLACE INTO `skill_cast_db` VALUES(10012, '10000', '0', '0', '0', '300000', '0'
 REPLACE INTO `skill_cast_db` VALUES(10013, '5000', '0', '0', '0', '300000', '0');
 REPLACE INTO `skill_cast_db` VALUES(10015, '0', '0', '0', '0', '300000', '0');
 
--- --------------------------------------------------------
+--
+-- Estrutura da tabela `skill_changematerial_db`
+--
+
+CREATE TABLE IF NOT EXISTS `skill_changematerial_db` (
+  `ProductID` int(10) unsigned NOT NULL,
+  `BaseRate` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `MakeAmount1` smallint(6) DEFAULT NULL,
+  `MakeAmountRate1` smallint(5) unsigned DEFAULT NULL,
+  `MakeAmount2` smallint(6) DEFAULT NULL,
+  `MakeAmountRate2` smallint(5) unsigned DEFAULT NULL,
+  `MakeAmount3` tinyint(4) DEFAULT NULL,
+  `MakeAmountRate3` smallint(5) unsigned DEFAULT NULL,
+  `MakeAmount4` tinyint(4) DEFAULT NULL,
+  `MakeAmountRate4` smallint(5) unsigned DEFAULT NULL,
+  `MakeAmount5` tinyint(4) DEFAULT NULL,
+  `MakeAmountRate5` smallint(5) unsigned DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+REPLACE INTO `skill_changematerial_db` VALUES(703,4,800,2,200,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(958,800,9,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(959,800,7,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(960,1000,6,800,9,200,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(961,800,3,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(962,1000,4,800,6,200,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(963,800,3,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(964,800,8,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(967,800,4,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(968,800,5,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(970,800,9,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(971,800,5,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(973,800,4,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(974,1000,4,800,6,200,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(991,1000,1,500,1,500,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(992,1000,1,500,1,500,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(999,1000,10,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(1003,500,1,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(1008,800,6,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(1009,800,4,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(1010,800,8,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(1011,800,4,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(1012,800,3,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(1013,9,800,13,200,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(1014,4,800,6,200,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(1016,1000,7,800,10,200,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(1019,800,2,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(1020,1000,4,800,6,200,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(1021,800,4,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(1022,1000,2,800,3,200,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(1024,800,4,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(1025,800,8,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(1026,800,4,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(1030,800,2,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(1033,1000,4,800,6,200,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(1034,1000,6,800,9,200,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(1035,1000,8,800,12,200,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(1037,800,6,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(1038,1000,1,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(1040,1000,8,800,12,200,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(1041,800,3,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(1042,800,6,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(1043,800,6,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(1045,800,8,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(1046,800,4,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(1049,800,6,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(1050,800,3,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(1051,800,7,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(1053,1000,6,800,9,200,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(1056,800,8,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(1058,800,5,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(1059,1000,5,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(1061,80,2,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(1061,1000,1,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(1064,800,8,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(1615,200,1,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(2267,1000,1,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(7063,1000,1,200,1,200,1,100,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(7166,1000,2,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(13269,1000,5,500,2,250,1,100,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(13270,1000,5,500,2,250,1,100,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(13271,1000,5,500,2,250,1,100,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(13272,1000,5,500,2,250,1,100,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(13273,1000,5,500,2,250,1,100,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(13274,1000,5,500,2,250,1,100,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(13275,1000,10,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(13276,1000,10,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(13277,1000,10,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(13278,1000,10,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(13279,1000,10,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(13280,1000,10,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(13281,1000,10,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(13282,1000,10,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `skill_changematerial_db` VALUES(13283,1000,10,1000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 
 --
 -- Estrutura da tabela `skill_db`
@@ -24847,7 +25017,175 @@ REPLACE INTO `skill_db` VALUES(10013, '0', 0, 4, '0', '0x3', '0', '1', '0', 'yes
 REPLACE INTO `skill_db` VALUES(10014, '0', 0, 0, '0', '0', '0', '1', '0', 'no', '0', '0x10', '0', 'none', '0', 'GD_DEVELOPMENT', 'Permanent Development');
 REPLACE INTO `skill_db` VALUES(10015, '0', 0, 0, '0', '0', '0', '1', '0', 'no', '0', '0x10', '0', 'none', '0', 'GD_ITEMEMERGENCYCALL', 'Urgent Call');
 
--- --------------------------------------------------------
+--
+-- Estrutura da tabela `skill_improvise_db`
+--
+
+CREATE TABLE IF NOT EXISTS `skill_improvise_db` (
+  `SkillID` smallint(5) unsigned NOT NULL,
+  `Rate` smallint(5) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`SkillID`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+REPLACE INTO `skill_improvise_db` VALUES(11,6000);
+REPLACE INTO `skill_improvise_db` VALUES(12,4000);
+REPLACE INTO `skill_improvise_db` VALUES(13,6000);
+REPLACE INTO `skill_improvise_db` VALUES(14,6000);
+REPLACE INTO `skill_improvise_db` VALUES(15,6000);
+REPLACE INTO `skill_improvise_db` VALUES(17,6000);
+REPLACE INTO `skill_improvise_db` VALUES(18,4000);
+REPLACE INTO `skill_improvise_db` VALUES(19,6000);
+REPLACE INTO `skill_improvise_db` VALUES(20,6000);
+REPLACE INTO `skill_improvise_db` VALUES(21,4000);
+REPLACE INTO `skill_improvise_db` VALUES(80,4000);
+REPLACE INTO `skill_improvise_db` VALUES(83,4000);
+REPLACE INTO `skill_improvise_db` VALUES(84,6000);
+REPLACE INTO `skill_improvise_db` VALUES(85,4000);
+REPLACE INTO `skill_improvise_db` VALUES(86,6000);
+REPLACE INTO `skill_improvise_db` VALUES(89,4000);
+
+--
+-- Estrutura da tabela `skill_reproduce_db`
+--
+
+CREATE TABLE IF NOT EXISTS `skill_reproduce_db` (
+  `SkillID` smallint(5) unsigned NOT NULL,
+  PRIMARY KEY (`SkillID`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+REPLACE INTO `skill_reproduce_db` VALUES(5);
+REPLACE INTO `skill_reproduce_db` VALUES(7);
+REPLACE INTO `skill_reproduce_db` VALUES(11);
+REPLACE INTO `skill_reproduce_db` VALUES(13);
+REPLACE INTO `skill_reproduce_db` VALUES(14);
+REPLACE INTO `skill_reproduce_db` VALUES(15);
+REPLACE INTO `skill_reproduce_db` VALUES(17);
+REPLACE INTO `skill_reproduce_db` VALUES(18);
+REPLACE INTO `skill_reproduce_db` VALUES(19);
+REPLACE INTO `skill_reproduce_db` VALUES(20);
+REPLACE INTO `skill_reproduce_db` VALUES(21);
+REPLACE INTO `skill_reproduce_db` VALUES(24);
+REPLACE INTO `skill_reproduce_db` VALUES(28);
+REPLACE INTO `skill_reproduce_db` VALUES(42);
+REPLACE INTO `skill_reproduce_db` VALUES(46);
+REPLACE INTO `skill_reproduce_db` VALUES(47);
+REPLACE INTO `skill_reproduce_db` VALUES(52);
+REPLACE INTO `skill_reproduce_db` VALUES(54);
+REPLACE INTO `skill_reproduce_db` VALUES(62);
+REPLACE INTO `skill_reproduce_db` VALUES(68);
+REPLACE INTO `skill_reproduce_db` VALUES(69);
+REPLACE INTO `skill_reproduce_db` VALUES(70);
+REPLACE INTO `skill_reproduce_db` VALUES(77);
+REPLACE INTO `skill_reproduce_db` VALUES(79);
+REPLACE INTO `skill_reproduce_db` VALUES(80);
+REPLACE INTO `skill_reproduce_db` VALUES(81);
+REPLACE INTO `skill_reproduce_db` VALUES(83);
+REPLACE INTO `skill_reproduce_db` VALUES(84);
+REPLACE INTO `skill_reproduce_db` VALUES(85);
+REPLACE INTO `skill_reproduce_db` VALUES(86);
+REPLACE INTO `skill_reproduce_db` VALUES(88);
+REPLACE INTO `skill_reproduce_db` VALUES(89);
+REPLACE INTO `skill_reproduce_db` VALUES(90);
+REPLACE INTO `skill_reproduce_db` VALUES(91);
+REPLACE INTO `skill_reproduce_db` VALUES(116);
+REPLACE INTO `skill_reproduce_db` VALUES(121);
+REPLACE INTO `skill_reproduce_db` VALUES(122);
+REPLACE INTO `skill_reproduce_db` VALUES(123);
+REPLACE INTO `skill_reproduce_db` VALUES(141);
+REPLACE INTO `skill_reproduce_db` VALUES(148);
+REPLACE INTO `skill_reproduce_db` VALUES(152);
+REPLACE INTO `skill_reproduce_db` VALUES(156);
+REPLACE INTO `skill_reproduce_db` VALUES(212);
+REPLACE INTO `skill_reproduce_db` VALUES(229);
+REPLACE INTO `skill_reproduce_db` VALUES(230);
+REPLACE INTO `skill_reproduce_db` VALUES(250);
+REPLACE INTO `skill_reproduce_db` VALUES(251);
+REPLACE INTO `skill_reproduce_db` VALUES(253);
+REPLACE INTO `skill_reproduce_db` VALUES(254);
+REPLACE INTO `skill_reproduce_db` VALUES(263);
+REPLACE INTO `skill_reproduce_db` VALUES(266);
+REPLACE INTO `skill_reproduce_db` VALUES(267);
+REPLACE INTO `skill_reproduce_db` VALUES(271);
+REPLACE INTO `skill_reproduce_db` VALUES(272);
+REPLACE INTO `skill_reproduce_db` VALUES(337);
+REPLACE INTO `skill_reproduce_db` VALUES(421);
+REPLACE INTO `skill_reproduce_db` VALUES(526);
+REPLACE INTO `skill_reproduce_db` VALUES(527);
+REPLACE INTO `skill_reproduce_db` VALUES(528);
+REPLACE INTO `skill_reproduce_db` VALUES(529);
+REPLACE INTO `skill_reproduce_db` VALUES(531);
+REPLACE INTO `skill_reproduce_db` VALUES(534);
+REPLACE INTO `skill_reproduce_db` VALUES(536);
+REPLACE INTO `skill_reproduce_db` VALUES(537);
+REPLACE INTO `skill_reproduce_db` VALUES(539);
+REPLACE INTO `skill_reproduce_db` VALUES(540);
+REPLACE INTO `skill_reproduce_db` VALUES(541);
+REPLACE INTO `skill_reproduce_db` VALUES(542);
+REPLACE INTO `skill_reproduce_db` VALUES(1001);
+REPLACE INTO `skill_reproduce_db` VALUES(1004);
+REPLACE INTO `skill_reproduce_db` VALUES(1006);
+REPLACE INTO `skill_reproduce_db` VALUES(1009);
+REPLACE INTO `skill_reproduce_db` VALUES(1015);
+REPLACE INTO `skill_reproduce_db` VALUES(2002);
+REPLACE INTO `skill_reproduce_db` VALUES(2005);
+REPLACE INTO `skill_reproduce_db` VALUES(2006);
+REPLACE INTO `skill_reproduce_db` VALUES(2022);
+REPLACE INTO `skill_reproduce_db` VALUES(2023);
+REPLACE INTO `skill_reproduce_db` VALUES(2034);
+REPLACE INTO `skill_reproduce_db` VALUES(2038);
+REPLACE INTO `skill_reproduce_db` VALUES(2040);
+REPLACE INTO `skill_reproduce_db` VALUES(2051);
+REPLACE INTO `skill_reproduce_db` VALUES(2054);
+REPLACE INTO `skill_reproduce_db` VALUES(2202);
+REPLACE INTO `skill_reproduce_db` VALUES(2203);
+REPLACE INTO `skill_reproduce_db` VALUES(2204);
+REPLACE INTO `skill_reproduce_db` VALUES(2210);
+REPLACE INTO `skill_reproduce_db` VALUES(2211);
+REPLACE INTO `skill_reproduce_db` VALUES(2212);
+REPLACE INTO `skill_reproduce_db` VALUES(2213);
+REPLACE INTO `skill_reproduce_db` VALUES(2214);
+REPLACE INTO `skill_reproduce_db` VALUES(2216);
+REPLACE INTO `skill_reproduce_db` VALUES(2233);
+REPLACE INTO `skill_reproduce_db` VALUES(2236);
+REPLACE INTO `skill_reproduce_db` VALUES(2239);
+REPLACE INTO `skill_reproduce_db` VALUES(2253);
+REPLACE INTO `skill_reproduce_db` VALUES(2254);
+REPLACE INTO `skill_reproduce_db` VALUES(2284);
+REPLACE INTO `skill_reproduce_db` VALUES(2288);
+REPLACE INTO `skill_reproduce_db` VALUES(2304);
+REPLACE INTO `skill_reproduce_db` VALUES(2310);
+REPLACE INTO `skill_reproduce_db` VALUES(2315);
+REPLACE INTO `skill_reproduce_db` VALUES(2316);
+REPLACE INTO `skill_reproduce_db` VALUES(2320);
+REPLACE INTO `skill_reproduce_db` VALUES(2323);
+REPLACE INTO `skill_reproduce_db` VALUES(2326);
+REPLACE INTO `skill_reproduce_db` VALUES(2327);
+REPLACE INTO `skill_reproduce_db` VALUES(2328);
+REPLACE INTO `skill_reproduce_db` VALUES(2330);
+REPLACE INTO `skill_reproduce_db` VALUES(2332);
+REPLACE INTO `skill_reproduce_db` VALUES(2336);
+REPLACE INTO `skill_reproduce_db` VALUES(2337);
+REPLACE INTO `skill_reproduce_db` VALUES(2343);
+REPLACE INTO `skill_reproduce_db` VALUES(2344);
+REPLACE INTO `skill_reproduce_db` VALUES(2413);
+REPLACE INTO `skill_reproduce_db` VALUES(2414);
+REPLACE INTO `skill_reproduce_db` VALUES(2418);
+REPLACE INTO `skill_reproduce_db` VALUES(2443);
+REPLACE INTO `skill_reproduce_db` VALUES(2444);
+REPLACE INTO `skill_reproduce_db` VALUES(2446);
+REPLACE INTO `skill_reproduce_db` VALUES(2447);
+REPLACE INTO `skill_reproduce_db` VALUES(2448);
+REPLACE INTO `skill_reproduce_db` VALUES(2449);
+REPLACE INTO `skill_reproduce_db` VALUES(2450);
+REPLACE INTO `skill_reproduce_db` VALUES(2454);
+REPLACE INTO `skill_reproduce_db` VALUES(2479);
+REPLACE INTO `skill_reproduce_db` VALUES(2480);
+REPLACE INTO `skill_reproduce_db` VALUES(2481);
+REPLACE INTO `skill_reproduce_db` VALUES(2482);
+REPLACE INTO `skill_reproduce_db` VALUES(2483);
+REPLACE INTO `skill_reproduce_db` VALUES(2490);
+REPLACE INTO `skill_reproduce_db` VALUES(2517);
+REPLACE INTO `skill_reproduce_db` VALUES(2518);
 
 --
 -- Estrutura da tabela `skill_require_db`
@@ -25455,7 +25793,34 @@ REPLACE INTO `skill_unit_db` VALUES(10007, '0xc2', NULL, '2', ' 0', '-1', 'sameg
 REPLACE INTO `skill_unit_db` VALUES(10008, '0xc3', NULL, '2', ' 0', '-1', 'sameguild', ' 0x040');
 REPLACE INTO `skill_unit_db` VALUES(10009, '0xc4', NULL, '2', ' 0', '-1', 'sameguild', ' 0x040');
 
--- --------------------------------------------------------
+--
+-- Estrutura da tabela `spellbook_db`
+--
+
+CREATE TABLE IF NOT EXISTS `spellbook_db` (
+  `SkillID` smallint(5) unsigned NOT NULL,
+  `PreservePoints` tinyint(4) NOT NULL,
+  `RequiredBook` smallint(5) unsigned NOT NULL,
+  PRIMARY KEY (`SkillID`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+REPLACE INTO `spellbook_db` VALUES(14,7,6190);
+REPLACE INTO `spellbook_db` VALUES(19,7,6189);
+REPLACE INTO `spellbook_db` VALUES(20,7,6191);
+REPLACE INTO `spellbook_db` VALUES(21,9,6197);
+REPLACE INTO `spellbook_db` VALUES(83,10,6194);
+REPLACE INTO `spellbook_db` VALUES(84,9,6198);
+REPLACE INTO `spellbook_db` VALUES(85,10,6193);
+REPLACE INTO `spellbook_db` VALUES(86,9,6199);
+REPLACE INTO `spellbook_db` VALUES(89,10,6192);
+REPLACE INTO `spellbook_db` VALUES(90,8,6201);
+REPLACE INTO `spellbook_db` VALUES(91,9,6200);
+REPLACE INTO `spellbook_db` VALUES(2210,8,6205);
+REPLACE INTO `spellbook_db` VALUES(2211,12,6204);
+REPLACE INTO `spellbook_db` VALUES(2213,22,6195);
+REPLACE INTO `spellbook_db` VALUES(2214,12,6203);
+REPLACE INTO `spellbook_db` VALUES(2216,12,6202);
+REPLACE INTO `spellbook_db` VALUES(2217,22,6196);
 
 --
 -- Estrutura da tabela `statpoint_db`
