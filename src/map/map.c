@@ -1908,25 +1908,37 @@ struct mob_data *map_id2md(int id) {
 
 struct npc_data *map_id2nd(int id) {
 	// just a id2bl lookup because there's no npc_db
-	struct block_list* bl = map->id2bl(id);
+	struct block_list *bl = map->id2bl(id);
 
 	return BL_CAST(BL_NPC, bl);
 }
 
 struct homun_data *map_id2hd(int id) {
-	struct block_list* bl = map->id2bl(id);
+	struct block_list *bl = map->id2bl(id);
 
 	return BL_CAST(BL_HOM, bl);
 }
 
 struct mercenary_data *map_id2mc(int id) {
-	struct block_list* bl = map->id2bl(id);
+	struct block_list *bl = map->id2bl(id);
 
 	return BL_CAST(BL_MER, bl);
 }
 
+struct pet_data *map_id2pd(int id){
+	struct block_list *bl = map->id2bl(id);
+	
+	return BL_CAST(BL_PET, bl);
+}
+
+struct elemental_data *map_id2ed(int id) {
+	struct block_list *bl = map->id2bl(id);
+	
+	return BL_CAST(BL_ELEM, bl);
+}
+
 struct chat_data *map_id2cd(int id) {
-	struct block_list* bl = map->id2bl(id);
+	struct block_list *bl = map->id2bl(id);
 
 	return BL_CAST(BL_CHAT, bl);
 }
@@ -6282,6 +6294,8 @@ void map_defaults(void) {
 	map->id2nd = map_id2nd;
 	map->id2hd = map_id2hd;
 	map->id2mc = map_id2mc;
+	map->id2pd = map_id2pd;
+	map->id2ed = map_id2ed;
 	map->id2cd = map_id2cd;
 	map->id2bl = map_id2bl;
 	map->blid_exists = map_blid_exists;

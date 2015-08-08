@@ -1011,6 +1011,8 @@ END_ZEROED_BLOCK;
 	struct npc_data * (*id2nd) (int id);
 	struct homun_data* (*id2hd) (int id);
 	struct mercenary_data* (*id2mc) (int id);
+	struct pet_data* (*id2pd) (int id);
+	struct elemental_data* (*id2ed) (int id);
 	struct chat_data* (*id2cd) (int id);
 	struct block_list * (*id2bl) (int id);
 	bool (*blid_exists) (int id);

@@ -9729,7 +9729,7 @@ BUILDIN(monster)
 	const char *event = "";
 	unsigned int size = SZ_SMALL;
 	unsigned int ai   = AI_NONE;
-	int mob_id;
+	int mob_id, i;
 
 	struct map_session_data* sd;
 	int16 m;
@@ -9781,9 +9781,15 @@ BUILDIN(monster)
 				return false;
 			}
 		}
+		
+		for(i = 0; i < amount; i++) {
+			mob_id = mob->once_spawn(sd, m, x, y, str, class_, 1, event, size, ai);
+
+			if (mob_id)
+				mapreg->setreg(reference_uid(script->add_str("$@mobid"), i), mob_id);
+		}
 	}
 
-	mob_id = mob->once_spawn(sd, m, x, y, str, class_, amount, event, size, ai);
 	script_pushint(st, mob_id);
 	return true;
 }
@@ -9837,7 +9843,7 @@ BUILDIN(areamonster) {
 	const char *event = "";
 	unsigned int size = SZ_SMALL;
 	unsigned int ai   = AI_NONE;
-	int mob_id;
+	int mob_id, i;
 
 	struct map_session_data* sd;
 	int16 m;
@@ -9878,13 +9884,19 @@ BUILDIN(areamonster) {
 				return false;
 			}
 		}
+		
+		for(i = 0; i < amount; i++) { //not optimised
+			mob_id = mob->once_spawn_area(sd, m, x0, y0, x1, y1, str, class_, 1, event, size, ai);
+
+			if (mob_id)
+				mapreg->setreg(reference_uid(script->add_str("$@mobid"), i), mob_id);
+		}
 	}
 
-	mob_id = mob->once_spawn_area(sd, m, x0, y0, x1, y1, str, class_, amount, event, size, ai);
 	script_pushint(st, mob_id);
-
 	return true;
 }
+
 /*==========================================
  * KillMonster subcheck, verify if mob to kill ain't got an even to handle, could be force kill by allflag
  *------------------------------------------*/
@@ -13582,14 +13594,22 @@ BUILDIN(atcommand) {
 
 /*==========================================
  * Displays a message for the player only (like system messages like "you got an apple" )
+ * Adicionado suporte para cores RGB. [Shiraz]
  *------------------------------------------*/
 BUILDIN(dispbottom)
 {
-	TBL_PC *sd=script->rid2sd(st);
-	const char *message;
-	message=script_getstr(st,2);
-	if(sd)
-		clif_disp_onlyself(sd,message,(int)strlen(message));
+	uint32 color = strtoul(script_getstr(st,3),NULL,0);
+	const char *message = script_getstr(st,2);
+	TBL_PC *sd;
+	
+	if((sd = script->rid2sd(st)) == NULL)
+		return false;
+	
+	if(color)
+		clif->messagecolor_self(sd->fd, color, message);
+	else
+		clif_disp_onlyself(sd, message, (int)strlen(message));
+	
 	return true;
 }
 
@@ -19751,6 +19771,620 @@ BUILDIN(mergeitem)
 	return true;
 }
 
+// duplicatenpc("NpcName", "DuplicateName", "DupHiddenName", "map", x, y, dir{, sprite{, xs, ys}});
+// author [Dastgir]
+BUILDIN(duplicatenpc)
+{
+	const char *npc_name = script_getstr(st, 2);
+	const char *dup_name = script_getstr(st, 3);
+	const char *dup_hidden_name = script_getstr(st, 4);
+	const char *tmap = script_getstr(st, 5);
+	int tx = script_getnum(st, 6);
+	int ty = script_getnum(st, 7);
+	int tdir = script_getnum(st, 8);
+	int tclass_, txs = -1, tys = -1, sourceid, type, tmapid, i;
+	struct npc_data *nd_source, *nd_target;
+	char targetname[24] = "";
+
+	if(script_hasdata(st, 10))
+		txs = (script_getnum(st, 10) < -1) ? -1 : script_getnum(st, 10);
+	if(script_hasdata(st, 11))
+		tys = (script_getnum(st, 11) < -1) ? -1 : script_getnum(st, 10);
+
+	if(txs == -1 && tys != -1)
+		txs = 0;
+	if(txs != - 1 && tys == -1)
+		tys = 0;
+
+	if(strlen(dup_name) + strlen(dup_hidden_name) > NAME_LENGTH)
+	{
+		ShowError("duplicatenpc: Name#HiddenName is to long (max %d chars). (%s)\n",NAME_LENGTH, npc_name);
+		script_pushint(st, 0);
+		return 0;
+	}
+
+	nd_source = npc->name2id(npc_name);
+
+	if(script_hasdata(st, 9))
+		tclass_ = (script_getnum(st, 9) < -1) ? -1 : script_getnum(st, 9);
+	else
+		tclass_ = nd_source->class_;
+
+	if( nd_source == NULL)
+	{
+		ShowError("duplicatenpc: original npc not found for duplicate. (%s)\n", npc_name);
+		script_pushint(st, 0);
+		return 0;
+	}
+	
+	sourceid = nd_source->bl.id;
+	type = nd_source->subtype;
+
+	tmapid = map->mapname2mapid(tmap);
+	if(tmapid < 0)
+	{
+		ShowError("duplicatenpc: target map not found. (%s)\n", tmap);
+		script_pushint(st, 0);
+		return 0;
+	}
+
+	nd_target = npc->create_npc(tmapid, tx, ty);
+	
+	strcat(targetname, dup_name);
+	strncat(targetname, "#", 1);
+	strncat(targetname, dup_hidden_name, strlen(dup_hidden_name));
+
+	safestrncpy(nd_target->name, targetname , sizeof(nd_target->name));
+	safestrncpy(nd_target->exname, targetname, sizeof(nd_target->exname));
+
+	nd_target->class_ = tclass_;
+	nd_target->speed = 200;
+	nd_target->src_id = sourceid;
+	nd_target->bl.type = BL_NPC;
+	nd_target->subtype = (enum npc_subtype)type;
+	switch(type)
+	{
+		case SCRIPT:
+			nd_target->u.scr.xs = txs;
+			nd_target->u.scr.ys = tys;
+			nd_target->u.scr.script = nd_source->u.scr.script;
+			nd_target->u.scr.label_list = nd_source->u.scr.label_list;
+			nd_target->u.scr.label_list_num = nd_source->u.scr.label_list_num;
+			nd_target->u.scr.shop = nd_source->u.scr.shop;
+			nd_target->u.scr.trader = nd_source->u.scr.trader;
+			break;
+
+		case SHOP:
+		case CASHSHOP:
+			nd_target->u.shop.shop_item = nd_source->u.shop.shop_item;
+			nd_target->u.shop.count = nd_source->u.shop.count;
+			break;
+
+		case WARP:
+			if( !battle->bc->warp_point_debug )
+				nd_target->class_ = WARP_CLASS;
+			else
+				nd_target->class_ = WARP_DEBUG_CLASS;
+			nd_target->u.warp.xs = txs;
+			nd_target->u.warp.ys = tys;
+			nd_target->u.warp.mapindex = nd_source->u.warp.mapindex;
+			nd_target->u.warp.x = nd_source->u.warp.x;
+			nd_target->u.warp.y = nd_source->u.warp.y;
+			break;
+	}
+
+	map->addnpc(tmapid, nd_target);
+	//status->change_init(&nd_target->bl);
+	//unit->dataset(&nd_target->bl);
+	nd_target->ud = &npc->base_ud;
+	nd_target->dir = tdir;
+	npc->setcells(nd_target);
+	map->addblock(&nd_target->bl);
+	if(tclass_ >= 0)
+	{
+		status->set_viewdata(&nd_target->bl, nd_target->class_);
+		if( map->list[tmapid].users )
+			clif->spawn(&nd_target->bl);
+	}
+	strdb_put(npc->name_db, nd_target->exname, nd_target);
+
+	if(type == SCRIPT)
+	{
+		for (i = 0; i < nd_target->u.scr.label_list_num; i++)
+		{
+			if (npc->event_export(nd_target, i)) {
+				ShowWarning("duplicatenpc: duplicate event %s::%s.\n",
+							 nd_target->exname, nd_target->u.scr.label_list[i].name);
+			}
+			npc->timerevent_export(nd_target, i);
+		}
+		nd_target->u.scr.timerid = INVALID_TIMER;
+	}
+
+	script_pushint(st, 1);
+	return true;
+}
+
+// [Kenpachi]
+// DuplicateRemove({"NPCname"});
+BUILDIN(duplicateremove)
+{
+	struct npc_data *nd;
+
+	if(script_hasdata(st, 2))
+	{
+		nd = npc->name2id(script_getstr(st, 2));
+		if(nd == NULL)
+		{
+			ShowError("duplicateremove: NPC not found: %s\n", script_getstr(st, 2));
+			script_pushint(st, -1);
+			return 0;
+		}
+	}
+	else
+		nd = (struct npc_data *)map->id2bl(st->oid);
+
+	if (nd == NULL){
+	}else if(nd->src_id == 0){	//remove all dupicates for this source npc
+		map->foreachnpc(npc->unload_dup_sub,nd->bl.id);
+	}else// just remove this duplicate
+		npc->unload(nd,true);
+
+	script_pushint(st, 1);
+	return true;
+}
+
+/// Gets specific live information of a bl.
+///
+/// getunitdata <unit id>,<arrayname>;
+/// author: rAthena Team
+BUILDIN(getunitdata)
+{
+	TBL_PC *sd = (st->rid) ? map->id2sd(st->rid) : NULL;
+	struct block_list* bl;
+	TBL_MOB* md = NULL;
+	TBL_HOM* hd = NULL;
+	TBL_MER* mc = NULL;
+	TBL_PET* pd = NULL;
+	TBL_ELEM* ed = NULL;
+	TBL_NPC* nd = NULL;
+	int64 num;
+	char* name;
+
+	if (!data_isreference(script_getdata(st, 3))) {
+		ShowWarning("buildin_getunitdata: Error in argument! Please give a variable to store values in.\n");
+		return false;
+	}
+
+	bl = map->id2bl(script_getnum(st, 2));
+
+	if (!bl) {
+		ShowWarning("buildin_getunitdata: Error in finding object with given game ID %d!\n", script_getnum(st, 2));
+		return false;
+	}
+
+	switch (bl->type) {
+		case BL_MOB:  md = map->id2md(bl->id); break;
+		case BL_HOM:  hd = map->id2hd(bl->id); break;
+		case BL_PET:  pd = map->id2pd(bl->id); break;
+		case BL_MER:  mc = map->id2mc(bl->id); break;
+		case BL_ELEM: ed = map->id2ed(bl->id); break;
+		case BL_NPC:  nd = map->id2nd(bl->id); break;
+	}
+
+	num = st->stack->stack_data[st->start+3].u.num;
+	name = (char *)(script->str_buf+script->str_data[num&0x00ffffff].str);
+
+	switch(bl->type) {
+		case BL_MOB:
+			if (!md) {
+				ShowWarning("buildin_getunitdata: Error in finding object BL_MOB!\n");
+				return false;
+			}
+			setd_sub(st,sd,name,0,(void *)(int)md->status.size,script_getref(st,3));
+			setd_sub(st,sd,name,1,(void *)(int)md->level,script_getref(st,3));
+			setd_sub(st,sd,name,2,(void *)(int)md->status.hp,script_getref(st,3));
+			setd_sub(st,sd,name,3,(void *)(int)md->status.max_hp,script_getref(st,3));
+			setd_sub(st,sd,name,4,(void *)(int)md->master_id,script_getref(st,3));
+			setd_sub(st,sd,name,5,(void *)(int)md->bl.m,script_getref(st,3));
+			setd_sub(st,sd,name,6,(void *)(int)md->bl.x,script_getref(st,3));
+			setd_sub(st,sd,name,7,(void *)(int)md->bl.y,script_getref(st,3));
+			setd_sub(st,sd,name,8,(void *)(int)md->status.speed,script_getref(st,3));
+			setd_sub(st,sd,name,9,(void *)(int)md->status.mode,script_getref(st,3));
+			setd_sub(st,sd,name,10,(void *)(int)md->special_state.ai,script_getref(st,3));
+			setd_sub(st,sd,name,11,(void *)(int)md->sc.option,script_getref(st,3));
+			setd_sub(st,sd,name,12,(void *)(int)md->vd->sex,script_getref(st,3));
+			setd_sub(st,sd,name,13,(void *)(int)md->vd->class_,script_getref(st,3));
+			setd_sub(st,sd,name,14,(void *)(int)md->vd->hair_style,script_getref(st,3));
+			setd_sub(st,sd,name,15,(void *)(int)md->vd->hair_color,script_getref(st,3));
+			setd_sub(st,sd,name,16,(void *)(int)md->vd->head_bottom,script_getref(st,3));
+			setd_sub(st,sd,name,17,(void *)(int)md->vd->head_mid,script_getref(st,3));
+			setd_sub(st,sd,name,18,(void *)(int)md->vd->head_top,script_getref(st,3));
+			setd_sub(st,sd,name,19,(void *)(int)md->vd->cloth_color,script_getref(st,3));
+			setd_sub(st,sd,name,20,(void *)(int)md->vd->shield,script_getref(st,3));
+			setd_sub(st,sd,name,21,(void *)(int)md->vd->weapon,script_getref(st,3));
+			setd_sub(st,sd,name,22,(void *)(int)md->vd->shield,script_getref(st,3));
+			setd_sub(st,sd,name,23,(void *)(int)md->ud.dir,script_getref(st,3));
+			setd_sub(st,sd,name,24,(void *)(int)md->status.str, script_getref(st,3));
+			setd_sub(st,sd,name,25,(void *)(int)md->status.agi, script_getref(st,3));
+			setd_sub(st,sd,name,26,(void *)(int)md->status.vit, script_getref(st,3));
+			setd_sub(st,sd,name,27,(void *)(int)md->status.int_, script_getref(st,3));
+			setd_sub(st,sd,name,28,(void *)(int)md->status.dex, script_getref(st,3));
+			setd_sub(st,sd,name,29,(void *)(int)md->status.luk, script_getref(st,3));
+			break;
+
+		case BL_HOM:
+			if (!hd) {
+				ShowWarning("buildin_getunitdata: Error in finding object BL_HOM!\n");
+				return false;
+			}
+			setd_sub(st,sd,name,0,(void *)(int)hd->base_status.size,script_getref(st,3));
+			setd_sub(st,sd,name,1,(void *)(int)hd->homunculus.level,script_getref(st,3));
+			setd_sub(st,sd,name,2,(void *)(int)hd->homunculus.hp,script_getref(st,3));
+			setd_sub(st,sd,name,3,(void *)(int)hd->homunculus.max_hp,script_getref(st,3));
+			setd_sub(st,sd,name,4,(void *)(int)hd->homunculus.sp,script_getref(st,3));
+			setd_sub(st,sd,name,5,(void *)(int)hd->homunculus.max_sp,script_getref(st,3));
+			setd_sub(st,sd,name,6,(void *)(int)hd->homunculus.char_id,script_getref(st,3));
+			setd_sub(st,sd,name,7,(void *)(int)hd->bl.m,script_getref(st,3));
+			setd_sub(st,sd,name,8,(void *)(int)hd->bl.x,script_getref(st,3));
+			setd_sub(st,sd,name,9,(void *)(int)hd->bl.y,script_getref(st,3));
+			setd_sub(st,sd,name,10,(void *)(int)hd->homunculus.hunger,script_getref(st,3));
+			setd_sub(st,sd,name,11,(void *)(int)hd->homunculus.intimacy,script_getref(st,3));
+			setd_sub(st,sd,name,12,(void *)(int)hd->base_status.speed,script_getref(st,3));
+			setd_sub(st,sd,name,13,(void *)(int)hd->ud.dir,script_getref(st,3));
+			setd_sub(st,sd,name,14,(void *)(int)hd->ud.canmove_tick, script_getref(st,3));
+			setd_sub(st,sd,name,15,(void *)(int)hd->base_status.str, script_getref(st,3));
+			setd_sub(st,sd,name,16,(void *)(int)hd->base_status.agi, script_getref(st,3));
+			setd_sub(st,sd,name,17,(void *)(int)hd->base_status.vit, script_getref(st,3));
+			setd_sub(st,sd,name,18,(void *)(int)hd->base_status.int_, script_getref(st,3));
+			setd_sub(st,sd,name,19,(void *)(int)hd->base_status.dex, script_getref(st,3));
+			setd_sub(st,sd,name,20,(void *)(int)hd->base_status.luk, script_getref(st,3));
+			break;
+
+		case BL_PET:
+			if (!pd) {
+				ShowWarning("buildin_getunitdata: Error in finding object BL_PET!\n");
+				return false;
+			}
+			setd_sub(st,sd,name,0,(void *)(int)pd->status.size,script_getref(st,3));
+			setd_sub(st,sd,name,1,(void *)(int)pd->pet.level,script_getref(st,3));
+			setd_sub(st,sd,name,2,(void *)(int)pd->status.hp,script_getref(st,3));
+			setd_sub(st,sd,name,3,(void *)(int)pd->status.max_hp,script_getref(st,3));
+			setd_sub(st,sd,name,4,(void *)(int)pd->pet.account_id,script_getref(st,3));
+			setd_sub(st,sd,name,5,(void *)(int)pd->bl.m,script_getref(st,3));
+			setd_sub(st,sd,name,6,(void *)(int)pd->bl.x,script_getref(st,3));
+			setd_sub(st,sd,name,7,(void *)(int)pd->bl.y,script_getref(st,3));
+			setd_sub(st,sd,name,8,(void *)(int)pd->pet.hungry,script_getref(st,3));
+			setd_sub(st,sd,name,9,(void *)(int)pd->pet.intimate,script_getref(st,3));
+			setd_sub(st,sd,name,10,(void *)(int)pd->status.speed,script_getref(st,3));
+			setd_sub(st,sd,name,11,(void *)(int)pd->ud.dir,script_getref(st,3));
+			setd_sub(st,sd,name,12,(void *)(int)pd->ud.canmove_tick, script_getref(st,3));
+			setd_sub(st,sd,name,13,(void *)(int)pd->status.str, script_getref(st,3));
+			setd_sub(st,sd,name,14,(void *)(int)pd->status.agi, script_getref(st,3));
+			setd_sub(st,sd,name,15,(void *)(int)pd->status.vit, script_getref(st,3));
+			setd_sub(st,sd,name,16,(void *)(int)pd->status.int_, script_getref(st,3));
+			setd_sub(st,sd,name,17,(void *)(int)pd->status.dex, script_getref(st,3));
+			setd_sub(st,sd,name,18,(void *)(int)pd->status.luk, script_getref(st,3));
+			break;
+
+		case BL_MER:
+			if (!mc) {
+				ShowWarning("buildin_getunitdata: Error in finding object BL_MER!\n");
+				return false;
+			}
+			setd_sub(st,sd,name,0,(void *)(int)mc->base_status.size,script_getref(st,3));
+			setd_sub(st,sd,name,1,(void *)(int)mc->base_status.hp,script_getref(st,3));
+			setd_sub(st,sd,name,2,(void *)(int)mc->base_status.max_hp,script_getref(st,3));
+			setd_sub(st,sd,name,3,(void *)(int)mc->mercenary.char_id,script_getref(st,3));
+			setd_sub(st,sd,name,4,(void *)(int)mc->bl.m,script_getref(st,3));
+			setd_sub(st,sd,name,5,(void *)(int)mc->bl.x,script_getref(st,3));
+			setd_sub(st,sd,name,6,(void *)(int)mc->bl.y,script_getref(st,3));
+			setd_sub(st,sd,name,7,(void *)(int)mc->mercenary.kill_count,script_getref(st,3));
+			setd_sub(st,sd,name,8,(void *)(int)mc->mercenary.life_time,script_getref(st,3));
+			setd_sub(st,sd,name,9,(void *)(int)mc->base_status.speed,script_getref(st,3));
+			setd_sub(st,sd,name,10,(void *)(int)mc->ud.dir,script_getref(st,3));
+			setd_sub(st,sd,name,11,(void *)(int)mc->ud.canmove_tick, script_getref(st,3));
+			setd_sub(st,sd,name,12,(void *)(int)mc->base_status.str, script_getref(st,3));
+			setd_sub(st,sd,name,13,(void *)(int)mc->base_status.agi, script_getref(st,3));
+			setd_sub(st,sd,name,14,(void *)(int)mc->base_status.vit, script_getref(st,3));
+			setd_sub(st,sd,name,15,(void *)(int)mc->base_status.int_, script_getref(st,3));
+			setd_sub(st,sd,name,16,(void *)(int)mc->base_status.dex, script_getref(st,3));
+			setd_sub(st,sd,name,17,(void *)(int)mc->base_status.luk, script_getref(st,3));
+			break;
+
+		case BL_ELEM:
+			if (!ed) {
+				ShowWarning("buildin_getunitdata: Error in finding object BL_ELEM!\n");
+				return false;
+			}
+			setd_sub(st,sd,name,0,(void *)(int)ed->base_status.size,script_getref(st,3));
+			setd_sub(st,sd,name,1,(void *)(int)ed->elemental.hp,script_getref(st,3));
+			setd_sub(st,sd,name,2,(void *)(int)ed->elemental.max_hp,script_getref(st,3));
+			setd_sub(st,sd,name,3,(void *)(int)ed->elemental.sp,script_getref(st,3));
+			setd_sub(st,sd,name,4,(void *)(int)ed->elemental.max_sp,script_getref(st,3));
+			setd_sub(st,sd,name,5,(void *)(int)ed->elemental.char_id,script_getref(st,3));
+			setd_sub(st,sd,name,6,(void *)(int)ed->bl.m,script_getref(st,3));
+			setd_sub(st,sd,name,7,(void *)(int)ed->bl.x,script_getref(st,3));
+			setd_sub(st,sd,name,8,(void *)(int)ed->bl.y,script_getref(st,3));
+			setd_sub(st,sd,name,9,(void *)(int)ed->elemental.life_time,script_getref(st,3));
+			setd_sub(st,sd,name,10,(void *)(int)ed->elemental.mode,script_getref(st,3));
+			setd_sub(st,sd,name,11,(void *)(int)ed->base_status.speed,script_getref(st,3));
+			setd_sub(st,sd,name,12,(void *)(int)ed->ud.dir,script_getref(st,3));
+			setd_sub(st,sd,name,13,(void *)(int)ed->ud.canmove_tick, script_getref(st,3));
+			setd_sub(st,sd,name,14,(void *)(int)ed->base_status.str, script_getref(st,3));
+			setd_sub(st,sd,name,15,(void *)(int)ed->base_status.agi, script_getref(st,3));
+			setd_sub(st,sd,name,16,(void *)(int)ed->base_status.vit, script_getref(st,3));
+			setd_sub(st,sd,name,17,(void *)(int)ed->base_status.int_, script_getref(st,3));
+			setd_sub(st,sd,name,18,(void *)(int)ed->base_status.dex, script_getref(st,3));
+			setd_sub(st,sd,name,19,(void *)(int)ed->base_status.luk, script_getref(st,3));
+			break;
+
+		case BL_NPC:
+			if (!nd) {
+				ShowWarning("buildin_getunitdata: Error in finding object BL_NPC!\n");
+				return false;
+			}
+			setd_sub(st,sd,name,0,(void *)(int)nd->class_,script_getref(st,3));
+			setd_sub(st,sd,name,1,(void *)(int)nd->level,script_getref(st,3));
+			setd_sub(st,sd,name,2,(void *)(int)nd->status.hp,script_getref(st,3));
+			setd_sub(st,sd,name,3,(void *)(int)nd->status.max_hp,script_getref(st,3));
+			setd_sub(st,sd,name,4,(void *)(int)nd->bl.m,script_getref(st,3));
+			setd_sub(st,sd,name,5,(void *)(int)nd->bl.x,script_getref(st,3));
+			setd_sub(st,sd,name,6,(void *)(int)nd->bl.y,script_getref(st,3));
+			setd_sub(st,sd,name,7,(void *)(int)nd->ud->dir,script_getref(st,3));
+			setd_sub(st,sd,name,8,(void *)(int)nd->status.str, script_getref(st,3));
+			setd_sub(st,sd,name,9,(void *)(int)nd->status.agi, script_getref(st,3));
+			setd_sub(st,sd,name,10,(void *)(int)nd->status.vit, script_getref(st,3));
+			setd_sub(st,sd,name,11,(void *)(int)nd->status.int_, script_getref(st,3));
+			setd_sub(st,sd,name,12,(void *)(int)nd->status.dex, script_getref(st,3));
+			setd_sub(st,sd,name,13,(void *)(int)nd->status.luk, script_getref(st,3));
+			break;
+
+		default:
+			ShowWarning("buildin_getunitdata: Unknown object type!\n");
+			return false;
+	}
+
+	return true;
+}
+
+/// Changes the live data of a bl.
+///
+/// setunitdata <unit id>,<type>,<value>;
+/// author: rAthena Team
+BUILDIN(setunitdata)
+{
+	struct block_list* bl = NULL;
+	TBL_MOB* md = NULL;
+	TBL_HOM* hd = NULL;
+	TBL_MER* mc = NULL;
+	TBL_PET* pd = NULL;
+	TBL_ELEM* ed = NULL;
+	TBL_NPC* nd = NULL;
+	int type, value;
+
+	bl = map->id2bl(script_getnum(st, 2));
+
+	if (!bl) {
+		ShowWarning("buildin_setunitdata: Error in finding object with given game ID %d!\n", script_getnum(st, 2));
+		return false;
+	}
+
+	switch (bl->type) {
+		case BL_MOB:  md = map->id2md(bl->id); break;
+		case BL_HOM:  hd = map->id2hd(bl->id); break;
+		case BL_PET:  pd = map->id2pd(bl->id); break;
+		case BL_MER:  mc = map->id2mc(bl->id); break;
+		case BL_ELEM: ed = map->id2ed(bl->id); break;
+		case BL_NPC:  nd = map->id2nd(bl->id); break;
+	}
+
+	type = script_getnum(st, 3);
+	value = script_getnum(st, 4);
+
+	switch (bl->type) {
+	case BL_MOB:
+		if (!md) {
+			ShowWarning("buildin_setunitdata: Error in finding object BL_MOB!\n");
+			return false;
+		}
+		switch (type) {
+			case 0: md->status.size = (unsigned char)value; break;
+			case 1: md->level = (unsigned short)value; break;
+			case 2: md->status.hp = (unsigned int)value; break;
+			case 3: md->status.max_hp = (unsigned int)value; break;
+			case 4: md->master_id = value; break;
+			case 5: md->bl.m = (short)value; break;
+			case 6: md->bl.x = (short)value; break;
+			case 7: md->bl.y = (short)value; break;
+			case 8: md->status.speed = (unsigned short)value; break;
+			case 9: md->status.mode = (enum e_mode)value; break;
+			case 10: md->special_state.ai = (enum mob_ai)value; break;
+			case 11: md->sc.option = (unsigned short)value; break;
+			case 12: md->vd->sex = (char)value; break;
+			case 13: md->vd->class_ = (unsigned short)value; break;
+			case 14: md->vd->hair_style = (unsigned short)value; break;
+			case 15: md->vd->hair_color = (unsigned short)value; break;
+			case 16: md->vd->head_bottom = (unsigned short)value; break;
+			case 17: md->vd->head_mid = (unsigned short)value; break;
+			case 18: md->vd->head_top = (unsigned short)value; break;
+			case 19: md->vd->cloth_color = (unsigned short)value; break;
+			case 20: md->vd->shield = (unsigned short)value; break;
+			case 21: md->vd->weapon = (unsigned short)value; break;
+			case 22: md->vd->shield = (unsigned short)value; break;
+			case 23: md->ud.dir = (unsigned char)value; break;
+			case 24: md->status.str = (unsigned int)value; break;
+			case 25: md->status.agi = (unsigned int)value; break;
+			case 26: md->status.vit = (unsigned int)value; break;
+			case 27: md->status.int_ = (unsigned int)value; break;
+			case 28: md->status.dex = (unsigned int)value; break;
+			case 29: md->status.luk = (unsigned int)value; break;
+			default:
+				ShowError("buildin_setunitdata: Unknown data identifier %d for BL_MOB.\n", type);
+				return false;
+			}
+		break;
+
+	case BL_HOM:
+		if (!hd) {
+			ShowWarning("buildin_setunitdata: Error in finding object BL_HOM!\n");
+			return false;
+		}
+		switch (type) {
+			case 0: hd->base_status.size = (unsigned char)value; break;
+			case 1: hd->homunculus.level = (unsigned short)value; break;
+			case 2: hd->homunculus.hp = (unsigned int)value; break;
+			case 3: hd->homunculus.max_hp = (unsigned int)value; break;
+			case 4: hd->homunculus.sp = (unsigned int)value; break;
+			case 5: hd->homunculus.max_sp; (unsigned int)value; break;
+			case 6: hd->homunculus.char_id = (unsigned int)value; break;
+			case 7: hd->bl.m = (short)value; break;
+			case 8: hd->bl.x = (short)value; break;
+			case 9: hd->bl.y = (short)value; break;
+			case 10: hd->homunculus.hunger = (short)value; break;
+			case 11: hd->homunculus.intimacy = (unsigned int)value; break;
+			case 12: hd->base_status.speed = (unsigned short)value; break;
+			case 13: hd->ud.dir = (unsigned char)value; break;
+			case 14: hd->ud.canmove_tick = value > 0 ? 1 : 0; break;
+			case 15: hd->base_status.str = (unsigned int)value; break;
+			case 16: hd->base_status.agi = (unsigned int)value; break;
+			case 17: hd->base_status.vit = (unsigned int)value; break;
+			case 18: hd->base_status.int_ = (unsigned int)value; break;
+			case 19: hd->base_status.dex = (unsigned int)value; break;
+			case 20: hd->base_status.luk = (unsigned int)value; break;
+			default:
+				ShowError("buildin_setunitdata: Unknown data identifier %d for BL_HOM.\n", type);
+				return false;
+			}
+		break;
+
+	case BL_PET:
+		if (!pd) {
+			ShowWarning("buildin_setunitdata: Error in finding object BL_PET!\n");
+			return false;
+		}
+		switch (type) {
+			case 0: pd->status.size = (unsigned char)value; break;
+			case 1: pd->pet.level = (unsigned short)value; break;
+			case 2: pd->status.hp = (unsigned int)value; break;
+			case 3: pd->status.max_hp = (unsigned int)value; break;
+			case 4: pd->pet.account_id = (unsigned int)value; break;
+			case 5: pd->bl.m = (short)value; break;
+			case 6: pd->bl.x = (short)value; break;
+			case 7: pd->bl.y = (short)value; break;
+			case 8: pd->pet.hungry = (short)value; break;
+			case 9: pd->pet.intimate = (unsigned int)value; break;
+			case 10: pd->status.speed = (unsigned short)value; break;
+			case 11: pd->ud.dir = (unsigned char)value; break;
+			case 12: pd->ud.canmove_tick = value > 0 ? 1 : 0; break;
+			case 13: pd->status.str = (unsigned int)value; break;
+			case 14: pd->status.agi = (unsigned int)value; break;
+			case 15: pd->status.vit = (unsigned int)value; break;
+			case 16: pd->status.int_ = (unsigned int)value; break;
+			case 17: pd->status.dex = (unsigned int)value; break;
+			case 18: pd->status.luk = (unsigned int)value; break;
+			default:
+				ShowError("buildin_setunitdata: Unknown data identifier %d for BL_PET.\n", type);
+				return false;
+			}
+		break;
+
+	case BL_MER:
+		if (!mc) {
+			ShowWarning("buildin_setunitdata: Error in finding object BL_MER!\n");
+			return false;
+		}
+		switch (type) {
+			case 0: mc->base_status.size = (unsigned char)value; break;
+			case 1: mc->base_status.hp = (unsigned int)value; break;
+			case 2: mc->base_status.max_hp = (unsigned int)value; break;
+			case 3: mc->mercenary.char_id = (unsigned int)value; break;
+			case 4: mc->bl.m = (short)value; break;
+			case 5: mc->bl.x = (short)value; break;
+			case 6: mc->bl.y = (short)value; break;
+			case 7: mc->mercenary.kill_count = (unsigned int)value; break;
+			case 8: mc->mercenary.life_time = (unsigned int)value; break;
+			case 9: mc->base_status.speed = (unsigned short)value; break;
+			case 10: mc->ud.dir = (unsigned char)value; break;
+			case 11: mc->ud.canmove_tick = value > 0 ? 1 : 0; break;
+			case 12: mc->base_status.str = (unsigned int)value; break;
+			case 13: mc->base_status.agi = (unsigned int)value; break;
+			case 14: mc->base_status.vit = (unsigned int)value; break;
+			case 15: mc->base_status.int_ = (unsigned int)value; break;
+			case 16: mc->base_status.dex = (unsigned int)value; break;
+			case 17: mc->base_status.luk = (unsigned int)value; break;
+			default:
+				ShowError("buildin_setunitdata: Unknown data identifier %d for BL_MER.\n", type);
+				return false;
+			}
+		break;
+
+	case BL_ELEM:
+		if (!ed) {
+			ShowWarning("buildin_setunitdata: Error in finding object BL_ELEM!\n");
+			return false;
+		}
+		switch (type) {
+			case 0: ed->base_status.size = (unsigned char)value; break;
+			case 1: ed->elemental.hp = (unsigned int)value; break;
+			case 2: ed->elemental.max_hp = (unsigned int)value; break;
+			case 3: ed->elemental.sp = (unsigned int)value; break;
+			case 4: ed->elemental.max_sp = (unsigned int)value; break;
+			case 5: ed->elemental.char_id = (unsigned int)value; break;
+			case 6: ed->bl.m = (short)value; break;
+			case 7: ed->bl.x = (short)value; break;
+			case 8: ed->bl.y = (short)value; break;
+			case 9: ed->elemental.life_time = (unsigned int)value; break;
+			case 10: ed->elemental.mode = (unsigned int)value; break;
+			case 11: ed->base_status.speed = (unsigned short)value; break;
+			case 12: ed->ud.dir = (unsigned char)value; break;
+			case 13: ed->ud.canmove_tick = value > 0 ? 1 : 0; break;
+			case 14: ed->base_status.str = (unsigned int)value; break;
+			case 15: ed->base_status.agi = (unsigned int)value; break;
+			case 16: ed->base_status.vit = (unsigned int)value; break;
+			case 17: ed->base_status.int_ = (unsigned int)value; break;
+			case 18: ed->base_status.dex = (unsigned int)value; break;
+			case 19: ed->base_status.luk = (unsigned int)value; break;
+			default:
+				ShowError("buildin_setunitdata: Unknown data identifier %d for BL_ELEM.\n", type);
+				return false;
+			}
+		break;
+
+	case BL_NPC:
+		if (!md) {
+			ShowWarning("buildin_setunitdata: Error in finding object BL_NPC!\n");
+			return false;
+		}
+		switch (type) {
+			case 0: nd->class_ = (unsigned int)value; break;
+			case 1: nd->level = (unsigned int)value; break;
+			case 2: nd->status.hp = (unsigned int)value; break;
+			case 3: nd->status.max_hp = (unsigned int)value; break;
+			case 4: nd->bl.m = (short)value; break;
+			case 5: nd->bl.x = (short)value; break;
+			case 6: nd->bl.y = (short)value; break;
+			case 7: nd->ud->dir = (unsigned char)value; break;
+			case 8: nd->status.str = (unsigned int)value; break;
+			case 9: nd->status.agi = (unsigned int)value; break;
+			case 10: nd->status.vit = (unsigned int)value; break;
+			case 11: nd->status.int_ = (unsigned int)value; break;
+			case 12: nd->status.dex = (unsigned int)value; break;
+			case 13: nd->status.luk = (unsigned int)value; break;
+			default:
+				ShowError("buildin_setunitdata: Unknown data identifier %d for BL_NPC.\n", type);
+				return false;
+			}
+		break;
+
+	default:
+		ShowWarning("buildin_setunitdata: Unknown object type!\n");
+		return false;
+	}
+
+	return true;
+}
+
 /** place holder for the translation macro **/
 BUILDIN(_) {
 	return true;
@@ -19857,15 +20491,6 @@ bool script_add_builtin(const struct script_function *buildin, bool override) {
 	}
 
 	return true;
-}
-
-bool script_hp_add(char *name, char *args, bool (*func)(struct script_state *st), bool isDeprecated) {
-	struct script_function buildin;
-	buildin.name = name;
-	buildin.arg = args;
-	buildin.func = func;
-	buildin.deprecated = isDeprecated;
-	return script->add_builtin(&buildin, true);
 }
 
 #define BUILDIN_DEF(x,args) { buildin_ ## x , #x , args, false }
@@ -20146,7 +20771,7 @@ void script_parse_builtin(void) {
 		BUILDIN_DEF(deletepset,"i"), // Delete a pattern set [MouseJstr]
 		BUILDIN_DEF(pcre_match,"ss"),
 #endif
-		BUILDIN_DEF(dispbottom,"s"), //added from jA [Lupus]
+		BUILDIN_DEF(dispbottom,"s?"), //added from jA [Lupus]
 		BUILDIN_DEF(getusersname,""),
 		BUILDIN_DEF(recovery,""),
 		BUILDIN_DEF(getpetinfo,"i"),
@@ -20393,6 +21018,11 @@ void script_parse_builtin(void) {
 		
 		BUILDIN_DEF(mergeitem,""),
 		
+		BUILDIN_DEF(duplicatenpc,"ssssiii???"),
+		BUILDIN_DEF(duplicateremove,"?"),
+		BUILDIN_DEF(getunitdata,"i*"),
+		BUILDIN_DEF(setunitdata,"iii"),
+		
 		BUILDIN_DEF(_,"s"),
 	};
 	int i, len = ARRAYLENGTH(BUILDIN);
@@ -20635,7 +21265,6 @@ void script_defaults(void) {
 	script->warning = script_warning;
 	script->parse_subexpr = script_parse_subexpr;
 
-	script->addScript = script_hp_add;
 	script->conv_num = conv_num;
 	script->conv_str = conv_str;
 	script->rid2sd = script_rid2sd;
