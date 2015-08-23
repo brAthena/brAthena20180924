@@ -621,6 +621,18 @@ void log_zeny_sub_sql(struct map_session_data *sd, char *type, struct map_sessio
 		return;
 	}
 }
+void log_zeny_sub_txt(struct map_session_data* sd, char *type, struct map_session_data* src_sd, int amount) {
+	char timestring[255];
+	time_t curtime;
+	FILE* logfp;
+	
+	if( ( logfp = fopen(logs->config.log_zeny, "a") ) == NULL )
+		return;
+	time(&curtime);
+	strftime(timestring, sizeof(timestring), "%m/%d/%Y %H:%M:%S", localtime(&curtime));
+	fprintf(logfp, "%s - %s[%d]\t%s[%d]\t%d\t\n", timestring, src_sd->status.name, src_sd->status.account_id, sd->status.name, sd->status.account_id, amount);
+	fclose(logfp);
+}
 
 /// logs zeny transactions
 void log_zeny(struct map_session_data* sd,char * type, struct map_session_data* src_sd, int amount)
@@ -941,6 +953,7 @@ void log_defaults(void) {
 	
 	/* will be modified in a few seconds once loading is complete. */
 
+	logs->zeny_sub = log_zeny_sub_txt;
 	logs->npc_sub = log_npc_sub_txt;
 	logs->chat_sub = log_chat_sub_txt;
 	logs->atcommand_sub = log_atcommand_sub_txt;
