@@ -2536,6 +2536,9 @@ int npc_parseview(const char* w4, const char* start, const char* buffer, const c
 	} else {
 		// NPC has an ID specified for view id.
 		val = atoi(w4);
+		if (val != -1)
+			ShowWarning("npc_parseview: O uso de NPC view IDs numericos esta obsuleto e poderá ser removido em futuras atualizacoes. Por favor substitua por NPC view constants. ID '%d' que consta no arquivo '%s', linha '%d'.\n", val, filepath, strline(buffer, start - buffer));
+
 	}
 
 	return val;
@@ -2705,7 +2708,11 @@ const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const char* s
 			if (retval) *retval = EXIT_FAILURE;
 			return strchr(start,'\n');// skip and continue
 		}
-
+		if (dir < 0 || dir > 7) {
+			ShowError("npc_parse_ship: Configuracao da rotacao de npc invalida - '%d' no arquivo '%s', linha '%d'.\n", dir, filepath, strline(buffer, start - buffer));
+			if (retval) *retval = EXIT_FAILURE;
+			return strchr(start, '\n');//continue
+		}
 		m = map->mapname2mapid(mapname);
 	}
 
@@ -2931,6 +2938,14 @@ const char* npc_parse_script(char* w1, char* w2, char* w3, char* w4, const char*
 
 	script_start = strstr(start,",{");
 	end = strchr(start,'\n');
+
+	if (dir < 0 || dir > 7) {
+		ShowError("npc_parse_script: Invalid NPC facing direction '%d' in file '%s', line '%d'.\n", dir, filepath, strline(buffer, start - buffer));
+		if (retval) *retval = EXIT_FAILURE;
+		return npc->skip_script(script_start, buffer, filepath, retval); // continue
+		
+	}
+
 	if( strstr(w4,",{") == NULL || script_start == NULL || (end != NULL && script_start > end) )
 	{
 		ShowError("npc_parse_script: Faltando um ',{' no arquivo '%s', linha '%d'. Pulando o resto do arquivo.\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer,start-buffer), w1, w2, w3, w4);
@@ -3087,6 +3102,12 @@ const char* npc_parse_duplicate(char* w1, char* w2, char* w3, char* w4, const ch
 			ShowError("npc_parse_duplicate: Formato para duplicate invalido '%s', linha '%d'. Pulando linha...\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer,start-buffer), w1, w2, w3, w4);
 			if (retval) *retval = EXIT_FAILURE;
 			return end;// next line, try to continue
+		}
+		if (dir < 0 || dir > 7) {
+			ShowError("npc_parse_duplicate: Configuracao da rotacao de npc invalida - '%d' no arquivo '%s', linha '%d'.\n", dir, filepath, strline(buffer, start - buffer));
+			if (retval) *retval = EXIT_FAILURE;
+			return end; // try next
+			
 		}
 		m = map->mapname2mapid(mapname);
 	}
@@ -3513,10 +3534,10 @@ const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const char* st
 
 	// w1=<map name>,<x>,<y>,<xs>,<ys>
 	// w3=<mob name>{,<mob level>}
-	// w4=<mob id/mob name>,<amount>,<delay1>,<delay2>,<event>{,<mob size>,<mob ai>}
-	if( sscanf(w1, "%31[^,],%d,%d,%d,%d", mapname, &x, &y, &xs, &ys) < 3
+	// w4=<mob id>,<amount>,<delay1>,<delay2>{,<event>,<mob size>,<mob ai>}
+	if (sscanf(w1, "%31[^,],%d,%d,%d,%d", mapname, &x, &y, &xs, &ys) < 5
 	 || sscanf(w3, "%23[^,],%d", mobname, &mob_lv) < 1
-	 || sscanf(w4, "%23[^,],%d,%u,%u,%50[^,],%d,%d[^\t\r\n]", mobname2, &num, &mobspawn.delay1, &mobspawn.delay2, mobspawn.eventname, &size, &ai) < 2
+	 || sscanf(w4, "%23[^,],%d,%u,%u,%50[^,],%d,%d[^\t\r\n]", mobname2, &num, &mobspawn.delay1, &mobspawn.delay2, mobspawn.eventname, &size, &ai) < 4
 	 ) {
 		ShowError("npc_parse_mob: Definicao de monstro invalida '%s', linha '%d'.\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer,start-buffer), w1, w2, w3, w4);
 		if (retval) *retval = EXIT_FAILURE;
