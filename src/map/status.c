@@ -2306,6 +2306,7 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt) {
 		if (opt&SCO_FIRST && sd->inventory_data[index]->equip_script) {
 			//Execute equip-script on login
 			script->run(sd->inventory_data[index]->equip_script,0,sd->bl.id,0);
+			script->run_item_equip_script(sd, sd->inventory_data[index], 0);
 			if (!calculating)
 				return 1;
 		}
@@ -2346,10 +2347,10 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt) {
 			if(sd->inventory_data[index]->script) {
 				if (wd == &sd->left_weapon) {
 					sd->state.lr_flag = 1;
-					script->run(sd->inventory_data[index]->script,0,sd->bl.id,0);
+					script->run_use_script(sd, sd->inventory_data[index], 0);
 					sd->state.lr_flag = 0;
 				} else
-					script->run(sd->inventory_data[index]->script,0,sd->bl.id,0);
+					script->run_use_script(sd, sd->inventory_data[index], 0);
 				if (!calculating) //Abort, script->run retriggered this. [Skotlex]
 					return 1;
 			}
@@ -2372,7 +2373,7 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt) {
 			if(sd->inventory_data[index]->script) {
 				if( i == EQI_HAND_L ) //Shield
 					sd->state.lr_flag = 3;
-				script->run(sd->inventory_data[index]->script,0,sd->bl.id,0);
+				script->run_use_script(sd, sd->inventory_data[index], 0);
 				if( i == EQI_HAND_L ) //Shield
 					sd->state.lr_flag = 0;
 				if (!calculating) //Abort, script->run retriggered this. [Skotlex]
@@ -2388,7 +2389,7 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt) {
 			sd->bonus.arrow_atk += sd->inventory_data[index]->atk;
 			sd->state.lr_flag = 2;
 			if( !itemdb_is_GNthrowable(sd->inventory_data[index]->nameid) ) //don't run scripts on throwable items
-				script->run(sd->inventory_data[index]->script,0,sd->bl.id,0);
+				script->run_use_script(sd, sd->inventory_data[index], 0);
 			sd->state.lr_flag = 0;
 			if (!calculating) //Abort, script->run retriggered status_calc_pc. [Skotlex]
 				return 1;
@@ -2467,6 +2468,7 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt) {
 
 				if(opt&SCO_FIRST && data->equip_script) {//Execute equip-script on login
 					script->run(data->equip_script,0,sd->bl.id,0);
+					script->run_item_equip_script(sd, data, 0);
 					if (!calculating)
 						return 1;
 				}
@@ -2476,10 +2478,10 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt) {
 
 				if(i == EQI_HAND_L && sd->status.inventory[index].equip == EQP_HAND_L) { //Left hand status.
 					sd->state.lr_flag = 1;
-					script->run(data->script,0,sd->bl.id,0);
+					script->run_use_script(sd, data, 0);
 					sd->state.lr_flag = 0;
 				} else
-					script->run(data->script,0,sd->bl.id,0);
+					script->run_use_script(sd, data, 0);
 				if (!calculating) //Abort, script->run his function. [Skotlex]
 					return 1;
 			}
@@ -2490,6 +2492,7 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt) {
 		struct item_data *data = itemdb->exists(sc->data[SC_ITEMSCRIPT]->val1);
 		if( data && data->script )
 			script->run(data->script,0,sd->bl.id,0);
+			script->run_use_script(sd, data, 0);
 	}
 
 	for (index = 0; index < SC_MAX; ++index) // bonus de status [Shiraz]
