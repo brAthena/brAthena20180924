@@ -849,7 +849,7 @@ int read_elementaldb(void) {
 			db->status.rhw.atk   = (libconfig->setting_lookup_int(elemental_, "ATK1", &int_value) && int_value >= 0)? int_value : 0;
 			db->status.rhw.atk2  = (libconfig->setting_lookup_int(elemental_, "ATK2", &int_value) && int_value >= 0)? int_value : 0;
 			db->status.def       = (libconfig->setting_lookup_int(elemental_, "DEF", &int_value) && int_value >= 0)? int_value : 0;
-			db->status.mdef      = (libconfig->setting_lookup_int(elemental_, "LMDEF", &int_value) && int_value >= 0)? int_value : 0;
+			db->status.mdef      = (libconfig->setting_lookup_int(elemental_, "MDEF", &int_value) && int_value >= 0)? int_value : 0;
 			db->status.str       = (libconfig->setting_lookup_int(elemental_, "STR", &int_value) && int_value >= 0)? int_value : 0;
 			db->status.agi       = (libconfig->setting_lookup_int(elemental_, "AGI", &int_value) && int_value >= 0)? int_value : 0;
 			db->status.vit       = (libconfig->setting_lookup_int(elemental_, "VIT", &int_value) && int_value >= 0)? int_value : 0;
