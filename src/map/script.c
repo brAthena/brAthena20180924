@@ -13598,7 +13598,7 @@ BUILDIN(atcommand) {
  *------------------------------------------*/
 BUILDIN(dispbottom)
 {
-	uint32 color = strtoul(script_getstr(st,3),NULL,0);
+	uint32 color = script_hasdata(st, 3) ? strtoul(script_getstr(st, 3), NULL, 0) : 0;
 	const char *message = script_getstr(st,2);
 	TBL_PC *sd;
 	
