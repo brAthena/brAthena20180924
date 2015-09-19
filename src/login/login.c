@@ -243,65 +243,16 @@ bool login_check_password(const char* md5key, int passwdenc, const char* passwd,
 	}
 }
 
-//--------------------------------------------
-// Test to know if an IP come from LAN or WAN.
-//--------------------------------------------
-int login_lan_subnetcheck(uint32 ip)
+/**
+ * Checks whether the given IP comes from LAN or WAN.
+ *
+ * @param ip IP address to check.
+ * @retval 0 if it is a WAN IP.
+ * @return the appropriate LAN server address to send, if it is a LAN IP.
+*/
+uint32 login_lan_subnet_check(uint32 ip)
 {
-	int i;
-	ARR_FIND( 0, login_config.subnet_count, i, (login_config.subnet[i].char_ip & login_config.subnet[i].mask) == (ip & login_config.subnet[i].mask) );
-	return ( i < login_config.subnet_count ) ? login_config.subnet[i].char_ip : 0;
-}
-
-//----------------------------------
-// Reading LAN Support configuration
-//----------------------------------
-int login_lan_config_read(const char *lancfgName)
-{
-	FILE *fp;
-	int line_num = 0;
-	char line[1024], w1[64], w2[64], w3[64], w4[64];
-
-	nullpo_ret(lancfgName);
-	if((fp = fopen(lancfgName, "r")) == NULL) {
-		ShowWarning("LAN: Arquivo de configuracao %s nao foi encontrado.\n", lancfgName);
-		return 1;
-	}
-
-	while(fgets(line, sizeof(line), fp))
-	{
-		line_num++;
-		if ((line[0] == '/' && line[1] == '/') || line[0] == '\n' || line[1] == '\n')
-			continue;
-
-		if (sscanf(line, "%63[^:]: %63[^:]:%63[^:]:%63[^\r\n]", w1, w2, w3, w4) != 4) {
-			ShowWarning("Erro de sintaxe no arquivo de configuracao %s na linha %d.\n", lancfgName, line_num);
-			continue;
-		}
-
-		if( strcmpi(w1, "subnet") == 0 )
-		{
-			login_config.subnet[login_config.subnet_count].mask = str2ip(w2);
-			login_config.subnet[login_config.subnet_count].char_ip = str2ip(w3);
-			login_config.subnet[login_config.subnet_count].map_ip = str2ip(w4);
-
-			if( (login_config.subnet[login_config.subnet_count].char_ip
-			     & login_config.subnet[login_config.subnet_count].mask) != (login_config.subnet[login_config.subnet_count].map_ip
-			     & login_config.subnet[login_config.subnet_count].mask) )
-			{
-				ShowError("%s: Erro de configuracao: O servidor de personagem (%s) e servidor de mapas (%s) pertencem a diferentes sub-redes!\n", lancfgName, w3, w4);
-				continue;
-			}
-
-			login_config.subnet_count++;
-		}
-	}
-
-	if( login_config.subnet_count > 1 ) /* only useful if there is more than 1 available */
-		ShowStatus("Leu %d de sub-redes.\n", login_config.subnet_count);
-
-	fclose(fp);
-	return 0;
+	return sockt->lan_subnet_check(ip, NULL);
 }
 
 void login_fromchar_auth_ack(int fd, int account_id, uint32 login_id1, uint32 login_id2, uint8 sex, int request_id, struct login_auth_node* node)
@@ -1232,7 +1183,6 @@ void login_auth_ok(struct login_session_data* sd)
 	int fd = 0;
 	uint32 ip;
 	uint8 server_num, n;
-	uint32 subnet_char_ip;
 	struct login_auth_node* node;
 	int i;
 
@@ -1307,12 +1257,12 @@ void login_auth_ok(struct login_session_data* sd)
 	memset(WFIFOP(fd,20), 0, 24);
 	WFIFOW(fd,44) = 0; // unknown
 	WFIFOB(fd,46) = sex_str2num(sd->sex);
-	for( i = 0, n = 0; i < ARRAYLENGTH(server); ++i )
-	{
+	for (i = 0, n = 0; i < ARRAYLENGTH(server); ++i) {
+		uint32 subnet_char_ip;
 		if( !session_isValid(server[i].fd) )
 			continue;
 
-		subnet_char_ip = login->lan_subnetcheck(ip); // Advanced subnet check [LuzZza]
+		subnet_char_ip = login->lan_subnet_check(ip);
 		WFIFOL(fd,47+n*32) = htonl((subnet_char_ip) ? subnet_char_ip : server[i].ip);
 		WFIFOW(fd,47+n*32+4) = ntows(htons(server[i].port)); // [!] LE byte order here [!]
 		memcpy(WFIFOP(fd,47+n*32+6), server[i].name, 20);
@@ -1392,7 +1342,7 @@ void login_auth_failed(struct login_session_data* sd, int result)
 		login_log(ip, sd->userid, result, error); // FIXME: result can be 100, conflicting with the value 100 we use for successful login...
 	}
 
-	if( result == 1 && login_config.dynamic_pass_failure_ban )
+	if (result == 1 && login_config.dynamic_pass_failure_ban && !sockt->trusted_ip_check(ip))
 		ipban_log(ip); // log failed password attempt
 
 #if PACKETVER >= 20120000 /* not sure when this started */
@@ -1591,7 +1541,7 @@ void login_parse_request_connection(int fd, struct login_session_data* sd, const
 		sd->account_id >= 0 &&
 		sd->account_id < ARRAYLENGTH(server) &&
 		!session_isValid(server[sd->account_id].fd) &&
-		login->lan_subnetcheck(ipl))
+		sockt->allowed_ip_check(ipl))
 	{
 		ShowStatus("Conexao do servidor de personagem '%s' aceita.\n", server_name);
 		safestrncpy(server[sd->account_id].name, server_name, sizeof(server[sd->account_id].name));
@@ -1637,7 +1587,7 @@ int login_parse_login(int fd)
 	if( sd == NULL )
 	{
 		// Perform ip-ban check
-		if( login_config.ipban && ipban_check(ipl) )
+		if (login_config.ipban && !sockt->trusted_ip_check(ipl) && ipban_check(ipl))
 		{
 			ShowStatus("Conexao recusada: IP nao esta autorizado (ip: %s mac: %s).\n", ip, sd->mac_address);
 			login_log(ipl, "unknown", -3, "ip banned");
@@ -1752,7 +1702,6 @@ void login_set_defaults()
 
 	login_config.client_hash_check = 0;
 	login_config.client_hash_nodes = NULL;
-	login_config.subnet_count = 0;
 }
 
 //-----------------------------------
@@ -1917,7 +1866,7 @@ int do_final(void) {
 	}
 
 	aFree(login->LOGIN_CONF_NAME);
-	aFree(login->LAN_CONF_NAME);
+	aFree(login->NET_CONF_NAME);
 
 	ShowStatus("Finalizado.\n");
 	return EXIT_SUCCESS;
@@ -1965,15 +1914,15 @@ static CMDLINEARG(loginconfig)
 	return true;
 }
 /**
- * --lan-config handler
+ * --net-config handler
  *
  * Overrides the default subnet configuration file.
  * @see cmdline->exec
  */
-static CMDLINEARG(lanconfig)
+static CMDLINEARG(netconfig)
 {
-	aFree(login->LAN_CONF_NAME);
-	login->LAN_CONF_NAME = aStrdup(params);
+	aFree(login->NET_CONF_NAME);
+	login->NET_CONF_NAME = aStrdup(params);
 	return true;
 }
 /**
@@ -1982,7 +1931,7 @@ static CMDLINEARG(lanconfig)
 void cmdline_args_init_local(void)
 {
 	CMDLINEARG_DEF2(login-config, loginconfig, "Arquivo de configuracao alternativo do servidor de login.", CMDLINE_OPT_PARAM);
-	CMDLINEARG_DEF2(lan-config, lanconfig, "Arquivo alternativo de configuracao de sub-redes.", CMDLINE_OPT_PARAM);
+	CMDLINEARG_DEF2(net - config, netconfig, "Arquivo alternativo de configuracao de sub-redes.", CMDLINE_OPT_PARAM);
 }
 
 //------------------------------
@@ -2006,12 +1955,12 @@ int do_init(int argc, char** argv)
 	login_set_defaults();
 
 	login->LOGIN_CONF_NAME = aStrdup("conf/login-server.conf");
-	login->LAN_CONF_NAME   = aStrdup("conf/subnet.conf");
+	login->NET_CONF_NAME = aStrdup("conf/network.conf");
 
 	cmdline->exec(argc, argv, CMDLINE_OPT_PREINIT);
 	cmdline->exec(argc, argv, CMDLINE_OPT_NORMAL);
 	login_config_read(login->LOGIN_CONF_NAME);
-	login->lan_config_read(login->LAN_CONF_NAME);
+	sockt->net_config_read(login->NET_CONF_NAME);
 
 	for( i = 0; i < ARRAYLENGTH(server); ++i )
 		chrif_server_init(i);
@@ -2084,8 +2033,7 @@ void login_defaults(void) {
 	login->sync_ip_addresses = login_sync_ip_addresses;
 	login->check_encrypted = login_check_encrypted;
 	login->check_password = login_check_password;
-	login->lan_subnetcheck = login_lan_subnetcheck;
-	login->lan_config_read = login_lan_config_read;
+	login->lan_subnet_check = login_lan_subnet_check;
 
 	login->fromchar_auth_ack = login_fromchar_auth_ack;
 	login->fromchar_accinfo = login_fromchar_accinfo;
@@ -2131,5 +2079,5 @@ void login_defaults(void) {
 	login->send_coding_key = login_send_coding_key;
 
 	login->LOGIN_CONF_NAME = NULL;
-	login->LAN_CONF_NAME = NULL;
+	login->NET_CONF_NAME = NULL;
 }
