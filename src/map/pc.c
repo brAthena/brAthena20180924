@@ -4896,6 +4896,7 @@ int pc_isUseitem(struct map_session_data *sd,int n)
 int pc_useitem(struct map_session_data *sd,int n) {
 	int64 tick = timer->gettick();
 	int amount, nameid, i;
+	struct item_data tmp_data;
 
 	nullpo_ret(sd);
 
@@ -5007,6 +5008,9 @@ int pc_useitem(struct map_session_data *sd,int n) {
 	if(sd->catch_target_class != -1) //Abort pet catching.
 		sd->catch_target_class = -1;
 	amount = sd->status.inventory[n].amount;
+	tmp_data.nameid = sd->inventory_data[n]->nameid;
+	tmp_data.script = sd->inventory_data[n]->script;
+
 	//Check if the item is to be consumed immediately [Skotlex]
 	if (sd->inventory_data[n]->flag.delay_consume || sd->inventory_data[n]->flag.keepafteruse)
 		clif->useitemack(sd,n,amount,true);
@@ -5033,7 +5037,7 @@ int pc_useitem(struct map_session_data *sd,int n) {
 	if( itemdb_iscashfood(nameid) )
 		sd->canusecashfood_tick = tick + battle_config.cashfood_use_interval;
 
-	script->run_use_script(sd, sd->inventory_data[n], npc->fake_nd->bl.id);
+	script->run_use_script(sd, &tmp_data, npc->fake_nd->bl.id);
 
 	script->potion_flag = 0;
 	return 1;
