@@ -9,8 +9,8 @@
 *                          www.brathena.org                                  *
 *****************************************************************************/
 
-#ifndef COMMON_CHAR_H
-#define COMMON_CHAR_H
+#ifndef CHAR_CHAR_H
+#define CHAR_CHAR_H
 
 #include "common/cbasetypes.h"
 #include "common/core.h" // CORE_ST_LAST
@@ -320,4 +320,4 @@ struct char_interface {
 
 struct char_interface *chr;
 
-#endif /* COMMON_CHAR_H */
+#endif /* CHAR_CHAR_H */in

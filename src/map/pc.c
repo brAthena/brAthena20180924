@@ -9554,7 +9554,14 @@ int pc_load_combo(struct map_session_data *sd) {
 	return ret;
 }
 
-void pc_equipitem_pos(struct map_session_data *sd, struct item_data *id, int pos)
+/**
+* Equip item ad given position.
+* @param sd the affected player structure. Must be checked before.
+* @param id item structure for equip. Must be checked before.
+* @param n inventory item position. Must be checked before.
+* @param pos slot position. Must be checked before.
+**/
+void pc_equipitem_pos(struct map_session_data *sd, struct item_data *id, int n, int pos)
 {
 	if (pos & (EQP_HAND_R|EQP_SHADOW_WEAPON)) {
 		if(id)
@@ -9728,7 +9735,7 @@ int pc_equipitem(struct map_session_data *sd,int n,int req_pos)
 
 	sd->status.inventory[n].equip=pos;
 
-	pc->equipitem_pos(sd, id, pos);
+	pc->equipitem_pos(sd, id, n, pos);
 
 	pc->checkallowskill(sd); //Check if status changes should be halted.
 	iflag = sd->npc_item_flag;
@@ -9775,7 +9782,12 @@ int pc_equipitem(struct map_session_data *sd,int n,int req_pos)
 
 	return 1;
 }
-
+/**
+* Unrquip item ad given position.
+* @param sd the affected player structure. Must be checked before.
+* @param n inventory item position. Must be checked before.
+* @param pos slot position. Must be checked before.
+**/
 void pc_unequipitem_pos(struct map_session_data *sd, int n, int pos)
 {
 	if (pos & EQP_HAND_R) {

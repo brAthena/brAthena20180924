@@ -9,8 +9,8 @@
 *                          www.brathena.org                                  *
 *****************************************************************************/
 
-#ifndef CHAR_QUEST_H
-#define CHAR_QUEST_H
+#ifndef CHAR_INT_QUEST_H
+#define CHAR_INT_QUEST_H
 
 #ifdef BRATHENA_CORE
 void inter_quest_defaults(void);
@@ -25,5 +25,5 @@ struct inter_quest_interface {
 
 struct inter_quest_interface *inter_quest;
 
-#endif /* CHAR_QUEST_H */
+#endif /* CHAR_INT_QUEST_H */
 
