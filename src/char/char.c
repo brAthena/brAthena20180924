@@ -4167,10 +4167,10 @@ uint32 char_lan_subnet_check(uint32 ip)
 {
 	struct s_subnet lan = { 0 };
 	if (sockt->lan_subnet_check(ip, &lan)) {
-		ShowInfo("Subnet check [%u.%u.%u.%u]: Matches "CL_CYAN"%u.%u.%u.%u/%u.%u.%u.%u"CL_RESET"\n", CONVIP(ip), CONVIP(lan.ip & lan.mask), CONVIP(lan.mask));
+		ShowInfo("Verificacao de sub-redes [%u.%u.%u.%u]: Corresponde "CL_CYAN"%u.%u.%u.%u/%u.%u.%u.%u"CL_RESET"\n", CONVIP(ip), CONVIP(lan.ip & lan.mask), CONVIP(lan.mask));
 		return lan.ip;
 	}
-	ShowInfo("Subnet check [%u.%u.%u.%u]: "CL_CYAN"WAN"CL_RESET"\n", CONVIP(ip));
+	ShowInfo("Verificacao de sub-redes [%u.%u.%u.%u]: "CL_CYAN"WAN"CL_RESET"\n", CONVIP(ip));
 	return 0;
 }
 
@@ -4642,7 +4642,7 @@ void char_parse_char_select(int fd, struct char_session_data* sd, uint32 ipl)
 	//FIXME: is this case even possible? [ultramage]
 	if ((map_fd = chr->server[i].fd) < 1 || session[map_fd] == NULL)
 	{
-		ShowError("chr->parse_char: Tentativa de escrever uma sessÃ£o invÃ¡lida %d! Servidor de mapas #%d desconectado.\n", map_fd, i);
+		ShowError("chr->parse_char: Tentativa de escrever uma sessão inválida %d! Servidor de mapas #%d desconectado.\n", map_fd, i);
 		chr->server[i].fd = -1;
 		memset(&chr->server[i], 0, sizeof(struct mmo_map_server));
 		chr->authfail_fd(fd, 1); // 1 = Server closed
@@ -5827,7 +5827,7 @@ void cmdline_args_init_local(void)
 {
 	CMDLINEARG_DEF2(char-config, charconfig, "Configuracao alternativa do servidor de personagem.", CMDLINE_OPT_PARAM);
 	CMDLINEARG_DEF2(inter-config, interconfig, "Configuracao alternativa do inter-server.", CMDLINE_OPT_PARAM);
-	CMDLINEARG_DEF2(net - config, netconfig, "Alternative network configuration.", CMDLINE_OPT_PARAM);
+	CMDLINEARG_DEF2(net - config, netconfig, "Configuracao alternativa de rede.", CMDLINE_OPT_PARAM);
 }
 
 int do_init(int argc, char **argv) {

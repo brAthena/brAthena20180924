@@ -1682,7 +1682,7 @@ int socket_net_config_read_sub(config_setting_t *t, struct s_subnet **list, int 
 		struct s_subnet *l = NULL;
 
 		if (sscanf(subnet, "%63[^:]:%63[^:]", ipbuf, maskbuf) != 2) {
-			ShowWarning("Invalid IP:Subnet entry in configuration file %s: '%s' (%s)\n", filename, subnet, groupname);
+			ShowWarning("IP Invalido:Entrada de sub-rede no arquivo de configuracao %s: '%s' (%s)\n", filename, subnet, groupname);
 		}
 		RECREATE(*list, struct s_subnet, *count + 1);
 		l = *list;
@@ -1705,7 +1705,7 @@ void socket_net_config_read(const char *filename)
 	nullpo_retv(filename);
 
 	if (libconfig->read_file(&network_config, filename)) {
-		ShowError("LAN Support configuration file is not found: '%s'. This server won't be able to accept connections from any servers.\n", filename);
+		ShowError("O arquivo de configuracao de Lan nao foi encontrado: '%s'. Este server nao sera capaz de aceitar a conexao de todos servidores.\n", filename);
 		return;
 	}
 
@@ -1715,7 +1715,7 @@ void socket_net_config_read(const char *filename)
 	}
 	sockt->lan_subnet_count = 0;
 	if (sockt->net_config_read_sub(libconfig->lookup(&network_config, "lan_subnets"), &sockt->lan_subnet, &sockt->lan_subnet_count, filename, "lan_subnets") > 0)
-		ShowStatus("Read information about %d LAN subnets.\n", sockt->lan_subnet_count);
+		ShowStatus("Leia as informacoes sobre %d LAN e sub-redes.\n", sockt->lan_subnet_count);
 
 	if (sockt->trusted_ip) {
 		aFree(sockt->trusted_ip);
@@ -1723,11 +1723,11 @@ void socket_net_config_read(const char *filename)
 	}
 	sockt->trusted_ip_count = 0;
 	if (sockt->net_config_read_sub(libconfig->lookup(&network_config, "trusted"), &sockt->trusted_ip, &sockt->trusted_ip_count, filename, "trusted") > 0)
-		ShowStatus("Read information about %d trusted IP ranges.\n", sockt->trusted_ip_count);
+		ShowStatus("Leia as informacoes sobre %d enderecos de IP confiaveis.\n", sockt->trusted_ip_count);
 	for (i = 0; i < sockt->allowed_ip_count; ++i) {
 		if ((sockt->allowed_ip[i].ip & sockt->allowed_ip[i].mask) == 0) {
-			ShowError("Using a wildcard IP range in the trusted server IPs is NOT RECOMMENDED.\n");
-			ShowNotice("Please edit your '%s' trusted list to fit your network configuration.\n", filename);
+			ShowError("Usar uma faixa de IP curinga nos IPs de servidores confiaveis nao e recomendado.\n");
+			ShowNotice("Por favor edite sua '%s' lista para ajustar sua configuracao de rede confiavel.\n", filename);
 			break;
 		}
 	}
@@ -1738,14 +1738,14 @@ void socket_net_config_read(const char *filename)
 	}
 	sockt->allowed_ip_count = 0;
 	if (sockt->net_config_read_sub(libconfig->lookup(&network_config, "allowed"), &sockt->allowed_ip, &sockt->allowed_ip_count, filename, "allowed") > 0)
-		ShowStatus("Read information about %d allowed server IP ranges.\n", sockt->allowed_ip_count);
+		ShowStatus("Leia as informacoes sobre %d intervalos permitidos de IP do servidor.\n", sockt->allowed_ip_count);
 	if (sockt->allowed_ip_count == 0) {
-		ShowError("No allowed server IP ranges configured. This server won't be able to accept connections from any char servers.\n");
+		ShowError("Nao ha faixas de IP de servidores permitidos configurado. Este servidor nao sera capaz de aceitar conexoes de quaisquer char-server.\n");
 	}
 	for (i = 0; i < sockt->allowed_ip_count; ++i) {
 		if ((sockt->allowed_ip[i].ip & sockt->allowed_ip[i].mask) == 0) {
-			ShowWarning("Using a wildcard IP range in the allowed server IPs is NOT RECOMMENDED.\n");
-			ShowNotice("Please edit your '%s' allowed list to fit your network configuration.\n", filename);
+			ShowWarning("Usar uma faixa de IP curinga nos IPs de servidores autorizados nao e recomendado.\n");
+			ShowNotice("Por favor edite sua '%s' lista de permicoes para funcionar sua configuracao de rede.\n", filename);
 			break;
 		}
 	}
