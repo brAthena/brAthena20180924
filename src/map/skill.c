@@ -15331,7 +15331,7 @@ int skill_sit (struct map_session_data *sd, int type)
 	}
 
 	if( type ) {
-		clif->sc_load(&sd->bl,sd->bl.id,SELF,SI_SIT,0,0,0);
+		clif->efst_set_enter(&sd->bl,sd->bl.id,SELF,SI_SIT,0,0,0);
 	} else {
 		clif->sc_end(&sd->bl,sd->bl.id,SELF,SI_SIT);
 	}
