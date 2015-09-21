@@ -55,7 +55,11 @@ enum packet_headers {
 #else
 	status_changeType = sc_notickType,/* 0x196 */
 #endif
-	status_change2Type = 0x43f,
+#if PACKETVER >= 20120618
+	efst_set_enterType = 0x984,
+#elif PACKETVER >= 20111108
+	efst_set_enterType = 0x8ff,
+#endif
 	status_change_endType = 0x196,
 #if PACKETVER < 20091103
 	spawn_unit2Type = 0x7c,
@@ -627,15 +631,17 @@ struct packet_status_change_end {
 	unsigned char state;
 } __attribute__((packed));
 
-struct packet_status_change2 {
+struct PACKET_ZC_EFST_SET_ENTER {
 	short PacketType;
-	short index;
-	unsigned int AID;
-	unsigned char state;
-	unsigned int Left;
-	int val1;
-	int val2;
-	int val3;
+	unsigned long AID;
+	short hEFST;
+#if PACKETVER >= 20120529
+	unsigned long MaxMS; // PACKET_ZC_EFST_SET_ENTER2
+#endif
+	unsigned long Time;
+	int Val1;
+	int Val2;
+	int Val3;
 } __attribute__((packed));
 
 struct packet_maptypeproperty2 {
