@@ -17280,6 +17280,7 @@ void clif_maptypeproperty2(struct block_list *bl,enum send_target t) {
 
 // ícone de efeitos [Megasantos]
 void clif_efst_set_enter(struct block_list *bl, int tid, enum send_target target, int type, int val1, int val2, int val3) {
+#if PACKETVER >= 20111101
 	struct PACKET_ZC_EFST_SET_ENTER p;
 
 	p.PacketType = efst_set_enterType;
@@ -17294,6 +17295,7 @@ void clif_efst_set_enter(struct block_list *bl, int tid, enum send_target target
 	p.Val3 = val3;
 
 	clif->send(&p,sizeof(p), bl, target);
+#endif
 }
 
 void clif_partytickack(struct map_session_data* sd, bool flag) {
