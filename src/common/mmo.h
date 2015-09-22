@@ -486,6 +486,7 @@ struct mmo_charstatus {
 	int father;
 	int mother;
 	int child;
+	bool cash_shop; // Megasantos
 
 	unsigned int base_exp,job_exp;
 	int zeny;
