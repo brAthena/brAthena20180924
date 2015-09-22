@@ -57,7 +57,7 @@ enum packet_headers {
 #endif
 #if PACKETVER >= 20120618
 	efst_set_enterType = 0x984,
-#elif PACKETVER >= 20111108
+#elif PACKETVER >= 20111101
 	efst_set_enterType = 0x8ff,
 #endif
 	status_change_endType = 0x196,
