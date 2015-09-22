@@ -17101,6 +17101,11 @@ void __attribute__ ((unused)) clif_parse_dull(int fd,struct map_session_data *sd
 }
 void clif_parse_CashShopOpen(int fd, struct map_session_data *sd) {
 
+	if(sd->status.cash_shop == true) {
+		clif->messagecolor_self(fd, COLOR_RED, msg_fd(fd, 3001));
+		return;
+	}
+
 	if (map->list[sd->bl.m].flag.nocashshop) {
 		clif->messagecolor_self(fd, COLOR_RED, msg_fd(fd,1489)); //Cash Shop is disabled in this map
 		return;
@@ -17141,6 +17146,11 @@ void clif_parse_CashShopSchedule(int fd, struct map_session_data *sd) {
 void clif_parse_CashShopBuy(int fd, struct map_session_data *sd) {
 	unsigned short limit = RFIFOW(fd, 4), i, j;
 	unsigned int kafra_pay = RFIFOL(fd, 6);// [Ryuuzaki] - These are free cash points (strangely #CASH = main cash currently for us, confusing)
+
+	if(sd->status.cash_shop == true) {
+		clif->messagecolor_self(fd, COLOR_RED, msg_fd(fd, 3001));
+		return;
+	}
 
 	if (map->list[sd->bl.m].flag.nocashshop) {
 		clif->messagecolor_self(fd, COLOR_RED, msg_fd(fd,1489)); //Cash Shop is disabled in this map

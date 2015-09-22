@@ -9381,6 +9381,23 @@ ACMD(lang) {
 	return true;
 }
 /**
+* Faz uma nova leitura do banco de dados cashshop. [Megasantos]
+**/
+ACMD(reloadcashshop) {
+	struct s_mapiterator* sd_cash = mapit_getallusers();
+
+	for(sd = (TBL_PC*)mapit->first(sd_cash); mapit->exists(sd_cash); sd = (TBL_PC*)mapit->next(sd_cash))
+		sd->status.cash_shop = true;
+
+	intif->broadcast(msg_sd(sd, 3000), strlen(msg_sd(sd, 3000)) + 1, 0);
+	
+	clif_cashshop_db();
+	mapit->free(sd_cash);
+
+	return true;
+}
+
+/**
  * Fills the reference of available commands in atcommand DBMap
  **/
 #define ACMD_DEF(x) { #x, atcommand_ ## x, NULL, NULL, NULL, true }
@@ -9651,6 +9668,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(skdebug),
 		ACMD_DEF(cddebug),
 		ACMD_DEF(lang),
+		ACMD_DEF(reloadcashshop), // Megasantos
 	};
 	int i;
 
