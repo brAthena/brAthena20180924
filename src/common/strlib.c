@@ -11,9 +11,7 @@
 
 #define BRATHENA_CORE
 
-#define H_STRLIB_C
 #include "strlib.h"
-#undef H_STRLIB_C
 
 #include "common/cbasetypes.h"
 #include "common/malloc.h"
@@ -124,7 +122,7 @@ int jmemescapecpy (char* pt, const char* spt, int size)
 }
 
 // Function to suppress control characters in a string.
-int remove_control_chars(char* str)
+int strlib_remove_control_chars(char *str)
 {
 	int i;
 	int change = 0;
@@ -141,7 +139,7 @@ int remove_control_chars(char* str)
 
 // Removes characters identified by ISSPACE from the start and end of the string
 // NOTE: make sure the string is not const!!
-char* trim(char* str)
+char *strlib_trim(char *str)
 {
 	size_t start;
 	size_t end;
@@ -169,7 +167,7 @@ char* trim(char* str)
 // Converts one or more consecutive occurrences of the delimiters into a single space
 // and removes such occurrences from the beginning and end of string
 // NOTE: make sure the string is not const!!
-char* normalize_name(char* str,const char* delims)
+char *strlib_normalize_name(char *str, const char *delims)
 {
 	char* in = str;
 	char* out = str;
@@ -207,7 +205,7 @@ char* normalize_name(char* str,const char* delims)
 //stristr: Case insensitive version of strstr, code taken from
 //http://www.daniweb.com/code/snippet313.html, Dave Sinkula
 //
-const char* stristr(const char* haystack, const char* needle)
+const char *strlib_stristr(const char *haystack, const char *needle)
 {
 	if ( !*needle )
 	{
@@ -236,86 +234,48 @@ const char* stristr(const char* haystack, const char* needle)
 }
 
 #ifdef __WIN32
-char* strtok_r_(char *s1, const char *s2, char **lasts) {
+char* strlib_strtok_r(char *s1, const char *s2, char **lasts)
+{
 	char *ret;
 
 	if (s1 == NULL)
 		s1 = *lasts;
-	while(*s1 && strchr(s2, *s1))
+	while (*s1 && strchr(s2, *s1))
 		++s1;
-	if(*s1 == '\0')
+	if (*s1 == '\0')
 		return NULL;
 	ret = s1;
-	while(*s1 && !strchr(s2, *s1))
+	while (*s1 && !strchr(s2, *s1))
 		++s1;
-	if(*s1)
+	if (*s1)
 		*s1++ = '\0';
 	*lasts = s1;
 	return ret;
-}
+#else
+return strtok_r(s1, s2, lasts);
 #endif
 
-// TODO: The _MSC_VER check can probably be removed (we no longer support VS
-// versions <= 2003, do we?), but this implementation might be still necessary
-// for NetBSD 5.x and possibly some Solaris versions.
+}
+size_t strlib_strnlen(const char *string, size_t maxlen)
+{
+	// TODO: The _MSC_VER check can probably be removed (we no longer support VS
+	// versions <= 2003, do we?), but this implementation might be still necessary
+	// for NetBSD 5.x and possibly some Solaris versions.
 #if !(defined(WIN32) && defined(_MSC_VER) && _MSC_VER >= 1400) && !defined(HAVE_STRNLEN)
-/* Find the length of STRING, but scan at most MAXLEN characters.
- * If no '\0' terminator is found in that many characters, return MAXLEN.
- */
-size_t strnlen(const char* string, size_t maxlen) {
+	/* Find the length of STRING, but scan at most MAXLEN characters.
+	 * If no '\0' terminator is found in that many characters, return MAXLEN.
+	 */
 	const char* end = (const char*)memchr(string, '\0', maxlen);
 	return end ? (size_t) (end - string) : maxlen;
-}
+#else
+	return strnlen(string, maxlen);
 #endif
-
-// TODO: This should probably be removed, I don't think we support MSVC++ 6.0 anymore.
-#if defined(WIN32) && defined(_MSC_VER) && _MSC_VER <= 1200
-uint64 strtoull(const char* str, char** endptr, int base)
-{
-	uint64 result;
-	int count;
-	int n;
-
-	if( base == 0 )
-	{
-		if( str[0] == '0' && (str[1] == 'x' || str[1] == 'X') )
-			base = 16;
-		else
-		if( str[0] == '0' )
-			base = 8;
-		else
-			base = 10;
-	}
-
-	if( base == 8 )
-		count = sscanf(str, "%I64o%n", &result, &n);
-	else
-	if( base == 10 )
-		count = sscanf(str, "%I64u%n", &result, &n);
-	else
-	if( base == 16 )
-		count = sscanf(str, "%I64x%n", &result, &n);
-	else
-		count = 0; // fail
-
-	if( count < 1 )
-	{
-		errno = EINVAL;
-		result = 0;
-		n = 0;
-	}
-
-	if( endptr )
-		*endptr = (char*)str + n;
-
-	return result;
 }
-#endif
 
 //----------------------------------------------------
 // E-mail check: return 0 (not correct) or 1 (valid).
 //----------------------------------------------------
-int e_mail_check(char* email)
+int strlib_e_mail_check(char *email)
 {
 	char ch;
 	char* last_arobas;
@@ -352,7 +312,7 @@ int e_mail_check(char* email)
 // Return numerical value of a switch configuration
 // on/off, yes/no, true/false, number
 //--------------------------------------------------
-int config_switch(const char* str) {
+int strlib_config_switch(const char *str) {
 	size_t len = strlen(str);
 	if ((len == 2 && strcmpi(str, "on") == 0)
 	 || (len == 3 && strcmpi(str, "yes") == 0)
@@ -372,7 +332,7 @@ int config_switch(const char* str) {
 }
 
 /// strncpy that always null-terminates the string
-char* safestrncpy(char* dst, const char* src, size_t n)
+char *strlib_safestrncpy(char *dst, const char *src, size_t n)
 {
 	if( n > 0 )
 	{
@@ -393,7 +353,7 @@ char* safestrncpy(char* dst, const char* src, size_t n)
 }
 
 /// doesn't crash on null pointer
-size_t safestrnlen(const char* string, size_t maxlen)
+size_t strlib_safestrnlen(const char *string, size_t maxlen)
 {
 	return ( string != NULL ) ? strnlen(string, maxlen) : 0;
 }
@@ -407,8 +367,9 @@ size_t safestrnlen(const char* string, size_t maxlen)
 /// @param fmt Format string
 /// @param ... Format arguments
 /// @return The size of the string or -1 if the buffer is too small
-int safesnprintf(char *buf, size_t sz, const char *fmt, ...) __attribute__((format(printf, 3, 4)));
-int safesnprintf(char *buf, size_t sz, const char *fmt, ...) {
+int strlib_safesnprintf(char *buf, size_t sz, const char *fmt, ...) __attribute__((format(printf, 3, 4)));
+int strlib_safesnprintf(char *buf, size_t sz, const char *fmt, ...)
+{
 	va_list ap;
 	int ret;
 
@@ -424,7 +385,7 @@ int safesnprintf(char *buf, size_t sz, const char *fmt, ...) {
 
 /// Returns the line of the target position in the string.
 /// Lines start at 1.
-int strline(const char* str, size_t pos)
+int strlib_strline(const char *str, size_t pos)
 {
 	const char* target;
 	int line;
@@ -450,7 +411,7 @@ int strline(const char* str, size_t pos)
 /// @param output Output string
 /// @param input Binary input buffer
 /// @param count Number of bytes to convert
-bool bin2hex(char* output, unsigned char* input, size_t count)
+bool strlib_bin2hex(char *output, unsigned char *input, size_t count)
 {
 	char toHex[] = "0123456789abcdef";
 	size_t i;
@@ -1140,29 +1101,29 @@ void strlib_defaults(void) {
 	strlib->jstrescape = jstrescape;
 	strlib->jstrescapecpy = jstrescapecpy;
 	strlib->jmemescapecpy = jmemescapecpy;
-	strlib->remove_control_chars = remove_control_chars;
-	strlib->trim = trim;
-	strlib->normalize_name = normalize_name;
-	strlib->stristr = stristr;
+	strlib->remove_control_chars_ = strlib_remove_control_chars;
+	strlib->trim_ = strlib_trim;
+	strlib->normalize_name_ = strlib_normalize_name;
+	strlib->stristr_ = strlib_stristr;
 
 #if !(defined(WIN32) && defined(_MSC_VER) && _MSC_VER >= 1400) && !defined(HAVE_STRNLEN)
-	strlib->strnlen = strnlen;
+	strlib->strnlen_ = strlib_strnlen;
 #else
-	strlib->strnlen = NULL;
+	strlib->strnlen_ = NULL;
 #endif
 
-#if defined(WIN32) && defined(_MSC_VER) && _MSC_VER <= 1200
-	strlib->strtoull = strtoull;
+#ifdef WIN32
+	strlib->strtok_r_ = strlib_strtok_r;
 #else
-	strlib->strtoull = NULL;
+	strlib->strtok_r_ = NULL;
 #endif
-	strlib->e_mail_check = e_mail_check;
-	strlib->config_switch = config_switch;
-	strlib->safestrncpy = safestrncpy;
-	strlib->safestrnlen = safestrnlen;
-	strlib->safesnprintf = safesnprintf;
-	strlib->strline = strline;
-	strlib->bin2hex = bin2hex;
+	strlib->e_mail_check_ = strlib_e_mail_check;
+	strlib->config_switch_ = strlib_config_switch;
+	strlib->safestrncpy_ = strlib_safestrncpy;
+	strlib->safestrnlen_ = strlib_safestrnlen;
+	strlib->safesnprintf_ = strlib_safesnprintf;
+	strlib->strline_ = strlib_strline;
+	strlib->bin2hex_ = strlib_bin2hex;
 
 	StrBuf->Malloc = StringBuf_Malloc;
 	StrBuf->Init = StringBuf_Init;

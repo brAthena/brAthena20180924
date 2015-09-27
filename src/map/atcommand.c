@@ -89,7 +89,7 @@ const char* atcommand_msgsd(struct map_session_data *sd, int msg_number) {
 }
 
 const char* atcommand_msgfd(int fd, int msg_number) {
-	struct map_session_data *sd = session_isValid(fd) ? session[fd]->session_data : NULL;
+	struct map_session_data *sd = sockt->session_is_valid(fd) ? session[fd]->session_data : NULL;
 	if( !(msg_number >= 0 && msg_number < MAX_MSG) )
 		return "??";
 	if( !sd || sd->lang_id >= atcommand->max_message_table || !atcommand->msg_table[sd->lang_id][msg_number] )
@@ -3687,7 +3687,7 @@ ACMD(reloadscript) {
 	}
 	mapit->free(iter);
 
-	flush_fifos();
+	sockt->flush_fifos();
 	map->reloadnpc(true); // reload config files seeking for npcs
 	script->reload();
 	npc->reload();
@@ -9391,7 +9391,7 @@ ACMD(reloadcashshop) {
 
 	intif->broadcast(msg_sd(sd, 3000), strlen(msg_sd(sd, 3000)) + 1, 0);
 	
-	clif_cashshop_db();
+	clif->cashshop_load();
 	mapit->free(sd_cash);
 
 	return true;

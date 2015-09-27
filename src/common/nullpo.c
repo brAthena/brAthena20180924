@@ -19,9 +19,9 @@
 #include <stdarg.h>
 #include <stdlib.h>
 #include <string.h>
-#if defined(__GNUC__) && !defined(CYGWIN)
+#ifdef HAVE_EXECINFO
 #include <execinfo.h>
-#endif
+#endif // HAVE_EXECINFO
 
 struct nullpo_interface nullpo_s;
 
@@ -35,12 +35,12 @@ struct nullpo_interface nullpo_s;
  * @param title      Message title to display (i.e. failed assertion or nullpo info)
  */
 void assert_report(const char *file, int line, const char *func, const char *targetname, const char *title) {
-#if defined(__GNUC__) && !defined(CYGWIN)
+#ifdef HAVE_EXECINFO
 	void *array[10];
 	int size;
 	char **strings;
 	int i;
-#endif
+#endif // HAVE_EXECINFO
 	if (file == NULL)
 		file = "??";
 
@@ -49,13 +49,13 @@ void assert_report(const char *file, int line, const char *func, const char *tar
 
 	ShowError("--- %s --------------------------------------------\n", title);
 	ShowError("%s:%d: '%s' na funcao `%s'\n", file, line, targetname, func);
-#if defined(__GNUC__) && !defined(CYGWIN)
+#ifdef HAVE_EXECINFO
 	size = (int)backtrace(array, 10);
 	strings = backtrace_symbols(array, size);
 	for (i = 0; i < size; i++)
 		ShowError("%s\n", strings[i]);
 	free(strings);
-#endif
+#endif // HAVE_EXECINFO
 	ShowError("--- fim %s ----------------------------------------\n", title);
 }
 
