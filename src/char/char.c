@@ -91,6 +91,7 @@ char acc_reg_num_db[32] = "acc_reg_num_db";
 char acc_reg_str_db[32] = "acc_reg_str_db";
 char char_reg_str_db[32] = "char_reg_str_db";
 char char_reg_num_db[32] = "char_reg_num_db";
+char updatecharlog[256] = "updatecharlog"; // [Megasantos]
 
 struct char_interface char_s;
 
@@ -1554,6 +1555,12 @@ int char_rename_char_sql(struct char_session_data *sd, int char_id)
 		return 4;
 	}
 
+	// Log troca de nome [Megasantos]
+	if (SQL_ERROR == SQL->Query(inter->sql_handle, "INSERT INTO `%s` (`gid`, `charname_old`,`charname_new`,`gdid`,`position`,`regdate`)"
+		"VALUES ('%d', '%s', '%s', '%d', '%d', NOW())",
+		updatecharlog, char_dat.char_id, char_dat.name, esc_name, char_dat.guild_id, char_dat.slot))
+		Sql_ShowDebug(inter->sql_handle);
+
 	if( SQL_ERROR == SQL->Query(inter->sql_handle, "UPDATE `%s` SET `name` = '%s', `rename` = '%d' WHERE `char_id` = '%d'", char_db, esc_name, --char_dat.rename, char_id) )
 	{
 		Sql_ShowDebug(inter->sql_handle);
@@ -1566,16 +1573,6 @@ int char_rename_char_sql(struct char_session_data *sd, int char_id)
 
 	safestrncpy(char_dat.name, sd->new_name, NAME_LENGTH);
 	memset(sd->new_name,0,sizeof(sd->new_name));
-
-	// log change
-	if( log_char )
-	{
-		if( SQL_ERROR == SQL->Query(inter->sql_handle,
-			"INSERT INTO `%s` (`time`, `char_msg`,`account_id`,`char_id`,`char_num`,`name`,`str`,`agi`,`vit`,`int`,`dex`,`luk`,`hair`,`hair_color`)"
-			"VALUES (NOW(), '%s', '%d', '%d', '%d', '%s', '0', '0', '0', '0', '0', '0', '0', '0')",
-			charlog_db, "change char name", sd->account_id, char_dat.char_id, char_dat.slot, esc_name) )
-			Sql_ShowDebug(inter->sql_handle);
-	}
 
 	return 0;
 }
@@ -5458,6 +5455,8 @@ void char_sql_config_read(const char* cfgName)
 			safestrncpy(inventory_db, w2, sizeof(inventory_db));
 		else if(!strcmpi(w1,"charlog_db"))
 			safestrncpy(charlog_db, w2, sizeof(charlog_db));
+		else if(!strcmpi(w1,"updatecharlog"))
+			safestrncpy(updatecharlog, w2, sizeof(updatecharlog));
 		else if(!strcmpi(w1,"storage_db"))
 			safestrncpy(storage_db, w2, sizeof(storage_db));
 		else if(!strcmpi(w1,"skill_db"))

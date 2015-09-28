@@ -111,6 +111,7 @@ extern char acc_reg_num_db[32];
 extern char acc_reg_str_db[32];
 extern char char_reg_str_db[32];
 extern char char_reg_num_db[32];
+extern char updatecharlog[256]; // [Megasantos]
 
 extern int db_use_sql_item_db;
 extern int db_use_sql_mob_db;
