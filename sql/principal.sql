@@ -793,6 +793,8 @@ CREATE TABLE IF NOT EXISTS `sql_updates` (
   PRIMARY KEY (`timestamp`)
 ) ENGINE=MyISAM;
 
+INSERT IGNORE INTO `sql_updates` (`timestamp`) VALUES (1443394980); -- 2015-09-27--23-03.sql
+
 --
 -- Estrutura da tabela `sstatus`
 --
@@ -827,3 +829,15 @@ CREATE TABLE IF NOT EXISTS `storage` (
   KEY `account_id` (`account_id`)
 ) ENGINE=MyISAM;
 
+--
+-- Estrutura da tabela `updatecharlog` [Megasantos]
+--
+
+CREATE TABLE IF NOT EXISTS `updatecharlog` (
+  `gid` INT(11) UNSIGNED NOT NULL DEFAULT '0',
+  `charname_old` VARCHAR(24) NOT NULL DEFAULT '',
+  `charname_new` VARCHAR(24) NOT NULL DEFAULT '',
+  `gdid` INT(11) UNSIGNED NOT NULL DEFAULT '0',
+  `position` TINYINT NOT NULL DEFAULT '0',
+  `regdate` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00'
+) ENGINE=MyISAM;
