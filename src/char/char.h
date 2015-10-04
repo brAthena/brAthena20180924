@@ -321,4 +321,4 @@ struct char_interface {
 
 struct char_interface *chr;
 
-#endif /* CHAR_CHAR_H */in
+#endif /* CHAR_CHAR_H */

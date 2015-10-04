@@ -233,9 +233,9 @@ const char *strlib_stristr(const char *haystack, const char *needle)
 	return 0;
 }
 
-#ifdef __WIN32
 char* strlib_strtok_r(char *s1, const char *s2, char **lasts)
 {
+#ifdef __WIN32
 	char *ret;
 
 	if (s1 == NULL)
@@ -252,10 +252,10 @@ char* strlib_strtok_r(char *s1, const char *s2, char **lasts)
 	*lasts = s1;
 	return ret;
 #else
-return strtok_r(s1, s2, lasts);
+	return strtok_r(s1, s2, lasts);
 #endif
-
 }
+
 size_t strlib_strnlen(const char *string, size_t maxlen)
 {
 	// TODO: The _MSC_VER check can probably be removed (we no longer support VS
