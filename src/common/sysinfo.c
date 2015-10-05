@@ -22,7 +22,6 @@
 
 #include <stdio.h> // fopen
 #include <stdlib.h> // atoi
-
 #ifdef WIN32
 #	include <windows.h>
 #else
@@ -205,7 +204,9 @@ enum windows_ver_suite {
 #define SYSINFO_COMPILER "Microsoft Visual C++ 2012 (v" EXPAND_AND_QUOTE(_MSC_VER) ")"
 #elif _MSC_VER >= 1800 && _MSC_VER < 1900
 #define SYSINFO_COMPILER "Microsoft Visual C++ 2013 (v" EXPAND_AND_QUOTE(_MSC_VER) ")"
-#else // < 1300 || >= 1900
+#elif _MSC_VER >= 1900 && _MSC_VER < 2000
+#define SYSINFO_COMPILER "Microsoft Visual C++ 2015 (v" EXPAND_AND_QUOTE(_MSC_VER) ")"
+#else // < 1300 || >= 2000
 #define SYSINFO_COMPILER "Microsoft Visual C++ v" EXPAND_AND_QUOTE(_MSC_VER)
 #endif
 #else
