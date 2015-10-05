@@ -54,7 +54,6 @@ struct view_data;
 #define clif_disp_onlyself(sd,mes,len) clif->disp_message( &(sd)->bl, (mes), (len), SELF )
 #define MAX_ROULETTE_LEVEL 7 /** client-defined value **/
 #define MAX_ROULETTE_COLUMNS 9 /** client-defined value **/
-
 #define RGB2BGR(c) ((c & 0x0000FF) << 16 | (c & 0x00FF00) | (c & 0xFF0000) >> 16)
 
 #define COLOR_RED     0xff0000U
@@ -566,11 +565,6 @@ struct merge_item {
 };
 
 /**
- * Vars
- **/
-struct s_packet_db packet_db[MAX_PACKET_DB + 1];
-
-/**
  * Clif.c Interface
  **/
 struct clif_interface {
@@ -610,6 +604,7 @@ struct clif_interface {
 	int (*send_sub) (struct block_list *bl, va_list ap);
 	int (*send_actual) (int fd, void *buf, int len);
 	int (*parse) (int fd);
+	const struct s_packet_db *(*packet) (int packet_id);
 	unsigned short (*parse_cmd) ( int fd, struct map_session_data *sd );
 	unsigned short (*decrypt_cmd) ( int cmd, struct map_session_data *sd );
 	/* auth */
@@ -624,6 +619,8 @@ struct clif_interface {
 	void (*dropitem) (struct map_session_data *sd,int n,int amount);
 	void (*delitem) (struct map_session_data *sd,int n,int amount, short reason);
 	void (*takeitem) (struct block_list* src, struct block_list* dst);
+	void (*item_equip) (short idx, struct EQUIPITEM_INFO *p, struct item *i, struct item_data *id, int eqp_pos);
+	void (*item_normal) (short idx, struct NORMALITEM_INFO *p, struct item *i, struct item_data *id);
 	void (*arrowequip) (struct map_session_data *sd,int val);
 	void (*arrow_fail) (struct map_session_data *sd,int type);
 	void (*use_card) (struct map_session_data *sd,int idx);
@@ -773,7 +770,7 @@ struct clif_interface {
 	int (*poison_list) (struct map_session_data *sd, uint16 skill_lv);
 	int (*autoshadowspell_list) (struct map_session_data *sd);
 	int (*skill_itemlistwindow) ( struct map_session_data *sd, uint16 skill_id, uint16 skill_lv );
-	void (*efst_set_enter) (struct block_list *bl, int tid, enum send_target target, int type, int val1, int val2, int val3);
+	void (*sc_load) (struct block_list *bl, int tid, enum send_target target, int type, int val1, int val2, int val3);
 	void (*sc_end) (struct block_list *bl, int tid, enum send_target target, int type);
 	void (*initialstatus) (struct map_session_data *sd);
 	void (*cooldown_list) (int fd, struct skill_cd* cd);
@@ -1090,6 +1087,7 @@ struct clif_interface {
 	void (*cancelmergeitem) (int fd, struct map_session_data *sd);
 	int (*comparemergeitem) (const void *a, const void *b);
 	void (*ackmergeitems) (int fd, struct map_session_data *sd);
+
 	/*------------------------
 	 *- Parse Incoming Packet
 	 *------------------------*/
@@ -1327,6 +1325,9 @@ struct clif_interface {
 	/* NPC Market (by Ind after an extensive debugging of the packet, only possible thanks to Yommy <3) */
 	void (*pNPCMarketClosed) (int fd, struct map_session_data *sd);
 	void (*pNPCMarketPurchase) (int fd, struct map_session_data *sd);
+	/* */
+	void (*add_random_options) (unsigned char* buf, struct item* item);
+	void (*pHotkeyRowShift) (int fd, struct map_session_data *sd);
 };
 
 struct clif_interface *clif;

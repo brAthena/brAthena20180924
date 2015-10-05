@@ -534,6 +534,7 @@ int quest_read_db(void)
 
 		count++;
 	}
+	libconfig->destroy(&quest_db_conf);
 	ShowConf("Leitura de '"CL_WHITE"%d"CL_RESET"' entradas em '"CL_WHITE"%s"CL_RESET"'.\n", count, filename);
 	return count;
 }

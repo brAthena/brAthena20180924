@@ -17,6 +17,7 @@
 #include "map/clif.h"
 #include "map/pc.h"
 #include "common/cbasetypes.h"
+#include "common/nullpo.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -50,12 +51,15 @@ int duel_checktime(struct map_session_data* sd) {
 	
 	return !(diff >= 0 && diff < battle_config.duel_time_interval);
 }
+
 static int duel_showinfo_sub(struct map_session_data* sd, va_list va)
 {
 	struct map_session_data *ssd = va_arg(va, struct map_session_data*);
 	int *p = va_arg(va, int*);
 	char output[256];
 
+	nullpo_retr(1, sd);
+	nullpo_retr(1, ssd);
 	if (sd->duel_group != ssd->duel_group) return 0;
 	
 	sprintf(output, "      %d. %s", ++(*p), sd->status.name);
@@ -86,7 +90,9 @@ void duel_showinfo(const unsigned int did, struct map_session_data* sd) {
 int duel_create(struct map_session_data* sd, const unsigned int maxpl) {
 	int i=1;
 	char output[256];
-	
+
+	nullpo_ret(sd);
+
 	while(i < MAX_DUEL && duel->list[i].members_count > 0) i++;
 	if(i == MAX_DUEL) return 0;
 	
@@ -107,6 +113,8 @@ int duel_create(struct map_session_data* sd, const unsigned int maxpl) {
 void duel_invite(const unsigned int did, struct map_session_data* sd, struct map_session_data* target_sd) {
 	char output[256];
 
+	nullpo_retv(sd);
+	nullpo_retv(target_sd);
 	// " -- Player %s invites %s to duel --"
 	sprintf(output, msg_sd(sd,373), sd->status.name, target_sd->status.name);
 	clif->disp_message(&sd->bl, output, strlen(output), DUEL_WOS);
@@ -122,6 +130,7 @@ void duel_invite(const unsigned int did, struct map_session_data* sd, struct map
 static int duel_leave_sub(struct map_session_data* sd, va_list va)
 {
 	int did = va_arg(va, int);
+	nullpo_ret(sd);
 	if (sd->duel_invite == did)
 		sd->duel_invite = 0;
 	return 0;
@@ -129,7 +138,8 @@ static int duel_leave_sub(struct map_session_data* sd, va_list va)
 
 void duel_leave(const unsigned int did, struct map_session_data* sd) {
 	char output[256];
-	
+
+	nullpo_retv(sd);
 	// " <- Player %s has left duel --"
 	sprintf(output, msg_sd(sd,375), sd->status.name);
 	clif->disp_message(&sd->bl, output, strlen(output), DUEL_WOS);
@@ -149,7 +159,8 @@ void duel_leave(const unsigned int did, struct map_session_data* sd) {
 
 void duel_accept(const unsigned int did, struct map_session_data* sd) {
 	char output[256];
-	
+
+	nullpo_retv(sd);
 	duel->list[did].members_count++;
 	sd->duel_group = sd->duel_invite;
 	duel->list[did].invites_count--;
@@ -165,7 +176,8 @@ void duel_accept(const unsigned int did, struct map_session_data* sd) {
 
 void duel_reject(const unsigned int did, struct map_session_data* sd) {
 	char output[256];
-	
+
+	nullpo_retv(sd);
 	// " -- Player %s has rejected duel --"
 	sprintf(output, msg_sd(sd,377), sd->status.name);
 	clif->disp_message(&sd->bl, output, strlen(output), DUEL_WOS);

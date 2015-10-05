@@ -190,6 +190,7 @@ CREATE TABLE IF NOT EXISTS `char` (
   `unban_time` INT(11) UNSIGNED NOT NULL DEFAULT '0',
   `uniqueitem_counter` BIGINT(20) UNSIGNED NOT NULL DEFAULT '0',
   `sex` ENUM('M','F','U') NOT NULL DEFAULT 'U',
+  `hotkey_rowshift` TINYINT(3) UNSIGNED NOT NULL DEFAULT '0',
   PRIMARY KEY (`char_id`),
   UNIQUE KEY `name_key` (`name`),
   KEY `account_id` (`account_id`),
@@ -584,7 +585,7 @@ CREATE TABLE IF NOT EXISTS `login` (
 -- added standard accounts for servers, VERY INSECURE!!!
 -- inserted into the table called login which is above
 
-INSERT INTO `login` (`account_id`, `userid`, `user_pass`, `sex`, `email`) VALUES ('1', 's1', 'p1', 'S','brathena@brathena.org');
+INSERT IGNORE INTO `login` (`account_id`, `userid`, `user_pass`, `sex`, `email`) VALUES ('1', 's1', 'p1', 'S','brathena@brathena.org');
 
 --
 -- Estrutura da tabela `mapreg`
@@ -794,6 +795,7 @@ CREATE TABLE IF NOT EXISTS `sql_updates` (
 ) ENGINE=MyISAM;
 
 INSERT IGNORE INTO `sql_updates` (`timestamp`) VALUES (1443394980); -- 2015-09-27--23-03.sql
+INSERT IGNORE INTO `sql_updates` (`timestamp`) VALUES (1440688342); -- 2015-08-27--20-42.sql
 
 --
 -- Estrutura da tabela `sstatus`

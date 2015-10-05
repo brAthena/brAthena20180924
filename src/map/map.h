@@ -552,6 +552,12 @@ struct map_zone_skill_damage_cap_entry {
 	enum map_zone_skill_subtype subtype;
 };
 
+enum map_zone_merge_type {
+	MZMT_NORMAL = 0, ///< MZMT_MERGEABLE zones can merge *into* MZMT_NORMAL zones (but not the converse).
+	MZMT_MERGEABLE,  ///< Can merge with other MZMT_MERGEABLE zones and *into* MZMT_NORMAL zones.
+	MZMT_NEVERMERGE, ///< Cannot merge with any zones.
+};
+
 #define MAP_ZONE_NAME_LENGTH 60
 #define MAP_ZONE_ALL_NAME "All"
 #define MAP_ZONE_NORMAL_NAME "Normal"
@@ -563,6 +569,7 @@ struct map_zone_skill_damage_cap_entry {
 
 struct map_zone_data {
 	char name[MAP_ZONE_NAME_LENGTH];/* 20'd */
+	enum map_zone_merge_type merge_type;
 	struct map_zone_disabled_skill_entry **disabled_skills;
 	int disabled_skills_count;
 	int *disabled_items;
@@ -576,7 +583,7 @@ struct map_zone_data {
 	struct map_zone_skill_damage_cap_entry **capped_skills;
 	int capped_skills_count;
 	struct {
-		unsigned int special : 2;/* 1: whether this is a mergeable zone; 2: whether it is a merged zone */
+		unsigned int merged : 1;
 	} info;
 };
 
@@ -722,7 +729,7 @@ struct map_data {
 	bool custom_name; ///< Whether the instanced map is using a custom name
 
 	/* */
-	int (*getcellp)(struct map_data* m,int16 x,int16 y,cell_chk cellchk);
+	int (*getcellp)(struct map_data* m, const struct block_list *bl, int16 x, int16 y, cell_chk cellchk);
 	void (*setcell) (int16 m, int16 x, int16 y, cell_t cell, bool flag);
 	char *cellPos;
 
@@ -935,7 +942,7 @@ END_ZEROED_BLOCK;
 	void (*zone_change) (int m, struct map_zone_data *zone, const char* start, const char* buffer, const char* filepath);
 	void (*zone_change2) (int m, struct map_zone_data *zone);
 
-	int (*getcell) (int16 m,int16 x,int16 y,cell_chk cellchk);
+	int (*getcell) (int16 m, const struct block_list *bl, int16 x, int16 y, cell_chk cellchk);
 	void (*setgatcell) (int16 m, int16 x, int16 y, int gat);
 
 	void (*cellfromcache) (struct map_data *m);
@@ -957,7 +964,7 @@ END_ZEROED_BLOCK;
 	// search and creation
 	int (*get_new_object_id) (void);
 	int (*search_freecell) (struct block_list *src, int16 m, int16 *x, int16 *y, int16 rx, int16 ry, int flag);
-	bool (*closest_freecell) (int16 m, int16 *x, int16 *y, int type, int flag);
+	bool (*closest_freecell) (int16 m, const struct block_list *bl, int16 *x, int16 *y, int type, int flag);
 	//
 	int (*quit) (struct map_session_data *sd);
 	// npc
@@ -966,7 +973,7 @@ END_ZEROED_BLOCK;
 	int (*clearflooritem_timer) (int tid, int64 tick, int id, intptr_t data);
 	int (*removemobs_timer) (int tid, int64 tick, int id, intptr_t data);
 	void (*clearflooritem) (struct block_list* bl);
-	int (*addflooritem) (struct item *item_data,int amount,int16 m,int16 x,int16 y,int first_charid,int second_charid,int third_charid,int flags);
+	int (*addflooritem) (const struct block_list *bl, struct item *item_data, int amount, int16 m, int16 x, int16 y, int first_charid, int second_charid, int third_charid, int flags);
 	// player to map session
 	void (*addnickdb) (int charid, const char* nick);
 	void (*delnickdb) (int charid, const char* nick);
@@ -1055,15 +1062,15 @@ END_ZEROED_BLOCK;
 	void (*do_shutdown) (void);
 
 	int (*freeblock_timer) (int tid, int64 tick, int id, intptr_t data);
-	int (*searchrandfreecell) (int16 m, int16 *x, int16 *y, int stack);
+	int (*searchrandfreecell) (int16 m, const struct block_list *bl, int16 *x, int16 *y, int stack);
 	int (*count_sub) (struct block_list *bl, va_list ap);
 	DBData (*create_charid2nick) (DBKey key, va_list args);
 	int (*removemobs_sub) (struct block_list *bl, va_list ap);
 	struct mapcell (*gat2cell) (int gat);
 	int (*cell2gat) (struct mapcell cell);
-	int (*getcellp) (struct map_data *m, int16 x, int16 y, cell_chk cellchk);
+	int (*getcellp) (struct map_data *m, const struct block_list *bl, int16 x, int16 y, cell_chk cellchk);
 	void (*setcell) (int16 m, int16 x, int16 y, cell_t cell, bool flag);
-	int (*sub_getcellp) (struct map_data *m, int16 x, int16 y, cell_chk cellchk);
+	int (*sub_getcellp) (struct map_data *m, const struct block_list *bl, int16 x, int16 y, cell_chk cellchk);
 	void (*sub_setcell) (int16 m, int16 x, int16 y, cell_t cell, bool flag);
 	void (*iwall_nextxy) (int16 x, int16 y, int8 dir, int pos, int16 *x1, int16 *y1);
 	DBData (*create_map_data_other_server) (DBKey key, va_list args);

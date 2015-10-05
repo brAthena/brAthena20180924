@@ -516,6 +516,8 @@ struct Battle_Config {
 	int stormgust_knockback;
 
 	int feature_roulette;
+	
+	int show_monster_hp_bar; // [Frost]
 };
 
 #ifdef BRATHENA_CORE

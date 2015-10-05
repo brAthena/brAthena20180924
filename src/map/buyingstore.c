@@ -21,6 +21,7 @@
 #include "map/pc.h" // struct map_session_data
 #include "common/cbasetypes.h"
 #include "common/db.h" // ARR_FIND
+#include "common/nullpo.h" // nullpo_*
 #include "common/showmsg.h" // ShowWarning
 #include "common/socket.h" // RBUF*
 #include "common/strlib.h" // safestrncpy
@@ -34,6 +35,7 @@ unsigned int buyingstore_getuid(void) {
 
 bool buyingstore_setup(struct map_session_data* sd, unsigned char slots)
 {
+	nullpo_retr(false, sd);
 	if( !battle_config.feature_buying_store || sd->state.vending || sd->state.buyingstore || sd->state.trading || slots == 0 )
 	{
 		return false;
@@ -50,7 +52,7 @@ bool buyingstore_setup(struct map_session_data* sd, unsigned char slots)
 		return false;
 	}
 
-	if( map->getcell(sd->bl.m, sd->bl.x, sd->bl.y, CELL_CHKNOVENDING) ) {
+	if (map->getcell(sd->bl.m, &sd->bl, sd->bl.x, sd->bl.y, CELL_CHKNOVENDING)) {
 		// custom: no vending cells
 		clif->message(sd->fd, msg_sd(sd,204)); // "You can't open a shop on this cell."
 		return false;
@@ -68,11 +70,11 @@ bool buyingstore_setup(struct map_session_data* sd, unsigned char slots)
 	return true;
 }
 
-
 void buyingstore_create(struct map_session_data* sd, int zenylimit, unsigned char result, const char* storename, const uint8* itemlist, unsigned int count)
 {
 	unsigned int i, weight, listidx;
 
+	nullpo_retv(sd);
 	if (!result || count == 0) {
 		// canceled, or no items
 		return;
@@ -104,7 +106,7 @@ void buyingstore_create(struct map_session_data* sd, int zenylimit, unsigned cha
 		return;
 	}
 
-	if( map->getcell(sd->bl.m, sd->bl.x, sd->bl.y, CELL_CHKNOVENDING) ) {
+	if (map->getcell(sd->bl.m, &sd->bl, sd->bl.x, sd->bl.y, CELL_CHKNOVENDING)) {
 		// custom: no vending cells
 		clif->message(sd->fd, msg_sd(sd,204)); // "You can't open a shop on this cell."
 		return;
@@ -184,10 +186,10 @@ void buyingstore_create(struct map_session_data* sd, int zenylimit, unsigned cha
 	clif->buyingstore_entry(sd);
 }
 
-
 void buyingstore_close(struct map_session_data* sd)
 {
-	if( sd->state.buyingstore )
+	nullpo_retv(sd);
+	if (sd->state.buyingstore)
 	{
 		// invalidate data
 		sd->state.buyingstore = false;
@@ -198,11 +200,11 @@ void buyingstore_close(struct map_session_data* sd)
 	}
 }
 
-
 void buyingstore_open(struct map_session_data* sd, int account_id)
 {
 	struct map_session_data* pl_sd;
 
+	nullpo_retv(sd);
 	if( !battle_config.feature_buying_store || pc_istrading(sd) )
 	{// not allowed to sell
 		return;
@@ -235,6 +237,7 @@ void buyingstore_trade(struct map_session_data* sd, int account_id, unsigned int
 	unsigned int i, weight, listidx, k;
 	struct map_session_data* pl_sd;
 
+	nullpo_retv(sd);
 	if( count == 0 )
 	{// nothing to do
 		return;
@@ -409,7 +412,8 @@ bool buyingstore_search(struct map_session_data* sd, unsigned short nameid)
 {
 	unsigned int i;
 
-	if( !sd->state.buyingstore )
+	nullpo_retr(false, sd);
+	if (!sd->state.buyingstore)
 	{// not buying
 		return false;
 	}
@@ -430,6 +434,8 @@ bool buyingstore_searchall(struct map_session_data* sd, const struct s_search_st
 {
 	unsigned int i, idx;
 	struct s_buyingstore_item* it;
+
+	nullpo_retr(true, sd);
 
 	if( !sd->state.buyingstore )
 	{// not buying

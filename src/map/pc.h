@@ -902,7 +902,6 @@ END_ZEROED_BLOCK; /* End */
 	int (*skill) (struct map_session_data *sd, int id, int level, int flag);
 
 	int (*insert_card) (struct map_session_data *sd,int idx_card,int idx_equip);
-	
 	bool (*can_insert_card) (struct map_session_data* sd, int idx_card);
 	bool (*can_insert_card_into) (struct map_session_data* sd, int idx_card, int idx_equip);
 
@@ -939,7 +938,7 @@ END_ZEROED_BLOCK; /* End */
 	int (*resetfeel) (struct map_session_data *sd);
 	int (*resethate) (struct map_session_data *sd);
 	int (*equipitem) (struct map_session_data *sd,int n,int req_pos);
-	void(*equipitem_pos) (struct map_session_data *sd, struct item_data *id, int n, int pos);
+	void (*equipitem_pos) (struct map_session_data *sd, struct item_data *id, int n, int pos);
 	int (*unequipitem) (struct map_session_data *sd,int n,int flag);
 	void (*unequipitem_pos) (struct map_session_data *sd, int n, int pos);
 	int (*checkitem) (struct map_session_data *sd);

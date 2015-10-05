@@ -24,14 +24,44 @@ enum packet_headers {
 	banking_checkType = 0x9a6,
 	cart_additem_ackType = 0x12c,
 	sc_notickType = 0x196,
+#if PACKETVER >= 20141022
+	hotkeyType = 0xa00,
+#elif PACKETVER >= 20090603
+	hotkeyType = 0x7d9,
+#else
+	hotkeyType = 0x2b9,
+#endif
+#if PACKETVER >= 20150226
+	cartaddType = 0xa0b,
+#elif PACKETVER >= 5
+	cartaddType = 0x1c5,
+#else
+	cartaddType = 0x124,
+#endif
+#if PACKETVER >= 20150226
+	storageaddType = 0xa0a,
+#elif PACKETVER >= 5
+	storageaddType = 0x1c4,
+#else
+	storageaddType = 0xf4,
+#endif
+#if PACKETVER >= 20150226
+	tradeaddType = 0xa09,
+#elif PACKETVER >= 20100223
+	tradeaddType = 0x80f,
+#else
+	tradeaddType = 0x0e9,
+#endif
 #if PACKETVER < 20061218
-	additemType = 0xa0,
+	additemType = 0x0a0,
 #elif PACKETVER < 20071002
 	additemType = 0x29a,
 #elif PACKETVER < 20120925
 	additemType = 0x2d4,
-#else
+#elif PACKETVER < 20150226
 	additemType = 0x990,
+#else
+	additemType = 0xa0c,
 #endif
 #if PACKETVER < 4
 	idle_unitType = 0x78,
@@ -55,11 +85,7 @@ enum packet_headers {
 #else
 	status_changeType = sc_notickType,/* 0x196 */
 #endif
-#if PACKETVER >= 20120618
-	efst_set_enterType = 0x984,
-#elif PACKETVER >= 20111101
-	efst_set_enterType = 0x8ff,
-#endif
+	status_change2Type = 0x43f,
 	status_change_endType = 0x196,
 #if PACKETVER < 20091103
 	spawn_unit2Type = 0x7c,
@@ -144,7 +170,9 @@ enum packet_headers {
 #else
 	inventorylistnormalType = 0xa3,
 #endif
-#if PACKETVER >= 20120925
+#if PACKETVER >= 20150226
+	inventorylistequipType = 0xa0d,
+#elif PACKETVER >= 20120925
 	inventorylistequipType = 0x992,
 #elif PACKETVER >= 20080102
 	inventorylistequipType = 0x2d0,
@@ -162,7 +190,9 @@ enum packet_headers {
 #else
 	storagelistnormalType = 0xa5,
 #endif
-#if PACKETVER >= 20120925
+#if PACKETVER >= 20150226
+	storagelistequipType = 0xa10,
+#elif PACKETVER >= 20120925
 	storagelistequipType = 0x996,
 #elif PACKETVER >= 20080102
 	storagelistequipType = 0x2d1,
@@ -180,7 +210,9 @@ enum packet_headers {
 #else
 	cartlistnormalType = 0x123,
 #endif
-#if PACKETVER >= 20120925
+#if PACKETVER >= 20150226
+	cartlistequipType = 0xa0f,
+#elif PACKETVER >= 20120925
 	cartlistequipType = 0x994,
 #elif PACKETVER >= 20080102
 	cartlistequipType = 0x2d2,
@@ -189,6 +221,12 @@ enum packet_headers {
 #else
 	cartlistequipType = 0x122,
 #endif
+#if PACKETVER < 20100105
+	vendinglistType = 0x133,
+#else
+	vendinglistType = 0x800,
+#endif
+	openvendingType = 0x136,
 #if PACKETVER >= 20120925
 	equipitemType = 0x998,
 #else
@@ -223,8 +261,8 @@ enum packet_headers {
 #endif
 	partyleaderchangedType = 0x7fc,
 	rouletteinfoackType = 0xa1c,
-	roulettgenerateackType = 0xA20,
-	roulettercvitemackType = 0xA22,
+	roulettgenerateackType = 0xa20,
+	roulettercvitemackType = 0xa22,
 };
 
 #if !defined(sun) && (!defined(__NETBSD__) || __NetBSD_Version__ >= 600000000) // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
@@ -266,6 +304,12 @@ struct NORMALITEM_INFO {
 #endif
 } __attribute__((packed));
 
+struct RndOptions {
+	short index;
+	short value;
+	unsigned char param;
+} __attribute__((packed));
+
 struct EQUIPITEM_INFO {
 	short index;
 	unsigned short ITID;
@@ -293,6 +337,10 @@ struct EQUIPITEM_INFO {
 #endif
 #if PACKETVER >= 20100629
 	unsigned short wItemSpriteNumber;
+#endif
+#if PACKETVER >= 20150226
+	unsigned char option_count;
+	struct RndOptions option_data[5];
 #endif
 #if PACKETVER >= 20120925
 	struct {
@@ -354,6 +402,9 @@ struct packet_additem {
 #if PACKETVER >= 20071002
 	unsigned short bindOnEquipType;
 #endif
+#if PACKETVER >= 20150226
+	struct RndOptions option_data[5];
+#endif
 } __attribute__((packed));
 
 struct packet_dropflooritem {
@@ -370,8 +421,8 @@ struct packet_dropflooritem {
 	unsigned char subY;
 	short count;
 } __attribute__((packed));
-#if PACKETVER < 20091103
 struct packet_idle_unit2 {
+#if PACKETVER < 20091103
 	short PacketType;
 #if PACKETVER >= 20071106
 	unsigned char objecttype;
@@ -402,8 +453,13 @@ struct packet_idle_unit2 {
 	unsigned char ySize;
 	unsigned char state;
 	short clevel;
+#else // ! PACKETVER < 20091103
+	char UNUSED;
+#endif // PACKETVER < 20091103
 } __attribute__((packed));
+
 struct packet_spawn_unit2 {
+#if PACKETVER < 20091103
 	short PacketType;
 #if PACKETVER >= 20071106
 	unsigned char objecttype;
@@ -428,8 +484,11 @@ struct packet_spawn_unit2 {
 	unsigned char PosDir[3];
 	unsigned char xSize;
 	unsigned char ySize;
+#else // ! PACKETVER < 20091103
+	char UNUSED;
+#endif // PACKETVER < 20091103
 } __attribute__((packed));
-#endif
+
 struct packet_spawn_unit {
 	short PacketType;
 #if PACKETVER >= 20091103
@@ -631,17 +690,15 @@ struct packet_status_change_end {
 	unsigned char state;
 } __attribute__((packed));
 
-struct PACKET_ZC_EFST_SET_ENTER {
+struct packet_status_change2 {
 	short PacketType;
-	unsigned long AID;
-	short hEFST;
-#if PACKETVER >= 20120529
-	unsigned long MaxMS; // PACKET_ZC_EFST_SET_ENTER2
-#endif
-	unsigned long Time;
-	int Val1;
-	int Val2;
-	int Val3;
+	short index;
+	unsigned int AID;
+	unsigned char state;
+	unsigned int Left;
+	int val1;
+	int val2;
+	int val3;
 } __attribute__((packed));
 
 struct packet_maptypeproperty2 {
@@ -721,6 +778,7 @@ struct packet_script_clear {
 	unsigned int NpcID;
 } __attribute__((packed));
 
+/* made possible thanks to Yommy!! */
 struct packet_package_item_announce {
 	short PacketType;
 	short PacketLength;
@@ -732,6 +790,7 @@ struct packet_package_item_announce {
 	unsigned short BoxItemID;
 } __attribute__((packed));
 
+/* made possible thanks to Yommy!! */
 struct packet_item_drop_announce {
 	short PacketType;
 	short PacketLength;
@@ -780,7 +839,7 @@ struct packet_banking_withdraw_ack {
 	int Balance;
 } __attribute__((packed));
 
-/* Sistema de Roleta */
+/* Roulette System [Yommy/Hercules] */
 struct packet_roulette_open_ack {
 	short PacketType;
 	char Result;
@@ -1008,6 +1067,7 @@ struct packet_npc_market_result_ack {
 struct packet_npc_market_open {
 	short PacketType;
 	short PacketLength;
+	/* inner struct figured by Ind after some annoying hour of debugging (data Thanks to Yommy) */
 	struct {
 		unsigned short nameid;
 		unsigned char type;
@@ -1016,7 +1076,7 @@ struct packet_npc_market_open {
 		unsigned short view;
 	// It seems that the client doesn't have any hard-coded limit for this list
 	// it's possible to send up to 1890 items without dropping a packet that's
-	// too large
+	// too large [Panikon]
 	} list[1000];/* TODO: whats the actual max of this? */
 } __attribute__((packed));
 
@@ -1035,6 +1095,17 @@ struct packet_party_leader_changed {
 	unsigned int new_leader_aid;
 } __attribute__((packed));
 
+struct packet_hotkey {
+	short PacketType;
+#if PACKETVER >= 20141022
+	char Rotate;
+#endif
+	struct {
+		char isSkill;		// 0: Item, 1:Skill
+		unsigned int ID;	// Item/Skill ID
+		short count;		// Item Quantity/Skill Level
+	} hotkey[MAX_HOTKEYS];
+} __attribute__((packed));
 
 #if !defined(sun) && (!defined(__NETBSD__) || __NetBSD_Version__ >= 600000000) // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #pragma pack(pop)

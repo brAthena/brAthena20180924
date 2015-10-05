@@ -261,6 +261,7 @@ void channel_send(struct channel_data *chan, struct map_session_data *sd, const 
 {
 	char message[150];
 	nullpo_retv(chan);
+	nullpo_retv(msg);
 
 	if (sd && chan->msg_delay != 0
 	 && DIFF_TICK(sd->hchsysch_tick + chan->msg_delay*1000, timer->gettick()) > 0
@@ -268,12 +269,12 @@ void channel_send(struct channel_data *chan, struct map_session_data *sd, const 
 		clif->messagecolor_self(sd->fd, COLOR_RED, msg_sd(sd,1455));
 		return;
 	} else if (sd) {
-		snprintf(message, 150, "[ #%s ] %s : %s",chan->name,sd->status.name, msg);
+		safesnprintf(message, 150, "[ #%s ] %s : %s", chan->name, sd->status.name, msg);
 		clif->channel_msg(chan,sd,message);
 		if (chan->msg_delay != 0)
 			sd->hchsysch_tick = timer->gettick();
 	} else {
-		snprintf(message, 150, "[ #%s ] %s",chan->name, msg);
+		safesnprintf(message, 150, "[ #%s ] %s", chan->name, msg);
 		clif->channel_msg2(chan, message);
 	}
 }
@@ -331,6 +332,7 @@ enum channel_operation_status channel_join(struct channel_data *chan, struct map
 
 	nullpo_retr(HCS_STATUS_FAIL, chan);
 	nullpo_retr(HCS_STATUS_FAIL, sd);
+	nullpo_retr(HCS_STATUS_FAIL, password);
 
 	if (idb_exists(chan->users, sd->status.char_id)) {
 		return HCS_STATUS_ALREADY;
@@ -363,7 +365,7 @@ enum channel_operation_status channel_join(struct channel_data *chan, struct map
 		int i;
 		for (i = 0; i < MAX_GUILDALLIANCE; i++) {
 			struct guild *sg = NULL;
-			if (g->alliance[i].opposition == 0 && g->alliance[i].guild_id && (sg = guild->search(g->alliance[i].guild_id))) {
+			if (g->alliance[i].opposition == 0 && g->alliance[i].guild_id && (sg = guild->search(g->alliance[i].guild_id)) != NULL) {
 				if (!(sg->channel->banned && idb_exists(sg->channel->banned, sd->status.account_id))) {
 					channel->join_sub(sg->channel, sd, stealth);
 				}
@@ -447,6 +449,7 @@ void channel_leave(struct channel_data *chan, struct map_session_data *sd)
  */
 void channel_quit(struct map_session_data *sd)
 {
+	nullpo_retv(sd);
 	while (sd->channel_count > 0) {
 		// Loop downward to avoid unnecessary array compactions by channel_leave
 		struct channel_data *chan = sd->channels[sd->channel_count-1];
@@ -463,10 +466,11 @@ void channel_quit(struct map_session_data *sd)
 /**
  * Joins the local map channel.
  *
- * @param sd The target character
+ * @param sd The target character (sd must be non null)
  */
 void channel_map_join(struct map_session_data *sd)
 {
+	nullpo_retv(sd);
 	if (sd->state.autotrade || sd->state.standalone)
 		return;
 	if (!map->list[sd->bl.m].channel) {
@@ -477,7 +481,7 @@ void channel_map_join(struct map_session_data *sd)
 		map->list[sd->bl.m].channel->m = sd->bl.m;
 	}
 
-	channel->join(map->list[sd->bl.m].channel, sd, NULL, false);
+	channel->join(map->list[sd->bl.m].channel, sd, "", false);
 }
 
 /**
@@ -539,12 +543,13 @@ void channel_guild_leave_alliance(const struct guild *g_source, const struct gui
 /**
  * Makes a character quit all guild-related channels.
  *
- * @param sd The character
+ * @param sd The character (must be non null)
  */
 void channel_quit_guild(struct map_session_data *sd)
 {
 	unsigned char i;
 
+	nullpo_retv(sd);
 	for (i = 0; i < sd->channel_count; i++) {
 		struct channel_data *chan = sd->channels[i];
 
@@ -675,8 +680,8 @@ void read_channels_config(void)
 		}
 
 		ShowConf("Leitura de '"CL_WHITE"%d"CL_RESET"' canais em '"CL_WHITE"%s"CL_RESET"'.\n", db_size(channel->db), config_filename);
-		libconfig->destroy(&channels_conf);
 	}
+	libconfig->destroy(&channels_conf);
 }
 
 /*==========================================

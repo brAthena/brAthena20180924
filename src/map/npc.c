@@ -556,7 +556,7 @@ int npc_timerevent(int tid, int64 tick, int id, intptr_t data) {
 		return 0;
 	}
 
-	if( ted->rid && !(sd = map->id2sd(ted->rid)) ) {
+	if (ted->rid && (sd = map->id2sd(ted->rid)) == NULL) {
 		ShowError("npc_timerevent: Jogador attachado nao foi encontrado.\n");
 		ers_free(npc->timer_event_ers, ted);
 		return 0;
@@ -621,7 +621,7 @@ int npc_timerevent_start(struct npc_data* nd, int rid) {
 	// Check if there is an OnTimer Event
 	ARR_FIND( 0, nd->u.scr.timeramount, j, nd->u.scr.timer_event[j].timer > nd->u.scr.timer );
 
-	if( nd->u.scr.rid > 0 && !(sd = map->id2sd(nd->u.scr.rid)) ) {
+	if (nd->u.scr.rid > 0 && (sd = map->id2sd(nd->u.scr.rid)) == NULL) {
 		// Failed to attach timer to this player.
 		ShowError("npc_timerevent_start: Jogador attachado nao foi encontrado!\n");
 		return 1;
@@ -670,7 +670,7 @@ int npc_timerevent_stop(struct npc_data* nd)
 
 	nullpo_ret(nd);
 
-	if (nd->u.scr.rid && !(sd = map->id2sd(nd->u.scr.rid))) {
+	if (nd->u.scr.rid && (sd = map->id2sd(nd->u.scr.rid)) == NULL) {
 		ShowError("npc_timerevent_stop: Jogador attachado nao foi encontrado!\n");
 		return 1;
 	}
@@ -1099,7 +1099,7 @@ int npc_check_areanpc(int flag, int16 m, int16 x, int16 y, int16 range) {
 	i = 0;
 	for (ys = y0; ys <= y1 && !i; ys++) {
 		for(xs = x0; xs <= x1 && !i; xs++) {
-			if (map->getcell(m,xs,ys,CELL_CHKNPC))
+			if (map->getcell(m, NULL, xs, ys, CELL_CHKNPC))
 				i = 1;
 		}
 	}
@@ -3301,7 +3301,7 @@ void npc_setcells(struct npc_data* nd) {
 
 	for (i = y-ys; i <= y+ys; i++) {
 		for (j = x-xs; j <= x+xs; j++) {
-			if (map->getcell(m, j, i, CELL_CHKNOPASS))
+			if (map->getcell(m, &nd->bl, j, i, CELL_CHKNOPASS))
 				continue;
 			map->list[m].setcell(m, j, i, CELL_NPC, true);
 		}
@@ -3338,10 +3338,10 @@ void npc_unsetcells(struct npc_data* nd) {
 
 	//Locate max range on which we can locate npc cells
 	//FIXME: does this really do what it's supposed to do? [ultramage]
-	for(x0 = x-xs; x0 > 0 && map->getcell(m, x0, y, CELL_CHKNPC); x0--);
-	for(x1 = x+xs; x1 < map->list[m].xs-1 && map->getcell(m, x1, y, CELL_CHKNPC); x1++);
-	for(y0 = y-ys; y0 > 0 && map->getcell(m, x, y0, CELL_CHKNPC); y0--);
-	for(y1 = y+ys; y1 < map->list[m].ys-1 && map->getcell(m, x, y1, CELL_CHKNPC); y1++);
+	for(x0 = x-xs; x0 > 0 && map->getcell(m, &nd->bl, x0, y, CELL_CHKNPC); x0--);
+	for(x1 = x+xs; x1 < map->list[m].xs-1 && map->getcell(m, &nd->bl, x1, y, CELL_CHKNPC); x1++);
+	for(y0 = y-ys; y0 > 0 && map->getcell(m, &nd->bl, x, y0, CELL_CHKNPC); y0--);
+	for(y1 = y+ys; y1 < map->list[m].ys-1 && map->getcell(m, &nd->bl, x, y1, CELL_CHKNPC); y1++);
 
 	//Erase this npc's cells
 	for (i = y-ys; i <= y+ys; i++)
@@ -3779,7 +3779,7 @@ const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, const char
 			ShowWarning("npc_parse_mapflag: Voce nao pode definir PvP e BG para o mesmo mapa! Removendo BG de %s do arquivo '%s', linha '%d'.\n", map->list[m].name, filepath, strline(buffer,start-buffer));
 			if (retval) *retval = EXIT_FAILURE;
 		}
-		if( state && (zone = strdb_get(map->zone_db, MAP_ZONE_PVP_NAME)) && map->list[m].zone != zone ) {
+		if( state && (zone = strdb_get(map->zone_db, MAP_ZONE_PVP_NAME)) != NULL && map->list[m].zone != zone ) {
 			map->zone_change(m,zone,start,buffer,filepath);
 		} else if ( !state ) {
 			map->list[m].zone = &map->zone_all;
@@ -3831,7 +3831,7 @@ const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, const char
 			ShowWarning("npc_parse_mapflag: Voce nao pode definir GvG e BG para o mesmo mapa! Removendo BG de %s no arquivo '%s', linha '%d'.\n", map->list[m].name, filepath, strline(buffer,start-buffer));
 			if (retval) *retval = EXIT_FAILURE;
 		}
-		if( state && (zone = strdb_get(map->zone_db, MAP_ZONE_GVG_NAME)) && map->list[m].zone != zone ) {
+		if( state && (zone = strdb_get(map->zone_db, MAP_ZONE_GVG_NAME)) != NULL && map->list[m].zone != zone ) {
 			map->zone_change(m,zone,start,buffer,filepath);
 		}
 	}
@@ -3869,7 +3869,7 @@ const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, const char
 			if (retval) *retval = EXIT_FAILURE;
 		}
 		
-		if( state && (zone = strdb_get(map->zone_db, MAP_ZONE_BG_NAME)) && map->list[m].zone != zone ) {
+		if( state && (zone = strdb_get(map->zone_db, MAP_ZONE_BG_NAME)) != NULL && map->list[m].zone != zone ) {
 			map->zone_change(m,zone,start,buffer,filepath);
 		}
 	}
@@ -4576,14 +4576,14 @@ void npc_debug_warps_sub(struct npc_data* nd) {
 	if (m < 0) return; //Warps to another map, nothing to do about it.
 	if (nd->u.warp.x == 0 && nd->u.warp.y == 0) return; // random warp
 
-	if (map->getcell(m, nd->u.warp.x, nd->u.warp.y, CELL_CHKNPC)) {
+	if (map->getcell(m, &nd->bl, nd->u.warp.x, nd->u.warp.y, CELL_CHKNPC)) {
 		ShowWarning("Portal %s em %s(%d,%d) diretamente no topo de uma area em %s(%d,%d)\n",
 			nd->name,
 			map->list[nd->bl.m].name, nd->bl.x, nd->bl.y,
 			map->list[m].name, nd->u.warp.x, nd->u.warp.y
 			);
 	}
-	if (map->getcell(m, nd->u.warp.x, nd->u.warp.y, CELL_CHKNOPASS)) {
+	if (map->getcell(m, &nd->bl, nd->u.warp.x, nd->u.warp.y, CELL_CHKNOPASS)) {
 		ShowWarning("Portal %s at %s(%d,%d) diretamente em uma non-walkable area em %s(%d,%d)\n",
 			nd->name,
 			map->list[nd->bl.m].name, nd->bl.x, nd->bl.y,

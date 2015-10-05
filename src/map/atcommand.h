@@ -17,6 +17,8 @@
 #include "common/conf.h"
 #include "common/db.h"
 
+#include <stdarg.h>
+
 /**
  * Declarations
  **/
@@ -119,6 +121,8 @@ struct atcommand_interface {
 	void (*get_jail_time) (int jailtime, int* year, int* month, int* day, int* hour, int* minute);
 	int (*cleanfloor_sub) (struct block_list *bl, va_list ap);
 	int (*mutearea_sub) (struct block_list *bl,va_list ap);
+	void (*getring) (struct map_session_data* sd);
+	void (*channel_help) (int fd, const char *command, bool can_create);
 	/* */
 	void (*commands_sub) (struct map_session_data* sd, const int fd, AtCommandType type);
 	void (*cmd_db_clear) (void);
@@ -139,6 +143,7 @@ void atcommand_defaults(void);
 #endif // BRATHENA_CORE
 
 /* stay here */
-#define ACMD(x) static bool atcommand_ ## x (const int fd, struct map_session_data* sd, const char* command, const char* message, struct AtCommandInfo *info)
+#define ACMD(x) static bool atcommand_ ## x (const int fd, struct map_session_data* sd, const char* command, const char* message, struct AtCommandInfo *info) __attribute__((nonnull (2, 3, 4, 5))); \
+    static bool atcommand_ ## x (const int fd, struct map_session_data* sd, const char* command, const char* message, struct AtCommandInfo *info)
 
 #endif /* MAP_ATCOMMAND_H */

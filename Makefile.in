@@ -122,7 +122,7 @@ sysinfo: config.status
 
 config.status: configure
 	@echo "	RECONFIGURE"
-	@./config.status --recheck
+	@./config.status --recheck && ./config.status
 
 	
 help: Makefile
