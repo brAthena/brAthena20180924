@@ -13,10 +13,11 @@
 
 #include "login.h"
 
-#include "account.h"
-#include "ipban.h"
-#include "loginlog.h"
+#include "login/account.h"
+#include "login/ipban.h"
+#include "login/loginlog.h"
 #include "common/cbasetypes.h"
+#include "common/conf.h"
 #include "common/core.h"
 #include "common/db.h"
 #include "common/malloc.h"
@@ -33,6 +34,7 @@
 #include <stdlib.h>
 
 struct login_interface login_s;
+struct login_interface *login;
 struct Login_Config login_config;
 struct mmo_char_server server[MAX_SERVERS]; // char server data
 
@@ -148,8 +150,7 @@ int charif_sendallwos(int sfd, uint8* buf, size_t len)
 	for( i = 0, c = 0; i < ARRAYLENGTH(server); ++i )
 	{
 		int fd = server[i].fd;
-		if( sockt->session_is_valid(fd) && fd != sfd )
-		{
+		if (sockt->session_is_valid(fd) && fd != sfd) {
 			WFIFOHEAD(fd,len);
 			memcpy(WFIFOP(fd,0), buf, len);
 			WFIFOSET(fd,len);
@@ -243,13 +244,14 @@ bool login_check_password(const char* md5key, int passwdenc, const char* passwd,
 	}
 }
 
+
 /**
  * Checks whether the given IP comes from LAN or WAN.
  *
  * @param ip IP address to check.
  * @retval 0 if it is a WAN IP.
  * @return the appropriate LAN server address to send, if it is a LAN IP.
-*/
+ */
 uint32 login_lan_subnet_check(uint32 ip)
 {
 	return sockt->lan_subnet_check(ip, NULL);
@@ -297,7 +299,7 @@ void login_fromchar_parse_auth(int fd, int id, const char *const ip)
 	RFIFOSKIP(fd,23);
 
 	node = (struct login_auth_node*)idb_get(login->auth_db, account_id);
-	if( runflag == LOGINSERVER_ST_RUNNING &&
+	if( core->runflag == LOGINSERVER_ST_RUNNING &&
 		node != NULL &&
 		node->account_id == account_id &&
 		node->login_id1  == login_id1 &&
@@ -1043,7 +1045,7 @@ int login_mmo_auth(struct login_session_data* sd, bool isServer) {
 
 		for( dnsbl_serv = strtok(login_config.dnsbl_servs,","); dnsbl_serv != NULL; dnsbl_serv = strtok(NULL,",") ) {
 			sprintf(ip_dnsbl, "%s.%s", r_ip, trim(dnsbl_serv));
-			if( sockt->host2ip(ip_dnsbl) ) {
+			if (sockt->host2ip(ip_dnsbl)) {
 				ShowInfo("DNSBL IP: (%s) na lista negra. Jogador expulso.\n", r_ip);
 				return 3;
 			}
@@ -1189,7 +1191,7 @@ void login_auth_ok(struct login_session_data* sd)
 	nullpo_retv(sd);
 	fd = sd->fd;
 	ip = sockt->session[fd]->client_addr;
-	if( runflag != LOGINSERVER_ST_RUNNING )
+	if( core->runflag != LOGINSERVER_ST_RUNNING )
 	{
 		// players can only login while running
 		login->connection_problem(fd, 1); // 01 = server closed
@@ -1259,7 +1261,8 @@ void login_auth_ok(struct login_session_data* sd)
 	WFIFOB(fd,46) = sex_str2num(sd->sex);
 	for (i = 0, n = 0; i < ARRAYLENGTH(server); ++i) {
 		uint32 subnet_char_ip;
-		if( !sockt->session_is_valid(server[i].fd) )
+
+		if (!sockt->session_is_valid(server[i].fd))
 			continue;
 
 		subnet_char_ip = login->lan_subnet_check(ip);
@@ -1498,6 +1501,7 @@ void login_parse_request_coding_key(int fd, struct login_session_data* sd)
 	login->send_coding_key(fd, sd);
 }
 
+void login_char_server_connection_status(int fd, struct login_session_data* sd, uint8 status) __attribute__((nonnull (2)));
 void login_char_server_connection_status(int fd, struct login_session_data* sd, uint8 status)
 {
 	WFIFOHEAD(fd,3);
@@ -1535,7 +1539,7 @@ void login_parse_request_connection(int fd, struct login_session_data* sd, const
 	login_log(sockt->session[fd]->client_addr, sd->userid, 100, message);
 
 	result = login->mmo_auth(sd, true);
-	if (runflag == LOGINSERVER_ST_RUNNING &&
+	if (core->runflag == LOGINSERVER_ST_RUNNING &&
 		result == -1 &&
 		sd->sex == 'S' &&
 		sd->account_id >= 0 &&
@@ -1725,12 +1729,12 @@ int login_config_read(const char* cfgName)
 			continue;
 
 		if(!strcmpi(w1,"timestamp_format"))
-			safestrncpy(timestamp_format, w2, 20);
+			safestrncpy(showmsg->timestamp_format, w2, 20);
 		else if(!strcmpi(w1,"stdout_with_ansisequence"))
-			stdout_with_ansisequence = config_switch(w2);
+			showmsg->stdout_with_ansisequence = config_switch(w2) ? true : false;
 		else if(!strcmpi(w1,"console_silent")) {
-			msg_silent = atoi(w2);
-			if( msg_silent ) /* only bother if we actually have this enabled */
+			showmsg->silent = atoi(w2);
+			if( showmsg->silent ) /* only bother if we actually have this enabled */
 				ShowInfo("Definindo Console Silent: %d\n", atoi(w2));
 		}
 		else if( !strcmpi(w1, "bind_ip") ) {
@@ -1888,16 +1892,16 @@ void set_server_type(void) {
 /// Called when a terminate signal is received.
 void do_shutdown_login(void)
 {
-	if( runflag != LOGINSERVER_ST_SHUTDOWN )
+	if( core->runflag != LOGINSERVER_ST_SHUTDOWN )
 	{
 		int id;
-		runflag = LOGINSERVER_ST_SHUTDOWN;
+		core->runflag = LOGINSERVER_ST_SHUTDOWN;
 		ShowStatus("Finalizando...\n");
 		// TODO proper shutdown procedure; kick all characters, wait for acks, ...  [FlavioJS]
 		for( id = 0; id < ARRAYLENGTH(server); ++id )
 			chrif_server_reset(id);
 		sockt->flush_fifos();
-		runflag = CORE_ST_STOP;
+		core->runflag = CORE_ST_STOP;
 	}
 }
 
@@ -2004,9 +2008,9 @@ int do_init(int argc, char** argv)
 		exit(EXIT_FAILURE);
 	}
 
-	if( runflag != CORE_ST_STOP ) {
-		shutdown_callback = do_shutdown_login;
-		runflag = LOGINSERVER_ST_RUNNING;
+	if( core->runflag != CORE_ST_STOP ) {
+		core->shutdown_callback = do_shutdown_login;
+		core->runflag = LOGINSERVER_ST_RUNNING;
 	}
 
 	ShowStatus("O servidor de login esta "CL_GREEN"pronto"CL_RESET" (Escutando na porta %u).\n\n", login_config.login_port);

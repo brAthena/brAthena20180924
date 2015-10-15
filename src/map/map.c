@@ -1804,7 +1804,7 @@ int map_quit(struct map_session_data *sd) {
 	if( sd->bg_id && !sd->bg_queue.arena ) /* TODO: dump this chunk after bg_queue is fully enabled */
 		bg->team_leave(sd,BGTL_QUIT);
 
-	if (sd->state.autotrade && runflag != MAPSERVER_ST_SHUTDOWN && !channel->config->closing)
+	if (sd->state.autotrade && core->runflag != MAPSERVER_ST_SHUTDOWN && !channel->config->closing)
 		pc->autotrade_update(sd,PAUC_REMOVE);
 
 	skill->cooldown_save(sd);
@@ -3544,12 +3544,12 @@ int map_config_read(char *cfgName) {
 		*ptr = '\0';
 
 		if(strcmpi(w1,"timestamp_format")==0)
-			safestrncpy(timestamp_format, w2, 20);
+			safestrncpy(showmsg->timestamp_format, w2, 20);
 		else if(strcmpi(w1,"stdout_with_ansisequence")==0)
-			stdout_with_ansisequence = config_switch(w2);
+			showmsg->stdout_with_ansisequence = config_switch(w2);
 		else if(strcmpi(w1,"console_silent")==0) {
-			msg_silent = atoi(w2);
-			if( msg_silent ) // only bother if its actually enabled
+			showmsg->silent = atoi(w2);
+			if( showmsg->silent ) // only bother if its actually enabled
 				ShowInfo("Opcao Console Silent: %d\n", atoi(w2));
 		} else if (strcmpi(w1, "userid")==0)
 			chrif->setuserid(w2);
@@ -3599,7 +3599,7 @@ int map_config_read(char *cfgName) {
 		else if (strcmpi(w1, "use_grf") == 0)
 			map->enable_grf = config_switch(w2);
 		else if (strcmpi(w1, "console_msg_log") == 0)
-			console_msg_log = atoi(w2);//[Ind]
+			showmsg->console_log = atoi(w2);//[Ind]
 		else if (strcmpi(w1, "default_language") == 0)
 			safestrncpy(map->default_lang_str, w2, sizeof(map->default_lang_str));
 		else if (strcmpi(w1, "import") == 0)
@@ -5650,9 +5650,9 @@ void set_server_type(void) {
 /// Called when a terminate signal is received.
 void do_shutdown(void)
 {
-	if( runflag != MAPSERVER_ST_SHUTDOWN )
+	if( core->runflag != MAPSERVER_ST_SHUTDOWN )
 	{
-		runflag = MAPSERVER_ST_SHUTDOWN;
+		core->runflag = MAPSERVER_ST_SHUTDOWN;
 		ShowStatus("Shutting down...\n");
 		{
 			struct map_session_data* sd;
@@ -5773,7 +5773,7 @@ void map_load_defaults(void) {
  */
 static CMDLINEARG(runonce)
 {
-	runflag = CORE_ST_STOP;
+	core->runflag = CORE_ST_STOP;
 	return true;
 }
 /**
@@ -5881,7 +5881,7 @@ static CMDLINEARG(logconfig)
 static CMDLINEARG(scriptcheck)
 {
 	map->minimal = true;
-	runflag = CORE_ST_STOP;
+	core->runflag = CORE_ST_STOP;
 	map->scriptcheck = true;
 	return true;
 }
@@ -5911,7 +5911,7 @@ static CMDLINEARG(generatetranslations) {
 		ShowError("export-dialog: falha ao abrir '%s' para inscricao\n",script->lang_export_file);
 	}
 
-	runflag = CORE_ST_STOP;
+	core->runflag = CORE_ST_STOP;
 	return true;
 }
 
@@ -6100,9 +6100,9 @@ int do_init(int argc, char *argv[])
 	
 	ShowStatus("Servidor esta '"CL_GREEN"pronto"CL_RESET"' (Porta '"CL_WHITE"%d"CL_RESET"').\n\n", map->port);
 
-	if( runflag != CORE_ST_STOP ) {
-		shutdown_callback = map->do_shutdown;
-		runflag = MAPSERVER_ST_RUNNING;
+	if( core->runflag != CORE_ST_STOP ) {
+		core->shutdown_callback = map->do_shutdown;
+		core->runflag = MAPSERVER_ST_RUNNING;
 	}
 
 	map_cp_defaults();

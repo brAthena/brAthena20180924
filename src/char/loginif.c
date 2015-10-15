@@ -27,6 +27,7 @@
 #include <string.h>
 
 struct loginif_interface loginif_s;
+struct loginif_interface *loginif;
 
 /// Resets all the data.
 void loginif_reset(void)
@@ -45,9 +46,9 @@ void loginif_reset(void)
 /// If all the conditions are met, it stops the core loop.
 void loginif_check_shutdown(void)
 {
-	if( runflag != CHARSERVER_ST_SHUTDOWN )
+	if( core->runflag != CHARSERVER_ST_SHUTDOWN )
 		return;
-	runflag = CORE_ST_STOP;
+	core->runflag = CORE_ST_STOP;
 }
 
 
@@ -69,8 +70,8 @@ void loginif_on_ready(void)
 	chr->send_accounts_tologin(INVALID_TIMER, timer->gettick(), 0, 0);
 
 	// if no map-server already connected, display a message...
-	ARR_FIND( 0, ARRAYLENGTH(chr->server), i, chr->server[i].fd > 0 && chr->server[i].map );
-	if( i == ARRAYLENGTH(chr->server) )
+	ARR_FIND(0, ARRAYLENGTH(chr->server), i, chr->server[i].fd > 0 && VECTOR_LENGTH(chr->server[i].maps));
+	if (i == ARRAYLENGTH(chr->server))
 		ShowStatus("Aguardando mapas do servidor de mapas.\n");
 }
 

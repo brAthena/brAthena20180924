@@ -13,7 +13,6 @@
 #define LOGIN_LOGIN_H
 
 #include "common/cbasetypes.h"
-#include "common/conf.h"
 #include "common/core.h" // CORE_ST_LAST
 #include "common/db.h"
 #include "common/mmo.h" // NAME_LENGTH,SEX_*

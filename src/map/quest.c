@@ -44,6 +44,9 @@
 #include <time.h>
 
 struct quest_interface quest_s;
+struct quest_db *db_data[MAX_QUEST_DB]; ///< Quest database
+
+struct quest_interface *quest;
 
 /**
  * Searches a quest by ID.
@@ -512,7 +515,7 @@ int quest_read_db(void)
 	const char *filename = "quest_db.conf";
 
 	sprintf(filepath, "%s/%s", map->db_path, filename);
-	if (libconfig->read_file(&quest_db_conf, filepath) || !(qdb = libconfig->setting_get_member(quest_db_conf.root, filename))) {
+	if (libconfig->read_file(&quest_db_conf, filepath) || !(qdb = libconfig->setting_get_member(quest_db_conf.root, "quest_db"))) {
 		ShowError("Nao foi possivel abrir %s\n", filepath);
 		return -1;
 	}
@@ -627,6 +630,7 @@ void do_reload_quest(void) {
  */
 void quest_defaults(void) {
 	quest = &quest_s;
+	quest->db_data = db_data;
 
 	memset(&quest->db, 0, sizeof(quest->db));
 	memset(&quest->dummy, 0, sizeof(quest->dummy));

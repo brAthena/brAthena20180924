@@ -47,7 +47,7 @@ enum quest_check_type {
 };
 
 struct quest_interface {
-	struct quest_db *db_data[MAX_QUEST_DB]; ///< Quest database
+	struct quest_db **db_data; ///< Quest database
 	struct quest_db dummy;                  ///< Dummy entry for invalid quest lookups
 	/* */
 	void (*init) (bool minimal);
@@ -68,10 +68,10 @@ struct quest_interface {
 	struct quest_db *(*read_db_sub) (config_setting_t *cs, int n, const char *source);
 };
 
-struct quest_interface *quest;
-
 #ifdef BRATHENA_CORE
 void quest_defaults(void);
 #endif // BRATHENA_CORE
+
+struct quest_interface *quest;
 
 #endif /* MAP_QUEST_H */

@@ -13,7 +13,7 @@
 #define COMMON_CONSOLE_H
 
 #include "config/core.h" // MAX_CONSOLE_INPUT
-
+#include "common/db.h"
 #include "common/cbasetypes.h"
 #include "common/mutex.h"
 #include "common/spinlock.h"
@@ -43,13 +43,20 @@ typedef void (*CParseFunc)(char *line);
 #define CPCMD_C_A(x,y) console_parse_ ##y ##x
 
 #define CP_CMD_LENGTH 20
+
+enum CONSOLE_PARSE_ENTRY_TYPE {
+	CPET_UNKNOWN,
+	CPET_FUNCTION,
+	CPET_CATEGORY,
+};
+
 struct CParseEntry {
 	char cmd[CP_CMD_LENGTH];
+	int type; ///< Entry type (@see enum CONSOLE_PARSE_ENTRY_TYPE)
 	union {
 		CParseFunc func;
-		struct CParseEntry **next;
+		VECTOR_DECL(struct CParseEntry *) children;
 	} u;
-	unsigned short next_count;
 };
 
 #ifdef CONSOLE_INPUT
@@ -61,10 +68,8 @@ struct console_input_interface {
 	ramutex *ptmutex;/* parse thread mutex */
 	racond *ptcond;/* parse thread cond */
 	/* */
-	struct CParseEntry **cmd_list;
-	struct CParseEntry **cmds;
-	unsigned int cmd_count;
-	unsigned int cmd_list_count;
+	VECTOR_DECL(struct CParseEntry *) command_list;
+	VECTOR_DECL(struct CParseEntry *) commands;
 	/* */
 	Sql *SQL;
 	/* */
@@ -92,10 +97,10 @@ struct console_interface {
 	struct console_input_interface *input;
 };
 
-struct console_interface *console;
-
 #ifdef BRATHENA_CORE
 void console_defaults(void);
 #endif // BRATHENA_CORE
+
+struct console_interface *console;
 
 #endif /* COMMON_CONSOLE_H */

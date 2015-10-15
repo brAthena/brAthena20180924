@@ -35,10 +35,10 @@ struct loginif_interface {
 	void (*connect_to_server) (void);
 };
 
-struct loginif_interface *loginif;
-
 #ifdef BRATHENA_CORE
 void loginif_defaults(void);
 #endif // BRATHENA_CORE
+
+struct loginif_interface *loginif;
 
 #endif /* CHAR_LOGINIF_H */

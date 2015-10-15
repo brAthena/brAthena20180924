@@ -10259,7 +10259,7 @@ void atcommand_db_clear(void) {
 }
 
 void atcommand_doload(void) {
-	if( runflag >= MAPSERVER_ST_RUNNING )
+	if( core->runflag >= MAPSERVER_ST_RUNNING )
 		atcommand->cmd_db_clear();
 	if( atcommand->db == NULL )
 		atcommand->db = stridb_alloc(DB_OPT_DUP_KEY|DB_OPT_RELEASE_DATA, ATCOMMAND_LENGTH);

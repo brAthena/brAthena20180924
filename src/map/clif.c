@@ -5469,7 +5469,7 @@ void clif_displaymessage_sprintf(const int fd, const char *mes, ...) {
 	if (map->cpsd_active && fd == 0) {
 		ShowInfo("HCP: ");
 		va_start(ap,mes);
-		vShowMessage_(MSG_NONE,mes,ap);
+		vShowMessage(mes,ap);
 		va_end(ap);
 		ShowMessage("\n");
 	} else if (fd > 0) {
@@ -8984,7 +8984,7 @@ void clif_parse_WantToConnection(int fd, struct map_session_data* sd) {
 	client_tick = RFIFOL(fd, packet_db[cmd].pos[3]);
 	sex         = RFIFOB(fd, packet_db[cmd].pos[4]);
 
-	if( runflag != MAPSERVER_ST_RUNNING ) { // not allowed
+	if( core->runflag != MAPSERVER_ST_RUNNING ) { // not allowed
 		clif->authfail_fd(fd,1);// server closed
 		return;
 	}

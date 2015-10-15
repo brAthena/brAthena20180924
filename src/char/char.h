@@ -56,8 +56,7 @@ struct mmo_map_server {
 	uint32 ip;
 	uint16 port;
 	int users;
-	unsigned short *map;
-	unsigned short maps;
+	VECTOR_DECL(uint16) maps;
 };
 
 #define MAX_MAP_SERVERS 2
@@ -70,59 +69,6 @@ enum {
 	TABLE_STORAGE,
 	TABLE_GUILD_STORAGE,
 };
-
-#ifdef BRATHENA_CORE
-extern int char_name_option;
-extern char char_name_letters[];
-extern bool char_gm_read;
-extern int autosave_interval;
-extern int save_log;
-extern char db_path[];
-extern char char_db[256];
-extern char scdata_db[256];
-extern char cart_db[256];
-extern char inventory_db[256];
-extern char charlog_db[256];
-extern char storage_db[256];
-extern char interlog_db[256];
-extern char skill_db[256];
-extern char memo_db[256];
-extern char guild_db[256];
-extern char guild_alliance_db[256];
-extern char guild_castle_db[256];
-extern char guild_expulsion_db[256];
-extern char guild_member_db[256];
-extern char guild_position_db[256];
-extern char guild_skill_db[256];
-extern char guild_storage_db[256];
-extern char party_db[256];
-extern char pet_db[256];
-extern char mail_db[256];
-extern char auction_db[256];
-extern char quest_db[256];
-extern char homunculus_db[256];
-extern char skill_homunculus_db[256];
-extern char mercenary_db[256];
-extern char mercenary_owner_db[256];
-extern char ragsrvinfo_db[256];
-extern char elemental_db[256];
-extern char interreg_db[32];
-extern char acc_reg_num_db[32];
-extern char acc_reg_str_db[32];
-extern char char_reg_str_db[32];
-extern char char_reg_num_db[32];
-extern char updatecharlog[256]; // [Megasantos]
-
-extern int db_use_sql_item_db;
-extern int db_use_sql_mob_db;
-extern int db_use_sql_mob_skill_db;
-
-extern int guild_exp_rate;
-extern int log_inter;
-
-void char_load_defaults();
-void char_defaults();
-#endif // BRATHENA_CORE
 
 struct char_auth_node {
 	int account_id;
@@ -318,6 +264,57 @@ struct char_interface {
 	void (*config_dispatch) (char *w1, char *w2);
 	int (*config_read) (const char* cfgName);
 };
+
+#ifdef BRATHENA_CORE
+extern int char_name_option;
+extern char char_name_letters[];
+extern bool char_gm_read;
+extern int autosave_interval;
+extern int save_log;
+extern char db_path[];
+extern char char_db[256];
+extern char scdata_db[256];
+extern char cart_db[256];
+extern char inventory_db[256];
+extern char charlog_db[256];
+extern char storage_db[256];
+extern char interlog_db[256];
+extern char skill_db[256];
+extern char memo_db[256];
+extern char guild_db[256];
+extern char guild_alliance_db[256];
+extern char guild_castle_db[256];
+extern char guild_expulsion_db[256];
+extern char guild_member_db[256];
+extern char guild_position_db[256];
+extern char guild_skill_db[256];
+extern char guild_storage_db[256];
+extern char party_db[256];
+extern char pet_db[256];
+extern char mail_db[256];
+extern char auction_db[256];
+extern char quest_db[256];
+extern char homunculus_db[256];
+extern char skill_homunculus_db[256];
+extern char mercenary_db[256];
+extern char mercenary_owner_db[256];
+extern char ragsrvinfo_db[256];
+extern char elemental_db[256];
+extern char acc_reg_num_db[32];
+extern char acc_reg_str_db[32];
+extern char char_reg_str_db[32];
+extern char char_reg_num_db[32];
+
+extern int db_use_sql_item_db;
+extern int db_use_sql_mob_db;
+extern int db_use_sql_mob_skill_db;
+
+extern int guild_exp_rate;
+extern int log_inter;
+
+void char_load_defaults();
+void char_defaults();
+#endif // BRATHENA_CORE
 
 struct char_interface *chr;
 

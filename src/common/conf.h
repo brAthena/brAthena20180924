@@ -23,8 +23,8 @@ struct libconfig_interface {
 	int (*read) (config_t *config, FILE *stream);
 	void (*write) (const config_t *config, FILE *stream);
 	/* */
-	void (*set_auto_convert) (config_t *config, int flag);
-	int (*get_auto_convert) (const config_t *config);
+	void (*set_auto_convert) (config_t *config, int flag); // TODO: Replace with config_set_options
+	int (*get_auto_convert) (const config_t *config); // TODO: Replace with config_get_options
 	/* */
 	int (*read_string) (config_t *config, const char *str);
 	int (*read_file_src) (config_t *config, const char *filename);
@@ -98,10 +98,10 @@ struct libconfig_interface {
 	int (*setting_copy) (config_setting_t *parent, const config_setting_t *src);
 };
 
-struct libconfig_interface *libconfig;
-
 #ifdef BRATHENA_CORE
 void libconfig_defaults(void);
 #endif // BRATHENA_CORE
+
+struct libconfig_interface *libconfig;
 
 #endif // COMMON_CONF_H

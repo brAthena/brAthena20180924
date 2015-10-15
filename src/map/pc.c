@@ -24,7 +24,7 @@
 #include "map/date.h" // is_day_of_*()
 #include "map/duel.h"
 #include "map/elemental.h"
-#include "map/guild.h" // guild->search(), guild_request_info()
+#include "map/guild.h" // guild-"search(), guild_request_info()
 #include "map/homunculus.h"
 #include "map/instance.h"
 #include "map/intif.h"
@@ -35,7 +35,7 @@
 #include "map/mercenary.h"
 #include "map/mob.h" // struct mob_data
 #include "map/npc.h" // fake_nd
-#include "map/party.h" // party->search()
+#include "map/party.h" // party-"search()
 #include "map/path.h"
 #include "map/pc_groups.h"
 #include "map/pet.h" // pet_unlocktarget()
@@ -52,7 +52,7 @@
 #include "common/nullpo.h"
 #include "common/random.h"
 #include "common/showmsg.h"
-#include "common/socket.h" // sockt->session[]
+#include "common/socket.h"
 #include "common/strlib.h" // safestrncpy()
 #include "common/sysinfo.h"
 #include "common/timer.h"
@@ -2998,7 +2998,7 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 				case 0: //Right hand
 					ARR_FIND(0, ARRAYLENGTH(sd->right_weapon.add_dmg), i, sd->right_weapon.add_dmg[i].rate == 0 || sd->right_weapon.add_dmg[i].class_ == type2);
 					if (i == ARRAYLENGTH(sd->right_weapon.add_dmg)) {
-						ShowWarning("pc_bonus2: Atingido limite de (%"PRIuS") bonus de dano por personagem!\n",
+						ShowWarning("pc_bonus2: Atingido limite de (%d) bonus de dano por personagem!\n",
 									ARRAYLENGTH(sd->right_weapon.add_dmg));
 						break;
 					}
@@ -3012,7 +3012,7 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 				case 1: //Left hand
 					ARR_FIND(0, ARRAYLENGTH(sd->left_weapon.add_dmg), i, sd->left_weapon.add_dmg[i].rate == 0 || sd->left_weapon.add_dmg[i].class_ == type2);
 					if (i == ARRAYLENGTH(sd->left_weapon.add_dmg)) {
-						ShowWarning("pc_bonus2: Atingido limite de (%"PRIuS") bonus de dano por personagem!\n",
+						ShowWarning("pc_bonus2: Atingido limite de (%d) bonus de dano por personagem!\n",
 									ARRAYLENGTH(sd->left_weapon.add_dmg));
 						break;
 					}
@@ -3030,7 +3030,7 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 				break;
 			ARR_FIND(0, ARRAYLENGTH(sd->add_mdmg), i, sd->add_mdmg[i].rate == 0 || sd->add_mdmg[i].class_ == type2);
 			if (i == ARRAYLENGTH(sd->add_mdmg)) {
-				ShowWarning("pc_bonus2: Atingido limite de (%"PRIuS") bonus de dano magico por personagem!\n", ARRAYLENGTH(sd->add_mdmg));
+				ShowWarning("pc_bonus2: Atingido limite de (%d) bonus de dano magico por personagem!\n", ARRAYLENGTH(sd->add_mdmg));
 				break;
 			}
 			sd->add_mdmg[i].class_ = type2;
@@ -3043,7 +3043,7 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 				break;
 			ARR_FIND(0, ARRAYLENGTH(sd->add_def), i, sd->add_def[i].rate == 0 || sd->add_def[i].class_ == type2);
 			if (i == ARRAYLENGTH(sd->add_def)) {
-				ShowWarning("pc_bonus2: Atingido limite de (%"PRIuS") bonus de defesa por personagem!\n", ARRAYLENGTH(sd->add_def));
+				ShowWarning("pc_bonus2: Atingido limite de (%d) bonus de defesa por personagem!\n", ARRAYLENGTH(sd->add_def));
 				break;
 			}
 			sd->add_def[i].class_ = type2;
@@ -3056,7 +3056,7 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 				break;
 			ARR_FIND(0, ARRAYLENGTH(sd->add_mdef), i, sd->add_mdef[i].rate == 0 || sd->add_mdef[i].class_ == type2);
 			if (i == ARRAYLENGTH(sd->add_mdef)) {
-				ShowWarning("pc_bonus2: Atingido limite de (%"PRIuS") bonus de defesa magica por personagem!\n", ARRAYLENGTH(sd->add_mdef));
+				ShowWarning("pc_bonus2: Atingido limite de (%d) bonus de defesa magica por personagem!\n", ARRAYLENGTH(sd->add_mdef));
 				break;
 			}
 			sd->add_mdef[i].class_ = type2;
@@ -3219,7 +3219,7 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			ARR_FIND(0, ARRAYLENGTH(sd->skillatk), i, sd->skillatk[i].id == 0 || sd->skillatk[i].id == type2);
 			if (i == ARRAYLENGTH(sd->skillatk)) {
 				//Better mention this so the array length can be updated. [Skotlex]
-				ShowDebug("script->run: bonus2 bSkillAtk atingiu o seu limite de (%"PRIuS" habilidades por personagem), bonus de habilidade %d (+%d%%) perdido.\n",
+				ShowDebug("script->run: bonus2 bSkillAtk atingiu o seu limite de (%d habilidades por personagem), bonus de habilidade %d (+%d%%) perdido.\n",
 				          ARRAYLENGTH(sd->skillatk), type2, val);
 				break;
 			}
@@ -3236,7 +3236,7 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			ARR_FIND(0, ARRAYLENGTH(sd->skillheal), i, sd->skillheal[i].id == 0 || sd->skillheal[i].id == type2);
 			if (i == ARRAYLENGTH(sd->skillheal)) {
 				// Better mention this so the array length can be updated. [Skotlex]
-				ShowDebug("script->run: bonus2 bSkillHeal atingiu o seu limite de (%"PRIuS" habilidades por personagem), bonus de habilidade %d (+%d%%) perdido.\n",
+				ShowDebug("script->run: bonus2 bSkillHeal atingiu o seu limite de (%d habilidades por personagem), bonus de habilidade %d (+%d%%) perdido.\n",
 				          ARRAYLENGTH(sd->skillheal), type2, val);
 				break;
 			}
@@ -3253,7 +3253,7 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			ARR_FIND(0, ARRAYLENGTH(sd->skillheal2), i, sd->skillheal2[i].id == 0 || sd->skillheal2[i].id == type2);
 			if (i == ARRAYLENGTH(sd->skillheal2)) {
 				// Better mention this so the array length can be updated. [Skotlex]
-				ShowDebug("script->run: bonus2 bSkillHeal2 atingiu o seu limite de (%"PRIuS" habilidades por personagem), bonus de habilidade %d (+%d%%) perdido.\n",
+				ShowDebug("script->run: bonus2 bSkillHeal2 atingiu o seu limite de (%d habilidades por personagem), bonus de habilidade %d (+%d%%) perdido.\n",
 				          ARRAYLENGTH(sd->skillheal2), type2, val);
 				break;
 			}
@@ -3270,7 +3270,7 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			ARR_FIND(0, ARRAYLENGTH(sd->skillblown), i, sd->skillblown[i].id == 0 || sd->skillblown[i].id == type2);
 			if (i == ARRAYLENGTH(sd->skillblown)) {
 				//Better mention this so the array length can be updated. [Skotlex]
-				ShowDebug("script->run: bonus2 bSkillBlown atingiu o seu limite de (%"PRIuS" habilidades por personagem), bonus de habilidade %d (+%d%%) perdido.\n",
+				ShowDebug("script->run: bonus2 bSkillBlown atingiu o seu limite de (%d habilidades por personagem), bonus de habilidade %d (+%d%%) perdido.\n",
 				          ARRAYLENGTH(sd->skillblown), type2, val);
 				break;
 			}
@@ -3290,14 +3290,8 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			ARR_FIND(0, ARRAYLENGTH(sd->skillcast), i, sd->skillcast[i].id == 0 || sd->skillcast[i].id == type2);
 			if (i == ARRAYLENGTH(sd->skillcast)) {
 				//Better mention this so the array length can be updated. [Skotlex]
-				ShowDebug("script->run: bonus2 %s atingiu o seu limite de (%"PRIuS" habilidades por personagem), bonus de habilidade %d (+%d%%) perdido.\n",
-
-	#ifndef RENEWAL_CAST
-					"bCastRate",
-	#else
-					"bVariableCastrate",
-	#endif
-
+				ShowDebug("script->run: bonus2 %s reached its limit (%d skills per character), bonus skill %d (+%d%%) lost.\n",
+					type == SP_CASTRATE ? "bCastRate" : "bVariableCastrate",
 					ARRAYLENGTH(sd->skillcast), type2, val);
 				break;
 			}
@@ -3316,7 +3310,7 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			ARR_FIND(0, ARRAYLENGTH(sd->skillfixcastrate), i, sd->skillfixcastrate[i].id == 0 || sd->skillfixcastrate[i].id == type2);
 
 			if (i == ARRAYLENGTH(sd->skillfixcastrate)) {
-				ShowDebug("script->run: bonus2 bFixedCastrate atingiu o seu limite de (%"PRIuS" habilidades por personagem), bonus de habilidade %d (+%d%%) perdido.\n",
+				ShowDebug("script->run: bonus2 bFixedCastrate atingiu o seu limite de (%d habilidades por personagem), bonus de habilidade %d (+%d%%) perdido.\n",
 				          ARRAYLENGTH(sd->skillfixcastrate), type2, val);
 				break;
 			}
@@ -3367,7 +3361,7 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			//Standard item bonus.
 			for(i=0; i < ARRAYLENGTH(sd->itemhealrate) && sd->itemhealrate[i].nameid && sd->itemhealrate[i].nameid != type2; i++);
 			if (i == ARRAYLENGTH(sd->itemhealrate)) {
-				ShowWarning("pc_bonus2: Atingido limite de (%"PRIuS") bonus item heal por personagem!\n", ARRAYLENGTH(sd->itemhealrate));
+				ShowWarning("pc_bonus2: Atingido limite de (%d) bonus item heal por personagem!\n", ARRAYLENGTH(sd->itemhealrate));
 				break;
 			}
 			sd->itemhealrate[i].nameid = type2;
@@ -3544,7 +3538,7 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 				break;
 			ARR_FIND(0, ARRAYLENGTH(sd->skillusesprate), i, sd->skillusesprate[i].id == 0 || sd->skillusesprate[i].id == type2);
 			if (i == ARRAYLENGTH(sd->skillusesprate)) {
-				ShowDebug("script->run: bonus2 bSkillUseSPrate atingiu o seu limite de (%"PRIuS" habilidades por personagem), bonus de habilidade %d (+%d%%) perdido.\n",
+				ShowDebug("script->run: bonus2 bSkillUseSPrate atingiu o seu limite de (%d habilidades por personagem), bonus de habilidade %d (+%d%%) perdido.\n",
 				          ARRAYLENGTH(sd->skillusesprate), type2, val);
 				break;
 			}
@@ -3560,7 +3554,7 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 				break;
 			ARR_FIND(0, ARRAYLENGTH(sd->skillcooldown), i, sd->skillcooldown[i].id == 0 || sd->skillcooldown[i].id == type2);
 			if (i == ARRAYLENGTH(sd->skillcooldown)) {
-				ShowDebug("script->run: bonus2 bSkillCoolDown atingiu o seu limite de (%"PRIuS" habilidades por personagem), bonus de habilidade %d (+%d%%) perdido.\n",
+				ShowDebug("script->run: bonus2 bSkillCoolDown atingiu o seu limite de (%d habilidades por personagem), bonus de habilidade %d (+%d%%) perdido.\n",
 				          ARRAYLENGTH(sd->skillcooldown), type2, val);
 				break;
 			}
@@ -3576,7 +3570,7 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 				break;
 			ARR_FIND(0, ARRAYLENGTH(sd->skillfixcast), i, sd->skillfixcast[i].id == 0 || sd->skillfixcast[i].id == type2);
 			if (i == ARRAYLENGTH(sd->skillfixcast)) {
-				ShowDebug("script->run: bonus2 bSkillFixedCast atingiu o seu limite de (%"PRIuS" habilidades por personagem), bonus de habilidade %d (+%d%%) perdido.\n",
+				ShowDebug("script->run: bonus2 bSkillFixedCast atingiu o seu limite de (%d habilidades por personagem), bonus de habilidade %d (+%d%%) perdido.\n",
 				          ARRAYLENGTH(sd->skillfixcast), type2, val);
 				break;
 			}
@@ -3592,7 +3586,7 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 				break;
 			ARR_FIND(0, ARRAYLENGTH(sd->skillvarcast), i, sd->skillvarcast[i].id == 0 || sd->skillvarcast[i].id == type2);
 			if (i == ARRAYLENGTH(sd->skillvarcast)) {
-				ShowDebug("script->run: bonus2 bSkillVariableCast atingiu o seu limite de (%"PRIuS" habilidades por personagem), bonus de habilidade %d (+%d%%) perdido.\n",
+				ShowDebug("script->run: bonus2 bSkillVariableCast atingiu o seu limite de (%d habilidades por personagem), bonus de habilidade %d (+%d%%) perdido.\n",
 				          ARRAYLENGTH(sd->skillvarcast), type2, val);
 				break;
 			}
@@ -3609,7 +3603,7 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 				break;
 			ARR_FIND(0, ARRAYLENGTH(sd->skillcast), i, sd->skillcast[i].id == 0 || sd->skillcast[i].id == type2);
 			if (i == ARRAYLENGTH(sd->skillcast)) {
-				ShowDebug("script->run: bonus2 bVariableCastrate atingiu o seu limite de (%"PRIuS" habilidades por personagem), bonus de habilidade %d (+%d%%) perdido.\n",
+				ShowDebug("script->run: bonus2 bVariableCastrate atingiu o seu limite de (%d habilidades por personagem), bonus de habilidade %d (+%d%%) perdido.\n",
 				          ARRAYLENGTH(sd->skillcast), type2, val);
 				break;
 			}
@@ -3626,7 +3620,7 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 				break;
 			ARR_FIND(0, ARRAYLENGTH(sd->skillusesp), i, sd->skillusesp[i].id == 0 || sd->skillusesp[i].id == type2);
 			if (i == ARRAYLENGTH(sd->skillusesp)) {
-				ShowDebug("script->run: bonus2 bSkillUseSP atingiu o seu limite de (%"PRIuS" habilidades por personagem), bonus de habilidade %d (+%d%%) perdido.\n",
+				ShowDebug("script->run: bonus2 bSkillUseSP atingiu o seu limite de (%d habilidades por personagem), bonus de habilidade %d (+%d%%) perdido.\n",
 				          ARRAYLENGTH(sd->skillusesp), type2, val);
 				break;
 			}
@@ -4132,7 +4126,10 @@ bool pc_can_insert_card(struct map_session_data* sd, int idx_card)
 }
 
 /*==========================================
- * Append a card to an item ?
+ * Attempt to insert card into item.
+ * Return:
+ *   0 = fail
+ *   1 = success
  *------------------------------------------*/
 int pc_insert_card(struct map_session_data* sd, int idx_card, int idx_equip)
 {
@@ -4162,6 +4159,7 @@ int pc_insert_card(struct map_session_data* sd, int idx_card, int idx_equip)
 		sd->status.inventory[idx_equip].card[i] = nameid;
 		logs->card(sd,i,"Insert", &sd->status.inventory[idx_equip]);
 		clif->insert_card(sd,idx_equip,idx_card,0);
+		return 1;
 	}
 
 	return 0;

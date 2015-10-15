@@ -61,6 +61,9 @@
  * Socket Interface Source
  **/
 struct socket_interface sockt_s;
+struct socket_interface *sockt;
+
+struct socket_data **session;
 
 #ifdef SEND_SHORTLIST
 	// Add a fd to the shortlist so that it'll be recognized as a fd that needs
@@ -115,7 +118,6 @@ int sock2fd(SOCKET s)
 		return -1;// not found
 	return fd;
 }
-
 
 /// Inserts the socket into the global array of sockets.
 /// Returns a new fd associated with the socket.
@@ -363,8 +365,7 @@ void setsocketopts(int fd, struct hSockOpt *opt) {
  *--------------------------------------*/
 void set_eof(int fd)
 {
-	if( sockt->session_is_active(fd) )
-	{
+	if (sockt->session_is_active(fd)) {
 #ifdef SEND_SHORTLIST
 		// Add this socket to the shortlist for eof handling.
 		send_shortlist_add_fd(fd);
@@ -377,7 +378,7 @@ int recv_to_fifo(int fd)
 {
 	ssize_t len;
 
-	if( !sockt->session_is_active(fd) )
+	if (!sockt->session_is_active(fd))
 		return -1;
 
 	len = sRecv(fd, (char *) sockt->session[fd]->rdata + sockt->session[fd]->rdata_size, (int)RFIFOSPACE(fd), 0);
@@ -414,7 +415,7 @@ int send_from_fifo(int fd)
 {
 	ssize_t len;
 
-	if( !sockt->session_is_valid(fd) )
+	if (!sockt->session_is_valid(fd))
 		return -1;
 
 	if( sockt->session[fd]->wdata_size == 0 )
@@ -539,7 +540,7 @@ int make_listen_bind(uint32 ip, uint16 port)
 	}
 
 	setsocketopts(fd,NULL);
-	set_nonblocking(fd, 1);
+	sockt->set_nonblocking(fd, 1);
 
 	server_address.sin_family      = AF_INET;
 	server_address.sin_addr.s_addr = htonl(ip);
@@ -605,7 +606,7 @@ int make_connection(uint32 ip, uint16 port, struct hSockOpt *opt) {
 		return -1;
 	}
 	//Now the socket can be made non-blocking. [Skotlex]
-	set_nonblocking(fd, 1);
+	sockt->set_nonblocking(fd, 1);
 
 	if (sockt->fd_max <= fd) sockt->fd_max = fd + 1;
 	sFD_SET(fd,&readfds);
@@ -633,7 +634,7 @@ static int create_session(int fd, RecvFunc func_recv, SendFunc func_send, ParseF
 
 static void delete_session(int fd)
 {
-	if( sockt->session_is_valid(fd) ) {
+	if (sockt->session_is_valid(fd)) {
 #ifdef SHOW_SERVER_STATS
 		socket_data_qi -= sockt->session[fd]->rdata_size - sockt->session[fd]->rdata_pos;
 		socket_data_qo -= sockt->session[fd]->wdata_size;
@@ -649,7 +650,7 @@ static void delete_session(int fd)
 
 int realloc_fifo(int fd, unsigned int rfifo_size, unsigned int wfifo_size)
 {
-	if( !sockt->session_is_valid(fd) )
+	if (!sockt->session_is_valid(fd))
 		return 0;
 
 	if( sockt->session[fd]->max_rdata != rfifo_size && sockt->session[fd]->rdata_size < rfifo_size) {
@@ -668,7 +669,7 @@ int realloc_writefifo(int fd, size_t addition)
 {
 	size_t newsize;
 
-	if( !sockt->session_is_valid(fd) ) // might not happen
+	if (!sockt->session_is_valid(fd)) // might not happen
 		return 0;
 
 	if (sockt->session[fd]->wdata_size + addition  > sockt->session[fd]->max_wdata) {
@@ -696,7 +697,7 @@ int rfifoskip(int fd, size_t len)
 {
 	struct socket_data *s;
 
-	if ( !sockt->session_is_active(fd) )
+	if (!sockt->session_is_active(fd))
 		return 0;
 
 	s = sockt->session[fd];
@@ -875,7 +876,7 @@ int do_sockets(int next)
 		}
 
 #ifdef __clang_analyzer__
-		// Let Clang's static analyzer know this never happens (it thinks it might because of a NULL check in session_isValid)
+		// Let Clang's static analyzer know this never happens (it thinks it might because of a NULL check in session_is_valid)
 		if (!sockt->session[i]) continue;
 #endif // __clang_analyzer__
 		sockt->session[i]->func_parse(i);
@@ -971,7 +972,7 @@ static int connect_check_(uint32 ip)
 
 	// Search the allow list
 	for( i=0; i < access_allownum; ++i ){
-		if( (ip & access_allow[i].mask) == (access_allow[i].ip & access_allow[i].mask) ){
+		if (SUBNET_MATCH(ip, access_allow[i].ip, access_allow[i].mask)) {
 			if( access_debug ){
 				ShowInfo("connect_check: Encontrada lista de permissoes correspondetes a:%d.%d.%d.%d IP:%d.%d.%d.%d Mask:%d.%d.%d.%d\n",
 					CONVIP(ip),
@@ -984,7 +985,7 @@ static int connect_check_(uint32 ip)
 	}
 	// Search the deny list
 	for( i=0; i < access_denynum; ++i ){
-		if( (ip & access_deny[i].mask) == (access_deny[i].ip & access_deny[i].mask) ){
+		if (SUBNET_MATCH(ip, access_deny[i].ip, access_deny[i].mask)) {
 			if( access_debug ){
 				ShowInfo("connect_check: Encontrada lista de rejeicoes correspondetes a:%d.%d.%d.%d IP:%d.%d.%d.%d Mask:%d.%d.%d.%d\n",
 					CONVIP(ip),
@@ -1058,12 +1059,12 @@ static int connect_check_clear(int tid, int64 tick, int id, intptr_t data) {
 	int list  = 0;
 	ConnectHistory *hist = NULL;
 	DBIterator *iter;
-	
+
 	if( !db_size(connect_history) )
 		return 0;
-	
+
 	iter = db_iterator(connect_history);
-	
+
 	for( hist = dbi_first(iter); dbi_exists(iter); hist = dbi_next(iter) ){
 		if( (!hist->ddos && DIFF_TICK(tick,hist->tick) > ddos_interval*3) ||
 			(hist->ddos && DIFF_TICK(tick,hist->tick) > ddos_autoreset) )
@@ -1073,9 +1074,8 @@ static int connect_check_clear(int tid, int64 tick, int id, intptr_t data) {
 			}
 		list++;
  	}
-	
 	dbi_destroy(iter);
-	
+
 	if( access_debug ){
 		ShowInfo("connect_check_clear: Removido %d da %d lista de IP.\n", clear, list);
 	}
@@ -1198,7 +1198,6 @@ int socket_config_read(const char* cfgName)
 	return 0;
 }
 
-
 void socket_final(void)
 {
 	int i;
@@ -1221,21 +1220,10 @@ void socket_final(void)
 	aFree(sockt->session[0]);
 
 	aFree(sockt->session);
-	
-	if (sockt->lan_subnet)
-		aFree(sockt->lan_subnet);
-	sockt->lan_subnet = NULL;
-	sockt->lan_subnet_count = 0;
-	
-	if (sockt->allowed_ip)
-		aFree(sockt->allowed_ip);
-	sockt->allowed_ip = NULL;
-	sockt->allowed_ip_count = 0;
-	
-	if (sockt->trusted_ip)
-		aFree(sockt->trusted_ip);
-	sockt->trusted_ip = NULL;
-	sockt->trusted_ip_count = 0;
+
+	VECTOR_CLEAR(sockt->lan_subnets);
+	VECTOR_CLEAR(sockt->allowed_ips);
+	VECTOR_CLEAR(sockt->trusted_ips);
 }
 
 /// Closes a socket.
@@ -1385,7 +1373,7 @@ void socket_init(void)
 #endif
 
 	// Get initial local ips
-	sockt->naddr_ = sockt->getips(sockt->addr_, 16);
+	sockt->naddr_ = sockt->getips(sockt->addr_,16);
 
 	sFD_ZERO(&readfds);
 #if defined(SEND_SHORTLIST)
@@ -1429,13 +1417,14 @@ uint32 host2ip(const char* hostname)
 	struct hostent* h = gethostbyname(hostname);
 	return (h != NULL) ? ntohl(*(uint32*)h->h_addr) : 0;
 }
+
 /**
-* Converts a numeric ip into a dot-formatted string.
-*
-*@param ip     Numeric IP to convert.
-*@param ip_str Output buffer, optional(if provided, must have size greater or equal to 16).
-*
-*@return A pointer to the output string.
+ * Converts a numeric ip into a dot-formatted string.
+ *
+ * @param ip     Numeric IP to convert.
+ * @param ip_str Output buffer, optional (if provided, must have size greater or equal to 16).
+ *
+ * @return A pointer to the output string.
  */
 const char *ip2str(uint32 ip, char *ip_str)
 {
@@ -1529,7 +1518,7 @@ void send_shortlist_add_fd(int fd)
 	int i;
 	int bit;
 
-	if( !sockt->session_is_valid(fd) )
+	if (!sockt->session_is_valid(fd))
 		return;// out of range
 
 	i = fd/32;
@@ -1539,7 +1528,7 @@ void send_shortlist_add_fd(int fd)
 		return;// already in the list
 
 	if (send_shortlist_count >= ARRAYLENGTH(send_shortlist_array)) {
-		ShowDebug("send_shortlist_add_fd: shortlist esta cheia, ignorando... (fd=%d shortlist.count=%d shortlist.length=%"PRIuS")\n",
+		ShowDebug("send_shortlist_add_fd: shortlist esta cheia, ignorando... (fd=%d shortlist.count=%d shortlist.length=%d)\n",
 		          fd, send_shortlist_count, ARRAYLENGTH(send_shortlist_array));
 		return;
 	}
@@ -1598,24 +1587,25 @@ void send_shortlist_do_sends()
 	}
 }
 #endif
+
 /**
-* Checks whether the given IP comes from LAN or WAN.
-*
-* @param[in]  ip   IP address to check.
-* @param[out] info Verbose output, if requested. Filled with the matching entry. Ignored if NULL.
-* @retval 0 if it is a WAN IP.
-* @return the appropriate LAN server address to send, if it is a LAN IP.
-*/
+ * Checks whether the given IP comes from LAN or WAN.
+ *
+ * @param[in]  ip   IP address to check.
+ * @param[out] info Verbose output, if requested. Filled with the matching entry. Ignored if NULL.
+ * @retval 0 if it is a WAN IP.
+ * @return the appropriate LAN server address to send, if it is a LAN IP.
+ */
 uint32 socket_lan_subnet_check(uint32 ip, struct s_subnet *info)
 {
 	int i;
-	ARR_FIND(0, sockt->lan_subnet_count, i, (sockt->lan_subnet[i].ip & sockt->lan_subnet[i].mask) == (ip & sockt->lan_subnet[i].mask));
-	if (i < sockt->lan_subnet_count) {
+	ARR_FIND(0, VECTOR_LENGTH(sockt->lan_subnets), i, SUBNET_MATCH(ip, VECTOR_INDEX(sockt->lan_subnets, i).ip, VECTOR_INDEX(sockt->lan_subnets, i).mask));
+	if (i != VECTOR_LENGTH(sockt->lan_subnets)) {
 		if (info) {
-			info->ip = sockt->lan_subnet[i].ip;
-			info->mask = sockt->lan_subnet[i].mask;
+			info->ip = VECTOR_INDEX(sockt->lan_subnets, i).ip;
+			info->mask = VECTOR_INDEX(sockt->lan_subnets, i).mask;
 		}
-		return sockt->lan_subnet[i].ip;
+		return VECTOR_INDEX(sockt->lan_subnets, i).ip;
 	}
 	if (info) {
 		info->ip = info->mask = 0;
@@ -1624,83 +1614,82 @@ uint32 socket_lan_subnet_check(uint32 ip, struct s_subnet *info)
 }
 
 /**
-* Checks whether the given IP is allowed to connect as a server.
-*
-* @param ip IP address to check.
-* @retval true if we allow server connections from the given IP.
-* @retval false otherwise.
-*/
+ * Checks whether the given IP is allowed to connect as a server.
+ *
+ * @param ip IP address to check.
+ * @retval true if we allow server connections from the given IP.
+ * @retval false otherwise.
+ */
 bool socket_allowed_ip_check(uint32 ip)
 {
 	int i;
-	ARR_FIND(0, sockt->allowed_ip_count, i, (sockt->allowed_ip[i].ip & sockt->allowed_ip[i].mask) == (ip & sockt->allowed_ip[i].mask));
-	if (i < sockt->allowed_ip_count)
+	ARR_FIND(0, VECTOR_LENGTH(sockt->allowed_ips), i, SUBNET_MATCH(ip, VECTOR_INDEX(sockt->allowed_ips, i).ip, VECTOR_INDEX(sockt->allowed_ips, i).mask));
+	if (i != VECTOR_LENGTH(sockt->allowed_ips))
 		return true;
 	return sockt->trusted_ip_check(ip); // If an address is trusted, it's automatically also allowed.
 }
 
 /**
-* Checks whether the given IP is trusted and can skip ipban checks.
-*
-* @param ip IP address to check.
-* @retval true if we trust the given IP.
-* @retval false otherwise.
-*/
+ * Checks whether the given IP is trusted and can skip ipban checks.
+ *
+ * @param ip IP address to check.
+ * @retval true if we trust the given IP.
+ * @retval false otherwise.
+ */
 bool socket_trusted_ip_check(uint32 ip)
 {
 	int i;
-	ARR_FIND(0, sockt->trusted_ip_count, i, (sockt->trusted_ip[i].ip & sockt->trusted_ip[i].mask) == (ip & sockt->trusted_ip[i].mask));
-	if (i < sockt->trusted_ip_count)
+	ARR_FIND(0, VECTOR_LENGTH(sockt->trusted_ips), i, SUBNET_MATCH(ip, VECTOR_INDEX(sockt->trusted_ips, i).ip, VECTOR_INDEX(sockt->trusted_ips, i).mask));
+	if (i != VECTOR_LENGTH(sockt->trusted_ips))
 		return true;
 	return false;
 }
 
 /**
-* Helper function to read a list of network.conf values.
-*
-* Entries will be appended to the variable-size array pointed to by list/count.
-*
-* @param[in]     t         The list to parse.
-* @param[in,out] list      Pointer to the head of the output array to append to. Must not be NULL (but the array may be empty).
-* @param[in,out] count     Pointer to the counter of the output array to append to. Must not be NULL (but it may contain zero).
-* @param[in]     filename  Current filename, for output/logging reasons.
-* @param[in]     groupname Current group name, for output/logging reasons.
-* @return The amount of entries read, zero in case of errors.
-*/
-int socket_net_config_read_sub(config_setting_t *t, struct s_subnet **list, int *count, const char *filename, const char *groupname)
+ * Helper function to read a list of network.conf values.
+ *
+ * Entries will be appended to the variable-size array pointed to by list/count.
+ *
+ * @param[in]     t         The list to parse.
+ * @param[in,out] list      Vector to append to. Must not be NULL (but the vector may be empty).
+ * @param[in]     filename  Current filename, for output/logging reasons.
+ * @param[in]     groupname Current group name, for output/logging reasons.
+ * @return The amount of entries read, zero in case of errors.
+ */
+int socket_net_config_read_sub(config_setting_t *t, struct s_subnet_vector *list, const char *filename, const char *groupname)
 {
 	int i, len;
 	char ipbuf[64], maskbuf[64];
 
 	nullpo_retr(0, list);
-	nullpo_retr(0, count);
 
 	if (t == NULL)
 		return 0;
 
 	len = libconfig->setting_length(t);
 
+	VECTOR_ENSURE(*list, len, 1);
 	for (i = 0; i < len; ++i) {
 		const char *subnet = libconfig->setting_get_string_elem(t, i);
-		struct s_subnet *l = NULL;
+		struct s_subnet *entry = NULL;
 
 		if (sscanf(subnet, "%63[^:]:%63[^:]", ipbuf, maskbuf) != 2) {
 			ShowWarning("IP Invalido:Entrada de sub-rede no arquivo de configuracao %s: '%s' (%s)\n", filename, subnet, groupname);
+			continue;
 		}
-		RECREATE(*list, struct s_subnet, *count + 1);
-		l = *list;
-		l[*count].ip = sockt->str2ip(ipbuf);
-		l[*count].mask = sockt->str2ip(maskbuf);
-		++*count;
+		VECTOR_PUSHZEROED(*list);
+		entry = &VECTOR_LAST(*list);
+		entry->ip = sockt->str2ip(ipbuf);
+		entry->mask = sockt->str2ip(maskbuf);
 	}
-	return *count;
+	return (int)VECTOR_LENGTH(*list);
 }
 
 /**
-* Reads the network configuration file.
-*
-* @param filename The filename to read from.
-*/
+ * Reads the network configuration file.
+ *
+ * @param filename The filename to read from.
+ */
 void socket_net_config_read(const char *filename)
 {
 	config_t network_config;
@@ -1712,45 +1701,29 @@ void socket_net_config_read(const char *filename)
 		return;
 	}
 
-	if (sockt->lan_subnet) {
-		aFree(sockt->lan_subnet);
-		sockt->lan_subnet = NULL;
-	}
-	sockt->lan_subnet_count = 0;
-	if (sockt->net_config_read_sub(libconfig->lookup(&network_config, "lan_subnets"), &sockt->lan_subnet, &sockt->lan_subnet_count, filename, "lan_subnets") > 0)
-		ShowStatus("Leia as informacoes sobre %d LAN e sub-redes.\n", sockt->lan_subnet_count);
+	VECTOR_CLEAR(sockt->lan_subnets);
+	if (sockt->net_config_read_sub(libconfig->lookup(&network_config, "lan_subnets"), &sockt->lan_subnets, filename, "lan_subnets") > 0)
+		ShowStatus("Leia as informacoes sobre %d LAN e sub-redes.\n", (int)VECTOR_LENGTH(sockt->lan_subnets));
 
-	if (sockt->trusted_ip) {
-		aFree(sockt->trusted_ip);
-		sockt->trusted_ip = NULL;
-	}
-	sockt->trusted_ip_count = 0;
-	if (sockt->net_config_read_sub(libconfig->lookup(&network_config, "trusted"), &sockt->trusted_ip, &sockt->trusted_ip_count, filename, "trusted") > 0)
-		ShowStatus("Leia as informacoes sobre %d enderecos de IP confiaveis.\n", sockt->trusted_ip_count);
-	for (i = 0; i < sockt->allowed_ip_count; ++i) {
-		if ((sockt->allowed_ip[i].ip & sockt->allowed_ip[i].mask) == 0) {
-			ShowError("Usar uma faixa de IP curinga nos IPs de servidores confiaveis nao e recomendado.\n");
-			ShowNotice("Por favor edite sua '%s' lista para ajustar sua configuracao de rede confiavel.\n", filename);
-			break;
-		}
+	VECTOR_CLEAR(sockt->trusted_ips);
+	if (sockt->net_config_read_sub(libconfig->lookup(&network_config, "trusted"), &sockt->trusted_ips, filename, "trusted") > 0)
+		ShowStatus("Leia as informacoes sobre %d enderecos de IP confiaveis.\n", (int)VECTOR_LENGTH(sockt->trusted_ips));
+	ARR_FIND(0, VECTOR_LENGTH(sockt->trusted_ips), i, SUBNET_MATCH(0, VECTOR_INDEX(sockt->trusted_ips, i).ip, VECTOR_INDEX(sockt->trusted_ips, i).mask));
+	if (i != VECTOR_LENGTH(sockt->trusted_ips)) {
+		ShowError("Usar uma faixa de IP curinga nos IPs de servidores confiaveis nao e recomendado.\n");
+		ShowNotice("Por favor edite sua '%s' lista para ajustar sua configuracao de rede confiavel.\n", filename);
 	}
 
-	if (sockt->allowed_ip) {
-		aFree(sockt->allowed_ip);
-		sockt->allowed_ip = NULL;
-	}
-	sockt->allowed_ip_count = 0;
-	if (sockt->net_config_read_sub(libconfig->lookup(&network_config, "allowed"), &sockt->allowed_ip, &sockt->allowed_ip_count, filename, "allowed") > 0)
-		ShowStatus("Leia as informacoes sobre %d intervalos permitidos de IP do servidor.\n", sockt->allowed_ip_count);
-	if (sockt->allowed_ip_count == 0) {
+	VECTOR_CLEAR(sockt->allowed_ips);
+	if (sockt->net_config_read_sub(libconfig->lookup(&network_config, "allowed"), &sockt->allowed_ips, filename, "allowed") > 0)
+		ShowStatus("Leia as informacoes sobre %d intervalos permitidos de IP do servidor.\n", (int)VECTOR_LENGTH(sockt->allowed_ips));
+	if (VECTOR_LENGTH(sockt->allowed_ips) + VECTOR_LENGTH(sockt->trusted_ips) == 0) {
 		ShowError("Nao ha faixas de IP de servidores permitidos configurado. Este servidor nao sera capaz de aceitar conexoes de quaisquer char-server.\n");
-	}
-	for (i = 0; i < sockt->allowed_ip_count; ++i) {
-		if ((sockt->allowed_ip[i].ip & sockt->allowed_ip[i].mask) == 0) {
-			ShowWarning("Usar uma faixa de IP curinga nos IPs de servidores autorizados nao e recomendado.\n");
-			ShowNotice("Por favor edite sua '%s' lista de permicoes para funcionar sua configuracao de rede.\n", filename);
-			break;
 		}
+	ARR_FIND(0, VECTOR_LENGTH(sockt->allowed_ips), i, SUBNET_MATCH(0, VECTOR_INDEX(sockt->allowed_ips, i).ip, VECTOR_INDEX(sockt->allowed_ips, i).mask));
+	if (i != VECTOR_LENGTH(sockt->allowed_ips)) {
+		ShowWarning("Using a wildcard IP range in the allowed server IPs is NOT RECOMMENDED.\n");
+		ShowNotice("Please edit your '%s' allowed list to fit your network configuration.\n", filename);
 	}
 	libconfig->destroy(&network_config);
 	return;
@@ -1767,13 +1740,10 @@ void socket_defaults(void) {
 	memset(&sockt->addr_, 0, sizeof(sockt->addr_));
 	sockt->naddr_ = 0;
 	/* */
-	sockt->lan_subnet_count = 0;
-	sockt->lan_subnet = NULL;
-	sockt->allowed_ip_count = 0;
-	sockt->allowed_ip = NULL;
-	sockt->trusted_ip_count = 0;
-	sockt->trusted_ip = NULL;
-	
+	VECTOR_INIT(sockt->lan_subnets);
+	VECTOR_INIT(sockt->allowed_ips);
+	VECTOR_INIT(sockt->trusted_ips);
+
 	sockt->init = socket_init;
 	sockt->final = socket_final;
 	/* */
@@ -1802,6 +1772,7 @@ void socket_defaults(void) {
 	sockt->ntows = ntows;
 	sockt->getips = socket_getips;
 	sockt->eof = set_eof;
+
 	sockt->lan_subnet_check = socket_lan_subnet_check;
 	sockt->allowed_ip_check = socket_allowed_ip_check;
 	sockt->trusted_ip_check = socket_trusted_ip_check;
