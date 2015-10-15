@@ -4,6 +4,8 @@
 # www.brathena.org
 # Base Author: Haru
 
+# Fix EOL 14102015
+
 do_fail() {
 	echo 'Error writing output file'
 	exit 1

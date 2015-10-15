@@ -2,6 +2,8 @@
 # athena starting script by rowla
 # modified by shazeya@syafi.com (NL101541)
 
+# Fix EOL 14102015
+
 PATH=./:$PATH
 
 L_SRV=login-server
@@ -9,7 +11,7 @@ C_SRV=char-server
 M_SRV=map-server
 
 print_start() {
-#    more << EOF
+#  more << EOF
 echo "Athena Starting..."
 echo "            (c) 2003 Athena Project"
 echo "              modified by shazeya@syafi.com"
