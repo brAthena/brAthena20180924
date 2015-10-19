@@ -66,6 +66,110 @@
 struct pc_interface pc_s;
 struct pc_interface *pc;
 
+/// Tabela Elemental
+int ElementTable[4][ELE_MAX][ELE_MAX] =
+{
+#ifdef RENEWAL
+	{//		Neut Watr Erth Fire Wind Pois Holy Shdw Gho  Und
+		{	100, 100, 100, 100, 100, 100, 100, 100,  70, 100	},		// Neutro LV.1
+		{	100,  25, 100, 150,  90, 100,  75, 100, 100, 100	},		// Água LV.1
+		{	100, 100,  25,  90, 150, 100,  75, 100, 100, 100	},		// Terra LV.1
+		{	100,  90, 150,  25, 100, 100,  75, 100, 100, 125	},		// Fogo LV.1
+		{	100, 175,  90, 100,  25, 100,  75, 100, 100, 100	},		// Vento LV.1
+		{	100, 100, 125, 125, 125,   0,  75,  50, 100, -25	},		// Veneno LV.1
+		{	100, 100, 100, 100, 100, 100,   0, 125, 100, 150	},		// Sagrado LV.1
+		{	100, 100, 100, 100, 100,  50, 125,   0, 100, -25	},		// Sombrio LV.1
+		{	 70, 100, 100, 100, 100, 100,  75,  75, 125, 100	},		// Fantasma LV.1
+		{	100, 100, 100, 100, 100,  50, 100,   0, 100,   0	},		// Morto-Vivo LV.1
+	},
+	{//		Neut Watr Erth Fire Wind Pois Holy Shdw Gho  Und
+		{	100, 100, 100, 100, 100, 100, 100, 100,  50, 100	},		// Neutro LV.2
+		{	100,   0, 100, 175,  80, 100,  50,  75, 100, 100	},		// Água LV.2
+		{	100, 100,   0,  80, 175, 100,  50,  75, 100, 100	},		// Terra LV.2
+		{	100,  80, 175,   0, 100, 100,  50,  75, 100, 150	},		// Fogo LV.2
+		{	100, 175,  80, 100,   0, 100,  50,  75, 100, 100	},		// Vento LV.2
+		{	100,  75, 125, 125, 125,   0,  50,  25,  75, -50	},		// Veneno LV.2
+		{	100, 100, 100, 100, 100, 100, -25, 150, 100, 175	},		// Sagrado LV.2
+		{	100, 100, 100, 100, 100,  25, 150, -25, 100, -50	},		// Sombrio LV.2
+		{	 50,  75,  75,  75,  75,  75,  50,  50, 150, 125	},		// Fantasma LV.2
+		{	100,  75,  75,  75,  75,  25, 125,   0, 100,   0	},		// Morto-Vivo LV.2
+	},
+	{//		Neut Watr Erth Fire Wind Pois Holy Shdw Gho  Und
+		{	100, 100, 100, 100, 100, 100, 100, 100,   0, 100	},		// Neutro LV.3
+		{	100, -25, 100, 200,  70, 100,  25,  50, 100, 125	},		// Água LV.3
+		{	100, 100, -25,  70, 200, 100,  25,  50, 100, 100	},		// Terra LV.3
+		{	100,  70, 200, -25, 100, 100,  25,  50, 100, 175	},		// Fogo LV.3
+		{	100, 200,  70, 100, -25, 100,  25,  50, 100, 100	},		// Vento LV.3
+		{	100,  50, 100, 100, 100,   0,  25,   0,  50, -75	},		// Veneno LV.3
+		{	100, 100, 100, 100, 100, 125, -50, 175, 100, 200	},		// Sagrado LV.3
+		{	100, 100, 100, 100, 100,   0, 175, -50, 100, -75	},		// Sombrio LV.3
+		{	  0,  50,  50,  50,  50,  50,  25,  25, 175, 150	},		// Fantasma LV.3
+		{	100,  50,  50,  50,  50,   0, 150,   0, 100,   0	},		// Morto-Vivo LV.3
+	},
+	{//		Neut Watr Erth Fire Wind Pois Holy Shdw Gho  Und
+		{	100, 100, 100, 100, 100, 100, 100, 100,   0, 100	},		// Neutro LV.4
+		{	100, -50, 100, 200,  60,  75,   0,  25, 100, 150	},		// Água LV.4
+		{	100, 100, -50,  60, 200,  75,   0,  25, 100,  50	},		// Terra LV.4
+		{	100,  60, 200, -50, 100,  75,   0,  25, 100, 200	},		// Fogo LV.4
+		{	100, 200,  60, 100, -50,  75,   0,  25, 100, 100	},		// Vento LV.4
+		{	100,  25,  75,  75,  75,   0,   0, -25,  25,-100	},		// Veneno LV.4
+		{	100,  75,  75,  75,  75, 125,-100, 200, 100, 200	},		// Sagrado LV.4
+		{	100,  75,  75,  75,  75, -25, 200,-100, 100,-100	},		// Sombrio LV.4
+		{	  0,  25,  25,  25,  25,  25,   0,   0, 200, 175	},		// Fantasma LV.4
+		{	100,  25,  25,  25,  25, -25, 175,   0, 100,   0	},		// Morto-Vivo LV.4
+	}
+#else
+	{//		Neut Watr Erth Fire Wind Pois Holy Shdw Gho  Und
+		{	100, 100, 100, 100, 100, 100, 100, 100,  25, 100	},		// Neutro LV.1
+		{	100,  25, 100, 150,  50, 100,  75, 100, 100, 100	},		// Água LV.1
+		{	100, 100, 100,  50, 150, 100,  75, 100, 100, 100	},		// Terra LV.1
+		{	100,  50, 150,  25, 100, 100,  75, 100, 100, 125	},		// Fogo LV.1
+		{	100, 175,  50, 100,  25, 100,  75, 100, 100, 100	},		// Vento LV.1
+		{	100, 100, 125, 125, 125,   0,  75,  50, 100, -25	},		// Veneno LV.1
+		{	100, 100, 100, 100, 100, 100,   0, 125, 100, 150	},		// Sagrado LV.1
+		{	100, 100, 100, 100, 100,  50, 125,   0, 100, -25	},		// Sombrio LV.1
+		{	 25, 100, 100, 100, 100, 100,  75,  75, 125, 100	},		// Fantasma LV.1
+		{	100, 100, 100, 100, 100,  50, 100,   0, 100,   0	},		// Morto-Vivo LV.1
+	},
+	{//		Neut Watr Erth Fire Wind Pois Holy Shdw Gho  Und
+		{	100, 100, 100, 100, 100, 100, 100, 100,  25, 100	},		// Neutro LV.2
+		{	100,   0, 100, 175,  25, 100,  50,  75, 100, 100	},		// Água LV.2
+		{	100, 100,  50,  25, 175, 100,  50,  75, 100, 100	},		// Terra LV.2
+		{	100,  25, 175,   0, 100, 100,  50,  75, 100, 150	},		// Fogo LV.2
+		{	100, 175,  25, 100,   0, 100,  50,  75, 100, 100	},		// Vento LV.2
+		{	100,  75, 125, 125, 125,   0,  50,  25,  75, -50	},		// Veneno LV.2
+		{	100, 100, 100, 100, 100, 100, -25, 150, 100, 175	},		// Sagrado LV.2
+		{	100, 100, 100, 100, 100,  25, 150, -25, 100, -50	},		// Sombrio LV.2
+		{	  0,  75,  75,  75,  75,  75,  50,  50, 150, 125	},		// Fantasma LV.2
+		{	100,  75,  75,  75,  75,  25, 125,   0, 100,   0	},		// Morto-Vivo LV.2
+	},
+	{//		Neut Watr Erth Fire Wind Pois Holy Shdw Gho  Und
+		{	100, 100, 100, 100, 100, 100, 100, 100,   0, 100	},		// Neutro LV.3
+		{	100, -25, 100, 200,   0, 100,  25,  50, 100, 125	},		// Água LV.3
+		{	100, 100,   0,   0, 200, 100,  25,  50, 100,  75	},		// Terra LV.3
+		{	100,   0, 200, -25, 100, 100,  25,  50, 100, 175	},		// Fogo LV.3
+		{	100, 200,   0, 100, -25, 100,  25,  50, 100, 100	},		// Vento LV.3
+		{	100,  50, 100, 100, 100,   0,  25,   0,  50, -75	},		// Veneno LV.3
+		{	100, 100, 100, 100, 100, 125, -50, 175, 100, 200	},		// Sagrado LV.3
+		{	100, 100, 100, 100, 100,   0, 175, -50, 100, -75	},		// Sombrio LV.3
+		{	  0,  50,  50,  50,  50,  50,  25,  25, 175, 150	},		// Fantasma LV.3
+		{	100,  50,  50,  50,  50,   0, 150,   0, 100,   0	},		// Morto-Vivo LV.3
+	},
+	{//		Neut Watr Erth Fire Wind Pois Holy Shdw Gho  Und
+		{	100, 100, 100, 100, 100, 100, 100, 100,   0, 100	},		// Neutro LV.4
+		{	100, -50, 100, 200,   0,  75,   0,  25, 100, 150	},		// Água LV.4
+		{	100, 100, -25,   0, 200,  75,   0,  25, 100,  50	},		// Terra LV.4
+		{	100,   0, 200, -50, 100,  75,   0,  25, 100, 200	},		// Fogo LV.4
+		{	100, 200,   0, 100, -50,  75,   0,  25, 100, 100	},		// Vento LV.4
+		{	100,  25,  75,  75,  75,   0,   0, -25,  25,-100	},		// Veneno LV.4
+		{	100,  75,  75,  75,  75, 125,-100, 200, 100, 200	},		// Sagrado LV.4
+		{	100,  75,  75,  75,  75, -25, 200,-100, 100,-100	},		// Sombrio LV.4
+		{	  0,  25,  25,  25,  25,  25,   0,   0, 200, 175	},		// Fantasma LV.4
+		{	100,  25,  25,  25,  25, -25, 175,   0, 100,   0	},		// Morto-Vivo LV.4
+	}
+#endif
+};
+
 //Converts a class to its array index for CLASS_COUNT defined arrays.
 //Note that it does not do a validity check for speed purposes, where parsing
 //player input make sure to use a pc->db_checkid first!
@@ -10950,7 +11054,7 @@ int pc_readdb(void) {
 	int i,j,k;
 	unsigned int count = 0;
 	FILE *fp;
-	char line[24000],*p;
+	char line[24000];
 
 	//reset
 	memset(pc->exp_table,0,sizeof(pc->exp_table));
@@ -11053,57 +11157,18 @@ int pc_readdb(void) {
 			for ( k = ELE_NEUTRAL; k<ELE_MAX; k++ )
 				battle->attr_fix_table[i][j][k]=100;
 
-	sprintf(line, "%s/"DBPATH"attr_fix.txt", map->db_path);
-
-	fp=fopen(line,"r");
-	if(fp==NULL){
-		ShowError("Nao foi possivel abrir %s\n", line);
-		return 1;
-	}
-	while(fgets(line, sizeof(line), fp))
-	{
-		char *split[10];
-		int lv,n;
-		if(line[0]=='/' && line[1]=='/')
-			continue;
-		for(j=0,p=line;j<3 && p;j++){
-			split[j]=p;
-			p=strchr(p,',');
-			if(p) *p++=0;
-		}
-		if( j < 2 )
-			continue;
-
-		lv=atoi(split[0]);
-		n=atoi(split[1]);
-		count++;
-		for ( i = ELE_NEUTRAL; i<n && i<ELE_MAX; ) {
-			if( !fgets(line, sizeof(line), fp) )
-				break;
-			if(line[0]=='/' && line[1]=='/')
-				continue;
-
-			for ( j = ELE_NEUTRAL, p = line; j<n && j<ELE_MAX && p; j++ ) {
-				while(*p==32 && *p>0)
-					p++;
-				battle->attr_fix_table[lv-1][i][j]=atoi(p);
+	for (k = 0; k < 4; k++)
+		for (i = ELE_NEUTRAL; i < ELE_MAX; i++)
+			for (j = ELE_NEUTRAL; j < ELE_MAX; j++) {
+				battle->attr_fix_table[k][i][j] = ElementTable[k][i][j];
 #ifndef RENEWAL
-				if(battle_config.attr_recover == 0 && battle->attr_fix_table[lv-1][i][j] < 0)
-					battle->attr_fix_table[lv-1][i][j] = 0;
+				if (battle_config.attr_recover == 0 && battle->attr_fix_table[k][i][j] < 0)
+					battle->attr_fix_table[k][i][j] = 0;
 #endif
-				p=strchr(p,',');
-				if(p) *p++=0;
 			}
-
-			i++;
-		}
-	}
-	fclose(fp);
-	ShowStatus("Leitura de '"CL_WHITE"%u"CL_RESET"' entradas em '"CL_WHITE"%s/"DBPATH"%s"CL_RESET"'.\n",count,map->db_path,"attr_fix.txt");
-	count = 0;
-	
 	// reset then read statspoint
 	memset(pc->statp,0,sizeof(pc->statp));
+	count = 0;
 	i=1;
 
 	if(SQL_ERROR == SQL->Query(map->brAmysql_handle, "SELECT * FROM `%s`", get_database_name(51)))
