@@ -10896,20 +10896,20 @@ bool pc_readdb_levelpenalty(char* fields[], int columns, int current) {
 int GetLevel(int Class, int Type, int MaxLv)
 {
 	// Nível de Base
-	if (Type == 0 && (Class >= 0 && Class <= 25) || (Class >= 4023 && Class <= 4052))
+	if (Type == 0 && ((Class >= 0 && Class <= 25) || (Class >= 4023 && Class <= 4052)))
 		MaxLv = BASE_MAX_1LV;
 	if (Type == 0 && (Class >= 4001 && Class <= 4022))
 		MaxLv = BASE_MAX_2LV;
-	if (Type == 0 && (Class >= 4054 && Class <= 4087) || (Class >= 4096 && Class <= 4112))
+	if (Type == 0 && ((Class >= 4054 && Class <= 4087) || (Class >= 4096 && Class <= 4112)))
 		MaxLv = BASE_MAX_3LV;
-	if (Type == 0 && (Class >= 4190 && Class <= 4191) || (Class == 4211 || Class == 4215))
+	if (Type == 0 && ((Class >= 4190 && Class <= 4191) || (Class == 4211 || Class == 4215)))
 		MaxLv = BASE_MAX_4LV;
 	// Nível de Classe
 	if (Type == 1 && (Class == 0 || Class == 4023))
 		MaxLv = JOB_MAX_1LV;
-	if (Type == 1 && (Class >= 1 && Class <= 6) || (Class >= 4024 && Class <= 4029) || (Class == 4046 || Class == 4050))
+	if (Type == 1 && ((Class >= 1 && Class <= 6) || (Class >= 4024 && Class <= 4029) || (Class == 4046 || Class == 4050)))
 		MaxLv = JOB_MAX_2LV;
-	if (Type == 1 && (Class >= 7 && Class <= 21) || (Class >= 4030 && Class <= 4052))
+	if (Type == 1 && ((Class >= 7 && Class <= 21) || (Class >= 4030 && Class <= 4052)))
 		MaxLv = JOB_MAX_3LV;
 	if (Type == 1 && Class == 4001)
 		MaxLv = JOB_MAX_4LV;
@@ -10917,9 +10917,9 @@ int GetLevel(int Class, int Type, int MaxLv)
 		MaxLv = JOB_MAX_5LV;
 	if (Type == 1 && (Class >= 4008 && Class <= 4022))
 		MaxLv = JOB_MAX_6LV;
-	if (Type == 1 && (Class >= 4054 && Class <= 4087) || (Class >= 4096 && Class <= 4112))
+	if (Type == 1 && ((Class >= 4054 && Class <= 4087) || (Class >= 4096 && Class <= 4112)))
 		MaxLv = JOB_MAX_7LV;
-	if (Type == 1 && (Class >= 4190 && Class <= 4191) || (Class >= 4211 && Class <= 4212) || (Class == 4215))
+	if (Type == 1 && ((Class >= 4190 && Class <= 4191) || (Class >= 4211 && Class <= 4212) || (Class == 4215)))
 		MaxLv = JOB_MAX_8LV;
 	if (Type == 1 && (Class >= 24 && Class <= 25))
 		MaxLv = JOB_MAX_9LV;
