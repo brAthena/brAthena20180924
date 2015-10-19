@@ -1177,12 +1177,9 @@ void read_petdb(void) {
 #ifdef RENEWAL
 	const char *config_filename = "db/re/PetTable.conf"; // FIXME hardcoded name
 #else
-#ifdef OLD_TIMES
-	const char *config_filename = "db/ot/PetTable.conf"; // FIXME hardcoded name
-#else
 	const char *config_filename = "db/pre-re/PetTable.conf"; // FIXME hardcoded name
 #endif
-#endif
+
 	int i = 0, pet_count = 0, j;
 	const char *str = NULL;
 

@@ -915,12 +915,9 @@ void itemdb_read_packages(void) {
 #ifdef RENEWAL
 	const char *config_filename = "db/re/PackageItem.conf"; // FIXME hardcoded name
 #else
-#ifdef OLD_TIMES
-	const char *config_filename = "db/ot/PackageItem.conf"; // FIXME hardcoded name
-#else
 	const char *config_filename = "db/pre-re/PackageItem.conf"; // FIXME hardcoded name
 #endif
-#endif
+
 	const char *itname;
 	int i = 0, cnt = 0, c = 0, highest_gcnt = 0;
 	unsigned int *must = NULL, *random = NULL, *rgroup = NULL, **rgroups = NULL;

@@ -12358,12 +12358,9 @@ void buffspecial_db(void) {
 #ifdef RENEWAL
 	const char *config_filename = "db/re/BuffSpecial.conf"; // FIXME hardcoded name
 #else
-#ifdef OLD_TIMES
-	const char *config_filename = "db/ot/BuffSpecial.conf"; // FIXME hardcoded name
-#else
 	const char *config_filename = "db/pre-re/BuffSpecial.conf"; // FIXME hardcoded name
 #endif
-#endif
+
 	int scname = 0, i = 0, sc_count = 0;
 	const char *str = NULL;
 
