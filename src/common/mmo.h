@@ -110,7 +110,32 @@
 //Official Limit: 2.1b ( the var that stores the money doesn't go much higher than this by default )
 #define MAX_BANK_ZENY INT_MAX
 
+// Nível Max. Global (Base)
 #define MAX_LEVEL 175
+
+// Tabela de Nível Máximo por Classes
+enum _max_level_ {
+/// Nível Max. de Base - Suporta até nível de base 1000
+	BASE_MAX_1LV		= 99,	// Classes Normais e Classes Baby.
+	BASE_MAX_2LV		= 99,	// Classes Transcedentais.
+	BASE_MAX_3LV		= 175,	// Terceira Classe Normal, Terceira Classe Bebê.
+	BASE_MAX_4LV		= 160,	// Super Aprendiz Expandido e Kagerou/Oboro.
+/// Nível Max. de Classe - Suporta até nível de classe 255
+	JOB_MAX_1LV			= 10,	// Aprendiz & Bebê Aprendiz.
+	JOB_MAX_2LV			= 50,	// Primeira Classe & Primeira Classe Bebê.
+	JOB_MAX_3LV			= 50,	// Segunda Classe & Segunda Classe Bebê.
+	JOB_MAX_4LV			= 10,	// Aprendiz Transcedental.
+	JOB_MAX_5LV			= 50,	// Primeira Classe Transcedental.
+	JOB_MAX_6LV			= 70,	// Segunda Classe Transcedental.
+	JOB_MAX_7LV			= 60,	// Terceira Classe, Terceira Classe Bebê.
+	JOB_MAX_8LV			= 50,	// Super Aprendiz Expandido e Kagerou/Oboro.
+	JOB_MAX_9LV			= 70,	// Ninja/Gunslinger.
+	JOB_MAX_10LV		= 50,	// Taekwon.
+	JOB_MAX_11LV		= 50,	// Mestre Taekwon.
+	JOB_MAX_12LV		= 50,	// Espiritualista.
+	JOB_MAX_13LV		= 99,	// Super Aprendiz & Bebê Super Aprendiz.
+};
+
 #define MAX_FAME 1000000000
 #define MAX_CART 100
 #define MAX_SKILL 1478

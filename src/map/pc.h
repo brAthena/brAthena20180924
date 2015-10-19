@@ -33,7 +33,6 @@
 /**
  * Defines
  **/
-#define EXP_TABLE_READ 11
 #define MAX_PC_BONUS 10
 #define MAX_PC_SKILL_REQUIRE 5
 #define MAX_PC_FEELHATE 3
@@ -65,23 +64,6 @@ enum equip_index {
 	EQI_SHADOW_ACC_R,
 	EQI_SHADOW_ACC_L,
 	EQI_MAX
-};
-
-enum exp_flag {
-	EXP_BASE_FLAG = 1,
-	EXP_CLASS_FLAG
-};
-// Estrutura para level.
-struct exp_table_level {
-	int Level;
-	int exp;
-	struct exp_table_level* next;
-};
-struct exp_table {
-	struct exp_table_level* etl;
-	// Flags para leitura da tabela.
-	enum exp_flag flag_type;
-	int flag_class;
 };
 
 enum pc_unequipitem_flag {
@@ -810,8 +792,6 @@ END_ZEROED_BLOCK; /* End */
 
 	unsigned int equip_pos[EQI_MAX];
 	struct sg_data sg_info[MAX_PC_FEELHATE];
-	/* Ponteiro para estrutura de banco para as flags. */
-	struct exp_table* exp_db;
 	/* */
 	struct eri *sc_display_ers;
 	/* global expiration timer id */
@@ -921,10 +901,8 @@ END_ZEROED_BLOCK; /* End */
 	bool (*gainexp) (struct map_session_data *sd, struct block_list *src, unsigned int base_exp, unsigned int job_exp, bool is_quest);
 	unsigned int (*nextbaseexp) (struct map_session_data *sd);
 	unsigned int (*thisbaseexp) (struct map_session_data *sd);
-	unsigned int (*baseexp_sub) (int class_,unsigned int job_level); // [Carlos/brAthena]
 	unsigned int (*nextjobexp) (struct map_session_data *sd);
 	unsigned int (*thisjobexp) (struct map_session_data *sd);
-	unsigned int (*jobexp_sub) (unsigned int class_,unsigned int job_level); // [Carlos/brAthena]
 	int (*gets_status_point) (int level);
 	int (*need_status_point) (struct map_session_data *sd,int type,int val);
 	int (*maxparameterincrease) (struct map_session_data* sd, int type);
@@ -1014,7 +992,6 @@ END_ZEROED_BLOCK; /* End */
 	int (*set_hate_mob) (struct map_session_data *sd, int pos, struct block_list *bl);
 
 	int (*readdb) (void);
-	int (*read_exp_fromsql) (void);
 	int (*map_day_timer) (int tid, int64 tick, int id, intptr_t data); // by [yor]
 	int (*map_night_timer) (int tid, int64 tick, int id, intptr_t data); // by [yor]
 	// Rental System

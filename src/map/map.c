@@ -3861,7 +3861,7 @@ char *get_database_name(int database_id)
 		case 19: db_name = "mercenary_skill_db"; break;
 		case 20: db_name = "mob_avail_db"; break;
 		case 21: db_name = "mob_chat_db"; break;
-		//22 a 24 Vazio  
+		//22 a 24 Vazio
 		case 25: db_name = "monstersummonlist"; break;
 		case 26: db_name = "classchange"; break;
 		case 27: db_name = "pet_db"; break;
@@ -3871,19 +3871,7 @@ char *get_database_name(int database_id)
 		case 31: db_name = "exp_homun_db"; break;
 		case 32: db_name = "homunculus_db"; break;
 		case 33: db_name = "job_db2"; break;
-		// Inicio - Leitura das tabelas de experiencia.
-		case 34: db_name = "expparameter"; break;            // Base: Classes Normais e Babys     
-		case 35: db_name = "expparameter2"; break;           // Base: base Transclasse
-		case 36: db_name = "expparameter3"; break;           // Base: base 3rd, Bebê 3rd, Classes expandidas Super Aprendiz, (até base 175)  Super Aprendiz expandido , Kagerou/Oboro , Rebelde (até base 160 somente)
-		case 37: db_name = "firstjobexpparameter"; break;    // Classe: Primeiras Classes, Bebê primeiras Classes e Taekwon
-		case 38: db_name = "firstjobexpparameter2"; break;   // Classe: TransClasses 1-1
-		case 39: db_name = "firstjobexpparameter3"; break;   // Classe: Ninja/Gunslinger
-		case 40: db_name = "novicejobexpparameter"; break;   // Classe: Aprendiz e Baby Aprendiz
-		case 41: db_name = "novicejobexpparameter2"; break;  // Classe: Aprendiz renascido
-		case 42: db_name = "secondjobexpparameter"; break;   // Classe: Segunda Classes e Bebê 2nd Classes e Soul Linker
-		case 43: db_name = "secondjobexpparameter2"; break;  // Classe: Transclasse 2-1
-		case 44: db_name = "thirdjobexpparameter"; break;    // Classe: 3rd classes, Bebê 3rds, Super Aprendiz (até job 60) Super Aprendiz expandido, Kagerou/Oboro , Rebeldes (somente até job 50)
-		// Fim - Leitura das tabelas de experiência.
+		//34 a 44 Vazio
 		case 45: db_name = "item_combo_db"; break;
 		case 46: db_name = "level_penalty_db"; break;
 		case 47: db_name = "mob_db"; break;
@@ -3893,6 +3881,7 @@ char *get_database_name(int database_id)
 		case 51: db_name = "statpoint_db"; break;
 		case 52: db_name = "item_db"; break;
 		case 53: db_name = "size_fix_db"; break;
+		case 54: db_name = "exp_db"; break;
 	}
 
 	return db_name;
