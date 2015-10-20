@@ -10672,18 +10672,6 @@ int pc_level_penalty_mod(int diff, unsigned char race, unsigned short mode, int 
 	return 100;
 #endif
 }
-int pc_split_str(char *str,char **val,int num)
-{
-	int i;
-
-	for (i=0; i<num && str; i++){
-		val[i] = str;
-		str = strchr(str,',');
-		if (str && i<num-1) //Do not remove a trailing comma.
-			*str++=0;
-	}
-	return i;
-}
 
 int pc_split_atoi(char* str, int* val, char sep, int max)
 {
@@ -10893,47 +10881,47 @@ bool pc_readdb_levelpenalty(char* fields[], int columns, int current) {
 // Bypass para exp_db [Shiraz]
 // Retorna o level correspondente ao identificador.
 // enum _max_level_ (mmo.h)
-int GetLevel(int Class, int Type, int MaxLv)
-{
+int GetLevel(int Class, int Type)
+{	
 	// Nível de Base
 	if (Type == 0 && ((Class >= 0 && Class <= 25) || (Class >= 4023 && Class <= 4052)))
-		MaxLv = BASE_MAX_1LV;
+		return BASE_MAX_1LV;
 	if (Type == 0 && (Class >= 4001 && Class <= 4022))
-		MaxLv = BASE_MAX_2LV;
+		return BASE_MAX_2LV;
 	if (Type == 0 && ((Class >= 4054 && Class <= 4087) || (Class >= 4096 && Class <= 4112)))
-		MaxLv = BASE_MAX_3LV;
+		return BASE_MAX_3LV;
 	if (Type == 0 && ((Class >= 4190 && Class <= 4191) || (Class == 4211 || Class == 4215)))
-		MaxLv = BASE_MAX_4LV;
+		return BASE_MAX_4LV;
 	// Nível de Classe
 	if (Type == 1 && (Class == 0 || Class == 4023))
-		MaxLv = JOB_MAX_1LV;
+		return JOB_MAX_1LV;
 	if (Type == 1 && ((Class >= 1 && Class <= 6) || (Class >= 4024 && Class <= 4029) || (Class == 4046 || Class == 4050)))
-		MaxLv = JOB_MAX_2LV;
+		return JOB_MAX_2LV;
 	if (Type == 1 && ((Class >= 7 && Class <= 21) || (Class >= 4030 && Class <= 4052)))
-		MaxLv = JOB_MAX_3LV;
+		return JOB_MAX_3LV;
 	if (Type == 1 && Class == 4001)
-		MaxLv = JOB_MAX_4LV;
+		return JOB_MAX_4LV;
 	if (Type == 1 && (Class >= 4002 && Class <= 4007))
-		MaxLv = JOB_MAX_5LV;
+		return JOB_MAX_5LV;
 	if (Type == 1 && (Class >= 4008 && Class <= 4022))
-		MaxLv = JOB_MAX_6LV;
+		return JOB_MAX_6LV;
 	if (Type == 1 && ((Class >= 4054 && Class <= 4087) || (Class >= 4096 && Class <= 4112)))
-		MaxLv = JOB_MAX_7LV;
+		return JOB_MAX_7LV;
 	if (Type == 1 && ((Class >= 4190 && Class <= 4191) || (Class >= 4211 && Class <= 4212) || (Class == 4215)))
-		MaxLv = JOB_MAX_8LV;
+		return JOB_MAX_8LV;
 	if (Type == 1 && (Class >= 24 && Class <= 25))
-		MaxLv = JOB_MAX_9LV;
+		return JOB_MAX_9LV;
 	if (Type == 1 && Class == 4046)
-		MaxLv = JOB_MAX_10LV;
+		return JOB_MAX_10LV;
 	if (Type == 1 && (Class >= 4047 && Class <= 4048))
-		MaxLv = JOB_MAX_11LV;
+		return JOB_MAX_11LV;
 	if (Type == 1 && Class == 4049)
-		MaxLv = JOB_MAX_12LV;
+		return JOB_MAX_12LV;
 	if (Type == 1 && (Class == 23 || Class == 4045))
-		MaxLv = JOB_MAX_13LV;
+		return JOB_MAX_13LV;
 
-	// Caso o level não esteja definido, retorna o valor de exp_db (SQL).
-	return MaxLv;
+	ShowError("Nivel maximo indefinido para a classe %d\n", Class);
+	return 0;
 }
 
 /*==========================================
@@ -10953,16 +10941,14 @@ int pc_readdb(void) {
 
 	while (SQL_SUCCESS == SQL->NextRow(map->brAmysql_handle)) {
 		int jobs[CLASS_COUNT], job_count, job, job_id;
+		char *split[3];
 		int type;
 		unsigned int ui,maxlv;
-		char *split[4];
 		
-		SQL->GetData(map->brAmysql_handle, 0, &row, NULL);
+		for(j = 0; j < 3; ++j)
+			SQL->GetData(map->brAmysql_handle, j, &split[j], NULL);
 
-		if (pc_split_str(row,split,4) < 4)
-			continue;
-
-		job_count = pc_split_atoi(split[1],jobs,':',CLASS_COUNT);
+		job_count = pc_split_atoi(split[0],jobs,':',CLASS_COUNT);
 		if (job_count < 1)
 			continue;
 		job_id = jobs[0];
@@ -10970,12 +10956,12 @@ int pc_readdb(void) {
 			ShowError("pc_readdb: Classe invalida (id %d).\n", job_id);
 			continue;
 		}
-		type = atoi(split[2]);
+		type = atoi(split[1]);
 		if (type < 0 || type > 1) {
 			ShowError("pc_readdb: Tipo invalido %d (deve ser 0 para base e 1 para classe).\n", type);
 			continue;
 		}
-		maxlv = GetLevel(job_id, type, atoi(split[0]));
+		maxlv = GetLevel(job_id, type);
 		if (maxlv > MAX_LEVEL) {
 			ShowWarning("pc_readdb: Nivel maximo %u para classe %d excedeu o limite do servidor (%u).\n ", maxlv, job_id, MAX_LEVEL);
 			maxlv = MAX_LEVEL;
@@ -10983,7 +10969,7 @@ int pc_readdb(void) {
 		count++;
 		job = jobs[0] = pc->class2idx(job_id);
 		//We send one less and then one more because the last entry in the exp array should hold 0.
-		pc->max_level[job][type] = pc_split_atoui(split[3], pc->exp_table[job][type],',',maxlv-1)+1;
+		pc->max_level[job][type] = pc_split_atoui(split[2], pc->exp_table[job][type],',',maxlv-1)+1;
 		//Reverse check in case the array has a bunch of trailing zeros... [Skotlex]
 		//The reasoning behind the -2 is this... if the max level is 5, then the array
 		//should look like this:
