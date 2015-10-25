@@ -87,7 +87,7 @@ enum e_battle_check_target { //New definitions [Skotlex]
  * Values used by (struct Damage).type, as well as clif->damage(type) and clif->skill_damage(type)
  *
  * Note: some values may not apply in some contexts.
-*/
+ */
 enum battle_dmg_type {
 	BDT_NORMAL      = 0,  // Normal attack
 	//BDT_PICKUP      = 1,  // Pick up item
@@ -106,7 +106,7 @@ enum battle_dmg_type {
 
 /**
  * Structures
-**/
+ **/
 
 // damage structure
 struct Damage {
@@ -516,13 +516,9 @@ struct Battle_Config {
 	int stormgust_knockback;
 
 	int feature_roulette;
-	
+
 	int show_monster_hp_bar; // [Frost]
 };
-
-#ifdef BRATHENA_CORE
-extern struct Battle_Config battle_config;
-#endif // BRATHENA_CORE
 
 /* criteria for battle_config.idletime_critera */
 enum e_battle_config_idletime {
@@ -657,6 +653,7 @@ struct battle_interface {
 struct battle_interface *battle;
 
 #ifdef BRATHENA_CORE
+extern struct Battle_Config battle_config;
 void battle_defaults(void);
 #endif // BRATHENA_CORE
 

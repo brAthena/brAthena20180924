@@ -640,7 +640,7 @@ void unit_run_hit( struct block_list *bl, struct status_change *sc, struct map_s
 
 	//If you can't run forward, you must be next to a wall, so bounce back. [Skotlex]
 	if( type == SC_RUN )
-		clif->sc_load(bl,bl->id,AREA,SI_TING,0,0,0);
+		clif->efst_set_enter(bl,bl->id,AREA,SI_TING,0,0,0);
 
 	//Set running to 0 beforehand so status_change_end knows not to enable spurt [Kevin]
 	unit->bl2ud(bl)->state.running = 0;
@@ -746,7 +746,7 @@ int unit_movepos(struct block_list *bl, short dst_x, short dst_y, int easy, bool
 	unit->stop_walking(bl, STOPWALKING_FLAG_FIXPOS);
 	unit->stop_attack(bl);
 
-	if (checkpath && (map->getcell(bl->m, bl, dst_x, dst_y, CELL_CHKNOPASS) || !path->search(NULL,bl,bl->m,bl->x,bl->y,dst_x,dst_y,easy,CELL_CHKNOREACH)))
+	if (checkpath && (map->getcell(bl->m, bl, dst_x, dst_y, CELL_CHKNOPASS) || !path->search(NULL, bl, bl->m, bl->x, bl->y, dst_x, dst_y, easy, CELL_CHKNOREACH)) )
 		return 0; // unreachable
 
 	ud->to_x = dst_x;

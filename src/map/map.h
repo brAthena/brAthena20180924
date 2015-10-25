@@ -12,8 +12,6 @@
 #ifndef MAP_MAP_H
 #define MAP_MAP_H
 
-#include "config/core.h"
-
 #include "map/atcommand.h"
 #include "common/cbasetypes.h"
 #include "common/core.h" // CORE_ST_LAST
@@ -222,7 +220,13 @@ enum {
 #define EVENT_NAME_LENGTH ( NAME_LENGTH * 2 + 3 )
 #define DEFAULT_AUTOSAVE_INTERVAL (5*60*1000)
 // Specifies maps where players may hit each other
-#define map_flag_vs(m) (map->list[m].flag.pvp || map->list[m].flag.gvg_dungeon || map->list[m].flag.gvg || ((map->agit_flag || map->agit2_flag) && map->list[m].flag.gvg_castle) || map->list[m].flag.battleground)
+#define map_flag_vs(m) ( \
+		map->list[m].flag.pvp \
+		|| map->list[m].flag.gvg_dungeon \
+		|| map->list[m].flag.gvg \
+		|| ((map->agit_flag || map->agit2_flag) && map->list[m].flag.gvg_castle) \
+		|| map->list[m].flag.battleground \
+		)
 // Specifies maps that have special GvG/WoE restrictions
 #define map_flag_gvg(m) (map->list[m].flag.gvg || ((map->agit_flag || map->agit2_flag) && map->list[m].flag.gvg_castle))
 // Specifies if the map is tagged as GvG/WoE (regardless of map->agit_flag status)
@@ -773,8 +777,6 @@ struct mapit_interface {
 	bool                    (*exists) (struct s_mapiterator* iter);
 };
 
-struct mapit_interface *mapit;
-
 #define mapit_getallusers() (mapit->alloc(MAPIT_NORMAL,BL_PC))
 #define mapit_geteachpc()   (mapit->alloc(MAPIT_NORMAL,BL_PC))
 #define mapit_geteachmob()  (mapit->alloc(MAPIT_NORMAL,BL_MOB))
@@ -870,7 +872,6 @@ struct map_interface {
 	char mob_db2_db[32];
 	char mob_skill_db_db[32];
 	char mob_skill_db2_db[32];
-	char interreg_db[32];
 	char autotrade_merchants_db[32];
 	char autotrade_data_db[32];
 	char npc_market_data_db[32];
@@ -1109,7 +1110,9 @@ END_ZEROED_BLOCK;
 	void (*zone_clear_single) (struct map_zone_data *zone);
 };
 
+struct mapit_interface *mapit;
 struct map_interface *map;
+
 void sv_readsqldb(char *table_name, int param_size, int max_allowed, bool(*sub_parse_row)(char *string[], int columns, int current));
 char* get_database_name(int database_id);
 

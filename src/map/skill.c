@@ -12371,7 +12371,7 @@ int skill_unit_onplace_timer(struct skill_unit *src, struct block_list *bl, int6
 				sg->limit = 0;
 				clif->changetraplook(&src->bl, UNT_USED_TRAPS);
 				sg->unit_id = UNT_USED_TRAPS;
- 			}
+			}
 			break;
 		case UNT_THORNS_TRAP:
 			if( tsc ) {
@@ -15337,7 +15337,7 @@ int skill_sit (struct map_session_data *sd, int type)
 	}
 
 	if( type ) {
-		clif->sc_load(&sd->bl,sd->bl.id,SELF,SI_SIT,0,0,0);
+		clif->efst_set_enter(&sd->bl,sd->bl.id,SELF,SI_SIT,0,0,0);
 	} else {
 		clif->sc_end(&sd->bl,sd->bl.id,SELF,SI_SIT);
 	}
@@ -17402,7 +17402,6 @@ int skill_produce_mix(struct map_session_data *sd, uint16 skill_id, int nameid, 
 				clif->msgtable_skill(sd, skill_id, MSG_SKILL_SUCCESS);
 			return 1;
 		}
-		
 	}
 	logs->produce(sd,NULL,0,"Crafting Fail"); //Craft Failure Log
 	if(equip){
@@ -17582,7 +17581,6 @@ void skill_toggle_magicpower(struct block_list *bl, uint16 skill_id) {
 	}
 }
 
-
 int skill_magicdecoy(struct map_session_data *sd, int nameid) {
 	int x, y, i, class_, skill_id;
 	struct mob_data *md;
@@ -17609,7 +17607,6 @@ int skill_magicdecoy(struct map_session_data *sd, int nameid) {
 	sd->menuskill_val = 0;
 
 	class_ = (nameid == ITEMID_BOODY_RED || nameid == ITEMID_CRYSTAL_BLUE) ? 2043 + nameid - ITEMID_BOODY_RED : (nameid == ITEMID_WIND_OF_VERDURE) ? 2046 : 2045;
-
 
 	md =  mob->once_spawn_sub(&sd->bl, sd->bl.m, x, y, sd->status.name, class_, "", SZ_SMALL, AI_NONE);
 	if( md ) {
@@ -17749,7 +17746,6 @@ int skill_elementalanalysis(struct map_session_data* sd, int n, uint16 skill_lv,
 			clif->skill_fail(sd,SO_EL_ANALYSIS,USESKILL_FAIL_LEVEL,0);
 			return 1;
 		}
-
 
 		memset(&tmp_item,0,sizeof(tmp_item));
 		tmp_item.nameid = product;
@@ -18933,7 +18929,6 @@ bool skill_parse_row_reproducedb(char* split[], int column, int current) {
 
 	return true;
 }
-
 
 bool skill_parse_row_abradb(char* split[], int columns, int current) {
 // skill_id,DummyName,RequiredHocusPocusLevel,Rate

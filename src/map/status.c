@@ -42,6 +42,7 @@
 #include "common/strlib.h"
 #include "common/timer.h"
 #include "common/utils.h"
+#include "common/conf.h"
 
 #include <math.h>
 #include <memory.h>
@@ -1101,7 +1102,6 @@ void initDummyData(void)
 	status->dummy.ele_lv = 1; //Min elemental level.
 	status->dummy.mode = MD_CANMOVE;
 }
-
 
 //For copying a status_data structure from b to a, without overwriting current Hp and Sp
 static inline void status_cpy(struct status_data* a, const struct status_data* b)
@@ -2626,7 +2626,6 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt) {
 	if( (skill_lv = pc->checkskill(sd,WM_LESSON)) > 0 )
 		bstatus->max_sp += 30 * skill_lv;
 
-
 	// Apply relative modifiers from equipment
 	if(sd->sprate < 0)
 		sd->sprate = 0;
@@ -2804,7 +2803,6 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt) {
 		bstatus->aspd_rate -= 250 - 50 * pc->checkskill(sd, RK_DRAGONTRAINING);
 #endif
 	bstatus->adelay = 2*bstatus->amotion;
-
 
 	// ----- DMOTION -----
 	//
@@ -9261,7 +9259,7 @@ int status_change_start(struct block_list *src, struct block_list *bl, enum sc_t
 	switch (type) {
 		case SC_VACUUM_EXTREME:
 			if(!map_flag_gvg(bl->m))
-				unit->stop_walking(bl, STOPWALKING_FLAG_FIXPOS);
+				unit->stop_walking(bl,1);
 			break;
 		case SC_FREEZE:
 		case SC_STUN:
@@ -10438,7 +10436,7 @@ int kaahi_heal_timer(int tid, int64 tick, int id, intptr_t data) {
 	int hp;
 
 	if ((bl=map->id2bl(id)) == NULL || (sc=status->get_sc(bl)) == NULL || (sce=sc->data[SC_KAAHI]) == NULL)
- 		return 0;
+		return 0;
 
 	if(sce->val4 != tid) {
 		ShowError("kaahi_heal_timer: Timer mismatch: %d != %d\n", tid, sce->val4);
@@ -10624,7 +10622,7 @@ int status_change_timer(int tid, int64 tick, int id, intptr_t data) {
 					sce->timer = INVALID_TIMER;
 					return 0;
 				}
- 			}
+			}
 		}
 			break;
 

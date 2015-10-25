@@ -544,7 +544,6 @@ void bg_match_over(struct bg_arena *arena, bool canceled) {
 		return;
 	arena->ongoing = false;
 
-	nullpo_retv(arena);
 	for( i = 0; i < queue->size; i++ ) {
 		struct map_session_data * sd = NULL;
 
@@ -569,6 +568,7 @@ void bg_begin(struct bg_arena *arena) {
 	struct hQueue *queue = &script->hq[arena->queue_id];
 	int i, count = 0;
 
+	nullpo_retv(arena);
 	for( i = 0; i < queue->size; i++ ) {
 		struct map_session_data * sd = NULL;
 

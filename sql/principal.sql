@@ -508,17 +508,6 @@ CREATE TABLE IF NOT EXISTS `interlog` (
   `time` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
   `log` VARCHAR(255) NOT NULL DEFAULT ''
 ) ENGINE=MyISAM; 
-
---
--- Estrutura da tabela `interreg`
---
-
-CREATE TABLE IF NOT EXISTS `interreg` (
-  `varname` VARCHAR(11) NOT NULL,
-  `value` VARCHAR(20) NOT NULL,
-   PRIMARY KEY (`varname`)
-) ENGINE=InnoDB;
-
 --
 -- Estrutura da tabela `inventory`
 --
@@ -796,16 +785,7 @@ CREATE TABLE IF NOT EXISTS `sql_updates` (
 
 INSERT IGNORE INTO `sql_updates` (`timestamp`) VALUES (1443394980); -- 2015-09-27--23-03.sql
 INSERT IGNORE INTO `sql_updates` (`timestamp`) VALUES (1440688342); -- 2015-08-27--20-42.sql
-
---
--- Estrutura da tabela `sstatus`
---
-
-CREATE TABLE IF NOT EXISTS `sstatus` (
-  `index` TINYINT(4) UNSIGNED NOT NULL DEFAULT '0',
-  `name` VARCHAR(255) NOT NULL DEFAULT '',
-  `user` INT(11) UNSIGNED NOT NULL DEFAULT '0'
-) ENGINE=MyISAM;
+INSERT IGNORE INTO `sql_updates` (`timestamp`) VALUES (1445742780); -- 2015-10-25--03-13.sql
 
 --
 -- Estrutura da tabela `storage`

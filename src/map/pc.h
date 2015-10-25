@@ -12,8 +12,6 @@
 #ifndef MAP_PC_H
 #define MAP_PC_H
 
-#include "config/core.h" // AUTOLOOTITEM_SIZE, RENEWAL, SECURE_NPCTIMEOUT
-
 #include "map/battle.h" // battle
 #include "map/battleground.h" // enum bg_queue_types
 #include "map/buyingstore.h"  // struct s_buyingstore
@@ -1071,7 +1069,7 @@ END_ZEROED_BLOCK; /* End */
 	void (*autotrade_populate) (struct map_session_data *sd);
 
 	int (*check_job_name) (const char *name);
-	
+
 	void (*get_ip) (struct map_session_data *sd,char * str);
 };
 
