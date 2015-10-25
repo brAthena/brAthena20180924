@@ -627,7 +627,7 @@ void pc_rental_expire(struct map_session_data *sd, int i) {
 			}
 			break;
 	}
-	
+
 	clif->rental_expired(sd->fd, i, sd->status.inventory[i].nameid);
 	logs->item_getrem(0, sd, &sd->status.inventory[i], -sd->status.inventory[i].amount, "Expired");
 	pc->delitem(sd, i, sd->status.inventory[i].amount, 0, DELITEM_NORMAL);
@@ -3024,7 +3024,7 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 				break;
 			}
 			pc->bonus_addeff(sd->addeff, ARRAYLENGTH(sd->addeff), (sc_type)type2,
-				sd->state.lr_flag!=2?val:0, sd->state.lr_flag==2?val:0, 0, 0);
+			                 sd->state.lr_flag!=2?val:0, sd->state.lr_flag==2?val:0, 0, 0);
 			break;
 		case SP_ADDEFF2:
 			if (type2 > SC_MAX) {
@@ -3032,7 +3032,7 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 				break;
 			}
 			pc->bonus_addeff(sd->addeff, ARRAYLENGTH(sd->addeff), (sc_type)type2,
-				sd->state.lr_flag!=2?val:0, sd->state.lr_flag==2?val:0, ATF_SELF, 0);
+			                 sd->state.lr_flag!=2?val:0, sd->state.lr_flag==2?val:0, ATF_SELF, 0);
 			break;
 		case SP_RESEFF:
 			if (type2 < SC_COMMON_MIN || type2 > SC_COMMON_MAX) {
@@ -3065,7 +3065,7 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			}
 			if(sd->state.lr_flag != 2){
 				if ( type2 >= RC_MAX ){
-					for ( i = RC_FORMLESS; i < RC_BOSS; i++ ){
+					for ( i = RC_FORMLESS; i < RC_BOSS; i++ ) {
 						if ( (type2 == RC_NONPLAYER && i == RC_PLAYER) ||
 							 (type2 == RC_NONDEMIHUMAN && i == RC_DEMIHUMAN) ||
 							 (type2 == RC_DEMIPLAYER && (i != RC_PLAYER && i != RC_DEMIHUMAN)) ||
@@ -3892,7 +3892,7 @@ int pc_bonus3(struct map_session_data *sd,int type,int type2,int type3,int val)
 				break;
 			}
 			pc->bonus_addeff(sd->addeff, ARRAYLENGTH(sd->addeff), (sc_type)type2,
-				sd->state.lr_flag!=2?type3:0, sd->state.lr_flag==2?type3:0, val, 0);
+			                 sd->state.lr_flag!=2?type3:0, sd->state.lr_flag==2?type3:0, val, 0);
 			break;
 
 		case SP_ADDEFF_WHENHIT:
@@ -3999,7 +3999,7 @@ int pc_bonus4(struct map_session_data *sd,int type,int type2,int type3,int type4
 		if(sd->state.lr_flag == 2)
 			break;
 		if ( type2 >= RC_MAX ) {
-			for ( i = RC_FORMLESS; i < RC_BOSS; i++ ){
+			for ( i = RC_FORMLESS; i < RC_BOSS; i++ ) {
 				if ( (type2 == RC_NONPLAYER && i == RC_PLAYER) ||
 	 				 (type2 == RC_NONDEMIHUMAN && i == RC_DEMIHUMAN) ||
 	 				 (type2 == RC_DEMIPLAYER && (i != RC_PLAYER && i != RC_DEMIHUMAN)) ||
@@ -4593,7 +4593,7 @@ int pc_additem(struct map_session_data *sd,struct item *item_data,int amount)
 				break;
 		}
 	}
-	
+
 	i = MAX_INVENTORY;
 
 	// Stackable | Non Rental
@@ -5332,7 +5332,7 @@ void pc_bound_clear(struct map_session_data *sd, enum e_item_bound_type type) {
 			break;
 		case IBT_GUILD: {
 				struct guild_storage *gstor = idb_get(gstorage->db,sd->status.guild_id);
-				
+
 				for( i = 0; i < MAX_INVENTORY; i++ ){
 					if(sd->status.inventory[i].bound == type) {
 						if( gstor ){
@@ -5349,7 +5349,6 @@ void pc_bound_clear(struct map_session_data *sd, enum e_item_bound_type type) {
 			}
 			break;
 	}
-	
 }
 /*==========================================
  *  Display item stolen msg to player sd
@@ -5438,7 +5437,7 @@ int pc_steal_item(struct map_session_data *sd,struct block_list *bl, uint16 skil
 		return 0;
 	}
 	else logs->pickdrop(sd,md,&tmp_item,1,"Steal",md->name);
-	
+
 	if(battle_config.show_steal_in_same_party)
 		party->foreachsamemap(pc->show_steal,sd,AREA_SIZE,sd,tmp_item.nameid);
 
@@ -6887,7 +6886,6 @@ unsigned int pc_nextjobexp(struct map_session_data *sd)
 
 	if(sd->status.job_level>=pc->maxjoblv(sd) || sd->status.job_level<=0)
 		return 0;
-
 	return pc->exp_table[pc->class2idx(sd->status.class_)][1][sd->status.job_level-1];
 }
 
@@ -6896,7 +6894,6 @@ unsigned int pc_thisjobexp(struct map_session_data *sd)
 {
 	if(sd->status.job_level>pc->maxjoblv(sd) || sd->status.job_level<=1)
 		return 0;
-
 	return pc->exp_table[pc->class2idx(sd->status.class_)][1][sd->status.job_level-2];
 }
 
@@ -8750,7 +8747,7 @@ int pc_setoption(struct map_session_data *sd,int type)
 
 	if( (type&OPTION_RIDING && !(p_type&OPTION_RIDING)) || (type&OPTION_DRAGON && !(p_type&OPTION_DRAGON) && pc->checkskill(sd,RK_DRAGONTRAINING) > 0) ) {
 		// Mounting
-		clif->sc_load(&sd->bl,sd->bl.id,AREA,SI_RIDING, 0, 0, 0);
+		clif->efst_set_enter(&sd->bl,sd->bl.id,AREA,SI_RIDING, 0, 0, 0);
 		status_calc_pc(sd,SCO_NONE);
 	} else if( (!(type&OPTION_RIDING) && p_type&OPTION_RIDING) || (!(type&OPTION_DRAGON) && p_type&OPTION_DRAGON) ) {
 		// Dismount
@@ -8774,12 +8771,12 @@ int pc_setoption(struct map_session_data *sd,int type)
 #endif
 
 	if (type&OPTION_FALCON && !(p_type&OPTION_FALCON)) //Falcon ON
-		clif->sc_load(&sd->bl,sd->bl.id,AREA,SI_FALCON, 0, 0, 0);
+		clif->efst_set_enter(&sd->bl,sd->bl.id,AREA,SI_FALCON, 0, 0, 0);
 	else if (!(type&OPTION_FALCON) && p_type&OPTION_FALCON) //Falcon OFF
 		clif->sc_end(&sd->bl,sd->bl.id,AREA,SI_FALCON);
 
 	if( type&OPTION_WUGRIDER && !(p_type&OPTION_WUGRIDER) ) { // Mounting
-		clif->sc_load(&sd->bl,sd->bl.id,AREA,SI_WUGRIDER, 0, 0, 0);
+		clif->efst_set_enter(&sd->bl,sd->bl.id,AREA,SI_WUGRIDER, 0, 0, 0);
 		status_calc_pc(sd,SCO_NONE);
 	} else if( !(type&OPTION_WUGRIDER) && p_type&OPTION_WUGRIDER ) { // Dismount
 		clif->sc_end(&sd->bl,sd->bl.id,AREA,SI_WUGRIDER);
@@ -8867,7 +8864,7 @@ int pc_setcart(struct map_session_data *sd,int type) {
 				clif->cartlist(sd);
 			clif->updatestatus(sd, SP_CARTINFO);
 			sc_start(NULL,&sd->bl, SC_PUSH_CART, 100, type, 0);
-			clif->sc_load(&sd->bl, sd->bl.id, AREA, SI_ON_PUSH_CART, type, 0, 0);
+			clif->efst_set_enter(&sd->bl, sd->bl.id, AREA, SI_ON_PUSH_CART, type, 0, 0);
 			if( sd->sc.data[SC_PUSH_CART] )/* forcefully update */
 				sd->sc.data[SC_PUSH_CART]->val1 = type;
 			break;
@@ -10672,6 +10669,18 @@ int pc_level_penalty_mod(int diff, unsigned char race, unsigned short mode, int 
 	return 100;
 #endif
 }
+int pc_split_str(char *str,char **val,int num)
+{
+	int i;
+
+	for (i=0; i<num && str; i++){
+		val[i] = str;
+		str = strchr(str,',');
+		if (str && i<num-1) //Do not remove a trailing comma.
+			*str++=0;
+	}
+	return i;
+}
 
 int pc_split_atoi(char* str, int* val, char sep, int max)
 {
@@ -10728,7 +10737,7 @@ void pc_read_skill_tree(void) {
 	int i = 0;
 	struct s_mapiterator *iter;
 	struct map_session_data *sd;
-	
+
 	if (libconfig->read_file(&skill_tree_conf, config_filename)) {
 		ShowError("Nao foi possivel abrir %s\n", config_filename);
 		return;
@@ -10737,7 +10746,7 @@ void pc_read_skill_tree(void) {
 	while ((skt = libconfig->setting_get_elem(skill_tree_conf.root,i++))) {
 		int k;
 		const char *name = config_setting_name(skt);
-		
+
 		if ( (k = pc->check_job_name(name)) == -1 ) {
 			ShowWarning("pc_read_skill_tree: '%s' nome de classe desconhecido!\n", name);
 			continue;
@@ -11444,7 +11453,7 @@ void pc_autotrade_populate(struct map_session_data *sd) {
 	sd->vend_num = cursor;
 
 	pc->autotrade_update(sd,PAUC_START);
-	
+
 	idb_remove(pc->at_db, sd->status.char_id);
 }
 
@@ -11817,8 +11826,8 @@ void pc_defaults(void) {
 	pc->autotrade_start = pc_autotrade_start;
 	pc->autotrade_prepare = pc_autotrade_prepare;
 	pc->autotrade_populate = pc_autotrade_populate;
-	
+
 	pc->get_ip = pc_get_ip;
-	
+
 	pc->check_job_name = pc_check_job_name;
 }

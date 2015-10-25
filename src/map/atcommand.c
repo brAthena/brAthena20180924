@@ -83,18 +83,16 @@ struct atcmd_binding_data* get_atcommandbind_byname(const char* name) {
 }
 
 const char* atcommand_msgsd(struct map_session_data *sd, int msg_number) {
-	if( !(msg_number >= 0 && msg_number < MAX_MSG) )
-		return "??";
-	if( !sd || sd->lang_id >= atcommand->max_message_table || !atcommand->msg_table[sd->lang_id][msg_number] )
+	Assert_retr("??", msg_number >= 0 && msg_number < MAX_MSG);
+	if (!sd || sd->lang_id >= atcommand->max_message_table || !atcommand->msg_table[sd->lang_id][msg_number])
 		return atcommand->msg_table[0][msg_number];
 	return atcommand->msg_table[sd->lang_id][msg_number];
 }
 
 const char* atcommand_msgfd(int fd, int msg_number) {
 	struct map_session_data *sd = sockt->session_is_valid(fd) ? sockt->session[fd]->session_data : NULL;
-	if( !(msg_number >= 0 && msg_number < MAX_MSG) )
-		return "??";
-	if( !sd || sd->lang_id >= atcommand->max_message_table || !atcommand->msg_table[sd->lang_id][msg_number] )
+	Assert_retr("??", msg_number >= 0 && msg_number < MAX_MSG);
+	if (!sd || sd->lang_id >= atcommand->max_message_table || !atcommand->msg_table[sd->lang_id][msg_number])
 		return atcommand->msg_table[0][msg_number];
 	return atcommand->msg_table[sd->lang_id][msg_number];
 }
@@ -103,13 +101,12 @@ const char* atcommand_msgfd(int fd, int msg_number) {
 // Return the message string of the specified number by [Yor]
 //-----------------------------------------------------------
 const char* atcommand_msg(int msg_number) {
-	if (msg_number >= 0 && msg_number < MAX_MSG) {
-	    if(atcommand->msg_table[map->default_lang_id][msg_number] != NULL && atcommand->msg_table[map->default_lang_id][msg_number][0] != '\0')
-			return atcommand->msg_table[map->default_lang_id][msg_number];
-		
-		if(atcommand->msg_table[0][msg_number] != NULL && atcommand->msg_table[0][msg_number][0] != '\0')
-			return atcommand->msg_table[0][msg_number];
-	}
+	Assert_retr("??", msg_number >= 0 && msg_number < MAX_MSG);
+	if (atcommand->msg_table[map->default_lang_id][msg_number] != NULL && atcommand->msg_table[map->default_lang_id][msg_number][0] != '\0')
+		return atcommand->msg_table[map->default_lang_id][msg_number];
+
+	if(atcommand->msg_table[0][msg_number] != NULL && atcommand->msg_table[0][msg_number][0] != '\0')
+		return atcommand->msg_table[0][msg_number];
 
 	return "??";
 }
@@ -3924,10 +3921,10 @@ ACMD(mapinfo) {
 				}
 				if(strcmp(nd->name,nd->exname) == 0)
 					safesnprintf(atcmd_output, sizeof(atcmd_output), msg_fd(fd,1111), // NPC %d: %s | Direction: %s | Sprite: %d | Location: %d %d
-							++i, nd->name, direction, nd->class_, nd->bl.x, nd->bl.y);
+						++i, nd->name, direction, nd->class_, nd->bl.x, nd->bl.y);
 				else
 					safesnprintf(atcmd_output, sizeof(atcmd_output), msg_fd(fd,1112), // NPC %d: %s::%s | Direction: %s | Sprite: %d | Location: %d %d
-							++i, nd->name, nd->exname, direction, nd->class_, nd->bl.x, nd->bl.y);
+						++i, nd->name, nd->exname, direction, nd->class_, nd->bl.x, nd->bl.y);
 				clif->message(fd, atcmd_output);
 			}
 			break;
@@ -6104,7 +6101,7 @@ ACMD(cleanarea) {
 
 	if (!*message || (n=sscanf(message, "%d %d %d %d", &x0, &y0, &x1, &y1)) < 1) {
 		map->foreachinrange(atcommand->cleanfloor_sub, &sd->bl, AREA_SIZE * 2, BL_ITEM);
-		} else if (n == 4) {
+	} else if (n == 4) {
 		map->foreachinarea(atcommand->cleanfloor_sub, sd->bl.m, x0, y0, x1, y1, BL_ITEM);
 	} else {
 		map->foreachinrange(atcommand->cleanfloor_sub, &sd->bl, x0, BL_ITEM);
@@ -9211,7 +9208,7 @@ ACMD(fontcolor) {
 	sd->fontcolor = k + 1;
 	safesnprintf(atcmd_output, sizeof(atcmd_output), "A cor mudou para '%s'", channel->config->colors_name[k]);
 	clif->messagecolor_self(fd, channel->config->colors[k], atcmd_output);
-	
+
 	return true;
 }
 ACMD(searchstore){
@@ -10137,6 +10134,7 @@ void atcommand_config_read(const char* config_filename) {
  */
 static inline int atcommand_command_type2idx(AtCommandType type)
 {
+	Assert_retr(0, type > 0);
 	return (type-1);
 }
 

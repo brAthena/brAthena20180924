@@ -11,6 +11,7 @@
 
 #define BRATHENA_CORE
 
+#include "config/core.h" // DBPATH
 #include "pet.h"
 
 #include "map/atcommand.h" // msg_txt()
@@ -112,7 +113,7 @@ int pet_attackskill(struct pet_data *pd, int target_id) {
 
 	if (DIFF_TICK(pd->ud.canact_tick, timer->gettick()) > 0)
 		return 0;
-	
+
 	if (rnd()%100 < (pd->a_skill->rate +pd->pet.intimate*pd->a_skill->bonusrate/1000)) {
 		//Skotlex: Use pet's skill
 		int inf;
@@ -138,7 +139,7 @@ int pet_target_check(struct map_session_data *sd,struct block_list *bl,int type)
 	int rate;
 
 	pd = sd->pd;
-	
+
 	Assert_ret(pd->msd == 0 || pd->msd->pd == pd);
 
 	if( bl == NULL || bl->type != BL_MOB || bl->prev == NULL
@@ -191,7 +192,7 @@ int pet_sc_check(struct map_session_data *sd, int type)
 		return 1;
 
 	pd->recovery->timer = timer->add(timer->gettick()+pd->recovery->delay*1000,pet->recovery_timer,sd->bl.id,0);
-	
+
 	return 0;
 }
 
@@ -216,7 +217,7 @@ int pet_hungry(int tid, int64 tick, int id, intptr_t data) {
 
 	if (pd->pet.intimate <= 0)
 		return 1; //You lost the pet already, the rest is irrelevant.
-	
+
 	pd->pet.hungry--;
 	if( pd->pet.hungry < 0 )
 	{
@@ -326,7 +327,6 @@ int pet_data_init(struct map_session_data *sd, struct s_pet *petinfo)
 	int i=0,interval=0;
 
 	nullpo_retr(1, sd);
-
 	Assert_retr(1, sd->status.pet_id == 0 || sd->pd == 0 || sd->pd->msd == sd);
 
 	if(sd->status.account_id != petinfo->account_id || sd->status.char_id != petinfo->char_id) {
@@ -344,7 +344,7 @@ int pet_data_init(struct map_session_data *sd, struct s_pet *petinfo)
 		//The pet_id value was lost? odd... restore it.
 		sd->status.pet_id = petinfo->pet_id;
 	}
-	
+
 	i = pet->search_petDB_index(petinfo->class_,PET_CLASS);
 	if(i < 0) {
 		sd->status.pet_id = 0;
@@ -374,10 +374,10 @@ int pet_data_init(struct map_session_data *sd, struct s_pet *petinfo)
 
 	pd->last_thinktime = timer->gettick();
 	pd->state.skillbonus = 0;
-	
+
 	if( battle_config.pet_status_support )
-		script->run_pet(pet->db[i].pet_script, 0, sd->bl.id, 0);
-	
+		script->run_pet(pet->db[i].pet_script,0,sd->bl.id,0);
+
 	if( pd->petDB ) {
 		if( pd->petDB->equip_script )
 			status_calc_pc(sd,SCO_NONE);
@@ -387,7 +387,7 @@ int pet_data_init(struct map_session_data *sd, struct s_pet *petinfo)
 		else
 			interval = pd->petDB->hungry_delay;
 	}
-	
+
 	if( interval <= 0 )
 		interval = 1;
 	pd->pet_hungry_timer = timer->add(timer->gettick() + interval, pet->hungry, sd->bl.id, 0);
@@ -397,7 +397,6 @@ int pet_data_init(struct map_session_data *sd, struct s_pet *petinfo)
 int pet_birth_process(struct map_session_data *sd, struct s_pet *petinfo)
 {
 	nullpo_retr(1, sd);
-
 	Assert_retr(1, sd->status.pet_id == 0 || sd->pd == 0 || sd->pd->msd == sd);
 
 	if(sd->status.pet_id && petinfo->incubate == 1) {
@@ -577,7 +576,7 @@ bool pet_get_egg(int account_id, short pet_class, int pet_id ) {
 	// the first request. [Panikon]
 	i = pet->search_petDB_index(pet_class,PET_CLASS);
 	sd->catch_target_class = -1;
-	
+
 	if(i < 0) {
 		intif->delete_petdata(pet_id);
 		return false;
@@ -604,11 +603,11 @@ int pet_menu(struct map_session_data *sd,int menunum)
 	nullpo_ret(sd);
 	if (sd->pd == NULL)
 		return 1;
-	
+
 	//You lost the pet already.
 	if(!sd->status.pet_id || sd->pd->pet.intimate <= 0 || sd->pd->pet.incubate)
 		return 1;
-		
+
 	egg_id = itemdb->exists(sd->pd->petDB->EggID);
 	if (egg_id) {
 		if ((egg_id->flag.trade_restriction&ITR_NODROP) && !pc->inventoryblank(sd)) {
@@ -616,7 +615,7 @@ int pet_menu(struct map_session_data *sd,int menunum)
 			return 1;
 		}
 	}
-	
+
 	switch(menunum) {
 		case 0:
 			clif->send_petstatus(sd);
@@ -682,9 +681,9 @@ int pet_equipitem(struct map_session_data *sd,int index) {
 	nullpo_retr(1, sd);
 	pd = sd->pd;
 	if (!pd)  return 1;
-	
+
 	nameid = sd->status.inventory[index].nameid;
-	
+
 	if(pd->petDB->AcceID == 0 || nameid != pd->petDB->AcceID || pd->pet.equip != 0) {
 		clif->equipitemack(sd,0,0,EIA_FAIL);
 		return 1;
@@ -795,7 +794,6 @@ int pet_food(struct map_session_data *sd, struct pet_data *pd) {
 int pet_randomwalk(struct pet_data *pd, int64 tick)
 {
 	nullpo_ret(pd);
-
 	Assert_ret(pd->msd == 0 || pd->msd->pd == pd);
 
 	if (DIFF_TICK(pd->next_walktime,tick) < 0 && unit->can_move(&pd->bl)) {
@@ -855,7 +853,7 @@ int pet_ai_sub_hard(struct pet_data *pd, struct map_session_data *sd, int64 tick
 		pet->randomwalk(pd,tick);
 		return 0;
 	}
-	
+
 	if (!check_distance_bl(&sd->bl, &pd->bl, pd->db->range3)) {
 		//Master too far, chase.
 		if(pd->target_id)
@@ -879,7 +877,7 @@ int pet_ai_sub_hard(struct pet_data *pd, struct map_session_data *sd, int64 tick
 		pd->status.speed = pd->petDB->speed;
 		pd->ud.state.change_walk_target = pd->ud.state.speed_changed = 1;
 	}
-	
+
 	if (pd->target_id) {
 		target= map->id2bl(pd->target_id);
 		if (!target || pd->bl.m != target->m || status->isdead(target)
@@ -889,13 +887,13 @@ int pet_ai_sub_hard(struct pet_data *pd, struct map_session_data *sd, int64 tick
 			pet->unlocktarget(pd);
 		}
 	}
-	
+
 	if(!target && pd->loot && pd->msd && pc_has_permission(pd->msd, PC_PERM_TRADE) && pd->loot->count < pd->loot->max && DIFF_TICK(tick,pd->ud.canact_tick)>0) {
 		//Use half the pet's range of sight.
 		map->foreachinrange(pet->ai_sub_hard_lootsearch,&pd->bl,
 			pd->db->range2/2, BL_ITEM,pd,&target);
 	}
-	
+
 	if (!target) {
 	//Just walk around.
 		if (check_distance_bl(&sd->bl, &pd->bl, 3))
@@ -910,7 +908,7 @@ int pet_ai_sub_hard(struct pet_data *pd, struct map_session_data *sd, int64 tick
 
 		return 0;
 	}
-	
+
 	if(pd->ud.target == target->id &&
 		(pd->ud.attacktimer != INVALID_TIMER || pd->ud.walktimer != INVALID_TIMER))
 		return 0; //Target already locked.
@@ -974,7 +972,7 @@ int pet_ai_sub_hard_lootsearch(struct block_list *bl,va_list ap)
 
 	if(sd_charid && sd_charid != pd->msd->status.char_id)
 		return 0;
-	
+
 	if(unit->can_reach_bl(&pd->bl,bl, pd->db->range2, 1, NULL, NULL) &&
 		((*target) == NULL || //New target closer than previous one.
 		!check_distance_bl(&pd->bl, *target, distance_bl(&pd->bl, bl))))
@@ -1060,18 +1058,18 @@ int pet_skill_bonus_timer(int tid, int64 tick, int id, intptr_t data) {
 	struct pet_data *pd;
 	int bonus;
 	int duration = 0;
-	
+
 	if(sd == NULL || sd->pd==NULL || sd->pd->bonus == NULL)
 		return 1;
-	
+
 	pd=sd->pd;
-	
+
 	if(pd->bonus->timer != tid) {
 		ShowError("pet_skill_bonus_timer %d != %d\n",pd->bonus->timer,tid);
 		pd->bonus->timer = INVALID_TIMER;
 		return 0;
 	}
-	
+
 	// determine the time for the next timer
 	if (pd->state.skillbonus && pd->bonus->delay > 0) {
 		bonus = 0;
@@ -1083,7 +1081,7 @@ int pet_skill_bonus_timer(int tid, int64 tick, int id, intptr_t data) {
 		pd->bonus->timer = INVALID_TIMER;
 		return 0;
 	}
-	
+
 	if (pd->state.skillbonus != bonus) {
 		pd->state.skillbonus = bonus;
 		status_calc_pc(sd, SCO_NONE);
@@ -1099,10 +1097,10 @@ int pet_skill_bonus_timer(int tid, int64 tick, int id, intptr_t data) {
 int pet_recovery_timer(int tid, int64 tick, int id, intptr_t data) {
 	struct map_session_data *sd=map->id2sd(id);
 	struct pet_data *pd;
-	
+
 	if(sd==NULL || sd->pd == NULL || sd->pd->recovery == NULL)
 		return 1;
-	
+
 	pd=sd->pd;
 
 	if(pd->recovery->timer != tid) {
@@ -1119,7 +1117,7 @@ int pet_recovery_timer(int tid, int64 tick, int id, intptr_t data) {
 	}
 
 	pd->recovery->timer = INVALID_TIMER;
-	
+
 	return 0;
 }
 
@@ -1133,14 +1131,14 @@ int pet_skill_support_timer(int tid, int64 tick, int id, intptr_t data) {
 	short rate = 100;
 	if(sd==NULL || sd->pd == NULL || sd->pd->s_skill == NULL)
 		return 1;
-	
+
 	pd=sd->pd;
-	
+
 	if(pd->s_skill->timer != tid) {
 		ShowError("pet_skill_support_timer %d != %d\n",pd->s_skill->timer,tid);
 		return 0;
 	}
-	
+
 	st = status->get_status_data(&sd->bl);
 
 	if (DIFF_TICK(pd->ud.canact_tick, tick) > 0) {
@@ -1148,7 +1146,7 @@ int pet_skill_support_timer(int tid, int64 tick, int id, intptr_t data) {
 		pd->s_skill->timer=timer->add(pd->ud.canact_tick,pet->skill_support_timer,sd->bl.id,0);
 		return 0;
 	}
-	
+
 	if(pc_isdead(sd) ||
 		(rate = get_percentage(st->sp, st->max_sp)) > pd->s_skill->sp ||
 		(rate = get_percentage(st->hp, st->max_hp)) > pd->s_skill->hp ||
@@ -1157,7 +1155,7 @@ int pet_skill_support_timer(int tid, int64 tick, int id, intptr_t data) {
 		pd->s_skill->timer=timer->add(tick+(rate>10?rate:10)*100,pet->skill_support_timer,sd->bl.id,0);
 		return 0;
 	}
-	
+
 	pet_stop_attack(pd);
 	pet_stop_walking(pd, STOPWALKING_FLAG_FIXPOS);
 	pd->s_skill->timer=timer->add(tick+pd->s_skill->delay*1000,pet->skill_support_timer,sd->bl.id,0);
@@ -1312,7 +1310,7 @@ int do_init_pet(bool minimal) {
 
 	pet->item_drop_ers = ers_new(sizeof(struct item_drop),"pet.c::item_drop_ers",ERS_OPT_NONE);
 	pet->item_drop_list_ers = ers_new(sizeof(struct item_drop_list),"pet.c::item_drop_list_ers",ERS_OPT_NONE);
-	
+
 	timer->add_func_list(pet->hungry,"pet_hungry");
 	timer->add_func_list(pet->ai_hard,"pet_ai_hard");
 	timer->add_func_list(pet->skill_bonus_timer,"pet_skill_bonus_timer"); // [Valaris]
@@ -1346,16 +1344,14 @@ int do_final_pet(void)
 }
 void pet_defaults(void) {
 	pet = &pet_s;
-	
+
 	memset(pet->db,0,sizeof(pet->db));
 	pet->item_drop_ers = NULL;
 	pet->item_drop_list_ers = NULL;
-	
-	/* */
+
 	pet->init = do_init_pet;
 	pet->final = do_final_pet;
-	
-	/* */
+
 	pet->hungry_val = pet_hungry_val;
 	pet->set_intimate = pet_set_intimate;
 	pet->create_egg = pet_create_egg;

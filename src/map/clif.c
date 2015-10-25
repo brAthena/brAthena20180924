@@ -14,35 +14,35 @@
 #include "config/core.h" // ANTI_MAYAP_CHEAT, RENEWAL, SECURE_NPCTIMEOUT
 #include "clif.h"
 
-#include "atcommand.h"
-#include "battle.h"
-#include "battleground.h"
-#include "channel.h"
-#include "chat.h"
-#include "chrif.h"
-#include "elemental.h"
-#include "guild.h"
-#include "homunculus.h"
-#include "instance.h"
-#include "intif.h"
-#include "itemdb.h"
-#include "log.h"
-#include "mail.h"
-#include "map.h"
-#include "mercenary.h"
-#include "mob.h"
-#include "npc.h"
-#include "party.h"
-#include "pc.h"
-#include "pet.h"
-#include "quest.h"
-#include "script.h"
-#include "skill.h"
-#include "status.h"
-#include "storage.h"
-#include "trade.h"
-#include "unit.h"
-#include "vending.h"
+#include "map/atcommand.h"
+#include "map/battle.h"
+#include "map/battleground.h"
+#include "map/channel.h"
+#include "map/chat.h"
+#include "map/chrif.h"
+#include "map/elemental.h"
+#include "map/guild.h"
+#include "map/homunculus.h"
+#include "map/instance.h"
+#include "map/intif.h"
+#include "map/itemdb.h"
+#include "map/log.h"
+#include "map/mail.h"
+#include "map/map.h"
+#include "map/mercenary.h"
+#include "map/mob.h"
+#include "map/npc.h"
+#include "map/party.h"
+#include "map/pc.h"
+#include "map/pet.h"
+#include "map/quest.h"
+#include "map/script.h"
+#include "map/skill.h"
+#include "map/status.h"
+#include "map/storage.h"
+#include "map/trade.h"
+#include "map/unit.h"
+#include "map/vending.h"
 #include "common/cbasetypes.h"
 #include "common/conf.h"
 #include "common/ers.h"
@@ -183,9 +183,14 @@ static inline bool disguised(struct block_list* bl) {
 	return (bool)( bl->type == BL_PC && ((TBL_PC*)bl)->disguise != -1 );
 }
 
-
 //Guarantees that the given string does not exceeds the allowed size, as well as making sure it's null terminated. [Skotlex]
 static inline unsigned int mes_len_check(char* mes, unsigned int len, unsigned int max) {
+	nullpo_retr(0, mes);
+	if (len <= 0)
+	{
+		mes[0] = '\0';
+		Assert_retr(0, len > 0);
+	}
 	if( len > max )
 		len = max;
 
@@ -1392,7 +1397,7 @@ bool clif_spawn(struct block_list *bl)
 				if( sd->bg_id && map->list[sd->bl.m].flag.battleground )
 					clif->sendbgemblem_area(sd);
 				for( i = 0; i < sd->sc_display_count; i++ ) {
-					clif->sc_load(&sd->bl, sd->bl.id,AREA,status->dbs->IconChangeTable[sd->sc_display[i]->type],sd->sc_display[i]->val1,sd->sc_display[i]->val2,sd->sc_display[i]->val3);
+					clif->efst_set_enter(&sd->bl, sd->bl.id,AREA,status->dbs->IconChangeTable[sd->sc_display[i]->type],sd->sc_display[i]->val1,sd->sc_display[i]->val2,sd->sc_display[i]->val3);
 				}
 				if (sd->charm_type != CHARM_TYPE_NONE && sd->charm_count > 0)
 					clif->spiritcharm(sd);
@@ -2888,10 +2893,10 @@ void clif_updatestatus(struct map_session_data *sd,int type)
 			WFIFOL(fd,4)=sd->battle_status.cri/10;
 			break;
 		case SP_MATK1:
-				WFIFOL(fd,4)=pc_rightside_matk(sd);
+			WFIFOL(fd,4)=pc_rightside_matk(sd);
 			break;
 		case SP_MATK2:
-				WFIFOL(fd,4)=pc_leftside_matk(sd);
+			WFIFOL(fd,4)=pc_leftside_matk(sd);
 			break;
 		case SP_ZENY:
 			WFIFOW(fd,0)=0xb1;
@@ -4077,7 +4082,7 @@ void clif_getareachar_pc(struct map_session_data* sd,struct map_session_data* ds
 		clif->charm_single(sd->fd, dstsd);
 
 	for( i = 0; i < dstsd->sc_display_count; i++ ) {
-		clif->sc_load(&sd->bl,dstsd->bl.id,SELF,status->dbs->IconChangeTable[dstsd->sc_display[i]->type],dstsd->sc_display[i]->val1,dstsd->sc_display[i]->val2,dstsd->sc_display[i]->val3);
+		clif->efst_set_enter(&sd->bl,dstsd->bl.id,SELF,status->dbs->IconChangeTable[dstsd->sc_display[i]->type],dstsd->sc_display[i]->val1,dstsd->sc_display[i]->val2,dstsd->sc_display[i]->val3);
 	}
 	if( (sd->status.party_id && dstsd->status.party_id == sd->status.party_id) || //Party-mate, or hpdisp setting.
 		(sd->bg_id && sd->bg_id == dstsd->bg_id) || //BattleGround
@@ -4771,6 +4776,7 @@ void clif_skillinfo(struct map_session_data *sd,int skill_id, int inf)
 	int skill_lv;
 
 	nullpo_retv(sd);
+	Assert_retv(idx >= 0 && idx < MAX_SKILL);
 
 	skill_lv = sd->status.skill[idx].lv;
 
@@ -6508,7 +6514,7 @@ void clif_party_withdraw(struct party_data* p, struct map_session_data* sd, int 
 		// Search for any online party member
 		ARR_FIND(0, MAX_PARTY, i, p->data[i].sd != NULL);
 		if (i != MAX_PARTY)
-				sd = p->data[i].sd;
+			sd = p->data[i].sd;
 	}
 
 	if (!sd)
@@ -8608,6 +8614,7 @@ void clif_feel_info(struct map_session_data* sd, unsigned char feel_level, unsig
 	char mapname[MAP_NAME_LENGTH_EXT];
 
 	nullpo_retv(sd);
+	Assert_retv(feel_level < MAX_PC_FEELHATE);
 	mapindex->getmapname_ext(mapindex_id2name(sd->feel_map[feel_level].index), mapname);
 	clif->starskill(sd, mapname, 0, feel_level, type ? 1 : 0);
 }
@@ -11321,7 +11328,7 @@ void clif_parse_NpcAmountInput(int fd,struct map_session_data *sd)
 	int amount = (int)RFIFOL(fd,6);
 
 	if (amount >= 0)
-	sd->npc_amount = amount;
+		sd->npc_amount = amount;
 	else
 		sd->npc_amount = 0;
 	npc->scriptcont(sd, npcid, false);
@@ -15008,6 +15015,8 @@ void clif_parse_Auction_register(int fd, struct map_session_data *sd)
 	if (!battle_config.feature_auction)
 		return;
 
+	Assert_retv(sd->auction.index >= 0 && sd->auction.index < MAX_INVENTORY);
+
 	memset(&auction, 0, sizeof(auction));
 	auction.price = RFIFOL(fd,2);
 	auction.buynow = RFIFOL(fd,6);
@@ -15082,7 +15091,7 @@ void clif_parse_Auction_register(int fd, struct map_session_data *sd)
 	else
 	{
 		int zeny = auction.hours*battle_config.auction_feeperhour;
-		
+
 		pc->delitem(sd, sd->auction.index, sd->auction.amount, 1, DELITEM_SOLD);
 		sd->auction.amount = 0;
 
@@ -15948,7 +15957,6 @@ void clif_bg_xy_remove(struct map_session_data *sd)
 
 	clif->send(buf, packet_len(0x2df), &sd->bl, BG_SAMEMAP_WOS);
 }
-
 
 /// Notifies clients of a battleground message (ZC_BATTLEFIELD_CHAT).
 /// 02dc <packet len>.W <account id>.L <name>.24B <message>.?B
@@ -17222,7 +17230,6 @@ void clif_cashshop_db(void) {
 						}
 					}
 
-
 					RECREATE(clif->cs.data[i], struct hCSData *, ++clif->cs.item_count[i]);
 					CREATE(clif->cs.data[i][ clif->cs.item_count[i] - 1 ], struct hCSData , 1);
 
@@ -17234,8 +17241,8 @@ void clif_cashshop_db(void) {
 		}
 
 	}
-	ShowConf("Leitura de '"CL_WHITE"%d"CL_RESET"' entradas em '"CL_WHITE"%s"CL_RESET"'.\n", item_count_t, config_filename);
 	libconfig->destroy(&cashshop_conf);
+	ShowConf("Leitura de '"CL_WHITE"%d"CL_RESET"' entradas em '"CL_WHITE"%s"CL_RESET"'.\n", item_count_t, config_filename);
 }
 /// Items that are in favorite tab of inventory (ZC_ITEM_FAVORITE).
 /// 0900 <index>.W <favorite>.B
@@ -17406,9 +17413,9 @@ void clif_parse_CashShopBuy(int fd, struct map_session_data *sd) {
 							pc->getcash(sd, clif->cs.data[tab][j]->price * get_count,0);
 					} else /* create_egg succeeded so mark as success */
 						result = CSBR_SUCCESS;
-						
+
 					if(result == CSBR_SUCCESS) /* Add to cashshop Log - [GreenStage]*/
-						logs->cash_buy_sql(sd,"BotÃ£o de Cash","",&item_tmp,get_count,clif->cs.data[tab][j]->price);
+						logs->cash_buy_sql(sd,"Botão de Cash","",&item_tmp,get_count,clif->cs.data[tab][j]->price);
 
 				}
 			}
@@ -17477,19 +17484,23 @@ void clif_maptypeproperty2(struct block_list *bl,enum send_target t) {
 #endif
 }
 
-void clif_status_change2(struct block_list *bl, int tid, enum send_target target, int type, int val1, int val2, int val3) {
-	struct packet_status_change2 p;
+void clif_efst_set_enter(struct block_list *bl, int tid, enum send_target target, int type, int val1, int val2, int val3) {
+#if PACKETVER >= 20111101
+	struct PACKET_ZC_EFST_SET_ENTER p;
 
-	p.PacketType = status_change2Type;
-	p.index = type;
+	p.PacketType = efst_set_enterType;
 	p.AID = tid;
-	p.state = 1;
-	p.Left = 9999;
-	p.val1 = val1;
-	p.val2 = val2;
-	p.val3 = val3;
+	p.hEFST = type;
+#if PACKETVER >= 20120529
+	p.MaxMS = 9999;
+#endif
+	p.Time = 9999;
+	p.Val1 = val1;
+	p.Val2 = val2;
+	p.Val3 = val3;
 
 	clif->send(&p,sizeof(p), bl, target);
+#endif
 }
 
 void clif_partytickack(struct map_session_data* sd, bool flag) {
@@ -17598,6 +17609,7 @@ void clif_bgqueue_update_info(struct map_session_data *sd, unsigned char arena_i
 	struct packet_bgqueue_update_info p;
 
 	nullpo_retv(sd);
+	Assert_retv(arena_id < bg->arenas);
 	p.PacketType = bgqueue_updateinfoType;
 	safestrncpy(p.bg_name, bg->arena[arena_id]->name, sizeof(p.bg_name));
 	p.position = position;
@@ -17663,6 +17675,7 @@ void clif_bgqueue_battlebegins(struct map_session_data *sd, unsigned char arena_
 	struct packet_bgqueue_battlebegins p;
 
 	nullpo_retv(sd);
+	Assert_retv(arena_id < bg->arenas);
 	p.PacketType = bgqueue_battlebeginsType;
 	safestrncpy(p.bg_name, bg->arena[arena_id]->name, sizeof(p.bg_name));
 	safestrncpy(p.game_name, bg->arena[arena_id]->name, sizeof(p.game_name));
@@ -18181,9 +18194,9 @@ void clif_parse_RouletteGenerate(int fd, struct map_session_data* sd) {
 
 			it.nameid = clif->rd.nameid[stage][0];
 			it.identify = 1;
-			
+
 			pc->additem(sd, &it, clif->rd.qty[stage][0]);/** TODO maybe a new log type for roulette items? **/
-			
+
 			sd->roulette.stage = 0;
 			result = GENERATE_ROULETTE_LOSING;
 		} else
@@ -18331,10 +18344,8 @@ bool clif_parse_roulette_db(void) {
 			clif->rd.qty[i][j] = 1;
 		}
 	}
-
-	
 	ShowConf("Leitura de '"CL_WHITE"%d"CL_RESET"' entradas em '"CL_WHITE"%s"CL_RESET"'.\n", item_count_t, config_filename);
-	
+
 	return true;
 }
 
@@ -18414,7 +18425,7 @@ int clif_comparemergeitem(const void *a, const void *b)
 	nullpo_ret(a);
 	nullpo_ret(b);
 	if (a_->nameid == b_->nameid)
-	 return 0;
+		return 0;
 	return a_->nameid > b_->nameid ? -1 : 1;
 }
 
@@ -18491,7 +18502,7 @@ void clif_ackmergeitems(int fd, struct map_session_data *sd)
 	item_data.identify = 1;
 	item_data.unique_id = itemdb->unique_id(sd);
 	pc->additem(sd,&item_data,count);
-	
+
 	ARR_FIND(0,MAX_INVENTORY,i,item_data.unique_id == sd->status.inventory[i].unique_id);
 
 	WFIFOHEAD(fd,7);
@@ -18995,7 +19006,7 @@ void clif_defaults(void) {
 	clif->poison_list = clif_poison_list;
 	clif->autoshadowspell_list = clif_autoshadowspell_list;
 	clif->skill_itemlistwindow = clif_skill_itemlistwindow;
-	clif->sc_load = clif_status_change2;
+	clif->efst_set_enter = clif_efst_set_enter;
 	clif->sc_end = clif_status_change_end;
 	clif->initialstatus = clif_initialstatus;
 	clif->cooldown_list = clif_skill_cooldown_list;

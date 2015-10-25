@@ -329,8 +329,6 @@ struct npc_chat_interface {
 	void (*finalize_pcrematch_entry) (struct pcrematch_entry* e);
 };
 
-struct npc_chat_interface *npc_chat;
-
 /**
  * pcre interface (libpcre)
  * so that plugins may share and take advantage of the core's pcre
@@ -347,6 +345,7 @@ struct pcre_interface {
 	int (*get_substring) (const char *subject, int *ovector, int stringcount, int stringnumber, const char **stringptr);
 };
 
+struct npc_chat_interface *npc_chat;
 struct pcre_interface *libpcre;
 
 /**

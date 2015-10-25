@@ -67,7 +67,7 @@ struct chrif_interface chrif_s;
 //2b0a: Incoming/Outgoing, socket_datasync()
 //2b0b: Outgoing, update charserv skillid2idx
 //2b0c: Outgoing, chrif_changeemail -> 'change mail address ...'
-//2b0d: Incoming, chrif_changedsex -> 'Change sex of acc XY (or char)'
+//2b0d: Incoming, chrif_changedsex -> 'Change sex of acc XY' (or char)
 //2b0e: Outgoing, chrif_char_ask_name -> 'Do some operations (change sex, ban / unban etc)'
 //2b0f: Incoming, chrif_char_ask_name_answer -> 'answer of the 2b0e'
 //2b10: Outgoing, chrif_updatefamelist -> 'Update the fame ranking lists and send them'
@@ -195,10 +195,9 @@ bool chrif_auth_logout(TBL_PC* sd, enum sd_state state)
 
 bool chrif_auth_finished(TBL_PC* sd) {
 	struct auth_node *node;
- 
+
 	nullpo_retr(false, sd);
 	node = chrif->search(sd->status.account_id);
-
 	if ( node && node->sd == sd && node->state == ST_LOGIN ) {
 		node->sd = NULL;
 
@@ -207,6 +206,7 @@ bool chrif_auth_finished(TBL_PC* sd) {
 
 	return false;
 }
+
 // sets char-server's user id
 void chrif_setuserid(char *id) {
 	nullpo_retv(id);
@@ -1138,11 +1138,10 @@ bool chrif_save_scdata(struct map_session_data *sd) { //parses the sc_data of th
 	int64 tick;
 	struct status_change_data data;
 	struct status_change *sc;
- 	const struct TimerData *td;
- 
+	const struct TimerData *td;
+
 	nullpo_retr(false, sd);
 	sc = &sd->sc;
-
 	chrif_check(false);
 	tick = timer->gettick();
 
@@ -1362,7 +1361,7 @@ void chrif_skillid2idx(int fd) {
  *
  *------------------------------------------*/
 int chrif_parse(int fd) {
-	int packet_len, cmd, r;
+	int packet_len, cmd;
 
 	// only process data from the char-server
 	if ( fd != chrif->fd ) {
@@ -1391,10 +1390,10 @@ int chrif_parse(int fd) {
 		cmd = RFIFOW(fd,0);
 
 		if (cmd < 0x2af8 || cmd >= 0x2af8 + ARRAYLENGTH(chrif->packet_len_table) || chrif->packet_len_table[cmd-0x2af8] == 0) {
-			r = intif->parse(fd); // Passed on to the intif
+			int result = intif->parse(fd); // Passed on to the intif
 
-			if (r == 1) continue; // Treated in intif
-			if (r == 2) return 0; // Didn't have enough data (len==-1)
+			if (result == 1) continue; // Treated in intif
+			if (result == 2) return 0; // Didn't have enough data (len==-1)
 
 			ShowWarning("chrif_parse: sessao #%d, intif->parse falhou (comando nao reconhecido 0x%.4x).\n", fd, cmd);
 			sockt->eof(fd);

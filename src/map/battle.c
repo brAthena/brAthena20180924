@@ -109,7 +109,6 @@ struct block_list* battle_gettargeted(struct block_list *target) {
 	return bl_list[rnd()%c];
 }
 
-
 //Returns the id of the current targeted character of the passed bl. [Skotlex]
 int battle_gettarget(struct block_list* bl) {
 
@@ -421,6 +420,7 @@ int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 d
 	else
 		return damage + (damage * (ratio - 100) / 100);
 }
+
 //FIXME: Missing documentation for flag, flag2
 int64 battle_calc_weapon_damage(struct block_list *src, struct block_list *bl, uint16 skill_id, uint16 skill_lv, struct weapon_atk *watk, int nk, bool n_ele, short s_ele, short s_ele_, int size, int type, int flag, int flag2){ // [malufett]
 #ifdef RENEWAL
@@ -464,7 +464,7 @@ int64 battle_calc_weapon_damage(struct block_list *src, struct block_list *bl, u
 		if( sc->data[SC_ZENKAI] && watk->ele == sc->data[SC_ZENKAI]->val2 )
 			eatk += 200;
 	}
-	
+
 #ifdef RENEWAL_EDP
 	if ( sc && sc->data[SC_EDP] && skill_id != AS_GRIMTOOTH && skill_id != AS_VENOMKNIFE && skill_id != ASC_BREAKER ) {
 		struct status_data *tstatus;
@@ -474,9 +474,8 @@ int64 battle_calc_weapon_damage(struct block_list *src, struct block_list *bl, u
 	} else /* fall through */
 #endif
 	damage += eatk;
-	
 	damage = battle->calc_elefix(src, bl, skill_id, skill_lv, damage, nk, n_ele, s_ele, s_ele_, type == EQI_HAND_L, flag);
-	
+
 	/**
 	 * In RE Shield Boomerang takes weapon element only for damage calculation,
 	 * - resist calculation is always against neutral
@@ -597,7 +596,6 @@ int64 battle_calc_base_damage2(struct status_data *st, struct weapon_atk *wa, st
 			damage += ( (flag&1) ? sd->bonus.arrow_atk : rnd()%sd->bonus.arrow_atk );
 
 		//SizeFix only for players
-		nullpo_retr(damage, sd);
 		if (!(sd->special_state.no_sizefix || (flag&8)))
 			damage = damage * ( type == EQI_HAND_L ? sd->left_weapon.atkmods[t_size] : sd->right_weapon.atkmods[t_size] ) / 100;
 	}
@@ -628,6 +626,7 @@ int64 battle_calc_base_damage2(struct status_data *st, struct weapon_atk *wa, st
 
 int64 battle_calc_sizefix(struct map_session_data *sd, int64 damage, int type, int size,  bool ignore){
 	//SizeFix only for players
+	nullpo_retr(damage, sd);
 	if (!(sd->special_state.no_sizefix || (ignore)))
 		damage = damage * ( type == EQI_HAND_L ? sd->left_weapon.atkmods[size] : sd->right_weapon.atkmods[size] ) / 100;
 	return damage;
@@ -636,7 +635,7 @@ int64 battle_calc_sizefix(struct map_session_data *sd, int64 damage, int type, i
 /*==========================================
  * Passive skill damages increases
  *------------------------------------------*/
- // FIXME: type is undocumented
+// FIXME: type is undocumented
 int64 battle_addmastery(struct map_session_data *sd,struct block_list *target,int64 dmg,int type) {
 	int64 damage;
 	struct status_data *st = status->get_status_data(target);
@@ -645,7 +644,6 @@ int64 battle_addmastery(struct map_session_data *sd,struct block_list *target,in
 
 	nullpo_retr(damage, sd);
 	nullpo_retr(damage, target);
-
 	if((skill_lv = pc->checkskill(sd,AL_DEMONBANE)) > 0 &&
 		target->type == BL_MOB && //This bonus doesn't work against players.
 		(battle->check_undead(st->race,st->def_ele) || st->race==RC_DEMON) )
@@ -888,7 +886,7 @@ void battle_calc_masteryfix_unknown(struct block_list *src, struct block_list *t
 /*==========================================
  * Elemental attribute fix.
  *------------------------------------------*/
- // FIXME: flag is undocumented
+// FIXME: flag is undocumented
 int64 battle_calc_elefix(struct block_list *src, struct block_list *target, uint16 skill_id, uint16 skill_lv, int64 damage, int nk, int n_ele, int s_ele, int s_ele_, bool left, int flag){
 	struct status_data *tstatus;
 
@@ -971,14 +969,13 @@ int64 battle_calc_cardfix2(struct block_list *src, struct block_list *bl, int64 
  * &1 - calc for left hand.
  * &2 - atker side cardfix(BF_WEAPON) otherwise target side(BF_WEAPON).
  *------------------------------------------*/
- // FIXME: wflag is undocumented
+// FIXME: wflag is undocumented
 int64 battle_calc_cardfix(int attack_type, struct block_list *src, struct block_list *target, int nk, int s_ele, int s_ele_, int64 damage, int cflag, int wflag){
 	struct map_session_data *sd, *tsd;
-	short cardfix = 
 #ifdef RENEWAL
-		100;
+	short cardfix = 100;
 #else
-		1000;
+	short cardfix = 1000;
 #endif
 	short t_class, s_class, s_race2, t_race2;
 	struct status_data *sstatus, *tstatus;
@@ -2884,7 +2881,6 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 			return 0;
 		}
 
-
 		if( (sce=sc->data[SC_PARRYING]) && flag&BF_WEAPON && skill_id != WS_CARTTERMINATION && rnd()%100 < sce->val2 )
 		{ // attack blocked by Parrying
 			clif->skill_nodamage(bl, bl, LK_PARRYING, sce->val1,1);
@@ -3118,7 +3114,6 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 
 		if( sc->data[SC_MEIKYOUSISUI] && rnd()%100 < 40 ) // custom value
 			damage = 0;
-
 
 		if (!damage) return 0;
 
@@ -3412,7 +3407,6 @@ int battle_adjust_skill_damage(int m, unsigned short skill_id) {
 int battle_blewcount_bonus(struct map_session_data *sd, uint16 skill_id) {
 	int i;
 	nullpo_ret(sd);
-	
 	if (!sd->skillblown[0].id)
 		return 0;
 	//Apply the bonus blow count. [Skotlex]
@@ -4007,9 +4001,9 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 #else
 			short totaldef = tstatus->def2 + (short)status->get_def(target);
 #endif
-			md.damage = ( (sd?pc->checkskill(sd,NC_MAINFRAME):10) + 8 ) * ( skill_lv + 1 ) * ( status_get_sp(src) + sstatus->vit ) - totaldef;
+			md.damage = ( (sd?pc->checkskill(sd,NC_MAINFRAME):10) + 8 ) * ( skill_lv + 1 ) * ( status_get_sp(src) + sstatus->vit );
 			RE_LVL_MDMOD(100);
-			md.damage += status_get_hp(src);
+			md.damage += status_get_hp(src) - totaldef;
 		}
 		break;
 	case NC_MAGMA_ERUPTION:
@@ -4186,7 +4180,7 @@ void battle_calc_misc_attack_unknown(struct block_list *src, struct block_list *
 /*==========================================
  * battle_calc_weapon_attack (by Skotlex)
  *------------------------------------------*/
-// FIXME: mflag is undocumented
+// FIXME: wflag is undocumented
 struct Damage battle_calc_weapon_attack(struct block_list *src,struct block_list *target,uint16 skill_id,uint16 skill_lv,int wflag)
 {
 	unsigned int skillratio = 100; //Skill dmg modifiers.
@@ -4491,13 +4485,19 @@ struct Damage battle_calc_weapon_attack(struct block_list *src,struct block_list
 		skill_id == NJ_KIRIKAGE))
 	{
 		short cri = sstatus->cri;
-		if (sd)
-		{
+		if (sd)	{
+			// Check for katar here as katar crit bonus should not be displayed
+			if (sd->status.weapon == W_KATAR) {
+				cri <<= 1;
+			}
+
 			cri+= sd->critaddrace[tstatus->race];
-			if(flag.arrow)
+
+			if (flag.arrow) {
 				cri += sd->bonus.arrow_cri;
+			}
 		}
-		if( sc && sc->data[SC_CAMOUFLAGE] )
+		if (sc && sc->data[SC_CAMOUFLAGE])
 			cri += 10 * (10-sc->data[SC_CAMOUFLAGE]->val4);
 #ifndef RENEWAL
 		//The official equation is *2, but that only applies when sd's do critical.
@@ -4867,7 +4867,7 @@ struct Damage battle_calc_weapon_attack(struct block_list *src,struct block_list
 				else
 					wd.dmg_lv = ATK_DEF;
 				break;
-				
+
 			case KO_BAKURETSU:
 			{
 #ifdef RENEWAL
@@ -5503,7 +5503,6 @@ struct Damage battle_calc_weapon_attack(struct block_list *src,struct block_list
 #endif
 		}
 
-
 		if( src != target ) { // Don't reflect your own damage (Grand Cross)
 			if( wd.dmg_lv == ATK_MISS || wd.dmg_lv == ATK_BLOCK ) {
 				int64 prev1 = wd.damage, prev2 = wd.damage2;
@@ -5562,7 +5561,7 @@ struct Damage battle_calc_attack(int attack_type,struct block_list *bl,struct bl
 		memset(&d,0,sizeof(d));
 		break;
 	}
-	
+
 	nullpo_retr(d, target);
 #ifdef HMAP_ZONE_DAMAGE_CAP_TYPE
 	if( target && skill_id ) {
@@ -5601,6 +5600,7 @@ struct Damage battle_calc_attack(int attack_type,struct block_list *bl,struct bl
 	}
 	return d;
 }
+
 //Performs reflect damage (magic (maya) is performed over skill.c).
 void battle_reflect_damage(struct block_list *target, struct block_list *src, struct Damage *wd,uint16 skill_id) {
 	int64 damage, rdamage = 0, trdamage = 0;
@@ -6351,7 +6351,6 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 	switch( target->type ) { // Checks on actual target
 		case BL_PC: {
 				struct status_change* sc = status->get_sc(src);
-			
 				if( ((TBL_PC*)target)->invincible_timer != INVALID_TIMER ) {
 					switch( battle->get_current_skill(src) ) {
 						/* TODO a proper distinction should be established bugreport:8397 */
@@ -6390,7 +6389,7 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 			TBL_SKILL *su = (TBL_SKILL*)target;
 			if( !su->group )
 				return 0;
-			if( skill->get_inf2(su->group->skill_id)&INF2_TRAP && 
+			if( skill->get_inf2(su->group->skill_id)&INF2_TRAP &&
 				su->group->unit_id != UNT_USED_TRAPS &&
 				su->group->unit_id != UNT_NETHERWORLD ) { //Only a few skills can target traps...
 				switch( battle->get_current_skill(src) ) {
@@ -7080,9 +7079,8 @@ static const struct battle_data {
 	{ "snovice_call_type",                  &battle_config.snovice_call_type,               0,      0,      1,              },
 	{ "guild_notice_changemap",             &battle_config.guild_notice_changemap,          2,      0,      2,              },
 	{ "feature.banking",                    &battle_config.feature_banking,                 1,      0,      1,              },
-	{ "feature.auction",                    &battle_config.feature_auction,                 1,      0,      2,              },
+	{ "feature.auction",                    &battle_config.feature_auction,                 0,      0,      2,              },
 	{ "idletime_criteria",                  &battle_config.idletime_criteria,            0x25,      1,      INT_MAX,        },
-
 	{ "mon_trans_disable_in_gvg",           &battle_config.mon_trans_disable_in_gvg,        0,      0,      1,              },
 	{ "case_sensitive_aegisnames",          &battle_config.case_sensitive_aegisnames,       1,      0,      1,              },
 	{ "guild_castle_invite",                &battle_config.guild_castle_invite,             0,      0,      1,              },
@@ -7355,10 +7353,10 @@ void battle_adjust_conf(void) {
 #if PACKETVER > 20120000 && PACKETVER < 20130515 /* exact date (when it started) not known */
 	if( battle_config.feature_auction == 1 ) {
 		ShowWarning("conf/battle/feature.conf:feature.auction esta ativo porem nao e estavel com PACKETVER "EXPAND_AND_QUOTE(PACKETVER)", desativando...\n");
+		ShowWarning("conf/battle/feature.conf:feature.auction altere valor para '2' para desativar mensagem de alerta\n");
 		battle_config.feature_auction = 0;
 	}
 #endif
-
 
 #ifndef CELL_NOSTACK
 	if (battle_config.custom_cell_stack_limit != 1)
