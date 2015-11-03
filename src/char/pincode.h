@@ -46,7 +46,7 @@ struct pincode_interface {
 	void (*change) (int fd, struct char_session_data* sd);
 	int  (*compare) (int fd, struct char_session_data* sd, char* pin);
 	void (*check) (int fd, struct char_session_data* sd);
-	bool (*config_read) (char *w1, char *w2);
+	void(*SecondpwConfig) (void);
 };
 
 struct pincode_interface *pincode;

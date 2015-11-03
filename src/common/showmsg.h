@@ -80,6 +80,7 @@ enum msg_type {
 	MSG_NONE,
 	MSG_STATUS,
 	MSG_CONF,
+	MSG_LUA,
 	MSG_NPC,
 	MSG_SQL,
 	MSG_INFORMATION,
@@ -106,6 +107,7 @@ struct showmsg_interface {
 	void (*showStatus) (const char *, ...) __attribute__((format(printf, 1, 2)));
 	void (*showSQL) (const char *, ...) __attribute__((format(printf, 1, 2)));
 	void (*showNpc) (const char *, ...) __attribute__((format(printf, 1, 2)));
+	void (*showLUA)  (const char *, ...) __attribute__((format(printf, 1, 2)));
 	void (*showConf) (const char *, ...) __attribute__((format(printf, 1, 2)));
 	void (*showInfo) (const char *, ...) __attribute__((format(printf, 1, 2)));
 	void (*showNotice) (const char *, ...) __attribute__((format(printf, 1, 2)));
@@ -125,6 +127,7 @@ struct showmsg_interface {
 #define ShowInfo(fmt, ...) (showmsg->showInfo((fmt), ##__VA_ARGS__))
 #define ShowConf(fmt, ...) (showmsg->showConf((fmt), ##__VA_ARGS__))
 #define ShowNpc(fmt, ...) (showmsg->showNpc((fmt), ##__VA_ARGS__))
+#define ShowLUA(fmt, ...) (showmsg->showLUA((fmt), ##__VA_ARGS__))
 #define ShowNotice(fmt, ...) (showmsg->showNotice((fmt), ##__VA_ARGS__))
 #define ShowWarning(fmt, ...) (showmsg->showWarning((fmt), ##__VA_ARGS__))
 #define ShowDebug(fmt, ...) (showmsg->showDebug((fmt), ##__VA_ARGS__))

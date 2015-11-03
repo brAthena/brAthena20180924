@@ -261,7 +261,6 @@ struct char_interface {
 	int (*online_data_cleanup_sub) (DBKey key, DBData *data, va_list ap);
 	int (*online_data_cleanup) (int tid, int64 tick, int id, intptr_t data);
 	void (*sql_config_read) (const char* cfgName);
-	void (*config_dispatch) (char *w1, char *w2);
 	int (*config_read) (const char* cfgName);
 };
 
