@@ -40,7 +40,7 @@
 #include "map/trade.h"
 #include "map/vending.h"
 #include "common/db.h"
-#include "common/malloc.h"
+#include "common/memmgr.h"
 #include "common/nullpo.h"
 #include "common/random.h"
 #include "common/showmsg.h"

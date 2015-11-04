@@ -20,7 +20,7 @@
 #include "map/pc.h"     // W_MUSICAL, W_WHIP
 #include "map/script.h" // item script processing
 #include "common/conf.h"
-#include "common/malloc.h"
+#include "common/memmgr.h"
 #include "common/nullpo.h"
 #include "common/random.h"
 #include "common/showmsg.h"

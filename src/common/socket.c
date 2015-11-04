@@ -16,7 +16,7 @@
 
 #include "common/cbasetypes.h"
 #include "common/db.h"
-#include "common/malloc.h"
+#include "common/memmgr.h"
 #include "common/mmo.h"
 #include "common/nullpo.h"
 #include "common/showmsg.h"
