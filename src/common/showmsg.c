@@ -634,6 +634,7 @@ int vShowMessage_(enum msg_type flag, const char *string, va_list ap)
 	    (flag == MSG_CONF && showmsg->silent&4) ||
 	    (flag == MSG_NOTICE && showmsg->silent&4) ||
 	    (flag == MSG_NPC && showmsg->silent&4) ||
+		(flag == MSG_LUA && showmsg->silent & 6) ||
 	    (flag == MSG_WARNING && showmsg->silent&8) ||
 	    (flag == MSG_ERROR && showmsg->silent&16) ||
 	    (flag == MSG_SQL && showmsg->silent&16) ||
@@ -655,6 +656,9 @@ int vShowMessage_(enum msg_type flag, const char *string, va_list ap)
 			break;
 		case MSG_CONF: // Cor Ciano Escuro (Leitura para arquivo de configuração)
 			strcat(prefix,CL_LT_CYAN"[Conf]"CL_RESET":");
+			break;
+		case MSG_LUA: // Cor Violeta Escuro (Leitura para arquivo LUA)
+			strcat(prefix, CL_LT_MAGENTA"[LUA]"CL_RESET":");
 			break;
 		case MSG_NPC: //Cor Amarelo escuro (Leitura para arquivos de NPCS)
 			strcat(prefix,CL_LT_YELLOW"[NPC]"CL_RESET":");
@@ -773,6 +777,13 @@ void showmsg_showConf(const char *string, ...) {
 	vShowMessage_(MSG_CONF, string, ap);
 	va_end(ap);
 }
+void showmsg_showLUA(const char *string, ...) __attribute__((format(printf, 1, 2)));
+void showmsg_showLUA(const char *string, ...) {
+	va_list ap;
+	va_start(ap, string);
+	vShowMessage_(MSG_LUA, string, ap);
+	va_end(ap);
+}
 void showmsg_showNpc(const char *string, ...) __attribute__((format(printf, 1, 2)));
 void showmsg_showNpc(const char *string, ...) {
 	va_list ap;
@@ -886,6 +897,7 @@ void showmsg_defaults(void)
 	showmsg->showSQL = showmsg_showSQL;
 	showmsg->showConf = showmsg_showConf;
 	showmsg->showNpc = showmsg_showNpc;
+	showmsg->showLUA = showmsg_showLUA;
 	showmsg->showInfo = showmsg_showInfo;
 	showmsg->showNotice = showmsg_showNotice;
 	showmsg->showWarning = showmsg_showWarning;

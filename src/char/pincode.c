@@ -11,6 +11,9 @@
 
 #define BRATHENA_CORE
 
+#include "lua.h"
+#include "lualib.h"
+#include "lauxlib.h"
 #include "pincode.h"
 
 #include "char/char.h"
@@ -166,37 +169,56 @@ void pincode_decrypt(unsigned int userSeed, char* pin) {
 
 	sprintf(pin, "%d%d%d%d", pin[0], pin[1], pin[2], pin[3]);
 }
+/* Configuração código PIN [Megasantos] */
+void SecondpwConfig(void) {
 
-bool pincode_config_read(char *w1, char *w2) {
+	lua_State *L = luaL_newstate();
+	luaL_openlibs(L);
+	char *lua_filename = "conf/SecondpwConfig.lua";
 
-	nullpo_ret(w1);
-	nullpo_ret(w2);
-	while ( true ) {
-		if ( strcmpi(w1, "pincode_enabled") == 0 ) {
-			pincode->enabled = atoi(w2);
-#if PACKETVER < 20110309
-			if( pincode->enabled ) {
-				ShowWarning("pincode_enabled: Requer PACKETVER 20110309 ou superior. Desabilitando...\n");
-				pincode->enabled = 0;
-			}
-#endif
-		} else if ( strcmpi(w1, "pincode_changetime") == 0 ) {
-			pincode->changetime = atoi(w2)*60;
-		} else if ( strcmpi(w1, "pincode_maxtry") == 0 ) {
-			pincode->maxtry = atoi(w2);
-			if( pincode->maxtry > 3 ) {
-				ShowWarning("pincode_maxtry muito grande (%d); maximo permitido: 3! setando para 3...\n", pincode->maxtry);
-				pincode->maxtry = 3;
-			}
-		} else if ( strcmpi(w1, "pincode_charselect") == 0 ) {
-			pincode->charselect = atoi(w2);
-		} else {
-			return false;
-		}
-		break;
+	if (luaL_dofile(L, lua_filename)) {
+		ShowError("Erro ao ler o arquivo %s\n", lua_filename);
+		return;
 	}
+		lua_getglobal(L, "SECOND_PASSWD");// checa a tabela
 
-	return true;
+		lua_getfield(L, -1, "USE_SECONDPW"); // tabela de índice empura o resultado
+		if (!lua_isboolean(L, -1))
+			ShowWarning("USE_SECONDPW permite apenas valores booleanos; \n");
+
+		pincode->enabled = lua_toboolean(L, -1); // obtém o valor para função
+
+#if PACKETVER < 20110309
+		if (pincode->enabled) {
+			ShowWarning("USE_SECONDPW: Requer PACKETVER 20110309 ou superior. Desabilitando...\n");
+			pincode->enabled = 0;
+		}
+#endif
+		lua_getfield(L, -2, "SECOND_PASSWD_MAXTRY");
+		if (!lua_isnumber(L, -1))
+			ShowWarning("SECOND_PASSWD_MAXTRY permite apenas números; \n");
+
+		pincode->maxtry = (int)lua_tointeger(L, -1);
+
+		if (pincode->maxtry > 3) {
+			ShowWarning("SECOND_PASSWD_MAXTRY muito grande (%d); maximo permitido: 3! setando para 3...\n", pincode->maxtry);
+			pincode->maxtry = 3;
+		}
+
+		lua_getfield(L, -3, "SECOND_PASSWD_CHANGETIME");
+		if (!lua_isnumber(L, -1))
+			ShowWarning("SECOND_PASSWD_CHANGETIME permite apenas numeros; \n");
+
+		pincode->changetime = (int)lua_tointeger(L, -1) * 60;
+
+		lua_getfield(L, -4, "SECOND_PASSWD_LOGIN");
+		if (!lua_isboolean(L, -1))
+			ShowWarning("SECOND_PASSWD_LOGIN permite apenas valores booleanos; \n");
+
+		pincode->charselect = lua_toboolean(L, -1);
+
+		lua_close(L);
+		ShowLUA("Leitura de '"CL_WHITE"%s"CL_RESET" concluida'.\n", lua_filename);
 }
 
 void pincode_defaults(void) {
@@ -218,6 +240,6 @@ void pincode_defaults(void) {
 	pincode->change = pincode_change;
 	pincode->compare = pincode_compare;
 	pincode->check = pincode_check;
-	pincode->config_read = pincode_config_read;
+	pincode->SecondpwConfig = SecondpwConfig; // [Megasantos]
 
 }

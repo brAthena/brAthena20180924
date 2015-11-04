@@ -11,6 +11,10 @@
 
 #define BRATHENA_CORE
 
+#include "lua.h"
+#include "lualib.h"
+#include "lauxlib.h"
+
 #include "config/core.h" // CONSOLE_INPUT
 #include "char.h"
 
@@ -5530,29 +5534,17 @@ void char_sql_config_read(const char* cfgName)
 	ShowConf("Concluida leitura de %s.\n", cfgName);
 }
 
-void char_config_dispatch(char *w1, char *w2) {
-	bool (*dispatch_to[]) (char *w1, char *w2) = {
-		/* as many as it needs */
-		pincode->config_read
-	};
-	int i, len = ARRAYLENGTH(dispatch_to);
-	for(i = 0; i < len; i++) {
-		if( (*dispatch_to[i])(w1,w2) )
-			break;/* we found who this belongs to, can stop */
-	}
-}
-
 int char_config_read(const char* cfgName)
 {
 	char line[1024], w1[1024], w2[1024];
 	FILE* fp = fopen(cfgName, "r");
 
 	if (fp == NULL) {
-		ShowError("Arquivo de configuracao nao encontrado: %s.\n", cfgName);
+		ShowError("Configuration file not found: %s.\n", cfgName);
 		return 1;
 	}
 
-	while(fgets(line, sizeof(line), fp)) {
+	while (fgets(line, sizeof(line), fp)) {
 		if (line[0] == '/' && line[1] == '/')
 			continue;
 
@@ -5721,8 +5713,7 @@ int char_config_read(const char* cfgName)
 			char_maintenance_min_group_id = atoi(w2);
 		} else if (strcmpi(w1, "import") == 0) {
 			chr->config_read(w2);
-		} else
-			chr->config_dispatch(w1,w2);
+		}
 	}
 	fclose(fp);
 
@@ -5876,6 +5867,8 @@ int do_init(int argc, char **argv) {
 	chr->config_read(chr->CHAR_CONF_NAME);
 	sockt->net_config_read(chr->NET_CONF_NAME);
 	chr->sql_config_read(chr->SQL_CONF_NAME);
+
+	pincode->SecondpwConfig();
 
 	if (strcmp(chr->userid, "s1")==0 && strcmp(chr->passwd, "p1")==0) {
 		ShowWarning("Utilizar o usuario/senha padrao 's1/p1' nao e recomendado.\n");
@@ -6156,6 +6149,5 @@ void char_defaults(void)
 	chr->online_data_cleanup_sub = char_online_data_cleanup_sub;
 	chr->online_data_cleanup = char_online_data_cleanup;
 	chr->sql_config_read = char_sql_config_read;
-	chr->config_dispatch = char_config_dispatch;
 	chr->config_read = char_config_read;
 }
