@@ -634,7 +634,7 @@ int vShowMessage_(enum msg_type flag, const char *string, va_list ap)
 	    (flag == MSG_CONF && showmsg->silent&4) ||
 	    (flag == MSG_NOTICE && showmsg->silent&4) ||
 	    (flag == MSG_NPC && showmsg->silent&4) ||
-		(flag == MSG_LUA && showmsg->silent & 6) ||
+	    (flag == MSG_LUA && showmsg->silent & 6) ||
 	    (flag == MSG_WARNING && showmsg->silent&8) ||
 	    (flag == MSG_ERROR && showmsg->silent&16) ||
 	    (flag == MSG_SQL && showmsg->silent&16) ||

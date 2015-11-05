@@ -81,8 +81,8 @@ SecondPWNoCheckIP =
 	{ [[59.10.115.40]] },
 };
 
-function main()	
-	
+function main()
+	-- Altere apenas se souber o que está fazendo.
 	result, msg = SetSECOND_PASSWD( USE_SECONDPW );
 	if( not result ) then 
 		return false, msg;
