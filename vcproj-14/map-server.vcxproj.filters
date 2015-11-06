@@ -43,9 +43,6 @@
     <ClCompile Include="..\src\map\intif.c">
       <Filter>map_sql</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\map\irc-bot.c">
-      <Filter>map_sql</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\map\itemdb.c">
       <Filter>map_sql</Filter>
     </ClCompile>
@@ -239,9 +236,6 @@
       <Filter>map_sql</Filter>
     </ClInclude>
     <ClInclude Include="..\src\map\intif.h">
-      <Filter>map_sql</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\map\irc-bot.h">
       <Filter>map_sql</Filter>
     </ClInclude>
     <ClInclude Include="..\src\map\itemdb.h">
