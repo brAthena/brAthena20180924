@@ -17,7 +17,7 @@
 
 #include "common/cbasetypes.h"
 #include "common/core.h"
-#include "common/malloc.h"
+#include "common/memmgr.h"
 #include "common/strlib.h"
 
 #include <stdio.h> // fopen

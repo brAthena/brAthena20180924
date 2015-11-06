@@ -1556,6 +1556,8 @@ REPLACE INTO `const_db` VALUES('SC_MTF_MHP', '584', 0);
 REPLACE INTO `const_db` VALUES('SC_MTF_MSP', '585', 0);
 REPLACE INTO `const_db` VALUES('SC_MTF_PUMPKIN', '586', 0);
 REPLACE INTO `const_db` VALUES('SC_MTF_HITFLEE', '587', 0);
+REPLACE INTO `const_db` VALUES('SC_LJOSALFAR', '588', 0);
+REPLACE INTO `const_db` VALUES('SC_MERMAID_LONGING', '589', 0);
 REPLACE INTO `const_db` VALUES('SC_STEAMPACK', '800', 0);
 REPLACE INTO `const_db` VALUES('SC_ATKER_ASPD', '801', 0);
 REPLACE INTO `const_db` VALUES('SC_ATKER_MOVESPEED', '802', 0);
@@ -3676,8 +3678,33 @@ REPLACE INTO `const_db` VALUES('MOUNT_DRAGON_BROWN', '5', 0);
 REPLACE INTO `const_db` VALUES('MOUNT_DRAGON_GRAY', '6', 0);
 REPLACE INTO `const_db` VALUES('MOUNT_DRAGON_BLUE', '7', 0);
 REPLACE INTO `const_db` VALUES('MOUNT_DRAGON_RED', '8', 0);
-
--- --------------------------------------------------------
+REPLACE INTO `const_db` VALUES('SECOND','1',0);
+REPLACE INTO `const_db` VALUES('MINUTE','2',0);
+REPLACE INTO `const_db` VALUES('HOUR','3',0);
+REPLACE INTO `const_db` VALUES('WEEKDAY','4',0);
+REPLACE INTO `const_db` VALUES('DAYOFMONTH','5',0);
+REPLACE INTO `const_db` VALUES('MONTH','6',0);
+REPLACE INTO `const_db` VALUES('YEAR','7',0);
+REPLACE INTO `const_db` VALUES('DAYOFYEAR','8',0);
+REPLACE INTO `const_db` VALUES('SUNDAY','0',0);
+REPLACE INTO `const_db` VALUES('MONDAY','1',0);
+REPLACE INTO `const_db` VALUES('TUESDAY','2',0);
+REPLACE INTO `const_db` VALUES('WEDNESDAY','3',0);
+REPLACE INTO `const_db` VALUES('THURSDAY','4',0);
+REPLACE INTO `const_db` VALUES('FRIDAY','5',0);
+REPLACE INTO `const_db` VALUES('SATURDAY','6',0);
+REPLACE INTO `const_db` VALUES('JANUARY','1',0);
+REPLACE INTO `const_db` VALUES('FEBRUARY','2',0);
+REPLACE INTO `const_db` VALUES('MARCH','3',0);
+REPLACE INTO `const_db` VALUES('APRIL','4',0);
+REPLACE INTO `const_db` VALUES('MAY','5',0);
+REPLACE INTO `const_db` VALUES('JUNE','6',0);
+REPLACE INTO `const_db` VALUES('JULY','7',0);
+REPLACE INTO `const_db` VALUES('AUGUST','8',0);
+REPLACE INTO `const_db` VALUES('SEPTEMBER','9',0);
+REPLACE INTO `const_db` VALUES('OCTOBER','10',0);
+REPLACE INTO `const_db` VALUES('NOVEMBER','11',0);
+REPLACE INTO `const_db` VALUES('DECEMBER','12',0);
 
 --
 -- Estrutura da tabela `create_arrow_db`
@@ -5523,7 +5550,7 @@ REPLACE INTO `item_db` VALUES(2000,'Destruction_Rod','Staff of Destruction',4,20
 REPLACE INTO `item_db` VALUES(2001,'Divine_Cross','Divine Cross',4,20,10,1500,120,0,0,1,0,33024,63,2,34,4,70,NULL,1,23,0,NULL,0,0,0,NULL,0,NULL,0,NULL,0,'bonus bAtkEle,Ele_Holy; bonus bMatkRate,15; bonus bDex,4; bonus2 bSubRace,RC_Demon,15; bonus2 bSubRace,RC_Undead,15;','','');
 REPLACE INTO `item_db` VALUES(2002,'Krieger_Twohand_Staff1','Glorious Destruction Staff',4,20,10,0,70,0,0,1,0,99092,63,2,34,4,80,NULL,1,23,0,NULL,0,0,499,NULL,0,NULL,0,NULL,0,'bonus bMatkRate,getrefine(); bonus2 bMagicAddRace,RC_DemiHuman,15; bonus2 bIgnoreMdefRate,RC_DemiHuman,25; bonus bUnbreakableWeapon,0; if(getrefine()>5) { bonus2 bMagicAddRace,RC_DemiHuman,(getrefine()-5)*2; bonus2 bIgnoreMdefRate,RC_DemiHuman,5+(getrefine()-5)*2; } if(getrefine()>8) { bonus5 bAutoSpellOnSkill,WZ_STORMGUST,MG_SAFETYWALL,10,200,1; bonus5 bAutoSpellOnSkill,WZ_METEOR,MG_SAFETYWALL,10,200,1; bonus5 bAutoSpellOnSkill,WZ_VERMILION,MG_SAFETYWALL,10,200,1; }','','');
 REPLACE INTO `item_db` VALUES(2003,'Destruction_Rod_M','Staff of Destruction',4,20,10,2500,130,0,0,1,1,512,2,2,34,4,80,NULL,1,23,0,NULL,0,0,475,NULL,0,NULL,0,NULL,0,'bonus bMatkRate,25+getrefine()/2; bonus bInt,3; bonus bAgi,10; bonus bUseSPrate,(getrefine()*2); bonus3 bAutoSpellWhenHit,WZ_JUPITEL,5,(getrefine()*20); bonus2 bCastrate,HW_MAGICPOWER,-50;','','');
-REPLACE INTO `item_db` VALUES(2004,'Kronos','Kronos',4,20,10,1000,30,0,0,1,0,66052,2,2,34,4,50,NULL,1,23,0,NULL,0,0,0,NULL,0,NULL,0,NULL,0,'bonus bMatkRate,20; bonus bInt,3+(getrefine()/2); bonus bMaxHP,300+(50*getrefine()/2); autobonus "{ bonus bMatkRate,12; bonus buseSPRate,20; }",1,5000,BF_MAGIC,"{ specialeffect2 EF_ENHANCE; }";','','');
+REPLACE INTO `item_db` VALUES(2004,'Kronos','Kronos',4,20,10,1000,30,0,0,1,0,66052,2,2,34,4,50,NULL,1,23,0,NULL,0,0,0,NULL,0,NULL,0,NULL,0,'bonus bMatkRate,20; bonus bInt,3+(getrefine()/2); bonus bMaxHP,300+(50*getrefine()/2); autobonus "{ bonus bMatkRate,12; bonus bUseSPrate,20; }",1,5000,BF_MAGIC,"{ specialeffect2 EF_ENHANCE; }";','','');
 REPLACE INTO `item_db` VALUES(2005,'Dea_Staff','Dea Staff',4,20,10,1000,30,0,0,1,1,33040,2,2,34,3,50,NULL,1,23,0,NULL,0,0,0,NULL,0,NULL,0,NULL,0,'bonus bAtkEle,Ele_Holy; bonus bMatkRate,15+getrefine()/2; bonus bInt,6; bonus bVit,2; autobonus3 "{ }",20,1000,AL_HEAL,"{ specialeffect2 EF_MAGICALATTHIT; heal 0,200; }";','','');
 REPLACE INTO `item_db` VALUES(2006,'G_Staff_Of_Light','Staff Of Light',4,20,10,1900,80,0,0,1,0,8454660,63,2,34,4,60,NULL,1,23,0,NULL,0,0,0,NULL,0,NULL,0,NULL,0,'//bonus bMatk,150; bonus bAtkEle,Ele_Holy; bonus bInt,6;','','');
 REPLACE INTO `item_db` VALUES(2101,'Guard','Guard',5,500,250,300,0,0,3,0,0,4294967295,63,2,32,0,0,NULL,1,1,0,NULL,0,0,0,NULL,0,NULL,0,NULL,0,'','','');

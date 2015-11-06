@@ -9,8 +9,8 @@
 *                          www.brathena.org                                  *
 *****************************************************************************/
 
-#ifndef COMMON_MALLOC_H
-#define COMMON_MALLOC_H
+#ifndef COMMON_MEMMGR_H
+#define COMMON_MEMMGR_H
 
 #include "common/cbasetypes.h"
 
@@ -93,4 +93,4 @@ struct malloc_interface {
 };
 
 struct malloc_interface *iMalloc;
-#endif /* COMMON_MALLOC_H */
+#endif /* COMMON_MEMMGR_H */

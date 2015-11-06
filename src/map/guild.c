@@ -29,7 +29,7 @@
 #include "map/storage.h"
 #include "common/cbasetypes.h"
 #include "common/ers.h"
-#include "common/malloc.h"
+#include "common/memmgr.h"
 #include "common/mapindex.h"
 #include "common/nullpo.h"
 #include "common/showmsg.h"

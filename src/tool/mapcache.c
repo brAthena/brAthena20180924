@@ -14,7 +14,7 @@
 #include "common/cbasetypes.h"
 #include "common/core.h"
 #include "common/grfio.h"
-#include "common/malloc.h"
+#include "common/memmgr.h"
 #include "common/mmo.h"
 #include "common/showmsg.h"
 #include "common/utils.h"
