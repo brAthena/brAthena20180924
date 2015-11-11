@@ -5,8 +5,16 @@
 *               | |_) | | / ___ \ |_| | | |  __/ | | | (_| |                 *
 *               |_.__/|_|/_/   \_\__|_| |_|\___|_| |_|\__,_|                 *
 *                                                                            *
+*                            www.brathena.org                                *
 ******************************************************************************
-*                          www.brathena.org                                  *
+* src/common/strlib.c                                                        *
+******************************************************************************
+* Copyright (c) brAthena Dev Team                                            *
+* Copyright (c) Hercules Dev Team                                            *
+* Copyright (c) Athena Dev Teams                                             *
+*                                                                            *
+* Licenciado sob a licença GNU GPL                                           *
+* Para mais informações leia o arquivo LICENSE na raíz do emulador           *
 *****************************************************************************/
 
 #define BRATHENA_CORE
@@ -511,7 +519,7 @@ int sv_parse_next(struct s_svstate* svstate)
 				++i;// '\\'
 				if( IS_END() )
 				{
-					ShowError("sv_parse_next: seqÂuencia de escape vazia\n");
+					ShowError("sv_parse_next: sequencia de escape vazia\n");
 					return -1;
 				}
 				if( str[i] == 'x' )
@@ -540,7 +548,7 @@ int sv_parse_next(struct s_svstate* svstate)
 				}
 				else
 				{
-					ShowError("sv_parse_next: seqÂuencia de escape desconhecida \\%c\n", str[i]);
+					ShowError("sv_parse_next: sequencia de escape desconhecida \\%c\n", str[i]);
 					return -1;
 				}
 				state = PARSING_FIELD;
@@ -813,7 +821,7 @@ size_t sv_unescape_c(char* out_dest, const char* src, size_t len) {
 		if( src[i] == '\\' ) {
 			++i;// '\\'
 			if( i >= len )
-				ShowWarning("sv_unescape_c: seqÂuencia de escape vazia\n");
+				ShowWarning("sv_unescape_c: sequencia de escape vazia\n");
 			else if( src[i] == 'x' ) {// hex escape sequence
 				unsigned char c = 0;
 				unsigned char inrange = 1;
@@ -825,7 +833,7 @@ size_t sv_unescape_c(char* out_dest, const char* src, size_t len) {
 				}
 				do {
 					if( c > 0x0F && inrange ) {
-						ShowWarning("sv_unescape_c: seqÂuencia de escape hexadecimal fora do limite\n");
+						ShowWarning("sv_unescape_c: sequencia de escape hexadecimal fora do limite\n");
 						inrange = 0;
 					}
 					c = (c<<4)|low2hex[(unsigned char)src[i]];// hex digit
@@ -846,7 +854,7 @@ size_t sv_unescape_c(char* out_dest, const char* src, size_t len) {
 				out_dest[j++] = (char)c;
 			} else { // other escape sequence
 				if( strchr(SV_ESCAPE_C_SUPPORTED, src[i]) == NULL )
-					ShowWarning("sv_unescape_c: seqÂuencia de escape desconhecida \\%c\n", src[i]);
+					ShowWarning("sv_unescape_c: sequencia de escape desconhecida \\%c\n", src[i]);
 				switch( src[i] ) {
 					case 'a': out_dest[j++] = '\a'; break;
 					case 'b': out_dest[j++] = '\b'; break;

@@ -5,8 +5,17 @@
 *               | |_) | | / ___ \ |_| | | |  __/ | | | (_| |                 *
 *               |_.__/|_|/_/   \_\__|_| |_|\___|_| |_|\__,_|                 *
 *                                                                            *
+*                            www.brathena.org                                *
 ******************************************************************************
-*                          www.brathena.org                                  *
+* src/map/instance.c                                                         *
+* FunÁıes respons·veis pelo funcionamento das inst‚ncias dentro do emulador  *
+******************************************************************************
+* Copyright (c) brAthena Dev Team                                            *
+* Copyright (c) Hercules Dev Team                                            *
+* Copyright (c) Athena Dev Teams                                             *
+*                                                                            *
+* Licenciado sob a licenÁa GNU GPL                                           *
+* Para mais informaÁıes leia o arquivo LICENSE na raÌz do emulador           *
 *****************************************************************************/
 
 #define BRATHENA_CORE
@@ -172,7 +181,7 @@ int instance_add_map(const char *name, int instance_id, bool usebasename, const 
 	}
 
 	if( map_name != NULL && strdb_iget(mapindex->db, map_name) ) {
-		ShowError("instance_add_map: tentando criar mapa para inst√¢ncia com nome existente '%s'\n", map_name);
+		ShowError("instance_add_map: tentando criar mapa para inst‚ncia com nome existente '%s'\n", map_name);
 		return -2;
 	}
 

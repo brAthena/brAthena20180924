@@ -5,8 +5,17 @@
 *               | |_) | | / ___ \ |_| | | |  __/ | | | (_| |                 *
 *               |_.__/|_|/_/   \_\__|_| |_|\___|_| |_|\__,_|                 *
 *                                                                            *
+*                            www.brathena.org                                *
 ******************************************************************************
-*                          www.brathena.org                                  *
+* src/map/packets.h                                                          *
+* Banco de packets para comunicação com o client                             *
+******************************************************************************
+* Copyright (c) brAthena Dev Team                                            *
+* Copyright (c) Hercules Dev Team                                            *
+* Copyright (c) Athena Dev Teams                                             *
+*                                                                            *
+* Licenciado sob a licença GNU GPL                                           *
+* Para mais informações leia o arquivo LICENSE na raíz do emulador           *
 *****************************************************************************/
 
 //Incluído diretamente pelo clif.h em packet_loaddb()

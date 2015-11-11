@@ -5,8 +5,16 @@
 *               | |_) | | / ___ \ |_| | | |  __/ | | | (_| |                 *
 *               |_.__/|_|/_/   \_\__|_| |_|\___|_| |_|\__,_|                 *
 *                                                                            *
+*                            www.brathena.org                                *
 ******************************************************************************
-*                          www.brathena.org                                  *
+* src/char/int_auction.c                                                     *
+******************************************************************************
+* Copyright (c) brAthena Dev Team                                            *
+* Copyright (c) Hercules Dev Team                                            *
+* Copyright (c) Athena Dev Teams                                             *
+*                                                                            *
+* Licenciado sob a licenca GNU GPL                                           *
+* Para mais informações leia o arquivo LICENSE na raíz do emulador           *
 *****************************************************************************/
 
 #define BRATHENA_CORE
@@ -405,7 +413,7 @@ void mapif_parse_auction_close(int fd)
 	// Send Money to Seller
 	inter_mail->sendmail(0, "Gerente do Leilao", auction->seller_id, auction->seller_name, "Leilao", "Leilao Fechado.", auction->price, NULL);
 	// Send Item to Buyer
-	inter_mail->sendmail(0, "Gerente do Leilao", auction->buyer_id, auction->buyer_name, "Leilao", "Vencedor do LeilÃ£o.", 0, &auction->item);
+	inter_mail->sendmail(0, "Gerente do Leilao", auction->buyer_id, auction->buyer_name, "Leilao", "Vencedor do Leilão.", 0, &auction->item);
 	mapif->auction_message(auction->buyer_id, 6); // You have won the auction
 	inter_auction->delete_(auction);
 

@@ -5,8 +5,17 @@
 *               | |_) | | / ___ \ |_| | | |  __/ | | | (_| |                 *
 *               |_.__/|_|/_/   \_\__|_| |_|\___|_| |_|\__,_|                 *
 *                                                                            *
+*                            www.brathena.org                                *
 ******************************************************************************
-*                          www.brathena.org                                  *
+* src/tool/mapcache.c                                                        *
+* Responsável pelo cache de mapas adicionados ao emulador                    *
+******************************************************************************
+* Copyright (c) brAthena Dev Team                                            *
+* Copyright (c) Hercules Dev Team                                            *
+* Copyright (c) Athena Dev Teams                                             *
+*                                                                            *
+* Licenciado sob a licenca GNU GPL                                           *
+* Para mais informações leia o arquivo LICENSE na raíz do emulador           *
 *****************************************************************************/
 
 #define BRATHENA_CORE
@@ -263,7 +272,7 @@ void cmdline_args_init_local(void)
 	CMDLINEARG_DEF2(grf-list, grflist, "Alternativa lista de grf", CMDLINE_OPT_NORMAL|CMDLINE_OPT_PARAM);
 	CMDLINEARG_DEF2(map-list, maplist, "Alternativa lista de mapas", CMDLINE_OPT_NORMAL|CMDLINE_OPT_PARAM);
 	CMDLINEARG_DEF2(map-cache, mapcache, "Alternativo arquivo de cache", CMDLINE_OPT_NORMAL|CMDLINE_OPT_PARAM);
-	CMDLINEARG_DEF2(rebuild, rebuild, "ForÃ§a uma reconstruÃ§Ã£o do cache do mapa, em vez de apenas adicionar mapas desaparecidos", CMDLINE_OPT_NORMAL);
+	CMDLINEARG_DEF2(rebuild, rebuild, "Força uma reconstrução do cache do mapa, em vez de apenas adicionar mapas desaparecidos", CMDLINE_OPT_NORMAL);
 
 }
 

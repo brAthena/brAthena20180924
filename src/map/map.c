@@ -5,8 +5,17 @@
 *               | |_) | | / ___ \ |_| | | |  __/ | | | (_| |                 *
 *               |_.__/|_|/_/   \_\__|_| |_|\___|_| |_|\__,_|                 *
 *                                                                            *
+*                            www.brathena.org                                *
 ******************************************************************************
-*                          www.brathena.org                                  *
+* src/map/map.c                                                              *
+* Responsável pelo carregamento e funcionamento do map-server                *
+******************************************************************************
+* Copyright (c) brAthena Dev Team                                            *
+* Copyright (c) Hercules Dev Team                                            *
+* Copyright (c) Athena Dev Teams                                             *
+*                                                                            *
+* Licenciado sob a licença GNU GPL                                           *
+* Para mais informações leia o arquivo LICENSE na raíz do emulador           *
 *****************************************************************************/
 
 #define BRATHENA_CORE
@@ -5591,7 +5600,7 @@ void do_abort(void)
 	static int run = 0;
 	//Save all characters and then flush the inter-connection.
 	if (run) {
-		ShowFatalError("Servidor falhou ao tentar salvar dados de personagens. Informacoes de personagens foram perdidas!\n");
+		ShowFatalError("Servidor falhou ao tentar salvar dados de personagens. informacoes de personagens foram perdidas!\n");
 		return;
 	}
 	run = 1;

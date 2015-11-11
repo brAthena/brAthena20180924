@@ -5,8 +5,16 @@
 *               | |_) | | / ___ \ |_| | | |  __/ | | | (_| |                 *
 *               |_.__/|_|/_/   \_\__|_| |_|\___|_| |_|\__,_|                 *
 *                                                                            *
+*                            www.brathena.org                                *
 ******************************************************************************
-*                          www.brathena.org                                  *
+* src/common/socket.c                                                        *
+******************************************************************************
+* Copyright (c) brAthena Dev Team                                            *
+* Copyright (c) Hercules Dev Team                                            *
+* Copyright (c) Athena Dev Teams                                             *
+*                                                                            *
+* Licenciado sob a licença GNU GPL                                           *
+* Para mais informações leia o arquivo LICENSE na raíz do emulador           *
 *****************************************************************************/
 
 #define BRATHENA_CORE
@@ -1722,8 +1730,8 @@ void socket_net_config_read(const char *filename)
 		}
 	ARR_FIND(0, VECTOR_LENGTH(sockt->allowed_ips), i, SUBNET_MATCH(0, VECTOR_INDEX(sockt->allowed_ips, i).ip, VECTOR_INDEX(sockt->allowed_ips, i).mask));
 	if (i != VECTOR_LENGTH(sockt->allowed_ips)) {
-		ShowWarning("Using a wildcard IP range in the allowed server IPs is NOT RECOMMENDED.\n");
-		ShowNotice("Please edit your '%s' allowed list to fit your network configuration.\n", filename);
+		ShowWarning("Utilizar uma faixa de IPs coringa na lista de IPs permitidos NAO E RECOMENDADA.\n");
+		ShowNotice("Por favor edite sua lista de permissões '%s' para adequar na configuracao da sua rede.\n", filename);
 	}
 	libconfig->destroy(&network_config);
 	return;

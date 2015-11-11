@@ -5,8 +5,17 @@
 *               | |_) | | / ___ \ |_| | | |  __/ | | | (_| |                 *
 *               |_.__/|_|/_/   \_\__|_| |_|\___|_| |_|\__,_|                 *
 *                                                                            *
+*                            www.brathena.org                                *
 ******************************************************************************
-*                          www.brathena.org                                  *
+* src/map/log.c                                                              *
+* Funções referentes aos logs do emulador                                    *
+******************************************************************************
+* Copyright (c) brAthena Dev Team                                            *
+* Copyright (c) Hercules Dev Team                                            *
+* Copyright (c) Athena Dev Teams                                             *
+*                                                                            *
+* Licenciado sob a licença GNU GPL                                           *
+* Para mais informações leia o arquivo LICENSE na raíz do emulador           *
 *****************************************************************************/
 
 #define BRATHENA_CORE
@@ -778,7 +787,7 @@ void log_sql_init(void) {
 			Sql_ShowDebug(logs->mysql_handle);
 }
 void log_sql_final(void) {
-	ShowStatus("Fechando a conexÃ£o com a database de Log....\n");
+	ShowStatus("Fechando a conexão com a database de Log....\n");
 	SQL->Free(logs->mysql_handle);
 	logs->mysql_handle = NULL;
 }

@@ -5,8 +5,17 @@
 *               | |_) | | / ___ \ |_| | | |  __/ | | | (_| |                 *
 *               |_.__/|_|/_/   \_\__|_| |_|\___|_| |_|\__,_|                 *
 *                                                                            *
+*                            www.brathena.org                                *
 ******************************************************************************
-*                          www.brathena.org                                  *
+* src/config/core.h                                                          *
+* Configurações básicas do funcionamento do emulador                         *
+******************************************************************************
+* Copyright (c) brAthena Dev Team                                            *
+* Copyright (c) Hercules Dev Team                                            *
+* Copyright (c) Athena Dev Teams                                             *
+*                                                                            *
+* Licenciado sob a licença GNU GPL                                           *
+* Para mais informações leia o arquivo LICENSE na raíz do emulador           *
 *****************************************************************************/
 
 #ifndef CONFIG_CORE_H
@@ -76,10 +85,10 @@
 /// Comment to disable autotrade persistency (where autotrading merchants survive server restarts)
 #define AUTOTRADE_PERSISTENCY
 
-/// Retire o comentÃ¡rio de definiÃ§Ã£o para que a item_db seja carregada em SQL.
+/// Retire o comentário de definição para que a item_db seja carregada em SQL.
 //#define USE_SQL_ITEM_DB
 
-/// Retire o comentÃ¡rio de definiÃ§Ã£o para que a mob_db seja carregada em SQL.
+/// Retire o comentário de definição para que a mob_db seja carregada em SQL.
 //#define USE_SQL_MOB_DB
 
 /**

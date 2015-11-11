@@ -5,8 +5,17 @@
 *               | |_) | | / ___ \ |_| | | |  __/ | | | (_| |                 *
 *               |_.__/|_|/_/   \_\__|_| |_|\___|_| |_|\__,_|                 *
 *                                                                            *
+*                            www.brathena.org                                *
 ******************************************************************************
-*                          www.brathena.org                                  *
+* src/login/login.c                                                          *
+* Responsável pelas funções do login-server                                  *
+******************************************************************************
+* Copyright (c) brAthena Dev Team                                            *
+* Copyright (c) Hercules Dev Team                                            *
+* Copyright (c) Athena Dev Teams                                             *
+*                                                                            *
+* Licenciado sob a licenca GNU GPL                                           *
+* Para mais informações leia o arquivo LICENSE na raíz do emulador           *
 *****************************************************************************/
 
 #define BRATHENA_CORE
@@ -1334,7 +1343,7 @@ void login_auth_failed(struct login_session_data* sd, int result)
 		case  14: error = "Grupo nao permitido"; break; // 14 = MSI_REFUSE_NOT_PERMITTED_GROUP
 		case  15: error = "Grupo nao permitido"; break; // 15 = MSI_REFUSE_NOT_PERMITTED_GROUP
 		case  99: error = "Conta Apagada"; break; // 99 = This ID has been totally erased
-		case 100: error = "Informacoes de login continua"; break; // 100 = Login information remains at %s
+		case 100: error = "informacoes de login continua"; break; // 100 = Login information remains at %s
 		case 101: error = "Investigacao de hacking"; break; // 101 = Account has been locked for a hacking investigation. Please contact the GM Team for more information
 		case 102: error = "Investigacao de bug"; break; // 102 = This account has been temporarily prohibited from login due to a bug-related investigation
 		case 103: error = "Exclusao de personagem"; break; // 103 = This character is being deleted. Login is temporarily unavailable for the time being
