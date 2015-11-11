@@ -14656,21 +14656,6 @@ BUILDIN(equip2)
 	return true;
 }
 
-BUILDIN(setbattleflag)
-{
-	const char *flag, *value;
-
-	flag = script_getstr(st,2);
-	value = script_getstr(st,3);  // HACK: Retrieve number as string (auto-converted) for battle_set_value
-
-	if (battle->config_set_value(flag, value) == 0)
-		ShowWarning("buildin_setbattleflag: unknown battle_config flag '%s'\n",flag);
-	else
-		ShowInfo("buildin_setbattleflag: battle_config flag '%s' is now set to '%s'.\n",flag,value);
-
-	return true;
-}
-
 BUILDIN(getbattleflag)
 {
 	const char *flag;
@@ -20896,7 +20881,6 @@ void script_parse_builtin(void) {
 		BUILDIN_DEF(equip,"i"),
 		BUILDIN_DEF(autoequip,"ii"),
 		BUILDIN_DEF(equip2,"iiiiiii"),
-		BUILDIN_DEF(setbattleflag,"si"),
 		BUILDIN_DEF(getbattleflag,"s"),
 		BUILDIN_DEF(setitemscript,"is?"), //Set NEW item bonus script. Lupus
 		BUILDIN_DEF(disguise,"i"), //disguise player. Lupus

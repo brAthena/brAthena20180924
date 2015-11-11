@@ -11,6 +11,10 @@
 
 #define BRATHENA_CORE
 
+#include "lua.h"
+#include "lualib.h"
+#include "lauxlib.h"
+
 #include "config/core.h" // CELL_NOSTACK, CIRCULAR_AREA, CONSOLE_INPUT, HMAP_ZONE_DAMAGE_CAP_TYPE, OFFICIAL_WALKPATH, RENEWAL, RENEWAL_ASPD, RENEWAL_CAST, RENEWAL_DROP, RENEWAL_EDP, RENEWAL_EXP, RENEWAL_LVDMG, RE_LVL_DMOD(), RE_LVL_MDMOD(), RE_LVL_TMDMOD(), RE_SKILL_REDUCTION(), SCRIPT_CALLFUNC_CHECK, SECURE_NPCTIMEOUT, STATS_OPT_OUT
 #include "battle.h"
 
@@ -6685,6 +6689,60 @@ bool battle_check_range(struct block_list *src, struct block_list *bl, int range
 	return path->search_long(NULL,src,src->m,src->x,src->y,bl->x,bl->y,CELL_CHKWALL);
 }
 
+void battle_configuration(void) {
+	lua_State *L = luaL_newstate();
+	luaL_openlibs(L);
+	char *lua_filename = "conf/Battle_Config.lua";
+
+	if (luaL_dofile(L, lua_filename)) {
+		ShowError("Erro ao ler o arquivo %s\n", lua_filename);
+		return;
+	}
+	lua_getglobal(L, "DAMAGE");
+	
+	lua_getfield(L, -1, "ENABLE_BASEATK");                  battle_config.enable_baseatk = (int)lua_tointeger(L, -1);
+	lua_getfield(L, -2, "ENABLE_PERFECT_FLEE");             battle_config.enable_perfect_flee = (int)lua_tointeger(L, -1);
+	lua_getfield(L, -3, "ENABLE_CRITICAL");                 battle_config.enable_critical = (int)lua_tointeger(L, -1);
+	lua_getfield(L, -4, "MOB_CRITICAL_RATE");               battle_config.mob_critical_rate = (int)lua_tointeger(L, -1);
+	lua_getfield(L, -5, "CRITICAL_RATE");                   battle_config.critical_rate = (int)lua_tointeger(L, -1);
+	lua_getfield(L, -6, "ATTACK_WALK_DELAY");               battle_config.attack_walk_delay = (int)lua_tointeger(L, -1);
+	lua_getfield(L, -7, "PC_DAMAGE_WALK_DELAY_RATE");       battle_config.pc_walk_delay_rate = (int)lua_tointeger(L, -1);
+	lua_getfield(L, -8, "DAMAGE_WALK_DELAY_RATE");          battle_config.walk_delay_rate = (int)lua_tointeger(L, -1);
+	lua_getfield(L, -9, "MULTIHIT_DELAY");                  battle_config.multihit_delay = (int)lua_tointeger(L, -1);
+	lua_getfield(L, -10, "PLAYER_DAMAGE_DELAY_RATE");       battle_config.pc_damage_delay_rate = (int)lua_tointeger(L, -1);
+	lua_getfield(L, -11, "UNDEAD_DETECT_TYPE");             battle_config.undead_detect_type = (int)lua_tointeger(L, -1);
+	lua_getfield(L, -12, "ATRIBUTE_RECOVER");               battle_config.attr_recover = lua_toboolean(L, -1);
+	lua_getfield(L, -13, "MIN_RATE");                       battle_config.min_hitrate = (int)lua_tointeger(L, -1);
+	lua_getfield(L, -14, "MAX_RATE");                       battle_config.max_hitrate = (int)lua_tointeger(L, -1);
+	lua_getfield(L, -15, "AGI_PENALTY_TYPE");               battle_config.agi_penalty_type = (int)lua_tointeger(L, -1);
+	lua_getfield(L, -16, "AGI_PENALTY_TARGET");             battle_config.agi_penalty_target = (int)lua_tointeger(L, -1);
+	lua_getfield(L, -17, "AGI_PENALTY_COUNT");              battle_config.agi_penalty_count = (int)lua_tointeger(L, -1);
+	lua_getfield(L, -18, "AGI_PENALTY_NUM");                battle_config.agi_penalty_num = (int)lua_tointeger(L, -1);
+	lua_getfield(L, -19, "VIT_PENALTY_TYPE");               battle_config.vit_penalty_type = (int)lua_tointeger(L, -1);
+	lua_getfield(L, -20, "VIT_PENALTY_TARGET");             battle_config.vit_penalty_target = (int)lua_tointeger(L, -1);
+	lua_getfield(L, -21, "VIT_PENALTY_COUNT");              battle_config.vit_penalty_count = (int)lua_tointeger(L, -1);
+	lua_getfield(L, -22, "VIT_PENALTY_NUM");                battle_config.vit_penalty_num = (int)lua_tointeger(L, -1);
+	lua_getfield(L, -23, "WEAPON_DEFENSE_TYPE");            battle_config.weapon_defense_type = (int)lua_tointeger(L, -1);
+	lua_getfield(L, -24, "MAGIC_DEFENSE_TYPE");             battle_config.magic_defense_type = (int)lua_tointeger(L, -1);
+	lua_getfield(L, -25, "ATTACK_DIRECTION_CHANGE");        battle_config.attack_direction_change = (int)lua_tointeger(L, -1);
+	lua_getfield(L, -26, "ATTACK_ATTR_NONE");               battle_config.attack_attr_none = (int)lua_tointeger(L, -1);
+	lua_getfield(L, -27, "EQUIP_NATURAL_BREAK_RATE");       battle_config.equip_natural_break_rate = (int)lua_tointeger(L, -1);
+	lua_getfield(L, -28, "EQUIP_SELF_BREAK_RATE");          battle_config.equip_self_break_rate = (int)lua_tointeger(L, -1);
+	lua_getfield(L, -29, "EQUIP_SKILL_BREAK_RATE");         battle_config.equip_skill_break_rate = (int)lua_tointeger(L, -1);
+	lua_getfield(L, -30, "DELAY_BATTLE_DAMAGE");            battle_config.delay_battle_damage = lua_toboolean(L, -1);
+
+	/* remove 'value'; guarda 'key'  para a próxima iteração */
+	lua_pop(L, 30);
+
+	lua_getfield(L, -1, "ARROW_DECREMENT");                 battle_config.arrow_decrement = (int)lua_tointeger(L, -1);
+	lua_getfield(L, -2, "AUTOSPELL_CHECK_RANGE");           battle_config.autospell_check_range = lua_toboolean(L, -1);
+	lua_getfield(L, -3, "KNOCKBACK_LEFT");                  battle_config.knockback_left = lua_toboolean(L, -1);
+	lua_getfield(L, -4, "SNAP_DODGE");                      battle_config.snap_dodge = lua_toboolean(L, -1);
+
+	lua_close(L);
+	ShowLUA("Leitura de '"CL_WHITE"%s"CL_RESET" concluida'.\n", lua_filename);
+
+}
 static const struct battle_data {
 	const char* str;
 	int* val;
@@ -6693,11 +6751,11 @@ static const struct battle_data {
 	int max;
 } battle_data[] = {
 	{ "warp_point_debug",                   &battle_config.warp_point_debug,                0,      0,      1,              },
-	{ "enable_critical",                    &battle_config.enable_critical,                 BL_PC,  BL_NUL, BL_ALL,         },
-	{ "mob_critical_rate",                  &battle_config.mob_critical_rate,               100,    0,      INT_MAX,        },
-	{ "critical_rate",                      &battle_config.critical_rate,                   100,    0,      INT_MAX,        },
-	{ "enable_baseatk",                     &battle_config.enable_baseatk,                  BL_PC|BL_HOM, BL_NUL, BL_ALL,   },
-	{ "enable_perfect_flee",                &battle_config.enable_perfect_flee,             BL_PC|BL_PET, BL_NUL, BL_ALL,   },
+	//{ "enable_critical",                    &battle_config.enable_critical,                 BL_PC,  BL_NUL, BL_ALL,         },
+	//{ "mob_critical_rate",                  &battle_config.mob_critical_rate,               100,    0,      INT_MAX,        },
+	//{ "critical_rate",                      &battle_config.critical_rate,                   100,    0,      INT_MAX,        },
+	//{ "enable_baseatk",                     &battle_config.enable_baseatk,                  BL_PC|BL_HOM, BL_NUL, BL_ALL,   },
+	//{ "enable_perfect_flee",                &battle_config.enable_perfect_flee,             BL_PC|BL_PET, BL_NUL, BL_ALL,   },
 	{ "casting_rate",                       &battle_config.cast_rate,                       100,    0,      INT_MAX,        },
 	{ "delay_rate",                         &battle_config.delay_rate,                      100,    0,      INT_MAX,        },
 	{ "delay_dependon_dex",                 &battle_config.delay_dependon_dex,              0,      0,      1,              },
@@ -6708,7 +6766,7 @@ static const struct battle_data {
 	{ "skill_out_range_consume",            &battle_config.skill_out_range_consume,         1,      0,      1,              },
 	{ "skillrange_by_distance",             &battle_config.skillrange_by_distance,          ~BL_PC, BL_NUL, BL_ALL,         },
 	{ "skillrange_from_weapon",             &battle_config.use_weapon_skill_range,          BL_NUL, BL_NUL, BL_ALL,         },
-	{ "player_damage_delay_rate",           &battle_config.pc_damage_delay_rate,            100,    0,      INT_MAX,        },
+	//{ "player_damage_delay_rate",           &battle_config.pc_damage_delay_rate,            100,    0,      INT_MAX,        },
 	{ "defunit_not_enemy",                  &battle_config.defnotenemy,                     0,      0,      1,              },
 	{ "gvg_traps_target_all",               &battle_config.vs_traps_bctall,                 BL_PC,  BL_NUL, BL_ALL,         },
 	{ "traps_setting",                      &battle_config.traps_setting,                   0,      0,      1,              },
@@ -6716,7 +6774,7 @@ static const struct battle_data {
 	{ "clear_skills_on_death",              &battle_config.clear_unit_ondeath,              BL_NUL, BL_NUL, BL_ALL,         },
 	{ "clear_skills_on_warp",               &battle_config.clear_unit_onwarp,               BL_ALL, BL_NUL, BL_ALL,         },
 	{ "random_monster_checklv",             &battle_config.random_monster_checklv,          0,      0,      1,              },
-	{ "attribute_recover",                  &battle_config.attr_recover,                    1,      0,      1,              },
+	//{ "attribute_recover",                  &battle_config.attr_recover,                    1,      0,      1,              },
 	{ "flooritem_lifetime",                 &battle_config.flooritem_lifetime,              60000,  1000,   INT_MAX,        },
 	{ "item_auto_get",                      &battle_config.item_auto_get,                   0,      0,      1,              },
 	{ "item_first_get_time",                &battle_config.item_first_get_time,             3000,   0,      INT_MAX,        },
@@ -6770,9 +6828,9 @@ static const struct battle_data {
 	{ "slaves_inherit_mode",                &battle_config.slaves_inherit_mode,             2,      0,      3,              },
 	{ "slaves_inherit_speed",               &battle_config.slaves_inherit_speed,            3,      0,      3,              },
 	{ "summons_trigger_autospells",         &battle_config.summons_trigger_autospells,      1,      0,      1,              },
-	{ "pc_damage_walk_delay_rate",          &battle_config.pc_walk_delay_rate,              20,     0,      INT_MAX,        },
-	{ "damage_walk_delay_rate",             &battle_config.walk_delay_rate,                 100,    0,      INT_MAX,        },
-	{ "multihit_delay",                     &battle_config.multihit_delay,                  80,     0,      INT_MAX,        },
+	//{ "pc_damage_walk_delay_rate",          &battle_config.pc_walk_delay_rate,              20,     0,      INT_MAX,        },
+	//{ "damage_walk_delay_rate",             &battle_config.walk_delay_rate,                 100,    0,      INT_MAX,        },
+	//{ "multihit_delay",                     &battle_config.multihit_delay,                  80,     0,      INT_MAX,        },
 	{ "quest_skill_learn",                  &battle_config.quest_skill_learn,               0,      0,      1,              },
 	{ "quest_skill_reset",                  &battle_config.quest_skill_reset,               0,      0,      1,              },
 	{ "basic_skill_check",                  &battle_config.basic_skill_check,               1,      0,      1,              },
@@ -6817,7 +6875,7 @@ static const struct battle_data {
 	{ "natural_healsp_interval",            &battle_config.natural_healsp_interval,         8000,   NATURAL_HEAL_INTERVAL, INT_MAX, },
 	{ "natural_heal_skill_interval",        &battle_config.natural_heal_skill_interval,     10000,  NATURAL_HEAL_INTERVAL, INT_MAX, },
 	{ "natural_heal_weight_rate",           &battle_config.natural_heal_weight_rate,        50,     50,     101             },
-	{ "arrow_decrement",                    &battle_config.arrow_decrement,                 1,      0,      2,              },
+	//{ "arrow_decrement",                    &battle_config.arrow_decrement,                 1,      0,      2,              },
 	{ "max_aspd",                           &battle_config.max_aspd,                        190,    100,    199,            },
 	{ "max_third_aspd",                     &battle_config.max_third_aspd,                  193,    100,    199,            },
 	{ "max_walk_speed",                     &battle_config.max_walk_speed,                  300,    100,    100*DEFAULT_WALK_SPEED, },
@@ -6835,20 +6893,20 @@ static const struct battle_data {
 	{ "battle_log",                         &battle_config.battle_log,                      0,      0,      1,              },
 	{ "etc_log",                            &battle_config.etc_log,                         1,      0,      1,              },
 	{ "save_clothcolor",                    &battle_config.save_clothcolor,                 1,      0,      1,              },
-	{ "undead_detect_type",                 &battle_config.undead_detect_type,              0,      0,      2,              },
+	//{ "undead_detect_type",                 &battle_config.undead_detect_type,              0,      0,      2,              },
 	{ "auto_counter_type",                  &battle_config.auto_counter_type,               BL_ALL, BL_NUL, BL_ALL,         },
-	{ "min_hitrate",                        &battle_config.min_hitrate,                     5,      0,      100,            },
-	{ "max_hitrate",                        &battle_config.max_hitrate,                     100,    0,      100,            },
-	{ "agi_penalty_target",                 &battle_config.agi_penalty_target,              BL_PC,  BL_NUL, BL_ALL,         },
-	{ "agi_penalty_type",                   &battle_config.agi_penalty_type,                1,      0,      2,              },
-	{ "agi_penalty_count",                  &battle_config.agi_penalty_count,               3,      2,      INT_MAX,        },
-	{ "agi_penalty_num",                    &battle_config.agi_penalty_num,                 10,     0,      INT_MAX,        },
-	{ "vit_penalty_target",                 &battle_config.vit_penalty_target,              BL_PC,  BL_NUL, BL_ALL,         },
-	{ "vit_penalty_type",                   &battle_config.vit_penalty_type,                1,      0,      2,              },
-	{ "vit_penalty_count",                  &battle_config.vit_penalty_count,               3,      2,      INT_MAX,        },
-	{ "vit_penalty_num",                    &battle_config.vit_penalty_num,                 5,      0,      INT_MAX,        },
-	{ "weapon_defense_type",                &battle_config.weapon_defense_type,             0,      0,      INT_MAX,        },
-	{ "magic_defense_type",                 &battle_config.magic_defense_type,              0,      0,      INT_MAX,        },
+	//{ "min_hitrate",                        &battle_config.min_hitrate,                     5,      0,      100,            },
+	//{ "max_hitrate",                        &battle_config.max_hitrate,                     100,    0,      100,            },
+	//{ "agi_penalty_target",                 &battle_config.agi_penalty_target,              BL_PC,  BL_NUL, BL_ALL,         },
+	//{ "agi_penalty_type",                   &battle_config.agi_penalty_type,                1,      0,      2,              },
+	//{ "agi_penalty_count",                  &battle_config.agi_penalty_count,               3,      2,      INT_MAX,        },
+	//{ "agi_penalty_num",                    &battle_config.agi_penalty_num,                 10,     0,      INT_MAX,        },
+	//{ "vit_penalty_target",                 &battle_config.vit_penalty_target,              BL_PC,  BL_NUL, BL_ALL,         },
+	//{ "vit_penalty_type",                   &battle_config.vit_penalty_type,                1,      0,      2,              },
+	//{ "vit_penalty_count",                  &battle_config.vit_penalty_count,               3,      2,      INT_MAX,        },
+	//{ "vit_penalty_num",                    &battle_config.vit_penalty_num,                 5,      0,      INT_MAX,        },
+	//{ "weapon_defense_type",                &battle_config.weapon_defense_type,             0,      0,      INT_MAX,        },
+	//{ "magic_defense_type",                 &battle_config.magic_defense_type,              0,      0,      INT_MAX,        },
 	{ "skill_reiteration",                  &battle_config.skill_reiteration,               BL_NUL, BL_NUL, BL_ALL,         },
 	{ "skill_nofootset",                    &battle_config.skill_nofootset,                 BL_PC,  BL_NUL, BL_ALL,         },
 	{ "player_cloak_check_type",            &battle_config.pc_cloak_check_type,             1,      0,      1|2|4,          },
@@ -6856,7 +6914,7 @@ static const struct battle_data {
 	{ "sense_type",                         &battle_config.estimation_type,                 1|2,    0,      1|2,            },
 	{ "gvg_flee_penalty",                   &battle_config.gvg_flee_penalty,                20,     0,      INT_MAX,        },
 	{ "mob_changetarget_byskill",           &battle_config.mob_changetarget_byskill,        0,      0,      1,              },
-	{ "attack_direction_change",            &battle_config.attack_direction_change,         BL_ALL, BL_NUL, BL_ALL,         },
+	//{ "attack_direction_change",            &battle_config.attack_direction_change,         BL_ALL, BL_NUL, BL_ALL,         },
 	{ "land_skill_limit",                   &battle_config.land_skill_limit,                BL_ALL, BL_NUL, BL_ALL,         },
 	{ "monster_class_change_full_recover",  &battle_config.monster_class_change_recover,    1,      0,      1,              },
 	{ "produce_item_name_input",            &battle_config.produce_item_name_input,         0x1|0x2, 0,     0x9F,           },
@@ -6872,7 +6930,7 @@ static const struct battle_data {
 	{ "show_picker.item_type",              &battle_config.show_picker_item_type,           112,    0,      INT_MAX,        },
 	{ "party_update_interval",              &battle_config.party_update_interval,           1000,   100,    INT_MAX,        },
 	{ "party_item_share_type",              &battle_config.party_share_type,                0,      0,      1|2|3,          },
-	{ "attack_attr_none",                   &battle_config.attack_attr_none,                ~BL_PC, BL_NUL, BL_ALL,         },
+	//{ "attack_attr_none",                   &battle_config.attack_attr_none,                ~BL_PC, BL_NUL, BL_ALL,         },
 	{ "gx_allhit",                          &battle_config.gx_allhit,                       0,      0,      1,              },
 	{ "gx_disptype",                        &battle_config.gx_disptype,                     1,      0,      1,              },
 	{ "devotion_level_difference",          &battle_config.devotion_level_difference,       10,     0,      INT_MAX,        },
@@ -6925,9 +6983,9 @@ static const struct battle_data {
 	{ "alchemist_summon_reward",            &battle_config.alchemist_summon_reward,         1,      0,      2,              },
 	{ "drops_by_luk",                       &battle_config.drops_by_luk,                    0,      0,      INT_MAX,        },
 	{ "drops_by_luk2",                      &battle_config.drops_by_luk2,                   0,      0,      INT_MAX,        },
-	{ "equip_natural_break_rate",           &battle_config.equip_natural_break_rate,        0,      0,      INT_MAX,        },
-	{ "equip_self_break_rate",              &battle_config.equip_self_break_rate,           100,    0,      INT_MAX,        },
-	{ "equip_skill_break_rate",             &battle_config.equip_skill_break_rate,          100,    0,      INT_MAX,        },
+	//{ "equip_natural_break_rate",           &battle_config.equip_natural_break_rate,        0,      0,      INT_MAX,        },
+	//{ "equip_self_break_rate",              &battle_config.equip_self_break_rate,           100,    0,      INT_MAX,        },
+	//{ "equip_skill_break_rate",             &battle_config.equip_skill_break_rate,          100,    0,      INT_MAX,        },
 	{ "pk_mode",                            &battle_config.pk_mode,                         0,      0,      2,              },
 	{ "pk_level_range",                     &battle_config.pk_level_range,                  0,      0,      INT_MAX,        },
 	{ "manner_system",                      &battle_config.manner_system,                   0xFFF,  0,      0xFFF,          },
@@ -6959,11 +7017,11 @@ static const struct battle_data {
 	{ "min_skill_delay_limit",              &battle_config.min_skill_delay_limit,           100,    10,     INT_MAX,        },
 	{ "default_walk_delay",                 &battle_config.default_walk_delay,              300,    0,      INT_MAX,        },
 	{ "no_skill_delay",                     &battle_config.no_skill_delay,                  BL_MOB, BL_NUL, BL_ALL,         },
-	{ "attack_walk_delay",                  &battle_config.attack_walk_delay,               BL_ALL, BL_NUL, BL_ALL,         },
+	//{ "attack_walk_delay",                  &battle_config.attack_walk_delay,               BL_ALL, BL_NUL, BL_ALL,         },
 	{ "require_glory_guild",                &battle_config.require_glory_guild,             0,      0,      1,              },
 	{ "idle_no_share",                      &battle_config.idle_no_share,                   0,      0,      INT_MAX,        },
 	{ "party_even_share_bonus",             &battle_config.party_even_share_bonus,          0,      0,      INT_MAX,        },
-	{ "delay_battle_damage",                &battle_config.delay_battle_damage,             1,      0,      1,              },
+	//{ "delay_battle_damage",                &battle_config.delay_battle_damage,             1,      0,      1,              },
 	{ "hide_woe_damage",                    &battle_config.hide_woe_damage,                 0,      0,      1,              },
 	{ "display_version",                    &battle_config.display_version,                 1,      0,      1,              },
 	{ "display_hallucination",              &battle_config.display_hallucination,           1,      0,      1,              },
@@ -7032,8 +7090,8 @@ static const struct battle_data {
 	{ "eq_single_target_reflectable",       &battle_config.eq_single_target_reflectable,    1,      0,      1,              },
 	{ "invincible.nodamage",                &battle_config.invincible_nodamage,             0,      0,      1,              },
 	{ "mob_slave_keep_target",              &battle_config.mob_slave_keep_target,           0,      0,      1,              },
-	{ "autospell_check_range",              &battle_config.autospell_check_range,           0,      0,      1,              },
-	{ "knockback_left",                     &battle_config.knockback_left,                  1,      0,      1,              },
+	//{ "autospell_check_range",              &battle_config.autospell_check_range,           0,      0,      1,              },
+	//{ "knockback_left",                     &battle_config.knockback_left,                  1,      0,      1,              },
 	{ "client_reshuffle_dice",              &battle_config.client_reshuffle_dice,           0,      0,      1,              },
 	{ "client_sort_storage",                &battle_config.client_sort_storage,             0,      0,      1,              },
 	{ "feature.buying_store",               &battle_config.feature_buying_store,            1,      0,      1,              },
@@ -7086,7 +7144,7 @@ static const struct battle_data {
 	{ "guild_castle_invite",                &battle_config.guild_castle_invite,             0,      0,      1,              },
 	{ "guild_castle_expulsion",             &battle_config.guild_castle_expulsion,          0,      0,      1,              },
 	{ "song_timer_reset",                   &battle_config.song_timer_reset,                0,      0,      1,              },
-	{ "snap_dodge",                         &battle_config.snap_dodge,                      0,      0,      1,              },
+	//{ "snap_dodge",                         &battle_config.snap_dodge,                      0,      0,      1,              },
 	{ "stormgust_knockback",                &battle_config.stormgust_knockback,             1,      0,      1,              },
 	{ "monster_chase_refresh",              &battle_config.mob_chase_refresh,               1,      0,      30,             },
 	{ "mob_icewall_walk_block",             &battle_config.mob_icewall_walk_block,          75,     0,      255,            },
@@ -7264,26 +7322,6 @@ static int brathena_report_timer(int tid, int64 tick, int id, intptr_t data) {
 }
 #endif
 
-int battle_set_value(const char* w1, const char* w2)
-{
-	int val = config_switch(w2);
-
-	int i;
-
-	nullpo_retr(1, w1);
-	nullpo_retr(1, w2);
-	ARR_FIND(0, ARRAYLENGTH(battle_data), i, strcmpi(w1, battle_data[i].str) == 0);
-
-	if (val < battle_data[i].min || val > battle_data[i].max)
-	{
-		ShowWarning("Valor do ajuste '%s': %s esta invalido (min:%i max:%i)! Definindo para %i...\n", w1, w2, battle_data[i].min, battle_data[i].max, battle_data[i].defval);
-		val = battle_data[i].defval;
-	}
-
-	*battle_data[i].val = val;
-	return 1;
-}
-
 int battle_get_value(const char* w1)
 {
 	int i;
@@ -7390,9 +7428,6 @@ int battle_config_read(const char* cfgName)
 				continue;
 			if (strcmpi(w1, "import") == 0)
 				battle->config_read(w2);
-			else
-			if (battle->config_set_value(w1, w2) == 0)
-				ShowWarning("Opcao '%s' desconhecida no arquivo %s\n", w1, cfgName);
 		}
 
 		fclose(fp);
@@ -7419,6 +7454,8 @@ void do_init_battle(bool minimal) {
 	timer->add_func_list(brathena_report_timer, "brathena_report_timer");
 	timer->add_interval(timer->gettick()+30000, brathena_report_timer, 0, 0, 60000 * 30);
 #endif
+
+	battle->configuration();
 
 }
 
@@ -7482,7 +7519,6 @@ void battle_defaults(void) {
 	battle->calc_drain = battle_calc_drain;
 	battle->config_read = battle_config_read;
 	battle->config_set_defaults = battle_set_defaults;
-	battle->config_set_value = battle_set_value;
 	battle->config_get_value = battle_get_value;
 	battle->config_adjust = battle_adjust_conf;
 	battle->get_enemy_area = battle_getenemyarea;
@@ -7491,4 +7527,5 @@ void battle_defaults(void) {
 	battle->calc_skillratio_magic_unknown = battle_calc_skillratio_magic_unknown;
 	battle->calc_skillratio_weapon_unknown = battle_calc_skillratio_weapon_unknown;
 	battle->calc_misc_attack_unknown = battle_calc_misc_attack_unknown;
+	battle->configuration = battle_configuration;
 }

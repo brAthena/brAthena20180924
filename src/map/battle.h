@@ -636,7 +636,6 @@ struct battle_interface {
 	/* - battle_config                           */
 	int (*config_read) (const char *cfgName);
 	void (*config_set_defaults) (void);
-	int (*config_set_value) (const char* w1, const char* w2);
 	int (*config_get_value) (const char* w1);
 	void (*config_adjust) (void);
 	/* ----------------------------------------- */
@@ -648,6 +647,7 @@ struct battle_interface {
 	void (*calc_skillratio_magic_unknown) (int *attack_type, struct block_list *src, struct block_list *target, uint16 *skill_id, uint16 *skill_lv, int *skillratio, int *flag);
 	void (*calc_skillratio_weapon_unknown) (int *attack_type, struct block_list *src, struct block_list *target, uint16 *skill_id, uint16 *skill_lv, int *skillratio, int *flag);
 	void (*calc_misc_attack_unknown) (struct block_list *src, struct block_list *target, uint16 *skill_id, uint16 *skill_lv, int *mflag, struct Damage *md);
+	void (*configuration) (void);
 };
 
 struct battle_interface *battle;

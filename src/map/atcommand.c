@@ -6367,29 +6367,6 @@ ACMD(trade) {
 }
 
 /*==========================================
- * @setbattleflag by [MouseJstr]
- * set a battle_config flag without having to reboot
- *------------------------------------------*/
-ACMD(setbattleflag)
-{
-	char flag[128], value[128];
-
-	if (!*message || sscanf(message, "%127s %127s", flag, value) != 2) {
-		clif->message(fd, msg_fd(fd,1231)); // Usage: @setbattleflag <flag> <value>
-		return false;
-	}
-
-	if (battle->config_set_value(flag, value) == 0) {
-		clif->message(fd, msg_fd(fd,1232)); // Unknown battle_config flag.
-		return false;
-	}
-
-	clif->message(fd, msg_fd(fd,1233)); // Set battle_config as requested.
-
-	return true;
-}
-
-/*==========================================
  * @unmute [Valaris]
  *------------------------------------------*/
 ACMD(unmute) {
@@ -9559,7 +9536,6 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(adjgroup),
 		ACMD_DEF(trade),
 		ACMD_DEF(send),
-		ACMD_DEF(setbattleflag),
 		ACMD_DEF(unmute),
 		ACMD_DEF(clearweather),
 		ACMD_DEF(uptime),
