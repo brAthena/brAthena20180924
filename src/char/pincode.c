@@ -184,7 +184,7 @@ void SecondpwConfig(void) {
 
 		lua_getfield(L, -1, "USE_SECONDPW"); // tabela de índice empura o resultado
 		if (!lua_isboolean(L, -1))
-			ShowWarning("USE_SECONDPW permite apenas valores booleanos; \n");
+			ShowWarning("USE_SECONDPW permite apenas valores booleanos.\n");
 
 		pincode->enabled = lua_toboolean(L, -1); // obtém o valor para função
 
@@ -195,8 +195,8 @@ void SecondpwConfig(void) {
 		}
 #endif
 		lua_getfield(L, -2, "SECOND_PASSWD_MAXTRY");
-		if (!lua_isnumber(L, -1))
-			ShowWarning("SECOND_PASSWD_MAXTRY permite apenas números; \n");
+		if (!lua_isinteger(L, -1))
+			ShowWarning("SECOND_PASSWD_MAXTRY permite apenas números inteiros.\n");
 
 		pincode->maxtry = (int)lua_tointeger(L, -1);
 
@@ -206,14 +206,14 @@ void SecondpwConfig(void) {
 		}
 
 		lua_getfield(L, -3, "SECOND_PASSWD_CHANGETIME");
-		if (!lua_isnumber(L, -1))
-			ShowWarning("SECOND_PASSWD_CHANGETIME permite apenas numeros; \n");
+		if (!lua_isinteger(L, -1))
+			ShowWarning("SECOND_PASSWD_CHANGETIME permite apenas numeros inteiros.\n");
 
 		pincode->changetime = (int)lua_tointeger(L, -1) * 60;
 
 		lua_getfield(L, -4, "SECOND_PASSWD_LOGIN");
 		if (!lua_isboolean(L, -1))
-			ShowWarning("SECOND_PASSWD_LOGIN permite apenas valores booleanos; \n");
+			ShowWarning("SECOND_PASSWD_LOGIN permite apenas valores booleanos.\n");
 
 		pincode->charselect = lua_toboolean(L, -1);
 

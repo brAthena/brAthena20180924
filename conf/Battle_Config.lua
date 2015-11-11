@@ -51,7 +51,7 @@ DAMAGE ={
 	["MAGIC_DEFENSE_TYPE"] = 0;           -- Configuração para método alternativo de cálculo da defesa para ataques mágicos.(MDEF*value)
 	["ATTACK_DIRECTION_CHANGE"] = 0;      -- Configuração de direção do alvo. (Nota 3)
 	["ATTACK_ATTR_NONE"] = 14;            -- Configuração para quem estiver utilizando ataques de elemento neutro não vai obter qualquer resultado. (Nota 3) Essas configurações servem para alteração dos personagens que usam cartas ou armaduras com tal elemento ou ataques de elemento normal (exemplo: ghostring). (Nota 3)
-	["EQUIP_NATURAL_BREAK_RATE"] = 0;     -- Configuração da taxa na qual o equipamento pode quebrar. 1"] = 0.01% de chance. (Padrão"] = 0)
+	["EQUIP_NATURAL_BREAK_RATE"] = 0;     -- Configuração da taxa na qual o equipamento pode quebrar. 1 = 0.01% de chance. (Padrão é 0)
 	["EQUIP_SELF_BREAK_RATE"] = 100;      -- Configuração da taxa global de que o seu próprio equipamento pode quebrar. Esta taxa afeta a taxa de penalidade de quebra de habilidades, tais como Força Violenta e sua taxa de quebra natural. (Nota 2)
 	["EQUIP_SKILL_BREAK_RATE"] = 100;     -- Configuração da taxa na qual você pode quebrar equipamentos dos inimigos. Essas configurações funcionam para as habilidades Terror Ácido e Golpe Estilhaçante. (Nota 2)
 	["DELAY_BATTLE_DAMAGE"] = true;       -- Configuração para que ataques com armas tenham um tempo de relaxamento (delay) antes do verdadeiro dano ser aplicado. (Nota 1)
