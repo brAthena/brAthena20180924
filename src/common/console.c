@@ -11,6 +11,10 @@
 
 #define BRATHENA_CORE
 
+#include <lua/include/lua.h>
+#include <lua/include/lualib.h>
+#include <lua/include/lauxlib.h>
+
 #include "config/core.h" // CONSOLE_INPUT, MAX_CONSOLE_INPUT
 #include "console.h"
 
@@ -62,7 +66,7 @@ void display_title(void) {
 	const char *vcstype = sysinfo->vcstype();
 
 	ShowMessage("\n");
-	ShowMessage(""CL_BG_GREEN""CL_BT_WHITE"                                                                         "CL_CLL""CL_NORMAL"\n");
+	ShowMessage(""CL_BG_GREEN""CL_BT_WHITE"                                                                          "CL_CLL""CL_NORMAL"\n");
 	ShowMessage(""CL_BG_GREEN""CL_BT_WHITE"                            brAthena Dev.Team apresenta                   "CL_CLL""CL_NORMAL"\n");
 	ShowMessage(""CL_BG_GREEN""CL_BT_WHITE"                                                                          "CL_CLL""CL_NORMAL"\n");
 	ShowMessage(""CL_BG_GREEN""CL_BT_WHITE"                    _           _   _   _                                 "CL_CLL""CL_NORMAL"\n");
@@ -79,6 +83,7 @@ void display_title(void) {
 	ShowInfo("%s revisao (src): '"CL_WHITE"%s"CL_RESET"'\n", vcstype, sysinfo->vcsrevision_src());
 	ShowInfo("%s revisao (scripts): '"CL_WHITE"%s"CL_RESET"'\n", vcstype, sysinfo->vcsrevision_scripts());
 	ShowInfo("OS versao: '"CL_WHITE"%s"CL_RESET" [%s]'\n", sysinfo->osversion(), sysinfo->arch());
+	ShowInfo("Versao LUA: '"CL_LT_GREEN"%s"CL_RESET"'\n", LUA_RELEASE);
 	ShowInfo("CPU: '"CL_WHITE"%s [%d]"CL_RESET"'\n", sysinfo->cpu(), sysinfo->cpucores());
 	ShowInfo("Compilado com %s\n", sysinfo->compiler());
 	ShowInfo("Flags ao compilar: %s\n", sysinfo->cflags());
