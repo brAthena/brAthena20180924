@@ -1,0 +1,1 @@
+Arquivos convertidos pelo brA_Conversor serão salvos nesse diretório.
