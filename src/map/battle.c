@@ -6689,6 +6689,7 @@ bool battle_check_range(struct block_list *src, struct block_list *bl, int range
 	return path->search_long(NULL,src,src->m,src->x,src->y,bl->x,bl->y,CELL_CHKWALL);
 }
 
+// Leitura LUA para configurações de batalha [Megasantos]
 void battle_configuration(void) {
 	lua_State *L = luaL_newstate();
 	luaL_openlibs(L);
@@ -6724,8 +6725,44 @@ void battle_configuration(void) {
 	BATTLE_LUA_INT(L, -1, arrow_decrement);                    BATTLE_LUA_BOOL(L, -2, autospell_check_range);
 	BATTLE_LUA_BOOL(L, -3, knockback_left);                    BATTLE_LUA_BOOL(L, -4, snap_dodge);
 
+	lua_pop(L, 4);
+
+	ShowLUA("Leitura de '"CL_WHITE"%d"CL_RESET"' configura%c%ces de batalha '"CL_WHITE"DAMAGE"CL_RESET"' em '"CL_WHITE"%s"CL_RESET"'.\n", value, 135, 228, lua_filename);
+
+	value = 0;
+
+	lua_getglobal(L, "BATTLEGROUND");
+
+	BATTLE_LUA_INT(L, -1, bg_flee_penalty);                    BATTLE_LUA_INT(L, -2, bg_update_interval);
+
+	lua_pop(L, 2);
+
+	ShowLUA("Leitura de '"CL_WHITE"%d"CL_RESET"' configura%c%ces de batalha '"CL_WHITE"BATTLEGROUND"CL_RESET"' em '"CL_WHITE"%s"CL_RESET"'.\n", value, 135, 228, lua_filename);
+
+	value = 0;
+
+	lua_getglobal(L, "CLIENT");
+
+	BATTLE_LUA_INT(L, -1, packet_obfuscation);                 BATTLE_LUA_INT(L, -2, min_chat_delay);
+	BATTLE_LUA_INT(L, -3, min_hair_style);                     BATTLE_LUA_INT(L, -4, max_hair_style);
+	BATTLE_LUA_INT(L, -5, min_hair_color);                     BATTLE_LUA_INT(L, -6, max_hair_color);
+	BATTLE_LUA_INT(L, -7, min_cloth_color);                    BATTLE_LUA_INT(L, -8, max_cloth_color);
+	BATTLE_LUA_BOOL(L, -9, hide_woe_damage);                   BATTLE_LUA_INT(L, -10, pet_hair_style);
+	BATTLE_LUA_INT(L, -11, area_size);                         BATTLE_LUA_INT(L, -12, max_walk_path);
+	BATTLE_LUA_INT(L, -13, max_lv);                            BATTLE_LUA_INT(L, -14, aura_lv);
+	BATTLE_LUA_INT(L, -15, client_limit_unit_lv);              BATTLE_LUA_BOOL(L, -16, wedding_modifydisplay);
+	BATTLE_LUA_BOOL(L, -17, save_clothcolor);                  BATTLE_LUA_BOOL(L, -18, wedding_ignorepalette);
+	BATTLE_LUA_BOOL(L, -19, xmas_ignorepalette);               BATTLE_LUA_BOOL(L, -20, summer_ignorepalette);
+	BATTLE_LUA_BOOL(L, -21, hanbok_ignorepalette);             BATTLE_LUA_BOOL(L, -22, display_version);
+	BATTLE_LUA_BOOL(L, -23, display_hallucination);            BATTLE_LUA_BOOL(L, -24, display_status_timers);
+	BATTLE_LUA_BOOL(L, -25, client_reshuffle_dice);            BATTLE_LUA_BOOL(L, -26, client_sort_storage);
+	BATTLE_LUA_INT(L, -27, client_accept_chatdori);            BATTLE_LUA_INT(L, -28, client_emblem_max_blank);
+
+	lua_pop(L, 28);
+
+	ShowLUA("Leitura de '"CL_WHITE"%d"CL_RESET"' configura%c%ces de batalha '"CL_WHITE"CLIENT"CL_RESET"' em '"CL_WHITE"%s"CL_RESET"'.\n", value, 135, 228, lua_filename);
 	lua_close(L);
-	ShowLUA("Leitura de '"CL_WHITE"%d"CL_RESET"' configura%c%ces de batalha '"CL_WHITE"DAMAGE"CL_RESET"' conclu%cdas'.\n", value, 135, 228, 161);
+	
 
 }
 static const struct battle_data {
@@ -6841,11 +6878,6 @@ static const struct battle_data {
 	{ "item_check",                         &battle_config.item_check,                      0,      0,      1,              },
 	{ "item_use_interval",                  &battle_config.item_use_interval,               100,    0,      INT_MAX,        },
 	{ "cashfood_use_interval",              &battle_config.cashfood_use_interval,           60000,  0,      INT_MAX,        },
-	{ "wedding_modifydisplay",              &battle_config.wedding_modifydisplay,           0,      0,      1,              },
-	{ "wedding_ignorepalette",              &battle_config.wedding_ignorepalette,           0,      0,      1,              },
-	{ "xmas_ignorepalette",                 &battle_config.xmas_ignorepalette,              0,      0,      1,              },
-	{ "summer_ignorepalette",               &battle_config.summer_ignorepalette,            0,      0,      1,              },
-	{ "hanbok_ignorepalette",               &battle_config.hanbok_ignorepalette,            0,      0,      1,              },
 	{ "natural_healhp_interval",            &battle_config.natural_healhp_interval,         6000,   NATURAL_HEAL_INTERVAL, INT_MAX, },
 	{ "natural_healsp_interval",            &battle_config.natural_healsp_interval,         8000,   NATURAL_HEAL_INTERVAL, INT_MAX, },
 	{ "natural_heal_skill_interval",        &battle_config.natural_heal_skill_interval,     10000,  NATURAL_HEAL_INTERVAL, INT_MAX, },
@@ -6853,8 +6885,6 @@ static const struct battle_data {
 	{ "max_aspd",                           &battle_config.max_aspd,                        190,    100,    199,            },
 	{ "max_third_aspd",                     &battle_config.max_third_aspd,                  193,    100,    199,            },
 	{ "max_walk_speed",                     &battle_config.max_walk_speed,                  300,    100,    100*DEFAULT_WALK_SPEED, },
-	{ "max_lv",                             &battle_config.max_lv,                          99,     0,      MAX_LEVEL,      },
-	{ "aura_lv",                            &battle_config.aura_lv,                         99,     0,      INT_MAX,        },
 	{ "max_hp",                             &battle_config.max_hp,                          32500,  100,    1000000000,     },
 	{ "max_sp",                             &battle_config.max_sp,                          32500,  100,    1000000000,     },
 	{ "max_cart_weight",                    &battle_config.max_cart_weight,                 8000,   100,    1000000,        },
@@ -6866,7 +6896,6 @@ static const struct battle_data {
 	{ "skill_log",                          &battle_config.skill_log,                       BL_NUL, BL_NUL, BL_ALL,         },
 	{ "battle_log",                         &battle_config.battle_log,                      0,      0,      1,              },
 	{ "etc_log",                            &battle_config.etc_log,                         1,      0,      1,              },
-	{ "save_clothcolor",                    &battle_config.save_clothcolor,                 1,      0,      1,              },
 	{ "auto_counter_type",                  &battle_config.auto_counter_type,               BL_ALL, BL_NUL, BL_ALL,         },
 	{ "skill_reiteration",                  &battle_config.skill_reiteration,               BL_NUL, BL_NUL, BL_ALL,         },
 	{ "skill_nofootset",                    &battle_config.skill_nofootset,                 BL_PC,  BL_NUL, BL_ALL,         },
@@ -6952,16 +6981,8 @@ static const struct battle_data {
 	{ "night_at_start",                     &battle_config.night_at_start,                  0,      0,      1,              },
 	{ "show_mob_info",                      &battle_config.show_mob_info,                   0,      0,      1|2|4,          },
 	{ "ban_hack_trade",                     &battle_config.ban_hack_trade,                  0,      0,      INT_MAX,        },
-	{ "min_hair_style",                     &battle_config.min_hair_style,                  0,      0,      INT_MAX,        },
-	{ "max_hair_style",                     &battle_config.max_hair_style,                  23,     0,      INT_MAX,        },
-	{ "min_hair_color",                     &battle_config.min_hair_color,                  0,      0,      INT_MAX,        },
-	{ "max_hair_color",                     &battle_config.max_hair_color,                  9,      0,      INT_MAX,        },
-	{ "min_cloth_color",                    &battle_config.min_cloth_color,                 0,      0,      INT_MAX,        },
-	{ "max_cloth_color",                    &battle_config.max_cloth_color,                 4,      0,      INT_MAX,        },
-	{ "pet_hair_style",                     &battle_config.pet_hair_style,                  100,    0,      INT_MAX,        },
 	{ "castrate_dex_scale",                 &battle_config.castrate_dex_scale,              150,    1,      INT_MAX,        },
 	{ "vcast_stat_scale",                   &battle_config.vcast_stat_scale,                530,    1,      INT_MAX,        },
-	{ "area_size",                          &battle_config.area_size,                       14,     0,      INT_MAX,        },
 	{ "zeny_from_mobs",                     &battle_config.zeny_from_mobs,                  0,      0,      1,              },
 	{ "mobs_level_up",                      &battle_config.mobs_level_up,                   0,      0,      1,              },
 	{ "mobs_level_up_exp_rate",             &battle_config.mobs_level_up_exp_rate,          1,      1,      INT_MAX,        },
@@ -6976,9 +6997,6 @@ static const struct battle_data {
 	{ "require_glory_guild",                &battle_config.require_glory_guild,             0,      0,      1,              },
 	{ "idle_no_share",                      &battle_config.idle_no_share,                   0,      0,      INT_MAX,        },
 	{ "party_even_share_bonus",             &battle_config.party_even_share_bonus,          0,      0,      INT_MAX,        },
-	{ "hide_woe_damage",                    &battle_config.hide_woe_damage,                 0,      0,      1,              },
-	{ "display_version",                    &battle_config.display_version,                 1,      0,      1,              },
-	{ "display_hallucination",              &battle_config.display_hallucination,           1,      0,      1,              },
 	{ "use_statpoint_table",                &battle_config.use_statpoint_table,             1,      0,      1,              },
 	{ "ignore_items_gender",                &battle_config.ignore_items_gender,             1,      0,      1,              },
 	{ "copyskill_restrict",                 &battle_config.copyskill_restrict,              2,      0,      2,              },
@@ -7016,7 +7034,6 @@ static const struct battle_data {
 	{ "sg_angel_skill_ratio",               &battle_config.sg_angel_skill_ratio,            10,     0,      10000,          },
 	{ "autospell_stacking",                 &battle_config.autospell_stacking,              0,      0,      1,              },
 	{ "override_mob_names",                 &battle_config.override_mob_names,              0,      0,      2,              },
-	{ "min_chat_delay",                     &battle_config.min_chat_delay,                  0,      0,      INT_MAX,        },
 	{ "friend_auto_add",                    &battle_config.friend_auto_add,                 1,      0,      1,              },
 	{ "hom_rename",                         &battle_config.hom_rename,                      0,      0,      1,              },
 	{ "homunculus_show_growth",             &battle_config.homunculus_show_growth,          0,      0,      1,              },
@@ -7039,13 +7056,10 @@ static const struct battle_data {
 	{ "auction_feeperhour",                 &battle_config.auction_feeperhour,              12000,  0,      INT_MAX,        },
 	{ "auction_maximumprice",               &battle_config.auction_maximumprice,            500000000, 0,   MAX_ZENY,       },
 	{ "homunculus_auto_vapor",              &battle_config.homunculus_auto_vapor,           1,      0,      1,              },
-	{ "display_status_timers",              &battle_config.display_status_timers,           1,      0,      1,              },
 	{ "skill_add_heal_rate",                &battle_config.skill_add_heal_rate,             7,      0,      INT_MAX,        },
 	{ "eq_single_target_reflectable",       &battle_config.eq_single_target_reflectable,    1,      0,      1,              },
 	{ "invincible.nodamage",                &battle_config.invincible_nodamage,             0,      0,      1,              },
 	{ "mob_slave_keep_target",              &battle_config.mob_slave_keep_target,           0,      0,      1,              },
-	{ "client_reshuffle_dice",              &battle_config.client_reshuffle_dice,           0,      0,      1,              },
-	{ "client_sort_storage",                &battle_config.client_sort_storage,             0,      0,      1,              },
 	{ "feature.buying_store",               &battle_config.feature_buying_store,            1,      0,      1,              },
 	{ "feature.search_stores",              &battle_config.feature_search_stores,           1,      0,      1,              },
 	{ "searchstore_querydelay",             &battle_config.searchstore_querydelay,         10,      0,      INT_MAX,        },
@@ -7053,12 +7067,7 @@ static const struct battle_data {
 	{ "display_party_name",                 &battle_config.display_party_name,              0,      0,      1,              },
 	{ "cashshop_show_points",               &battle_config.cashshop_show_points,            0,      0,      1,              },
 	{ "mail_show_status",                   &battle_config.mail_show_status,                0,      0,      2,              },
-	{ "client_limit_unit_lv",               &battle_config.client_limit_unit_lv,            0,      0,      BL_ALL,         },
-	{ "client_emblem_max_blank_percent",    &battle_config.client_emblem_max_blank_percent, 100,    0,      100,            },
 
-	// BattleGround Settings
-	{ "bg_update_interval",                 &battle_config.bg_update_interval,              1000,   100,    INT_MAX,        },
-	{ "bg_flee_penalty",                    &battle_config.bg_flee_penalty,                 20,     0,      INT_MAX,        },
 	/**
 	 * rAthena
 	 **/
@@ -7081,11 +7090,8 @@ static const struct battle_data {
 	{ "skill_trap_type",                    &battle_config.skill_trap_type,                 0,      0,      1,              },
 	{ "item_restricted_consumption_type",   &battle_config.item_restricted_consumption_type,1,      0,      1,              },
 	{ "unequip_restricted_equipment",       &battle_config.unequip_restricted_equipment,    0,      0,      3,              },
-	{ "max_walk_path",                      &battle_config.max_walk_path,                   17,     1,      MAX_WALKPATH,   },
 	{ "item_enabled_npc",                   &battle_config.item_enabled_npc,                1,      0,      1,              },
 	{ "gm_ignore_warpable_area",            &battle_config.gm_ignore_warpable_area,         0,      2,      100,            },
-	{ "packet_obfuscation",                 &battle_config.packet_obfuscation,              1,      0,      3,              },
-	{ "client_accept_chatdori",             &battle_config.client_accept_chatdori,          0,      0,      INT_MAX,        },
 	{ "snovice_call_type",                  &battle_config.snovice_call_type,               0,      0,      1,              },
 	{ "guild_notice_changemap",             &battle_config.guild_notice_changemap,          2,      0,      2,              },
 	{ "feature.banking",                    &battle_config.feature_banking,                 1,      0,      1,              },

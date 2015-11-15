@@ -490,7 +490,7 @@ struct Battle_Config {
 	int cashshop_show_points;
 	int mail_show_status;
 	int client_limit_unit_lv;
-	int client_emblem_max_blank_percent;
+	int client_emblem_max_blank;
 	int hom_max_level;
 	int hom_S_max_level;
 
@@ -677,7 +677,7 @@ struct battle_interface {
 	void (*calc_skillratio_magic_unknown) (int *attack_type, struct block_list *src, struct block_list *target, uint16 *skill_id, uint16 *skill_lv, int *skillratio, int *flag);
 	void (*calc_skillratio_weapon_unknown) (int *attack_type, struct block_list *src, struct block_list *target, uint16 *skill_id, uint16 *skill_lv, int *skillratio, int *flag);
 	void (*calc_misc_attack_unknown) (struct block_list *src, struct block_list *target, uint16 *skill_id, uint16 *skill_lv, int *mflag, struct Damage *md);
-	void (*configuration) (void);
+	void (*configuration) (void); // [Megasantos]
 };
 
 struct battle_interface *battle;

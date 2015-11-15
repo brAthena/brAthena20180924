@@ -12718,8 +12718,8 @@ bool clif_validate_emblem(const uint8 *emblem, unsigned long emblem_len) {
 		return false;
 	}
 
-	if( battle_config.client_emblem_max_blank_percent < 100 ) {
-		int required_pixels = BITMAP_WIDTH * BITMAP_HEIGHT * (100 - battle_config.client_emblem_max_blank_percent) / 100;
+	if( battle_config.client_emblem_max_blank < 100 ) {
+		int required_pixels = BITMAP_WIDTH * BITMAP_HEIGHT * (100 - battle_config.client_emblem_max_blank) / 100;
 		int found_pixels = 0;
 		int i;
 		/// Checks what percentage of a guild emblem is blank. A blank emblem

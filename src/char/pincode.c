@@ -216,6 +216,8 @@ void SecondpwConfig(void) {
 			ShowWarning("SECOND_PASSWD_LOGIN permite apenas valores booleanos.\n");
 
 		pincode->charselect = lua_toboolean(L, -1);
+		
+		lua_pop(L, 4);
 
 		lua_close(L);
 		ShowLUA("Leitura de '"CL_WHITE"%s"CL_RESET" concluida'.\n", lua_filename);
