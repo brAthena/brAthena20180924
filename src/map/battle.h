@@ -12,6 +12,10 @@
 #ifndef MAP_BATTLE_H
 #define MAP_BATTLE_H
 
+#include "lua.h"
+#include "lualib.h"
+#include "lauxlib.h"
+
 #include "map/map.h" //ELE_MAX
 #include "common/cbasetypes.h"
 
@@ -24,6 +28,32 @@ struct block_list;
 struct weapon_atk;
 struct status_change;
 struct status_data;
+
+/**
+ * Macros para configuração de batalha LUA
+**/
+
+/* Macro para configurações de batalha inteiros */
+#define BATTLE_LUA_INT(state, idx, k) do { \
+	lua_getfield(state, idx, #k); \
+	battle_config.k = (int)lua_tointeger(L, -1); \
+if (!lua_isinteger(L, -1)) { \
+	ShowWarning("A configura%c%co '%s' permite apenas n%cmeros inteiros\n", 135, 198, #k, 163); \
+	continue; \
+} \
+	value += 1; \
+} while (0)
+
+/* Macro para configurações de batalha booleanas */
+#define BATTLE_LUA_BOOL(state, idx, k) do { \
+	lua_getfield(state, idx, #k); \
+	battle_config.k = lua_toboolean(L, -1); \
+if (!lua_isboolean(L, -1)) { \
+	ShowWarning("A configura%c%co '%s' permite apenas valores booleanos\n", 135, 198, #k); \
+	continue; \
+} \
+	value += 1; \
+} while (0)
 
 /**
  * Defines
@@ -134,7 +164,7 @@ struct Battle_Config {
 	int skill_amotion_leniency;
 	int skillrange_by_distance; //[Skotlex]
 	int use_weapon_skill_range; //[Skotlex]
-	int pc_damage_delay_rate;
+	int player_damage_delay_rate;
 	int defnotenemy;
 	int vs_traps_bctall;
 	int traps_setting;
@@ -142,7 +172,7 @@ struct Battle_Config {
 	int clear_unit_ondeath; //[Skotlex]
 	int clear_unit_onwarp; //[Skotlex]
 	int random_monster_checklv;
-	int attr_recover;
+	int attribute_recover;
 	int item_auto_get;
 	int flooritem_lifetime;
 	int item_first_get_time;
@@ -185,8 +215,8 @@ struct Battle_Config {
 	int slaves_inherit_mode;
 	int slaves_inherit_speed;
 	int summons_trigger_autospells;
-	int pc_walk_delay_rate; //Adjusts can't walk delay after being hit for players. [Skotlex]
-	int walk_delay_rate; //Adjusts can't walk delay after being hit. [Skotlex]
+	int pc_damage_walk_delay_rate; //Adjusts can't walk delay after being hit for players. [Skotlex]
+	int damage_walk_delay_rate; //Adjusts can't walk delay after being hit. [Skotlex]
 	int multihit_delay;  //Adjusts can't walk delay per hit on multi-hitting skills. [Skotlex]
 	int quest_skill_learn;
 	int quest_skill_reset;

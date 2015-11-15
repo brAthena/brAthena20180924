@@ -4198,11 +4198,11 @@ int clif_calc_walkdelay(struct block_list *bl,int delay, int type, int damage, i
 
 	nullpo_retr(delay, bl);
 	if (bl->type == BL_PC) {
-		if (battle_config.pc_walk_delay_rate != 100)
-			delay = delay*battle_config.pc_walk_delay_rate/100;
+		if (battle_config.pc_damage_walk_delay_rate != 100)
+			delay = delay*battle_config.pc_damage_walk_delay_rate / 100;
 	} else
-		if (battle_config.walk_delay_rate != 100)
-			delay = delay*battle_config.walk_delay_rate/100;
+	if (battle_config.damage_walk_delay_rate != 100)
+		delay = delay*battle_config.damage_walk_delay_rate / 100;
 
 	if (div_ > 1) //Multi-hit skills mean higher delays.
 		delay += battle_config.multihit_delay*(div_-1);

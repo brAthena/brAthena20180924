@@ -2814,8 +2814,8 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt) {
 	//
 	i =  800-bstatus->agi*4;
 	bstatus->dmotion = cap_value(i, 400, 800);
-	if(battle_config.pc_damage_delay_rate != 100)
-		bstatus->dmotion = bstatus->dmotion*battle_config.pc_damage_delay_rate/100;
+	if (battle_config.player_damage_delay_rate != 100)
+		bstatus->dmotion = bstatus->dmotion*battle_config.player_damage_delay_rate / 100;
 
 	// ----- MISC CALCULATIONS -----
 
@@ -3655,8 +3655,8 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag) {
 			else {
 				dmotion = 800-st->agi*4;
 				st->dmotion = cap_value(dmotion, 400, 800);
-				if ( battle_config.pc_damage_delay_rate != 100 )
-					st->dmotion = st->dmotion*battle_config.pc_damage_delay_rate / 100;
+				if (battle_config.player_damage_delay_rate != 100)
+					st->dmotion = st->dmotion*battle_config.player_damage_delay_rate / 100;
 				//It's safe to ignore bst->dmotion since no bonus affects it.
 				st->dmotion = status->calc_dmotion(bl, sc, st->dmotion);
 			}

@@ -11042,7 +11042,7 @@ int pc_readdb(void) {
 			for (j = ELE_NEUTRAL; j < ELE_MAX; j++) {
 				battle->attr_fix_table[k][i][j] = ElementTable[k][i][j];
 #ifndef RENEWAL
-				if (battle_config.attr_recover == 0 && battle->attr_fix_table[k][i][j] < 0)
+				if (battle_config.attribute_recover == 0 && battle->attr_fix_table[k][i][j] < 0)
 					battle->attr_fix_table[k][i][j] = 0;
 #endif
 			}
