@@ -2086,10 +2086,10 @@ int pc_bonus_item_drop(struct s_add_drop *drop, const short max, short id, short
 	if (rate >= 0) { //Absolute drop.
 		if (battle_config.item_rate_adddrop != 100)
 			rate = rate*battle_config.item_rate_adddrop/100;
-		if (rate < battle_config.item_drop_adddrop_min)
-			rate = battle_config.item_drop_adddrop_min;
-		else if (rate > battle_config.item_drop_adddrop_max)
-			rate = battle_config.item_drop_adddrop_max;
+		if (rate < battle_config.item_drop_add_min)
+			rate = battle_config.item_drop_add_min;
+		else if (rate > battle_config.item_drop_add_max)
+			rate = battle_config.item_drop_add_max;
 	} else { //Relative drop, max/min limits are applied at drop time.
 		if (battle_config.item_rate_adddrop != 100)
 			rate = rate*battle_config.item_rate_adddrop/100;

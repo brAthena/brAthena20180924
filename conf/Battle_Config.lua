@@ -15,12 +15,14 @@
 --   | Descrição: Configurações de Batalha.                                                                    |
 --   |---------------------------------------------------------------------------------------------------------|
 --   | Changelog:                                                                                              |
---   | 1.0 Adição da Configuração de dano [Megasantos]                                                         |
+--   | 1.0 Adição das Configurações de dano [Megasantos]                                                       |
 --   | 1.1 Adição das Configurações de battleground e client [Megasantos]                                      |
+--   | 1.2 Adição das Configurações de drop [Megasantos]                                                       |
 --   |---------------------------------------------------------------------------------------------------------|
 --   | - Anotações                                                                                             |
 --   | Nota 1: Valor optativo (true/false).  Nota 2: Valor em porcentagem (100 para 100%)                      |
 --   | Nota 3: Valor em unidade (1: Jogador, 2: Monstro, 4: Bicho de Estimação, 8: Homunculus, 16: Mercenários.|
+--   | Nota 4: Valor em Milissegundos (1 segundo são 1000 milissegundos)                                       |
 --   | Lembre-se que "NOTAS" dão recomendações importantes.                                                    |
 --   \_________________________________________________________________________________________________________/
 
@@ -63,7 +65,7 @@ DAMAGE = {
 
 BATTLEGROUND = {
 	["bg_flee_penalty"] = 20;             -- Configuração para penalidade de esquiva (flee) nas Batalhas Campais. 20 = -20% da sua esquiva original.
-	["bg_update_interval"] = 1000;        -- Configuração do intervalo de atualização para pontos no mini-mapa dos personagens de seu time (milisegundos).
+	["bg_update_interval"] = 1000;        -- Configuração do intervalo de atualização para pontos no mini-mapa dos personagens de seu time. (Nota 4)
 };
 
 CLIENT = {
@@ -95,4 +97,50 @@ CLIENT = {
 	["client_sort_storage"] = false;      -- Configuração para que o armazém seja aberto depois de enviar ao cliente. Habilitar essa opção diminui a capacidade do emulador.
 	["client_accept_chatdori"] = 1;       -- Configuração de duração em minutos para auto mute do client. Não ative se você ativou comandos para jogadores, porque o cliente vê vários comandos em sucessão como spam. Padrão: 1 (1 minuto) 0 = Desativado
 	["client_emblem_max_blank"] = 100;    -- Configuração que permite bloquear o uso de pixels transparentes em emblemas de clãs. Se definido como 100 (permite 100% de pixels transparentes)
+};
+
+DROPS = {
+	["item_auto_get"] = false;            -- Configuração para permitir que itens que forem dropados irem direto para o inventário do usuário. (Nota 1)
+	["flooritem_lifetime"] = 60000;       -- Configuração do tempo que os itens demoram para desaparecerem do chão depois de dropado. (Nota 4)
+	["item_first_get_time"] = 3000;       -- Configuração do tempo de demora para recolhimento de itens da pessoa que deu o maior dano no alvo poder pegar os itens. (Nota 4)
+	["item_second_get_time"] = 1000;      -- Configuração do tempo de demora para recolhimento de itens da primeira e segunda pessoas que deram os maiores danos no alvo poderem pegar os itens. Configuração válida após a configuração "item_first_get_time" ser executada. (Nota 4)
+	["item_third_get_time"] = 1000;       -- Configuração do tempo de demora para recolhimento de itens da primeira, segunda e terceira pessoas que deram os maiores danos no alvo poderem pegar os itens. Configuração válida após a configuração "item_second_get_time" ser executada. (Nota 4)
+	["mvp_item_first_get_time"] = 10000;  -- Configuração do tempo de demora para recolhimento de itens MVP da pessoa que deu o maior dano no alvo poder pegar os itens. (Nota 4)
+	["mvp_item_second_get_time"] = 10000; -- Configuração do tempo de demora para recolhimento de itens MVP da primeira e segunda pessoas que deram os maiores danos no alvo poderem pegar os itens. Configuração válida após a configuração after mvp_item_first_get_time ser executada. (Nota 4)
+	["mvp_item_third_get_time"] = 2000;   -- Configuração para definir quanto tempo para o primeiro, o segundo e o terceiro MVP poderem pegar o item? Configuração válida após a configuração mvp_item_second_get_time ser executada. (Nota 4)
+	["item_rate_common"] = 100;           -- Configurações de chances que itens comuns são dropados (Qualquer item normal, exceto cartas).
+	["item_rate_common_boss"] = 100;
+	["item_drop_common_min"] = 1;
+	["item_drop_common_max"] = 10000;
+	["item_rate_heal"] = 100;             -- Configurações das chances que itens de cura são dropados (Itens que recuperam hp e sp).
+	["item_rate_heal_boss"] = 100;
+	["item_drop_heal_min"] = 1;
+	["item_drop_heal_max"] = 10000;
+	["item_rate_use"] = 100;              -- Configurações das chances que outros itens usáveis são dropados, fora os itens de cura.
+	["item_rate_use_boss"] = 100;
+	["item_drop_use_min"] = 1;
+	["item_drop_use_max"] = 10000;
+	["item_rate_equip"] = 100;            -- Configurações das chances que os equipamentos são dropados.
+	["item_rate_equip_boss"] = 100;
+	["item_drop_equip_min"] = 1;
+	["item_drop_equip_max"] = 10000;
+	["item_rate_card"] = 100;             -- Configurações das chances que as cartas são dropadas.
+	["item_rate_card_boss"] = 100;
+	["item_drop_card_min"] = 1;
+	["item_drop_card_max"] = 10000;
+	["item_rate_mvp"] = 100;              -- Configurações das chances que os itens MVP são dropados. (direto no seu inventário)
+	["item_drop_mvp_min"] = 1;
+	["item_drop_mvp_max"] = 10000;
+	["item_rate_adddrop"] = 100;          -- Configurações das chances que os itens são dropados por itens geradores de itens. (Ex: Velho Álbum de Cartas)
+	["item_drop_add_min"] = 1;
+	["item_drop_add_max"] = 10000;
+	["item_rate_treasure"] = 100;         -- Configurações das chances que os itens dropados por tesouros. (Ex:Báu do Tesouro)
+	["item_drop_treasure_min"] = 1;
+	["item_drop_treasure_max"] = 10000;
+	["item_logarithmic_drops"] = false;   -- Configuração para uso de drops logarítimicos? (Nota 1) Chance de Drops (x,y) = x * (5 - log(x)) ^ (ln(y) / ln(5)) Onde x é a chance original de cair um item e y é o modificador drop_rate.
+	["drop_rate_item"] = false;           -- Configuração para que a quantidade de itens dropados por um monstro possa ser 0. (Nota 1)
+	["drops_by_luk"] = 0;                 -- Configuração para fazer com que a sorte (LUK) afete a chance de drop de um item em pequenos valores. Configurar com valor 100 significa que cada ponto de sorte aumenta a chance de drop em 0,01%.
+	["drops_by_luk2"] = 0;                -- Configuração para fazer com que o valor de sorte (LUK) aumente o drop de um item em maiores valores. olocar a variável em 100 significa que cada ponto de sorte aumenta a chance de drop em 1%.
+	["alchemist_summon_reward"] = 1;      -- Configuração para monstros como: Esfera Marinha e Floras invocados por alquimistas dropam ou não dropam itens. 0 = Não dropa nada, 1 = Esfera Marinha dropa itens, 2 = Todos os monstros invocados por alquimistas dropam itens.
+	["rare_drop_announce"] = 0;           -- Configuração para anunciar que o jogador dropou carta (chance 0.01%). Isso também anuncia a itens que foram recolhidos pela habilidade "Furto" quando roubar itens raros. 0 = Não mostra nenhum anúncio, 1 = Mostra anúncios para itens com 0,01% de chance. 333 = Mostra anúncios para itens com 3,33% de chance ou menos. 10000 = Mostra anúncios para todos os itens.
 };

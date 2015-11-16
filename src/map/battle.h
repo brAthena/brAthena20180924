@@ -34,7 +34,7 @@ struct status_data;
 **/
 
 /* Macro para configurações de batalha inteiros */
-#define BATTLE_LUA_INT(state, idx, k) do { \
+#define BATTLE_LUA_INTEGER(state, idx, k) do { \
 	lua_getfield(state, idx, #k); \
 	battle_config.k = (int)lua_tointeger(L, -1); \
 if (!lua_isinteger(L, -1)) { \
@@ -42,10 +42,11 @@ if (!lua_isinteger(L, -1)) { \
 	continue; \
 } \
 	value += 1; \
+	lua_pop(L, 1); /* remove 'value'; guarda 'key'  para a próxima iteração */ \
 } while (0)
 
 /* Macro para configurações de batalha booleanas */
-#define BATTLE_LUA_BOOL(state, idx, k) do { \
+#define BATTLE_LUA_BOOLEAN(state, idx, k) do { \
 	lua_getfield(state, idx, #k); \
 	battle_config.k = lua_toboolean(L, -1); \
 if (!lua_isboolean(L, -1)) { \
@@ -53,6 +54,7 @@ if (!lua_isboolean(L, -1)) { \
 	continue; \
 } \
 	value += 1; \
+	lua_pop(L, 1); \
 } while (0)
 
 /**
@@ -182,7 +184,7 @@ struct Battle_Config {
 	int mvp_item_second_get_time;
 	int mvp_item_third_get_time;
 	int base_exp_rate,job_exp_rate;
-	int drop_rate0item;
+	int drop_rate_item;
 	int death_penalty_type;
 	int death_penalty_base,death_penalty_job;
 	int pvp_exp;  // [MouseJstr]
@@ -323,7 +325,7 @@ struct Battle_Config {
 	item_rate_equip, item_rate_equip_boss, item_rate_heal, item_rate_heal_boss, item_rate_use,
 	item_rate_use_boss, item_rate_treasure, item_rate_adddrop;
 
-	int logarithmic_drops;
+	int item_logarithmic_drops;
 	int item_drop_common_min,item_drop_common_max; // Added by TyrNemesis^
 	int item_drop_card_min,item_drop_card_max;
 	int item_drop_equip_min,item_drop_equip_max;
@@ -331,7 +333,7 @@ struct Battle_Config {
 	int item_drop_heal_min,item_drop_heal_max; // Added by Valatris
 	int item_drop_use_min,item_drop_use_max; //End
 	int item_drop_treasure_min,item_drop_treasure_max; //by [Skotlex]
-	int item_drop_adddrop_min,item_drop_adddrop_max; //[Skotlex]
+	int item_drop_add_min, item_drop_add_max; //[Skotlex]
 
 	int prevent_logout; // Added by RoVeRT
 

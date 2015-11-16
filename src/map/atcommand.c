@@ -3621,7 +3621,7 @@ ACMD(reloadbattleconf)
 	   ||  prev_config.item_rate_use_boss     != battle_config.item_rate_use_boss
 	   ||  prev_config.item_rate_treasure     != battle_config.item_rate_treasure
 	   ||  prev_config.item_rate_adddrop      != battle_config.item_rate_adddrop
-	   ||  prev_config.logarithmic_drops      != battle_config.logarithmic_drops
+	   ||  prev_config.item_logarithmic_drops != battle_config.item_logarithmic_drops
 	   ||  prev_config.item_drop_common_min   != battle_config.item_drop_common_min
 	   ||  prev_config.item_drop_common_max   != battle_config.item_drop_common_max
 	   ||  prev_config.item_drop_card_min     != battle_config.item_drop_card_min
@@ -6635,7 +6635,7 @@ ACMD(mobinfo)
 			if( battle_config.atcommand_mobinfo_type ) {
 				droprate = droprate * pc->level_penalty_mod(monster->lv - sd->status.base_level, monster->status.race, monster->status.mode, 2) / 100;
 
-				if (droprate <= 0 && !battle_config.drop_rate0item)
+				if (droprate <= 0 && !battle_config.drop_rate_item)
 					droprate = 1;
 			}
 #endif

@@ -2331,7 +2331,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type) {
 				continue;
 			drop_rate = md->db->dropitem[i].p;
 			if (drop_rate <= 0) {
-				if (battle_config.drop_rate0item)
+				if (battle_config.drop_rate_item)
 					continue;
 				drop_rate = 1;
 			}
@@ -2428,7 +2428,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type) {
 						//it's negative, then it should be multiplied. e.g. for Mimic,Myst Case Cards, etc
 						// rate = base_rate * (mob_level/10) + 1
 						drop_rate = -sd->add_drop[i].rate*(md->level/10)+1;
-						drop_rate = cap_value(drop_rate, battle_config.item_drop_adddrop_min, battle_config.item_drop_adddrop_max);
+						drop_rate = cap_value(drop_rate, battle_config.item_drop_add_min, battle_config.item_drop_add_max);
 						if (drop_rate > 10000) drop_rate = 10000;
 					}
 					else
@@ -2523,7 +2523,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type) {
 					continue;
 
 				temp = mdrop_p[i];
-				if(temp <= 0 && !battle_config.drop_rate0item)
+				if(temp <= 0 && !battle_config.drop_rate_item)
 					temp = 1;
 				if(temp <= rnd()%10000+1) //if ==0, then it doesn't drop
 					continue;
@@ -3609,7 +3609,7 @@ unsigned int mob_drop_adjust(int baserate, int rate_adjust, unsigned short rate_
 {
 	double rate = baserate;
 
-	if (battle_config.logarithmic_drops && rate_adjust > 0 && rate_adjust != 100 && baserate > 0) //Logarithmic drops equation by Ishizu-Chan
+	if (battle_config.item_logarithmic_drops && rate_adjust > 0 && rate_adjust != 100 && baserate > 0) //Logarithmic drops equation by Ishizu-Chan
 		//Equation: Droprate(x,y) = x * (5 - log(x)) ^ (ln(y) / ln(5))
 		//x is the normal Droprate, y is the Modificator.
 		rate = rate * pow((5.0 - log10(rate)), (log(rate_adjust/100.) / log(5.0))) + 0.5;

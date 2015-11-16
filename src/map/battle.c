@@ -6703,29 +6703,23 @@ void battle_configuration(void) {
 
 	lua_getglobal(L, "DAMAGE");
 
-	BATTLE_LUA_INT(L, -1, enable_baseatk);                     BATTLE_LUA_INT(L, -2, enable_perfect_flee);
-	BATTLE_LUA_INT(L, -3, enable_critical);                    BATTLE_LUA_INT(L, -4, mob_critical_rate);
-	BATTLE_LUA_INT(L, -5, critical_rate);                      BATTLE_LUA_INT(L, -6, attack_walk_delay);
-	BATTLE_LUA_INT(L, -7, pc_damage_walk_delay_rate);          BATTLE_LUA_INT(L, -8, damage_walk_delay_rate);
-	BATTLE_LUA_INT(L, -9, multihit_delay);                     BATTLE_LUA_INT(L, -10, player_damage_delay_rate);
-	BATTLE_LUA_INT(L, -11, undead_detect_type);                BATTLE_LUA_BOOL(L, -12, attribute_recover);
-	BATTLE_LUA_INT(L, -13, min_hitrate);                       BATTLE_LUA_INT(L, -14, max_hitrate);
-	BATTLE_LUA_INT(L, -15, agi_penalty_type);                  BATTLE_LUA_INT(L, -16, agi_penalty_target);
-	BATTLE_LUA_INT(L, -17, agi_penalty_count);                 BATTLE_LUA_INT(L, -18, agi_penalty_num);
-	BATTLE_LUA_INT(L, -19, vit_penalty_type);                  BATTLE_LUA_INT(L, -20, vit_penalty_target);
-	BATTLE_LUA_INT(L, -21, vit_penalty_count);                 BATTLE_LUA_INT(L, -22, vit_penalty_num);
-	BATTLE_LUA_INT(L, -23, weapon_defense_type);               BATTLE_LUA_INT(L, -24, magic_defense_type);
-	BATTLE_LUA_INT(L, -25, attack_direction_change);           BATTLE_LUA_INT(L, -26, attack_attr_none);
-	BATTLE_LUA_INT(L, -27, equip_natural_break_rate);          BATTLE_LUA_INT(L, -28, equip_self_break_rate);
-	BATTLE_LUA_INT(L, -29, equip_skill_break_rate);            BATTLE_LUA_BOOL(L, -30, delay_battle_damage);
-
-	/* remove 'value'; guarda 'key'  para a próxima iteração */
-	lua_pop(L, 30);
-
-	BATTLE_LUA_INT(L, -1, arrow_decrement);                    BATTLE_LUA_BOOL(L, -2, autospell_check_range);
-	BATTLE_LUA_BOOL(L, -3, knockback_left);                    BATTLE_LUA_BOOL(L, -4, snap_dodge);
-
-	lua_pop(L, 4);
+	BATTLE_LUA_INTEGER(L, -1, enable_baseatk);                    BATTLE_LUA_INTEGER(L, -1, enable_perfect_flee);
+	BATTLE_LUA_INTEGER(L, -1, enable_critical);                   BATTLE_LUA_INTEGER(L, -1, mob_critical_rate);
+	BATTLE_LUA_INTEGER(L, -1, critical_rate);                     BATTLE_LUA_INTEGER(L, -1, attack_walk_delay);
+	BATTLE_LUA_INTEGER(L, -1, pc_damage_walk_delay_rate);         BATTLE_LUA_INTEGER(L, -1, damage_walk_delay_rate);
+	BATTLE_LUA_INTEGER(L, -1, multihit_delay);                    BATTLE_LUA_INTEGER(L, -1, player_damage_delay_rate);
+	BATTLE_LUA_INTEGER(L, -1, undead_detect_type);                BATTLE_LUA_BOOLEAN(L, -1, attribute_recover);
+	BATTLE_LUA_INTEGER(L, -1, min_hitrate);                       BATTLE_LUA_INTEGER(L, -1, max_hitrate);
+	BATTLE_LUA_INTEGER(L, -1, agi_penalty_type);                  BATTLE_LUA_INTEGER(L, -1, agi_penalty_target);
+	BATTLE_LUA_INTEGER(L, -1, agi_penalty_count);                 BATTLE_LUA_INTEGER(L, -1, agi_penalty_num);
+	BATTLE_LUA_INTEGER(L, -1, vit_penalty_type);                  BATTLE_LUA_INTEGER(L, -1, vit_penalty_target);
+	BATTLE_LUA_INTEGER(L, -1, vit_penalty_count);                 BATTLE_LUA_INTEGER(L, -1, vit_penalty_num);
+	BATTLE_LUA_INTEGER(L, -1, weapon_defense_type);               BATTLE_LUA_INTEGER(L, -1, magic_defense_type);
+	BATTLE_LUA_INTEGER(L, -1, attack_direction_change);           BATTLE_LUA_INTEGER(L, -1, attack_attr_none);
+	BATTLE_LUA_INTEGER(L, -1, equip_natural_break_rate);          BATTLE_LUA_INTEGER(L, -1, equip_self_break_rate);
+	BATTLE_LUA_INTEGER(L, -1, equip_skill_break_rate);            BATTLE_LUA_BOOLEAN(L, -1, delay_battle_damage);
+	BATTLE_LUA_INTEGER(L, -1, arrow_decrement);                   BATTLE_LUA_BOOLEAN(L, -1, autospell_check_range);
+	BATTLE_LUA_BOOLEAN(L, -1, knockback_left);                    BATTLE_LUA_BOOLEAN(L, -1, snap_dodge);
 
 	ShowLUA("Leitura de '"CL_WHITE"%d"CL_RESET"' configura%c%ces de batalha '"CL_WHITE"DAMAGE"CL_RESET"' em '"CL_WHITE"%s"CL_RESET"'.\n", value, 135, 228, lua_filename);
 
@@ -6733,7 +6727,7 @@ void battle_configuration(void) {
 
 	lua_getglobal(L, "BATTLEGROUND");
 
-	BATTLE_LUA_INT(L, -1, bg_flee_penalty);                    BATTLE_LUA_INT(L, -2, bg_update_interval);
+	BATTLE_LUA_INTEGER(L, -1, bg_flee_penalty);                   BATTLE_LUA_INTEGER(L, -1, bg_update_interval);
 
 	lua_pop(L, 2);
 
@@ -6743,26 +6737,55 @@ void battle_configuration(void) {
 
 	lua_getglobal(L, "CLIENT");
 
-	BATTLE_LUA_INT(L, -1, packet_obfuscation);                 BATTLE_LUA_INT(L, -2, min_chat_delay);
-	BATTLE_LUA_INT(L, -3, min_hair_style);                     BATTLE_LUA_INT(L, -4, max_hair_style);
-	BATTLE_LUA_INT(L, -5, min_hair_color);                     BATTLE_LUA_INT(L, -6, max_hair_color);
-	BATTLE_LUA_INT(L, -7, min_cloth_color);                    BATTLE_LUA_INT(L, -8, max_cloth_color);
-	BATTLE_LUA_BOOL(L, -9, hide_woe_damage);                   BATTLE_LUA_INT(L, -10, pet_hair_style);
-	BATTLE_LUA_INT(L, -11, area_size);                         BATTLE_LUA_INT(L, -12, max_walk_path);
-	BATTLE_LUA_INT(L, -13, max_lv);                            BATTLE_LUA_INT(L, -14, aura_lv);
-	BATTLE_LUA_INT(L, -15, client_limit_unit_lv);              BATTLE_LUA_BOOL(L, -16, wedding_modifydisplay);
-	BATTLE_LUA_BOOL(L, -17, save_clothcolor);                  BATTLE_LUA_BOOL(L, -18, wedding_ignorepalette);
-	BATTLE_LUA_BOOL(L, -19, xmas_ignorepalette);               BATTLE_LUA_BOOL(L, -20, summer_ignorepalette);
-	BATTLE_LUA_BOOL(L, -21, hanbok_ignorepalette);             BATTLE_LUA_BOOL(L, -22, display_version);
-	BATTLE_LUA_BOOL(L, -23, display_hallucination);            BATTLE_LUA_BOOL(L, -24, display_status_timers);
-	BATTLE_LUA_BOOL(L, -25, client_reshuffle_dice);            BATTLE_LUA_BOOL(L, -26, client_sort_storage);
-	BATTLE_LUA_INT(L, -27, client_accept_chatdori);            BATTLE_LUA_INT(L, -28, client_emblem_max_blank);
-
-	lua_pop(L, 28);
+	BATTLE_LUA_INTEGER(L, -1, packet_obfuscation);                BATTLE_LUA_INTEGER(L, -1, min_chat_delay);
+	BATTLE_LUA_INTEGER(L, -1, min_hair_style);                    BATTLE_LUA_INTEGER(L, -1, max_hair_style);
+	BATTLE_LUA_INTEGER(L, -1, min_hair_color);                    BATTLE_LUA_INTEGER(L, -1, max_hair_color);
+	BATTLE_LUA_INTEGER(L, -1, min_cloth_color);                   BATTLE_LUA_INTEGER(L, -1, max_cloth_color);
+	BATTLE_LUA_BOOLEAN(L, -1, hide_woe_damage);                   BATTLE_LUA_INTEGER(L, -1, pet_hair_style);
+	BATTLE_LUA_INTEGER(L, -1, area_size);                         BATTLE_LUA_INTEGER(L, -1, max_walk_path);
+	BATTLE_LUA_INTEGER(L, -1, max_lv);                            BATTLE_LUA_INTEGER(L, -1, aura_lv);
+	BATTLE_LUA_INTEGER(L, -1, client_limit_unit_lv);              BATTLE_LUA_BOOLEAN(L, -1, wedding_modifydisplay);
+	BATTLE_LUA_BOOLEAN(L, -1, save_clothcolor);                   BATTLE_LUA_BOOLEAN(L, -1, wedding_ignorepalette);
+	BATTLE_LUA_BOOLEAN(L, -1, xmas_ignorepalette);                BATTLE_LUA_BOOLEAN(L, -1, summer_ignorepalette);
+	BATTLE_LUA_BOOLEAN(L, -1, hanbok_ignorepalette);              BATTLE_LUA_BOOLEAN(L, -1, display_version);
+	BATTLE_LUA_BOOLEAN(L, -1, display_hallucination);             BATTLE_LUA_BOOLEAN(L, -1, display_status_timers);
+	BATTLE_LUA_BOOLEAN(L, -1, client_reshuffle_dice);             BATTLE_LUA_BOOLEAN(L, -1, client_sort_storage);
+	BATTLE_LUA_INTEGER(L, -1, client_accept_chatdori);            BATTLE_LUA_INTEGER(L, -1, client_emblem_max_blank);
 
 	ShowLUA("Leitura de '"CL_WHITE"%d"CL_RESET"' configura%c%ces de batalha '"CL_WHITE"CLIENT"CL_RESET"' em '"CL_WHITE"%s"CL_RESET"'.\n", value, 135, 228, lua_filename);
+
+	value = 0;
+
+	lua_getglobal(L, "DROPS");
+
+	BATTLE_LUA_BOOLEAN(L, -1, item_auto_get);                     BATTLE_LUA_INTEGER(L, -1, flooritem_lifetime);
+	BATTLE_LUA_INTEGER(L, -1, item_first_get_time);               BATTLE_LUA_INTEGER(L, -1, item_second_get_time);
+	BATTLE_LUA_INTEGER(L, -1, item_third_get_time);               BATTLE_LUA_INTEGER(L, -1, mvp_item_first_get_time);
+	BATTLE_LUA_INTEGER(L, -1, mvp_item_second_get_time);          BATTLE_LUA_INTEGER(L, -1, mvp_item_third_get_time);
+	BATTLE_LUA_INTEGER(L, -1, item_rate_common);                  BATTLE_LUA_INTEGER(L, -1, item_rate_common_boss);
+	BATTLE_LUA_INTEGER(L, -1, item_drop_common_min);              BATTLE_LUA_INTEGER(L, -1, item_drop_common_max);
+	BATTLE_LUA_INTEGER(L, -1, item_rate_heal);                    BATTLE_LUA_INTEGER(L, -1, item_rate_heal_boss);
+	BATTLE_LUA_INTEGER(L, -1, item_drop_heal_min);                BATTLE_LUA_INTEGER(L, -1, item_drop_heal_max);
+	BATTLE_LUA_INTEGER(L, -1, item_rate_use);                     BATTLE_LUA_INTEGER(L, -1, item_rate_use_boss);
+	BATTLE_LUA_INTEGER(L, -1, item_drop_use_min);                 BATTLE_LUA_INTEGER(L, -1, item_drop_use_max);
+	BATTLE_LUA_INTEGER(L, -1, item_rate_equip);                   BATTLE_LUA_INTEGER(L, -1, item_rate_equip_boss);
+	BATTLE_LUA_INTEGER(L, -1, item_drop_equip_min);               BATTLE_LUA_INTEGER(L, -1, item_drop_equip_max);
+	BATTLE_LUA_INTEGER(L, -1, item_rate_card);                    BATTLE_LUA_INTEGER(L, -1, item_rate_card_boss);
+	BATTLE_LUA_INTEGER(L, -1, item_drop_card_min);                BATTLE_LUA_INTEGER(L, -1, item_drop_card_max);
+	BATTLE_LUA_INTEGER(L, -1, item_rate_mvp);                     BATTLE_LUA_INTEGER(L, -1, item_drop_mvp_min);
+	BATTLE_LUA_INTEGER(L, -1, item_drop_mvp_max);                 BATTLE_LUA_INTEGER(L, -1, item_rate_adddrop);
+	BATTLE_LUA_INTEGER(L, -1, item_drop_add_min);                 BATTLE_LUA_INTEGER(L, -1, item_drop_add_max);
+	BATTLE_LUA_INTEGER(L, -1, item_rate_treasure);                BATTLE_LUA_INTEGER(L, -1, item_drop_treasure_min);
+	BATTLE_LUA_INTEGER(L, -1, item_drop_treasure_max);            BATTLE_LUA_BOOLEAN(L, -1, item_logarithmic_drops);
+	BATTLE_LUA_BOOLEAN(L, -1, drop_rate_item);                    BATTLE_LUA_INTEGER(L, -1, drops_by_luk);
+	BATTLE_LUA_INTEGER(L, -1, drops_by_luk2);                     BATTLE_LUA_INTEGER(L, -1, alchemist_summon_reward);
+	BATTLE_LUA_INTEGER(L, -1, rare_drop_announce);
+
+
+	ShowLUA("Leitura de '"CL_WHITE"%d"CL_RESET"' configura%c%ces de batalha '"CL_WHITE"DROPS"CL_RESET"' em '"CL_WHITE"%s"CL_RESET"'.\n", value, 135, 228, lua_filename);
+
 	lua_close(L);
-	
+
 
 }
 static const struct battle_data {
@@ -6790,15 +6813,6 @@ static const struct battle_data {
 	{ "clear_skills_on_death",              &battle_config.clear_unit_ondeath,              BL_NUL, BL_NUL, BL_ALL,         },
 	{ "clear_skills_on_warp",               &battle_config.clear_unit_onwarp,               BL_ALL, BL_NUL, BL_ALL,         },
 	{ "random_monster_checklv",             &battle_config.random_monster_checklv,          0,      0,      1,              },
-	{ "flooritem_lifetime",                 &battle_config.flooritem_lifetime,              60000,  1000,   INT_MAX,        },
-	{ "item_auto_get",                      &battle_config.item_auto_get,                   0,      0,      1,              },
-	{ "item_first_get_time",                &battle_config.item_first_get_time,             3000,   0,      INT_MAX,        },
-	{ "item_second_get_time",               &battle_config.item_second_get_time,            1000,   0,      INT_MAX,        },
-	{ "item_third_get_time",                &battle_config.item_third_get_time,             1000,   0,      INT_MAX,        },
-	{ "mvp_item_first_get_time",            &battle_config.mvp_item_first_get_time,         10000,  0,      INT_MAX,        },
-	{ "mvp_item_second_get_time",           &battle_config.mvp_item_second_get_time,        10000,  0,      INT_MAX,        },
-	{ "mvp_item_third_get_time",            &battle_config.mvp_item_third_get_time,         2000,   0,      INT_MAX,        },
-	{ "drop_rate0item",                     &battle_config.drop_rate0item,                  0,      0,      1,              },
 	{ "base_exp_rate",                      &battle_config.base_exp_rate,                   100,    0,      INT_MAX,        },
 	{ "job_exp_rate",                       &battle_config.job_exp_rate,                    100,    0,      INT_MAX,        },
 	{ "pvp_exp",                            &battle_config.pvp_exp,                         1,      0,      1,              },
@@ -6937,40 +6951,7 @@ static const struct battle_data {
 	{ "check_occupied_cells",               &battle_config.check_occupied_cells,            1,      0,      1,              },
 
 // eAthena additions
-	{ "item_logarithmic_drops",             &battle_config.logarithmic_drops,               0,      0,      1,              },
-	{ "item_drop_common_min",               &battle_config.item_drop_common_min,            1,      1,      10000,          },
-	{ "item_drop_common_max",               &battle_config.item_drop_common_max,            10000,  1,      10000,          },
-	{ "item_drop_equip_min",                &battle_config.item_drop_equip_min,             1,      1,      10000,          },
-	{ "item_drop_equip_max",                &battle_config.item_drop_equip_max,             10000,  1,      10000,          },
-	{ "item_drop_card_min",                 &battle_config.item_drop_card_min,              1,      1,      10000,          },
-	{ "item_drop_card_max",                 &battle_config.item_drop_card_max,              10000,  1,      10000,          },
-	{ "item_drop_mvp_min",                  &battle_config.item_drop_mvp_min,               1,      1,      10000,          },
-	{ "item_drop_mvp_max",                  &battle_config.item_drop_mvp_max,               10000,  1,      10000,          },
-	{ "item_drop_heal_min",                 &battle_config.item_drop_heal_min,              1,      1,      10000,          },
-	{ "item_drop_heal_max",                 &battle_config.item_drop_heal_max,              10000,  1,      10000,          },
-	{ "item_drop_use_min",                  &battle_config.item_drop_use_min,               1,      1,      10000,          },
-	{ "item_drop_use_max",                  &battle_config.item_drop_use_max,               10000,  1,      10000,          },
-	{ "item_drop_add_min",                  &battle_config.item_drop_adddrop_min,           1,      1,      10000,          },
-	{ "item_drop_add_max",                  &battle_config.item_drop_adddrop_max,           10000,  1,      10000,          },
-	{ "item_drop_treasure_min",             &battle_config.item_drop_treasure_min,          1,      1,      10000,          },
-	{ "item_drop_treasure_max",             &battle_config.item_drop_treasure_max,          10000,  1,      10000,          },
-	{ "item_rate_mvp",                      &battle_config.item_rate_mvp,                   100,    0,      1000000,        },
-	{ "item_rate_common",                   &battle_config.item_rate_common,                100,    0,      1000000,        },
-	{ "item_rate_common_boss",              &battle_config.item_rate_common_boss,           100,    0,      1000000,        },
-	{ "item_rate_equip",                    &battle_config.item_rate_equip,                 100,    0,      1000000,        },
-	{ "item_rate_equip_boss",               &battle_config.item_rate_equip_boss,            100,    0,      1000000,        },
-	{ "item_rate_card",                     &battle_config.item_rate_card,                  100,    0,      1000000,        },
-	{ "item_rate_card_boss",                &battle_config.item_rate_card_boss,             100,    0,      1000000,        },
-	{ "item_rate_heal",                     &battle_config.item_rate_heal,                  100,    0,      1000000,        },
-	{ "item_rate_heal_boss",                &battle_config.item_rate_heal_boss,             100,    0,      1000000,        },
-	{ "item_rate_use",                      &battle_config.item_rate_use,                   100,    0,      1000000,        },
-	{ "item_rate_use_boss",                 &battle_config.item_rate_use_boss,              100,    0,      1000000,        },
-	{ "item_rate_adddrop",                  &battle_config.item_rate_adddrop,               100,    0,      1000000,        },
-	{ "item_rate_treasure",                 &battle_config.item_rate_treasure,              100,    0,      1000000,        },
 	{ "prevent_logout",                     &battle_config.prevent_logout,                  10000,  0,      60000,          },
-	{ "alchemist_summon_reward",            &battle_config.alchemist_summon_reward,         1,      0,      2,              },
-	{ "drops_by_luk",                       &battle_config.drops_by_luk,                    0,      0,      INT_MAX,        },
-	{ "drops_by_luk2",                      &battle_config.drops_by_luk2,                   0,      0,      INT_MAX,        },
 	{ "pk_mode",                            &battle_config.pk_mode,                         0,      0,      2,              },
 	{ "pk_level_range",                     &battle_config.pk_level_range,                  0,      0,      INT_MAX,        },
 	{ "manner_system",                      &battle_config.manner_system,                   0xFFF,  0,      0xFFF,          },
@@ -7010,7 +6991,6 @@ static const struct battle_data {
 	{ "mob_npc_event_type",                 &battle_config.mob_npc_event_type,              1,      0,      1,              },
 	{ "character_size",                     &battle_config.character_size,                  1|2,    0,      1|2,            },
 	{ "retaliate_to_master",                &battle_config.retaliate_to_master,             1,      0,      1,              },
-	{ "rare_drop_announce",                 &battle_config.rare_drop_announce,              0,      0,      10000,          },
 	{ "duel_allow_pvp",                     &battle_config.duel_allow_pvp,                  0,      0,      1,              },
 	{ "duel_allow_gvg",                     &battle_config.duel_allow_gvg,                  0,      0,      1,              },
 	{ "duel_allow_teleport",                &battle_config.duel_allow_teleport,             0,      0,      1,              },
