@@ -32,15 +32,10 @@
 -- NOTA: Requer o cliente 2011-03-09aRagexeRE ou mais recente
 --------------------------------------------------------------------------------
 SECOND_PASSWD = {
-
 	USE_SECONDPW = true;            -- Habilita o uso de password secundário(Código PIN).
-
 	SECOND_PASSWD_MAXTRY = 3;       -- Quantas vezes o usuário pode digitar a senha errada ?
-
 	SECOND_PASSWD_CHANGETIME = 0;   -- Tempo em que o usuário tem que mudar seu código PIN. Exemplo: 1 = 1 minuto
-
 	SECOND_PASSWD_LOGIN = false;    -- Solicitar código PIN cada vez que selecionar o personagem?
-
 };
 
 --------------------------------------------------------------------------------
