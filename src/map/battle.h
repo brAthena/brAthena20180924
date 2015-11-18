@@ -32,7 +32,6 @@ struct status_data;
 /**
  * Macros para configuração de batalha LUA
 **/
-
 /* Macro para configurações de batalha inteiros */
 #define BATTLE_LUA_INTEGER(state, idx, k) do { \
 	lua_getfield(state, idx, #k); \
@@ -200,8 +199,8 @@ struct Battle_Config {
 	int monster_max_aspd;
 	int view_range_rate;
 	int chase_range_rate;
-	int atc_spawn_quantity_limit;
-	int atc_slave_clone_limit;
+	int spawn_quantity_limit;
+	int slave_clone_limit;
 	int partial_name_scan;
 	int skillfree;
 	int skillup_limit;
@@ -225,10 +224,10 @@ struct Battle_Config {
 	int quest_skill_learn;
 	int quest_skill_reset;
 	int basic_skill_check;
-	int guild_emperium_check;
-	int guild_exp_limit;
-	int guild_max_castles;
-	int guild_skill_relog_delay;
+	int emperium_check;
+	int exp_limit;
+	int max_castles;
+	int skill_relog_delay;
 	int emergency_call;
 	int guild_aura;
 	int pc_invincible_time;
@@ -486,8 +485,8 @@ struct Battle_Config {
 	int knockback_left;
 	int client_reshuffle_dice;  // Reshuffle /dice
 	int client_sort_storage;
-	int feature_buying_store;
-	int feature_search_stores;
+	int buying_store;
+	int search_stores;
 	int searchstore_querydelay;
 	int searchstore_maxresults;
 	int display_party_name;
@@ -506,15 +505,15 @@ struct Battle_Config {
 	int max_third_parameter;
 	int max_baby_third_parameter;
 	int max_extended_parameter;
-	int atcommand_max_stat_bypass;
+	int max_stat_bypass;
 	int max_third_aspd;
 	int vcast_stat_scale;
 
 	int mvp_tomb_enabled;
 
-	int atcommand_suggestions_enabled;
+	int atcommand_suggestions;
 	int min_npc_vendchat_distance;
-	int atcommand_mobinfo_type;
+	int mobinfo_type;
 
 	int mob_size_influence; // Enable modifications on earned experience, drop rates and monster status depending on monster size. [mkbu95]
 	int bowling_bash_area;
@@ -534,22 +533,22 @@ struct Battle_Config {
 
 	int client_accept_chatdori; // [Ai4rei/Mirei]
 	int snovice_call_type;
-	int guild_notice_changemap;
+	int notice_changemap;
 
-	int feature_banking;
-	int feature_auction;
+	int banking;
+	int auction;
 
 	int mon_trans_disable_in_gvg;
 
 	int case_sensitive_aegisnames;
-	int guild_castle_invite;
-	int guild_castle_expulsion;
+	int castle_invite;
+	int castle_expulsion;
 
 	int song_timer_reset; // [csnv]
 	int snap_dodge; // Enable or disable dodging damage snapping away [csnv]
 	int stormgust_knockback;
 
-	int feature_roulette;
+	int roulette;
 
 	int show_monster_hp_bar; // [Frost]
 };

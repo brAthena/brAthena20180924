@@ -353,7 +353,7 @@ int guild_create(struct map_session_data *sd, const char *name)
 		clif->guild_created(sd,1); // You're already in a guild
 		return 0;
 	}
-	if (battle_config.guild_emperium_check && pc->search_inventory(sd, ITEMID_EMPERIUM) == INDEX_NOT_FOUND) {
+	if (battle_config.emperium_check && pc->search_inventory(sd, ITEMID_EMPERIUM) == INDEX_NOT_FOUND) {
 		clif->guild_created(sd,3); // You need the necessary item to create a guild
 		return 0;
 	}
@@ -377,7 +377,7 @@ int guild_created(int account_id,int guild_id) {
 	//struct guild *g;
 	sd->status.guild_id=guild_id;
 	clif->guild_created(sd,0); // Success
-	if(battle_config.guild_emperium_check){
+	if(battle_config.emperium_check){
 		if(idx != INDEX_NOT_FOUND )
 			logs->consume(sd,&sd->status.inventory[idx],1,"Guild Create");
 		pc->delitem(sd, idx, 1, 0, DELITEM_NORMAL); //emperium consumption
@@ -526,7 +526,7 @@ int guild_recv_info(struct guild *sg) {
 		if ((sd = map->nick2sd(sg->master)) != NULL) {
 			//If the guild master is online the first time the guild_info is received,
 			//that means he was the first to join, so apply guild skill blocking here.
-			if( battle_config.guild_skill_relog_delay )
+			if( battle_config.skill_relog_delay )
 				guild->block_skill(sd, 300000);
 
 			//Also set the guild master flag.
@@ -638,7 +638,7 @@ int guild_invite(struct map_session_data *sd, struct map_session_data *tsd) {
 	 || tsd->guild_invite > 0
 	 || ( (map->agit_flag || map->agit2_flag)
 		   && map->list[tsd->bl.m].flag.gvg_castle
-		   && !battle_config.guild_castle_invite
+		   && !battle_config.castle_invite
 		   )
 	) {
 		//Can't invite people inside castles. [Skotlex]
@@ -733,7 +733,7 @@ void guild_member_joined(struct map_session_data *sd)
 		// set the Guild Master flag
 		sd->state.gmaster_flag = 1;
 		// prevent Guild Skills from being used directly after relog
-		if( battle_config.guild_skill_relog_delay )
+		if( battle_config.skill_relog_delay )
 			guild->block_skill(sd, 300000);
 	}
 	i = guild->getindex(g, sd->status.account_id, sd->status.char_id);
@@ -817,7 +817,7 @@ int guild_leave(struct map_session_data* sd, int guild_id, int account_id, int c
 	 // Can't leave inside castles
 	 || ((map->agit_flag || map->agit2_flag)
 			&& map->list[sd->bl.m].flag.gvg_castle
-			&& !battle_config.guild_castle_expulsion)
+			&& !battle_config.castle_expulsion)
 		)
 		return 0;
 
@@ -851,7 +851,7 @@ int guild_expulsion(struct map_session_data* sd, int guild_id, int account_id, i
 	 && tsd->status.char_id == char_id
 	 && ((map->agit_flag || map->agit2_flag)
 			&& map->list[sd->bl.m].flag.gvg_castle
-			&& !battle_config.guild_castle_expulsion)
+			&& !battle_config.castle_expulsion)
 			)
 		return 0;
 
@@ -1096,7 +1096,7 @@ int guild_change_position(int guild_id,int idx,int mode,int exp_mode,const char 
 {
 	struct guild_position p;
 
-	exp_mode = cap_value(exp_mode, 0, battle_config.guild_exp_limit);
+	exp_mode = cap_value(exp_mode, 0, battle_config.exp_limit);
 	p.mode=mode&GPERM_BOTH; // Invite and Expel
 	p.exp_mode=exp_mode;
 	safestrncpy(p.name,name,NAME_LENGTH);

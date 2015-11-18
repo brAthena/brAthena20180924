@@ -1460,7 +1460,7 @@ void clif_hominfo(struct map_session_data *sd, struct homun_data *hd, int flag) 
 #endif
 	WBUFW(buf,37)=cap_value(hstatus->matk_max, 0, INT16_MAX);
 	WBUFW(buf,39)=hstatus->hit;
-	if (battle_config.hom_setting&0x10)
+	if (battle_config.hom_setting&16)
 		WBUFW(buf,41)=hstatus->luk/3 + 1; //crit is a +1 decimal value! Just display purpose.[Vicious]
 	else
 		WBUFW(buf,41)=hstatus->cri/10;
@@ -9181,9 +9181,9 @@ void clif_parse_LoadEndAck(int fd, struct map_session_data *sd) {
 		clif->hominfo(sd,sd->hd,1);
 		clif->hominfo(sd,sd->hd,0); //for some reason, at least older clients want this sent twice
 		clif->homskillinfoblock(sd);
-		if( battle_config.hom_setting&0x8 )
+		if( battle_config.hom_setting&8 )
 			status_calc_bl(&sd->hd->bl, SCB_SPEED); //Homunc mimic their master's speed on each map change
-		if( !(battle_config.hom_setting&0x2) )
+		if( !(battle_config.hom_setting&2) )
 			skill->unit_move(&sd->hd->bl,timer->gettick(),1); // apply land skills immediately
 	}
 
@@ -9274,7 +9274,7 @@ void clif_parse_LoadEndAck(int fd, struct map_session_data *sd) {
 		} else {
 			sd->state.warp_clean = 1;
 		}
-		if( sd->guild && ( battle_config.guild_notice_changemap == 2 || ( battle_config.guild_notice_changemap == 1 && sd->state.changemap ) ) )
+		if( sd->guild && ( battle_config.notice_changemap == 2 || ( battle_config.notice_changemap == 1 && sd->state.changemap ) ) )
 			clif->guild_notice(sd,sd->guild);
 	}
 
@@ -14843,7 +14843,7 @@ void clif_Auction_openwindow(struct map_session_data *sd)
 	if (sd->state.storage_flag != STORAGE_FLAG_CLOSED || sd->state.vending || sd->state.buyingstore || sd->state.trading)
 		return;
 
-	if( !battle_config.feature_auction )
+	if( !battle_config.auction )
 		return;
 
 	WFIFOHEAD(fd,packet_len(0x25f));
@@ -14934,7 +14934,7 @@ void clif_parse_Auction_setitem(int fd, struct map_session_data *sd)
 	int amount = RFIFOL(fd,4); // Always 1
 	struct item_data *item;
 
-	if( !battle_config.feature_auction )
+	if( !battle_config.auction )
 		return;
 
 	if( sd->auction.amount > 0 )
@@ -15012,7 +15012,7 @@ void clif_parse_Auction_register(int fd, struct map_session_data *sd)
 	struct auction_data auction;
 	struct item_data *item;
 
-	if (!battle_config.feature_auction)
+	if (!battle_config.auction)
 		return;
 
 	Assert_retv(sd->auction.index >= 0 && sd->auction.index < MAX_INVENTORY);
@@ -15160,7 +15160,7 @@ void clif_parse_Auction_search(int fd, struct map_session_data* sd)
 	short type = RFIFOW(fd,2), page = RFIFOW(fd,32);
 	int price = RFIFOL(fd,4);  // FIXME: bug #5071
 
-	if( !battle_config.feature_auction )
+	if( !battle_config.auction )
 		return;
 
 	clif->pAuction_cancelreg(fd, sd);
@@ -15179,7 +15179,7 @@ void clif_parse_Auction_buysell(int fd, struct map_session_data* sd)
 {
 	short type = RFIFOW(fd,2) + 6;
 
-	if( !battle_config.feature_auction )
+	if( !battle_config.auction )
 		return;
 
 	clif->pAuction_cancelreg(fd, sd);
@@ -17798,7 +17798,7 @@ void clif_parse_BankDeposit(int fd, struct map_session_data* sd) {
 	struct packet_banking_deposit_req *p = P2PTR(fd);
 	int money;
 
-	if (!battle_config.feature_banking) {
+	if (!battle_config.banking) {
 		clif->messagecolor_self(fd, COLOR_RED, msg_fd(fd,1483));
 		return;
 	}
@@ -17813,7 +17813,7 @@ void clif_parse_BankWithdraw(int fd, struct map_session_data* sd) {
 	struct packet_banking_withdraw_req *p = P2PTR(fd);
 	int money;
 
-	if (!battle_config.feature_banking) {
+	if (!battle_config.banking) {
 		clif->messagecolor_self(fd, COLOR_RED, msg_fd(fd,1483));
 		return;
 	}
@@ -17827,7 +17827,7 @@ void clif_parse_BankCheck(int fd, struct map_session_data* sd) __attribute__((no
 void clif_parse_BankCheck(int fd, struct map_session_data* sd) {
 	struct packet_banking_check p;
 
-	if (!battle_config.feature_banking) {
+	if (!battle_config.banking) {
 		clif->messagecolor_self(fd, COLOR_RED, msg_fd(fd,1483));
 		return;
 	}
@@ -18110,7 +18110,7 @@ void clif_parse_RouletteOpen(int fd, struct map_session_data* sd) __attribute__(
 void clif_parse_RouletteOpen(int fd, struct map_session_data* sd) {
 	struct packet_roulette_open_ack p;
 
-	if( !battle_config.feature_roulette ) {
+	if( !battle_config.roulette ) {
 		clif->message(fd,"Roulette is disabled");
 		return;
 	}
@@ -18133,7 +18133,7 @@ void clif_parse_RouletteInfo(int fd, struct map_session_data* sd) {
 	struct packet_roulette_info_ack p;
 	unsigned short i, j, count = 0;
 
-	if( !battle_config.feature_roulette ) {
+	if( !battle_config.roulette ) {
 		clif->message(fd,"Roulette is disabled");
 		return;
 	}
@@ -18157,7 +18157,7 @@ void clif_parse_RouletteInfo(int fd, struct map_session_data* sd) {
 
 void clif_parse_RouletteClose(int fd, struct map_session_data* sd) __attribute__((nonnull (2)));
 void clif_parse_RouletteClose(int fd, struct map_session_data* sd) {
-	if( !battle_config.feature_roulette ) {
+	if( !battle_config.roulette ) {
 		clif->message(fd,"Roulette is disabled");
 		return;
 	}
@@ -18173,7 +18173,7 @@ void clif_parse_RouletteGenerate(int fd, struct map_session_data* sd) {
 	unsigned char result = GENERATE_ROULETTE_SUCCESS;
 	short stage = sd->roulette.stage;
 
-	if( !battle_config.feature_roulette ) {
+	if( !battle_config.roulette ) {
 		clif->message(fd,"Roulette is disabled");
 		return;
 	}
@@ -18229,7 +18229,7 @@ void clif_parse_RouletteRecvItem(int fd, struct map_session_data* sd) __attribut
 void clif_parse_RouletteRecvItem(int fd, struct map_session_data* sd) {
 	struct packet_roulette_itemrecv_ack p;
 
-	if( !battle_config.feature_roulette ) {
+	if( !battle_config.roulette ) {
 		clif->message(fd,"Roulette is disabled");
 		return;
 	}

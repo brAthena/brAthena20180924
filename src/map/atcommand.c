@@ -1967,8 +1967,8 @@ ACMD(monster)
 		strcpy(name,mob->db(mob_id)->name);
 
 	// If value of atcommand_spawn_quantity_limit directive is greater than or equal to 1 and quantity of monsters is greater than value of the directive
-	if (battle_config.atc_spawn_quantity_limit && number > battle_config.atc_spawn_quantity_limit)
-		number = battle_config.atc_spawn_quantity_limit;
+	if (battle_config.spawn_quantity_limit && number > battle_config.spawn_quantity_limit)
+		number = battle_config.spawn_quantity_limit;
 
 	if (strcmpi(info->command, "monstersmall") == 0)
 		size = SZ_MEDIUM;
@@ -2419,7 +2419,7 @@ ACMD(param) {
 	stats[4] = &sd->status.dex;
 	stats[5] = &sd->status.luk;
 
-	if( battle_config.atcommand_max_stat_bypass )
+	if( battle_config.max_stat_bypass )
 		max = SHRT_MAX;
 	else
 		max = pc_maxparameter(sd);
@@ -2468,7 +2468,7 @@ ACMD(stat_all) {
 		value = pc_maxparameter(sd);
 		max = pc_maxparameter(sd);
 	} else {
-		if( battle_config.atcommand_max_stat_bypass )
+		if( battle_config.max_stat_bypass )
 			max = SHRT_MAX;
 		else
 			max = pc_maxparameter(sd);
@@ -3233,10 +3233,10 @@ ACMD(guild)
 		return false;
 	}
 
-	prev = battle_config.guild_emperium_check;
-	battle_config.guild_emperium_check = 0;
+	prev = battle_config.emperium_check;
+	battle_config.emperium_check = 0;
 	guild->create(sd, guild_name);
-	battle_config.guild_emperium_check = prev;
+	battle_config.emperium_check = prev;
 
 	return true;
 }
@@ -6585,7 +6585,7 @@ ACMD(mobinfo)
 		base_exp = monster->base_exp;
 
 #ifdef RENEWAL_EXP
-		if( battle_config.atcommand_mobinfo_type ) {
+		if( battle_config.mobinfo_type ) {
 			base_exp = base_exp * pc->level_penalty_mod(monster->lv - sd->status.base_level, monster->status.race, monster->status.mode, 1) / 100;
 			job_exp = job_exp * pc->level_penalty_mod(monster->lv - sd->status.base_level, monster->status.race, monster->status.mode, 1) / 100;
 		}
@@ -6632,7 +6632,7 @@ ACMD(mobinfo)
 			droprate = monster->dropitem[i].p;
 
 #ifdef RENEWAL_DROP
-			if( battle_config.atcommand_mobinfo_type ) {
+			if( battle_config.mobinfo_type ) {
 				droprate = droprate * pc->level_penalty_mod(monster->lv - sd->status.base_level, monster->status.race, monster->status.mode, 2) / 100;
 
 				if (droprate <= 0 && !battle_config.drop_rate_item)
@@ -7132,7 +7132,7 @@ ACMD(iteminfo)
 
 		if (item_data->maxchance == -1)
 			safestrncpy(atcmd_output, msg_fd(fd,1281), sizeof(atcmd_output)); //  - Available in the shops only.
-		else if ( !battle_config.atcommand_mobinfo_type ) {
+		else if ( !battle_config.mobinfo_type ) {
 			if( item_data->maxchance )
 				safesnprintf(atcmd_output, sizeof(atcmd_output), msg_fd(fd,1282), (float)item_data->maxchance / 100 ); //  - Maximal monsters drop chance: %02.02f%%
 			else
@@ -7863,8 +7863,8 @@ ACMD(clone) {
 		    return false;
 		}
 		master = sd->bl.id;
-		if (battle_config.atc_slave_clone_limit
-			&& mob->countslave(&sd->bl) >= battle_config.atc_slave_clone_limit) {
+		if (battle_config.slave_clone_limit
+			&& mob->countslave(&sd->bl) >= battle_config.slave_clone_limit) {
 			clif->message(fd, msg_fd(fd,127)); // You've reached your slave clones limit.
 			return false;
 		}
@@ -7939,7 +7939,7 @@ ACMD(feelreset)
  *------------------------------------------*/
 ACMD(auction)
 {
-	if (!battle_config.feature_auction) {
+	if (!battle_config.auction) {
 		clif->messagecolor_self(sd->fd, COLOR_RED, msg_fd(fd,1484));
 		return false;
 	}
@@ -9713,7 +9713,7 @@ void atcommand_get_suggestions(struct map_session_data* sd, const char *name, bo
 	int prefix_count = 0, full_count = 0;
 	bool can_use;
 
-	if (!battle_config.atcommand_suggestions_enabled)
+	if (!battle_config.atcommand_suggestions)
 		return;
 
 	atcommand_iter = db_iterator(atcommand->db);

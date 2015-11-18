@@ -163,7 +163,7 @@ int homunculus_vaporize(struct map_session_data *sd, enum homun_state flag) {
 	//Delete timers when vaporized.
 	homun->hunger_timer_delete(hd);
 	hd->homunculus.vaporize = flag;
-	if(battle_config.hom_setting&0x40)
+	if(battle_config.hom_setting&64)
 		memset(hd->blockskill, 0, sizeof(hd->blockskill));
 	clif->hominfo(sd, sd->hd, 0);
 	homun->save(hd);
@@ -427,7 +427,7 @@ bool homunculus_evolve(struct homun_data *hd) {
 	hom->sp = hd->battle_status.sp;
 	status_calc_homunculus(hd,SCO_FIRST);
 
-	if (!(battle_config.hom_setting&0x2))
+	if (!(battle_config.hom_setting&2))
 		skill->unit_move(&sd->hd->bl,timer->gettick(),1); // apply land skills immediately
 
 	return true;
@@ -473,7 +473,7 @@ bool homunculus_mutate(struct homun_data *hd, int homun_id) {
 	hom->prev_class = prev_class;
 	status_calc_homunculus(hd,SCO_FIRST);
 
-	if (!(battle_config.hom_setting&0x2))
+	if (!(battle_config.hom_setting&2))
 		skill->unit_move(&sd->hd->bl,timer->gettick(),1); // apply land skills immediately
 
 	return true;

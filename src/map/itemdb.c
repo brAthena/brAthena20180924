@@ -2272,7 +2272,7 @@ void do_init_itemdb(bool minimal) {
 
 	/** it failed? we disable it **/
 	if( !clif->parse_roulette_db() )
-		battle_config.feature_roulette = 0;
+		battle_config.roulette = 0;
 }
 void itemdb_defaults(void) {
 	itemdb = &itemdb_s;

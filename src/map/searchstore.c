@@ -64,7 +64,7 @@ static inline unsigned int searchstore_getstoreid(struct map_session_data* sd, u
 
 
 bool searchstore_open(struct map_session_data* sd, unsigned int uses, unsigned short effect) {
-	if( !battle_config.feature_search_stores || sd->searchstore.open ) {
+	if( !battle_config.search_stores || sd->searchstore.open ) {
 		return false;
 	}
 
@@ -91,7 +91,7 @@ void searchstore_query(struct map_session_data* sd, unsigned char type, unsigned
 	searchstore_searchall_t store_searchall;
 	time_t querytime;
 
-	if( !battle_config.feature_search_stores ) {
+	if( !battle_config.search_stores ) {
 		return;
 	}
 
@@ -202,7 +202,7 @@ bool searchstore_querynext(struct map_session_data* sd) {
 
 
 void searchstore_next(struct map_session_data* sd) {
-	if( !battle_config.feature_search_stores || !sd->searchstore.open || sd->searchstore.count <= sd->searchstore.pages*SEARCHSTORE_RESULTS_PER_PAGE )
+	if( !battle_config.search_stores || !sd->searchstore.open || sd->searchstore.count <= sd->searchstore.pages*SEARCHSTORE_RESULTS_PER_PAGE )
 	{// nothing (more) to display
 		return;
 	}
@@ -243,7 +243,7 @@ void searchstore_click(struct map_session_data* sd, int account_id, int store_id
 	struct map_session_data* pl_sd;
 	searchstore_search_t store_search;
 
-	if( !battle_config.feature_search_stores || !sd->searchstore.open || !sd->searchstore.count ) {
+	if( !battle_config.search_stores || !sd->searchstore.open || !sd->searchstore.count ) {
 		return;
 	}
 
