@@ -204,8 +204,8 @@ struct Battle_Config {
 	int partial_name_scan;
 	int skillfree;
 	int skillup_limit;
-	int wp_rate;
-	int pp_rate;
+	int weapon_produce_rate;
+	int potion_produce_rate;
 	int monster_active_enable;
 	int monster_damage_delay_rate;
 	int monster_loot_type;
@@ -523,8 +523,8 @@ struct Battle_Config {
 
 	/** **/
 	int skill_trap_type;
-	int item_restricted_consumption_type;
-	int unequip_restricted_equipment;
+	int item_restricted_consume;
+	int unequip_restricted;
 	int max_walk_path;
 	int item_enabled_npc;
 	int packet_obfuscation;

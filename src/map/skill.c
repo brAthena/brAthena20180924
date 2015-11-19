@@ -17050,8 +17050,8 @@ int skill_produce_mix(struct map_session_data *sd, uint16 skill_id, int nameid, 
 					default:
 						break;
 				}
-				if(battle_config.pp_rate != 100)
-					make_per = make_per * battle_config.pp_rate / 100;
+				if (battle_config.potion_produce_rate != 100)
+					make_per = make_per * battle_config.potion_produce_rate / 100;
 				break;
 			case SA_CREATECON: // Elemental Converter Creation
 				make_per = 100000; // should be 100% success rate
@@ -17233,8 +17233,8 @@ int skill_produce_mix(struct map_session_data *sd, uint16 skill_id, int nameid, 
 			make_per+= 300; // +3
 		else if(pc->search_inventory(sd,ITEMID_ANVIL) != INDEX_NOT_FOUND)
 			make_per+= 0; // +0?
-		if(battle_config.wp_rate != 100)
-			make_per = make_per * battle_config.wp_rate / 100;
+		if (battle_config.weapon_produce_rate != 100)
+			make_per = make_per * battle_config.weapon_produce_rate / 100;
 	}
 
 	if (sd->class_&JOBL_BABY) //if it's a Baby Class
@@ -17263,26 +17263,26 @@ int skill_produce_mix(struct map_session_data *sd, uint16 skill_id, int nameid, 
 				case BS_MACE:
 				case BS_KNUCKLE:
 				case BS_SPEAR:
-					flag = battle_config.produce_item_name_input&0x1;
+					flag = battle_config.produce_item_name_input&1;
 					break;
 				case AM_PHARMACY:
 				case AM_TWILIGHT1:
 				case AM_TWILIGHT2:
 				case AM_TWILIGHT3:
-					flag = battle_config.produce_item_name_input&0x2;
+					flag = battle_config.produce_item_name_input&2;
 					break;
 				case AL_HOLYWATER:
 				/**
 				 * Arch Bishop
 				 **/
 				case AB_ANCILLA:
-					flag = battle_config.produce_item_name_input&0x8;
+					flag = battle_config.produce_item_name_input&8;
 					break;
 				case ASC_CDP:
-					flag = battle_config.produce_item_name_input&0x10;
+					flag = battle_config.produce_item_name_input&16;
 					break;
 				default:
-					flag = battle_config.produce_item_name_input&0x80;
+					flag = battle_config.produce_item_name_input&128;
 					break;
 			}
 			if (flag) {
@@ -17501,7 +17501,7 @@ int skill_arrow_create (struct map_session_data *sd, int nameid)
 		tmp_item.identify = 1;
 		tmp_item.nameid = skill->dbs->arrow_db[index].cre_id[i];
 		tmp_item.amount = skill->dbs->arrow_db[index].cre_amount[i];
-		if(battle_config.produce_item_name_input&0x4) {
+		if(battle_config.produce_item_name_input&4) {
 			tmp_item.card[0]=CARD0_CREATE;
 			tmp_item.card[1]=0;
 			tmp_item.card[2]=GetWord(sd->status.char_id,0); // CharId

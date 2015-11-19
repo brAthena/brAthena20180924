@@ -1091,14 +1091,14 @@ int pc_isequip(struct map_session_data *sd,int n)
 		return 0;
 	}
 
-	if ( battle_config.unequip_restricted_equipment & 1 ) {
+	if ( battle_config.unequip_restricted & 1 ) {
 		int i;
 		for ( i = 0; i < map->list[sd->bl.m].zone->disabled_items_count; i++ )
 			if ( map->list[sd->bl.m].zone->disabled_items[i] == sd->status.inventory[n].nameid )
 				return 0;
 	}
 
-	if ( battle_config.unequip_restricted_equipment & 2 ) {
+	if ( battle_config.unequip_restricted & 2 ) {
 		if ( !itemdb_isspecial( sd->status.inventory[n].card[0] ) ) {
 			int i, slot;
 			for ( slot = 0; slot < MAX_SLOTS; slot++ )
@@ -5090,7 +5090,7 @@ int pc_useitem(struct map_session_data *sd,int n) {
 	for(i = 0; i < map->list[sd->bl.m].zone->disabled_items_count; i++) {
 		if( map->list[sd->bl.m].zone->disabled_items[i] == nameid ) {
 			clif->msgtable(sd, MSG_ITEM_CANT_USE_AREA); // This item cannot be used within this area
-			if( battle_config.item_restricted_consumption_type && sd->status.inventory[n].expire_time == 0 ) {
+			if( battle_config.item_restricted_consume && sd->status.inventory[n].expire_time == 0 ) {
 				clif->useitemack(sd,n,sd->status.inventory[n].amount-1,true);
 				logs->consume(sd,&sd->status.inventory[n],1,"Consume");				
 				pc->delitem(sd,n,1,1,DELITEM_NORMAL);
@@ -9937,7 +9937,7 @@ int pc_unequipitem(struct map_session_data *sd,int n,int flag)
 	//OnUnEquip script [Skotlex]
 	if (sd->inventory_data[n]) {
 		if (sd->inventory_data[n]->unequip_script) {
-			if ( battle_config.unequip_restricted_equipment & 1 ) {
+			if ( battle_config.unequip_restricted & 1 ) {
 				ARR_FIND(0, map->list[sd->bl.m].zone->disabled_items_count, i,  map->list[sd->bl.m].zone->disabled_items[i] == sd->status.inventory[n].nameid);
 				if ( i == map->list[sd->bl.m].zone->disabled_items_count )
 					script->run_item_unequip_script(sd, sd->inventory_data[n], npc->fake_nd->bl.id);
@@ -9955,7 +9955,7 @@ int pc_unequipitem(struct map_session_data *sd,int n,int flag)
 
 				if ( ( data = itemdb->exists(sd->status.inventory[n].card[i]) ) != NULL ) {
 					if ( data->unequip_script ) {
-						if ( battle_config.unequip_restricted_equipment & 2 ) {
+						if ( battle_config.unequip_restricted & 2 ) {
 							int j;
 							ARR_FIND(0, map->list[sd->bl.m].zone->disabled_items_count, j,  map->list[sd->bl.m].zone->disabled_items[j] == sd->status.inventory[n].card[i]);
 							if ( j == map->list[sd->bl.m].zone->disabled_items_count )
@@ -10076,7 +10076,7 @@ int pc_checkitem(struct map_session_data *sd)
 			continue;
 		}
 
-		if (battle_config.unequip_restricted_equipment&1) {
+		if (battle_config.unequip_restricted&1) {
 			int j;
 			for (j = 0; j < map->list[sd->bl.m].zone->disabled_items_count; j++) {
 				if (map->list[sd->bl.m].zone->disabled_items[j] == sd->status.inventory[i].nameid) {
@@ -10086,7 +10086,7 @@ int pc_checkitem(struct map_session_data *sd)
 			}
 		}
 
-		if (battle_config.unequip_restricted_equipment&2) {
+		if (battle_config.unequip_restricted&2) {
 			if (!itemdb_isspecial(sd->status.inventory[i].card[0])) {
 				int j, slot;
 				for (slot = 0; slot < MAX_SLOTS; slot++) {

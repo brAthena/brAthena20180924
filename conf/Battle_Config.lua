@@ -1,37 +1,47 @@
---    _________________________________________________________________________________________________________
---   /                                                                                                         \
---   |                               _           _   _   _                                                     |
---   |                              | |__  _ __ / \ | |_| |__   ___ _ __   __ _                                |
---   |                              | '_ \| '__/ _ \| __| '_ \ / _ \ '_ \ / _` |                               |
---   |                              | |_) | | / ___ \ |_| | | |  __/ | | | (_| |                               |
---   |                              |_.__/|_|/_/   \_\__|_| |_|\___|_| |_|\__,_|                               |
---   |                                                                                                         |
---   |                                             brAthena Script                                             |
---   |---------------------------------------------------------------------------------------------------------|
---   | Nome da configuração: Battle_Config.lua                                                                 |
---   |---------------------------------------------------------------------------------------------------------|
---   | Criado por: Megasantos                                                                                  |
---   |---------------------------------------------------------------------------------------------------------|
---   | Descrição: Configurações de Batalha.                                                                    |
---   |---------------------------------------------------------------------------------------------------------|
---   | Changelog:                                                                                              |
---   | 1.0 Adição das Configurações de dano [Megasantos]                                                       |
---   | 1.1 Adição das Configurações de battleground e client [Megasantos]                                      |
---   | 1.2 Adição das Configurações de drop [Megasantos]                                                       |
---   | 1.3 Adição das Configurações de experiência, feature, mestre do jogo, clã e homunculus [Megasantos]     |
---   |---------------------------------------------------------------------------------------------------------|
---   | - Anotações                                                                                             |
---   | Nota 1: Valor optativo (true/false).  Nota 2: Valor em porcentagem (100 para 100%)                      |
---   | Nota 3: Valor em unidade (1: Jogador, 2: Monstro, 4: Bicho de Estimação, 8: Homunculus, 16: Mercenários.|
---   | Nota 4: Valor em Milissegundos (1 segundo são 1000 milissegundos)                                       |
---   | Nota 5: 1: Não pode ser controlado por habilidade de suporte (exceto pelo dono).                        |
---   |         4: Monstros sempre irão atrás deles ao invés de atacados pelos jogadores.                       |
---   |         8: Copiam a velocidade do mestre a cada mudança de mapa.                                        |
---   |         16: Exibem na janela de status, sorte/3+1 em vez do seu crítico real.                           |
---   |         32: Seu ATQM mínimo é sempre o mesmo que seu máximo.                                            |
---   |         64: Atraso no uso de habilidades é resetado quando vaporizado (morto).                          |
---   | Lembre-se que "NOTAS" dão recomendações importantes.                                                    |
---   \_________________________________________________________________________________________________________/
+--    ________________________________________________________________________________________________________________________
+--   /                                                                                                                        \
+--   |                                       _           _   _   _                                                            |
+--   |                                      | |__  _ __ / \ | |_| |__   ___ _ __   __ _                                       |
+--   |                                      | '_ \| '__/ _ \| __| '_ \ / _ \ '_ \ / _` |                                      |
+--   |                                      | |_) | | / ___ \ |_| | | |  __/ | | | (_| |                                      |
+--   |                                      |_.__/|_|/_/   \_\__|_| |_|\___|_| |_|\__,_|                                      |
+--   |                                                                                                                        |
+--   |                                                    brAthena Script                                                     |
+--   |------------------------------------------------------------------------------------------------------------------------|
+--   | Nome da configuração: Battle_Config.lua                                                                                |
+--   |------------------------------------------------------------------------------------------------------------------------|
+--   | Criado por: Megasantos                                                                                                 |
+--   |------------------------------------------------------------------------------------------------------------------------|
+--   | Descrição: Configurações de Batalha.                                                                                   |
+--   |------------------------------------------------------------------------------------------------------------------------|
+--   | Changelog:                                                                                                             |
+--   | 1.0 Adição das Configurações de dano [Megasantos]                                                                      |
+--   | 1.1 Adição das Configurações de battleground e client [Megasantos]                                                     |
+--   | 1.2 Adição das Configurações de drop [Megasantos]                                                                      |
+--   | 1.3 Adição das Configurações de experiência, feature, mestre do jogo, clã e homunculus [Megasantos]                    |
+--   | 1.4 Adição das Configurações de itens e misc [Megasantos]                                                              |
+--   |------------------------------------------------------------------------------------------------------------------------|
+--   | - Anotações                                                                                                            |
+--   | Nota 1: Valor optativo (true/false).  Nota 2: Valor em porcentagem (100 para 100%)                                     |
+--   |                                                                                                                        |
+--   | Nota 3: Valor em unidade (1: Jogador, 2: Monstro, 4: Bicho de Estimação, 8: Homunculus, 16: Mercenários.               |
+--   |                                                                                                                        |
+--   | Nota 4: Valor em Milissegundos (1 segundo são 1000 milissegundos)                                                      |
+--   |                                                                                                                        |
+--   | Nota 5: 1: Não pode ser controlado por habilidade de suporte (exceto pelo dono).                                       |
+--   |         4: Monstros sempre irão atrás deles ao invés de atacados pelos jogadores.                                      |
+--   |         8: Copiam a velocidade do mestre a cada mudança de mapa.                                                       |
+--   |         16: Exibem na janela de status, sorte/3+1 em vez do seu crítico real.                                          |
+--   |         32: Seu ATQM mínimo é sempre o mesmo que seu máximo.                                                           |
+--   |         64: Atraso no uso de habilidades é resetado quando vaporizado (morto).                                         |
+--   |                                                                                                                        |
+--   | Nota 6: 0: equipamentos desativados e cartas são anuladas(official)                                                    |
+--   |         1: equipamentos desativados são desequipados, cartas desativadas são anuladas                                  |
+--   |         2: equipamentos desativados são anulados, cartas desativadas se equipadas em equipamentos são desequipados     |                                                                                                |
+--   |         3: equipamentos desativados são desequipados, cartas desativadas se equipadas em equipamentos são desequipados |                                                                                            |
+--   |------------------------------------------------------------------------------------------------------------------------|
+--   | Lembre-se que "NOTAS" dão recomendações importantes.                                                                   |
+--   \________________________________________________________________________________________________________________________/
 
 DAMAGE = {
 	["enable_baseatk"] = 9;               -- Configuração para habilitar o ataque físico (ataque base), a força (str) ajuda a aumentar o dano (damage). (Nota 3)
@@ -152,7 +162,7 @@ DROPS = {
 	["rare_drop_announce"] = 0;           -- Configuração para anunciar que o jogador dropou carta (chance 0.01%). Isso também anuncia a itens que foram recolhidos pela habilidade "Furto" quando roubar itens raros. 0 = Não mostra nenhum anúncio, 1 = Mostra anúncios para itens com 0,01% de chance. 333 = Mostra anúncios para itens com 3,33% de chance ou menos. 10000 = Mostra anúncios para todos os itens.
 };
 
-EXPERIENCE ={
+EXPERIENCE = {
 	["base_exp_rate"] = 100;              -- Configuração da taxa em que a EXP de base é concedida. (Nota 2)
 	["job_exp_rate"] = 100;               -- Configuração da taxa em que a EXP de job é concedida. (Nota 2)
 	["multi_level_up"] = false;           -- Configuração para que o jogador possa passar mais de um nível de uma vez. (Nota 1)
@@ -195,7 +205,7 @@ GAME_MASTER = {
 
 };
 
-GUILD ={
+GUILD = {
 	["emperium_check"] = true;            -- Configuração para determinar a necessidade de consumo do item emperium ao criar uma guilda. (Nota 1)
 	["exp_limit"] = 50;                   -- Configuração da porcentagem máxima retirada da exp recebida para ser doada à guilda.
 	["max_castles"] = 0;                  -- Configuração do nº máximo de castelos que uma guilda pode possuir. 0 = ilimitado.
@@ -209,7 +219,7 @@ GUILD ={
 	["castle_expulsion"] = false;         -- Membros podem ser expulsos do clã em WoE/GvG? (Nota 1)
 };
 
-HOMUNCULUS ={
+HOMUNCULUS = {
 	["hom_setting"] = 29;                 -- Configuração dos Homunculus. (Nota 5)
 	["homunculus_friendly_rate"] = 100;   -- Configuração da taxa de intimidade obtida através da alimentação. (Nota 2)
 	["hom_rename"] = false;               -- Configuração para renomear um homunculus mais de uma vez. (Nota 1)
@@ -219,4 +229,58 @@ HOMUNCULUS ={
 	["homunculus_auto_vapor"] = true;     -- Configurações para saber se um homunculus vaporiza-se (morre) junto com o dono.
 	["hom_max_level"] = 99;               -- Nível máximo para Homunculus.
 	["hom_S_max_level"] = 150;            -- Nível máximo para Homunculus S.
+};
+
+ITEM = {
+	["vending_max_value"] = 1000000000;   -- Configuração da quantidade de zenys máximos que um mercador pode cobrar usando a habilidade comércio.
+	["vending_over_max"] = true;          -- Configuração que permite a compra mesmo se o jogador exceder o limite máximo de zenys. Marcado como "true" o restante dos zenys acima da capacidade do personagem serão apagados.
+	["vending_tax"] = 200;                -- Configuração de imposto aplicado à todas transações de vendas (exemplo: 10000 = 100%, 50 = 0.50%). Quando o imposto é aplicado, o preço máximo do item é cobrado ao comprador, mas o vendedor não terá o preço total pago.
+	["buyer_name"] = true;                -- Configuração para mostrar o nome do comprador quando o item é vendido.
+	["weapon_produce_rate"] = 100;        -- Configuração da chance de forjar um item com sucesso. (Nota 2)
+	["potion_produce_rate"] = 100;        -- Configuração da chance de criar uma poção com sucesso. (Nota 2)
+	["produce_item_name_input"] = 3;      -- Configuração para que os itens tenham o nome de seu criador neles. 1 = Armas, 2 = Poções, 4 = Flechas, 8 = Água Benta, 16 = Garrafas de Veneno, 128 = Outros.
+	["dead_branch_active"] = true;        -- Configuração para que os monstros invocados por galho seco tornem-se agressivos.
+	["random_monster_checklv"] = false;   -- Configuração para que os monstros invocados tenham um nível de base maior do que o personagem.
+	["ignore_items_gender"] = true;       -- Configuração para que os jogadores possam usar todos os itens sem restrições de gênero. Anéis de Casamentos Chicotes/Instrumentos Musicais serão checados independentemente.
+	["item_check"] = false;               -- Configuração que remove item do inventário se ele não é carregado no item_db.
+	["item_use_interval"] = 100;          -- Configuração de quanto tempo é necessário para que o jogador use outro item. Nos servidores oficiais é usado 0, mas é configurado para 100ms por medidas de segurança contra bots/macros.
+	["cashfood_use_interval"] = 60000;    -- Configuração de quanto tempo é necessário para o uso de "cash food". 60000 = 1 min
+	["gtb_sc_immunity"] = 50;             -- Configuração do nível necessário de bNoMagicDamage para que os status sejam bloqueados. Se você deixar em 50 um item pode dar bNoMagicDamage,40; e reduzirá o dano mágico em 40%, mas não bloqueará as mudanças de status.
+	["autospell_stacking"] = false;       -- Configuração para permitir que cartas com as mesmas funções tenham resultados unidos.
+	["item_restricted_consume"] = true;   -- Configuração para que itens consumíveis sejam consumidos ao tentar usá-los ?
+	["item_enabled_npc"] = true;          -- Habilitar todos os NPC's para permitir a mudança de equipamentos ao interagir ?
+	["unequip_restricted"] = 0;           -- Desequipar equipamentos que estão desativados em map_zone_db.conf? (Nota 6)
+};
+
+MISC = {
+	["pk_mode"] = 0;                      -- Configuração que habilita o modo PK. Se o modo PK (Player Kill) estiver ativado, o servidor inteiro será considerado PVP (exceto cidades), e jogadores poderão atacar uns aos outros. Quando jogadores matam monstros com 20 níveis mais elevado que o seu, eles receberão exp adicional de 15% e 25% de chance de receber mais itens. Se pk_mode é definido como 2 em vez de 1, os jogadores receberão um penalidade de manner de 5 cada vez que matarem outro jogador.
+	["manner_system"] = 31;               -- Configuração do sistema de Manner/Karma. As especificações da punição punição podem ser: 0: Nenhuma, 1: Não pode falar (Inclui PMs, msgs de clã/grupo, etc), 2: Desabilita o uso de habilidades, 4: Desabilita o uso de comandos, 8: Desabilita usar/pegar/dropar itens, 16: Desabilita criar chats e shops, 15: Oficial.
+	["pk_min_level"] = 55;                -- Configuração que define o nível mínimo para que um jogador possa participar de um PK.
+	["pk_level_range"] = 0;               -- Configuração que define a Diferença máxima de nível de base entre dois jogadores para que eles possam atacar uns aos outros.
+	["skill_log"] = false;                -- Configuração que define se deve mostrar log de habilidades no console.
+	["battle_log"] = false;               -- Configuração que define se deve mostrar battle log.
+	["etc_log"] = false;                  -- Configuração que define se deve mostrar outras coisas.
+	["warp_point_debug"] = false;         -- Configuração que define se deve mostrar o log de pontos de teleporte. Se for definido como 'true', os pontos aparecerão como bandeiras.
+	["night_at_start"] = false;           -- Configuração que define se o servidor iniciará com dia ou noite. true = dia. false = noite.
+	["day_duration"] = 0;                 -- Configuração que define a duração do dia em milissegundos (1800000 = 30 min). 0 = Desabilitado
+	["night_duration"] = 0;               -- Configuração que define a duração da noite em milissegundos (1800000 = 30 min). 0 = Desabilitado
+	["duel_allow_pvp"] = false;           -- Configuração que define se deve permitir duelos em mapas PVP.
+	["duel_allow_gvg"] = false;           -- Configuração que define se deve permitir duelos em mapas GVG.
+	["duel_allow_teleport"] = false;      -- Configuração que define se deve permitir warp durante um duelo.
+	["duel_autoleave_when_die"] = true;   -- Configuração que define se o jogador deve deixar o duelo automaticamente após a morte.
+	["duel_time_interval"] = 60;          -- Configuração que define o intervalo para o uso do comando @duel em minutos.
+	["duel_only_on_same_map"] = false;    -- Configuração que define o uso de duelos restrito em mapas.
+	["official_cell_stack_limit"] = 1;    -- Configurações que define o número máximo de personagems que podem ficar na mesma célula. Para que essas configurações funcionem também será necessário setá-las em src/map/map.h.
+	["custom_cell_stack_limit"] = 1;
+	["check_occupied_cells"] = true;      -- Permitir ocupar células já ocupadas por outros objetos?
+	["autotrade_mapflag"] = false;        -- Configuração que define se deve permitir, ou não, @autotrade apenas em mapas com a mapflag autotrade?
+	["at_timeout"] = 0;                   -- Configuração que define o número (em minutos) limite para que jogadores com autotrade permaneçam no servidor. Jogadores após usar autotrade serão expulsos do servidor em X minutos. 0 = Desabilitado.
+	["auction_feeperhour"] = 12000;       -- Configuração que define o preço por hora do Leilão. Padrão: 12,000z por hora.
+	["auction_maximumprice"] = 500000000; -- Configuração que define o preço máximo para um item do Leilão.
+	["searchstore_querydelay"] = 10;      -- Configuração prazo mínimo entre cada consulta de pesquisa de loja em segundos.
+	["searchstore_maxresults"] = 30;      -- Configuração quantidade máxima de resultados de uma consulta de pesquisa de loja, antes que seja cancelado.
+	["cashshop_show_points"] = false;     -- Configuração que mostra quantidade ganha ou perdida de cash.
+	["mail_show_status"] = 0;             -- Configuração que mostra se o sistema de e-mails é exibido ao logar na conta. 0 = Não, 1 = Sim, 2 = Sim, quando há e-mails não lidos.
+	["mon_trans_disable_in_gvg"] = false; -- Configuração que define se as transformações são removidas durante a Guerra do Emperium.
+	["case_sensitive_aegisnames"] = true; -- Configuração que define se pesquisas de AegisName e SpriteName são case sensitive (maiúsculas e minúsculas) // Quando isso é definido como sim pesquisas de item e monstro através de atcommands e comandos de script irá corresponder AegisNames e SpriteNames apenas quando o caso corresponda.
 };
