@@ -77,6 +77,43 @@ LOGIN_CONNECTION = {
 
 -- CONFIGURAÇÕES DE CONEXÃO COM O SERVIDOR DE CHAR (entrada para personagens)
 CHAR_CONNECTION = {	
+	["userid"] = ["s1"];								-- Configuração de usuário 
+	["passwd"] = ["p1"];								-- Configuração de senha
+	["server_name"] = ["brAthena"];						-- Nome do Servidor
+	["wisp_server_name"] = ["Server"];					-- Nome do Servidor em mensagens do servidor
+	--//login_ip: 127.0.0.1								-- Endereço de IP do serviço de login
+	--["bind_ip"] = 127.0.0.1; 							-- Apontar para endereço de IP especifico
+	["login_port"] = 6900;								-- Porta em que o serviço do login será iniciado
+	--//char_ip: 127.0.0.1								-- Endereço de IP do serviço de char
+	["char_port"] = 6121;								-- Porta em que o serviço de char será iniciado
+	--["timestamp_format"] = [%d/%b %H:%M]; 			-- Formato de horário que aparecerá nas mensagens do servidor
+	["stdout_with_ansisequence"] = false; 				-- Mensagens com sequência de escape em formato ANSI, aconselhado manter desabilitado
+	["console_silent"] = 0; 							-- Desabilita mensagens do console. 1 = Msg de Informação, 2 = Status, 4 = Notícias, 8 = Alertas, 16 =  Erros, 32 = Console
+	["char_server_type"] = 0;							-- Modo em que o serviço de char será executado. 0 = Normal, 1 = Manutenção, 2 = Maior de 18, 3 = Servidor Pago, 4= Servidor Gratuito
+	["char_maintenance_min_group_id"] = 99;				-- ID de grupo mínimo para se entrar no servidor char quando char_server_type tem valor 1
+	["char_new"] = 1;									-- Possibilita a criação de novos personagens ou não
+	["char_new_display"] = 0;							-- Mostrar "novidades" na lista do servidor.
+	["max_connect_user"] -1;							-- Configuração do máximo de usuários que o servidor suporta.
+	["gm_allow_group"] = -1;							-- ID do grupo que tem permissão para ignorar o limite de usuários do servidor.
+	["autosave_time"] = 60;								-- Em quanto tempo o servidor salvará todos os arquivos? Aplicado somente a guildas
+	["save_log"] = true;								-- Sempre salvar logs
+	["start_point"] = ["iz_int,97,90"];					-- Coordenadas onde o personagem nascerá no jogo para renovação
+	["start_point_pre"] = ["new_1-1,53,111"];			-- Coordenadas onde o personagem nascerá no jogo para pre-renovação
+	["start_items"] = 1201,1,0,2301,1,0;				-- Itens em que o personagem começará no jogo
+	["start_zeny"] = 0;									-- Dinheiro (zenys), que o personagem começará no jogo
+	["fame_list_alchemist"] = 10;						-- Número máximo de jogadores na lista da fama
+	["fame_list_blacksmith"] = 10;						-- Número máximo de jogadores na lista da fama
+	["fame_list_taekwon"] = 10;							-- Número máximo de jogadores na lista da fama
+	["guild_exp_rate"] = 100;							-- Experiência da guilda doada pelo personagem
+	["unknown_char_name"] = ["Desconhecido"];			-- Nome usado para personagens desconhecidos (com nomes inválidos)
+	["log_char"] = 1;									-- Gerar um log do serviço de personagens
+	["name_ignoring_case"] = false;						-- Permite nomes com letras diferentes, case-sensitive
+	["char_name_option"] = 1;							-- Configuração de opções para nomes de personagem. 0 = Sem Restrição (básico), 1 = Somente letras/símbolos na opção 'char_name_letters', 2 = Letras/Símbolos na opção 'char_name_letters' são ignoradas.
+	["char_name_letters"] = ["abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"]; -- Letras e símbolos permitidos
+	["char_del_level"] = 0;								-- Restrição para deletar personagem por nível de base
+	["char_del_delay"] = 86400;							-- Tempo de espera entre um deletar de personagem
+	["char_aegis_delete"] = 0;							-- Não permite que o personagem seja deletado se estiver em um clã ou grupo. Padrão 0 = Desabilitado
+	["db_path"] = ["db"];								-- Pasta onde encontram-se os arquivos de database (item_db.txt,mob_db.txt etc.)
 };
 -- CONFIGURAÇÕES DE CONEXÃO COM O SERVIDOR DE MAP (entrada ao mapa)
 MAP_CONNECTION = {	
