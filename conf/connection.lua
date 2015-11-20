@@ -118,3 +118,22 @@ CHAR_CONNECTION = {
 -- CONFIGURAÇÕES DE CONEXÃO COM O SERVIDOR DE MAP (entrada ao mapa)
 MAP_CONNECTION = {	
 };
+
+-- CONFIGURAÇÕES DE REDE TCP/IP
+NETWORK = {
+	["lan_subnets"] = "127.0.0.1:255.0.0.0";--"192.168.1.1:255.255.255.0";	-- Configure aqui qualquer subrede LAN em que o servidor se encontra
+	["allowed"] = "0.0.0.0:0.0.0.0";--,"127.0.0.1:255.0.0.0";	 			-- Configure aqui qualquer intervalo de IPs que estejam autorizados a entrar no servidor
+	["trusted"] = "127.0.0.1:255.0.0.0";									-- Configure aqui qualquer intervalo de IPs que estejam autorizados a entrar no servidor. Essa configuração desabilita IPBan.
+};
+
+-- CONFIGURAÇÕES DE PACOTES E SEUS TRATAMENTOS
+PACKETS = {
+	["debug"] = false;								-- Mostra relatórios de depuração
+	["stall_time"] = 60;							-- Tempo que um soquete fica aberto antes de fechar a conexão
+	["socket_max_client_packet"] = 24576;			-- Máximo de pacotes por cliente
+	["enable_ip_rules"] true;						-- Habilita regras de IP
+	["order"] = ["deny,allow"];						-- Denny = Proibição, Allow = Permissão
+	["ddos_interval"] = 3000;						-- Intervalo para tentativas de conexão consecutivas (Proteção a ataque DoS)
+	["ddos_count"] = 5;								-- Tentativas consecutivas
+	["ddos_autoreset"] = 600000;					-- Tempo para anular possível ameaça (10 minutos)
+};
