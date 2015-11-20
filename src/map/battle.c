@@ -6693,7 +6693,7 @@ bool battle_check_range(struct block_list *src, struct block_list *bl, int range
 void battle_configuration(void) {
 	lua_State *L = luaL_newstate();
 	luaL_openlibs(L);
-	char *lua_filename = "conf/Battle_Config.lua";
+	char *lua_filename = "conf/battle.lua";
 	int value = 0;
 
 	if (luaL_dofile(L, lua_filename)) {

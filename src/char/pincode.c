@@ -174,7 +174,7 @@ void SecondpwConfig(void) {
 
 	lua_State *L = luaL_newstate();
 	luaL_openlibs(L);
-	char *lua_filename = "conf/SecondpwConfig.lua";
+	char *lua_filename = "conf/secondpw_config.lua";
 
 	if (luaL_dofile(L, lua_filename)) {
 		ShowError("Erro ao ler o arquivo %s\n", lua_filename);
