@@ -960,10 +960,10 @@ int party_share_loot(struct party_data* p, struct map_session_data* sd, struct i
 {
 	TBL_PC* target = NULL;
 	int i;
-	if (p && p->party.item&2 && (first_charid || !(battle_config.party_share_type&1)))
+	if (p && p->party.item&2 && (first_charid || !(battle_config.party_item_share_type&1)))
 	{
 		//item distribution to party members.
-		if (battle_config.party_share_type&2) {
+		if (battle_config.party_item_share_type&2) {
 			//Round Robin
 			TBL_PC* psd;
 			i = p->itemc;

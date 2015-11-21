@@ -217,7 +217,7 @@ struct Battle_Config {
 	int mob_spawn_delay, plant_spawn_delay, boss_spawn_delay; // [Skotlex]
 	int slaves_inherit_mode;
 	int slaves_inherit_speed;
-	int summons_trigger_autospells;
+	int summons_autospells;
 	int pc_damage_walk_delay_rate; //Adjusts can't walk delay after being hit for players. [Skotlex]
 	int damage_walk_delay_rate; //Adjusts can't walk delay after being hit. [Skotlex]
 	int multihit_delay;  //Adjusts can't walk delay per hit on multi-hitting skills. [Skotlex]
@@ -249,7 +249,7 @@ struct Battle_Config {
 	int pet_max_stats; //[Skotlex]
 	int pet_max_atk1; //[Skotlex]
 	int pet_max_atk2; //[Skotlex]
-	int pet_no_gvg; //Disables pets in gvg. [Skotlex]
+	int pet_disable_in_gvg; //Disables pets in gvg. [Skotlex]
 	int pet_equip_required;
 
 	int skill_min_damage;
@@ -307,7 +307,7 @@ struct Battle_Config {
 	int mob_changetarget_byskill;
 	int attack_direction_change;
 	int land_skill_limit;
-	int monster_class_change_recover;
+	int monster_change_recover;
 	int produce_item_name_input;
 	int display_skill_fail;
 	int chat_warpportal;
@@ -317,7 +317,7 @@ struct Battle_Config {
 	int vending_over_max;
 	int vending_tax;
 	int show_steal_in_same_party;
-	int party_share_type;
+	int party_item_share_type;
 	int party_hp_mode;
 	int party_show_share_picker;
 	int show_picker_item_type;
@@ -415,7 +415,7 @@ struct Battle_Config {
 
 	int copyskill_restrict; // [Aru]
 	int berserk_cancels_buffs; // [Aru]
-	int mob_ai; //Configures various mob_ai settings to make them smarter or dumber(official). [Skotlex]
+	int monster_ai; //Configures various mob_ai settings to make them smarter or dumber(official). [Skotlex]
 	int hom_setting; //Configures various homunc settings which make them behave unlike normal characters.. [Skotlex]
 	int dynamic_mobs; // Dynamic Mobs [Wizputer] - battle.conf flag implemented by [random]
 	int mob_remove_damaged; // Dynamic Mobs - Remove mobs even if damaged [Wizputer]

@@ -20,6 +20,7 @@
 --   | 1.2 Adição das Configurações de drop [Megasantos]                                                                      |
 --   | 1.3 Adição das Configurações de experiência, feature, mestre do jogo, clã e homunculus [Megasantos]                    |
 --   | 1.4 Adição das Configurações de itens e misc [Megasantos]                                                              |
+--   | 1.5 Adição das Configurações de monstro, grupo e bichinho de estimação [Megasantos]                                    |
 --   |------------------------------------------------------------------------------------------------------------------------|
 --   | - Anotações                                                                                                            |
 --   | Nota 1: Valor optativo (true/false).  Nota 2: Valor em porcentagem (100 para 100%)                                     |
@@ -37,8 +38,20 @@
 --   |                                                                                                                        |
 --   | Nota 6: 0: equipamentos desativados e cartas são anuladas(official)                                                    |
 --   |         1: equipamentos desativados são desequipados, cartas desativadas são anuladas                                  |
---   |         2: equipamentos desativados são anulados, cartas desativadas se equipadas em equipamentos são desequipados     |                                                                                                |
---   |         3: equipamentos desativados são desequipados, cartas desativadas se equipadas em equipamentos são desequipados |                                                                                            |
+--   |         2: equipamentos desativados são anulados, cartas desativadas se equipadas em equipamentos são desequipados     |
+--   |         3: equipamentos desativados são desequipados, cartas desativadas se equipadas em equipamentos são desequipados |
+--   |                                                                                                                        |
+--   | Nota 7: 1: Quando ativado os monstros irão atualizar o local alvo repetidamente.                                       |
+--   |         2: Fazem os monstros usarem a habilidade ataque rude caso sejam atacados e não consiguirem revidar             |
+--   |         4: Se não definido monstros podem mudar de alvo caso sejam atacados corpo a corpo. Provocar se torna inútil    |
+--   |         8: Monstros que estiverem seguindo seu alvo e perder o mesmo a perseguição vai ser interrompida                |
+--   |         16: Quando definido, as habilidades dos monstros definidas para amigos também irão afetar neles mesmos         |
+--   |         32: Quando definido, o ai de um monstro é executado para todos os monstros em mapas que possuem jogadores      |
+--   |         64: Quando definido, o alvo de um monstros que mudar de mapa, o monstro irá andar até um portal. Use (mob_warp)|
+--   |         256: Quando definido, o monstro vai escolher uma habilidade aleatória de sua lista e vai começar por ela       |
+--   |         512: Quando definido, o atraso no uso da habilidade de um monstro não será aplicada para todas as entradas     |
+--   |         1024: Quando definido os monstros tem alcance de 9 para todas as habilidades. Caso contrario seu range é normal|
+--   |                                                                                                                        |
 --   |------------------------------------------------------------------------------------------------------------------------|
 --   | Lembre-se que "NOTAS" dão recomendações importantes.                                                                   |
 --   \________________________________________________________________________________________________________________________/
@@ -283,4 +296,84 @@ MISC = {
 	["mail_show_status"] = 0;             -- Configuração que mostra se o sistema de e-mails é exibido ao logar na conta. 0 = Não, 1 = Sim, 2 = Sim, quando há e-mails não lidos.
 	["mon_trans_disable_in_gvg"] = false; -- Configuração que define se as transformações são removidas durante a Guerra do Emperium.
 	["case_sensitive_aegisnames"] = true; -- Configuração que define se pesquisas de AegisName e SpriteName são case sensitive (maiúsculas e minúsculas) // Quando isso é definido como sim pesquisas de item e monstro através de atcommands e comandos de script irá corresponder AegisNames e SpriteNames apenas quando o caso corresponda.
+};
+
+MONSTER = {
+	["mvp_hp_rate"] = 100;                -- Configuração que define a taxa de HP dos MVPs. (Nota 2)
+	["monster_hp_rate"] = 100;            -- Configuração que define a taxa de HP dos monstros normais, ou seja, monstros que não são MVPs. (Nota 2)
+	["monster_max_aspd"] = 199;           -- Configuração que define o nível de velocidade de ataque máximo de um monstro.
+	["monster_ai"] = 0;                   -- Configuração para definir as várias configurações dos monstros relacionadas ao AI. (nota 7)
+	["mob_chase_refresh"] = 3;            -- Quando um monstro deve verificar sua perseguição? 0 = A cada 100ms (MIN_MOBTHINKTIME), 1 = A cada célula movida, 2 = A cada duas células movidas, 3 = A cada 3 células movidas (oficial), x = A cada x células movidas. Independentemente dessa configuração, um monstro irá sempre verificar se sua perseguição chegou a seu destino. Aumente esse valor se você quer fazer os monstros continuarem se movendo depois que eles perderam seu alvo.
+	["mob_warp"] = 0;                     -- Configuração que define se os monstros poderão ser teleportados. 0 = Desativado, 1 = Ativar 'monster-teleport' quando estiverem em um portal, 2 = Ativar 'monster-teleport' quando estiverem em teleportes originados pelos Sacerdotes, 4 = Desativar teleporte quando o mapa alvo conter o mapflag 'nobranch'.
+	["mob_active_time"] = 0;              -- Caso isso for setado com um valor acima de 0, será definido o tempo (em ms) que os monstros terão seu 'AI' ativo depois de todos os jogadores terem se afastado de seu espaço de visão.
+	["boss_active_time"] = 0;
+	["view_range_rate"] = 100;            -- Configuração que define o ajuste da visão de alcance de Monstro e Bichos de Estimação. Esta é a coluna range2 no mob_db.
+	["chase_range_rate"] = 100;           -- Configuração que define a taxa de perseguição que o mob concede antes de desistir da perseguição. (quanto mais longe o jogador está do seu campo de visão). Esta é a coluna range3 no mob_db.
+	["monster_active_enable"] = true;     -- Configuração que define se deve permitir que monstros sejam agressivos e ataquem primeiro? (Nota 1)
+	["override_mob_names"] = 0;           -- Configuração que define se os nomes listados no mob_db devem sobrescrever os nomes especificados nos arquivos de envocação (spawn) de mob. 0 = Não, 1 = Sempre usar o nome da coluna do mob_db (nome em inglês do monstro), 2 = Sempre usar o nome da coluna do mob_db (nome  do monstro original do kRO)
+	["monster_damage_delay_rate"] = 100;  -- Configuração que define a taxa de atraso no dano de um monstro.
+	["monster_loot_type"] = 0;            -- Configuração que define as ações de coletas de itens feita pelos monstros. 0 = O monstro consumirá o item, 1 = O monstro não consumirá o item.
+	["mob_skill_rate"] = 100;             -- Configuração que define a chance de um monstro carregar uma habilidade. Se definida como 0 as habilidades dos monstros são desabilitadas.
+	["mob_skill_delay"] = 100;            -- Configuração que define o ajuste no atraso da habilidade de um monstro. Depois que um monstro carregar uma habilidade, há um atraso para que seja possível usá-la novamente.
+	["mob_count_rate"] = 100;             -- Configuração que define a taxa de monstros em um mapa, 200 seria o dobro do spawn normal.
+	["mob_spawn_delay"] = 100;            -- Configurações que define a taxa de renascimento dos monstros em um mapa. 50 tornaria o renascimento muito mais rápido (metade do tempo de atraso). Essa opção não afeta monstro que possuem renascimento imediato (maioria dos monstros normais).
+	["plant_spawn_delay"] = 100;
+	["boss_spawn_delay"] = 100;
+	["no_spawn_on_player"] = 0;           -- Configuração que define se os monstros não serão invocados no campo de visão dos jogadores. 0 = desativado, x = números de tentativas antes de desistir 
+	["force_random_spawn"] = false;       -- Configuração que define as coordenadas de nascimento nos arquivos devem ser ignoradas ?
+	["slaves_inherit_mode"] = 2;          -- Configuração que define se os escravos devem herdar traços passivos/agressivos de seu mestre. 0 = Não, manter modo original, 1 = Escravo sempre agressivo, 2 = Escravo sempre passivo, 3 = Mesmo estado agressivo/passivo de seu dono.
+	["slaves_inherit_speed"] = 3;         -- Configuração que define se os escravos devem ter a mesma velocidade que seu mestre. 0 = Nunca, 1 = Se o mestre pode andar, 2 = Se o mestre não pode andar (mesmo sem se mexer Mobs têm uma velocidade em seu mob_db), 3 = Sempre.
+	["summons_autospells"] = true;        -- Configuração que define se os ataques de monstros invocados (escravos) (alquimistas, ou monstros gerados pelo @summon) terão chance de despertar o efeito de cartas de seu dono.
+	["retaliate_to_master"] = true;       -- Configuração que define quando um monstro é atacado por outro, se o monstro vai atacar o dono do mesmo ao invés do próprio monstro.
+	["mob_changetarget_byskill"] = false; -- Configuração que define se monstros devem trocar de alvo temporariamente quando uma habilidade ativa uma habilidade de contra-ataque.
+	["monster_change_recover"] = true;    -- Configuração que define se a classe de um monstro mudar, se o mesmo recuperará completamente o HP.
+	["show_mob_info"] = 0;                -- Configuração que define se poderá mostrar algumas informações do monstros próximo ao seu nome. 0 = Desabilitado, 1: Mostrar o HP do monstro (Formato: Hp/MaxHp), 2 = Mostrar o HP do monstro (Formato: Percentual do total de vida), 4 = Mostrar o nível do monstro.
+	["zeny_from_mobs"] = false;           -- Configuração que define se deve ganhar Zeny ao matar monstros?
+	["mobs_level_up"] = false;            -- Configuração que define os níveis dos Monstros (monstro vai evoluir de nível a cada vez que matar um jogador e ficarão cada vez mais fortes).
+	["mobs_level_up_exp_rate"] = 1;       -- Taxa de experiência é calculada dessa maneira: ((nível do monstro-nível original do monstro)*(exp*(mobs_level_up_exp rate/100)))
+	["dynamic_mobs"] = true;              -- Configuração que define se deve usar monstros dinâmicos?
+	["mob_remove_damaged"] = true;        -- Configuração que define se deve remover monstro mesmo que tenham sofrido dano.
+	["mob_remove_delay"] = 300000;        -- Configuração que define o atraso antes de remover monstro de mapas vazios. (padrão 5 min = 300 segs)
+	["mob_npc_event_type"] = 1;           -- Configuração que define em quem o mob npc_event é executado quando um monstro é morto. 0 = Sobre o jogador que fez a maior parte dos danos para no mob, 1 = Ligado quando o jogador matou o mob (se for morto por um não-jogador, recorre ao tipo 0). Isso afeta quem ganha o Castelo, quando o Emperium está quebrado.
+	["ksprotection"] = 0;                 -- Configuração que define o tempo para ativar a proteção contra "roubo da morte" (kill steal) de um monstro. (nota 4) 0 = Desativado
+	["mob_slave_keep_target"] = true;     -- Configuração quando monstros invocados por MVPs, devem manter seu alvo quando são invocados para perto de seu mestre ?
+	["mvp_tomb_enabled"] = true;          -- Configuração que define se será criado um Túmulo quando o jogador matar um MvP (MvPs citados em npc/monstros/... e utilizando o comando boss_monster).
+	["show_monster_hp_bar"] = true;       -- Configuração para mostrar a barra de hp dos monstros? Só funciona em cliente 2012-04-04aRagexeRE em diante
+	["mob_size_influence"] = false;       -- Configuração que define se o tamanho dos monstros especialmente invocados influência na experiência ganha, taxas de drop, status de monstro. Se o monstro é grande, ele vai dar duas vezes a experiência, aumentar as taxas de drop por duas vezes e dobrar todos os status (hp, str, agi etc). Mas se o monstro é pequeno tudo será dividido por dois (experiência, status e taxas de drop). Só tem efeito sob o comando de 'monstro', @monsterbig e @monstersmall.
+	["mob_icewall_walk_block"] = 220;     -- Como um monstro deveria ser preso por uma Barreira de Gelo invocada diretamente nele? Em servidores oficiais, monstros só podem deixar uma Barreira de Gelo no oeste e Sul. Se seu alvo é o norte ou leste. Eles vão tentar continuamente a persegui-lo, mas não conseguem. 0 = monstro não vai ser preso na Barreira de Gelo, 1 = monstro irá se comportar como um monstro preso, 2-255 = Número de loops de um monstro irá percorrer o comportamento descrito acima, antes de ele se libertar da Barreira de Gelo.
+	["boss_icewall_walk_block"] = 1;
+};
+
+PARTY = {
+	["show_steal_in_same_party"] = false; -- Configuração para mostrar o nome no grupo de alguém que usar a habilidade de roubo (Furtar, Afanar)
+	["party_update_interval"] = 1000;     -- Configuração do intervalo antes de atualizar o ponto no mini-mapa que mostra onde o membro do grupo está. (nota 4)
+	["party_hp_mode"] = 0;                -- Configuração do método usado para atualizar as barras de HPs dos membros do grupo. 0 = Aegis - barra é atualizada a cada mudança de HP (banda intensiva), 1 =  eAthena/brAthena - barra é atualizada de acordo com a atualização dos pontos no mini-mapa (demora até 1 segundo).
+	["party_show_share_picker"] = true;   -- Configuração que define quando a "Divisão de Grupo" está ativado, dizer qual membro recebeu o item? 
+	["show_picker_item_type"] = 112;      -- Que tipos de itens vai ser anunciado quando 'show_party_share_picker' está ativo? 1 = IT_HEALING,  2 = IT_UNKNOWN,  4 = IT_USABLE, 8 = IT_ETC, 16 = IT_WEAPON, 32 = IT_ARMOR, 64 = IT_CARD, 128 = IT_PETEGG, 256 = IT_PETARMOR, 512 = IT_UNKNOWN2, 1024 = IT_AMMO,   2048 = IT_DELAYCONSUME, 262144 = IT_CASH
+	["party_item_share_type"] = 0;        -- Configuração do método de distribuição, quando o compartilhamento de itens está ativado em um grupo: 0 = Normal (item vai para um membro aleatório do grupo), 1 = Compartilhamento é desativado para drops de não forem de monstros (Jogador/Pet), 2 = Rodízio (itens são distribuidos uniformemente entre os membros), 3 = 1+2
+	["idle_no_share"] = 0;                -- Configuração da distribuição de Exp/Itens será desabilitada para membros ociosos/ausentes do grupo? Configure como '0', ou a quantidade de segundos necessários para considerar um personagem ocioso.
+	["party_even_share_bonus"] = 0;       -- Configuração que define se deve dar bônus adicional de experiência para os membros do grupo envolvido? Se definido para 10, a divisão de um mesmo grupo de 5 pessoas receberão +40% exp (4 Membros * 10% de exp): experiência de grupo de 140% no total, para que cada membro receba 140%/5 = 28% exp (em vez de 20%).
+	["display_party_name"] = false;       -- Exibir nome do grupo, independentemente se o jogador está em um clã.
+};
+
+PET = {
+	["pet_catch_rate"] = 100;             -- Configuração que define a taxa para captura de bichos de estimação.
+	["pet_rename"] = false;               -- Configuração que define se os bichinhos de estimação podem ser renomeados.
+	["pet_friendly_rate"] = 100;          -- Configuração que define a taxa de aumento da lealdade do bicho de estimação pela alimentação.
+	["pet_hungry_delay_rate"] = 100;      -- Configuração que define a taxa na qual o bichinho de estimação fica com fome.
+	["pet_hungry_friendly_decrease"] = 5; -- Configuração que dfine a taxa de fome do seu bichinho de estimação. A lealdade do seu bichinho de estimação vai de 0 a 1000, em 0 ele foge.
+	["pet_equip_required"] = true;        -- Configuração que define se o bichinho necessitará do equipamento para usar sua habilidade.
+	["pet_attack_support"] = false;       -- Configuração que define se jogadores poderão usar bichinhos como suporte no ataque contra monstro.
+	["pet_damage_support"] = false;       -- Configuração que define quando o dono receber um ataque, se seu bichinho de estimação deve revidar.
+	["pet_support_min_friendly"] = 900;   -- Configuração que define o mínimo de lealdade para seu bichinho lhe dar suporte.
+	["pet_equip_min_friendly"] = 900;     -- Configuração que define o mínimo de lealdade para seu bichinho lhe dar suporte usando pet_script conforme as habilidades oficiais. (0 - 1000)
+	["pet_status_support"] = false;       -- Configuração que define se jogadores poderão usar habilidades de bichinhos como suporte. Habilidades ofensivas do bichinho de estimação precisam de no mínimo pet_attack_support ou pet_damage_support habilitados para funcionar.
+	["pet_support_rate"] = 100;           -- Configuração que define a taxa à qual um bichinho irá apoiá-lo na batalha. Afeta: pet_attack_support & pet_damage_support.
+	["pet_attack_exp_to_master"] = false; -- Configuração que define se o dono do bichinho recebe experiência quando ele derrotar um inimigo.
+	["pet_attack_exp_rate"] = 100;        -- Configuração que define a experiência ganha do bichinho que derrota um monstro.
+	["pet_lv_rate"] = 0;                  -- Configuração que define o sistema de níveis para bichinhos. Caso esteja 200%, o nível do bichinho será o dobro do seu dono, caso esteja com 50% terá a metade.
+	["pet_max_stats"] = 99;               -- Configuração que define os atributos máximos para os bichinhos quando o sistema de níveis está habilitado.
+	["pet_max_atk1"] = 500;               -- Configurações dos danos de ataque para os bichinhos. Caso seja habilitado o pet_str, o dano máximo será (base_atk) + (pet_max_atk2).
+	["pet_max_atk2"] = 1000;
+	["pet_disable_in_gvg"] = false;       -- Animais de estimação são desativadas durante Guerra do Emperium? definida como true, animais de estimação são automaticamente retornados para ovo quando entrar em castelos durando a Guerra do Emperium. E a incubação é proibida também dentro dos castelos que estão ocorrendo a Guerra do Emperium.
 };

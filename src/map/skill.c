@@ -250,7 +250,7 @@ int skill_get_casttype2 (uint16 index) {
 //Returns actual skill range taking into account attack range and AC_OWL [Skotlex]
 int skill_get_range2 (struct block_list *bl, uint16 skill_id, uint16 skill_lv) {
 	int range;
-	if( bl->type == BL_MOB && battle_config.mob_ai&0x400 )
+	if( bl->type == BL_MOB && battle_config.monster_ai&1024 )
 		return 9; //Mobs have a range of 9 regardless of skill used.
 
 	range = skill->get_range(skill_id, skill_lv);
@@ -1376,7 +1376,7 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 			break;
 	}
 
-	if (md && battle_config.summons_trigger_autospells && md->master_id && md->special_state.ai != AI_NONE) {
+	if (md && battle_config.summons_autospells && md->master_id && md->special_state.ai != AI_NONE) {
 		//Pass heritage to Master for status causing effects. [Skotlex]
 		sd = map->id2sd(md->master_id);
 		src = sd?&sd->bl:src;

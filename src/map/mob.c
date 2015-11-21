@@ -994,7 +994,7 @@ int mob_can_changetarget(struct mob_data* md, struct block_list* target, int mod
 	{
 		if (md->state.provoke_flag == target->id)
 			return 1;
-		else if (!(battle_config.mob_ai&0x4))
+		else if (!(battle_config.monster_ai&4))
 			return 0;
 	}
 
@@ -1002,7 +1002,7 @@ int mob_can_changetarget(struct mob_data* md, struct block_list* target, int mod
 		case MSS_BERSERK:
 			if (!(mode&MD_CHANGETARGET_MELEE))
 				return 0;
-			return (battle_config.mob_ai&0x4 || check_distance_bl(&md->bl, target, 3));
+			return (battle_config.monster_ai&4 || check_distance_bl(&md->bl, target, 3));
 		case MSS_RUSH:
 			return (mode&MD_CHANGETARGET_CHASE);
 		case MSS_FOLLOW:
@@ -1304,7 +1304,7 @@ int mob_unlocktarget(struct mob_data *md, int64 tick) {
 		mob_stop_attack(md);
 		mob_stop_walking(md, STOPWALKING_FLAG_FIXPOS); //Stop chasing.
 		md->state.skillstate = MSS_IDLE;
-		if(battle_config.mob_ai&0x8) //Walk instantly after dropping target
+		if(battle_config.monster_ai&8) //Walk instantly after dropping target
 			md->next_walktime = tick+rnd()%1000;
 		else
 			md->next_walktime = tick+rnd()%1000+MIN_RANDOMWALKTIME;
@@ -1378,7 +1378,7 @@ int mob_warpchase(struct mob_data *md, struct block_list *target)
 {
 	struct npc_data *warp = NULL;
 	int distance = AREA_SIZE;
-	if (!(target && battle_config.mob_ai&0x40 && battle_config.mob_warp&1))
+	if (!(target && battle_config.monster_ai&64 && battle_config.mob_warp&1))
 		return 0; //Can't warp chase.
 
 	if (target->m == md->bl.m && check_distance_bl(&md->bl, target, AREA_SIZE))
@@ -1437,7 +1437,7 @@ bool mob_ai_sub_hard(struct mob_data *md, int64 tick) {
 		tbl = map->id2bl(md->target_id);
 		if (!tbl || tbl->m != md->bl.m
 		 || (md->ud.attacktimer == INVALID_TIMER && !status->check_skilluse(&md->bl, tbl, 0, 0))
-		 || (md->ud.walktimer != INVALID_TIMER && !(battle_config.mob_ai&0x1) && !check_distance_bl(&md->bl, tbl, md->min_chase))
+		 || (md->ud.walktimer != INVALID_TIMER && !(battle_config.monster_ai&1) && !check_distance_bl(&md->bl, tbl, md->min_chase))
 		 || ( tbl->type == BL_PC
 		   && ((((TBL_PC*)tbl)->state.gangsterparadise && !(mode&MD_BOSS))
 		     || ((TBL_PC*)tbl)->invincible_timer != INVALID_TIMER)
@@ -1460,7 +1460,7 @@ bool mob_ai_sub_hard(struct mob_data *md, int64 tick) {
 			//Rude attacked check.
 			if (!battle->check_range(&md->bl, tbl, md->status.rhw.range)
 			 && ( //Can't attack back and can't reach back.
-			       (!can_move && DIFF_TICK(tick, md->ud.canmove_tick) > 0 && (battle_config.mob_ai&0x2 || (md->sc.data[SC_SPIDERWEB] && md->sc.data[SC_SPIDERWEB]->val1)
+			       (!can_move && DIFF_TICK(tick, md->ud.canmove_tick) > 0 && (battle_config.monster_ai&2 || (md->sc.data[SC_SPIDERWEB] && md->sc.data[SC_SPIDERWEB]->val1)
 			      || md->sc.data[SC_WUGBITE] || md->sc.data[SC_VACUUM_EXTREME] || md->sc.data[SC_THORNS_TRAP]
 			      || md->sc.data[SC__MANHOLE] // Not yet confirmed if boss will teleport once it can't reach target.
 			      || md->walktoxy_fail_count > 0)
@@ -1482,10 +1482,10 @@ bool mob_ai_sub_hard(struct mob_data *md, int64 tick) {
 			if( md->bl.m != abl->m || abl->prev == NULL
 			 || (dist = distance_bl(&md->bl, abl)) >= MAX_MINCHASE // Attacker longer than visual area
 			 || battle->check_target(&md->bl, abl, BCT_ENEMY) <= 0 // Attacker is not enemy of mob
-			 || (battle_config.mob_ai&0x2 && !status->check_skilluse(&md->bl, abl, 0, 0)) // Cannot normal attack back to Attacker
+			 || (battle_config.monster_ai&2 && !status->check_skilluse(&md->bl, abl, 0, 0)) // Cannot normal attack back to Attacker
 			 || (!battle->check_range(&md->bl, abl, md->status.rhw.range) // Not on Melee Range and ...
 			    && ( // Reach check
-					(!can_move && DIFF_TICK(tick, md->ud.canmove_tick) > 0 && (battle_config.mob_ai&0x2 || (md->sc.data[SC_SPIDERWEB] && md->sc.data[SC_SPIDERWEB]->val1)
+					(!can_move && DIFF_TICK(tick, md->ud.canmove_tick) > 0 && (battle_config.monster_ai&2 || (md->sc.data[SC_SPIDERWEB] && md->sc.data[SC_SPIDERWEB]->val1)
 						|| md->sc.data[SC_WUGBITE] || md->sc.data[SC_VACUUM_EXTREME] || md->sc.data[SC_THORNS_TRAP]
 						|| md->sc.data[SC__MANHOLE] // Not yet confirmed if boss will teleport once it can't reach target.
 						|| md->walktoxy_fail_count > 0)
@@ -1506,7 +1506,7 @@ bool mob_ai_sub_hard(struct mob_data *md, int64 tick) {
 				}
 			}
 			else
-			if (!(battle_config.mob_ai&0x2) && !status->check_skilluse(&md->bl, abl, 0, 0)) {
+			if (!(battle_config.monster_ai&2) && !status->check_skilluse(&md->bl, abl, 0, 0)) {
 				//Can't attack back, but didn't invoke a rude attacked skill...
 			} else {
 				//Attackable
@@ -1666,7 +1666,7 @@ bool mob_ai_sub_hard(struct mob_data *md, int64 tick) {
 
 	if (md->ud.walktimer != INVALID_TIMER && md->ud.target == tbl->id &&
 		(
-			!(battle_config.mob_ai&0x1) ||
+			!(battle_config.monster_ai&1) ||
 			check_distance_blxy(tbl, md->ud.to_x, md->ud.to_y, md->status.rhw.range)
 	)) //Current target tile is still within attack range.
 		return true;
@@ -1716,7 +1716,7 @@ int mob_ai_sub_lazy(struct mob_data *md, va_list args) {
 
 	tick = va_arg(args, int64);
 
-	if (battle_config.mob_ai&0x20 && map->list[md->bl.m].users>0)
+	if (battle_config.monster_ai&32 && map->list[md->bl.m].users>0)
 		return (int)mob->ai_sub_hard(md, tick);
 
 	if (md->bl.prev==NULL || md->status.hp == 0)
@@ -1780,7 +1780,7 @@ int mob_ai_lazy(int tid, int64 tick, int id, intptr_t data) {
  *------------------------------------------*/
 int mob_ai_hard(int tid, int64 tick, int id, intptr_t data) {
 
-	if (battle_config.mob_ai&0x20)
+	if (battle_config.monster_ai&32)
 		map->foreachmob(mob->ai_sub_lazy,tick);
 	else
 		map->foreachpc(mob->ai_sub_foreachclient,tick);
@@ -2771,7 +2771,7 @@ int mob_class_change (struct mob_data *md, int class_)
 	status_calc_mob(md, SCO_FIRST);
 	md->ud.state.speed_changed = 1; //Speed change update.
 
-	if (battle_config.monster_class_change_recover) {
+	if (battle_config.monster_change_recover) {
 		memset(md->dmglog, 0, sizeof(md->dmglog));
 		md->tdmg = 0;
 	} else {
@@ -2902,7 +2902,7 @@ int mob_summonslave(struct mob_data *md2,int *value,int amount,uint16 skill_id)
 		amount+=k; //Increase final value by same amount to preserve total number to summon.
 	}
 
-	if (!battle_config.monster_class_change_recover &&
+	if (!battle_config.monster_change_recover &&
 		(skill_id == NPC_TRANSFORMATION || skill_id == NPC_METAMORPHOSIS))
 		hp_rate = get_percentage(md2->status.hp, md2->status.max_hp);
 
@@ -2990,7 +2990,7 @@ int mob_getfriendhprate_sub(struct block_list *bl,va_list ap)
 	max_rate=va_arg(ap,int);
 	fr=va_arg(ap,struct block_list **);
 
-	if( md->bl.id == bl->id && !(battle_config.mob_ai&0x10))
+	if( md->bl.id == bl->id && !(battle_config.monster_ai&16))
 		return 0;
 
 	if ((*fr) != NULL) //A friend was already found.
@@ -3042,7 +3042,7 @@ int mob_getfriendstatus_sub(struct block_list *bl,va_list ap)
 	nullpo_ret(md=(struct mob_data *)bl);
 	nullpo_ret(mmd=va_arg(ap,struct mob_data *));
 
-	if( mmd->bl.id == bl->id && !(battle_config.mob_ai&0x10) )
+	if( mmd->bl.id == bl->id && !(battle_config.monster_ai&16) )
 		return 0;
 
 	if (battle->check_target(&mmd->bl,bl,BCT_ENEMY)>0)
@@ -3092,7 +3092,7 @@ int mobskill_use(struct mob_data *md, int64 tick, int event) {
 		return 0; //Skill act delay only affects non-event skills.
 
 	//Pick a starting position and loop from that.
-	i = (battle_config.mob_ai&0x100) ? rnd()%md->db->maxskill : 0;
+	i = (battle_config.monster_ai&256) ? rnd()%md->db->maxskill : 0;
 	for (n = 0; n < md->db->maxskill; i++, n++) {
 		int c2, flag = 0;
 
@@ -3276,7 +3276,7 @@ int mobskill_use(struct mob_data *md, int64 tick, int event) {
 			snprintf(temp, sizeof temp,"%s : %s", name, mc->msg);
 			clif->messagecolor(&md->bl, mc->color, temp);
 		}
-		if(!(battle_config.mob_ai&0x200)) { //pass on delay to same skill.
+		if(!(battle_config.monster_ai&512)) { //pass on delay to same skill.
 			for (j = 0; j < md->db->maxskill; j++)
 				if (md->db->skill[j].skill_id == ms[i].skill_id)
 					md->skilldelay[j]=tick;
