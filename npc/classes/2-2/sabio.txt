@@ -1,31 +1,26 @@
-//===== Hercules Script ======================================
-//= Sage Job Quest
-//===== By: ==================================================
-//= jAthena (0.9) - I guess
-//= Unknown Translator (1.0)
-//= Darkchild (1.2)
-//===== Current Version: =====================================
-//= 2.8
-//===== Description: =========================================
-//= [Official Conversion]
-//= Job quest for Sage classes
-//===== Additional Comments: =================================
-//= 2.1 Rescripted to Aegis 10.3 stadards. [L0ne_W0lf]
-//=     No longer uses function "F_BlockHigh"
-//= 2.2 Small bug fix (== -> !=) thanks to Saithis. [L0ne_W0lf]
-//= 2.2b ANotehr smaLL bugfix, pointed out by Cara. [L0ne_W0lf]
-//= 2.3 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
-//= 2.4 Fixes bug with first room monsters not being reset. [L0ne_W0lf]
-//= 2.4a Deleted unused variables. [Samuray22]
-//= 2.5 Updated waiting room. (Removes global var) [L0ne_W0lf]
-//= 2.5a Corrected some "mes"s without the getitemname. (bugreport:1564) [Samuray22]
-//=     -Changed an incorrect "!=" to "==". (bugreport:1572)
-//=     -And Small Typo Error
-//= 2.6 Fixed Kayron Grik cutin not being removed as reported by jc1991, bugreport:1825 [Brainstorm]
-//= 2.6a Fixed a Little Bug with Whispers Summoned in the Last Test. (bugreport:2253) [Samuray22]
-//= 2.7 Added Quest Log commands. [Kisuka]
-//= 2.8 Removed the need for use of 'goto.' [L0ne_W0lf]
-//============================================================
+//    ________________________________________________________
+//   /                                                        \
+//   |       _           _   _   _                            |
+//   |      | |__  _ __ / \ | |_| |__   ___ _ __   __ _       |
+//   |      | '_ \| '__/ _ \| __| '_ \ / _ \ '_ \ / _` |      |
+//   |      | |_) | | / ___ \ |_| | | |  __/ | | | (_| |      |
+//   |      |_.__/|_|/_/   \_\__|_| |_|\___|_| |_|\__,_|      |
+//   |                                                        |
+//   |                    brAthena Script                     |
+//   |--------------------------------------------------------|
+//   | Nome do Script:  sabio.txt                             |
+//   |--------------------------------------------------------|
+//   | Criado por: eA/rA/Herc/brA Dev. Team                   |
+//   |--------------------------------------------------------|
+//   | Versões eA/rA/Herc/brA: 2.8/2.8/2.8/1.0                |
+//   |--------------------------------------------------------|
+//   | Descrição: Quest da classe Sábio.                      |
+//   |--------------------------------------------------------|
+//   | Changelog:                                             |
+//   | 1.0 Cabeçalho brAthena [Axl]                           |
+//   |--------------------------------------------------------|
+//   | - Anotações                                            |
+//   \________________________________________________________/
 
 yuno_in02,38,61,5	script	Dean of the Academy#sa	2_M_SAGE_OLD,{
 	cutin "job_sage_kayron",2;

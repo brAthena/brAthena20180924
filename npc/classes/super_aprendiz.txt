@@ -1,22 +1,28 @@
-//===== Hercules Script ======================================
-//= Super Novice Job Quest
-//===== By: ==================================================
-//= Darkchild
-//===== Current Version: =====================================
-//= 2.4
-//===== Description: =========================================
-//= [Official Conversion]
-//= Super Novice Job Change Npc
-//= Super Novice Cart Rental Npc
-//= Some Other Useless Super Novice Npc
-//===== Additional Comments: =================================
-//= 1.9 Rescripted to the Aegis 10.3 Standars. [Samuray22]
-//= 2.0 Rescripted again, this time using an iRO base. [L0ne_W0lf]
-//= 2.1 Swapped use of baseclass for basejob. [L0ne_W0lf]
-//= 2.2 Added Quest Log commands. [Kisuka]
-//= 2.3 NPC "Esseray" calls Ex. Super Novice script when enabled. [Euphy]
-//= 2.4 Added an Ex. Super Novice dialog check. [Euphy]
-//============================================================
+//    ________________________________________________________
+//   /                                                        \
+//   |       _           _   _   _                            |
+//   |      | |__  _ __ / \ | |_| |__   ___ _ __   __ _       |
+//   |      | '_ \| '__/ _ \| __| '_ \ / _ \ '_ \ / _` |      |
+//   |      | |_) | | / ___ \ |_| | | |  __/ | | | (_| |      |
+//   |      |_.__/|_|/_/   \_\__|_| |_|\___|_| |_|\__,_|      |
+//   |                                                        |
+//   |                    brAthena Script                     |
+//   |--------------------------------------------------------|
+//   | Nome do Script:  super_aprendiz.txt                    |
+//   |--------------------------------------------------------|
+//   | Criado por: eA/rA/Herc/brA Dev. Team                   |
+//   |--------------------------------------------------------|
+//   | Versões eA/rA/Herc/brA: 2.4/2.4/2.4/1.0                |
+//   |--------------------------------------------------------|
+//   | Descrição: Quest da classe Super Aprendiz;             |
+//   |            Aluguel de carrinho para Super Aprendiz;    |
+//   |            Outros npcs usuais para Super Aprendiz.     |
+//   |--------------------------------------------------------|
+//   | Changelog:                                             |
+//   | 1.0 Cabeçalho brAthena [Axl]                           |
+//   |--------------------------------------------------------|
+//   | - Anotações                                            |
+//   \________________________________________________________/
 
 aldeba_in,223,167,3	script	Tzerero#sn	4_M_SEAMAN,{
 	if (BaseJob == Job_SuperNovice) {

@@ -1,42 +1,27 @@
-//===== Hercules Script ======================================
-//= Valkyrie Realm
-//===== By: ==================================================
-//= Nana, fixes by Poki
-//= finished, optimized and tested by Lupus
-//= L0ne_W0lf
-//===== Current Version: =====================================
-//= 3.1
-//===== Description: =========================================
-//= [Official Conversion]
-//= Quest to become a Tranceded Class. (Advanced/Rebirthed)
-//===== Additional Comments: =================================
-//= 1.1 Made all into functions,additional checks,quest skills,now Valhallana can return you back. She also makes reborn process only when you got no Zeny/items (as in kRO) [Lupus]
-//= 1.2 now alternative classes can use their 1-1 job NPC to become Advanced 1st Class [Lupus]
-//= 1.4 added Baby Class support [Lupus]
-//= 1.5 Fixed loads of gramatical errors. [Mass Zero]
-//= 1.6 Added a func which prevent advanced classes passing 2nd Job Quests again. It also guides adv classes where to go. [Lupus]
-//= 1.7 On reborn reset some Job Quest Vars and Reset Girls Counter [Lupus]
-//= 1.8 Added Taekwondo classes check [Lupus]
-//= 1.9 Added support for Job NPC Fase pics, sorrected one dialogue stuff [Lupus]
-//= 2.0 Removed callfunc Is_####_Class in favor of baseClass [Silentdragon]
-//= 2.1 Changed all numbers into constants. [Vicious]
-//= 2.2 Now ALL quests skills are saved/restored [Lupus]
-//= 2.3 Removed Duplicates [Silent]
-//= 2.4 Fixed typos, optimized [Lupus]
-//= 2.5 Fixed a stuck bug [Lupus]
-//= 2.6a Adding proper dialogues [Lupus]
-//= 2.7 Rescripted to Aegis 10.3 standards. [L0ne_W0;f]
-//=     Removed all functions as they are no longer required.
-//=     Correct job level requirements for 1-1 -> 2-x.
-//= 2.7a Added Function "F_BlockHigh" back in until rewriteing of the 2-x [L0ne_W0lf]
-//=     scripts are comepleted.
-//= 2.7b Removed function "F_BlockHigh" as it's no longer used. [L0ne_W0lf]
-//= 2.8 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
-//= 2.9 Corrected Valkyrie case spicifying where to warp after rebirthing. [L0ne_W0lf]
-//= 2.9b Fixed Verdandi typo, fixed resetting vars [Lupus]
-//= 3.0 Added quest log commands. [L0ne_W0lf]
-//= 3.1 Added Izlude Renewal coordinates.
-//============================================================
+//    ________________________________________________________
+//   /                                                        \
+//   |       _           _   _   _                            |
+//   |      | |__  _ __ / \ | |_| |__   ___ _ __   __ _       |
+//   |      | '_ \| '__/ _ \| __| '_ \ / _ \ '_ \ / _` |      |
+//   |      | |_) | | / ___ \ |_| | | |  __/ | | | (_| |      |
+//   |      |_.__/|_|/_/   \_\__|_| |_|\___|_| |_|\__,_|      |
+//   |                                                        |
+//   |                    brAthena Script                     |
+//   |--------------------------------------------------------|
+//   | Nome do Script:  valquiria.txt                         |
+//   |--------------------------------------------------------|
+//   | Criado por: eA/rA/Herc/brA Dev. Team                   |
+//   |--------------------------------------------------------|
+//   | Versões eA/rA/Herc/brA: 3.1/3.1/3.1/1.0                |
+//   |--------------------------------------------------------|
+//   | Descrição: Quest de renascimento para Transclasse.     |
+//   |--------------------------------------------------------|
+//   | Changelog:                                             |
+//   | 1.0 Cabeçalho brAthena [Axl]                           |
+//   |--------------------------------------------------------|
+//   | - Anotações                                            |
+//   \________________________________________________________/
+
 
 valkyrie,48,86,4	script	Valkyrie#	4_F_VALKYRIE,{
 	if (ADVJOB != 0 || Upper == 1) {

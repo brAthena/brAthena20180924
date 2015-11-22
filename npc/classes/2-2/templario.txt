@@ -1,36 +1,26 @@
-//===== Hercules Script ======================================
-//= Crusader Job Quest
-//===== By: ==================================================
-//= Made by: Black Dragon
-//= Converted by: Shin
-//===== Current Version: =====================================
-//= 3.3
-//===== Description: =========================================
-//= [Official Conversion]
-//= Job quest for Crusader classes
-//===== Additional Comments: =================================
-//= 2.2 Updated All NPCs to the officials one [Samuray22]
-//=     -Based on the ASB 4.0 Package.
-//=-Maybe need be checked the monsters in the test 2 and 4.
-//= 2.3 Fixed some bugs that prevented from going further. [SinSloth]
-//= 2.4 Updated NPC dialogs using Aegis 10.3 files. [L0ne_W0lf]
-//=    - Fixed logic error with job change reward for job 50 swordies.
-//=    - Completely redid the 1st and third tests.
-//=    - Optimized first four NPC scripts slightly.
-//=    - Temporary character variables "@" are now ".@"
-//=    - Fixed some indentation.
-//= 2.5 Fixed some spelling and grammar in crusader quest. [L0ne_W0lf]
-//= 2.6 Fixed bug (about totally blocked baby class), optimized,
-//=     made some NPC more unique names: Monster Summon#cr1 [Lupus]
-//= 2.7 Fixed Some variables like ".@item", and changed to "@item". [Samuray22]
-//= 2.8 Fixed a little minor bug. [Samuray22]
-//= 2.9 Minor fixes, typos, an incorrect answer. Thanks to yyCC. [L0ne_W0lf]
-//= 2.9a Deleted unused variables. [Samuray22]
-//= 3.0 Updated waiting room. (Removes global var) [L0ne_W0lf]
-//= 3.1 Adding Hermemton's changes. [L0ne_W0lf]
-//= 3.2 Added Quest Log commands. [Kisuka]
-//= 3.3 Removed the need for use of 'goto.' [L0ne_W0lf]
-//============================================================
+//    ________________________________________________________
+//   /                                                        \
+//   |       _           _   _   _                            |
+//   |      | |__  _ __ / \ | |_| |__   ___ _ __   __ _       |
+//   |      | '_ \| '__/ _ \| __| '_ \ / _ \ '_ \ / _` |      |
+//   |      | |_) | | / ___ \ |_| | | |  __/ | | | (_| |      |
+//   |      |_.__/|_|/_/   \_\__|_| |_|\___|_| |_|\__,_|      |
+//   |                                                        |
+//   |                    brAthena Script                     |
+//   |--------------------------------------------------------|
+//   | Nome do Script:  templario.txt                         |
+//   |--------------------------------------------------------|
+//   | Criado por: eA/rA/Herc/brA Dev. Team                   |
+//   |--------------------------------------------------------|
+//   | Versões eA/rA/Herc/brA: 3.3/3.3/3.3/1.0                |
+//   |--------------------------------------------------------|
+//   | Descrição: Quest da classe Templário.                  |
+//   |--------------------------------------------------------|
+//   | Changelog:                                             |
+//   | 1.0 Cabeçalho brAthena [Axl]                           |
+//   |--------------------------------------------------------|
+//   | - Anotações                                            |
+//   \________________________________________________________/
 
 // Senior Crusader: 1st Collect Items Test
 //============================================================

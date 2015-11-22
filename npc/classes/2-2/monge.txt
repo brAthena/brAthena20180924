@@ -1,20 +1,26 @@
-//===== Hercules Script ======================================
-//= Monk Job Quest
-//===== By: ==================================================
-//= Dino9021, Edited / Translated by Celest
-//===== Current Version: =====================================
-//= 2.5
-//===== Description: =========================================
-//= [Official Conversion]
-//= Job quest for Monk classes
-//===== Additional Comments: =================================
-//= 2.2 Rescripted to Aegis 10.3 stadards. [L0ne_W0lf]
-//=     No longer uses function "F_BlockHigh"
-//= 2.3 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
-//= 2.3a Deleted unused variables. [Samuray22]
-//= 2.4 Added Quest Log commands. [Kisuka]
-//= 2.5 Removed the need for use of 'goto.' [L0ne_W0lf]
-//============================================================
+//    ________________________________________________________
+//   /                                                        \
+//   |       _           _   _   _                            |
+//   |      | |__  _ __ / \ | |_| |__   ___ _ __   __ _       |
+//   |      | '_ \| '__/ _ \| __| '_ \ / _ \ '_ \ / _` |      |
+//   |      | |_) | | / ___ \ |_| | | |  __/ | | | (_| |      |
+//   |      |_.__/|_|/_/   \_\__|_| |_|\___|_| |_|\__,_|      |
+//   |                                                        |
+//   |                    brAthena Script                     |
+//   |--------------------------------------------------------|
+//   | Nome do Script:  monge.txt                             |
+//   |--------------------------------------------------------|
+//   | Criado por: eA/rA/Herc/brA Dev. Team                   |
+//   |--------------------------------------------------------|
+//   | Versões eA/rA/Herc/brA: 2.5/2.5/2.5/1.0                |
+//   |--------------------------------------------------------|
+//   | Descrição: Quest da classe Monge.                      |
+//   |--------------------------------------------------------|
+//   | Changelog:                                             |
+//   | 1.0 Cabeçalho brAthena [Axl]                           |
+//   |--------------------------------------------------------|
+//   | - Anotações                                            |
+//   \________________________________________________________/
 
 prt_monk,59,247,1	script	Guarding Monk#mk	2_M_PHARMACIST,6,2,{
 	if (Upper == 1) {

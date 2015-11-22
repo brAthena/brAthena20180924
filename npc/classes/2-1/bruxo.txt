@@ -1,31 +1,26 @@
-//===== Hercules Script ======================================
-//= Wizard Job Quest
-//===== By: ==================================================
-//= (Aegis) Translated by yoshiki, converted by kobra_k88
-//= Further bugfixed and tested by Lupus
-//===== Current Version: =====================================
-//= 3.3
-//===== Description: =========================================
-//= [Official Conversion]
-//= Job Change quest for Wizard class.
-//===== Additional Comments: =================================
-//= 2.4 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
-//= 2.5 Several bugfixes with the help of Barron-Monster. [L0ne_W0lf]
-//= 2.5a More bugfixes care of Barron-Monster. [L0ne_W0lf]
-//= 2.5b Fixed tests calling on a non-existant label in "Room of x#Failed" npcs. [L0ne_W0lf]
-//= 2.5c Bug fixes. Cleaned up some NPCs slightly. [L0ne_W0lf]
-//= 2.6 Fixed Water Room not warping on time-up. [L0ne_W0lf]
-//= 2.7 Now uses enable and disable waitingroomevent. [L0ne_W0lf]
-//=     Other minor fixes to various NPCs.
-//= 2.7a Added end; :D (bugreport:2038) [Yommy]
-//= 2.8 Fixed donpcevent to doevent. (bugreport:2311) [SoulBlaker]
-//= 2.9 Reverted the change of donpcevent to doevent. [L0ne_W0lf]
-//=     Was probably cuased by a warp BEFORE a percentheal
-//= 3.0 Added Quest Log commands. [Kisuka]
-//= 3.1 Removed the need for use of 'goto.' [L0ne_W0lf]
-//= 3.2 Modified the quest to renewal. [Vali] (Thanks to Muad_Dib for the necessary info).
-//= 3.3 Fixed waitingroom bug. [Euphy]
-//============================================================
+//    ________________________________________________________
+//   /                                                        \
+//   |       _           _   _   _                            |
+//   |      | |__  _ __ / \ | |_| |__   ___ _ __   __ _       |
+//   |      | '_ \| '__/ _ \| __| '_ \ / _ \ '_ \ / _` |      |
+//   |      | |_) | | / ___ \ |_| | | |  __/ | | | (_| |      |
+//   |      |_.__/|_|/_/   \_\__|_| |_|\___|_| |_|\__,_|      |
+//   |                                                        |
+//   |                    brAthena Script                     |
+//   |--------------------------------------------------------|
+//   | Nome do Script:  bruxo.txt                             |
+//   |--------------------------------------------------------|
+//   | Criado por: eA/rA/Herc/brA Dev. Team                   |
+//   |--------------------------------------------------------|
+//   | Versões eA/rA/Herc/brA: 3.3/3.3/3.3/1.0                |
+//   |--------------------------------------------------------|
+//   | Descrição: Quest da classe Bruxo.                      |
+//   |--------------------------------------------------------|
+//   | Changelog:                                             |
+//   | 1.0 Cabeçalho brAthena [Axl]                           |
+//   |--------------------------------------------------------|
+//   | - Anotações                                            |
+//   \________________________________________________________/
 
 gef_tower,111,37,4	script	Wizard Guildsman	1_F_GYPSY,{
 	if (Upper == 1) {

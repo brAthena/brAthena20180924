@@ -21,6 +21,7 @@
 //   |--------------------------------------------------------|
 //   | - Anotações                                            |
 //   \________________________________________________________/
+
 airport,143,43,5	script	Airport Staff#airport1a::airport1	4_F_01,{
 	mes "[Airport Staff]";
 	mes "Welcome to the";
