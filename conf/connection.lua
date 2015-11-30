@@ -128,12 +128,13 @@ NETWORK = {
 
 -- CONFIGURAÇÕES DE PACOTES E SEUS TRATAMENTOS
 PACKETS = {
-	["debug"] = false;								-- Mostra relatórios de depuração
-	["stall_time"] = 60;							-- Tempo que um soquete fica aberto antes de fechar a conexão
-	["socket_max_client_packet"] = 24576;			-- Máximo de pacotes por cliente
-	["enable_ip_rules"] true;						-- Habilita regras de IP
-	["order"] = ["deny,allow"];						-- Denny = Proibição, Allow = Permissão
-	["ddos_interval"] = 3000;						-- Intervalo para tentativas de conexão consecutivas (Proteção a ataque DoS)
-	["ddos_count"] = 5;								-- Tentativas consecutivas
-	["ddos_autoreset"] = 600000;					-- Tempo para anular possível ameaça (10 minutos)
+	["debug"] = false;									-- Mostra relatórios de depuração
+	["stall_time"] = 60;								-- Tempo que um soquete fica aberto antes de fechar a conexão
+	["socket_max_client_packet"] = 24576;				-- Máximo de pacotes por cliente
+	["enable_ip_rules"] true;							-- Habilita regras de IP
+	["order"] = ["deny,allow"];							-- Denny = Proibição, Allow = Permissão
+	["ddos_interval"] = 3000;							-- Intervalo para tentativas de conexão consecutivas (Proteção a ataque DoS)
+	["ddos_count"] = 5;									-- Tentativas consecutivas
+	["ddos_autoreset"] = 600000;						-- Tempo para anular possível ameaça (10 minutos)
 };
+
