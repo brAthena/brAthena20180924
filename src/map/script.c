@@ -15756,11 +15756,9 @@ BUILDIN(query_sql) {
 }
 
 BUILDIN(query_logsql) {
-	if( !logs->config.sql_logs ) {// logs->mysql_handle == NULL
-		ShowWarning("buildin_query_logsql: SQL logs are disabled, query '%s' will not be executed.\n", script_getstr(st,2));
-		script_pushint(st,-1);
-		return false;
-	}
+	ShowWarning("buildin_query_logsql: SQL logs are disabled, query '%s' will not be executed.\n", script_getstr(st,2));
+	script_pushint(st,-1);
+	return false;
 	return script->buildin_query_sql_sub(st, logs->mysql_handle);
 }
 

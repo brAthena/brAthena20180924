@@ -24,6 +24,58 @@ struct map_session_data;
 struct mob_data;
 struct mail_message;
 
+// Máximo de caracteres para nomes das tabelas de logs [Megasantos]
+#define SIZE_LOGS 20
+
+/**
+ * Macros para logs LUA [Megasantos]
+**/
+
+/* Macro para logs inteiros */
+#define LOGS_LUA_INTEGER(state, idx, k) do { \
+	lua_getfield(state, idx, #k); \
+	logs->config.k = (int)lua_tointeger(L, -1); \
+if (!lua_isinteger(L, -1)) { \
+	ShowWarning("A configura%c%co '"CL_LT_YELLOW"%s"CL_RESET"' permite apenas n%cmeros inteiros.\n", 135, 198, #k, 163); \
+	lua_pop(L, 1); \
+	continue; \
+} \
+	count += 1; \
+	lua_pop(L, 1); \
+} while (0)
+
+/* Macro para logs booleanos */
+#define LOGS_LUA_BOOLEAN(state, idx, k) do { \
+	lua_getfield(state, idx, #k); \
+	logs->config.k = lua_toboolean(L, -1); \
+if (!lua_isboolean(L, -1)) { \
+	ShowWarning("A configura%c%co '"CL_LT_YELLOW"%s"CL_RESET"' permite apenas valores booleanos.\n", 135, 198, #k); \
+	lua_pop(L, 1); \
+	continue; \
+} \
+	count += 1; \
+	lua_pop(L, 1); \
+} while (0)
+
+/* Macro para nome do banco de dados */
+#define LOGS_LUA_STRINGS(state, idx, k) do { \
+	size_t len; \
+	lua_getfield(state, idx, #k); \
+	safestrncpy(logs->config.k, lua_tolstring(L, -1, &len), SIZE_LOGS); \
+if(len > SIZE_LOGS) { \
+	ShowWarning("A configura%c%co '"CL_LT_YELLOW"%s"CL_RESET"' permite somente '"CL_LT_YELLOW"%d"CL_RESET"' caracteres, altere o nome para fazer a leitura.\n", 135, 198, #k, SIZE_LOGS); \
+	lua_pop(L, 1); \
+	continue; \
+} \
+if (!lua_isstring(L, -1)) { \
+	ShowWarning("A configura%c%co '"CL_LT_YELLOW"%s"CL_RESET"' permite apenas strings.\n", 135, 198, #k); \
+	lua_pop(L, 1); \
+	continue; \
+} \
+	count += 1; \
+	lua_pop(L, 1); \
+} while (0)
+
 /**
  * Defines
  **/
@@ -79,16 +131,53 @@ typedef enum e_log_filter {
 } e_log_filter;
 
 struct log_interface {
-	bool enable_logs;
 	struct {
+		bool enable_logs;
+		bool chat_woe_disable;
+		bool trade;
+		bool mail;
+		bool remove_item;
+		bool gstorage;
+		bool storage;
+		bool produce;
+		bool npc_buy_sell;
+		bool pc_pick_drop;
+		bool mob_pick_drop;
+		bool consume;
+		bool item_vending;
+		bool buying_store;
+		bool cards;
+		bool branch;
+		bool mvpdrop;
+		bool commands;
+		bool npc;
+		bool buycash;
 		int filter;
-		bool sql_logs;
-		bool log_chat_woe_disable;
-		int rare_items_log,refine_items_log,price_items_log,amount_items_log;
-		int trade,mail,get_rem_item,gstorage,storage,produce,npc_buy_sell,
-			pc_pick_drop, mob_pick_drop,consume,vending,buyingstore,cards;
-		int branch, mvpdrop, zeny, commands, npc, chat, buycash;
-		char log_branch[64], log_pick[64], log_zeny[64], log_mvpdrop[64], log_gm[64], log_npc[64], log_chat[64];
+		int rare_items;
+		int refine_items;
+		int price_items;
+		int amount_items;
+		int zeny;
+		int chat;
+		char branch_db[SIZE_LOGS];
+		char pick_db[SIZE_LOGS];
+		char zeny_db[SIZE_LOGS];
+		char mvpdrop_db[SIZE_LOGS];
+		char gm_db[SIZE_LOGS];
+		char npc_db[SIZE_LOGS];
+		char chat_db[SIZE_LOGS];
+		char buystore_db[SIZE_LOGS];
+		char card_db[SIZE_LOGS];
+		char cash_db[SIZE_LOGS];
+		char gstore_db[SIZE_LOGS];
+		char consume_db[SIZE_LOGS];
+		char produce_db[SIZE_LOGS];
+		char remove_db[SIZE_LOGS];
+		char mail_db[SIZE_LOGS];
+		char npcshop_db[SIZE_LOGS];
+		char storage_db[SIZE_LOGS];
+		char trade_db[SIZE_LOGS];
+		char vending_db[SIZE_LOGS];
 	} config;
 	/* */
 	char db_ip[32];
@@ -110,9 +199,8 @@ struct log_interface {
 	void (*atcommand_sub) (struct map_session_data* sd, const char* message);
 	void (*branch_sub) (struct map_session_data* sd);
 
-	int (*config_read) (const char* cfgName);
-	
-	void (*config_done) (void);
+	void (*config_read) (void);
+
 	void (*sql_init) (void);
 	void (*sql_final) (void);
 

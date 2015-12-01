@@ -3913,9 +3913,7 @@ int map_sql_close(void)
 	ShowStatus("Close Map DB Connection....\n");
 	SQL->Free(map->mysql_handle);
 	map->mysql_handle = NULL;
-	if (logs->config.sql_logs) {
-		logs->sql_final();
-	}
+	logs->sql_final();
 	return 0;
 }
 
@@ -5953,7 +5951,7 @@ int do_init(int argc, char *argv[])
 		battle->config_read(map->BATTLE_CONF_FILENAME);
 		atcommand->msg_read(map->MSG_CONF_NAME, false);
 		map->inter_config_read(map->INTER_CONF_NAME);
-		logs->config_read(map->LOG_CONF_NAME);
+		logs->config_read();
 	}
 	script->config_read(map->SCRIPT_CONF_NAME);
 
