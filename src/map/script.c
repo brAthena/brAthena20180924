@@ -15756,9 +15756,6 @@ BUILDIN(query_sql) {
 }
 
 BUILDIN(query_logsql) {
-	ShowWarning("buildin_query_logsql: SQL logs are disabled, query '%s' will not be executed.\n", script_getstr(st,2));
-	script_pushint(st,-1);
-	return false;
 	return script->buildin_query_sql_sub(st, logs->mysql_handle);
 }
 
