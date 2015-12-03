@@ -34,12 +34,12 @@ struct mail_message;
 /* Macro para logs inteiros */
 #define LOGS_LUA_INTEGER(state, idx, k) do { \
 	lua_getfield(state, idx, #k); \
-	logs->config.k = (int)lua_tointeger(L, -1); \
 if (!lua_isinteger(L, -1)) { \
 	ShowWarning("A configura%c%co '"CL_LT_YELLOW"%s"CL_RESET"' permite apenas n%cmeros inteiros.\n", 135, 198, #k, 163); \
 	lua_pop(L, 1); \
 	continue; \
 } \
+	logs->config.k = (int)lua_tointeger(L, -1); \
 	count += 1; \
 	lua_pop(L, 1); \
 } while (0)
@@ -47,12 +47,12 @@ if (!lua_isinteger(L, -1)) { \
 /* Macro para logs booleanos */
 #define LOGS_LUA_BOOLEAN(state, idx, k) do { \
 	lua_getfield(state, idx, #k); \
-	logs->config.k = lua_toboolean(L, -1); \
 if (!lua_isboolean(L, -1)) { \
 	ShowWarning("A configura%c%co '"CL_LT_YELLOW"%s"CL_RESET"' permite apenas valores booleanos.\n", 135, 198, #k); \
 	lua_pop(L, 1); \
 	continue; \
 } \
+	logs->config.k = lua_toboolean(L, -1); \
 	count += 1; \
 	lua_pop(L, 1); \
 } while (0)
@@ -61,14 +61,14 @@ if (!lua_isboolean(L, -1)) { \
 #define LOGS_LUA_STRINGS(state, idx, k) do { \
 	size_t len; \
 	lua_getfield(state, idx, #k); \
-	safestrncpy(logs->config.k, lua_tolstring(L, -1, &len), SIZE_LOGS); \
-if(len > SIZE_LOGS) { \
-	ShowWarning("A configura%c%co '"CL_LT_YELLOW"%s"CL_RESET"' permite somente '"CL_LT_YELLOW"%d"CL_RESET"' caracteres, altere o nome para fazer a leitura.\n", 135, 198, #k, SIZE_LOGS); \
+if (!lua_isstring(L, -1)) { \
+	ShowWarning("A configura%c%co '"CL_LT_YELLOW"%s"CL_RESET"' permite apenas strings.\n", 135, 198, #k); \
 	lua_pop(L, 1); \
 	continue; \
 } \
-if (!lua_isstring(L, -1)) { \
-	ShowWarning("A configura%c%co '"CL_LT_YELLOW"%s"CL_RESET"' permite apenas strings.\n", 135, 198, #k); \
+	safestrncpy(logs->config.k, lua_tolstring(L, -1, &len), SIZE_LOGS); \
+if(len > SIZE_LOGS) { \
+	ShowWarning("A configura%c%co '"CL_LT_YELLOW"%s"CL_RESET"' permite somente '"CL_LT_YELLOW"%d"CL_RESET"' caracteres, altere o nome para fazer a leitura.\n", 135, 198, #k, SIZE_LOGS); \
 	lua_pop(L, 1); \
 	continue; \
 } \

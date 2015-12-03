@@ -35,12 +35,12 @@ struct status_data;
 /* Macro para configurações de batalha inteiros */
 #define BATTLE_LUA_INTEGER(state, idx, k) do { \
 	lua_getfield(state, idx, #k); \
-	battle_config.k = (int)lua_tointeger(L, -1); \
 if (!lua_isinteger(L, -1)) { \
 	ShowWarning("A configura%c%co '%s' permite apenas n%cmeros inteiros.\n", 135, 198, #k, 163); \
 	lua_pop(L, 1); \
 	continue; \
 } \
+	battle_config.k = (int)lua_tointeger(L, -1); \
 	value += 1; \
 	lua_pop(L, 1); \
 } while (0)
@@ -48,12 +48,12 @@ if (!lua_isinteger(L, -1)) { \
 /* Macro para configurações de batalha booleanas */
 #define BATTLE_LUA_BOOLEAN(state, idx, k) do { \
 	lua_getfield(state, idx, #k); \
-	battle_config.k = lua_toboolean(L, -1); \
 if (!lua_isboolean(L, -1)) { \
 	ShowWarning("A configura%c%co '%s' permite apenas valores booleanos.\n", 135, 198, #k); \
 	lua_pop(L, 1); \
 	continue; \
 } \
+	battle_config.k = lua_toboolean(L, -1); \
 	value += 1; \
 	lua_pop(L, 1); \
 } while (0)
