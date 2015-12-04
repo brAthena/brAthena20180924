@@ -1,33 +1,44 @@
-//===== Hercules Script ======================================
-//= Alberta Town Renewal
-//===== By: ==================================================
-//= Euphy
-//===== Current Version: =====================================
-//= 1.0
-//===== Description: =========================================
-//= [Official Conversion]
-//= Alberta town NPCs.
-//===== Additional Comments: =================================
-//= 1.0 First Version.
-//============================================================
+//    ________________________________________________________
+//   /                                                        \
+//   |       _           _   _   _                            |
+//   |      | |__  _ __ / \ | |_| |__   ___ _ __   __ _       |
+//   |      | '_ \| '__/ _ \| __| '_ \ / _ \ '_ \ / _` |      |
+//   |      | |_) | | / ___ \ |_| | | |  __/ | | | (_| |      |
+//   |      |_.__/|_|/_/   \_\__|_| |_|\___|_| |_|\__,_|      |
+//   |                                                        |
+//   |                    brAthena Script                     |
+//   |--------------------------------------------------------|
+//   | Nome do Script: alberta.txt                            |
+//   |--------------------------------------------------------|
+//   | Criado por: eA/rA/Herc/brA Dev. Team                   |
+//   |--------------------------------------------------------|
+//   | Versões eA/rA/Herc/brA: 1.0/1.0/1.0/1.0                |
+//   |--------------------------------------------------------|
+//   | Descrição: NPCs da Cidade de Alberta (RE)              |
+//   |--------------------------------------------------------|
+//   | Changelog:                                             |
+//   | 1.0 Cabeçalho brAthena [Axl]                           |
+//   |--------------------------------------------------------|
+//   | - Anotações                                            |
+//   \________________________________________________________/
 
-// cities/amatsu.txt
+// cidades/amatsu.txt
 //============================================================
 alberta,246,74,3	duplicate(Sea_Captain_amatsu)	Sea Captain#ama1	4_M_SEAMAN
 
-// cities/ayothaya.txt
+// cidades/ayothaya.txt
 //============================================================
 alberta,246,29,3	duplicate(Aibakthing_ayothaya)	Aibakthing#ayo	4_M_THAIONGBAK
 
-// cities/gonryun.txt
+// cidades/gonryun.txt
 //============================================================
 alberta,246,62,3	duplicate(Kunlun_Envoy_gonryun)	Kunlun Envoy#gon	4_M_TWMIDMAN
 
-// cities/louyang.txt
+// cidades/louyang.txt
 //============================================================
 alberta,246,40,3	duplicate(Girl_louyang)	Girl#0lou	4_F_CHNDRESS1
 
-// cities/moscovia.txt
+// cidades/moscovia.txt
 //============================================================
 alberta,246,51,4	duplicate(PR_Officer_moscovia)	Moscovia P.R. Officer#1	4_F_RUSWOMAN2
 
