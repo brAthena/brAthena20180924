@@ -7,15 +7,14 @@
 
 #include "common/cbasetypes.h"
 #include "common/core.h"
-#include "common/conf.h"
 #include "common/memmgr.h"
-#include "common/mmo.h"
 #include "common/showmsg.h"
 #include "common/utils.h"
 #include "common/strlib.h"
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #ifndef _WIN32
 #include <unistd.h>
 #endif
@@ -120,15 +119,28 @@ char *replace_str(char *str, char *orig, char *rep)
 }
 
 // Remove caracteres de uma string.
-void split_char(char *str, char split)
+void strip_char(char *str, char strip)
 {
 	int count = 0, i;
 
 	for (i = 0; str[i]; i++)
-		if (str[i] != split)
+		if (str[i] != strip)
 			str[count++] = str[i];
 
 	str[count] = '\0';
+}
+
+// Formata funções de script para SQL.
+char *parse_script(char *str)
+{
+	int i;
+
+	for (i = 0; str[i]; i++) {
+		if (str[i] == '\n' || str[i] == '	')
+			str[i] = ' ';
+	}
+
+	return escape_str(str);
 }
 
 // Converte o arquivo abra_db.txt para SQL.
@@ -1519,7 +1531,7 @@ void convert_skill_db(void)
 			token = strtok(NULL, ",");
 		}
 
-		split_char(buf, '\t');
+		strip_char(buf, '\t');
 
 		snprintf(write, sizeof(write), "REPLACE INTO skill_db VALUES(%s);\n", buf);
 		fprintf(fwrite, write);
@@ -1701,8 +1713,8 @@ void convert_skill_unit_db(void)
 			token = strtok(NULL, ",");
 		}
 
-		split_char(buf, ' ');
-		split_char(buf, '\t');
+		strip_char(buf, ' ');
+		strip_char(buf, '\t');
 
 		snprintf(write, sizeof(write), "REPLACE INTO skill_unit_db VALUES(%s);\n", buf);
 		fprintf(fwrite, write);
@@ -1938,11 +1950,302 @@ void convert_mob_skill_db(void)
 	file_count++;
 }
 
-// Converte o arquivo item_db.txt para SQL.
-// Função inversa da original criada pelo Hercules.
+char *item_parse_i32(config_setting_t *it, char *field, char *pos) {
+	char *rep = pos;
+	int i = 0;
+
+	if (config_setting_lookup_int(it, field, &i))
+		rep += sprintf(rep, "%d,", i);
+	else
+		rep += sprintf(rep, "NULL,");
+
+	return rep;
+}
+
+char *item_parse_i32_(config_setting_t *it, char *field, char *pos) {
+	char *rep = pos;
+	int i = 0;
+
+	if (config_setting_lookup_int(it, field, &i) && i >= 0)
+		rep += sprintf(rep, "%d,", i);
+	else
+		rep += sprintf(rep, "NULL,");
+
+	return rep;
+}
+
+char *item_parse_job(config_setting_t *it, char *field, char *pos) {
+	char *rep = pos;
+	int i = 0;
+
+	if (config_setting_lookup_int(it, field, &i))
+		rep += sprintf(rep, "0x%"PRIXS",", (unsigned int)i);
+	else
+		rep += sprintf(rep, "NULL,");
+
+	return rep;
+}
+
+char *item_parse_gender(config_setting_t *it, char *field, char *pos) {
+	char *rep = pos;
+	int i = 0;
+
+	if (config_setting_lookup_int(it, field, &i) && i >= 0)
+		rep += sprintf(rep, "%d,", i);
+	else
+		rep += sprintf(rep, "2,");
+
+	return rep;
+}
+
+char *item_parse_str(config_setting_t *it, char *field, char *pos) {
+	char *ret = pos, *str = NULL;
+
+	if (config_setting_lookup_string(it, field, &str))
+		ret += sprintf(ret, "'%s',", escape_str(str));
+	else
+		ret += sprintf(ret, "NULL,");
+
+	return ret;
+}
+
+char *item_parse_bool(config_setting_t *it, char *field, char *pos) {
+	char *rep = pos;
+	int i = 0;
+
+	if ((it = config_setting_get_member(it, field)))
+		rep += sprintf(rep, "%d,", (config_setting_get_bool(it) ? 1 : 0));
+	else
+		rep += sprintf(rep, "NULL,");
+
+	return rep;
+}
+
+char *item_parse_script(config_setting_t *it, char *field, char *pos, bool coma) {
+	char *ret = pos, *str = NULL;
+
+	if (config_setting_lookup_string(it, field, &str))
+		ret += sprintf(ret, "'%s'%c", parse_script(str), (coma) ? ',' : '\0');
+	else
+		ret += sprintf(ret, "''%c", (coma) ? ',' : '\0');
+
+	return ret;
+}
+
+// Converte o arquivo item_db.conf para SQL.
 void convert_item_db(void)
 {
-	// Em breve
+	const char *filename = "item_db.conf";
+	char filepath[256];
+	config_setting_t *itdb, *it;
+	config_t item_db_conf;
+	FILE *fwrite;
+	int i = 0;
+	
+	sprintf(filepath, "%s/%s", "db", filename);
+	config_init(&item_db_conf);
+
+	if (!config_read_file(&item_db_conf, filepath) || !(itdb = config_setting_get_member(item_db_conf.root, "item_db"))) {
+		config_destroy(&item_db_conf);
+		return;
+	}
+
+	fwrite = fopen("sql/conversor/item_db.sql", "w+");
+
+	while ((it = config_setting_get_elem(itdb, i++))) {
+		char buf[2048], write[2048], *pos = buf;
+		config_setting_t *t = NULL;
+
+		// Item ID
+		pos = item_parse_i32(it, "Id", pos);
+		// AegisName
+		pos = item_parse_str(it, "AegisName", pos);
+		// Name
+		pos = item_parse_str(it, "Name", pos);
+		// Type
+		pos = item_parse_i32(it, "Type", pos);
+		// Buy
+		pos = item_parse_i32(it, "Buy", pos);
+		// Sell
+		pos = item_parse_i32(it, "Sell", pos);
+		// Weight
+		pos = item_parse_i32_(it, "Weight", pos);
+		// Atk
+		pos = item_parse_i32_(it, "Atk", pos);
+		// Matk
+		pos = item_parse_i32_(it, "Matk", pos);
+		// Def
+		pos = item_parse_i32_(it, "Def", pos);
+		// Range
+		pos = item_parse_i32_(it, "Range", pos);
+		// Slots
+		pos = item_parse_i32_(it, "Slots", pos);
+		// Job
+		pos = item_parse_job(it, "Job", pos);
+		// Upper
+		pos = item_parse_i32(it, "Upper", pos);
+		// Gender
+		pos = item_parse_gender(it, "Gender", pos);
+		// Loc
+		pos = item_parse_i32_(it, "Loc", pos);
+		// WeaponLv
+		pos = item_parse_i32_(it, "WeaponLv", pos);
+
+		// EquipLv
+		if ((t = config_setting_get_member(it, "EquipLv"))) {
+			if (config_setting_is_aggregate(t)) {
+				if (config_setting_length(t) >= 2)
+					pos += sprintf(pos, "%d,", config_setting_get_int_elem(t,0));
+				if (config_setting_length(t) >= 1)
+					pos += sprintf(pos, "%d,", config_setting_get_int_elem(t,1));
+			} else {
+				pos += sprintf(pos, "%d,", config_setting_get_int(t));
+				pos += sprintf(pos, "NULL,");
+			}
+		}
+		else{
+			pos += sprintf(pos, "NULL,");
+			pos += sprintf(pos, "NULL,");
+		}
+
+		// Refine
+		pos = item_parse_bool(it, "Refine", pos);
+		// View
+		pos = item_parse_i32_(it, "View", pos);
+		// BindOnEquip
+		pos = item_parse_bool(it, "BindOnEquip", pos);
+		// ForceSerial
+		pos = item_parse_bool(it, "ForceSerial", pos);
+		// BuyingStore
+		pos = item_parse_bool(it, "BuyingStore", pos);
+		// KeepAfterUse
+		pos = item_parse_bool(it, "KeepAfterUse", pos);
+		// Delay
+		pos = item_parse_i32_(it, "Delay", pos);
+
+		// Trade
+		if ((t = config_setting_get_member(it, "Trade"))) {
+			if (config_setting_is_group(t)) {
+				int trade_restriction = 0;
+				config_setting_t *tt = NULL;
+
+				if ((tt = config_setting_get_member(t, "nodrop"))) {
+					if (config_setting_get_bool(tt))
+						trade_restriction += 1;
+				}
+
+				if ((tt = config_setting_get_member(t, "notrade"))) {
+					if (config_setting_get_bool(tt))
+						trade_restriction += 2;
+				}
+
+				if ((tt = config_setting_get_member(t, "partneroverride"))) {
+					if (config_setting_get_bool(tt))
+						trade_restriction += 4;
+				}
+
+				if ((tt = config_setting_get_member(t, "noselltonpc"))) {
+					if (config_setting_get_bool(tt))
+						trade_restriction += 8;
+				}
+
+				if ((tt = config_setting_get_member(t, "nocart"))) {
+					if (config_setting_get_bool(tt))
+						trade_restriction += 10;
+				}
+
+				if ((tt = config_setting_get_member(t, "nostorage"))) {
+					if (config_setting_get_bool(tt))
+						trade_restriction += 20;
+				}
+
+				if ((tt = config_setting_get_member(t, "nogstorage"))) {
+					if (config_setting_get_bool(tt))
+						trade_restriction += 40;
+				}
+
+				if ((tt = config_setting_get_member(t, "nomail"))) {
+					if (config_setting_get_bool(tt))
+						trade_restriction += 80;
+				}
+
+				if ((tt = config_setting_get_member(t, "noauction"))) {
+					if (config_setting_get_bool(tt))
+						trade_restriction += 100;
+				}
+
+				if (trade_restriction)
+					pos += sprintf(pos, "%d,", trade_restriction);
+				else
+					pos += sprintf(pos, "NULL,");
+
+				if ((tt = config_setting_get_member(t, "override")))
+					pos += sprintf(pos, "%d,", config_setting_get_int(tt));
+				else
+					pos += sprintf(pos, "NULL,");
+			}
+		} else {
+			pos += sprintf(pos, "NULL,");
+			pos += sprintf(pos, "NULL,");
+		}
+
+		// Nouse
+		if ((t = config_setting_get_member(it, "Nouse"))) {
+			if (config_setting_is_group(t)) {
+				config_setting_t *tt = NULL;
+
+				if ((tt = config_setting_get_member(t, "sitting"))) {
+					if (config_setting_get_bool(tt))
+						pos += sprintf(pos, "1,");
+				}
+				else
+					pos += sprintf(pos, "NULL,");
+
+				if ((tt = config_setting_get_member(t, "override")))
+					pos += sprintf(pos, "%d,", config_setting_get_int(tt));
+				else
+					pos += sprintf(pos, "NULL,");
+			}
+		} else {
+			pos += sprintf(pos, "NULL,");
+			pos += sprintf(pos, "NULL,");
+		}
+
+		// Stack
+		if ((t = config_setting_get_member(it, "Stack"))) {
+			if (config_setting_is_aggregate(t) && config_setting_length(t) >= 1) {
+				int stack_flag = config_setting_get_int_elem(t,1);
+				int stack_amount = config_setting_get_int_elem(t,0);
+
+				if (stack_amount)
+					pos += sprintf(pos, "%d,", stack_amount);
+				else
+					pos += sprintf(pos, "NULL,");
+
+				if (stack_flag)
+					pos += sprintf(pos, "%d,", stack_flag);
+				else
+					pos += sprintf(pos, "NULL,");
+			}
+		} else {
+			pos += sprintf(pos, "NULL,");
+			pos += sprintf(pos, "NULL,");
+		}
+
+		// Sprite
+		pos = item_parse_i32_(it, "Sprite", pos);
+		// Script
+		pos = item_parse_script(it, "Script", pos, true);
+		// OnEquipScript
+		pos = item_parse_script(it, "OnEquipScript", pos, true);
+		// OnUnequipScript
+		pos = item_parse_script(it, "OnUnequipScript", pos, false);
+
+		sprintf(write, "REPLACE INTO item_db VALUES(%s);\n", buf);
+		fprintf(fwrite, write);
+	}
+
+	config_destroy(&item_db_conf);
 }
 
 // Função Inicial
