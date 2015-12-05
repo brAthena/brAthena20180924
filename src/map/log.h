@@ -12,6 +12,10 @@
 #ifndef MAP_LOG_H
 #define MAP_LOG_H
 
+#include "lua.h"
+#include "lualib.h"
+#include "lauxlib.h"
+
 #include "common/cbasetypes.h"
 #include "common/sql.h"
 

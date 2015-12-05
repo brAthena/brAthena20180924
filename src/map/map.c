@@ -5953,7 +5953,7 @@ int do_init(int argc, char *argv[])
 		map->inter_config_read(map->INTER_CONF_NAME);
 		logs->config_read();
 	}
-	script->config_read(map->SCRIPT_CONF_NAME);
+	script->config_read();
 
 	map->id_db     = idb_alloc(DB_OPT_BASE);
 	map->pc_db     = idb_alloc(DB_OPT_BASE); //Added for reliable map->id2sd() use. [Skotlex]

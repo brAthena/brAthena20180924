@@ -11,6 +11,10 @@
 
 #define BRATHENA_CORE
 
+#include "lua.h"
+#include "lualib.h"
+#include "lauxlib.h"
+
 #include "config/core.h" // RENEWAL, RENEWAL_ASPD, RENEWAL_CAST, RENEWAL_DROP, RENEWAL_EDP, RENEWAL_EXP, RENEWAL_LVDMG, SCRIPT_CALLFUNC_CHECK, SECURE_NPCTIMEOUT, SECURE_NPCTIMEOUT_INTERVAL
 #include "script.h"
 
@@ -4362,49 +4366,26 @@ void run_script_main(struct script_state *st) {
 	}
 }
 
-int script_config_read(char *cfgName) {
-	int i;
-	char line[1024],w1[1024],w2[1024];
-	FILE *fp;
+void script_config_read(void) {
+	lua_State *L = luaL_newstate();
+	luaL_openlibs(L);
+	char *lua_filename = "conf/script.lua";
+	int count = 0;
 
-	if( !( fp = fopen(cfgName,"r") ) ) {
-		ShowError("File not found: %s\n", cfgName);
-		return 1;
+	if (luaL_dofile(L, lua_filename)) {
+		ShowError("Erro ao ler o arquivo %s\n", lua_filename);
+		return;
 	}
-	while (fgets(line, sizeof(line), fp)) {
-		if (line[0] == '/' && line[1] == '/')
-			continue;
-		i = sscanf(line,"%1023[^:]: %1023[^\r\n]", w1, w2);
-		if(i!=2)
-			continue;
 
-		if(strcmpi(w1,"warn_func_mismatch_paramnum")==0) {
-			script->config.warn_func_mismatch_paramnum = config_switch(w2);
-		}
-		else if(strcmpi(w1,"check_cmdcount")==0) {
-			script->config.check_cmdcount = config_switch(w2);
-		}
-		else if(strcmpi(w1,"check_gotocount")==0) {
-			script->config.check_gotocount = config_switch(w2);
-		}
-		else if(strcmpi(w1,"input_min_value")==0) {
-			script->config.input_min_value = config_switch(w2);
-		}
-		else if(strcmpi(w1,"input_max_value")==0) {
-			script->config.input_max_value = config_switch(w2);
-		}
-		else if(strcmpi(w1,"warn_func_mismatch_argtypes")==0) {
-			script->config.warn_func_mismatch_argtypes = config_switch(w2);
-		}
-		else if(strcmpi(w1,"import")==0) {
-			script->config_read(w2);
-		} else {
-			ShowWarning("Unknown setting '%s' in file %s\n", w1, cfgName);
-		}
-	}
-	fclose(fp);
+	lua_getglobal(L, "SCRIPT");
 
-	return 0;
+	SCRIPT_LUA_BOOLEAN(L, -1, warn_func_mismatch_paramnum);             SCRIPT_LUA_INTEGER(L, -1, check_cmdcount);
+	SCRIPT_LUA_INTEGER(L, -1, check_gotocount);                         SCRIPT_LUA_INTEGER(L, -1, input_min_value);
+	SCRIPT_LUA_INTEGER(L, -1, input_max_value);                         SCRIPT_LUA_BOOLEAN(L, -1, warn_func_mismatch_argtypes);
+
+	ShowLUA("Leitura de '"CL_WHITE"%d"CL_RESET"' configura%c%ces na tabela '"CL_WHITE"SCRIPT"CL_RESET"' em '"CL_WHITE"%s"CL_RESET"'.\n", count, 135, 228, lua_filename);
+
+	lua_close(L);
 }
 
 /**

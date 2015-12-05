@@ -12,6 +12,10 @@
 #ifndef MAP_SCRIPT_H
 #define MAP_SCRIPT_H
 
+#include "lua.h"
+#include "lualib.h"
+#include "lauxlib.h"
+
 #include "map/map.h" //EVENT_NAME_LENGTH
 #include "common/cbasetypes.h"
 #include "common/db.h"
@@ -21,6 +25,36 @@
 
 #include <errno.h>
 #include <setjmp.h>
+
+
+/**
+* Macros para configuração de script LUA
+**/
+/* Macro para configurações de batalha inteiros */
+#define SCRIPT_LUA_INTEGER(state, idx, k) do { \
+	lua_getfield(state, idx, #k); \
+if (!lua_isinteger(L, -1)) { \
+	ShowWarning("A configura%c%co '%s' permite apenas n%cmeros inteiros.\n", 135, 198, #k, 163); \
+	lua_pop(L, 1); \
+	continue; \
+} \
+	script->config.k = (int)lua_tointeger(L, -1); \
+	count += 1; \
+	lua_pop(L, 1); \
+} while (0)
+
+/* Macro para configurações de script booleanas */
+#define SCRIPT_LUA_BOOLEAN(state, idx, k) do { \
+	lua_getfield(state, idx, #k); \
+if (!lua_isboolean(L, -1)) { \
+	ShowWarning("A configura%c%co '%s' permite apenas valores booleanos.\n", 135, 198, #k); \
+	lua_pop(L, 1); \
+	continue; \
+} \
+	script->config.k = lua_toboolean(L, -1); \
+	count += 1; \
+	lua_pop(L, 1); \
+} while (0)
 
 /**
  * Declarations
@@ -667,7 +701,7 @@ struct script_interface {
 	void (*run_autobonus) (const char *autobonus,int id, int pos);
 	void (*cleararray_pc) (struct map_session_data* sd, const char* varname, void* value);
 	void (*setarray_pc) (struct map_session_data* sd, const char* varname, uint32 idx, void* value, int* refcache);
-	int (*config_read) (char *cfgName);
+	void (*config_read) (void);
 	int (*add_str) (const char* p);
 	const char* (*get_str) (int id);
 	int (*search_str) (const char* p);
