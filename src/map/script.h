@@ -28,9 +28,9 @@
 
 
 /**
-* Macros para configuração de script LUA
+* Macros para configuração de script LUA [Megasantos]
 **/
-/* Macro para configurações de batalha inteiros */
+/* Macro para configurações de script inteiros */
 #define SCRIPT_LUA_INTEGER(state, idx, k) do { \
 	lua_getfield(state, idx, #k); \
 if (!lua_isinteger(L, -1)) { \

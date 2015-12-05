@@ -30,7 +30,7 @@ struct status_change;
 struct status_data;
 
 /**
- * Macros para configuração de batalha LUA
+ * Macros para configuração de batalha LUA [Megasantos]
 **/
 /* Macro para configurações de batalha inteiros */
 #define BATTLE_LUA_INTEGER(state, idx, k) do { \

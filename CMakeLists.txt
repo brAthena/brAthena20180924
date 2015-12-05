@@ -1,7 +1,7 @@
 #############################
-#	brAthena				#						
+#   brAthena                #						
 # @author: Rafael Gorges    #
-# @date: 11/30/15			#
+# @date: 11/30/15           #
 #############################
 
 # Verifica a versão do CMake e fornece um nome para o projeto

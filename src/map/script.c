@@ -4366,6 +4366,7 @@ void run_script_main(struct script_state *st) {
 	}
 }
 
+/* Leitura LUA para configuração de script [Megasantos] */
 void script_config_read(void) {
 	lua_State *L = luaL_newstate();
 	luaL_openlibs(L);
