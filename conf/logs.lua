@@ -23,17 +23,17 @@
 --   |                                                                                                                        |
 --   | Nota 2: 0 = Nunca faz log.                                                                                             |
 --   |         1 = Faz log de qualquer coisa.                                                                                 |
---   |         2 - Itens de cura. (0)                                                                                         |
---   |         4 - Outros itens. (items(3) + flechas(10))                                                                     |
---   |         8 - Usavéis. (items(2) + lures, pergaminhos(11))                                                               |
---   |         16 - Armas. (4)                                                                                                |
---   |         32 - Escudos, armaduras, capacetes, acessorios, etc. (5)                                                       |
---   |         64 - Cartas. (6)                                                                                               |
---   |         128 - Acessorios para bichinhos de estimação. (8) + ovos (7) (monstros não dropam este tipo de itens)          |
---   |         256 - Log de itens caros. (se o preço for >= price_items_log)                                                  |
---   |         512 - Log de grande quantidade de itens. (se a quantidade for maior ou igual ao valor de "amount_items_log")   |
---   |         1024 - Log de itens refinados. (se a taxa de refinamento for maior ou igual ao valor de "refine_items_log")    |
---   |         2048 - Log de itens raros. (se a chance de queda for maior ou igual ao valor de "rare_items_log")              |
+--   |         2 = Itens de cura. (0)                                                                                         |
+--   |         4 = Outros itens. (items(3) + flechas(10))                                                                     |
+--   |         8 = Usavéis. (items(2) + lures, pergaminhos(11))                                                               |
+--   |         16 = Armas. (4)                                                                                                |
+--   |         32 = Escudos, armaduras, capacetes, acessorios, etc. (5)                                                       |
+--   |         64 = Cartas. (6)                                                                                               |
+--   |         128 = Acessorios para bichinhos de estimação. (8) + ovos (7) (monstros não dropam este tipo de itens)          |
+--   |         256 = Log de itens caros. (se o preço for >= price_items_log)                                                  |
+--   |         512 = Log de grande quantidade de itens. (se a quantidade for maior ou igual ao valor de "amount_items_log")   |
+--   |         1024 = Log de itens refinados. (se a taxa de refinamento for maior ou igual ao valor de "refine_items_log")    |
+--   |         2048 = Log de itens raros. (se a chance de queda for maior ou igual ao valor de "rare_items_log")              |
 --   |                                                                                                                        |
 --   | Nota 3: 0 = Nunca faz log.                                                                                             |
 --   |         1 = Faz log de mensagens globais.                                                                              |
