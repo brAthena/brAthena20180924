@@ -3325,80 +3325,6 @@ void map_flags_init(void) {
 	}
 }
 
-#define NO_WATER 1000000
-
-/*
- * Reads from the .rsw for each map
- * Returns water height (or NO_WATER if file doesn't exist) or other error is encountered.
- * Assumed path for file is data/mapname.rsw
- * Credits to LittleWolf
- */
-int map_waterheight(char* mapname)
-{
-	char fn[256];
-	char *rsw, *found;
-
-	//Look up for the rsw
-	snprintf(fn, sizeof(fn), "data\\%s.rsw", mapname);
-
-	if ( (found = grfio_find_file(fn)) )
-		safestrncpy(fn, found, sizeof(fn)); // replace with real name
-
-	// read & convert fn
-	rsw = (char *) grfio_read (fn);
-	if (rsw) {
-		//Load water height from file
-		int wh = (int) *(float*)(rsw+166);
-		aFree(rsw);
-		return wh;
-	}
-	ShowWarning("Falha em encontrar o nivel de agua em %s (%s)\n", mapname, fn);
-	return NO_WATER;
-}
-
-/*==================================
- * .GAT format
- *----------------------------------*/
-int map_readgat (struct map_data* m)
-{
-	char filename[256];
-	uint8* gat;
-	int water_height;
-	size_t xy, off, num_cells;
-
-	sprintf(filename, "data\\%s.gat", m->name);
-
-	gat = (uint8 *) grfio_read(filename);
-	if (gat == NULL)
-		return 0;
-
-	m->xs = *(int32*)(gat+6);
-	m->ys = *(int32*)(gat+10);
-	num_cells = m->xs * m->ys;
-	CREATE(m->cell, struct mapcell, num_cells);
-
-	water_height = map->waterheight(m->name);
-
-	// Set cell properties
-	off = 14;
-	for( xy = 0; xy < num_cells; ++xy )
-	{
-		// read cell data
-		float height = *(float*)( gat + off      );
-		uint32 type = *(uint32*)( gat + off + 16 );
-		off += 20;
-
-		if( type == 0 && water_height != NO_WATER && height > water_height )
-			type = 3; // Cell is 0 (walkable) but under water level, set to 3 (walkable water)
-
-		m->cell[xy] = map->gat2cell(type);
-	}
-
-	aFree(gat);
-
-	return 1;
-}
-
 /*======================================
  * Add/Remove map to the map_db
  *--------------------------------------*/
@@ -6318,8 +6244,6 @@ void map_defaults(void) {
 	map->delmapid = map_delmapid;
 	map->zone_db_clear = map_zone_db_clear;
 	map->list_final = do_final_maps;
-	map->waterheight = map_waterheight;
-	map->readgat = map_readgat;
 	map->readallmaps = map_readallmaps;
 	map->config_read = map_config_read;
 	map->config_read_sub = map_config_read_sub;

@@ -1082,8 +1082,6 @@ END_ZEROED_BLOCK;
 	void (*delmapid) (int id);
 	void (*zone_db_clear) (void);
 	void (*list_final) (void);
-	int (*waterheight) (char *mapname);
-	int (*readgat) (struct map_data *m);
 	int (*readallmaps) (void);
 	int (*config_read) (char *cfgName);
 	int (*config_read_sub) (char *cfgName);
