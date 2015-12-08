@@ -26,7 +26,7 @@ MT19937AR_H = $(MT19937AR_D)/mt19937ar.h
 
 MAP_C = atcommand.c battle.c battleground.c buyingstore.c channel.c chat.c \
         chrif.c clif.c date.c duel.c elemental.c guild.c homunculus.c \
-        instance.c intif.c itemdb.c log.c mail.c map.c mapreg_sql.c \
+        instance.c intif.c itemdb.c log.c mail.c map.c mapreg.c \
         mercenary.c mob.c npc.c npc_chat.c party.c path.c pc.c pc_groups.c \
         pet.c quest.c script.c searchstore.c skill.c status.c storage.c \
         trade.c unit.c vending.c
