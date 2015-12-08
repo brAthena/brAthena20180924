@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS `atcommandlog` (
   `char_name` varchar(25) NOT NULL DEFAULT '',
   `map` varchar(11) NOT NULL DEFAULT '',
   `command` varchar(255) NOT NULL DEFAULT ''
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE UNIQUE INDEX comando ON atcommandlog (command);
 
@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS `branchlog` (
   `char_id` int(11) NOT NULL DEFAULT '0',
   `char_name` varchar(25) NOT NULL DEFAULT '',
   `map` varchar(11) NOT NULL DEFAULT ''
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE UNIQUE INDEX personagem ON branchlog (char_name);
 
@@ -69,7 +69,7 @@ CREATE TABLE IF NOT EXISTS `buyingstore_log` (
   `ItemSlot3` smallint(11) NOT NULL DEFAULT '0',
   `ItemSlot4` smallint(11) NOT NULL DEFAULT '0',
   `ItemRefiningLevel` tinyint(3) unsigned NOT NULL DEFAULT '0'
-) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=latin1;
 
 CREATE INDEX nome_item ON buyingstore_log (ItemName);
 
@@ -99,7 +99,7 @@ CREATE TABLE IF NOT EXISTS `card_log` (
   `ItemSlot3` smallint(11) NOT NULL DEFAULT '0',
   `ItemSlot4` smallint(11) NOT NULL DEFAULT '0',
   `ItemRefiningLevel` tinyint(3) unsigned NOT NULL DEFAULT '0'
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE INDEX nome_carta ON card_log (ItemName);
 
@@ -132,7 +132,7 @@ CREATE TABLE IF NOT EXISTS `cashitemshop` (
   `Cash_View` int(11) unsigned NOT NULL DEFAULT '0',
   `Cash_Before` int(11) unsigned NOT NULL DEFAULT '0',
   `Cash_After` int(11) unsigned NOT NULL DEFAULT '0'
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE INDEX nome_item ON cashitemshop (ItemName);
 
@@ -152,7 +152,7 @@ CREATE TABLE IF NOT EXISTS `chatlog` (
   `src_map_y` smallint(4) NOT NULL DEFAULT '0',
   `dst_charname` varchar(25) NOT NULL DEFAULT '',
   `message` varchar(150) NOT NULL DEFAULT ''
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE INDEX mensagem ON chatlog (message);
 
@@ -182,7 +182,7 @@ CREATE TABLE IF NOT EXISTS `guild_storage_log` (
   `ItemSlot3` smallint(11) NOT NULL DEFAULT '0',
   `ItemSlot4` smallint(11) NOT NULL DEFAULT '0',
   `ItemRefiningLevel` tinyint(3) unsigned NOT NULL DEFAULT '0'
-) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=latin1;
 
 CREATE INDEX nome_item ON guild_storage_log (ItemName);
 CREATE INDEX nome_guilda ON guild_storage_log (GuildName);
@@ -204,7 +204,7 @@ CREATE TABLE IF NOT EXISTS `itemconsume_log` (
   `ItemSerial` bigint(20) unsigned NOT NULL DEFAULT '0',
   `Amount` int(11) unsigned NOT NULL DEFAULT '0',
   `Type_` varchar(20) NOT NULL DEFAULT ''
-) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=latin1;
 
 --
 -- Estrutura da tabela `itemproduce_log`
@@ -224,7 +224,7 @@ CREATE TABLE IF NOT EXISTS `itemproduce_log` (
   `ItemSerial` bigint(20) unsigned NOT NULL DEFAULT '0',
   `Amount` int(11) unsigned NOT NULL DEFAULT '0',
   `Type_` enum('Fail Refine','Craft Requirement','Crafting Sucess','Cooking','Arrow Create','Ele.Analysis','Sucess Refine','Downgrade') NOT NULL DEFAULT 'Craft Requirement'
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Estrutura da tabela `item_get_removelog`
@@ -251,7 +251,7 @@ CREATE TABLE IF NOT EXISTS `item_get_removelog` (
   `ItemSlot3` smallint(11) NOT NULL DEFAULT '0',
   `ItemSlot4` smallint(11) NOT NULL DEFAULT '0',
   `ItemRefiningLevel` tinyint(3) unsigned NOT NULL DEFAULT '0'
-) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=latin1;
 
 --
 -- Estrutura da tabela `loginlog`
@@ -263,7 +263,7 @@ CREATE TABLE IF NOT EXISTS `loginlog` (
   `user` varchar(23) NOT NULL DEFAULT '',
   `rcode` tinyint(4) NOT NULL DEFAULT '0',
   `log` varchar(255) NOT NULL DEFAULT ''
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Estrutura da tabela `mail_log`
@@ -286,7 +286,7 @@ CREATE TABLE IF NOT EXISTS `mail_log` (
   `ItemSlot3` smallint(11) NOT NULL DEFAULT '0',
   `ItemSlot4` smallint(11) NOT NULL DEFAULT '0',
   `ItemRefiningLevel` tinyint(3) unsigned NOT NULL DEFAULT '0'
-) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=latin1;
 
 CREATE UNIQUE INDEX nome_remetente ON mail_log (SenderName);
 CREATE UNIQUE INDEX nome_destinatario ON mail_log (DestName);
@@ -304,7 +304,7 @@ CREATE TABLE IF NOT EXISTS `npclog` (
   `char_name` varchar(25) NOT NULL DEFAULT '',
   `map` varchar(11) NOT NULL DEFAULT '',
   `mes` varchar(255) NOT NULL DEFAULT ''
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Estrutura da tabela `npcshop_log`
@@ -329,7 +329,7 @@ CREATE TABLE IF NOT EXISTS `npcshop_log` (
   `ItemSerial` bigint(20) unsigned NOT NULL DEFAULT '0',
   `Slots` tinyint(3) NOT NULL DEFAULT '0',
   `ItemRefiningLevel` tinyint(3) unsigned NOT NULL DEFAULT '0'
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Estrutura da tabela `pickdrop_log`
@@ -357,7 +357,7 @@ CREATE TABLE IF NOT EXISTS `pickdrop_log` (
   `ItemSlot3` smallint(11) NOT NULL DEFAULT '0',
   `ItemSlot4` smallint(11) NOT NULL DEFAULT '0',
   `ItemRefiningLevel` tinyint(3) unsigned NOT NULL DEFAULT '0'
-) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=latin1;
 
 --
 -- Estrutura da tabela `storage_log`
@@ -383,7 +383,7 @@ CREATE TABLE IF NOT EXISTS `storage_log` (
   `ItemSlot3` smallint(11) NOT NULL DEFAULT '0',
   `ItemSlot4` smallint(11) NOT NULL DEFAULT '0',
   `ItemRefiningLevel` tinyint(3) unsigned NOT NULL DEFAULT '0'
-) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=latin1;
 
 CREATE UNIQUE INDEX personagem ON storage_log (CharName);
 CREATE UNIQUE INDEX nome_item ON storage_log (ItemName);
@@ -416,7 +416,7 @@ CREATE TABLE IF NOT EXISTS `trade_log` (
   `ItemSlot3` smallint(11) NOT NULL DEFAULT '0',
   `ItemSlot4` smallint(11) NOT NULL DEFAULT '0',
   `ItemRefiningLevel` tinyint(3) unsigned NOT NULL DEFAULT '0'
-) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=latin1;
 
 CREATE UNIQUE INDEX data ON trade_log (Date);
 CREATE UNIQUE INDEX nome_item ON trade_log (ItemName);
@@ -450,7 +450,7 @@ CREATE TABLE IF NOT EXISTS `vending_log` (
   `ItemSlot3` smallint(11) NOT NULL DEFAULT '0',
   `ItemSlot4` smallint(11) NOT NULL DEFAULT '0',
   `ItemRefiningLevel` tinyint(3) unsigned NOT NULL DEFAULT '0'
-) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=latin1;
 
 CREATE UNIQUE INDEX nome_item ON vending_log (ItemName);
 CREATE UNIQUE INDEX personagem ON vending_log (Vendor_CharID);
@@ -467,7 +467,7 @@ CREATE TABLE IF NOT EXISTS `zenylog` (
   `type` enum('Auction','Bank','Monster','Script','bStore','Steal','Cmd','Npc','Trade','Mail','Vending','Other') NOT NULL DEFAULT 'Other',
   `amount` int(11) NOT NULL DEFAULT '0',
   `map` varchar(11) NOT NULL DEFAULT ''
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE UNIQUE INDEX personagem ON zenylog (char_id);
 

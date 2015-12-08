@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS `account_data` (
   `base_drop` SMALLINT(6) UNSIGNED NOT NULL DEFAULT '100',
   `base_death` SMALLINT(6) UNSIGNED NOT NULL DEFAULT '100',
   PRIMARY KEY (`account_id`)
-) ENGINE=MyISAM; 
+) ENGINE=InnoDB; 
 
 --
 -- Estrutura da tabela `acc_reg_num_db`
@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS `acc_reg_num_db` (
   `value` INT(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`account_id`,`key`,`index`),
   KEY `account_id` (`account_id`)
-) ENGINE=MyISAM;
+) ENGINE=InnoDB;
 
 --
 -- Estrutura da tabela `acc_reg_str_db`
@@ -49,7 +49,7 @@ CREATE TABLE IF NOT EXISTS `acc_reg_str_db` (
   `value` VARCHAR(254) NOT NULL DEFAULT '0',
   PRIMARY KEY (`account_id`,`key`,`index`),
   KEY `account_id` (`account_id`)
-) ENGINE=MyISAM;
+) ENGINE=InnoDB;
 
 --
 -- Estrutura da tabela `auction`
@@ -76,7 +76,7 @@ CREATE TABLE IF NOT EXISTS `auction` (
   `card3` SMALLINT(11) NOT NULL DEFAULT '0',
   `unique_id` BIGINT(20) UNSIGNED NOT NULL DEFAULT '0',
   PRIMARY KEY (`auction_id`)
-) ENGINE=MyISAM;
+) ENGINE=InnoDB;
 
 --
 -- Estrutura da tabela `autotrade_data`
@@ -88,7 +88,7 @@ CREATE TABLE IF NOT EXISTS `autotrade_data` (
   `amount` INT(11) NOT NULL DEFAULT '0',
   `price` INT(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`char_id`,`itemkey`)
-) ENGINE=MyISAM; 
+) ENGINE=InnoDB; 
 
 --
 -- Estrutura da tabela `autotrade_merchants`
@@ -100,7 +100,7 @@ CREATE TABLE IF NOT EXISTS `autotrade_merchants` (
   `sex` TINYINT(2) NOT NULL DEFAULT '0',
   `title` VARCHAR(80) NOT NULL DEFAULT 'Buy From Me!',
   PRIMARY KEY (`account_id`,`char_id`)
-) ENGINE=MyISAM; 
+) ENGINE=InnoDB; 
 
 --
 -- Estrutura da tabela `cart_inventory`
@@ -124,7 +124,7 @@ CREATE TABLE IF NOT EXISTS `cart_inventory` (
   `unique_id` BIGINT(20) UNSIGNED NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `char_id` (`char_id`)
-) ENGINE=MyISAM;
+) ENGINE=InnoDB;
 
 --
 -- Estrutura da tabela `char`
@@ -197,7 +197,7 @@ CREATE TABLE IF NOT EXISTS `char` (
   KEY `party_id` (`party_id`),
   KEY `guild_id` (`guild_id`),
   KEY `online` (`online`)
-) ENGINE=MyISAM AUTO_INCREMENT=150000; 
+) ENGINE=InnoDB AUTO_INCREMENT=150000; 
 
 --
 -- Estrutura da tabela `char_reg_num_db`
@@ -210,7 +210,7 @@ CREATE TABLE IF NOT EXISTS `char_reg_num_db` (
   `value` INT(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`char_id`,`key`,`index`),
   KEY `char_id` (`char_id`)
-) ENGINE=MyISAM;
+) ENGINE=InnoDB;
 
 --
 -- Estrutura da tabela `char_reg_str_db`
@@ -223,7 +223,7 @@ CREATE TABLE IF NOT EXISTS `char_reg_str_db` (
   `value` VARCHAR(254) NOT NULL DEFAULT '0',
   PRIMARY KEY (`char_id`,`key`,`index`),
   KEY `char_id` (`char_id`)
-) ENGINE=MyISAM;
+) ENGINE=InnoDB;
 
 --
 -- Estrutura da tabela `charlog`
@@ -244,7 +244,7 @@ CREATE TABLE IF NOT EXISTS `charlog` (
   `luk` INT(11) UNSIGNED NOT NULL DEFAULT '0',
   `hair` TINYINT(4) NOT NULL DEFAULT '0',
   `hair_color` INT(11) NOT NULL DEFAULT '0'
-) ENGINE=MyISAM; 
+) ENGINE=InnoDB; 
 
 --
 -- Estrutura da tabela `elemental`
@@ -269,7 +269,7 @@ CREATE TABLE IF NOT EXISTS `elemental` (
   `hit` SMALLINT(4) UNSIGNED NOT NULL DEFAULT '0',
   `life_time` INT(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`ele_id`)
-) ENGINE=MyISAM;
+) ENGINE=InnoDB;
 
 --
 -- Estrutura da tabela `friends`
@@ -280,7 +280,7 @@ CREATE TABLE IF NOT EXISTS `friends` (
   `friend_account` INT(11) NOT NULL DEFAULT '0',
   `friend_id` INT(11) NOT NULL DEFAULT '0',
   KEY  `char_id` (`char_id`)
-) ENGINE=MyISAM;
+) ENGINE=InnoDB;
 
 --
 -- Estrutura da tabela `hotkey`
@@ -293,7 +293,7 @@ CREATE TABLE IF NOT EXISTS `hotkey` (
   `itemskill_id` INT(11) UNSIGNED NOT NULL DEFAULT '0',
   `skill_lvl` TINYINT(4) UNSIGNED NOT NULL DEFAULT '0',
   PRIMARY KEY (`char_id`,`hotkey`)
-) ENGINE=MyISAM;
+) ENGINE=InnoDB;
 
 --
 -- Estrutura da tabela `global_acc_reg_num_db`
@@ -306,7 +306,7 @@ CREATE TABLE IF NOT EXISTS `global_acc_reg_num_db` (
   `value` INT(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`account_id`,`key`,`index`),
   KEY `account_id` (`account_id`)
-) ENGINE=MyISAM;
+) ENGINE=InnoDB;
 
 --
 -- Estrutura da tabela `global_acc_reg_str_db`
@@ -319,7 +319,7 @@ CREATE TABLE IF NOT EXISTS `global_acc_reg_str_db` (
   `value` VARCHAR(254) NOT NULL DEFAULT '0',
   PRIMARY KEY (`account_id`,`key`,`index`),
   KEY `account_id` (`account_id`)
-) ENGINE=MyISAM;
+) ENGINE=InnoDB;
 
 --
 -- Estrutura da tabela `guild`
@@ -345,7 +345,7 @@ CREATE TABLE IF NOT EXISTS `guild` (
   PRIMARY KEY (`guild_id`,`char_id`),
   UNIQUE KEY `guild_id` (`guild_id`),
   KEY `char_id` (`char_id`)
-) ENGINE=MyISAM;
+) ENGINE=InnoDB;
 
 --
 -- Estrutura da tabela `guild_alliance`
@@ -358,7 +358,7 @@ CREATE TABLE IF NOT EXISTS `guild_alliance` (
   `name` VARCHAR(24) NOT NULL DEFAULT '',
   PRIMARY KEY (`guild_id`,`alliance_id`),
   KEY `alliance_id` (`alliance_id`)
-) ENGINE=MyISAM;
+) ENGINE=InnoDB;
 
 --
 -- Estrutura da tabela `guild_castle`
@@ -385,7 +385,7 @@ CREATE TABLE IF NOT EXISTS `guild_castle` (
   `visibleG7` INT(11) UNSIGNED NOT NULL DEFAULT '0',
   PRIMARY KEY (`castle_id`),
   KEY `guild_id` (`guild_id`)
-) ENGINE=MyISAM;
+) ENGINE=InnoDB;
 
 --
 -- Estrutura da tabela `guild_expulsion`
@@ -397,7 +397,7 @@ CREATE TABLE IF NOT EXISTS `guild_expulsion` (
   `name` VARCHAR(24) NOT NULL DEFAULT '',
   `mes` VARCHAR(40) NOT NULL DEFAULT '',
   PRIMARY KEY (`guild_id`,`name`)
-) ENGINE=MyISAM;
+) ENGINE=InnoDB;
 
 --
 -- Estrutura da tabela `guild_member`
@@ -419,7 +419,7 @@ CREATE TABLE IF NOT EXISTS `guild_member` (
   `name` VARCHAR(24) NOT NULL DEFAULT '',
   PRIMARY KEY (`guild_id`,`char_id`),
   KEY `char_id` (`char_id`)
-) ENGINE=MyISAM;
+) ENGINE=InnoDB;
 
 --
 -- Estrutura da tabela `guild_position`
@@ -432,7 +432,7 @@ CREATE TABLE IF NOT EXISTS `guild_position` (
   `mode` TINYINT(11) UNSIGNED NOT NULL DEFAULT '0',
   `exp_mode` TINYINT(11) UNSIGNED NOT NULL DEFAULT '0',
   PRIMARY KEY (`guild_id`,`position`)
-) ENGINE=MyISAM;
+) ENGINE=InnoDB;
 
 --
 -- Estrutura da tabela `guild_skill`
@@ -443,7 +443,7 @@ CREATE TABLE IF NOT EXISTS `guild_skill` (
   `id` SMALLINT(11) UNSIGNED NOT NULL DEFAULT '0',
   `lv` TINYINT(11) UNSIGNED NOT NULL DEFAULT '0',
   PRIMARY KEY (`guild_id`,`id`)
-) ENGINE=MyISAM;
+) ENGINE=InnoDB;
 
 --
 -- Estrutura da tabela `guild_storage`
@@ -467,7 +467,7 @@ CREATE TABLE IF NOT EXISTS `guild_storage` (
   `unique_id` BIGINT(20) UNSIGNED NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `guild_id` (`guild_id`)
-) ENGINE=MyISAM;
+) ENGINE=InnoDB;
 
 --
 -- Estrutura da tabela `homunculus`
@@ -498,7 +498,7 @@ CREATE TABLE IF NOT EXISTS `homunculus` (
   `rename_flag` TINYINT(2) NOT NULL DEFAULT '0',
   `vaporize` TINYINT(2) NOT NULL DEFAULT '0',
   PRIMARY KEY (`homun_id`)
-) ENGINE=MyISAM;
+) ENGINE=InnoDB;
 
 -- 
 -- Estrutura da tabela `interlog`
@@ -507,7 +507,7 @@ CREATE TABLE IF NOT EXISTS `homunculus` (
 CREATE TABLE IF NOT EXISTS `interlog` (
   `time` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
   `log` VARCHAR(255) NOT NULL DEFAULT ''
-) ENGINE=MyISAM; 
+) ENGINE=InnoDB; 
 --
 -- Estrutura da tabela `inventory`
 --
@@ -531,7 +531,7 @@ CREATE TABLE IF NOT EXISTS `inventory` (
   `unique_id` BIGINT(20) UNSIGNED NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `char_id` (`char_id`)
-) ENGINE=MyISAM;
+) ENGINE=InnoDB;
 
 --
 -- Estrutura da tabela `ipbanlist`
@@ -543,7 +543,7 @@ CREATE TABLE IF NOT EXISTS `ipbanlist` (
   `rtime` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
   `reason` VARCHAR(255) NOT NULL DEFAULT '',
   KEY (`list`)
-) ENGINE=MyISAM;
+) ENGINE=InnoDB;
 
 --
 -- Estrutura da tabela `login`
@@ -569,7 +569,7 @@ CREATE TABLE IF NOT EXISTS `login` (
   `pincode_change` INT(11) UNSIGNED NOT NULL DEFAULT '0',
   PRIMARY KEY (`account_id`),
   KEY `name` (`userid`)
-) ENGINE=MyISAM AUTO_INCREMENT=2000000; 
+) ENGINE=InnoDB AUTO_INCREMENT=2000000; 
 
 -- added standard accounts for servers, VERY INSECURE!!!
 -- inserted into the table called login which is above
@@ -585,7 +585,7 @@ CREATE TABLE IF NOT EXISTS `mapreg` (
   `index` INT(11) UNSIGNED NOT NULL DEFAULT '0',
   `value` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`varname`,`index`)
-) ENGINE=MyISAM;
+) ENGINE=InnoDB;
 
 --
 -- Estrutura da tabela `npc_market_data`
@@ -596,7 +596,7 @@ CREATE TABLE IF NOT EXISTS `npc_market_data` (
   `itemid` INT(11) UNSIGNED NOT NULL DEFAULT '0',
   `amount` INT(11) UNSIGNED NOT NULL DEFAULT '0',
   PRIMARY KEY (`name`,`itemid`)
-) ENGINE=MyISAM;
+) ENGINE=InnoDB;
 
 --
 -- Estrutura da tabela `sc_data`
@@ -614,7 +614,7 @@ CREATE TABLE IF NOT EXISTS `sc_data` (
   KEY (`account_id`),
   KEY (`char_id`),
   PRIMARY KEY (`account_id`,`char_id`,`type`)
-) ENGINE=MyISAM;
+) ENGINE=InnoDB;
 
 --
 -- Estrutura da tabela `mail`
@@ -642,7 +642,7 @@ CREATE TABLE IF NOT EXISTS `mail` (
   `card3` SMALLINT(11) NOT NULL DEFAULT '0',
   `unique_id` BIGINT(20) UNSIGNED NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM;
+) ENGINE=InnoDB;
 
 --
 -- Estrutura da tabela `memo`
@@ -656,7 +656,7 @@ CREATE TABLE IF NOT EXISTS `memo` (
   `y` SMALLINT(4) UNSIGNED NOT NULL DEFAULT '0',
   PRIMARY KEY (`memo_id`),
   KEY `char_id` (`char_id`)
-) ENGINE=MyISAM;
+) ENGINE=InnoDB;
 
 --
 -- Estrutura da tabela `mercenary`
@@ -671,7 +671,7 @@ CREATE TABLE IF NOT EXISTS `mercenary` (
   `kill_counter` INT(11) NOT NULL,
   `life_time` INT(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`mer_id`)
-) ENGINE=MyISAM;
+) ENGINE=InnoDB;
 
 --
 -- Estrutura da tabela `mercenary_owner`
@@ -687,7 +687,7 @@ CREATE TABLE IF NOT EXISTS `mercenary_owner` (
   `sword_calls` INT(11) NOT NULL DEFAULT '0',
   `sword_faith` INT(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`char_id`)
-) ENGINE=MyISAM;
+) ENGINE=InnoDB;
 
 --
 -- Estrutura da tabela `party`
@@ -701,7 +701,7 @@ CREATE TABLE IF NOT EXISTS `party` (
   `leader_id` INT(11) UNSIGNED NOT NULL DEFAULT '0',
   `leader_char` INT(11) UNSIGNED NOT NULL DEFAULT '0',
   PRIMARY KEY (`party_id`)
-) ENGINE=MyISAM;
+) ENGINE=InnoDB;
 
 --
 -- Estrutura da tabela `pet`
@@ -721,7 +721,7 @@ CREATE TABLE IF NOT EXISTS `pet` (
   `rename_flag` TINYINT(4) UNSIGNED NOT NULL DEFAULT '0',
   `incubate` INT(11) UNSIGNED NOT NULL DEFAULT '0',
   PRIMARY KEY (`pet_id`)
-) ENGINE=MyISAM;
+) ENGINE=InnoDB;
 
 --
 -- Estrutura da tabela `quest`
@@ -736,7 +736,7 @@ CREATE TABLE IF NOT EXISTS `quest` (
   `count2` MEDIUMINT(8) UNSIGNED NOT NULL DEFAULT '0',
   `count3` MEDIUMINT(8) UNSIGNED NOT NULL DEFAULT '0',
   PRIMARY KEY (`char_id`,`quest_id`)
-) ENGINE=MyISAM;
+) ENGINE=InnoDB;
 
 --
 -- Estrutura da tabela `ragsrvinfo`
@@ -748,7 +748,7 @@ CREATE TABLE IF NOT EXISTS `ragsrvinfo` (
   `exp` INT(11) UNSIGNED NOT NULL DEFAULT '0',
   `jexp` INT(11) UNSIGNED NOT NULL DEFAULT '0',
   `drop` INT(11) UNSIGNED NOT NULL DEFAULT '0'
-) ENGINE=MyISAM;
+) ENGINE=InnoDB;
 
 --
 -- Estrutura da tabela `skill`
@@ -760,7 +760,7 @@ CREATE TABLE IF NOT EXISTS `skill` (
   `lv` TINYINT(4) UNSIGNED NOT NULL DEFAULT '0',
   `flag` TINYINT(1) UNSIGNED NOT NULL DEFAULT 0,
   PRIMARY KEY (`char_id`,`id`)
-) ENGINE=MyISAM;
+) ENGINE=InnoDB;
 
 --
 -- Estrutura da tabela `skill_homunculus`
@@ -771,7 +771,7 @@ CREATE TABLE IF NOT EXISTS `skill_homunculus` (
   `id` INT(11) NOT NULL,
   `lv` SMALLINT(6) NOT NULL,
   PRIMARY KEY (`homun_id`,`id`)
-) ENGINE=MyISAM;
+) ENGINE=InnoDB;
 
 --
 -- Estrutura da tabela `sql_updates`
@@ -781,7 +781,7 @@ CREATE TABLE IF NOT EXISTS `sql_updates` (
   `timestamp` INT(11) UNSIGNED NOT NULL,
   `ignored` ENUM('Yes','No') NOT NULL DEFAULT 'No',
   PRIMARY KEY (`timestamp`)
-) ENGINE=MyISAM;
+) ENGINE=InnoDB;
 
 INSERT IGNORE INTO `sql_updates` (`timestamp`) VALUES (1443394980); -- 2015-09-27--23-03.sql
 INSERT IGNORE INTO `sql_updates` (`timestamp`) VALUES (1440688342); -- 2015-08-27--20-42.sql
@@ -809,7 +809,7 @@ CREATE TABLE IF NOT EXISTS `storage` (
   `unique_id` BIGINT(20) UNSIGNED NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `account_id` (`account_id`)
-) ENGINE=MyISAM;
+) ENGINE=InnoDB;
 
 --
 -- Estrutura da tabela `updatecharlog` [Megasantos]
@@ -822,4 +822,4 @@ CREATE TABLE IF NOT EXISTS `updatecharlog` (
   `gdid` INT(11) UNSIGNED NOT NULL DEFAULT '0',
   `position` TINYINT NOT NULL DEFAULT '0',
   `regdate` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00'
-) ENGINE=MyISAM;
+) ENGINE=InnoDB;
