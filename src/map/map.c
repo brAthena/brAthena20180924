@@ -3344,42 +3344,30 @@ int map_readallmaps (void) {
 	FILE* fp=NULL;
 	int maps_removed = 0;
 
-	if( map->enable_grf )
-		ShowStatus("Carregando mapas (GRF)...\n");
-	else {
-		char mapcachefilepath[254];
-		sprintf(mapcachefilepath,"%s/%s%s",map->db_path,DBPATH,"map_cache.dat");
-		ShowStatus("Carregando mapas (%s)...\n", mapcachefilepath);
-		if( (fp = fopen(mapcachefilepath, "rb")) == NULL ) {
-			ShowFatalError("Nao foi possivel abrir o arquivo de mapas "CL_WHITE"%s"CL_RESET"\n", mapcachefilepath);
-			exit(EXIT_FAILURE); //No use launching server if maps can't be read.
-		}
+	char mapcachefilepath[254];
+	sprintf(mapcachefilepath,"%s/%s%s",map->db_path,DBPATH,"map_cache.dat");
+	ShowStatus("Carregando mapas (%s)...\n", mapcachefilepath);
+	if( (fp = fopen(mapcachefilepath, "rb")) == NULL ) {
+		ShowFatalError("Nao foi possivel abrir o arquivo de mapas "CL_WHITE"%s"CL_RESET"\n", mapcachefilepath);
+		exit(EXIT_FAILURE); //No use launching server if maps can't be read.
+	}
 
-		// Init mapcache data.. [Shinryo]
-		map->cache_buffer = map->init_mapcache(fp);
-		if(!map->cache_buffer) {
-			ShowFatalError("Falha ao inicializar os dados do mapcache (%s)..\n", mapcachefilepath);
-			exit(EXIT_FAILURE);
-		}
+	// Init mapcache data.. [Shinryo]
+	map->cache_buffer = map->init_mapcache(fp);
+	if(!map->cache_buffer) {
+		ShowFatalError("Falha ao inicializar os dados do mapcache (%s)..\n", mapcachefilepath);
+		exit(EXIT_FAILURE);
 	}
 
 	for(i = 0; i < map->count; i++) {
 		size_t size;
 
-		// show progress
-		if(map->enable_grf)
-			ShowStatus("Carregando mapas [%i/%i]: %s"CL_CLL"\r", i, map->count, map->list[i].name);
-
 		// try to load the map
-		if( !
-			(map->enable_grf?
-			map->readgat(&map->list[i])
-			:map->readfromcache(&map->list[i], map->cache_buffer))
-			) {
-				map->delmapid(i);
-				maps_removed++;
-				i--;
-				continue;
+		if(!map->readfromcache(&map->list[i], map->cache_buffer)) {
+			map->delmapid(i);
+			maps_removed++;
+			i--;
+			continue;
 		}
 
 		map->list[i].index = mapindex->name2id(map->list[i].name);
@@ -3415,10 +3403,6 @@ int map_readallmaps (void) {
 
 	// intialization and configuration-dependent adjustments of mapflags
 	map->flags_init();
-
-	if( !map->enable_grf ) {
-		fclose(fp);
-	}
 
 	// finished map loading
 	ShowInfo("Carregado(s) com sucesso '"CL_WHITE"%d"CL_RESET"' mapa(s)."CL_CLL"\n",map->count);
@@ -3512,8 +3496,6 @@ int map_config_read(char *cfgName) {
 			safestrncpy(map->db_path,w2,255);
 		else if (strcmpi(w1, "enable_spy") == 0)
 			map->enable_spy = config_switch(w2);
-		else if (strcmpi(w1, "use_grf") == 0)
-			map->enable_grf = config_switch(w2);
 		else if (strcmpi(w1, "console_msg_log") == 0)
 			showmsg->console_log = atoi(w2);//[Ind]
 		else if (strcmpi(w1, "default_language") == 0)
@@ -5461,8 +5443,6 @@ int do_final(void) {
 	map->map_db->destroy(map->map_db, map->db_final);
 
 	mapindex->final();
-	if(map->enable_grf)
-		grfio_final();
 
 	db_destroy(map->id_db);
 	db_destroy(map->pc_db);
@@ -5485,9 +5465,7 @@ int do_final(void) {
 	if( map->bl_list )
 		aFree(map->bl_list);
 
-	if( !map->enable_grf )
-		aFree(map->cache_buffer);
-
+	aFree(map->cache_buffer);
 	aFree(map->MAP_CONF_NAME);
 	aFree(map->BATTLE_CONF_FILENAME);
 	aFree(map->ATCOMMAND_CONF_FILENAME);
@@ -5917,9 +5895,6 @@ int do_init(int argc, char *argv[])
 		}
 	}
 
-	if(map->enable_grf)
-		grfio_init(map->GRF_PATH_FILENAME);
-
 	map->readallmaps();
 
 	if (!minimal) {
@@ -6064,7 +6039,6 @@ void map_defaults(void) {
 	map->users = 0;
 	map->ip_set = 0;
 	map->char_ip_set = 0;
-	map->enable_grf = 0;
 
 	memset(&map->index2mapid, -1, sizeof(map->index2mapid));
 

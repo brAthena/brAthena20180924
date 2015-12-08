@@ -899,7 +899,6 @@ struct map_interface {
 
 	int port;
 	int users;
-	int enable_grf; //To enable/disable reading maps from GRF files, bypassing mapcache [blackhole89]
 	bool ip_set;
 	bool char_ip_set;
 
