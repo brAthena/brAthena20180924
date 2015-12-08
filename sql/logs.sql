@@ -24,6 +24,8 @@ CREATE TABLE IF NOT EXISTS `atcommandlog` (
   `command` varchar(255) NOT NULL DEFAULT ''
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
+CREATE UNIQUE INDEX comando ON atcommandlog (command);
+
 --
 -- Estrutura da tabela `branchlog`
 --
@@ -36,6 +38,8 @@ CREATE TABLE IF NOT EXISTS `branchlog` (
   `char_name` varchar(25) NOT NULL DEFAULT '',
   `map` varchar(11) NOT NULL DEFAULT ''
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+CREATE UNIQUE INDEX personagem ON branchlog (char_name);
 
 --
 -- Estrutura da tabela `buyingstore_log`
@@ -67,6 +71,8 @@ CREATE TABLE IF NOT EXISTS `buyingstore_log` (
   `ItemRefiningLevel` tinyint(3) unsigned NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=latin1;
 
+CREATE INDEX nome_item ON buyingstore_log (ItemName);
+
 --
 -- Estrutura da tabela `card_log`
 --
@@ -94,6 +100,8 @@ CREATE TABLE IF NOT EXISTS `card_log` (
   `ItemSlot4` smallint(11) NOT NULL DEFAULT '0',
   `ItemRefiningLevel` tinyint(3) unsigned NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+CREATE INDEX nome_carta ON card_log (ItemName);
 
 --
 -- Estrutura da tabela `cashitemshop`
@@ -126,6 +134,8 @@ CREATE TABLE IF NOT EXISTS `cashitemshop` (
   `Cash_After` int(11) unsigned NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
+CREATE INDEX nome_item ON cashitemshop (ItemName);
+
 --
 -- Estrutura da tabela `chatlog`
 --
@@ -143,6 +153,8 @@ CREATE TABLE IF NOT EXISTS `chatlog` (
   `dst_charname` varchar(25) NOT NULL DEFAULT '',
   `message` varchar(150) NOT NULL DEFAULT ''
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+CREATE INDEX mensagem ON chatlog (message);
 
 --
 -- Estrutura da tabela `guild_storage_log`
@@ -172,6 +184,8 @@ CREATE TABLE IF NOT EXISTS `guild_storage_log` (
   `ItemRefiningLevel` tinyint(3) unsigned NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=latin1;
 
+CREATE INDEX nome_item ON guild_storage_log (ItemName);
+CREATE INDEX nome_guilda ON guild_storage_log (GuildName);
 --
 -- Estrutura da tabela `itemconsume_log`
 --
@@ -274,6 +288,10 @@ CREATE TABLE IF NOT EXISTS `mail_log` (
   `ItemRefiningLevel` tinyint(3) unsigned NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=latin1;
 
+CREATE UNIQUE INDEX nome_remetente ON mail_log (SenderName);
+CREATE UNIQUE INDEX nome_destinatario ON mail_log (DestName);
+CREATE UNIQUE INDEX nome_item ON mail_log (ItemName);
+
 --
 -- Estrutura da tabela `npclog`
 --
@@ -367,6 +385,9 @@ CREATE TABLE IF NOT EXISTS `storage_log` (
   `ItemRefiningLevel` tinyint(3) unsigned NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=latin1;
 
+CREATE UNIQUE INDEX personagem ON storage_log (CharName);
+CREATE UNIQUE INDEX nome_item ON storage_log (ItemName);
+
 --
 -- Estrutura da tabela `trade_log`
 --
@@ -396,6 +417,9 @@ CREATE TABLE IF NOT EXISTS `trade_log` (
   `ItemSlot4` smallint(11) NOT NULL DEFAULT '0',
   `ItemRefiningLevel` tinyint(3) unsigned NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=latin1;
+
+CREATE UNIQUE INDEX data ON trade_log (Date);
+CREATE UNIQUE INDEX nome_item ON trade_log (ItemName);
 
 --
 -- Estrutura da tabela `vending_log`
@@ -428,6 +452,9 @@ CREATE TABLE IF NOT EXISTS `vending_log` (
   `ItemRefiningLevel` tinyint(3) unsigned NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=latin1;
 
+CREATE UNIQUE INDEX nome_item ON vending_log (ItemName);
+CREATE UNIQUE INDEX personagem ON vending_log (Vendor_CharID);
+
 --
 -- Estrutura da tabela `zenylog`
 --
@@ -441,6 +468,8 @@ CREATE TABLE IF NOT EXISTS `zenylog` (
   `amount` int(11) NOT NULL DEFAULT '0',
   `map` varchar(11) NOT NULL DEFAULT ''
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+CREATE UNIQUE INDEX personagem ON zenylog (char_id);
 
 --
 -- Indexes for dumped tables
