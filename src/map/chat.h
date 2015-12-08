@@ -22,7 +22,7 @@ struct npc_data;
 
 #define MAX_CHAT_USERS 20
 
-struct chat_data {
+typedef struct chat_data {
 	struct block_list bl;            ///< data for this map object
 	char title[CHATROOM_TITLE_SIZE]; ///< room title
 	char pass[CHATROOM_PASS_SIZE];   ///< password
@@ -38,12 +38,12 @@ struct chat_data {
 	char npc_event[EVENT_NAME_LENGTH];
 	/* isn't this a waste? there is a enormous overhead, wouldn't something like skill_blockpc_start be better here? [Ind] */
 	DBMap* kick_list;                ///< DBMap of users who were kicked from this chat
-};
+} TBL_CHAT;
 
 /**
  * chat.c Interface
  **/
-struct chat_interface {
+typedef struct chat_interface {
 	/* funcs */
 	bool (*create_pc_chat) (struct map_session_data* sd, const char* title, const char* pass, int limit, bool pub);
 	bool (*join) (struct map_session_data* sd, int chatid, const char* pass);
@@ -58,7 +58,7 @@ struct chat_interface {
 	bool (*npc_kick_all) (struct chat_data* cd);
 	bool (*trigger_event) (struct chat_data *cd);
 	struct chat_data* (*create) (struct block_list* bl, const char* title, const char* pass, int limit, bool pub, int trigger, const char* ev, int zeny, int minLvl, int maxLvl);
-};
+} TBL_CHAT_INTERFACE;
 
 struct chat_interface *chat;
 

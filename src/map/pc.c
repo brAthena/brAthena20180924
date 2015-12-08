@@ -1946,9 +1946,9 @@ int pc_disguise(struct map_session_data *sd, int class_) {
 			clif->updatestatus(sd,SP_CARTINFO);
 		}
 		if (sd->chatID) {
-			struct chat_data* cd;
+			TBL_CHAT* cd;
 
-			if( (cd = (struct chat_data*)map->id2bl(sd->chatID)) )
+			if( (cd = (TBL_CHAT*)map->id2bl(sd->chatID)) )
 				clif->dispchat(cd,0);
 		}
 	}

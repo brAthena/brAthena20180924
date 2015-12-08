@@ -3715,7 +3715,7 @@ ACMD(reloadscript) {
 ACMD(mapinfo) {
 	struct map_session_data* pl_sd;
 	struct s_mapiterator* iter;
-	struct chat_data *cd = NULL;
+	TBL_CHAT *cd = NULL;
 	char direction[12];
 	int i, m_id, chat_num = 0, list = 0, vend_num = 0;
 	unsigned short m_index;
@@ -3754,7 +3754,7 @@ ACMD(mapinfo) {
 		if( pl_sd->mapindex == m_index ) {
 			if( pl_sd->state.vending )
 				vend_num++;
-			else if( (cd = (struct chat_data*)map->id2bl(pl_sd->chatID)) != NULL && cd->usersd[0] == pl_sd )
+			else if( (cd = (TBL_CHAT*)map->id2bl(pl_sd->chatID)) != NULL && cd->usersd[0] == pl_sd )
 				chat_num++;
 		}
 	}
@@ -3933,7 +3933,7 @@ ACMD(mapinfo) {
 			iter = mapit_getallusers();
 			for (pl_sd = (TBL_PC*)mapit->first(iter); mapit->exists(iter); pl_sd = (TBL_PC*)mapit->next(iter))
 			{
-				if ((cd = (struct chat_data*)map->id2bl(pl_sd->chatID)) != NULL &&
+				if ((cd = (TBL_CHAT*)map->id2bl(pl_sd->chatID)) != NULL &&
 						pl_sd->mapindex == m_index &&
 						cd->usersd[0] == pl_sd)
 				{

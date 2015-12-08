@@ -34,16 +34,16 @@ struct chat_interface chat_s;
 
 /// Initializes a chatroom object (common functionality for both pc and npc chatrooms).
 /// Returns a chatroom object on success, or NULL on failure.
-struct chat_data* chat_createchat(struct block_list* bl, const char* title, const char* pass, int limit, bool pub, int trigger, const char* ev, int zeny, int minLvl, int maxLvl)
+TBL_CHAT* chat_createchat(struct block_list* bl, const char* title, const char* pass, int limit, bool pub, int trigger, const char* ev, int zeny, int minLvl, int maxLvl)
 {
-	struct chat_data* cd;
+	TBL_CHAT* cd;
 	nullpo_retr(NULL, bl);
 	nullpo_retr(NULL, title);
 	nullpo_retr(NULL, pass);
 	nullpo_retr(NULL, ev);
 
 	/* Given the overhead and the numerous instances (npc allocated or otherwise) wouldn't it be beneficial to have it use ERS? [Ind] */
-	cd = (struct chat_data *) aMalloc(sizeof(struct chat_data));
+	cd = (TBL_CHAT*) aMalloc(sizeof(TBL_CHAT));
 
 	safestrncpy(cd->title, title, sizeof(cd->title));
 	safestrncpy(cd->pass, pass, sizeof(cd->pass));
@@ -82,7 +82,7 @@ struct chat_data* chat_createchat(struct block_list* bl, const char* title, cons
  * player chatroom creation
  *------------------------------------------*/
 bool chat_createpcchat(struct map_session_data* sd, const char* title, const char* pass, int limit, bool pub) {
-	struct chat_data* cd;
+	TBL_CHAT* cd;
 	nullpo_ret(sd);
 	nullpo_ret(title);
 	nullpo_ret(pass);
@@ -126,11 +126,11 @@ bool chat_createpcchat(struct map_session_data* sd, const char* title, const cha
  * join an existing chatroom
  *------------------------------------------*/
 bool chat_joinchat(struct map_session_data* sd, int chatid, const char* pass) {
-	struct chat_data* cd;
+	TBL_CHAT* cd;
 
 	nullpo_ret(sd);
 	nullpo_ret(pass);
-	cd = (struct chat_data*)map->id2bl(chatid);
+	cd = (TBL_CHAT*)map->id2bl(chatid);
 
 	if( cd == NULL || cd->bl.type != BL_CHAT || cd->bl.m != sd->bl.m || sd->state.vending || sd->state.buyingstore || sd->chatID || ((cd->owner->type == BL_NPC) ? cd->users+1 : cd->users) >= cd->limit )
 	{
@@ -188,13 +188,13 @@ bool chat_joinchat(struct map_session_data* sd, int chatid, const char* pass) {
  *  3: Owner changed (Owner left and a new one as assigned)
  *------------------------------------------*/
 int chat_leavechat(struct map_session_data* sd, bool kicked) {
-	struct chat_data* cd;
+	TBL_CHAT* cd;
 	int i;
 	int leavechar;
 
 	nullpo_retr(0, sd);
 
-	cd = (struct chat_data*)map->id2bl(sd->chatID);
+	cd = (TBL_CHAT*)map->id2bl(sd->chatID);
 	if( cd == NULL ) {
 		pc_setchatid(sd, 0);
 		return 0;
@@ -262,14 +262,14 @@ int chat_leavechat(struct map_session_data* sd, bool kicked) {
  *  1: Success
  *------------------------------------------*/
 bool chat_changechatowner(struct map_session_data* sd, const char* nextownername) {
-	struct chat_data* cd;
+	TBL_CHAT* cd;
 	struct map_session_data* tmpsd;
 	int i;
 
 	nullpo_ret(sd);
 	nullpo_ret(nextownername);
 
-	cd = (struct chat_data*)map->id2bl(sd->chatID);
+	cd = (TBL_CHAT*)map->id2bl(sd->chatID);
 	if( cd == NULL || (struct block_list*) sd != cd->owner )
 		return false;
 
@@ -308,13 +308,13 @@ bool chat_changechatowner(struct map_session_data* sd, const char* nextownername
  *  1: Success
  *------------------------------------------*/
 bool chat_changechatstatus(struct map_session_data* sd, const char* title, const char* pass, int limit, bool pub) {
-	struct chat_data* cd;
+	TBL_CHAT* cd;
 
 	nullpo_ret(sd);
 	nullpo_ret(title);
 	nullpo_ret(pass);
 
-	cd = (struct chat_data*)map->id2bl(sd->chatID);
+	cd = (TBL_CHAT*)map->id2bl(sd->chatID);
 	if( cd==NULL || (struct block_list *)sd != cd->owner )
 		return false;
 
@@ -336,13 +336,13 @@ bool chat_changechatstatus(struct map_session_data* sd, const char* title, const
  *  1: Success
  *------------------------------------------*/
 bool chat_kickchat(struct map_session_data* sd, const char* kickusername) {
-	struct chat_data* cd;
+	TBL_CHAT* cd;
 	int i;
 
 	nullpo_ret(sd);
 	nullpo_ret(kickusername);
 
-	cd = (struct chat_data *)map->id2bl(sd->chatID);
+	cd = (TBL_CHAT *)map->id2bl(sd->chatID);
 
 	if( cd==NULL || (struct block_list *)sd != cd->owner )
 		return false;
@@ -365,7 +365,7 @@ bool chat_kickchat(struct map_session_data* sd, const char* kickusername) {
  *------------------------------------------*/
 bool chat_createnpcchat(struct npc_data* nd, const char* title, int limit, bool pub, int trigger, const char* ev, int zeny, int minLvl, int maxLvl)
 {
-	struct chat_data* cd;
+	TBL_CHAT* cd;
 	nullpo_ret(nd);
 
 	if( nd->chat_id ) {
@@ -396,10 +396,10 @@ bool chat_createnpcchat(struct npc_data* nd, const char* title, int limit, bool 
  *  1: Success
  *------------------------------------------*/
 bool chat_deletenpcchat(struct npc_data* nd) {
-	struct chat_data *cd;
+	TBL_CHAT *cd;
 	nullpo_ret(nd);
 
-	cd = (struct chat_data*)map->id2bl(nd->chat_id);
+	cd = (TBL_CHAT*)map->id2bl(nd->chat_id);
 	if( cd == NULL )
 		return false;
 
@@ -419,7 +419,7 @@ bool chat_deletenpcchat(struct npc_data* nd) {
  *  0: Couldn't trigger / Missing data
  *  1: Success
  *------------------------------------------*/
-bool chat_triggerevent(struct chat_data *cd)
+bool chat_triggerevent(TBL_CHAT *cd)
 {
 	nullpo_ret(cd);
 
@@ -433,7 +433,7 @@ bool chat_triggerevent(struct chat_data *cd)
 
 /// Enables the event of the chat room.
 /// At most, 127 users are needed to trigger the event.
-bool chat_enableevent(struct chat_data* cd)
+bool chat_enableevent(TBL_CHAT* cd)
 {
 	nullpo_ret(cd);
 
@@ -443,7 +443,7 @@ bool chat_enableevent(struct chat_data* cd)
 }
 
 /// Disables the event of the chat room
-bool chat_disableevent(struct chat_data* cd)
+bool chat_disableevent(TBL_CHAT* cd)
 {
 	nullpo_ret(cd);
 
@@ -452,7 +452,7 @@ bool chat_disableevent(struct chat_data* cd)
 }
 
 /// Kicks all the users from the chat room.
-bool chat_npckickall(struct chat_data* cd)
+bool chat_npckickall(TBL_CHAT* cd)
 {
 	nullpo_ret(cd);
 
