@@ -60,7 +60,7 @@ typedef struct chat_interface {
 	struct chat_data* (*create) (struct block_list* bl, const char* title, const char* pass, int limit, bool pub, int trigger, const char* ev, int zeny, int minLvl, int maxLvl);
 } TBL_CHAT_INTERFACE;
 
-struct chat_interface *chat;
+TBL_CHAT_INTERFACE *chat;
 
 #ifdef BRATHENA_CORE
 void chat_defaults(void);

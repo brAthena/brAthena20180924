@@ -30,7 +30,7 @@
 #include <stdio.h>
 #include <string.h>
 
-struct chat_interface chat_s;
+TBL_CHAT_INTERFACE chat_s;
 
 /// Initializes a chatroom object (common functionality for both pc and npc chatrooms).
 /// Returns a chatroom object on success, or NULL on failure.
