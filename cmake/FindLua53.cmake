@@ -1,9 +1,9 @@
 # Procura pela biblioteca do Lua
 # Módulos:
-#  LUA53_FOUND,
-#  LUA53_LIBRARIES
+#  LUA53_FOUND, Verdadeiro caso a lua seja encontrada.
+#  LUA53_LIBRARIES, Lista de bibliotecas da lua
 #  LUA53_INCLUDE_DIR, Diretório onde está lua.h
-#  LUA53_VERSION_STRING, Versão do Lua encontrada pelo CMake
+#  LUA53_VERSION_STRING, Versão da Lua encontrada pelo CMake
 
 FIND_PATH(LUA53_INCLUDE_DIR lua.h
   HINTS

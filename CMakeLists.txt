@@ -24,6 +24,30 @@ if (WITH_LUAVER MATCHES "53")
 else()
 	mmessage(FATAL_ERROR "Versão desconhecida do Lua ${WITH_LUAVER}, é necessário ser 51, 52, 53, JIT")
 
+# Procura a biblioteca Pcre
+FIND_PACKAGE(PCRE)
+if(PCRE_FOUND)
+	set(PCRE_INCLUDE_DIR ${PCRE_INCLUDE_DIRS})
+	set(PCRE_LIBRARIES ${PCRE_NAMES} CACHE STRING "Pcre encontrada")
+else()
+	mmessage(FATAL_ERROR "A Pcre não está instalada")
+endif(PCRE_FOUND)
+
+# Obtem o diretório de bibliotecas de inclusão
+INCLUDE_DIRECTORIES(
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/
+    ${LUA_INCLUDES}
+)
+
+# Procura a biblioteca Zlib
+FIND_PACKAGE(ZLIB)
+if(ZLIB_FOUND)
+	set(ZLIB_INCLUDE_DIR ${ZLIB_INCLUDE_DIRS})
+	set(ZLIB_LIBRARIES ${ZLIB_NAMES} CACHE STRING "Zlib encontrada")
+else()
+	mmessage(FATAL_ERROR "A Zlib não está instalada")
+endif(ZLIB_FOUND)
+
 # Obtem o diretório de bibliotecas de inclusão
 INCLUDE_DIRECTORIES(
     ${CMAKE_CURRENT_SOURCE_DIR}/src/
