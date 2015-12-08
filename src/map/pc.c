@@ -6828,7 +6828,7 @@ bool pc_gainexp(struct map_session_data *sd, struct block_list *src, unsigned in
 	if(sd->state.showexp) {
 		char output[256];
 		sprintf(output,
-			"Experiência Base:%u (%.2f%%) Classe:%u (%.2f%%)",base_exp,nextbp*(float)100,job_exp,nextjp*(float)100);
+			"Experi?cia Base:%u (%.2f%%) Classe:%u (%.2f%%)",base_exp,nextbp*(float)100,job_exp,nextjp*(float)100);
 		clif_disp_onlyself(sd,output,strlen(output));
 	}
 
@@ -7148,7 +7148,7 @@ int pc_skillup(struct map_session_data *sd,uint16 skill_id) {
 		else if (sd->sktree.third)
 			clif->msgtable_num(sd, MSG_SKILL_POINTS_LEFT_JOB2, sd->sktree.third);
 		else if (pc->calc_skillpoint(sd) < 9) /* TODO: official response? */
-			clif->messagecolor_self(sd->fd, COLOR_RED, "Você precisa das habilidades básicas.");
+			clif->messagecolor_self(sd->fd, COLOR_RED, "Voc?precisa das habilidades b?icas.");
 	}
 	return 0;
 }
