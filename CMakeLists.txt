@@ -8,29 +8,30 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8.9)
 PROJECT(brAthena C CXX)
 
+# Definindo o diretório padrão para módulos do CMake
 SET(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/" ${CMAKE_MODULE_PATH})
 
 # Procura a biblioteca do MySQL
 FIND_PACKAGE(MySQL)
 if(MySQL_FOUND)
-	MESSAGE(SEND_ERROR "O pacote do MySQL não está instalado.")
+	MMESSAGE(SEND_ERROR "O pacote do MySQL não está instalado.")
 endif(MySQL_FOUND)
 
 # Procura a biblioteca do Lua
 if (WITH_LUAVER MATCHES "53")
 	FIND_PACKAGE(Lua53 REQUIRED)
-		set(LUA_INCLUDES ${LUA53_INCLUDE_DIR})
-		set(LUA_LIBDIR "lib/lua/5.3" CACHE STRING "Lua encontrado")
+		SET(LUA_INCLUDES ${LUA53_INCLUDE_DIR})
+		SET(LUA_LIBDIR "lib/lua/5.3" CACHE STRING "Lua encontrado")
 else()
-	mmessage(FATAL_ERROR "Versão desconhecida do Lua ${WITH_LUAVER}, é necessário ser 51, 52, 53, JIT")
+	MMESSAGE(FATAL_ERROR "Versão desconhecida do Lua ${WITH_LUAVER}, é necessário ser 51, 52, 53, JIT")
 
 # Procura a biblioteca Pcre
 FIND_PACKAGE(PCRE)
 if(PCRE_FOUND)
-	set(PCRE_INCLUDE_DIR ${PCRE_INCLUDE_DIRS})
-	set(PCRE_LIBRARIES ${PCRE_NAMES} CACHE STRING "Pcre encontrada")
+	SET(PCRE_INCLUDE_DIR ${PCRE_INCLUDE_DIRS})
+	SET(PCRE_LIBRARIES ${PCRE_NAMES} CACHE STRING "Pcre encontrada")
 else()
-	mmessage(FATAL_ERROR "A Pcre não está instalada")
+	MMESSAGE(FATAL_ERROR "A Pcre não está instalada")
 endif(PCRE_FOUND)
 
 # Obtem o diretório de bibliotecas de inclusão
@@ -42,10 +43,10 @@ INCLUDE_DIRECTORIES(
 # Procura a biblioteca Zlib
 FIND_PACKAGE(ZLIB)
 if(ZLIB_FOUND)
-	set(ZLIB_INCLUDE_DIR ${ZLIB_INCLUDE_DIRS})
-	set(ZLIB_LIBRARIES ${ZLIB_NAMES} CACHE STRING "Zlib encontrada")
+	SET(ZLIB_INCLUDE_DIR ${ZLIB_INCLUDE_DIRS})
+	SET(ZLIB_LIBRARIES ${ZLIB_NAMES} CACHE STRING "Zlib encontrada")
 else()
-	mmessage(FATAL_ERROR "A Zlib não está instalada")
+	MMESSAGE(FATAL_ERROR "A Zlib não está instalada")
 endif(ZLIB_FOUND)
 
 # Obtem o diretório de bibliotecas de inclusão
@@ -62,3 +63,11 @@ ADD_EXECUTABLE(gateway ${SOURCES})
 
 # Diretório de bibliotecas
 LINK_DIRECTORIES(/usr/lib)
+
+# Definindo uso de CTest para CDash
+SET(CTEST_PROJECT_NAME "brAthena Emulador")
+SET(CTEST_NIGHTLY_START_TIME "01:00:00 UTC")
+SET(CTEST_DROP_METHOD "http")
+SET(CTEST_DROP_SITE "open.cdash.org")
+SET(CTEST_DROP_LOCATION "/submit.php?project=brAthena+Emulador")
+SET(CTEST_DROP_SITE_CDASH TRUE)
