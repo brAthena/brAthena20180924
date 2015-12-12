@@ -666,10 +666,6 @@ struct battle_interface {
 	int (*adjust_skill_damage) (int m, unsigned short skill_id);
 	int64 (*add_mastery) (struct map_session_data *sd,struct block_list *target,int64 dmg,int type);
 	int (*calc_drain) (int64 damage, int rate, int per);
-	/* - battle_config                           */
-	int (*config_read) (const char *cfgName);
-	void (*config_set_defaults) (void);
-	int (*config_get_value) (const char* w1);
 	void (*config_adjust) (void);
 	/* ----------------------------------------- */
 	/* picks a random enemy within the specified range */

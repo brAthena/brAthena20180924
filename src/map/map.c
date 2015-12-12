@@ -5851,8 +5851,6 @@ int do_init(int argc, char *argv[])
 			if (!map->char_ip_set)
 				chrif->setip(ip_str);
 		}
-
-		battle->config_read(map->BATTLE_CONF_FILENAME);
 		atcommand->msg_read(map->MSG_CONF_NAME, false);
 		map->inter_config_read(map->INTER_CONF_NAME);
 		logs->config_read();

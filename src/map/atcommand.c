@@ -3599,14 +3599,14 @@ ACMD(reloadatcommand) {
 	return true;
 }
 /*==========================================
- * @reloadbattleconf - reloads /conf/battle.conf
+ * @reloadbattleconf - reloads /conf/battle.lua
  *------------------------------------------*/
 ACMD(reloadbattleconf)
 {
 	struct Battle_Config prev_config;
 	memcpy(&prev_config, &battle_config, sizeof(prev_config));
 
-	battle->config_read(map->BATTLE_CONF_FILENAME);
+	battle->configuration();
 
 	if( prev_config.item_rate_mvp          != battle_config.item_rate_mvp
 	   ||  prev_config.item_rate_common       != battle_config.item_rate_common

@@ -14637,15 +14637,6 @@ BUILDIN(equip2)
 
 	return true;
 }
-
-BUILDIN(getbattleflag)
-{
-	const char *flag;
-	flag = script_getstr(st,2);
-	script_pushint(st,battle->config_get_value(flag));
-	return true;
-}
-
 //=======================================================
 // strlen [Valaris]
 //-------------------------------------------------------
@@ -20858,7 +20849,6 @@ void script_parse_builtin(void) {
 		BUILDIN_DEF(equip,"i"),
 		BUILDIN_DEF(autoequip,"ii"),
 		BUILDIN_DEF(equip2,"iiiiiii"),
-		BUILDIN_DEF(getbattleflag,"s"),
 		BUILDIN_DEF(setitemscript,"is?"), //Set NEW item bonus script. Lupus
 		BUILDIN_DEF(disguise,"i"), //disguise player. Lupus
 		BUILDIN_DEF(undisguise,""), //undisguise player. Lupus

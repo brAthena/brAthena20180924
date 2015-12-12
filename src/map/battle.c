@@ -7024,21 +7024,12 @@ void battle_configuration(void) {
 
 	lua_close(L);
 }
-static const struct battle_data {
-	const char* str;
-	int* val;
-	int defval;
-	int min;
-	int max;
-} battle_data[] = {	
-	{ "weapon_defense_type",                &battle_config.weapon_defense_type,             0,      0,      INT_MAX, },
-};
 #ifndef STATS_OPT_OUT
 /**
  * brAthena anonymous statistic usage report -- packet is built here, and sent to char server to report.
  **/
 void brathena_report(char* date, char *time_c) {
-	int i, bd_size = ARRAYLENGTH(battle_data);
+	int i;
 	unsigned int config = 0;
 	char timestring[25];
 	time_t curtime;
@@ -7152,12 +7143,12 @@ void brathena_report(char* date, char *time_c) {
 
 #define BFLAG_LENGTH 35
 
-	CREATE(buf, char, 262 + ( bd_size * ( BFLAG_LENGTH + 4 ) ) + 1 );
+	CREATE(buf, char, 262 + 1 );
 
 	/* build packet */
 
 	WBUFW(buf,0) = 0x3000;
-	WBUFW(buf,2) = 262 + ( bd_size * ( BFLAG_LENGTH + 4 ) );
+	WBUFW(buf,2) = 262;
 	WBUFW(buf,4) = 0x9f;
 
 	safestrncpy((char*)WBUFP(buf,6), date, 12);
@@ -7179,13 +7170,7 @@ void brathena_report(char* date, char *time_c) {
 	WBUFL(buf,250) = config;
 	WBUFL(buf,254) = PACKETVER;
 
-	WBUFL(buf,258) = bd_size;
-	for( i = 0; i < bd_size; i++ ) {
-		safestrncpy((char*)WBUFP(buf,262 + ( i * ( BFLAG_LENGTH + 4 ) ) ), battle_data[i].str, BFLAG_LENGTH);
-		WBUFL(buf,262 + BFLAG_LENGTH + ( i * ( BFLAG_LENGTH + 4 )  )  ) = *battle_data[i].val;
-	}
-
-	chrif->send_report(buf, 262 + ( bd_size * ( BFLAG_LENGTH + 4 ) ) );
+	chrif->send_report(buf, 262);
 
 	aFree(buf);
 
@@ -7198,23 +7183,6 @@ static int brathena_report_timer(int tid, int64 tick, int id, intptr_t data) {
 	return 0;
 }
 #endif
-
-int battle_get_value(const char* w1)
-{
-	int i;
-	nullpo_retr(1, w1);
-	ARR_FIND(0, ARRAYLENGTH(battle_data), i, strcmpi(w1, battle_data[i].str) == 0);
-	if (i == ARRAYLENGTH(battle_data))
-		return 0; // not found
-	else
-		return *battle_data[i].val;
-}
-
-void battle_set_defaults(void) {
-	int i;
-	for (i = 0; i < ARRAYLENGTH(battle_data); i++)
-		*battle_data[i].val = battle_data[i].defval;
-}
 
 void battle_adjust_conf(void) {
 	battle_config.monster_max_aspd = 2000 - battle_config.monster_max_aspd*10;
@@ -7276,47 +7244,6 @@ void battle_adjust_conf(void) {
 	if (battle_config.custom_cell_stack_limit != 1)
 		ShowWarning("Battle setting 'custom_cell_stack_limit' nao foi compilado com o suporte a cell_stack_limit, desativando...\n");
 #endif
-}
-
-int battle_config_read(const char* cfgName)
-{
-	FILE* fp;
-	static int count = 0;
-
-	nullpo_ret(cfgName);
-
-	if (count == 0)
-		battle->config_set_defaults();
-
-	count++;
-
-	fp = fopen(cfgName,"r");
-	if (fp == NULL)
-		ShowError("Arquivo nao encontrado: %s\n", cfgName);
-	else
-	{
-		char line[1024], w1[1024], w2[1024];
-		while(fgets(line, sizeof(line), fp))
-		{
-			if (line[0] == '/' && line[1] == '/')
-				continue;
-			if (sscanf(line, "%1023[^:]:%1023s", w1, w2) != 2)
-				continue;
-			if (strcmpi(w1, "import") == 0)
-				battle->config_read(w2);
-		}
-
-		fclose(fp);
-	}
-
-	count--;
-
-	if (count == 0) {
-		//battle->config_adjust();
-		//clif->bc_ready();
-	}
-
-	return 0;
 }
 
 void do_init_battle(bool minimal) {
@@ -7393,9 +7320,6 @@ void battle_defaults(void) {
 	battle->adjust_skill_damage = battle_adjust_skill_damage;
 	battle->add_mastery = battle_addmastery;
 	battle->calc_drain = battle_calc_drain;
-	battle->config_read = battle_config_read;
-	battle->config_set_defaults = battle_set_defaults;
-	battle->config_get_value = battle_get_value;
 	battle->config_adjust = battle_adjust_conf;
 	battle->get_enemy_area = battle_getenemyarea;
 	battle->damage_area = battle_damage_area;
