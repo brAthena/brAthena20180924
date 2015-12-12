@@ -1325,8 +1325,8 @@ int status_damage(struct block_list *src,struct block_list *target,int64 in_hp, 
 
 	//Normal death
 	st->hp = 0;
-	if (battle_config.clear_unit_ondeath &&
-		battle_config.clear_unit_ondeath&target->type)
+	if (battle_config.clear_skills_on_death &&
+		battle_config.clear_skills_on_death&target->type)
 		skill->clear_unitgroup(target);
 
 	if(target->type&BL_REGEN) {
@@ -6573,35 +6573,35 @@ int status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_typ
 
 	if (sd) {
 
-		if (battle_config.pc_sc_def_rate != 100) {
-			sc_def = sc_def*battle_config.pc_sc_def_rate/100;
-			sc_def2 = sc_def2*battle_config.pc_sc_def_rate/100;
+		if (battle_config.pc_status_def_rate != 100) {
+			sc_def = sc_def*battle_config.pc_status_def_rate/100;
+			sc_def2 = sc_def2*battle_config.pc_status_def_rate/100;
 		}
-		if(battle_config.enable_luk_influence)
-			sc_def += (battle_config.pc_max_sc_def*100 - sc_def)*st->luk/battle_config.pc_luk_sc_def;
+		if(battle_config.status_luk_influence)
+			sc_def += (battle_config.pc_max_status_def*100 - sc_def)*st->luk/battle_config.pc_luk_status_def;
 
-		sc_def = min(sc_def, battle_config.pc_max_sc_def*100);
-		sc_def2 = min(sc_def2, battle_config.pc_max_sc_def*100);
+		sc_def = min(sc_def, battle_config.pc_max_status_def*100);
+		sc_def2 = min(sc_def2, battle_config.pc_max_status_def*100);
 
-		if (tick_def > 0 && battle_config.pc_sc_def_rate != 100) {
-			tick_def = tick_def*battle_config.pc_sc_def_rate/100;
-			tick_def2 = tick_def2*battle_config.pc_sc_def_rate/100;
+		if (tick_def > 0 && battle_config.pc_status_def_rate != 100) {
+			tick_def = tick_def*battle_config.pc_status_def_rate/100;
+			tick_def2 = tick_def2*battle_config.pc_status_def_rate/100;
 		}
 	} else {
 
-		if (battle_config.mob_sc_def_rate != 100) {
-			sc_def = sc_def*battle_config.mob_sc_def_rate/100;
-			sc_def2 = sc_def2*battle_config.mob_sc_def_rate/100;
+		if (battle_config.mob_status_def_rate != 100) {
+			sc_def = sc_def*battle_config.mob_status_def_rate/100;
+			sc_def2 = sc_def2*battle_config.mob_status_def_rate/100;
 		}
-		if(battle_config.enable_luk_influence)
-			sc_def += (battle_config.mob_max_sc_def*100 - sc_def)*st->luk/battle_config.mob_luk_sc_def;
+		if(battle_config.status_luk_influence)
+			sc_def += (battle_config.mob_max_status_def*100 - sc_def)*st->luk/battle_config.mob_luk_status_def;
 
-		sc_def = min(sc_def, battle_config.mob_max_sc_def*100);
-		sc_def2 = min(sc_def2, battle_config.mob_max_sc_def*100);
+		sc_def = min(sc_def, battle_config.mob_max_status_def*100);
+		sc_def2 = min(sc_def2, battle_config.mob_max_status_def*100);
 
-		if (tick_def > 0 && battle_config.mob_sc_def_rate != 100) {
-			tick_def = tick_def*battle_config.mob_sc_def_rate/100;
-			tick_def2 = tick_def2*battle_config.mob_sc_def_rate/100;
+		if (tick_def > 0 && battle_config.mob_status_def_rate != 100) {
+			tick_def = tick_def*battle_config.mob_status_def_rate/100;
+			tick_def2 = tick_def2*battle_config.mob_status_def_rate/100;
 		}
 	}
 
@@ -7893,7 +7893,7 @@ int status_change_start(struct block_list *src, struct block_list *bl, enum sc_t
 				//val4&2 makes cloak not end on normal attacks [Skotlex]
 				//val4&4 makes cloak not end on using skills
 				if (bl->type == BL_PC || (bl->type == BL_MOB && ((TBL_MOB*)bl)->special_state.clone) ) //Standard cloaking.
-					val4 |= battle_config.pc_cloak_check_type&7;
+					val4 |= battle_config.player_cloak_check_type&7;
 				else
 					val4 |= battle_config.monster_cloak_check_type&7;
 				break;
@@ -8518,7 +8518,7 @@ int status_change_start(struct block_list *src, struct block_list *bl, enum sc_t
 				val2 = ( val1 + 1 ) / 2; // Hits
 				val3 = 90 + val1 * 10; // Walk speed
 				if (bl->type == BL_PC)
-					val4 |= battle_config.pc_cloak_check_type&7;
+					val4 |= battle_config.player_cloak_check_type&7;
 				else
 					val4 |= battle_config.monster_cloak_check_type&7;
 				tick_time = 1000; // [GodLesZ] tick time
@@ -9277,7 +9277,7 @@ int status_change_start(struct block_list *src, struct block_list *bl, enum sc_t
 		case SC_TRICKDEAD:
 			status_change_end(bl, SC_DANCING, INVALID_TIMER);
 			// Cancel cast when get status [LuzZza]
-			if (battle_config.sc_castcancel&bl->type)
+			if (battle_config.status_cast_cancel&bl->type)
 				unit->skillcastcancel(bl, 0);
 		case SC_FALLENEMPIRE:
 		case SC_WHITEIMPRISON:
@@ -9317,7 +9317,7 @@ int status_change_start(struct block_list *src, struct block_list *bl, enum sc_t
 			unit->stop_attack(bl);
 			break;
 		case SC_SILENCE:
-			if (battle_config.sc_castcancel&bl->type)
+			if (battle_config.status_cast_cancel&bl->type)
 				unit->skillcastcancel(bl, 0);
 			break;
 			/* */

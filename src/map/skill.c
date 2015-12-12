@@ -256,7 +256,7 @@ int skill_get_range2 (struct block_list *bl, uint16 skill_id, uint16 skill_lv) {
 	range = skill->get_range(skill_id, skill_lv);
 
 	if( range < 0 ) {
-		if( battle_config.use_weapon_skill_range&bl->type )
+		if( battle_config.skillrange_from_weapon&bl->type )
 			return status_get_range(bl);
 		range *=-1;
 	}
@@ -4210,7 +4210,7 @@ int skill_castend_damage_id(struct block_list* src, struct block_list *bl, uint1
 			/* Fall through */
 		case SL_STIN:
 		case SL_STUN:
-			if (sd && !battle_config.allow_es_magic_pc && bl->type != BL_MOB) {
+			if (sd && !battle_config.allow_es_magic_player && bl->type != BL_MOB) {
 				status->change_start(src,src,SC_STUN,10000,skill_lv,0,0,0,500,SCFLAG_FIXEDTICK|SCFLAG_FIXEDRATE);
 				clif->skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 				break;
@@ -7842,7 +7842,7 @@ int skill_castend_nodamage_id(struct block_list *src, struct block_list *bl, uin
 			}
 		case SL_SKA: // [marquis007]
 		case SL_SKE:
-			if (sd && !battle_config.allow_es_magic_pc && bl->type != BL_MOB) {
+			if (sd && !battle_config.allow_es_magic_player && bl->type != BL_MOB) {
 				clif->skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 				status->change_start(src,src,SC_STUN,10000,skill_lv,0,0,0,500,SCFLAG_FIXEDTICK|SCFLAG_FIXEDRATE);
 				break;
@@ -11139,8 +11139,8 @@ struct skill_unit_group* skill_unitsetting(struct block_list *src, uint16 skill_
 		case GN_HELLS_PLANT:
 			if (skill_id == GN_HELLS_PLANT && map->getcell(src->m, src, x, y, CELL_CHKLANDPROTECTOR))
 				return NULL;
-			if (map_flag_vs(src->m) && battle_config.vs_traps_bctall
-				&& (src->type&battle_config.vs_traps_bctall))
+			if (map_flag_vs(src->m) && battle_config.gvg_traps_target_all
+				&& (src->type&battle_config.gvg_traps_target_all))
 				target = BCT_ALL;
 			break;
 		case HT_ANKLESNARE:
@@ -11177,7 +11177,7 @@ struct skill_unit_group* skill_unitsetting(struct block_list *src, uint16 skill_
 					req_item = req.itemid[i];
 				if( map_flag_gvg2(src->m) || map->list[src->m].flag.battleground )
 					limit *= 4; // longer trap times in WOE [celest]
-				if( battle_config.vs_traps_bctall && map_flag_vs(src->m) && (src->type&battle_config.vs_traps_bctall) )
+				if( battle_config.gvg_traps_target_all && map_flag_vs(src->m) && (src->type&battle_config.gvg_traps_target_all) )
 					target = BCT_ALL;
 			}
 			break;
@@ -11370,7 +11370,7 @@ struct skill_unit_group* skill_unitsetting(struct block_list *src, uint16 skill_
 			limit = -1;
 			break;
 		case WM_REVERBERATION:
-			if( battle_config.vs_traps_bctall && map_flag_vs(src->m) && (src->type&battle_config.vs_traps_bctall) )
+			if( battle_config.gvg_traps_target_all && map_flag_vs(src->m) && (src->type&battle_config.gvg_traps_target_all) )
 				target = BCT_ALL;
 			val1 = skill_lv + 1;
 			val2 = 1;
@@ -14028,7 +14028,7 @@ int skill_check_condition_castend(struct map_session_data* sd, uint16 skill_id, 
 			if(battle_config.land_skill_limit && maxcount>0 && (battle_config.land_skill_limit&BL_PC)) {
 				i = map->foreachinmap(skill->check_condition_mob_master_sub ,sd->bl.m, BL_MOB, sd->bl.id, mob_class, skill_id, &c);
 				if( c >= maxcount
-				 || (skill_id==AM_CANNIBALIZE && c != i && battle_config.summon_flora&2)
+				 || (skill_id==AM_CANNIBALIZE && c != i && battle_config.summon_flora_setting&2)
 				) {
 					//Fails when: exceed max limit. There are other plant types already out.
 					clif->skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
@@ -14622,8 +14622,8 @@ int skill_castfix (struct block_list *bl, uint16 skill_id, uint16 skill_lv) {
 	}
 #endif
 	// config cast time multiplier
-	if (battle_config.cast_rate != 100)
-		time = time * battle_config.cast_rate / 100;
+	if (battle_config.casting_rate != 100)
+		time = time * battle_config.casting_rate / 100;
 	// return final cast time
 	time = max(time, 0);
 
@@ -15825,7 +15825,7 @@ bool skill_check_cloaking(struct block_list *bl, struct status_change_entry *sce
 	static int dy[] = {-1, 0, 1,  0, -1, -1, 1,  1};
 	bool wall = true;
 
-	if( (bl->type == BL_PC && battle_config.pc_cloak_check_type&1)
+	if( (bl->type == BL_PC && battle_config.player_cloak_check_type &1)
 	 || (bl->type != BL_PC && battle_config.monster_cloak_check_type&1)
 	) {
 		//Check for walls.
@@ -18799,7 +18799,7 @@ bool skill_parse_row_unitdb(char* split[], int columns, int current) {
 
 	skill->dbs->db[idx].unit_flag = (int)strtol(split[7],NULL,16);
 
-	if (skill->dbs->db[idx].unit_flag&UF_DEFNOTENEMY && battle_config.defnotenemy)
+	if (skill->dbs->db[idx].unit_flag&UF_DEFNOTENEMY && battle_config.defunit_not_enemy)
 		skill->dbs->db[idx].unit_target = BCT_NOENEMY;
 
 	//By default, target just characters.

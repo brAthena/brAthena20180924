@@ -941,8 +941,8 @@ int unit_warp(struct block_list *bl,short m,short x,short y,clr_type type)
 	if (!unit->remove_map(bl, type, ALC_MARK))
 		return 3;
 
-	if (bl->m != m && battle_config.clear_unit_onwarp &&
-		battle_config.clear_unit_onwarp&bl->type)
+	if (bl->m != m && battle_config.clear_skills_on_warp &&
+		battle_config.clear_skills_on_warp&bl->type)
 		skill->clear_unitgroup(bl);
 
 	bl->x=ud->to_x=x;
@@ -2085,7 +2085,7 @@ int unit_attack_timer_sub(struct block_list* src, int tid, int64 tick) {
 	if( ud->skilltimer != INVALID_TIMER && !(sd && pc->checkskill(sd,SA_FREECAST) > 0) )
 		return 0; // can't attack while casting
 
-	if( !battle_config.sdelay_attack_enable && DIFF_TICK(ud->canact_tick,tick) > 0 && !(sd && pc->checkskill(sd,SA_FREECAST) > 0) )
+	if( !battle_config.skill_delay_attack_enable && DIFF_TICK(ud->canact_tick,tick) > 0 && !(sd && pc->checkskill(sd,SA_FREECAST) > 0) )
 	{ // attacking when under cast delay has restrictions:
 		if( tid == INVALID_TIMER ) { //requested attack.
 			if(sd) clif->skill_fail(sd,1,USESKILL_FAIL_SKILLINTERVAL,0);

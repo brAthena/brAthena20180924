@@ -41,7 +41,7 @@ if (!lua_isinteger(L, -1)) { \
 	continue; \
 } \
 	battle_config.k = (int)lua_tointeger(L, -1); \
-	value += 1; \
+	count += 1; \
 	lua_pop(L, 1); \
 } while (0)
 
@@ -54,7 +54,7 @@ if (!lua_isboolean(L, -1)) { \
 	continue; \
 } \
 	battle_config.k = lua_toboolean(L, -1); \
-	value += 1; \
+	count += 1; \
 	lua_pop(L, 1); \
 } while (0)
 
@@ -158,22 +158,22 @@ struct Battle_Config {
 	int critical_rate;
 	int enable_baseatk;
 	int enable_perfect_flee;
-	int cast_rate, delay_rate;
+	int casting_rate, delay_rate;
 	int delay_dependon_dex, delay_dependon_agi;
-	int sdelay_attack_enable;
+	int skill_delay_attack_enable;
 	int left_cardfix_to_right;
 	int skill_add_range;
 	int skill_out_range_consume;
 	int skill_amotion_leniency;
 	int skillrange_by_distance; //[Skotlex]
-	int use_weapon_skill_range; //[Skotlex]
+	int skillrange_from_weapon; //[Skotlex]
 	int player_damage_delay_rate;
-	int defnotenemy;
-	int vs_traps_bctall;
+	int defunit_not_enemy;
+	int gvg_traps_target_all;
 	int traps_setting;
-	int summon_flora; //[Skotlex]
-	int clear_unit_ondeath; //[Skotlex]
-	int clear_unit_onwarp; //[Skotlex]
+	int summon_flora_setting; //[Skotlex]
+	int clear_skills_on_death; //[Skotlex]
+	int clear_skills_on_warp; //[Skotlex]
 	int random_monster_checklv;
 	int attribute_recover;
 	int item_auto_get;
@@ -202,8 +202,8 @@ struct Battle_Config {
 	int spawn_quantity_limit;
 	int slave_clone_limit;
 	int partial_name_scan;
-	int skillfree;
-	int skillup_limit;
+	int player_skillfree;
+	int player_skillup_limit;
 	int weapon_produce_rate;
 	int potion_produce_rate;
 	int monster_active_enable;
@@ -230,7 +230,7 @@ struct Battle_Config {
 	int skill_relog_delay;
 	int emergency_call;
 	int guild_aura;
-	int pc_invincible_time;
+	int player_invincible_time;
 
 	int pet_catch_rate;
 	int pet_rename;
@@ -300,9 +300,9 @@ struct Battle_Config {
 	int magic_defense_type;
 	int skill_reiteration;
 	int skill_nofootset;
-	int pc_cloak_check_type;
+	int player_cloak_check_type;
 	int monster_cloak_check_type;
-	int estimation_type;
+	int sense_type;
 	int gvg_flee_penalty;
 	int mob_changetarget_byskill;
 	int attack_direction_change;
@@ -442,18 +442,18 @@ struct Battle_Config {
 	int skip_teleport_lv1_menu; // possibility to disable (skip) Teleport Lv1 menu, that have only two lines `Random` and `Cancel` [LuzZza]
 	int mob_max_skilllvl;
 	int allow_skill_without_day; // [Komurka]
-	int allow_es_magic_pc; // [Skotlex]
+	int allow_es_magic_player; // [Skotlex]
 	int skill_wall_check; // [Skotlex]
 	int official_cell_stack_limit; // [Playtester]
 	int custom_cell_stack_limit; // [Skotlex]
 	int check_occupied_cells; // [4144]
 	int skill_caster_check; // [Skotlex]
-	int sc_castcancel; // [Skotlex]
-	int pc_sc_def_rate; // [Skotlex]
-	int mob_sc_def_rate;
-	int pc_max_sc_def;
-	int mob_max_sc_def;
-	int enable_luk_influence,pc_luk_sc_def,mob_luk_sc_def;
+	int status_cast_cancel; // [Skotlex]
+	int pc_status_def_rate; // [Skotlex]
+	int mob_status_def_rate;
+	int pc_max_status_def;
+	int mob_max_status_def;
+	int status_luk_influence, pc_luk_status_def, mob_luk_status_def;
 	
 	int sg_angel_skill_ratio;
 	int sg_miracle_skill_ratio;

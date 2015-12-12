@@ -5227,11 +5227,11 @@ void clif_skill_estimation(struct map_session_data *sd,struct block_list *dst) {
 	WBUFW(buf, 4) = status->get_lv(dst);
 	WBUFW(buf, 6) = dstatus->size;
 	WBUFL(buf, 8) = dstatus->hp;
-	WBUFW(buf,12) = ((battle_config.estimation_type&1) ? dstatus->def : 0)
-	              + ((battle_config.estimation_type&2) ? dstatus->def2 : 0);
+	WBUFW(buf,12) = ((battle_config.sense_type&1) ? dstatus->def : 0)
+	              + ((battle_config.sense_type&2) ? dstatus->def2 : 0);
 	WBUFW(buf,14) = dstatus->race;
-	WBUFW(buf,16) = ((battle_config.estimation_type&1) ? dstatus->mdef : 0)
-	              + ((battle_config.estimation_type&2) ? dstatus->mdef2 : 0);
+	WBUFW(buf,16) = ((battle_config.sense_type&1) ? dstatus->mdef : 0)
+	              + ((battle_config.sense_type&2) ? dstatus->mdef2 : 0);
 	WBUFW(buf,18) = dstatus->def_ele;
 	for(i=0;i<9;i++) {
 		WBUFB(buf,20+i)= (unsigned char)battle->attr_ratio(i+1,dstatus->def_ele, dstatus->ele_lv);
@@ -9095,8 +9095,8 @@ void clif_parse_LoadEndAck(int fd, struct map_session_data *sd) {
 	if(sd->status.guild_id)
 		guild->send_memberinfoshort(sd,1);
 
-	if(battle_config.pc_invincible_time > 0) {
-		pc->setinvincibletimer(sd,battle_config.pc_invincible_time);
+	if(battle_config.player_invincible_time > 0) {
+		pc->setinvincibletimer(sd,battle_config.player_invincible_time);
 	}
 
 	if( map->list[sd->bl.m].users++ == 0 && battle_config.dynamic_mobs )
@@ -9376,7 +9376,7 @@ void clif_parse_LoadEndAck(int fd, struct map_session_data *sd) {
 	}
 
 	// Trigger skill effects if you appear standing on them
-	if(!battle_config.pc_invincible_time)
+	if(!battle_config.player_invincible_time)
 		skill->unit_move(&sd->bl,timer->gettick(),1);
 
 	// NPC Quest / Event Icon Check [Kisuka]
@@ -9941,7 +9941,7 @@ void clif_parse_ActionRequest_sub(struct map_session_data *sd, int action_type, 
 			if( sd->sc.option&OPTION_COSTUME )
 				return;
 
-			if (!battle_config.sdelay_attack_enable && pc->checkskill(sd, SA_FREECAST) <= 0) {
+			if (!battle_config.skill_delay_attack_enable && pc->checkskill(sd, SA_FREECAST) <= 0) {
 				if (DIFF_TICK(tick, sd->ud.canact_tick) < 0) {
 					clif->skill_fail(sd, 1, USESKILL_FAIL_SKILLINTERVAL, 0);
 					return;

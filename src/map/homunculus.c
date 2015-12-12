@@ -204,7 +204,7 @@ int homunculus_calc_skilltree(struct homun_data *hd, int flag_evolve) {
 		for( i = 0; i < MAX_SKILL_TREE && ( id = homun->dbs->skill_tree[c][i].id ) > 0; i++ ) {
 			if( hd->homunculus.hskill[ id - HM_SKILLBASE ].id )
 				continue; //Skill already known.
-			if(!battle_config.skillfree) {
+			if(!battle_config.player_skillfree) {
 				for( j = 0; j < MAX_PC_SKILL_REQUIRE; j++ ) {
 					if( homun->dbs->skill_tree[c][i].need[j].id &&
 					   homun->checkskill(hd,homun->dbs->skill_tree[c][i].need[j].id) < homun->dbs->skill_tree[c][i].need[j].lv ) {
@@ -228,7 +228,7 @@ int homunculus_calc_skilltree(struct homun_data *hd, int flag_evolve) {
 		j = ( flag_evolve ) ? 10 : hd->homunculus.intimacy;
 		if( j < homun->dbs->skill_tree[c][i].intimacylv )
 			continue;
-		if(!battle_config.skillfree) {
+		if(!battle_config.player_skillfree) {
 			for( j = 0; j < MAX_PC_SKILL_REQUIRE; j++ ) {
 				if( homun->dbs->skill_tree[c][i].need[j].id &&
 					homun->checkskill(hd,homun->dbs->skill_tree[c][i].need[j].id) < homun->dbs->skill_tree[c][i].need[j].lv ) {

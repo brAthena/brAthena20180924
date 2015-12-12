@@ -1627,7 +1627,7 @@ int pc_calc_skilltree(struct map_session_data *sd)
 				continue; //Skill already known.
 
 			f = 1;
-			if(!battle_config.skillfree) {
+			if(!battle_config.player_skillfree) {
 				int j;
 				for(j = 0; j < MAX_PC_SKILL_REQUIRE; j++) {
 					int k;
@@ -1711,7 +1711,7 @@ void pc_check_skilltree(struct map_session_data *sd, int skill_id)
 	int i,id=0,flag;
 	int c=0;
 
-	if(battle_config.skillfree)
+	if(battle_config.player_skillfree)
 		return; //Function serves no purpose if this is set
 
 	i = pc->calc_skilltree_normalize_job(sd);
@@ -1797,7 +1797,7 @@ int pc_calc_skilltree_normalize_job(struct map_session_data *sd)
 	int skill_point, novice_skills;
 	int c = sd->class_;
 
-	if (!battle_config.skillup_limit || pc_has_permission(sd, PC_PERM_ALL_SKILL))
+	if (!battle_config.player_skillup_limit || pc_has_permission(sd, PC_PERM_ALL_SKILL))
 		return c;
 
 	skill_point = pc->calc_skillpoint(sd);
@@ -5609,7 +5609,7 @@ int pc_setpos(struct map_session_data* sd, unsigned short map_index, int x, int 
 				if( !pc->isequip( sd , sd->equip_index[ i ] ) )
 					pc->unequipitem(sd, sd->equip_index[i], PCUNEQUIPITEM_FORCE);
 		}
-		if (battle_config.clear_unit_onwarp&BL_PC)
+		if (battle_config.clear_skills_on_warp&BL_PC)
 			skill->clear_unitgroup(&sd->bl);
 		party->send_dot_remove(sd); //minimap dot fix [Kevin]
 		guild->send_dot_remove(sd);
@@ -7142,7 +7142,7 @@ int pc_skillup(struct map_session_data *sd,uint16 skill_id) {
 			clif->updatestatus(sd,SP_CARTINFO);
 		if (!pc_has_permission(sd, PC_PERM_ALL_SKILL)) // may skill everything at any time anyways, and this would cause a huge slowdown
 			clif->skillinfoblock(sd);
-	} else if( battle_config.skillup_limit ){
+	} else if( battle_config.player_skillup_limit ){
 		if (sd->sktree.second)
 			clif->msgtable_num(sd, MSG_SKILL_POINTS_LEFT_JOB1, sd->sktree.second);
 		else if (sd->sktree.third)
@@ -7818,8 +7818,8 @@ int pc_dead(struct map_session_data *sd,struct block_list *src) {
 			pc->setstand(sd);
 			status_percent_heal(&sd->bl, 100, 100);
 			clif->resurrection(&sd->bl, 1);
-			if(battle_config.pc_invincible_time)
-				pc->setinvincibletimer(sd, battle_config.pc_invincible_time);
+			if(battle_config.player_invincible_time)
+				pc->setinvincibletimer(sd, battle_config.player_invincible_time);
 			sc_start(NULL,&sd->bl,status->skill2sc(MO_STEELBODY),100,1,skill->get_time(MO_STEELBODY,1));
 			if(map_flag_gvg2(sd->bl.m))
 				pc->respawn_timer(INVALID_TIMER, timer->gettick(), sd->bl.id, 0);
@@ -7983,8 +7983,8 @@ void pc_revive(struct map_session_data *sd,unsigned int hp, unsigned int sp) {
 	if(sp) clif->updatestatus(sd,SP_SP);
 
 	pc->setstand(sd);
-	if(battle_config.pc_invincible_time > 0)
-		pc->setinvincibletimer(sd, battle_config.pc_invincible_time);
+	if(battle_config.player_invincible_time > 0)
+		pc->setinvincibletimer(sd, battle_config.player_invincible_time);
 
 	if( sd->state.gmaster_flag ) {
 		guild->aura_refresh(sd,GD_LEADERSHIP,guild->checkskill(sd->guild,GD_LEADERSHIP));
@@ -9701,7 +9701,7 @@ int pc_equipitem(struct map_session_data *sd,int n,int req_pos)
 			pos = sd->equip_index[EQI_SHADOW_WEAPON] >= 0 ? EQP_SHADOW_SHIELD : EQP_SHADOW_WEAPON;
 	}
 
-	if (pos&EQP_HAND_R && battle_config.use_weapon_skill_range&BL_PC) {
+	if (pos&EQP_HAND_R && battle_config.skillrange_from_weapon&BL_PC) {
 		//Update skill-block range database when weapon range changes. [Skotlex]
 		i = sd->equip_index[EQI_HAND_R];
 		if (i < 0 || !sd->inventory_data[i]) //No data, or no weapon equipped

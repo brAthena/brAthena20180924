@@ -6377,7 +6377,7 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 		{
 			TBL_MOB *md = BL_CAST(BL_MOB, target);
 			if((
-			     (md->special_state.ai == AI_SPHERE || (md->special_state.ai == AI_FLORA && battle_config.summon_flora&1))
+			     (md->special_state.ai == AI_SPHERE || (md->special_state.ai == AI_FLORA && battle_config.summon_flora_setting&1))
 			     && s_bl->type == BL_PC && src->type != BL_MOB
 			   )
 			 || (md->special_state.ai == AI_ZANZOU && t_bl->id != s_bl->id)
@@ -6694,7 +6694,7 @@ void battle_configuration(void) {
 	lua_State *L = luaL_newstate();
 	luaL_openlibs(L);
 	char *lua_filename = "conf/battle.lua";
-	int value = 0;
+	int count = 0;
 
 	if (luaL_dofile(L, lua_filename)) {
 		ShowError("Erro ao ler o arquivo %s\n", lua_filename);
@@ -6721,17 +6721,17 @@ void battle_configuration(void) {
 	BATTLE_LUA_INTEGER(L, -1, arrow_decrement);                   BATTLE_LUA_BOOLEAN(L, -1, autospell_check_range);
 	BATTLE_LUA_BOOLEAN(L, -1, knockback_left);                    BATTLE_LUA_BOOLEAN(L, -1, snap_dodge);
 
-	ShowLUA("Leitura de '"CL_WHITE"%d"CL_RESET"' configura%c%ces de batalha '"CL_WHITE"DAMAGE"CL_RESET"' em '"CL_WHITE"%s"CL_RESET"'.\n", value, 135, 228, lua_filename);
+	ShowLUA("Leitura de '"CL_WHITE"%d"CL_RESET"' configura%c%ces de batalha '"CL_WHITE"DAMAGE"CL_RESET"' em '"CL_WHITE"%s"CL_RESET"'.\n", count, 135, 228, lua_filename);
 
-	value = 0;
+	count = 0;
 
 	lua_getglobal(L, "BATTLEGROUND");
 
 	BATTLE_LUA_INTEGER(L, -1, bg_flee_penalty);                   BATTLE_LUA_INTEGER(L, -1, bg_update_interval);
 
-	ShowLUA("Leitura de '"CL_WHITE"%d"CL_RESET"' configura%c%ces de batalha '"CL_WHITE"BATTLEGROUND"CL_RESET"' em '"CL_WHITE"%s"CL_RESET"'.\n", value, 135, 228, lua_filename);
+	ShowLUA("Leitura de '"CL_WHITE"%d"CL_RESET"' configura%c%ces de batalha '"CL_WHITE"BATTLEGROUND"CL_RESET"' em '"CL_WHITE"%s"CL_RESET"'.\n", count, 135, 228, lua_filename);
 
-	value = 0;
+	count = 0;
 
 	lua_getglobal(L, "CLIENT");
 
@@ -6750,9 +6750,9 @@ void battle_configuration(void) {
 	BATTLE_LUA_BOOLEAN(L, -1, client_reshuffle_dice);             BATTLE_LUA_BOOLEAN(L, -1, client_sort_storage);
 	BATTLE_LUA_INTEGER(L, -1, client_accept_chatdori);            BATTLE_LUA_INTEGER(L, -1, client_emblem_max_blank);
 
-	ShowLUA("Leitura de '"CL_WHITE"%d"CL_RESET"' configura%c%ces de batalha '"CL_WHITE"CLIENT"CL_RESET"' em '"CL_WHITE"%s"CL_RESET"'.\n", value, 135, 228, lua_filename);
+	ShowLUA("Leitura de '"CL_WHITE"%d"CL_RESET"' configura%c%ces de batalha '"CL_WHITE"CLIENT"CL_RESET"' em '"CL_WHITE"%s"CL_RESET"'.\n", count, 135, 228, lua_filename);
 
-	value = 0;
+	count = 0;
 
 	lua_getglobal(L, "DROPS");
 
@@ -6779,9 +6779,9 @@ void battle_configuration(void) {
 	BATTLE_LUA_INTEGER(L, -1, drops_by_luk2);                     BATTLE_LUA_INTEGER(L, -1, alchemist_summon_reward);
 	BATTLE_LUA_INTEGER(L, -1, rare_drop_announce);
 
-	ShowLUA("Leitura de '"CL_WHITE"%d"CL_RESET"' configura%c%ces de batalha '"CL_WHITE"DROPS"CL_RESET"' em '"CL_WHITE"%s"CL_RESET"'.\n", value, 135, 228, lua_filename);
+	ShowLUA("Leitura de '"CL_WHITE"%d"CL_RESET"' configura%c%ces de batalha '"CL_WHITE"DROPS"CL_RESET"' em '"CL_WHITE"%s"CL_RESET"'.\n", count, 135, 228, lua_filename);
 
-	value = 0;
+	count = 0;
 
 	lua_getglobal(L, "EXPERIENCE");
 
@@ -6796,9 +6796,9 @@ void battle_configuration(void) {
 	BATTLE_LUA_INTEGER(L, -1, zeny_penalty);                      BATTLE_LUA_BOOLEAN(L, -1, disp_experience);
 	BATTLE_LUA_BOOLEAN(L, -1, disp_zeny);                         BATTLE_LUA_BOOLEAN(L, -1, use_statpoint_table);
 
-	ShowLUA("Leitura de '"CL_WHITE"%d"CL_RESET"' configura%c%ces de batalha '"CL_WHITE"EXPERIENCE"CL_RESET"' em '"CL_WHITE"%s"CL_RESET"'.\n", value, 135, 228, lua_filename);
+	ShowLUA("Leitura de '"CL_WHITE"%d"CL_RESET"' configura%c%ces de batalha '"CL_WHITE"EXPERIENCE"CL_RESET"' em '"CL_WHITE"%s"CL_RESET"'.\n", count, 135, 228, lua_filename);
 
-	value = 0;
+	count = 0;
 
 	lua_getglobal(L, "FEATURE");
 
@@ -6806,9 +6806,9 @@ void battle_configuration(void) {
 	BATTLE_LUA_BOOLEAN(L, -1, atcommand_suggestions);             BATTLE_LUA_BOOLEAN(L, -1, banking);
 	BATTLE_LUA_BOOLEAN(L, -1, auction);                           BATTLE_LUA_BOOLEAN(L, -1, roulette);
 
-	ShowLUA("Leitura de '"CL_WHITE"%d"CL_RESET"' configura%c%ces de batalha '"CL_WHITE"FEATURE"CL_RESET"' em '"CL_WHITE"%s"CL_RESET"'.\n", value, 135, 228, lua_filename);
+	ShowLUA("Leitura de '"CL_WHITE"%d"CL_RESET"' configura%c%ces de batalha '"CL_WHITE"FEATURE"CL_RESET"' em '"CL_WHITE"%s"CL_RESET"'.\n", count, 135, 228, lua_filename);
 
-	value = 0;
+	count = 0;
 
 	lua_getglobal(L, "GAME_MASTER");
 
@@ -6817,9 +6817,9 @@ void battle_configuration(void) {
 	BATTLE_LUA_INTEGER(L, -1, ban_hack_trade);                    BATTLE_LUA_BOOLEAN(L, -1, mobinfo_type);
 	BATTLE_LUA_INTEGER(L, -1, gm_ignore_warpable_area);
 
-	ShowLUA("Leitura de '"CL_WHITE"%d"CL_RESET"' configura%c%ces de batalha '"CL_WHITE"GAME_MASTER"CL_RESET"' em '"CL_WHITE"%s"CL_RESET"'.\n", value, 135, 228, lua_filename);
+	ShowLUA("Leitura de '"CL_WHITE"%d"CL_RESET"' configura%c%ces de batalha '"CL_WHITE"GAME_MASTER"CL_RESET"' em '"CL_WHITE"%s"CL_RESET"'.\n", count, 135, 228, lua_filename);
 
-	value = 0;
+	count = 0;
 
 	lua_getglobal(L, "GUILD");
 
@@ -6830,9 +6830,9 @@ void battle_configuration(void) {
 	BATTLE_LUA_INTEGER(L, -1, notice_changemap);                  BATTLE_LUA_BOOLEAN(L, -1, castle_invite);
 	BATTLE_LUA_BOOLEAN(L, -1, castle_expulsion);
 
-	ShowLUA("Leitura de '"CL_WHITE"%d"CL_RESET"' configura%c%ces de batalha '"CL_WHITE"GUILD"CL_RESET"' em '"CL_WHITE"%s"CL_RESET"'.\n", value, 135, 228, lua_filename);
+	ShowLUA("Leitura de '"CL_WHITE"%d"CL_RESET"' configura%c%ces de batalha '"CL_WHITE"GUILD"CL_RESET"' em '"CL_WHITE"%s"CL_RESET"'.\n", count, 135, 228, lua_filename);
 
-	value = 0;
+	count = 0;
 
 	lua_getglobal(L, "HOMUNCULUS");
 
@@ -6842,9 +6842,9 @@ void battle_configuration(void) {
 	BATTLE_LUA_BOOLEAN(L, -1, homunculus_auto_vapor);             BATTLE_LUA_INTEGER(L, -1, hom_max_level);
 	BATTLE_LUA_INTEGER(L, -1, hom_S_max_level);
 
-	ShowLUA("Leitura de '"CL_WHITE"%d"CL_RESET"' configura%c%ces de batalha '"CL_WHITE"HOMUNCULUS"CL_RESET"' em '"CL_WHITE"%s"CL_RESET"'.\n", value, 135, 228, lua_filename);
+	ShowLUA("Leitura de '"CL_WHITE"%d"CL_RESET"' configura%c%ces de batalha '"CL_WHITE"HOMUNCULUS"CL_RESET"' em '"CL_WHITE"%s"CL_RESET"'.\n", count, 135, 228, lua_filename);
 
-	value = 0;
+	count = 0;
 
 	lua_getglobal(L, "ITEM");
 
@@ -6858,9 +6858,9 @@ void battle_configuration(void) {
 	BATTLE_LUA_BOOLEAN(L, -1, autospell_stacking);                BATTLE_LUA_BOOLEAN(L, -1, item_restricted_consume);
 	BATTLE_LUA_BOOLEAN(L, -1, item_enabled_npc);                  BATTLE_LUA_INTEGER(L, -1, unequip_restricted);
 
-	ShowLUA("Leitura de '"CL_WHITE"%d"CL_RESET"' configura%c%ces de batalha '"CL_WHITE"ITEM"CL_RESET"' em '"CL_WHITE"%s"CL_RESET"'.\n", value, 135, 228, lua_filename);
+	ShowLUA("Leitura de '"CL_WHITE"%d"CL_RESET"' configura%c%ces de batalha '"CL_WHITE"ITEM"CL_RESET"' em '"CL_WHITE"%s"CL_RESET"'.\n", count, 135, 228, lua_filename);
 
-	value = 0;
+	count = 0;
 
 	lua_getglobal(L, "MISC");
 
@@ -6880,9 +6880,9 @@ void battle_configuration(void) {
 	BATTLE_LUA_BOOLEAN(L, -1, cashshop_show_points);              BATTLE_LUA_INTEGER(L, -1, mail_show_status);
 	BATTLE_LUA_BOOLEAN(L, -1, mon_trans_disable_in_gvg);          BATTLE_LUA_BOOLEAN(L, -1, case_sensitive_aegisnames);
 
-	ShowLUA("Leitura de '"CL_WHITE"%d"CL_RESET"' configura%c%ces de batalha '"CL_WHITE"MISC"CL_RESET"' em '"CL_WHITE"%s"CL_RESET"'.\n", value, 135, 228, lua_filename);
+	ShowLUA("Leitura de '"CL_WHITE"%d"CL_RESET"' configura%c%ces de batalha '"CL_WHITE"MISC"CL_RESET"' em '"CL_WHITE"%s"CL_RESET"'.\n", count, 135, 228, lua_filename);
 
-	value = 0;
+	count = 0;
 
 	lua_getglobal(L, "MONSTER");
 
@@ -6909,9 +6909,9 @@ void battle_configuration(void) {
 	BATTLE_LUA_BOOLEAN(L, -1, mob_size_influence);                BATTLE_LUA_INTEGER(L, -1, mob_icewall_walk_block);
 	BATTLE_LUA_INTEGER(L, -1, boss_icewall_walk_block);
 
-	ShowLUA("Leitura de '"CL_WHITE"%d"CL_RESET"' configura%c%ces de batalha '"CL_WHITE"MONSTER"CL_RESET"' em '"CL_WHITE"%s"CL_RESET"'.\n", value, 135, 228, lua_filename);
+	ShowLUA("Leitura de '"CL_WHITE"%d"CL_RESET"' configura%c%ces de batalha '"CL_WHITE"MONSTER"CL_RESET"' em '"CL_WHITE"%s"CL_RESET"'.\n", count, 135, 228, lua_filename);
 
-	value = 0;
+	count = 0;
 
 	lua_getglobal(L, "PARTY");
 
@@ -6921,9 +6921,9 @@ void battle_configuration(void) {
 	BATTLE_LUA_INTEGER(L, -1, idle_no_share);                     BATTLE_LUA_INTEGER(L, -1, party_even_share_bonus);
 	BATTLE_LUA_BOOLEAN(L, -1, display_party_name);
 
-	ShowLUA("Leitura de '"CL_WHITE"%d"CL_RESET"' configura%c%ces de batalha '"CL_WHITE"PARTY"CL_RESET"' em '"CL_WHITE"%s"CL_RESET"'.\n", value, 135, 228, lua_filename);
+	ShowLUA("Leitura de '"CL_WHITE"%d"CL_RESET"' configura%c%ces de batalha '"CL_WHITE"PARTY"CL_RESET"' em '"CL_WHITE"%s"CL_RESET"'.\n", count, 135, 228, lua_filename);
 
-	value = 0;
+	count = 0;
 
 	lua_getglobal(L, "PET");
 
@@ -6938,7 +6938,89 @@ void battle_configuration(void) {
 	BATTLE_LUA_INTEGER(L, -1, pet_max_atk1);                      BATTLE_LUA_INTEGER(L, -1, pet_max_atk2);
 	BATTLE_LUA_BOOLEAN(L, -1, pet_disable_in_gvg);
 
-	ShowLUA("Leitura de '"CL_WHITE"%d"CL_RESET"' configura%c%ces de batalha '"CL_WHITE"PET"CL_RESET"' em '"CL_WHITE"%s"CL_RESET"'.\n", value, 135, 228, lua_filename);
+	ShowLUA("Leitura de '"CL_WHITE"%d"CL_RESET"' configura%c%ces de batalha '"CL_WHITE"PET"CL_RESET"' em '"CL_WHITE"%s"CL_RESET"'.\n", count, 135, 228, lua_filename);
+
+	count = 0;
+
+	lua_getglobal(L, "PLAYER");
+
+	BATTLE_LUA_INTEGER(L, -1, hp_rate);                           BATTLE_LUA_INTEGER(L, -1, sp_rate);
+	BATTLE_LUA_BOOLEAN(L, -1, left_cardfix_to_right);             BATTLE_LUA_INTEGER(L, -1, restart_hp_rate);
+	BATTLE_LUA_INTEGER(L, -1, restart_sp_rate);                   BATTLE_LUA_BOOLEAN(L, -1, player_skillfree);
+	BATTLE_LUA_BOOLEAN(L, -1, player_skillup_limit);              BATTLE_LUA_BOOLEAN(L, -1, quest_skill_learn);
+	BATTLE_LUA_BOOLEAN(L, -1, quest_skill_reset);                 BATTLE_LUA_BOOLEAN(L, -1, basic_skill_check);
+	BATTLE_LUA_INTEGER(L, -1, player_invincible_time);            BATTLE_LUA_INTEGER(L, -1, natural_healhp_interval);
+	BATTLE_LUA_INTEGER(L, -1, natural_healsp_interval);           BATTLE_LUA_INTEGER(L, -1, natural_heal_skill_interval);
+	BATTLE_LUA_INTEGER(L, -1, natural_heal_weight_rate);          BATTLE_LUA_INTEGER(L, -1, max_aspd);
+	BATTLE_LUA_INTEGER(L, -1, max_third_aspd);                    BATTLE_LUA_INTEGER(L, -1, max_walk_speed);
+	BATTLE_LUA_INTEGER(L, -1, max_hp);                            BATTLE_LUA_INTEGER(L, -1, max_sp);
+	BATTLE_LUA_INTEGER(L, -1, max_parameter);                     BATTLE_LUA_INTEGER(L, -1, max_third_parameter);
+	BATTLE_LUA_INTEGER(L, -1, max_extended_parameter);            BATTLE_LUA_INTEGER(L, -1, max_baby_parameter);
+	BATTLE_LUA_INTEGER(L, -1, max_baby_third_parameter);          BATTLE_LUA_INTEGER(L, -1, max_def);
+	BATTLE_LUA_INTEGER(L, -1, max_mdef);                          BATTLE_LUA_INTEGER(L, -1, over_def_bonus);
+	BATTLE_LUA_INTEGER(L, -1, max_cart_weight);                   BATTLE_LUA_INTEGER(L, -1, prevent_logout);
+	BATTLE_LUA_BOOLEAN(L, -1, show_hp_sp_drain);                  BATTLE_LUA_BOOLEAN(L, -1, show_hp_sp_gain);
+	BATTLE_LUA_BOOLEAN(L, -1, friend_auto_add);                   BATTLE_LUA_BOOLEAN(L, -1, invite_request_check);
+	BATTLE_LUA_INTEGER(L, -1, bone_drop);                         BATTLE_LUA_INTEGER(L, -1, character_size);
+	BATTLE_LUA_INTEGER(L, -1, idle_no_autoloot);                  BATTLE_LUA_INTEGER(L, -1, min_npc_vendchat_distance);
+	BATTLE_LUA_BOOLEAN(L, -1, snovice_call_type);                 BATTLE_LUA_INTEGER(L, -1, idletime_criteria);
+
+	ShowLUA("Leitura de '"CL_WHITE"%d"CL_RESET"' configura%c%ces de batalha '"CL_WHITE"PLAYER"CL_RESET"' em '"CL_WHITE"%s"CL_RESET"'.\n", count, 135, 228, lua_filename);
+
+	count = 0;
+
+	lua_getglobal(L, "SKILL");
+
+	BATTLE_LUA_INTEGER(L, -1, casting_rate);                      BATTLE_LUA_INTEGER(L, -1, delay_rate);
+	BATTLE_LUA_BOOLEAN(L, -1, delay_dependon_dex);                BATTLE_LUA_BOOLEAN(L, -1, delay_dependon_agi);
+	BATTLE_LUA_INTEGER(L, -1, min_skill_delay_limit);             BATTLE_LUA_INTEGER(L, -1, default_walk_delay);
+	BATTLE_LUA_INTEGER(L, -1, no_skill_delay);                    BATTLE_LUA_INTEGER(L, -1, castrate_dex_scale);
+	BATTLE_LUA_INTEGER(L, -1, vcast_stat_scale);                  BATTLE_LUA_INTEGER(L, -1, skill_amotion_leniency);
+	BATTLE_LUA_BOOLEAN(L, -1, skill_delay_attack_enable);         BATTLE_LUA_INTEGER(L, -1, skill_add_range);
+	BATTLE_LUA_BOOLEAN(L, -1, skill_out_range_consume);           BATTLE_LUA_INTEGER(L, -1, skillrange_by_distance);
+	BATTLE_LUA_INTEGER(L, -1, skillrange_from_weapon);            BATTLE_LUA_BOOLEAN(L, -1, skill_caster_check);
+	BATTLE_LUA_INTEGER(L, -1, clear_skills_on_death);             BATTLE_LUA_INTEGER(L, -1, clear_skills_on_warp);
+	BATTLE_LUA_BOOLEAN(L, -1, defunit_not_enemy);                 BATTLE_LUA_INTEGER(L, -1, skill_min_damage);
+	BATTLE_LUA_INTEGER(L, -1, combo_delay_rate);                  BATTLE_LUA_INTEGER(L, -1, auto_counter_type);
+	BATTLE_LUA_INTEGER(L, -1, skill_reiteration);                 BATTLE_LUA_INTEGER(L, -1, skill_nofootset);
+	BATTLE_LUA_INTEGER(L, -1, gvg_traps_target_all);              BATTLE_LUA_BOOLEAN(L, -1, traps_setting);
+	BATTLE_LUA_INTEGER(L, -1, summon_flora_setting);              BATTLE_LUA_BOOLEAN(L, -1, song_timer_reset);
+	BATTLE_LUA_BOOLEAN(L, -1, skill_wall_check);                  BATTLE_LUA_INTEGER(L, -1, player_cloak_check_type);
+	BATTLE_LUA_INTEGER(L, -1, monster_cloak_check_type);          BATTLE_LUA_INTEGER(L, -1, land_skill_limit);
+	BATTLE_LUA_INTEGER(L, -1, display_skill_fail);                BATTLE_LUA_BOOLEAN(L, -1, chat_warpportal);
+	BATTLE_LUA_INTEGER(L, -1, sense_type);                        BATTLE_LUA_INTEGER(L, -1, finger_offensive_type);
+	BATTLE_LUA_BOOLEAN(L, -1, gx_allhit);                         BATTLE_LUA_BOOLEAN(L, -1, gx_disptype);
+	BATTLE_LUA_INTEGER(L, -1, devotion_level_difference);         BATTLE_LUA_BOOLEAN(L, -1, player_skill_partner_check);
+	BATTLE_LUA_BOOLEAN(L, -1, skill_removetrap_type);             BATTLE_LUA_BOOLEAN(L, -1, backstab_bow_penalty);
+	BATTLE_LUA_INTEGER(L, -1, skill_steal_max_tries);             BATTLE_LUA_INTEGER(L, -1, copyskill_restrict);
+	BATTLE_LUA_BOOLEAN(L, -1, berserk_cancels_buffs);             BATTLE_LUA_INTEGER(L, -1, max_heal);
+	BATTLE_LUA_INTEGER(L, -1, max_heal_lv);                       BATTLE_LUA_INTEGER(L, -1, emergency_call);
+	BATTLE_LUA_INTEGER(L, -1, guild_aura);                        BATTLE_LUA_BOOLEAN(L, -1, skip_teleport_lv1_menu);
+	BATTLE_LUA_BOOLEAN(L, -1, allow_skill_without_day);           BATTLE_LUA_BOOLEAN(L, -1, allow_es_magic_player);
+	BATTLE_LUA_INTEGER(L, -1, sg_miracle_skill_ratio);            BATTLE_LUA_INTEGER(L, -1, sg_miracle_skill_duration);
+	BATTLE_LUA_INTEGER(L, -1, sg_angel_skill_ratio);              BATTLE_LUA_INTEGER(L, -1, skill_add_heal_rate);
+	BATTLE_LUA_BOOLEAN(L, -1, eq_single_target_reflectable);      BATTLE_LUA_BOOLEAN(L, -1, invincible_nodamage);
+	BATTLE_LUA_BOOLEAN(L, -1, dancing_weaponswitch_fix);          BATTLE_LUA_BOOLEAN(L, -1, skill_trap_type);
+	BATTLE_LUA_INTEGER(L, -1, mob_max_skilllvl);                  BATTLE_LUA_INTEGER(L, -1, bowling_bash_area);
+	BATTLE_LUA_BOOLEAN(L, -1, stormgust_knockback);
+
+	ShowLUA("Leitura de '"CL_WHITE"%d"CL_RESET"' configura%c%ces de batalha '"CL_WHITE"SKILL"CL_RESET"' em '"CL_WHITE"%s"CL_RESET"'.\n", count, 135, 228, lua_filename);
+
+
+	count = 0;
+
+	lua_getglobal(L, "STATUS");
+
+	BATTLE_LUA_INTEGER(L, -1, status_cast_cancel);                BATTLE_LUA_INTEGER(L, -1, pc_status_def_rate);
+	BATTLE_LUA_INTEGER(L, -1, mob_status_def_rate);               BATTLE_LUA_INTEGER(L, -1, pc_max_status_def);
+	BATTLE_LUA_INTEGER(L, -1, mob_max_status_def);                BATTLE_LUA_BOOLEAN(L, -1, status_luk_influence);
+	BATTLE_LUA_INTEGER(L, -1, pc_luk_status_def);                 BATTLE_LUA_INTEGER(L, -1, mob_luk_status_def);
+
+	ShowLUA("Leitura de '"CL_WHITE"%d"CL_RESET"' configura%c%ces de batalha '"CL_WHITE"STATUS"CL_RESET"' em '"CL_WHITE"%s"CL_RESET"'.\n", count, 135, 228, lua_filename);
+
+
+	battle->config_adjust();
+	clif->bc_ready();
 
 	lua_close(L);
 }
@@ -6948,130 +7030,8 @@ static const struct battle_data {
 	int defval;
 	int min;
 	int max;
-} battle_data[] = {
-	{ "casting_rate",                       &battle_config.cast_rate,                       100,    0,      INT_MAX,        },
-	{ "delay_rate",                         &battle_config.delay_rate,                      100,    0,      INT_MAX,        },
-	{ "delay_dependon_dex",                 &battle_config.delay_dependon_dex,              0,      0,      1,              },
-	{ "delay_dependon_agi",                 &battle_config.delay_dependon_agi,              0,      0,      1,              },
-	{ "skill_delay_attack_enable",          &battle_config.sdelay_attack_enable,            0,      0,      1,              },
-	{ "left_cardfix_to_right",              &battle_config.left_cardfix_to_right,           0,      0,      1,              },
-	{ "skill_add_range",                    &battle_config.skill_add_range,                 0,      0,      INT_MAX,        },
-	{ "skill_out_range_consume",            &battle_config.skill_out_range_consume,         1,      0,      1,              },
-	{ "skillrange_by_distance",             &battle_config.skillrange_by_distance,          ~BL_PC, BL_NUL, BL_ALL,         },
-	{ "skillrange_from_weapon",             &battle_config.use_weapon_skill_range,          BL_NUL, BL_NUL, BL_ALL,         },
-	{ "defunit_not_enemy",                  &battle_config.defnotenemy,                     0,      0,      1,              },
-	{ "gvg_traps_target_all",               &battle_config.vs_traps_bctall,                 BL_PC,  BL_NUL, BL_ALL,         },
-	{ "traps_setting",                      &battle_config.traps_setting,                   0,      0,      1,              },
-	{ "summon_flora_setting",               &battle_config.summon_flora,                    1|2,    0,      1|2,            },
-	{ "clear_skills_on_death",              &battle_config.clear_unit_ondeath,              BL_NUL, BL_NUL, BL_ALL,         },
-	{ "clear_skills_on_warp",               &battle_config.clear_unit_onwarp,               BL_ALL, BL_NUL, BL_ALL,         },
-	{ "hp_rate",                            &battle_config.hp_rate,                         100,    1,      INT_MAX,        },
-	{ "sp_rate",                            &battle_config.sp_rate,                         100,    1,      INT_MAX,        },
-	{ "restart_hp_rate",                    &battle_config.restart_hp_rate,                 0,      0,      100,            },
-	{ "restart_sp_rate",                    &battle_config.restart_sp_rate,                 0,      0,      100,            },
-	{ "guild_aura",                         &battle_config.guild_aura,                      31,     0,      31,             },
-	{ "emergency_call",                     &battle_config.emergency_call,                  11,     0,      31,             },
-	{ "player_skillfree",                   &battle_config.skillfree,                       0,      0,      1,              },
-	{ "player_skillup_limit",               &battle_config.skillup_limit,                   1,      0,      1,              },
-	//{ "mob_skill_use",                      &battle_config.mob_skill_use,                   1,      0,      1,              }, //Deprecated
-	{ "quest_skill_learn",                  &battle_config.quest_skill_learn,               0,      0,      1,              },
-	{ "quest_skill_reset",                  &battle_config.quest_skill_reset,               0,      0,      1,              },
-	{ "basic_skill_check",                  &battle_config.basic_skill_check,               1,      0,      1,              },
-	{ "player_invincible_time",             &battle_config.pc_invincible_time,              5000,   0,      INT_MAX,        },
-	{ "skill_min_damage",                   &battle_config.skill_min_damage,                2|4,    0,      1|2|4,          },
-	{ "finger_offensive_type",              &battle_config.finger_offensive_type,           0,      0,      1,              },
-	{ "max_heal_lv",                        &battle_config.max_heal_lv,                     11,     1,      INT_MAX,        },
-	{ "max_heal",                           &battle_config.max_heal,                        9999,   0,      INT_MAX,        },
-	{ "combo_delay_rate",                   &battle_config.combo_delay_rate,                100,    0,      INT_MAX,        },
-	{ "natural_healhp_interval",            &battle_config.natural_healhp_interval,         6000,   NATURAL_HEAL_INTERVAL, INT_MAX, },
-	{ "natural_healsp_interval",            &battle_config.natural_healsp_interval,         8000,   NATURAL_HEAL_INTERVAL, INT_MAX, },
-	{ "natural_heal_skill_interval",        &battle_config.natural_heal_skill_interval,     10000,  NATURAL_HEAL_INTERVAL, INT_MAX, },
-	{ "natural_heal_weight_rate",           &battle_config.natural_heal_weight_rate,        50,     50,     101             },
-	{ "max_aspd",                           &battle_config.max_aspd,                        190,    100,    199,            },
-	{ "max_third_aspd",                     &battle_config.max_third_aspd,                  193,    100,    199,            },
-	{ "max_walk_speed",                     &battle_config.max_walk_speed,                  300,    100,    100*DEFAULT_WALK_SPEED, },
-	{ "max_hp",                             &battle_config.max_hp,                          32500,  100,    1000000000,     },
-	{ "max_sp",                             &battle_config.max_sp,                          32500,  100,    1000000000,     },
-	{ "max_cart_weight",                    &battle_config.max_cart_weight,                 8000,   100,    1000000,        },
-	{ "max_parameter",                      &battle_config.max_parameter,                   99,     10,     10000,          },
-	{ "max_baby_parameter",                 &battle_config.max_baby_parameter,              80,     10,     10000,          },
-	{ "max_def",                            &battle_config.max_def,                         99,     0,      INT_MAX,        },
-	{ "max_mdef",                           &battle_config.max_mdef,                        99,     0,      INT_MAX,        },
-	{ "over_def_bonus",                     &battle_config.over_def_bonus,                  0,      0,      1000,           },
-	{ "auto_counter_type",                  &battle_config.auto_counter_type,               BL_ALL, BL_NUL, BL_ALL,         },
-	{ "skill_reiteration",                  &battle_config.skill_reiteration,               BL_NUL, BL_NUL, BL_ALL,         },
-	{ "skill_nofootset",                    &battle_config.skill_nofootset,                 BL_PC,  BL_NUL, BL_ALL,         },
-	{ "player_cloak_check_type",            &battle_config.pc_cloak_check_type,             1,      0,      1|2|4,          },
-	{ "monster_cloak_check_type",           &battle_config.monster_cloak_check_type,        4,      0,      1|2|4,          },
-	{ "sense_type",                         &battle_config.estimation_type,                 1|2,    0,      1|2,            },
-	{ "land_skill_limit",                   &battle_config.land_skill_limit,                BL_ALL, BL_NUL, BL_ALL,         },
-	{ "display_skill_fail",                 &battle_config.display_skill_fail,              2,      0,      1|2|4|8,        },
-	{ "chat_warpportal",                    &battle_config.chat_warpportal,                 0,      0,      1,              },
-	{ "gx_allhit",                          &battle_config.gx_allhit,                       0,      0,      1,              },
-	{ "gx_disptype",                        &battle_config.gx_disptype,                     1,      0,      1,              },
-	{ "devotion_level_difference",          &battle_config.devotion_level_difference,       10,     0,      INT_MAX,        },
-	{ "player_skill_partner_check",         &battle_config.player_skill_partner_check,      1,      0,      1,              },
-	{ "invite_request_check",               &battle_config.invite_request_check,            1,      0,      1,              },
-	{ "skill_removetrap_type",              &battle_config.skill_removetrap_type,           0,      0,      1,              },
-	{ "bone_drop",                          &battle_config.bone_drop,                       0,      0,      2,              },
-	{ "skill_wall_check",                   &battle_config.skill_wall_check,                1,      0,      1,              },
-	{ "dancing_weaponswitch_fix",           &battle_config.dancing_weaponswitch_fix,        1,      0,      1,              },
-
-// eAthena additions
-	{ "prevent_logout",                     &battle_config.prevent_logout,                  10000,  0,      60000,          },
-	{ "backstab_bow_penalty",               &battle_config.backstab_bow_penalty,            0,      0,      1,              },
-	{ "castrate_dex_scale",                 &battle_config.castrate_dex_scale,              150,    1,      INT_MAX,        },
-	{ "vcast_stat_scale",                   &battle_config.vcast_stat_scale,                530,    1,      INT_MAX,        },
-	{ "skill_steal_max_tries",              &battle_config.skill_steal_max_tries,           0,      0,      UCHAR_MAX,      },
-	{ "min_skill_delay_limit",              &battle_config.min_skill_delay_limit,           100,    10,     INT_MAX,        },
-	{ "default_walk_delay",                 &battle_config.default_walk_delay,              300,    0,      INT_MAX,        },
-	{ "no_skill_delay",                     &battle_config.no_skill_delay,                  BL_MOB, BL_NUL, BL_ALL,         },
-	{ "copyskill_restrict",                 &battle_config.copyskill_restrict,              2,      0,      2,              },
-	{ "berserk_cancels_buffs",              &battle_config.berserk_cancels_buffs,           0,      0,      1,              },
-	{ "show_hp_sp_drain",                   &battle_config.show_hp_sp_drain,                0,      0,      1,              },
-	{ "show_hp_sp_gain",                    &battle_config.show_hp_sp_gain,                 1,      0,      1,              },
-	{ "character_size",                     &battle_config.character_size,                  1|2,    0,      1|2,            },
-	{ "duel_allow_gvg",                     &battle_config.duel_allow_gvg,                  0,      0,      1,              },
-	{ "skip_teleport_lv1_menu",             &battle_config.skip_teleport_lv1_menu,          0,      0,      1,              },
-	{ "mob_max_skilllvl",                   &battle_config.mob_max_skilllvl,                100,    1,      INT_MAX,        },
-	{ "allow_skill_without_day",            &battle_config.allow_skill_without_day,         0,      0,      1,              },
-	{ "allow_es_magic_player",              &battle_config.allow_es_magic_pc,               0,      0,      1,              },
-	{ "skill_caster_check",                 &battle_config.skill_caster_check,              1,      0,      1,              },
-	{ "status_cast_cancel",                 &battle_config.sc_castcancel,                   BL_NUL, BL_NUL, BL_ALL,         },
-	{ "pc_status_def_rate",                 &battle_config.pc_sc_def_rate,                  100,    0,      INT_MAX,        },
-	{ "mob_status_def_rate",                &battle_config.mob_sc_def_rate,                 100,    0,      INT_MAX,        },
-	{ "status_luk_influence",               &battle_config.enable_luk_influence,            0,  	0,      1,    		    },
-	{ "pc_luk_status_def",                  &battle_config.pc_luk_sc_def,                   300,    1,      INT_MAX,        },
-	{ "mob_luk_status_def",                 &battle_config.mob_luk_sc_def,                  300,    1,      INT_MAX,        },
-	{ "pc_max_status_def",                  &battle_config.pc_max_sc_def,                   100,    0,      INT_MAX,        },
-	{ "mob_max_status_def",                 &battle_config.mob_max_sc_def,                  100,    0,      INT_MAX,        },
-	{ "sg_miracle_skill_ratio",             &battle_config.sg_miracle_skill_ratio,          1,      0,      10000,          },
-	{ "sg_angel_skill_ratio",               &battle_config.sg_angel_skill_ratio,            10,     0,      10000,          },
-	{ "friend_auto_add",                    &battle_config.friend_auto_add,                 1,      0,      1,              },
-	{ "vending_tax",                        &battle_config.vending_tax,                     0,      0,      10000,          },
-	{ "sg_miracle_skill_duration",          &battle_config.sg_miracle_skill_duration,       3600000, 0,     INT_MAX,        },
-	{ "idle_no_autoloot",                   &battle_config.idle_no_autoloot,                0,      0,      INT_MAX,        },
-	{ "skill_add_heal_rate",                &battle_config.skill_add_heal_rate,             7,      0,      INT_MAX,        },
-	{ "eq_single_target_reflectable",       &battle_config.eq_single_target_reflectable,    1,      0,      1,              },
-	{ "invincible.nodamage",                &battle_config.invincible_nodamage,             0,      0,      1,              },
-
-	/**
-	 * rAthena
-	 **/
-	{ "max_third_parameter",                &battle_config.max_third_parameter,             130,    10,     10000,          },
-	{ "max_baby_third_parameter",           &battle_config.max_baby_third_parameter,        117,    10,     10000,          },
-	{ "max_extended_parameter",             &battle_config.max_extended_parameter,          125,    10,     10000,          },
-	{ "skill_amotion_leniency",             &battle_config.skill_amotion_leniency,          90,     0,      300             },
-	{ "min_npc_vendchat_distance",          &battle_config.min_npc_vendchat_distance,       3,      0,      100             },
-	{ "bowling_bash_area",                  &battle_config.bowling_bash_area,               0,      0,      20,             },
-	/**
-	 *
-	 **/
-	{ "skill_trap_type",                    &battle_config.skill_trap_type,                 0,      0,      1,              },
-	{ "snovice_call_type",                  &battle_config.snovice_call_type,               0,      0,      1,              },
-	{ "idletime_criteria",                  &battle_config.idletime_criteria,            0x25,      1,      INT_MAX,        },
-	{ "song_timer_reset",                   &battle_config.song_timer_reset,                0,      0,      1,              },
-	{ "stormgust_knockback",                &battle_config.stormgust_knockback,             1,      0,      1,              },
+} battle_data[] = {	
+	{ "weapon_defense_type",                &battle_config.weapon_defense_type,             0,      0,      INT_MAX, },
 };
 #ifndef STATS_OPT_OUT
 /**
@@ -7306,9 +7266,8 @@ void battle_adjust_conf(void) {
 #endif
 
 #if PACKETVER > 20120000 && PACKETVER < 20130515 /* exact date (when it started) not known */
-	if( battle_config.auction == 1 ) {
+	if( battle_config.auction) {
 		ShowWarning("conf/battle/feature.conf:feature.auction esta ativo porem nao e estavel com PACKETVER "EXPAND_AND_QUOTE(PACKETVER)", desativando...\n");
-		ShowWarning("conf/battle/feature.conf:feature.auction altere valor para '2' para desativar mensagem de alerta\n");
 		battle_config.auction = 0;
 	}
 #endif
@@ -7353,8 +7312,8 @@ int battle_config_read(const char* cfgName)
 	count--;
 
 	if (count == 0) {
-		battle->config_adjust();
-		clif->bc_ready();
+		//battle->config_adjust();
+		//clif->bc_ready();
 	}
 
 	return 0;
