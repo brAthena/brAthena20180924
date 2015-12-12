@@ -3529,7 +3529,7 @@ int mob_clone_spawn(struct map_session_data *sd, int16 m, int16 x, int16 y, cons
 	sd->fd = fd;
 
 	//Finally, spawn it.
-	md = mob->once_spawn_sub(&sd->bl, m, x, y, "--en--", class_, event, SZ_SMALL, AI_NONE);
+	md = mob->once_spawn_sub(&sd->bl, m, x, y, NULL, class_, event, SZ_SMALL, AI_NONE);
 	if (!md) return 0; //Failed?
 
 	md->special_state.clone = 1;
