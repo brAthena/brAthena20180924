@@ -7029,7 +7029,6 @@ void battle_configuration(void) {
  * brAthena anonymous statistic usage report -- packet is built here, and sent to char server to report.
  **/
 void brathena_report(char* date, char *time_c) {
-	int i;
 	unsigned int config = 0;
 	char timestring[25];
 	time_t curtime;

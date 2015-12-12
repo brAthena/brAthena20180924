@@ -856,7 +856,6 @@ struct map_interface {
 	char *INTER_CONF_NAME;
 	char *LOG_CONF_NAME;
 	char *MAP_CONF_NAME;
-	char *BATTLE_CONF_FILENAME;
 	char *ATCOMMAND_CONF_FILENAME;
 	char *SCRIPT_CONF_NAME;
 	char *MSG_CONF_NAME;

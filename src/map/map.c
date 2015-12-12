@@ -5467,7 +5467,6 @@ int do_final(void) {
 
 	aFree(map->cache_buffer);
 	aFree(map->MAP_CONF_NAME);
-	aFree(map->BATTLE_CONF_FILENAME);
 	aFree(map->ATCOMMAND_CONF_FILENAME);
 	aFree(map->SCRIPT_CONF_NAME);
 	aFree(map->MSG_CONF_NAME);
@@ -5654,18 +5653,6 @@ static CMDLINEARG(mapconfig)
 	return true;
 }
 /**
- * --battle-config handler
- *
- * Overrides the default battle configuration filename.
- * @see cmdline->exec
- */
-static CMDLINEARG(battleconfig)
-{
-	aFree(map->BATTLE_CONF_FILENAME);
-	map->BATTLE_CONF_FILENAME = aStrdup(params);
-	return true;
-}
-/**
  * --atcommand-config handler
  *
  * Overrides the default atcommands configuration filename.
@@ -5786,7 +5773,6 @@ void cmdline_args_init_local(void)
 {
 	CMDLINEARG_DEF2(run-once, runonce, "Fecha o servidor apos carregar (teste).", CMDLINE_OPT_NORMAL);
 	CMDLINEARG_DEF2(map-config, mapconfig, "Configuracao alternativa para o servidor de mapas.", CMDLINE_OPT_NORMAL|CMDLINE_OPT_PARAM);
-	CMDLINEARG_DEF2(battle-config, battleconfig, "Configuracao alternativa para batle.", CMDLINE_OPT_NORMAL|CMDLINE_OPT_PARAM);
 	CMDLINEARG_DEF2(atcommand-config, atcommandconfig, "Configuracao alternativa para atcommand.", CMDLINE_OPT_NORMAL|CMDLINE_OPT_PARAM);
 	CMDLINEARG_DEF2(script-config, scriptconfig, "Configuracao alternativa para script.", CMDLINE_OPT_NORMAL|CMDLINE_OPT_PARAM);
 	CMDLINEARG_DEF2(msg-config, msgconfig, "Configuracao alternativa para message.", CMDLINE_OPT_NORMAL|CMDLINE_OPT_PARAM);
@@ -5812,7 +5798,6 @@ int do_init(int argc, char *argv[])
 	map->INTER_CONF_NAME         = aStrdup("conf/inter-server.conf");
 	map->LOG_CONF_NAME           = aStrdup("conf/logs.conf");
 	map->MAP_CONF_NAME           = aStrdup("conf/map-server.conf");
-	map->BATTLE_CONF_FILENAME    = aStrdup("conf/battle.conf");
 	map->ATCOMMAND_CONF_FILENAME = aStrdup("conf/atcommand.conf");
 	map->SCRIPT_CONF_NAME        = aStrdup("conf/script.conf");
 	map->MSG_CONF_NAME           = aStrdup("conf/messages.conf");
@@ -6009,7 +5994,6 @@ void map_defaults(void) {
 	map->INTER_CONF_NAME="conf/inter-server.conf";
 	map->LOG_CONF_NAME="conf/logs.conf";
 	map->MAP_CONF_NAME = "conf/map-server.conf";
-	map->BATTLE_CONF_FILENAME = "conf/battle.conf";
 	map->ATCOMMAND_CONF_FILENAME = "conf/atcommand.conf";
 	map->SCRIPT_CONF_NAME = "conf/script.conf";
 	map->MSG_CONF_NAME = "conf/messages.conf";
