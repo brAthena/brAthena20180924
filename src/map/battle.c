@@ -11,10 +11,6 @@
 
 #define BRATHENA_CORE
 
-#include "lua.h"
-#include "lualib.h"
-#include "lauxlib.h"
-
 #include "config/core.h" // CELL_NOSTACK, CIRCULAR_AREA, CONSOLE_INPUT, HMAP_ZONE_DAMAGE_CAP_TYPE, OFFICIAL_WALKPATH, RENEWAL, RENEWAL_ASPD, RENEWAL_CAST, RENEWAL_DROP, RENEWAL_EDP, RENEWAL_EXP, RENEWAL_LVDMG, RE_LVL_DMOD(), RE_LVL_MDMOD(), RE_LVL_TMDMOD(), RE_SKILL_REDUCTION(), SCRIPT_CALLFUNC_CHECK, SECURE_NPCTIMEOUT, STATS_OPT_OUT
 #include "battle.h"
 
@@ -45,6 +41,7 @@
 #include "common/sysinfo.h"
 #include "common/timer.h"
 #include "common/utils.h"
+#include "common/lua_macros.h"
 
 #include <math.h>
 #include <stdio.h>
