@@ -81,7 +81,7 @@ if (!lua_isinteger(L, -1)) { \
 	continue; \
 } \
 	battle_config.k = (int)lua_tointeger(L, -1); \
-	value += 1; \
+	count += 1; \
 	lua_pop(L, 1); \
 } while (0)
 
@@ -94,7 +94,7 @@ if (!lua_isboolean(L, -1)) { \
 	continue; \
 } \
 	battle_config.k = lua_toboolean(L, -1); \
-	value += 1; \
+	count += 1; \
 	lua_pop(L, 1); \
 } while (0)
 
