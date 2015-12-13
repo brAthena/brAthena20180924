@@ -122,18 +122,18 @@ bool msg_config_read(const char *cfg_name, bool allow_override) {
 			atcommand->msg_read(w2, true);
 		} else {
 			msg_number = atoi(w1);
-			if (msg_number >= 0 && msg_number < MAX_MSG) {
-				if (atcommand->msg_table[0][msg_number] != NULL) {
+			if (msg_number >= 0 && msg_number < MAX_MSG) { 
+				if (atcommand->msg_table[msg_number] != NULL) {
 					if (!allow_override) {
 						ShowError("Mensagem duplicada: ID '%d' ja esta sendo usado por '%s'. Mensagem '%s' foi ignorada.\n",
 						          msg_number, w2, atcommand->msg_table[0][msg_number]);
 						continue;
 					}
-					aFree(atcommand->msg_table[0][msg_number]);
+					aFree(atcommand->msg_table[msg_number]);
 				}
 				/* this could easily become consecutive memory like get_str() and save the malloc overhead for over 1k calls [Ind] */
-				atcommand->msg_table[0][msg_number] = (char *)aMalloc((strlen(w2) + 1)*sizeof (char));
-				strcpy(atcommand->msg_table[0][msg_number],w2);
+				atcommand->msg_table[msg_number] = (char *)aMalloc((strlen(w2) + 1)*sizeof(char));
+				strcpy(atcommand->msg_table[msg_number], w2);
 			}
 		}
 	}
