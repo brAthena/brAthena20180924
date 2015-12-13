@@ -3529,7 +3529,7 @@ int mob_clone_spawn(struct map_session_data *sd, int16 m, int16 x, int16 y, cons
 	sd->fd = fd;
 
 	//Finally, spawn it.
-	md = mob->once_spawn_sub(&sd->bl, m, x, y, NULL, class_, event, SZ_SMALL, AI_NONE);
+	md = mob->once_spawn_sub(&sd->bl, m, x, y, mob->db(class_)->name, class_, event, SZ_SMALL, AI_NONE);
 	if (!md) return 0; //Failed?
 
 	md->special_state.clone = 1;
@@ -4098,7 +4098,7 @@ int mob_read_randommonster(void)
 					mob->dead_branch_list = i;
 				else if(strcmp(row[0],"SA_CLASSCHANGE") == 0)
 					mob->class_change_list = i;
-				ShowSQL("Lista de monstros [%s] armazenada com id <%d>\n",last_group,-i -1); /*Helping user to know what class_ corresponds to each list*/
+				//ShowSQL("Lista de monstros [%s] armazenada com id <%d>\n",last_group,-i -1); /*Helping user to know what class_ corresponds to each list*/
 				//Use a poring if no data found in the previous list.
 				if(i && !summon[i-1].qty) {
 					summon[i-1].class_[0] = 1032;
