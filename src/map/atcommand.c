@@ -6313,7 +6313,7 @@ ACMD(summon)
 		return false;
 	}
 
-	md = mob->once_spawn_sub(&sd->bl, sd->bl.m, -1, -1,NULL, mob_id, "", SZ_SMALL, AI_NONE);
+	md = mob->once_spawn_sub(&sd->bl, sd->bl.m, -1, -1, mob->db(mob_id)->name, mob_id, "", SZ_SMALL, AI_NONE);
 
 	if(!md)
 		return false;
