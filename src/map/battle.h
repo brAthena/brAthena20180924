@@ -12,12 +12,11 @@
 #ifndef MAP_BATTLE_H
 #define MAP_BATTLE_H
 
-#include "lua.h"
-#include "lualib.h"
-#include "lauxlib.h"
+
 
 #include "map/map.h" //ELE_MAX
 #include "common/cbasetypes.h"
+#include "common/lua_macros.h"
 
 /**
  * Declarations
@@ -28,35 +27,6 @@ struct block_list;
 struct weapon_atk;
 struct status_change;
 struct status_data;
-
-/**
- * Macros para configuração de batalha LUA [Megasantos]
-**/
-/* Macro para configurações de batalha inteiros */
-#define BATTLE_LUA_INTEGER(state, idx, k) do { \
-	lua_getfield(state, idx, #k); \
-if (!lua_isinteger(L, -1)) { \
-	ShowWarning("A configura%c%co '%s' permite apenas n%cmeros inteiros.\n", 135, 198, #k, 163); \
-	lua_pop(L, 1); \
-	continue; \
-} \
-	battle_config.k = (int)lua_tointeger(L, -1); \
-	count += 1; \
-	lua_pop(L, 1); \
-} while (0)
-
-/* Macro para configurações de batalha booleanas */
-#define BATTLE_LUA_BOOLEAN(state, idx, k) do { \
-	lua_getfield(state, idx, #k); \
-if (!lua_isboolean(L, -1)) { \
-	ShowWarning("A configura%c%co '%s' permite apenas valores booleanos.\n", 135, 198, #k); \
-	lua_pop(L, 1); \
-	continue; \
-} \
-	battle_config.k = lua_toboolean(L, -1); \
-	count += 1; \
-	lua_pop(L, 1); \
-} while (0)
 
 /**
  * Defines

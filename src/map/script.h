@@ -12,10 +12,7 @@
 #ifndef MAP_SCRIPT_H
 #define MAP_SCRIPT_H
 
-#include "lua.h"
-#include "lualib.h"
-#include "lauxlib.h"
-
+#include "common/lua_macros.h"
 #include "map/map.h" //EVENT_NAME_LENGTH
 #include "common/cbasetypes.h"
 #include "common/db.h"
@@ -25,36 +22,6 @@
 
 #include <errno.h>
 #include <setjmp.h>
-
-
-/**
-* Macros para configuração de script LUA [Megasantos]
-**/
-/* Macro para configurações de script inteiros */
-#define SCRIPT_LUA_INTEGER(state, idx, k) do { \
-	lua_getfield(state, idx, #k); \
-if (!lua_isinteger(L, -1)) { \
-	ShowWarning("A configura%c%co '%s' permite apenas n%cmeros inteiros.\n", 135, 198, #k, 163); \
-	lua_pop(L, 1); \
-	continue; \
-} \
-	script->config.k = (int)lua_tointeger(L, -1); \
-	count += 1; \
-	lua_pop(L, 1); \
-} while (0)
-
-/* Macro para configurações de script booleanas */
-#define SCRIPT_LUA_BOOLEAN(state, idx, k) do { \
-	lua_getfield(state, idx, #k); \
-if (!lua_isboolean(L, -1)) { \
-	ShowWarning("A configura%c%co '%s' permite apenas valores booleanos.\n", 135, 198, #k); \
-	lua_pop(L, 1); \
-	continue; \
-} \
-	script->config.k = lua_toboolean(L, -1); \
-	count += 1; \
-	lua_pop(L, 1); \
-} while (0)
 
 /**
  * Declarations
