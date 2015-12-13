@@ -1933,7 +1933,7 @@ void clif_selllist(struct map_session_data *sd)
 /// - append this text
 void clif_scriptmes(struct map_session_data *sd, int npcid, const char *mes) {
 	int fd = sd->fd;
-	size_t slen;
+	int slen;
 
 	nullpo_retv(sd);
 	nullpo_retv(mes);
@@ -2048,7 +2048,7 @@ void clif_sendfakenpc(struct map_session_data *sd, int npcid) {
 /// TODO investigate behavior of other windows [FlavioJS]
 void clif_scriptmenu(struct map_session_data* sd, int npcid, const char* mes) {
 	int fd;
-	size_t slen;
+	int slen;
 	struct block_list *bl = NULL;
 
 	nullpo_retv(sd);
@@ -3585,7 +3585,7 @@ void clif_dispchat(struct chat_data* cd, int fd)
 	     : 1;
 
 	WBUFW(buf, 0) = 0xd7;
-	WBUFW(buf, 2) = 17 + strlen(cd->title);
+	WBUFW(buf, 2) = 17 + (uint16)strlen(cd->title);
 	WBUFL(buf, 4) = cd->owner->id;
 	WBUFL(buf, 8) = cd->bl.id;
 	WBUFW(buf,12) = cd->limit;
@@ -3622,7 +3622,7 @@ void clif_changechatstatus(struct chat_data* cd)
 	     : 1;
 
 	WBUFW(buf, 0) = 0xdf;
-	WBUFW(buf, 2) = 17 + strlen(cd->title);
+	WBUFW(buf, 2) = 17 + (uint16)strlen(cd->title);
 	WBUFL(buf, 4) = cd->owner->id;
 	WBUFL(buf, 8) = cd->bl.id;
 	WBUFW(buf,12) = cd->limit;
@@ -5457,7 +5457,7 @@ void clif_displaymessage2(const int fd, const char* mes) {
 		line = strtok(message, "\n");
 		while(line != NULL) {
 			// Limit message to 255+1 characters (otherwise it causes a buffer overflow in the client)
-			size_t len = strnlen(line, 255);
+			unsigned short len = (unsigned short)strnlen(line, CHAT_SIZE_MAX);
 
 			if (len > 0) { // don't send a void message (it's not displaying on the client chat). @help can send void line.
 				if( map->cpsd_active && fd == 0 ) {
@@ -5511,13 +5511,13 @@ void clif_displaymessage_sprintf(const int fd, const char *mes, ...) {
 }
 /// Send broadcast message in yellow or blue without font formatting (ZC_BROADCAST).
 /// 009a <packet len>.W <message>.?B
-void clif_broadcast(struct block_list *bl, const char *mes, size_t len, int type, enum send_target target)
+void clif_broadcast(struct block_list *bl, const char *mes, int len, int type, enum send_target target)
 {
 	int lp = (type&BC_COLOR_MASK) ? 4 : 0;
 	unsigned char *buf = NULL;
 	nullpo_retv(mes);
 
-	buf = aMalloc((4 + lp + len)*sizeof(unsigned char));
+	buf = (unsigned char*)aMalloc((4 + lp + len)*sizeof(unsigned char));
 
 	WBUFW(buf,0) = 0x9a;
 	WBUFW(buf,2) = 4 + lp + len;
@@ -5537,7 +5537,7 @@ void clif_broadcast(struct block_list *bl, const char *mes, size_t len, int type
  *------------------------------------------*/
 void clif_GlobalMessage(struct block_list* bl, const char* message) {
 	char buf[256];
-	size_t len;
+	int len;
 	nullpo_retv(bl);
 
 	if(!message)
@@ -5560,7 +5560,7 @@ void clif_GlobalMessage(struct block_list* bl, const char* message) {
 
 /// Send broadcast message with font formatting (ZC_BROADCAST2).
 /// 01c3 <packet len>.W <fontColor>.L <fontType>.W <fontSize>.W <fontAlign>.W <fontY>.W <message>.?B
-void clif_broadcast2(struct block_list* bl, const char* mes, size_t len, unsigned int fontColor, short fontType, short fontSize, short fontAlign, short fontY, enum send_target target)
+void clif_broadcast2(struct block_list* bl, const char* mes, int len, unsigned int fontColor, short fontType, short fontSize, short fontAlign, short fontY, enum send_target target)
 {
 	unsigned char *buf;
 
@@ -5732,7 +5732,7 @@ void clif_upgrademessage(int fd, int result, int item_id)
 /// Whisper is transmitted to the destination player (ZC_WHISPER).
 /// 0097 <packet len>.W <nick>.24B <message>.?B
 /// 0097 <packet len>.W <nick>.24B <isAdmin>.L <message>.?B (PACKETVER >= 20091104)
-void clif_wis_message(int fd, const char *nick, const char *mes, size_t mes_len)
+void clif_wis_message(int fd, const char *nick, const char *mes, int mes_len)
 {
 #if PACKETVER >= 20091104
 	struct map_session_data *ssd = NULL;
@@ -7875,7 +7875,7 @@ void clif_marriage_proposal(int fd, struct map_session_data *sd, struct map_sess
 /*==========================================
  * Displays a message using the guild-chat colors to the specified targets. [Skotlex]
  *------------------------------------------*/
-void clif_disp_message(struct block_list* src, const char* mes, size_t len, enum send_target target)
+void clif_disp_message(struct block_list* src, const char* mes, int len, enum send_target target)
 {
 	unsigned char buf[256];
 
@@ -8141,10 +8141,10 @@ void clif_specialeffect_value(struct block_list* bl, int effect_id, int num, sen
  */
 void clif_messagecolor_self(int fd, uint32 color, const char *msg)
 {
-	size_t msg_len;
+	unsigned short msg_len;
 
 	nullpo_retv(msg);
-	msg_len = strlen(msg) + 1;
+	msg_len = (unsigned short)strlen(msg) + 1;
 
 	WFIFOHEAD(fd,msg_len + 12);
 	WFIFOW(fd,0) = 0x2C1;
@@ -8166,7 +8166,7 @@ void clif_messagecolor_self(int fd, uint32 color, const char *msg)
  */
 void clif_messagecolor(struct block_list* bl, uint32 color, const char *msg)
 {
-	size_t msg_len = strlen(msg) + 1;
+	unsigned short msg_len = (unsigned short)strlen(msg) + 1;
 	uint8 buf[256];
 
 	nullpo_retv(bl);
@@ -8499,7 +8499,7 @@ void clif_slide(struct block_list *bl, int x, int y)
 void clif_disp_overhead(struct block_list *bl, const char* mes)
 {
 	unsigned char buf[256]; //This should be more than sufficient, the theoretical max is CHAT_SIZE + 8 (pads and extra inserted crap)
-	size_t len_mes;
+	int len_mes;
 
 	nullpo_retv(bl);
 	nullpo_retv(mes);
@@ -8919,7 +8919,7 @@ void clif_channel_msg(struct channel_data *chan, struct map_session_data *sd, ch
 	nullpo_retv(sd);
 	nullpo_retv(msg);
 	iter = db_iterator(chan->users);
-	msg_len = strlen(msg) + 1;
+	msg_len = (unsigned short)strlen(msg) + 1;
 	color = channel->config->colors[chan->color];
 
 	WFIFOHEAD(sd->fd,msg_len + 12);
@@ -8953,7 +8953,7 @@ void clif_channel_msg2(struct channel_data *chan, char *msg)
 	nullpo_retv(chan);
 	nullpo_retv(msg);
 	iter = db_iterator(chan->users);
-	msg_len = strlen(msg) + 1;
+	msg_len = (unsigned short)strlen(msg) + 1;
 	color = channel->config->colors[chan->color];
 
 	WBUFW(buf,0) = 0x2C1;
@@ -9654,10 +9654,10 @@ void clif_parse_GlobalMessage(int fd, struct map_session_data* sd) __attribute__
 void clif_parse_GlobalMessage(int fd, struct map_session_data* sd)
 {
 	const char* text = (char*)RFIFOP(fd,4);
-	size_t textlen = RFIFOW(fd,2) - 4;
+	int textlen = RFIFOW(fd,2) - 4;
 
 	char *name, *message, *fakename = NULL;
-	size_t namelen, messagelen;
+	int namelen, messagelen;
 
 	bool is_fake;
 
@@ -14557,7 +14557,7 @@ void clif_Mail_read(struct map_session_data *sd, int mail_id)
 		struct mail_message *msg = &sd->mail.inbox.msg[i];
 		struct item *item = &msg->item;
 		struct item_data *data;
-		size_t msg_len = strlen(msg->body), len;
+		int msg_len = strlen(msg->body), len;
 
 		if( msg_len == 0 ) {
 			strcpy(msg->body, "(no message)");
@@ -15983,7 +15983,7 @@ void clif_bg_xy_remove(struct map_session_data *sd)
 
 /// Notifies clients of a battleground message (ZC_BATTLEFIELD_CHAT).
 /// 02dc <packet len>.W <account id>.L <name>.24B <message>.?B
-void clif_bg_message(struct battleground_data *bgd, int src_id, const char *name, const char *mes, size_t len)
+void clif_bg_message(struct battleground_data *bgd, int src_id, const char *name, const char *mes, int len)
 {
 	struct map_session_data *sd;
 	unsigned char *buf;
@@ -17551,7 +17551,7 @@ void clif_ShowScript(struct block_list* bl, const char* message) {
 	}
 
 	WBUFW(buf,0)=0x8b3;
-	WBUFW(buf,2)=len+8;
+	WBUFW(buf,2)= (uint16)len+8;
 	WBUFL(buf,4)=bl->id;
 	safestrncpy((char *) WBUFP(buf,8),message,len);
 	clif->send((unsigned char *) buf,WBUFW(buf,2),bl,ALL_CLIENT);
