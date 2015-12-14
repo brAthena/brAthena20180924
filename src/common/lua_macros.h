@@ -127,4 +127,34 @@ if (!lua_isboolean(L, -1)) { \
 	lua_pop(L, 1); \
 } while (0)
 
+
+/**
+* Macros para configuração de network em LUA
+**/
+/* Macro para configurações de network */
+#define NETWORK_LUA_INTEGER(state, idx, k) do { \
+	lua_getfield(state, idx, #k); \
+if (!lua_isinteger(L, -1)) { \
+	ShowWarning("A configura%c%co '%s' permite apenas n%cmeros inteiros.\n", 135, 198, #k, 163); \
+	lua_pop(L, 1); \
+	continue; \
+} \
+	script->config.k = (int)lua_tointeger(L, -1); \
+	count += 1; \
+	lua_pop(L, 1); \
+} while (0)
+
+/* Macro para configurações de script booleanas */
+#define NETWORK_LUA_BOOLEAN(state, idx, k) do { \
+	lua_getfield(state, idx, #k); \
+if (!lua_isboolean(L, -1)) { \
+	ShowWarning("A configura%c%co '%s' permite apenas valores booleanos.\n", 135, 198, #k); \
+	lua_pop(L, 1); \
+	continue; \
+} \
+	script->config.k = lua_toboolean(L, -1); \
+	count += 1; \
+	lua_pop(L, 1); \
+} while (0)
+
 #endif //LUA_MACROS_H
