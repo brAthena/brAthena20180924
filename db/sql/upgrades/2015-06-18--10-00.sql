@@ -1,0 +1,1 @@
+ALTER TABLE pickdrop_log MODIFY Amount int(11) NOT NULL DEFAULT '0';

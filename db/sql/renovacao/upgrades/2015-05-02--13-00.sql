@@ -1,0 +1,1 @@
+UPDATE item_db SET `script`='summon_rand();' WHERE id IN (604,12024,12103,12109,12258);

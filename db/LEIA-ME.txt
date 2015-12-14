@@ -1,0 +1,17 @@
+//  ____________________________________________________________
+// /                                                            \
+// |         _           _   _   _                              |
+// |        | |__  _ __ / \ | |_| |__   ___ _ __   __ _         |
+// |        | '_ \| '__/ _ \| __| '_ \ / _ \ '_ \ / _` |        |
+// |        | |_) | | / ___ \ |_| | | |  __/ | | | (_| |        |
+// |        |_.__/|_|/_/   \_\__|_| |_|\___|_| |_|\__,_|        |
+// |                                                            |
+// |                       brAthena Script                      |
+// |____________________________________________________________|
+
+Este é um arquivo informativo, sobre o banco de dados. 
+
+- O atual banco de dados do brAthena, opera em duas linguagens: SQL + Lua
+- É necessário importar os scripts de criação do banco no seu MySQL, eles se encontram dentro da pasta SQL.
+- Os arquivos em Lua, são parte do banco de dados, onde são efetuadas mudanças com maior constancia, por isso são mantidos através
+de código fonte do emulador e você pode alterá-los diretamente, editando-os.
