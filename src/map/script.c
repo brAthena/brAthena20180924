@@ -5168,7 +5168,7 @@ BUILDIN(rand)
 /*==========================================
  * Warp sd to str,x,y or Random or SavePoint/Save
  *------------------------------------------*/
-BUILDIN(moveto)
+BUILDIN(warp)
 {
 	int ret;
 	int x,y;
@@ -9787,7 +9787,7 @@ BUILDIN(playerattached) {
 
 /*==========================================
  *------------------------------------------*/
-BUILDIN(broadcastserver) {
+BUILDIN(announce) {
 	const char *mes       = script_getstr(st,2);
 	int         flag      = script_getnum(st,3);
 	const char *fontColor = script_hasdata(st,4) ? script_getstr(st,4) : NULL;
@@ -9877,7 +9877,7 @@ BUILDIN(itemeffect) {
 	return true;
 }
 
-BUILDIN(broadcastinmap2) {
+BUILDIN(mapannounce) {
 	const char *mapname   = script_getstr(st,2);
 	const char *mes       = script_getstr(st,3);
 	int         flag      = script_getnum(st,4);
@@ -10896,9 +10896,9 @@ BUILDIN(getwaitingroomstate) {
 /// The id's of the teleported players are put into the array $@warpwaitingpc[]
 /// The total number of teleported players is put into $@warpwaitingpcnum
 ///
-/// warpwaitingpctoarena "<map name>",<x>,<y>,<number of players>;
-/// warpwaitingpctoarena "<map name>",<x>,<y>;
-BUILDIN(warpwaitingpctoarena)
+/// warpwaitingpc "<map name>",<x>,<y>,<number of players>;
+/// warpwaitingpc "<map name>",<x>,<y>;
+BUILDIN(warpwaitingpc)
 {
 	int x, y, i, n;
 	const char* map_name;
@@ -10934,7 +10934,7 @@ BUILDIN(warpwaitingpctoarena)
 			pc->payzeny(sd, cd->zeny, "Npc", NULL);
 		}
 
-		mapreg->setreg(reference_uid(script->add_str("$@warpwaitingpctoarena"), i), sd->bl.id);
+		mapreg->setreg(reference_uid(script->add_str("$@warpwaitingpc"), i), sd->bl.id);
 
 		if( strcmp(map_name,"Random") == 0 )
 			pc->randomwarp(sd,CLR_TELEPORT);
@@ -10943,7 +10943,7 @@ BUILDIN(warpwaitingpctoarena)
 		else
 			pc->setpos(sd, script->mapindexname2id(st,map_name), x, y, CLR_OUTSIGHT);
 	}
-	mapreg->setreg(script->add_str("$@warpwaitingpctoarenanum"), i);
+	mapreg->setreg(script->add_str("$@warpwaitingpcnum"), i);
 	return true;
 }
 
@@ -19947,24 +19947,24 @@ void script_parse_builtin(void) {
 		BUILDIN_DEF(close2,""),
 		BUILDIN_DEF(menu,"sl*"),
 		BUILDIN_DEF(select,"s*"), //for future jA script compatibility
-		BUILDIN_DEF_DEPRECATED(prompt,"s*"),
+		BUILDIN_DEF(prompt,"s*"),
 		//
-		BUILDIN_DEF_DEPRECATED(goto,"l"),
-		BUILDIN_DEF_DEPRECATED(callsub,"l*"),
-		BUILDIN_DEF_DEPRECATED(callfunc,"s*"),
-		BUILDIN_DEF_DEPRECATED(return,"?"),
-		BUILDIN_DEF_DEPRECATED(getarg,"i?"),
+		BUILDIN_DEF(goto,"l"),
+		BUILDIN_DEF(callsub,"l*"),
+		BUILDIN_DEF(callfunc,"s*"),
+		BUILDIN_DEF(return,"?"),
+		BUILDIN_DEF(getarg,"i?"),
 		BUILDIN_DEF(jobchange,"i?"),
 		BUILDIN_DEF(jobname,"i"),
 		BUILDIN_DEF(input,"r??"),
-		BUILDIN_DEF(moveto,"sii?"),
+		BUILDIN_DEF(warp,"sii?"),
 		BUILDIN_DEF(areawarp,"siiiisii??"),
-		BUILDIN_DEF_DEPRECATED(warpchar,"siii"), // [LuzZza]
+		BUILDIN_DEF(warpchar,"siii"), // [LuzZza]
 		BUILDIN_DEF(warpparty,"siii?"), // [Fredzilla] [Paradox924X]
 		BUILDIN_DEF(warpguild,"siii"), // [Fredzilla]
 		BUILDIN_DEF(setlook,"ii"),
 		BUILDIN_DEF(changelook,"ii"), // Simulates but don't Store it
-		BUILDIN_DEF2_DEPRECATED(__setr,"set","rv"),
+		BUILDIN_DEF2(__setr,"set","rv"),
 		BUILDIN_DEF(setarray,"rv*"),
 		BUILDIN_DEF(cleararray,"rvi"),
 		BUILDIN_DEF(copyarray,"rri"),
@@ -19986,7 +19986,7 @@ void script_parse_builtin(void) {
 		BUILDIN_DEF(heal,"ii"),
 		BUILDIN_DEF(itemheal,"ii"),
 		BUILDIN_DEF(percentheal,"ii"),
-		BUILDIN_DEF_DEPRECATED(rand,"i?"),
+		BUILDIN_DEF(rand,"i?"),
 		BUILDIN_DEF(countitem,"v"),
 		BUILDIN_DEF(countitem2,"viiiiiii"),
 		BUILDIN_DEF(checkweight,"vi*"),
@@ -20021,14 +20021,14 @@ void script_parse_builtin(void) {
 		BUILDIN_DEF(downrefitem,"i?"),
 		BUILDIN_DEF(statusup,"i"),
 		BUILDIN_DEF(statusup2,"ii"),
-		BUILDIN_DEF_DEPRECATED(bonus,"iv"),// Refazer usando a mesma forma oficial
-		BUILDIN_DEF2_DEPRECATED(bonus,"bonus2","ivi"),
-		BUILDIN_DEF2_DEPRECATED(bonus,"bonus3","ivii"),
-		BUILDIN_DEF2_DEPRECATED(bonus,"bonus4","ivvii"),
-		BUILDIN_DEF2_DEPRECATED(bonus,"bonus5","ivviii"),
-		BUILDIN_DEF_DEPRECATED(autobonus,"sii??"),
-		BUILDIN_DEF_DEPRECATED(autobonus2,"sii??"),
-		BUILDIN_DEF_DEPRECATED(autobonus3,"siiv?"),
+		BUILDIN_DEF(bonus,"iv"),
+		BUILDIN_DEF2(bonus,"bonus2","ivi"),
+		BUILDIN_DEF2(bonus,"bonus3","ivii"),
+		BUILDIN_DEF2(bonus,"bonus4","ivvii"),
+		BUILDIN_DEF2(bonus,"bonus5","ivviii"),
+		BUILDIN_DEF(autobonus,"sii??"),
+		BUILDIN_DEF(autobonus2,"sii??"),
+		BUILDIN_DEF(autobonus3,"siiv?"),
 		BUILDIN_DEF(skill,"vi?"),
 		BUILDIN_DEF(addtoskill,"vi?"), // [Valaris]
 		BUILDIN_DEF(guildskill,"vi"),
@@ -20037,7 +20037,7 @@ void script_parse_builtin(void) {
 		BUILDIN_DEF(basicskillcheck,""),
 		BUILDIN_DEF(getgmlevel,""),
 		BUILDIN_DEF(getgroupid,""),
-		BUILDIN_DEF_DEPRECATED(end,""),
+		BUILDIN_DEF(end,""),
 		BUILDIN_DEF(checkoption,"i"),
 		BUILDIN_DEF(setoption,"i?"),
 		BUILDIN_DEF(setcart,"?"),
@@ -20062,22 +20062,22 @@ void script_parse_builtin(void) {
 		BUILDIN_DEF(killmonster,"ss?"),
 		BUILDIN_DEF(killmonsterall,"s?"),
 		BUILDIN_DEF(clone,"siisi????"),
-		BUILDIN_DEF_DEPRECATED(doevent,"s"),
-		BUILDIN_DEF_DEPRECATED(donpcevent,"s"),
-		BUILDIN_DEF_DEPRECATED(addtimer,"is"),
-		BUILDIN_DEF_DEPRECATED(deltimer,"s"),
-		BUILDIN_DEF_DEPRECATED(addtimercount,"si"),
-		BUILDIN_DEF_DEPRECATED(initnpctimer,"??"),
-		BUILDIN_DEF_DEPRECATED(stopnpctimer,"??"),
-		BUILDIN_DEF_DEPRECATED(startnpctimer,"??"),
-		BUILDIN_DEF_DEPRECATED(setnpctimer,"i?"),
-		BUILDIN_DEF_DEPRECATED(getnpctimer,"i?"),
-		BUILDIN_DEF_DEPRECATED(attachnpctimer,"?"), // attached the player id to the npc timer [Celest]
-		BUILDIN_DEF_DEPRECATED(detachnpctimer,"?"), // detached the player id from the npc timer [Celest]
-		BUILDIN_DEF_DEPRECATED(playerattached,""), // returns id of the current attached player. [Skotlex]
-		BUILDIN_DEF_DEPRECATED(broadcastserver,"si?????"),
-		BUILDIN_DEF(broadcastinmap2,"ssi?????"),
-		BUILDIN_DEF_DEPRECATED(areaannounce,"siiiisi?????"),
+		BUILDIN_DEF(doevent,"s"),
+		BUILDIN_DEF(donpcevent,"s"),
+		BUILDIN_DEF(addtimer,"is"),
+		BUILDIN_DEF(deltimer,"s"),
+		BUILDIN_DEF(addtimercount,"si"),
+		BUILDIN_DEF(initnpctimer,"??"),
+		BUILDIN_DEF(stopnpctimer,"??"),
+		BUILDIN_DEF(startnpctimer,"??"),
+		BUILDIN_DEF(setnpctimer,"i?"),
+		BUILDIN_DEF(getnpctimer,"i?"),
+		BUILDIN_DEF(attachnpctimer,"?"), // attached the player id to the npc timer [Celest]
+		BUILDIN_DEF(detachnpctimer,"?"), // detached the player id from the npc timer [Celest]
+		BUILDIN_DEF(playerattached,""), // returns id of the current attached player. [Skotlex]
+		BUILDIN_DEF(announce,"si?????"),
+		BUILDIN_DEF(mapannounce,"ssi?????"),
+		BUILDIN_DEF(areaannounce,"siiiisi?????"),
 		BUILDIN_DEF(getusers,"i"),
 		BUILDIN_DEF(getmapguildusers,"si"),
 		BUILDIN_DEF(getmapusers,"s"),
@@ -20087,9 +20087,9 @@ void script_parse_builtin(void) {
 		BUILDIN_DEF(disablenpc,"s"),
 		BUILDIN_DEF(hideoffnpc,"s"),
 		BUILDIN_DEF(hideonnpc,"s"),
-		BUILDIN_DEF_DEPRECATED(sc_start,"iii???"), // Refazer usando a mesma forma oficial
-		BUILDIN_DEF2_DEPRECATED(sc_start,"sc_start2","iiii???"),
-		BUILDIN_DEF2_DEPRECATED(sc_start,"sc_start4","iiiiii???"),
+		BUILDIN_DEF(sc_start,"iii???"),
+		BUILDIN_DEF2(sc_start,"sc_start2","iiii???"),
+		BUILDIN_DEF2(sc_start,"sc_start4","iiiiii???"),
 		BUILDIN_DEF(sc_end,"i?"),
 		BUILDIN_DEF(getstatus, "i?"),
 		BUILDIN_DEF(getscrate,"ii?"),
@@ -20106,17 +20106,17 @@ void script_parse_builtin(void) {
 		BUILDIN_DEF(waitingroom,"si?????"),
 		BUILDIN_DEF(delwaitingroom,"?"),
 		BUILDIN_DEF2(waitingroomkickall,"kickwaitingroomall","?"),
-		BUILDIN_DEF_DEPRECATED(enablewaitingroomevent,"?"),
-		BUILDIN_DEF_DEPRECATED(disablewaitingroomevent,"?"),
+		BUILDIN_DEF(enablewaitingroomevent,"?"),
+		BUILDIN_DEF(disablewaitingroomevent,"?"),
 		BUILDIN_DEF(getwaitingroomstate,"i?"),
-		BUILDIN_DEF(warpwaitingpctoarena,"sii?"),
+		BUILDIN_DEF(warpwaitingpc,"sii?"),
 		BUILDIN_DEF(attachrid,"i"),
 		BUILDIN_DEF(detachrid,""),
 		BUILDIN_DEF(isloggedin,"i?"),
-		BUILDIN_DEF_DEPRECATED(setmapflagnosave,"ssii"),
-		BUILDIN_DEF_DEPRECATED(getmapflag,"si"),
-		BUILDIN_DEF_DEPRECATED(setmapflag,"si?"),
-		BUILDIN_DEF_DEPRECATED(removemapflag,"si"),
+		BUILDIN_DEF(setmapflagnosave,"ssii"),
+		BUILDIN_DEF(getmapflag,"si"),
+		BUILDIN_DEF(setmapflag,"si?"),
+		BUILDIN_DEF(removemapflag,"si"),
 		BUILDIN_DEF(pvpon,"s"),
 		BUILDIN_DEF(pvpoff,"s"),
 		BUILDIN_DEF(gvgon,"s"),
@@ -20142,8 +20142,8 @@ void script_parse_builtin(void) {
 		BUILDIN_DEF(getchildid,""),
 		BUILDIN_DEF(getmotherid,""),
 		BUILDIN_DEF(getfatherid,""),
-		BUILDIN_DEF_DEPRECATED(warppartner,"sii"),
-		BUILDIN_DEF_DEPRECATED(getitemname,"v"),
+		BUILDIN_DEF(warppartner,"sii"),
+		BUILDIN_DEF(getitemname,"v"),
 		BUILDIN_DEF(getitemslots,"i"),
 		BUILDIN_DEF(makepet,"i"),
 		BUILDIN_DEF(getexp,"ii"),
@@ -20176,8 +20176,8 @@ void script_parse_builtin(void) {
 		BUILDIN_DEF(movenpc,"sii?"), // [MouseJstr]
 		BUILDIN_DEF(message,"ss"), // [MouseJstr]
 		BUILDIN_DEF(npctalk,"s?"), // [Valaris]
-		BUILDIN_DEF_DEPRECATED(mobcount,"ss"), // Criar por Variavél
-		BUILDIN_DEF_DEPRECATED(getlook,"i"), // Criar por Variável
+		BUILDIN_DEF(mobcount,"ss"),
+		BUILDIN_DEF(getlook,"i"),
 		BUILDIN_DEF(getsavepoint,"i"),
 		BUILDIN_DEF(npcspeed,"i"), // [Valaris]
 		BUILDIN_DEF(npcwalkto,"ii"), // [Valaris]
@@ -20191,7 +20191,7 @@ void script_parse_builtin(void) {
 		BUILDIN_DEF(checkoption2,"i"),
 		BUILDIN_DEF(guildgetexp,"i"),
 		BUILDIN_DEF(guildchangegm,"is"),
-		BUILDIN_DEF_DEPRECATED(logmes,"s"), //this command actls as MES but rints info into LOG file either SQL/TXT [Lupus]
+		BUILDIN_DEF(logmes,"s"), //this command actls as MES but rints info into LOG file either SQL/TXT [Lupus]
 		BUILDIN_DEF(summon_rand,""), // brAthena - Summon system reworked
 		BUILDIN_DEF(summon,"si??"), // summons a slave monster [Celest]
 		BUILDIN_DEF(isnight,""), // check whether it is night time [Celest]
@@ -20202,11 +20202,11 @@ void script_parse_builtin(void) {
 		BUILDIN_DEF(night,""), // sets the server to night time
 		BUILDIN_DEF(day,""), // sets the server to day time
 #ifdef PCRE_SUPPORT
-		BUILDIN_DEF_DEPRECATED(defpattern,"iss"), // Define pattern to listen for [MouseJstr]
-		BUILDIN_DEF_DEPRECATED(activatepset,"i"), // Activate a pattern set [MouseJstr]
-		BUILDIN_DEF_DEPRECATED(deactivatepset,"i"), // Deactive a pattern set [MouseJstr]
-		BUILDIN_DEF_DEPRECATED(deletepset,"i"), // Delete a pattern set [MouseJstr]
-		BUILDIN_DEF_DEPRECATED(pcre_match,"ss"),
+		BUILDIN_DEF(defpattern,"iss"), // Define pattern to listen for [MouseJstr]
+		BUILDIN_DEF(activatepset,"i"), // Activate a pattern set [MouseJstr]
+		BUILDIN_DEF(deactivatepset,"i"), // Deactive a pattern set [MouseJstr]
+		BUILDIN_DEF(deletepset,"i"), // Delete a pattern set [MouseJstr]
+		BUILDIN_DEF(pcre_match,"ss"),
 #endif
 		BUILDIN_DEF(dispbottom,"s?"), //added from jA [Lupus]
 		BUILDIN_DEF(getusersname,""),
@@ -20220,39 +20220,39 @@ void script_parse_builtin(void) {
 		BUILDIN_DEF(getstrlen,"s"), //strlen [Valaris]
 		BUILDIN_DEF(charisalpha,"si"), //isalpha [Valaris]
 		BUILDIN_DEF(charat,"si"),
-		BUILDIN_DEF_DEPRECATED(setchar,"ssi"),
-		BUILDIN_DEF_DEPRECATED(insertchar,"ssi"),
-		BUILDIN_DEF_DEPRECATED(delchar,"si"),
-		BUILDIN_DEF_DEPRECATED(strtoupper,"s"),
-		BUILDIN_DEF_DEPRECATED(strtolower,"s"),
-		BUILDIN_DEF_DEPRECATED(charisupper, "si"),
-		BUILDIN_DEF_DEPRECATED(charislower, "si"),
-		BUILDIN_DEF_DEPRECATED(substr,"sii"),
+		BUILDIN_DEF(setchar,"ssi"),
+		BUILDIN_DEF(insertchar,"ssi"),
+		BUILDIN_DEF(delchar,"si"),
+		BUILDIN_DEF(strtoupper,"s"),
+		BUILDIN_DEF(strtolower,"s"),
+		BUILDIN_DEF(charisupper, "si"),
+		BUILDIN_DEF(charislower, "si"),
+		BUILDIN_DEF(substr,"sii"),
 		BUILDIN_DEF(explode, "rss"),
 		BUILDIN_DEF(implode, "r?"),
-		BUILDIN_DEF_DEPRECATED(sprintf,"s*"),  // [Mirei]
-		BUILDIN_DEF_DEPRECATED(sscanf,"ss*"),  // [Mirei]
-		BUILDIN_DEF_DEPRECATED(strpos,"ss?"),
-		BUILDIN_DEF_DEPRECATED(replacestr,"sss??"),
-		BUILDIN_DEF_DEPRECATED(countstr,"ss?"),
-		BUILDIN_DEF_DEPRECATED(setnpcdisplay,"sv??"),
-		BUILDIN_DEF_DEPRECATED(compare,"ss"), // Lordalfa - To bring strstr to scripting Engine.
-		BUILDIN_DEF_DEPRECATED(strcmp,"ss"),
+		BUILDIN_DEF(sprintf,"s*"),  // [Mirei]
+		BUILDIN_DEF(sscanf,"ss*"),  // [Mirei]
+		BUILDIN_DEF(strpos,"ss?"),
+		BUILDIN_DEF(replacestr,"sss??"),
+		BUILDIN_DEF(countstr,"ss?"),
+		BUILDIN_DEF(setnpcdisplay,"sv??"),
+		BUILDIN_DEF(compare,"ss"), // Lordalfa - To bring strstr to scripting Engine.
+		BUILDIN_DEF(strcmp,"ss"),
 		BUILDIN_DEF(getiteminfo,"ii"), //[Lupus] returns Items Buy / sell Price, etc info
-		BUILDIN_DEF_DEPRECATED(setiteminfo,"iii"), //[Lupus] set Items Buy / sell Price, etc info
+		BUILDIN_DEF(setiteminfo,"iii"), //[Lupus] set Items Buy / sell Price, etc info
 		BUILDIN_DEF(getequipcardid,"ii"), //[Lupus] returns CARD ID or other info from CARD slot N of equipped item
 		// List of mathematics commands --->
-		BUILDIN_DEF_DEPRECATED(log10,"i"),
-		BUILDIN_DEF_DEPRECATED(sqrt,"i"), //[zBuffer]
-		BUILDIN_DEF_DEPRECATED(pow,"ii"), //[zBuffer]
-		BUILDIN_DEF_DEPRECATED(distance,"iiii"), //[zBuffer]
+		BUILDIN_DEF(log10,"i"),
+		BUILDIN_DEF(sqrt,"i"), //[zBuffer]
+		BUILDIN_DEF(pow,"ii"), //[zBuffer]
+		BUILDIN_DEF(distance,"iiii"), //[zBuffer]
 		// <--- List of mathematics commands
-		BUILDIN_DEF_DEPRECATED(min, "i*"),
-		BUILDIN_DEF_DEPRECATED(max, "i*"),
-		BUILDIN_DEF_DEPRECATED(md5,"s"),
+		BUILDIN_DEF(min, "i*"),
+		BUILDIN_DEF(max, "i*"),
+		BUILDIN_DEF(md5,"s"),
 		// [zBuffer] List of dynamic var commands --->
-		BUILDIN_DEF_DEPRECATED(getd,"s"),
-		BUILDIN_DEF_DEPRECATED(setd,"sv"),
+		BUILDIN_DEF(getd,"s"),
+		BUILDIN_DEF(setd,"sv"),
 		// <--- [zBuffer] List of dynamic var commands
 		BUILDIN_DEF(petstat,"i"),
 		BUILDIN_DEF(callshop,"s?"), // [Skotlex]
@@ -20263,23 +20263,23 @@ void script_parse_builtin(void) {
 		BUILDIN_DEF(equip,"i"),
 		BUILDIN_DEF(autoequip,"ii"),
 		BUILDIN_DEF(equip2,"iiiiiii"),
-		BUILDIN_DEF_DEPRECATED(setitemscript,"is?"), //Set NEW item bonus script. Lupus
+		BUILDIN_DEF(setitemscript,"is?"), //Set NEW item bonus script. Lupus
 		BUILDIN_DEF(disguise,"i"), //disguise player. Lupus
 		BUILDIN_DEF(undisguise,""), //undisguise player. Lupus
 		BUILDIN_DEF(getmonsterinfo,"ii"), //Lupus
 		BUILDIN_DEF(addmonsterdrop,"vii"),
 		BUILDIN_DEF(delmonsterdrop,"vi"),
-		BUILDIN_DEF_DEPRECATED(axtoi,"s"),
+		BUILDIN_DEF(axtoi,"s"),
 		BUILDIN_DEF(query_sql,"s*"),
 		BUILDIN_DEF(query_logsql,"s*"),
 		BUILDIN_DEF(escape_sql,"v"),
-		BUILDIN_DEF_DEPRECATED(atoi,"s"),
-		BUILDIN_DEF_DEPRECATED(strtol,"si"),
+		BUILDIN_DEF(atoi,"s"),
+		BUILDIN_DEF(strtol,"si"),
 		// [zBuffer] List of player cont commands --->
 		BUILDIN_DEF(rid2name,"i"),
-		BUILDIN_DEF_DEPRECATED(pcfollow,"ii"),
-		BUILDIN_DEF_DEPRECATED(pcstopfollow,"i"),
-		BUILDIN_DEF_DEPRECATED(pcblockmove,"ii"),
+		BUILDIN_DEF(pcfollow,"ii"),
+		BUILDIN_DEF(pcstopfollow,"i"),
+		BUILDIN_DEF(pcblockmove,"ii"),
 		// <--- [zBuffer] List of player cont commands
 		// [zBuffer] List of mob control commands --->
 		BUILDIN_DEF(unitwalk,"ii?"),
@@ -20292,18 +20292,18 @@ void script_parse_builtin(void) {
 		BUILDIN_DEF(unitskilluseid,"ivi?"), // originally by Qamera [Celest]
 		BUILDIN_DEF(unitskillusepos,"iviii"), // [Celest]
 		// <--- [zBuffer] List of mob control commands
-		BUILDIN_DEF_DEPRECATED(sleep,"i"),
-		BUILDIN_DEF_DEPRECATED(sleep2,"i"),
-		BUILDIN_DEF_DEPRECATED(awake,"s"),
-		BUILDIN_DEF_DEPRECATED(getvariableofnpc,"rs"),
-		BUILDIN_DEF_DEPRECATED(warpportal,"iisii"),
+		BUILDIN_DEF(sleep,"i"),
+		BUILDIN_DEF(sleep2,"i"),
+		BUILDIN_DEF(awake,"s"),
+		BUILDIN_DEF(getvariableofnpc,"rs"),
+		BUILDIN_DEF(warpportal,"iisii"),
 		BUILDIN_DEF2(homunculus_evolution,"homevolution",""), //[orn]
 		BUILDIN_DEF2(homunculus_mutate,"hommutate","?"),
 		BUILDIN_DEF2(homunculus_morphembryo,"morphembryo",""),
 		BUILDIN_DEF2(homunculus_checkcall,"checkhomcall",""),
 		BUILDIN_DEF2(homunculus_shuffle,"homshuffle",""), //[Zephyrus]
-		BUILDIN_DEF_DEPRECATED(eaclass,"?"), //[Skotlex]
-		BUILDIN_DEF_DEPRECATED(roclass,"i?"), //[Skotlex]
+		BUILDIN_DEF(eaclass,"?"), //[Skotlex]
+		BUILDIN_DEF(roclass,"i?"), //[Skotlex]
 		BUILDIN_DEF(checkvending,"?"),
 		BUILDIN_DEF(checkchatting,"?"),
 		BUILDIN_DEF(checkidle,"?"),
@@ -20375,10 +20375,10 @@ void script_parse_builtin(void) {
 		/**
 		 * rAthena and beyond!
 		 **/
-		BUILDIN_DEF_DEPRECATED(getargcount,""),
+		BUILDIN_DEF(getargcount,""),
 		BUILDIN_DEF(getcharip,"?"),
-		BUILDIN_DEF_DEPRECATED(is_function,"s"),
-		BUILDIN_DEF_DEPRECATED(freeloop,"i"),
+		BUILDIN_DEF(is_function,"s"),
+		BUILDIN_DEF(freeloop,"i"),
 		BUILDIN_DEF(getrandgroupitem,"ii"),
 		BUILDIN_DEF(cleanmap,"s"),
 		BUILDIN_DEF2(cleanmap,"cleanarea","siiii"),
