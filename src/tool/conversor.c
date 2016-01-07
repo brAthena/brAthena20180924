@@ -22,6 +22,22 @@
 // Função de suporte ao console.
 void cmdline_args_init_local(void) {}
 
+// Tradução de tabelas
+struct data {
+	char name[24];
+};
+
+struct data item_data[0x8000];
+struct data mob_name[0x2710];
+struct data skill_name[0x271F];
+struct data castle_name[24];
+struct data merc_name[0x1B58];
+struct data elem_name[0xBB8];
+struct data homun_name[0x1B58];
+struct data chat_mob[40];
+struct data mob_skill[0x2710];
+struct data pet_name[0xBB8];
+
 // Variável para contagem dos arquivos convertidos.
 static unsigned int file_count;
 
@@ -141,6 +157,15 @@ char *parse_script(char *str)
 	}
 
 	return escape_str(str);
+}
+
+// Retorna o nome do item conforme arquivo de tradução.
+char *getitemname(int item_id)
+{
+	if(!strlen(item_data[item_id].name))
+		return NULL;
+
+	return escape_str(item_data[item_id].name);
 }
 
 // Converte o arquivo abra_db.txt para SQL.
@@ -2032,6 +2057,22 @@ char *item_parse_script(config_setting_t *it, char *field, char *pos, bool coma)
 	return ret;
 }
 
+char *item_parse_name(config_setting_t *it, char *field, char *pos) {
+	char *ret = pos, *str = NULL;
+	int id = 0;
+	
+	if (config_setting_lookup_int(it, "Id", &id) && id >= 0) {
+		if ((str = getitemname(id)) != NULL)
+			ret += sprintf(ret, "'%s',", str);
+		else if (config_setting_lookup_string(it, field, &str))
+			ret += sprintf(ret, "'%s',", escape_str(str));
+		else
+			ret += sprintf(ret, "NULL,");
+	}
+
+	return ret;
+}
+
 // Converte o arquivo item_db.conf para SQL.
 void convert_item_db(void)
 {
@@ -2061,7 +2102,7 @@ void convert_item_db(void)
 		// AegisName
 		pos = item_parse_str(it, "AegisName", pos);
 		// Name
-		pos = item_parse_str(it, "Name", pos);
+		pos = item_parse_name(it, "Name", pos);
 		// Type
 		pos = item_parse_i32(it, "Type", pos, "0");
 		// Buy
@@ -2248,11 +2289,34 @@ void convert_item_db(void)
 	file_count++;
 }
 
+// Reaproveitamento de Tradução
+// http://tools.brathena.org
+void translation(void) {
+	char line[1024];
+	FILE *fp;
+
+	memset(item_data, 0, sizeof(item_data));
+
+	if((fp = fopen("item_name.txt", "r"))) {
+		while(fgets(line, sizeof(line), fp) != NULL) {
+			char **rows, *str = line;
+
+			if((line[0] == '/' && line[1] == '/') || line[0] == '\n')
+				continue;
+
+			line[strlen(line)-1] = '\0';
+			explode(&rows, str, ',');
+			strncpy(item_data[atoi(rows[0])].name, rows[1], sizeof((*item_data).name));
+		}
+	}
+}
+
 // Função Inicial
 int do_init(void) {
 
 	ShowMessage("\n");
 	
+	translation();
 	convert_abra_db();
 	convert_castle_db();
 	convert_create_arrow_db();
