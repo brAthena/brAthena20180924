@@ -59,11 +59,9 @@ struct rAthread {
 	#endif
 };
 
-
 #ifdef HAS_TLS
 __thread int g_rathread_ID = -1;
 #endif
-
 
 ///
 /// Subystem Code
@@ -87,8 +85,6 @@ void rathread_init(void) {
 
 }//end: rathread_init()
 
-
-
 void rathread_final(void) {
 	register unsigned int i;
 
@@ -104,8 +100,6 @@ void rathread_final(void) {
 	}
 
 }//end: rathread_final()
-
-
 
 // gets called whenever a thread terminated ..
 static void rat_thread_terminated(rAthread *handle) {
@@ -142,7 +136,6 @@ static void *raThreadMainRedirector( void *p ){
 
 #endif
 
-
 	ret = ((rAthread*)p)->proc( ((rAthread*)p)->param ) ;
 
 #ifdef WIN32
@@ -157,17 +150,12 @@ static void *raThreadMainRedirector( void *p ){
 #endif
 }//end: raThreadMainRedirector()
 
-
-
-
-
 ///
 /// API Level
 ///
 rAthread *rathread_create(rAthreadProc entryPoint, void *param) {
 	return rathread_createEx( entryPoint, param,  (1<<23) /*8MB*/,  RAT_PRIO_NORMAL );
 }//end: rathread_create()
-
 
 rAthread *rathread_createEx(rAthreadProc entryPoint, void *param, size_t szStack, RATHREAD_PRIO prio) {
 #ifndef WIN32
@@ -177,12 +165,10 @@ rAthread *rathread_createEx(rAthreadProc entryPoint, void *param, size_t szStack
 	unsigned int i;
 	rAthread *handle = NULL;
 
-
 	// given stacksize aligned to systems pagesize?
 	tmp = szStack % sysinfo->getpagesize();
 	if(tmp != 0)
 		szStack += tmp;
-
 
 	// Get a free Thread Slot.
 	for(i = 0; i < RA_THREADS_MAX; i++){
@@ -218,7 +204,6 @@ rAthread *rathread_createEx(rAthreadProc entryPoint, void *param, size_t szStack
 
 	return handle;
 }//end: rathread_createEx
-
 
 void rathread_destroy(rAthread *handle) {
 #ifdef WIN32
@@ -264,7 +249,6 @@ rAthread *rathread_self(void) {
 	return NULL;
 }//end: rathread_self()
 
-
 int rathread_get_tid(void) {
 
 #ifdef HAS_TLS
@@ -279,7 +263,6 @@ int rathread_get_tid(void) {
 #endif
 
 }//end: rathread_get_tid()
-
 
 bool rathread_wait(rAthread *handle, void **out_exitCode) {
 	// Hint:
@@ -297,17 +280,14 @@ bool rathread_wait(rAthread *handle, void **out_exitCode) {
 
 }//end: rathread_wait()
 
-
 void rathread_prio_set(rAthread *handle, RATHREAD_PRIO prio) {
 	handle->prio = RAT_PRIO_NORMAL;
 	//@TODO
 }//end: rathread_prio_set()
 
-
 RATHREAD_PRIO rathread_prio_get(rAthread *handle) {
 	return handle->prio;
 }//end: rathread_prio_get()
-
 
 void rathread_yield(void) {
 #ifdef WIN32

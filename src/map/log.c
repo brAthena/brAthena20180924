@@ -38,6 +38,7 @@
 #include <string.h>
 
 struct log_interface log_s;
+struct log_interface *logs;
 
 
 /// obtain log type character for chat logs
@@ -54,7 +55,6 @@ char log_chattype2char(e_log_chat_type type) {
 	ShowDebug("log_chattype2char: Tipo desconhecido %d.\n", type);
 	return 'O';
 }
-
 
 /// check if this item should be logged according the settings
 bool should_log_item(int nameid, int amount, int refine, struct item_data *id) {
@@ -82,6 +82,8 @@ bool should_log_item(int nameid, int amount, int refine, struct item_data *id) {
 }
 void log_branch_sub_sql(struct map_session_data* sd) {
 	SqlStmt* stmt;
+
+	nullpo_retv(sd);
 	stmt = SQL->StmtMalloc(logs->mysql_handle);
 	if( SQL_SUCCESS != SQL->StmtPrepare(stmt, LOG_QUERY " INTO `%s` (`branch_date`, `account_id`, `char_id`, `char_name`, `map`) VALUES (NOW(), '%d', '%d', ?, '%s')", logs->config.log_branch, sd->status.account_id, sd->status.char_id, mapindex_id2name(sd->mapindex) )
 	   ||  SQL_SUCCESS != SQL->StmtBindParam(stmt, 0, SQLDT_STRING, sd->status.name, strnlen(sd->status.name, NAME_LENGTH))
@@ -144,7 +146,8 @@ void log_branch_sub_txt(struct map_session_data* sd) {
 	char timestring[255];
 	time_t curtime;
 	FILE* logfp;
-	
+
+	nullpo_retv(sd);
 	if( ( logfp = fopen(logs->config.log_branch, "a") ) == NULL )
 		return;
 	time(&curtime);
@@ -656,7 +659,9 @@ void log_zeny(struct map_session_data* sd,char * type, struct map_session_data* 
 
 void log_atcommand_sub_sql(struct map_session_data* sd, const char* message) {
 	SqlStmt* stmt;
-	
+
+	nullpo_retv(sd);
+	nullpo_retv(message);
 	stmt = SQL->StmtMalloc(logs->mysql_handle);
 	if( SQL_SUCCESS != SQL->StmtPrepare(stmt, LOG_QUERY " INTO `%s` (`atcommand_date`, `account_id`, `char_id`, `char_name`, `map`, `command`) VALUES (NOW(), '%d', '%d', ?, '%s', ?)", logs->config.log_gm, sd->status.account_id, sd->status.char_id, mapindex_id2name(sd->mapindex) )
 	   ||  SQL_SUCCESS != SQL->StmtBindParam(stmt, 0, SQLDT_STRING, sd->status.name, strnlen(sd->status.name, NAME_LENGTH))
@@ -673,7 +678,9 @@ void log_atcommand_sub_txt(struct map_session_data* sd, const char* message) {
 	char timestring[255];
 	time_t curtime;
 	FILE* logfp;
-	
+
+	nullpo_retv(sd);
+	nullpo_retv(message);
 	if( ( logfp = fopen(logs->config.log_gm, "a") ) == NULL )
 		return;
 	time(&curtime);
@@ -695,6 +702,9 @@ void log_atcommand(struct map_session_data* sd, const char* message)
 
 void log_npc_sub_sql(struct map_session_data *sd, const char *message) {
 	SqlStmt* stmt;
+
+	nullpo_retv(sd);
+	nullpo_retv(message);
 	stmt = SQL->StmtMalloc(logs->mysql_handle);
 	if( SQL_SUCCESS != SQL->StmtPrepare(stmt, LOG_QUERY " INTO `%s` (`npc_date`, `account_id`, `char_id`, `char_name`, `map`, `mes`) VALUES (NOW(), '%d', '%d', ?, '%s', ?)", logs->config.log_npc, sd->status.account_id, sd->status.char_id, mapindex_id2name(sd->mapindex) )
 	   ||  SQL_SUCCESS != SQL->StmtBindParam(stmt, 0, SQLDT_STRING, sd->status.name, strnlen(sd->status.name, NAME_LENGTH))
@@ -711,7 +721,9 @@ void log_npc_sub_txt(struct map_session_data *sd, const char *message) {
 	char timestring[255];
 	time_t curtime;
 	FILE* logfp;
-	
+
+	nullpo_retv(sd);
+	nullpo_retv(message);
 	if( ( logfp = fopen(logs->config.log_npc, "a") ) == NULL )
 		return;
 	time(&curtime);
@@ -732,7 +744,9 @@ void log_npc(struct map_session_data* sd, const char* message)
 
 void log_chat_sub_sql(e_log_chat_type type, int type_id, int src_charid, int src_accid, const char *mapname, int x, int y, const char* dst_charname, const char* message) {
 	SqlStmt* stmt;
-	
+
+	nullpo_retv(dst_charname);
+	nullpo_retv(message);
 	stmt = SQL->StmtMalloc(logs->mysql_handle);
 	if( SQL_SUCCESS != SQL->StmtPrepare(stmt, LOG_QUERY " INTO `%s` (`time`, `type`, `type_id`, `src_charid`, `src_accountid`, `src_map`, `src_map_x`, `src_map_y`, `dst_charname`, `message`) VALUES (NOW(), '%c', '%d', '%d', '%d', '%s', '%d', '%d', ?, ?)", logs->config.log_chat, logs->chattype2char(type), type_id, src_charid, src_accid, mapname, x, y)
 	 || SQL_SUCCESS != SQL->StmtBindParam(stmt, 0, SQLDT_STRING, (char*)dst_charname, safestrnlen(dst_charname, NAME_LENGTH))
@@ -749,7 +763,10 @@ void log_chat_sub_txt(e_log_chat_type type, int type_id, int src_charid, int src
 	char timestring[255];
 	time_t curtime;
 	FILE* logfp;
-	
+
+	nullpo_retv(mapname);
+	nullpo_retv(dst_charname);
+	nullpo_retv(message);
 	if( ( logfp = fopen(logs->config.log_chat, "a") ) == NULL )
 		return;
 	time(&curtime);
@@ -802,12 +819,12 @@ void log_set_defaults(void) {
 	logs->config.amount_items_log = 100;
 }
 
-
 int log_config_read(const char* cfgName) {
 	static int count = 0;
 	char line[1024], w1[1024], w2[1024];
 	FILE *fp;
 
+	nullpo_retr(1, cfgName);
 	if( count++ == 0 )
 		log_set_defaults();
 
@@ -942,9 +959,10 @@ void log_config_complete(void) {
 		logs->branch_sub = log_branch_sub_sql;
 	}
 }
+
 void log_defaults(void) {
 	logs = &log_s;
-	
+
 	sprintf(logs->db_ip,"127.0.0.1");
 	sprintf(logs->db_id,"ragnarok");
 	sprintf(logs->db_pw,"ragnarok");

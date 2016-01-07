@@ -42,6 +42,8 @@ struct status_data;
 #define MAX_HAIR_COLOR  (battle->bc->max_hair_color)
 #define MIN_CLOTH_COLOR (battle->bc->min_cloth_color)
 #define MAX_CLOTH_COLOR (battle->bc->max_cloth_color)
+#define MIN_BODY_STYLE (battle->bc->min_body_style)
+#define MAX_BODY_STYLE (battle->bc->max_body_style)
 
 #define is_boss(bl)     (status_get_mode(bl)&MD_BOSS) // Can refine later [Aru]
 
@@ -361,8 +363,7 @@ struct Battle_Config {
 	int area_size; // added by [MouseJstr]
 
 	int max_def, over_def_bonus; //added by [Skotlex]
-	int max_mdef;
-	
+
 	int zeny_from_mobs; // [Valaris]
 	int mobs_level_up; // [Valaris]
 	int mobs_level_up_exp_rate; // [Valaris]
@@ -399,6 +400,7 @@ struct Battle_Config {
 	int boss_active_time;
 
 	int show_hp_sp_drain, show_hp_sp_gain; //[Skotlex]
+	int show_katar_crit_bonus;
 
 	int mob_npc_event_type; //Determines on who the npc_event is executed. [Skotlex]
 
@@ -428,7 +430,7 @@ struct Battle_Config {
 	int mob_sc_def_rate;
 	int pc_max_sc_def;
 	int mob_max_sc_def;
-	int enable_luk_influence,pc_luk_sc_def,mob_luk_sc_def;
+	int enable_luk_influence, pc_luk_sc_def, mob_luk_sc_def;
 	
 	int sg_angel_skill_ratio;
 	int sg_miracle_skill_ratio;
@@ -488,6 +490,7 @@ struct Battle_Config {
 
 	int atcommand_suggestions_enabled;
 	int min_npc_vendchat_distance;
+	int vendchat_near_hiddennpc;
 	int atcommand_mobinfo_type;
 
 	int mob_size_influence; // Enable modifications on earned experience, drop rates and monster status depending on monster size. [mkbu95]
@@ -496,7 +499,7 @@ struct Battle_Config {
 	int mob_icewall_walk_block; //How a normal monster should be trapped in icewall [Playtester]
 	int boss_icewall_walk_block; //How a boss monster should be trapped in icewall [Playtester]
 
-	/** **/
+	/** Hercules **/
 	int skill_trap_type;
 	int item_restricted_consumption_type;
 	int unequip_restricted_equipment;
@@ -526,6 +529,16 @@ struct Battle_Config {
 	int feature_roulette;
 
 	int show_monster_hp_bar; // [Frost]
+
+	int fix_warp_hit_delay_abuse;
+
+	// Refine Def/Atk
+	int costume_refine_def, shadow_refine_def;
+	int shadow_refine_atk;
+
+	// BodyStyle
+	int min_body_style, max_body_style;
+	int save_body_style;
 };
 
 /* criteria for battle_config.idletime_critera */
@@ -644,7 +657,7 @@ struct battle_interface {
 	/* - battle_config                           */
 	int (*config_read) (const char *cfgName);
 	void (*config_set_defaults) (void);
-	int (*config_set_value) (const char* w1, const char* w2);
+	int (*config_set_value) (const char *w1, const char *w2);
 	int (*config_get_value) (const char* w1);
 	void (*config_adjust) (void);
 	/* ----------------------------------------- */

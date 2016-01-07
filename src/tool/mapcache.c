@@ -26,8 +26,8 @@
 #include "common/memmgr.h"
 #include "common/mmo.h"
 #include "common/showmsg.h"
-#include "common/utils.h"
 #include "common/strlib.h"
+#include "common/utils.h"
 
 #include <stdio.h>
 #include <stdlib.h>

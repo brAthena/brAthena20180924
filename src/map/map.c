@@ -82,6 +82,9 @@
 struct map_interface map_s;
 struct mapit_interface mapit_s;
 
+struct map_interface *map;
+struct mapit_interface *mapit;
+
 /*==========================================
  * server player count (of all mapservers)
  *------------------------------------------*/
@@ -1812,16 +1815,16 @@ int map_quit(struct map_session_data *sd) {
 	skill->cooldown_save(sd);
 	pc->itemcd_do(sd,false);
 
-	for( i = 0; i < sd->queues_count; i++ ) {
-		struct hQueue *queue;
-		if( (queue = script->queue(sd->queues[i])) && queue->onLogOut[0] != '\0' ) {
-			npc->event(sd, queue->onLogOut, 0);
+	for (i = 0; i < VECTOR_LENGTH(sd->script_queues); i++) {
+		struct script_queue *queue = script->queue(VECTOR_INDEX(sd->script_queues, i));
+		if (queue && queue->event_logout[0] != '\0') {
+			npc->event(sd, queue->event_logout, 0);
 		}
 	}
 	/* two times, the npc event above may assign a new one or delete others */
-	for( i = 0; i < sd->queues_count; i++ ) {
-		if( sd->queues[i] != -1 )
-			script->queue_remove(sd->queues[i],sd->status.account_id);
+	while (VECTOR_LENGTH(sd->script_queues)) {
+		int qid = VECTOR_LAST(sd->script_queues);
+		script->queue_remove(qid, sd->status.account_id);
 	}
 
 	npc->script_event(sd, NPCE_LOGOUT);
@@ -1910,19 +1913,19 @@ struct mob_data *map_id2md(int id) {
 
 struct npc_data *map_id2nd(int id) {
 	// just a id2bl lookup because there's no npc_db
-	struct block_list *bl = map->id2bl(id);
+	struct block_list* bl = map->id2bl(id);
 
 	return BL_CAST(BL_NPC, bl);
 }
 
 struct homun_data *map_id2hd(int id) {
-	struct block_list *bl = map->id2bl(id);
+	struct block_list* bl = map->id2bl(id);
 
 	return BL_CAST(BL_HOM, bl);
 }
 
 struct mercenary_data *map_id2mc(int id) {
-	struct block_list *bl = map->id2bl(id);
+	struct block_list* bl = map->id2bl(id);
 
 	return BL_CAST(BL_MER, bl);
 }
@@ -1940,7 +1943,7 @@ struct elemental_data *map_id2ed(int id) {
 }
 
 struct chat_data *map_id2cd(int id) {
-	struct block_list *bl = map->id2bl(id);
+	struct block_list* bl = map->id2bl(id);
 
 	return BL_CAST(BL_CHAT, bl);
 }
@@ -2060,6 +2063,39 @@ struct mob_data * map_id2boss(int id)
 {
 	if (id <= 0) return NULL;
 	return (struct mob_data*)idb_get(map->bossid_db,id);
+}
+
+/**
+ * Returns the equivalent bitmask to the given race ID.
+ *
+ * @param race A race identifier (@see enum Race)
+ *
+ * @return The equivalent race bitmask.
+ */
+uint32 map_race_id2mask(int race)
+{
+	if (race >= RC_FORMLESS && race < RC_MAX)
+		return 1 << race;
+
+	if (race == RC_ALL)
+		return RCMASK_ALL;
+
+	if (race == RC_NONPLAYER)
+		return RCMASK_NONPLAYER;
+
+	if (race == RC_NONDEMIHUMAN)
+		return RCMASK_NONDEMIHUMAN;
+
+	if (race == RC_DEMIPLAYER)
+		return RCMASK_DEMIPLAYER;
+
+	if (race == RC_NONDEMIPLAYER)
+		return RCMASK_NONDEMIPLAYER;
+
+	ShowWarning("map_race_id2mask: Invalid race: %d\n", race);
+	Assert_report((race >= RC_FORMLESS && race < RC_NONDEMIPLAYER) || race == RC_ALL);
+
+	return RCMASK_NONE;
 }
 
 /// Applies func to all the players in the db.
@@ -3545,7 +3581,7 @@ int map_config_read(char *cfgName) {
 		if(strcmpi(w1,"timestamp_format")==0)
 			safestrncpy(showmsg->timestamp_format, w2, 20);
 		else if(strcmpi(w1,"stdout_with_ansisequence")==0)
-			showmsg->stdout_with_ansisequence = config_switch(w2);
+			showmsg->stdout_with_ansisequence = config_switch(w2) ? true : false;
 		else if(strcmpi(w1,"console_silent")==0) {
 			showmsg->silent = atoi(w2);
 			if( showmsg->silent ) // only bother if its actually enabled
@@ -3736,7 +3772,7 @@ int inter_config_read(char *cfgName) {
 		else if(strcmpi(w1,"mob_skill_db2_db")==0)
 			safestrncpy(map->mob_skill_db2_db, w2, sizeof(map->mob_skill_db2_db));
 		/* map sql stuff */
-		else if(strcmpi(w1,"map_server_ip")==0)
+		if(strcmpi(w1,"map_server_ip")==0)
 			safestrncpy(map->server_ip, w2, sizeof(map->server_ip));
 		else if(strcmpi(w1,"map_server_port")==0)
 			map->server_port=atoi(w2);
@@ -4037,8 +4073,9 @@ struct map_zone_data *map_merge_zone(struct map_zone_data *main, struct map_zone
 	return zone;
 }
 
-void map_zone_change2(int m, struct map_zone_data *zone) {
-	char empty[1] = "\0";
+void map_zone_change2(int m, struct map_zone_data *zone)
+{
+	const char *empty = "";
 
 	if( map->list[m].zone == zone )
 		return;
@@ -4064,10 +4101,11 @@ void map_zone_change(int m, struct map_zone_data *zone, const char* start, const
 	map->zone_apply(m,zone,start,buffer,filepath);
 }
 /* removes previous mapflags from this map */
-void map_zone_remove(int m) {
+void map_zone_remove(int m)
+{
 	char flag[MAP_ZONE_MAPFLAG_LENGTH], params[MAP_ZONE_MAPFLAG_LENGTH];
 	unsigned short k;
-	char empty[1] = "\0";
+	const char *empty = "";
 	for(k = 0; k < map->list[m].zone_mf_count; k++) {
 		size_t len = strlen(map->list[m].zone_mf[k]),j;
 		params[0] = '\0';
@@ -4791,9 +4829,10 @@ bool map_zone_mf_cache(int m, char *flag, char *params) {
 
 	return false;
 }
-void map_zone_apply(int m, struct map_zone_data *zone, const char* start, const char* buffer, const char* filepath) {
+void map_zone_apply(int m, struct map_zone_data *zone, const char* start, const char* buffer, const char* filepath)
+{
 	int i;
-	char empty[1] = "\0";
+	const char *empty = "";
 	char flag[MAP_ZONE_MAPFLAG_LENGTH], params[MAP_ZONE_MAPFLAG_LENGTH];
 	map->list[m].zone = zone;
 	for(i = 0; i < zone->mapflags_count; i++) {
@@ -4816,10 +4855,11 @@ void map_zone_apply(int m, struct map_zone_data *zone, const char* start, const 
 	}
 }
 /* used on npc load and reload to apply all "Normal" and "PK Mode" zones */
-void map_zone_init(void) {
+void map_zone_init(void)
+{
 	char flag[MAP_ZONE_MAPFLAG_LENGTH], params[MAP_ZONE_MAPFLAG_LENGTH];
 	struct map_zone_data *zone;
-	char empty[1] = "\0";
+	const char *empty = "";
 	int i,k,j;
 
 	zone = &map->zone_all;
@@ -6080,6 +6120,11 @@ int do_init(int argc, char *argv[])
 	return 0;
 }
 
+/*=====================================
+* Default Functions : map.h
+* Generated by HerculesInterfaceMaker
+* created by Susu
+*-------------------------------------*/
 void map_defaults(void) {
 	map = &map_s;
 
@@ -6284,6 +6329,7 @@ void map_defaults(void) {
 	map->nick2sd = map_nick2sd;
 	map->getmob_boss = map_getmob_boss;
 	map->id2boss = map_id2boss;
+	map->race_id2mask = map_race_id2mask;
 	// reload config file looking only for npcs
 	map->reloadnpc = map_reloadnpc;
 

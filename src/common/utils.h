@@ -67,9 +67,9 @@ size_t hwrite(const void * ptr, size_t size, size_t count, FILE * stream);
 #endif // BRATHENA_CORE
 
 #ifdef WIN32
-	#define HSleep(x) Sleep(1000 * (x))
+#define HSleep(x) Sleep(1000 * (x))
 #else // ! WIN32
-	#define HSleep(x) sleep(x)
+#define HSleep(x) sleep(x)
 #endif
 
 /* [Ind/Hercules] Caching */

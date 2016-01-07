@@ -51,6 +51,7 @@
 #define WISDELLIST_MAX 256    // Number of elements in the list Delete data Wis
 
 struct inter_interface inter_s;
+struct inter_interface *inter;
 
 int char_server_port = 3306;
 char char_server_ip[32] = "127.0.0.1";
@@ -971,7 +972,7 @@ int mapif_wis_message(struct WisData *wd)
 		wd->len = 0;
 	if (wd->len >= sizeof(wd->msg) - 1)
 		wd->len = sizeof(wd->msg) - 1;
-	
+
 	WBUFW(buf, 0) = 0x3801;
 	WBUFW(buf, 2) = 56 +wd->len;
 	WBUFL(buf, 4) = wd->id;
@@ -1188,7 +1189,7 @@ int mapif_parse_Registry(int fd)
 
 	if( count ) {
 		int cursor = 14, i;
-		char key[32], sval[254];
+		char key[SCRIPT_VARNAME_LENGTH+1], sval[254];
 		bool isLoginActive = sockt->session_is_active(chr->login_fd);
 
 		if( isLoginActive )
@@ -1196,8 +1197,9 @@ int mapif_parse_Registry(int fd)
 
 		for(i = 0; i < count; i++) {
 			unsigned int index;
-			safestrncpy(key, (char*)RFIFOP(fd, cursor + 1), RFIFOB(fd, cursor));
-			cursor += RFIFOB(fd, cursor) + 1;
+			int len = RFIFOB(fd, cursor);
+			safestrncpy(key, (char*)RFIFOP(fd, cursor + 1), min((int)sizeof(key), len));
+			cursor += len + 1;
 
 			index = RFIFOL(fd, cursor);
 			cursor += 4;
@@ -1213,8 +1215,9 @@ int mapif_parse_Registry(int fd)
 					break;
 				/* str */
 				case 2:
-					safestrncpy(sval, (char*)RFIFOP(fd, cursor + 1), RFIFOB(fd, cursor));
-					cursor += RFIFOB(fd, cursor) + 1;
+					len = RFIFOB(fd, cursor);
+					safestrncpy(sval, (char*)RFIFOP(fd, cursor + 1), min((int)sizeof(sval), len));
+					cursor += len + 1;
 					inter->savereg(account_id,char_id,key,index,(intptr_t)sval,true);
 					break;
 				case 3:

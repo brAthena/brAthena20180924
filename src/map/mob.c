@@ -63,6 +63,7 @@
 #include <string.h>
 
 struct mob_interface mob_s;
+struct mob_interface *mob;
 
 #define ACTIVE_AI_RANGE 2 //Distance added on top of 'AREA_SIZE' at which mobs enter active AI mode.
 
@@ -151,16 +152,10 @@ void mvptomb_create(struct mob_data *md, char *killer, time_t time)
 	if ( md->tomb_nid )
 		mob->mvptomb_destroy(md);
 
-	nd = npc->create_npc(md->bl.m, md->bl.x, md->bl.y);
+	nd = npc->create_npc(TOMB, md->bl.m, md->bl.x, md->bl.y, md->ud.dir, MOB_TOMB);
 	md->tomb_nid = nd->bl.id;
-	nd->dir = md->ud.dir;
-	nd->bl.type = BL_NPC;
 
 	safestrncpy(nd->name, msg_txt(856), sizeof(nd->name)); // "Tomb"
-
-	nd->class_ = 565;
-	nd->speed = 200;
-	nd->subtype = TOMB;
 
 	nd->u.tomb.md = md;
 	nd->u.tomb.kill_time = time;
@@ -174,7 +169,6 @@ void mvptomb_create(struct mob_data *md, char *killer, time_t time)
 	map->addblock(&nd->bl);
 	status->set_viewdata(&nd->bl, nd->class_);
 	clif->spawn(&nd->bl);
-
 }
 
 void mvptomb_destroy(struct mob_data *md) {
@@ -498,7 +492,7 @@ int mob_once_spawn(struct map_session_data* sd, int16 m, int16 x, int16 y, const
 		if (!md)
 			continue;
 
-		if ( class_ == MOBID_EMPERIUM && !no_guardian_data ) {
+		if (class_ == MOBID_EMPELIUM && !no_guardian_data) {
 			struct guild_castle* gc = guild->mapindex2gc(map_id2index(m));
 			struct guild* g = (gc) ? guild->search(gc->guild_id) : NULL;
 			if( gc ) {
@@ -606,7 +600,7 @@ int mob_spawn_guardian_sub(int tid, int64 tick, int id, intptr_t data) {
 	if( g == NULL ) { //Liberate castle, if the guild is not found this is an error! [Skotlex]
 		ShowError("mob_spawn_guardian_sub: Nao foi possivel carregar o cla %d!\n", (int)data);
 		//Not sure this is the best way, but otherwise we'd be invoking this for ALL guardians spawned later on.
-		if( md->class_ == MOBID_EMPERIUM && md->guardian_data ) {
+		if (md->class_ == MOBID_EMPELIUM && md->guardian_data) {
 			md->guardian_data->g = NULL;
 			if( md->guardian_data->castle->guild_id ) {//Free castle up.
 				ShowNotice("Limpando a propriedade do castelo %d (%s)\n", md->guardian_data->castle->castle_id, md->guardian_data->castle->castle_name);
@@ -2069,11 +2063,17 @@ void mob_damage(struct mob_data *md, struct block_list *src, int damage) {
 
 	if (battle_config.show_mob_info&3)
 		clif->charnameack (0, &md->bl);
+	
+#if PACKETVER >= 20131223
+	// Resend ZC_NOTIFY_MOVEENTRY to Update the HP
+	if (battle_config.show_monster_hp_bar)
+		clif->set_unit_walking(&md->bl, NULL, unit->bl2ud(&md->bl), AREA);
+#endif
 
 	if (!src)
 		return;
 
-#if PACKETVER >= 20120404
+#if (PACKETVER >= 20120404 && PACKETVER < 20131223)
 	if (battle_config.show_monster_hp_bar && !(md->status.mode&MD_BOSS)) {
 		int i;
 		for(i = 0; i < DAMAGELOG_SIZE; i++){ // must show hp bar to all char who already hit the mob.
@@ -2368,7 +2368,9 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type) {
 
 			// Increase drop rate if user has SC_CASH_RECEIVEITEM
 			if (sd && sd->sc.data[SC_CASH_RECEIVEITEM]) // now rig the drop rate to never be over 90% unless it is originally >90%.
-				drop_rate = max(drop_rate,cap_value((int)(0.5+drop_rate*(sd->sc.data[SC_CASH_RECEIVEITEM]->val1)/100.),0,9000));
+				drop_rate = max(drop_rate, cap_value((int)(0.5 + drop_rate * (sd->sc.data[SC_CASH_RECEIVEITEM]->val1) / 100.), 0, 9000));
+			if (sd && sd->sc.data[SC_OVERLAPEXPUP])
+				drop_rate = max(drop_rate, cap_value((int)(0.5 + drop_rate * (sd->sc.data[SC_OVERLAPEXPUP]->val2) / 100.), 0, 9000));
 #ifdef RENEWAL_DROP
 			if( drop_modifier != 100 ) {
 				drop_rate = drop_rate * drop_modifier / 100;
@@ -2405,7 +2407,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type) {
 			 * so while we discuss, for a small period of time, the list is hardcoded (yes officially only those 2 use it,
 			 * thus why we're unsure on how to best place the setting) */
 			/* temp, will not be hardcoded for long thudu. */
-			if( it->nameid == 7782 || it->nameid == 7783 ) /* for when not hardcoded: add a check on mvp bonus drop as well */
+			if (it->nameid == ITEMID_GOLD_KEY77 || it->nameid == ITEMID_SILVER_KEY77) /* for when not hardcoded: add a check on mvp bonus drop as well */
 				clif->item_drop_announce(mvp_sd, it->nameid, md->name);
 
 			// Announce first, or else ditem will be freed. [Lance]
@@ -2428,8 +2430,8 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type) {
 			{
 				if ( sd->add_drop[i].race == -md->class_ ||
 					( sd->add_drop[i].race > 0 && (
-						sd->add_drop[i].race & (1<<mstatus->race) ||
-						sd->add_drop[i].race & (1<<((mstatus->mode&MD_BOSS)?RC_BOSS:RC_NONBOSS))
+						sd->add_drop[i].race & map->race_id2mask(mstatus->race) ||
+						sd->add_drop[i].race & map->race_id2mask((mstatus->mode&MD_BOSS) ? RC_BOSS : RC_NONBOSS)
 					)))
 				{
 					//check if the bonus item drop rate should be multiplied with mob level/10 [Lupus]
@@ -2563,7 +2565,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type) {
 		}
 	}
 
-	if (type&2 && !sd && md->class_ == MOBID_EMPERIUM && md->guardian_data) {
+	if (type&2 && !sd && md->class_ == MOBID_EMPELIUM && md->guardian_data) {
 		//Emperium destroyed by script. Discard mvp character. [Skotlex]
 		mvp_sd = NULL;
 	}
@@ -2688,9 +2690,10 @@ int mob_guardian_guildchange(struct mob_data *md)
 
 	if (md->guardian_data->castle->guild_id == 0) {
 		//Castle with no owner? Delete the guardians.
-		if( md->class_ == MOBID_EMPERIUM ) //But don't delete the emperium, just clear it's guild-data
+		if (md->class_ == MOBID_EMPELIUM) {
+			//But don't delete the emperium, just clear it's guild-data
 			md->guardian_data->g = NULL;
-		else {
+		} else {
 			if (md->guardian_data->number >= 0 && md->guardian_data->number < MAX_GUARDIANS && md->guardian_data->castle->guardian[md->guardian_data->number].visible)
 				guild->castledatasave(md->guardian_data->castle->castle_id, 10+md->guardian_data->number, 0);
 			unit->free(&md->bl,CLR_OUTSIGHT); //Remove guardian.
@@ -2738,39 +2741,39 @@ int mob_random_class (int *value, size_t count)
 /*==========================================
  * Change mob base class
  *------------------------------------------*/
-int mob_class_change (struct mob_data *md, int class_)
-{
+int mob_class_change (struct mob_data *md, int class_) {
+
 	int64 tick = timer->gettick(), c = 0;
 	int i, hp_rate;
 
 	nullpo_ret(md);
 
-	if( md->bl.prev == NULL )
+	if (md->bl.prev == NULL)
 		return 0;
 
-	//Disable class changing for some targets...
+	// Disable class changing for some targets...
 	if (md->guardian_data)
-		return 0; //Guardians/Emperium
+		return 0; // Guardians/Emperium
 
-	if( mob_is_treasure(md) )
-		return 0; //Treasure Boxes
+	if (mob_is_treasure(md))
+		return 0; // Treasure Boxes
 
-	if( md->special_state.ai > AI_ATTACK )
-		return 0; //Marine Spheres and Floras.
+	if (md->special_state.ai > AI_ATTACK)
+		return 0; // Marine Spheres and Floras.
 
-	if( mob->is_clone(md->class_) )
-		return 0; //Clones
+	if (mob->is_clone(md->class_))
+		return 0; // Clones
 
-	if( md->class_ == class_ )
-		return 0; //Nothing to change.
+	if (md->class_ == class_)
+		return 0; // Nothing to change.
 
 	hp_rate = get_percentage(md->status.hp, md->status.max_hp);
 	md->class_ = class_;
 	md->db = mob->db(class_);
-	if (battle_config.override_mob_names==1)
-		memcpy(md->name,md->db->name,NAME_LENGTH);
+	if (battle_config.override_mob_names == 1)
+		memcpy(md->name, md->db->name, NAME_LENGTH);
 	else
-		memcpy(md->name,md->db->jname,NAME_LENGTH);
+		memcpy(md->name, md->db->jname, NAME_LENGTH);
 
 	mob_stop_attack(md);
 	mob_stop_walking(md, STOPWALKING_FLAG_NONE);
@@ -2810,8 +2813,13 @@ void mob_heal(struct mob_data *md, unsigned int heal)
 {
 	if (battle_config.show_mob_info&3)
 		clif->charnameack (0, &md->bl);
+#if PACKETVER >= 20131223
+	// Resend ZC_NOTIFY_MOVEENTRY to Update the HP
+	if (battle_config.show_monster_hp_bar)
+		clif->set_unit_walking(&md->bl, NULL, unit->bl2ud(&md->bl), AREA);
+#endif
 
-#if PACKETVER >= 20120404
+#if (PACKETVER >= 20120404 && PACKETVER < 20131223)
 	if (battle_config.show_monster_hp_bar && !(md->status.mode&MD_BOSS)) {
 		int i;
 		for(i = 0; i < DAMAGELOG_SIZE; i++){ // must show hp bar to all char who already hit the mob.
@@ -3649,6 +3657,7 @@ void item_dropratio_adjust(int nameid, int mob_id, int *rate_adjust)
 			*rate_adjust = item_drop_ratio_db[nameid]->drop_ratio;
 	}
 }
+
 /* (mob_parse_dbrow)_cap_value */
 static inline int mob_parse_dbrow_cap_value(int class_, int min, int max, int value) {
 	if( value > max ) {
@@ -3921,7 +3930,6 @@ bool mob_parse_dbrow(char** str) {
  * Leitura mod_db SQL [Shiraz]
  *------------------------------------------*/
 void mob_readdb(void) {
-#ifdef USE_SQL_MOB_DB
 	int count = 0;
 
 	if(SQL_ERROR == SQL->Query(map->brAmysql_handle, "SELECT * FROM `%s`", get_database_name(47))) {
@@ -3952,22 +3960,8 @@ void mob_readdb(void) {
 
 	ShowSQL("Leitura de '"CL_WHITE"%d"CL_RESET"' entradas na tabela '"CL_WHITE"%s"CL_RESET"'.\n", count, get_database_name(47));
 	SQL->FreeResult(map->brAmysql_handle);
-#else
-	char filepath[256];
-	sprintf(filepath, "%s/%s", map->db_path, DBPATH"mob_db.txt");
-	
-	if(!exists(filepath))
-		return;
-	
-	sv->readdb(map->db_path, DBPATH"mob_db.txt", ',', 31+2*MAX_MVP_DROP+2*MAX_MOB_DROP, 31+2*MAX_MVP_DROP+2*MAX_MOB_DROP, -1, mob->readdb_sub);
-#endif
-
 	mob->name_constants();
 	return;
-}
-
-bool mob_readdb_sub(char* fields[], int columns, int current) {
-	return mob->parse_dbrow(fields);
 }
 
 void mob_name_constants(void) {
@@ -4647,18 +4641,12 @@ int do_final_mob(void)
 }
 
 void mob_defaults(void) {
-	//Defines the Manuk/Splendide mob groups for the status reductions [Epoque]
-	const int mob_manuk[8] = { 1986, 1987, 1988, 1989, 1990, 1997, 1998, 1999 };
-	const int mob_splendide[5] = { 1991, 1992, 1993, 1994, 1995 };
-
 	mob = &mob_s;
 
 	memset(mob->db_data, 0, sizeof(mob->db_data));
 	mob->dummy = NULL;
 	memset(mob->chat_db, 0, sizeof(mob->chat_db));
 
-	memcpy(mob->manuk, mob_manuk, sizeof(mob->manuk));
-	memcpy(mob->splendide, mob_splendide, sizeof(mob->splendide));
 	/* */
 	mob->reload = mob_reload;
 	mob->init = do_init_mob;
@@ -4742,7 +4730,6 @@ void mob_defaults(void) {
 	mob->drop_adjust = mob_drop_adjust;
 	mob->item_dropratio_adjust = item_dropratio_adjust;
 	mob->parse_dbrow = mob_parse_dbrow;
-	mob->readdb_sub = mob_readdb_sub;
 	mob->readdb = mob_readdb;
 	mob->name_constants = mob_name_constants;
 	mob->readdb_mobavail = mob_readdb_mobavail;

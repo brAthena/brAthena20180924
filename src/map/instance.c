@@ -47,6 +47,7 @@
 #include <time.h>
 
 struct instance_interface instance_s;
+struct instance_interface *instance;
 
 /// Checks whether given instance id is valid or not.
 bool instance_is_valid(int instance_id) {
@@ -75,6 +76,7 @@ int instance_create(int owner_id, const char *name, enum instance_owner_type typ
 	short *iptr = NULL;
 	int i;
 
+	nullpo_retr(-1, name);
 	switch ( type ) {
 		case IOT_NONE:
 			break;
@@ -164,13 +166,25 @@ int instance_create(int owner_id, const char *name, enum instance_owner_type typ
 	return i;
 }
 
-/*--------------------------------------
+/**
  * Add a map to the instance using src map "name"
- *--------------------------------------*/
+ *
+ * @param name Source map name.
+ * @param instance_id The destination instance ID.
+ * @param usebasename Whether to generate a standard instance map name (only used if map_name is not NULL).
+ * @param map_name    The name for the instanced map (may be NULL to generate a new one).
+ * @return The generated map's index.
+ * @retval -1 Map or instance not found.
+ * @retval -2 Duplicate map name.
+ * @retval -3 No more map indices available.
+ * @retval -4 Source map is already an instance.
+ **/
 int instance_add_map(const char *name, int instance_id, bool usebasename, const char *map_name) {
 	int16 m = map->mapname2mapid(name);
 	int i, im = -1;
 	size_t num_cell, size, j;
+
+	nullpo_retr(-1, name);
 
 	if( m < 0 )
 		return -1; // source map not found
@@ -319,6 +333,7 @@ int instance_map2imap(int16 m, int instance_id) {
 int instance_mapname2imap(const char *map_name, int instance_id) {
 	int i;
 
+	nullpo_retr(-1, map_name);
 	if( !instance->valid(instance_id) ) {
 		return -1;
 	}
@@ -336,6 +351,7 @@ int instance_mapname2imap(const char *map_name, int instance_id) {
  * result : mapid of map "m" in this instance
  *--------------------------------------*/
 int instance_mapid2imapid(int16 m, int instance_id) {
+	Assert_retr(-1, m >= 0 && m < map->count);
 	if( map->list[m].flag.src4instance == 0 )
 		return m; // not instances found for this map
 	else if( map->list[m].instance_id >= 0 ) { // This map is a instance, not a src map instance
@@ -673,6 +689,7 @@ void instance_set_timeout(int instance_id, unsigned int progress_timeout, unsign
 void instance_check_kick(struct map_session_data *sd) {
 	int16 m = sd->bl.m;
 
+	nullpo_retv(sd);
 	clif->instance_leave(sd->fd);
 	if( map->list[m].instance_id >= 0 ) { // User was on the instance map
 		if( map->list[m].save.map )

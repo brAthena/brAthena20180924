@@ -81,15 +81,8 @@
 /// Uncomment to enable real-time server stats (in and out data and ram usage). [Ai4rei]
 //#define SHOW_SERVER_STATS
 
-
 /// Comment to disable autotrade persistency (where autotrading merchants survive server restarts)
 #define AUTOTRADE_PERSISTENCY
-
-/// Retire o comentário de definição para que a item_db seja carregada em SQL.
-//#define USE_SQL_ITEM_DB
-
-/// Retire o comentário de definição para que a mob_db seja carregada em SQL.
-//#define USE_SQL_MOB_DB
 
 /**
  * No settings past this point

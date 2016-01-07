@@ -584,7 +584,7 @@ struct clif_interface {
 	int map_fd;
 	/* for clif_clearunit_delayed */
 	struct eri *delay_clearunit_ers;
-	/* Cash Shop [Ind] */
+	/* Cash Shop [Ind/Hercules] */
 	struct {
 		struct hCSData **data[CASHSHOP_TAB_MAX];
 		unsigned int item_count[CASHSHOP_TAB_MAX];
@@ -846,11 +846,11 @@ struct clif_interface {
 	void (*clearchat) (struct chat_data *cd,int fd);
 	void (*leavechat) (struct chat_data* cd, struct map_session_data* sd, bool flag);
 	void (*changechatstatus) (struct chat_data* cd);
-	void (*wis_message) (int fd, const char* nick, const char* mes, int mes_len);
+	void (*wis_message) (int fd, const char* nick, const char* mes, size_t mes_len);
 	void (*wis_end) (int fd, int flag);
-	void (*disp_message) (struct block_list* src, const char* mes, int len, enum send_target target);
-	void (*broadcast) (struct block_list* bl, const char* mes, int len, int type, enum send_target target);
-	void (*broadcast2) (struct block_list* bl, const char* mes, int len, unsigned int fontColor, short fontType, short fontSize, short fontAlign, short fontY, enum send_target target);
+	void (*disp_message) (struct block_list* src, const char* mes, size_t len, enum send_target target);
+	void (*broadcast) (struct block_list* bl, const char* mes, size_t len, int type, enum send_target target);
+	void (*broadcast2) (struct block_list* bl, const char* mes, size_t len, unsigned int fontColor, short fontType, short fontSize, short fontAlign, short fontY, enum send_target target);
 	void (*messagecolor_self) (int fd, uint32 color, const char *msg);
 	void (*messagecolor) (struct block_list* bl, uint32 color, const char* msg);
 	void (*disp_overhead) (struct block_list *bl, const char* mes);
@@ -947,7 +947,7 @@ struct clif_interface {
 	void (*bg_hp) (struct map_session_data *sd);
 	void (*bg_xy) (struct map_session_data *sd);
 	void (*bg_xy_remove) (struct map_session_data *sd);
-	void (*bg_message) (struct battleground_data *bgd, int src_id, const char *name, const char *mes, int len);
+	void (*bg_message) (struct battleground_data *bgd, int src_id, const char *name, const char *mes, size_t len);
 	void (*bg_updatescore) (int16 m);
 	void (*bg_updatescore_single) (struct map_session_data *sd);
 	void (*sendbgemblem_area) (struct map_session_data *sd);
@@ -1070,11 +1070,11 @@ struct clif_interface {
 	void (*user_count) (struct map_session_data* sd, int count);
 	void (*noask_sub) (struct map_session_data *src, struct map_session_data *target, int type);
 	void (*bc_ready) (void);
-	/* Sistema de Canal */
+	/* Hercules Channel System */
 	void (*channel_msg) (struct channel_data *chan, struct map_session_data *sd, char *msg);
 	void (*channel_msg2) (struct channel_data *chan, char *msg);
 	int (*undisguise_timer) (int tid, int64 tick, int id, intptr_t data);
-	/* Sistema de Banco */
+	/* Bank System [Yommy/Hercules] */
 	void (*bank_deposit) (struct map_session_data *sd, enum e_BANKING_DEPOSIT_ACK reason);
 	void (*bank_withdraw) (struct map_session_data *sd,enum e_BANKING_WITHDRAW_ACK reason);
 	/* */
@@ -1302,7 +1302,7 @@ struct clif_interface {
 	void (*pBGQueueCheckState) (int fd, struct map_session_data *sd);
 	void (*pBGQueueRevokeReq) (int fd, struct map_session_data *sd);
 	void (*pBGQueueBattleBeginAck) (int fd, struct map_session_data *sd);
-	/* Loja de Cash */
+	/* RagExe Cash Shop [Ind/Hercules] */
 	void (*pCashShopOpen) (int fd, struct map_session_data *sd);
 	void (*pCashShopClose) (int fd, struct map_session_data *sd);
 	void (*pCashShopReqTab) (int fd, struct map_session_data *sd);
@@ -1310,19 +1310,19 @@ struct clif_interface {
 	void (*pCashShopBuy) (int fd, struct map_session_data *sd);
 	void (*pPartyTick) (int fd, struct map_session_data *sd);
 	void (*pGuildInvite2) (int fd, struct map_session_data *sd);
-	/* Sistema de pesquisa do grupo */
+	/* Group Search System Update */
 	void (*pPartyBookingAddFilter) (int fd, struct map_session_data *sd);
 	void (*pPartyBookingSubFilter) (int fd, struct map_session_data *sd);
 	void (*pPartyBookingReqVolunteer) (int fd, struct map_session_data *sd);
 	void (*pPartyBookingRefuseVolunteer) (int fd, struct map_session_data *sd);
 	void (*pPartyBookingCancelVolunteer) (int fd, struct map_session_data *sd);
-	/* Sistema de Banco */
+	/* Bank System [Yommy/Hercules] */
 	void (*pBankDeposit) (int fd, struct map_session_data *sd);
 	void (*pBankWithdraw) (int fd, struct map_session_data *sd);
 	void (*pBankCheck) (int fd, struct map_session_data *sd);
 	void (*pBankOpen) (int fd, struct map_session_data *sd);
 	void (*pBankClose) (int fd, struct map_session_data *sd);
-	/* Sistema de Roleta */
+	/* Roulette System [Yommy/Hercules] */
 	void (*pRouletteOpen) (int fd, struct map_session_data *sd);
 	void (*pRouletteInfo) (int fd, struct map_session_data *sd);
 	void (*pRouletteClose) (int fd, struct map_session_data *sd);
@@ -1336,6 +1336,7 @@ struct clif_interface {
 	/* */
 	void (*add_random_options) (unsigned char* buf, struct item* item);
 	void (*pHotkeyRowShift) (int fd, struct map_session_data *sd);
+	void (*dressroom_open) (struct map_session_data *sd, int view);
 };
 
 struct clif_interface *clif;

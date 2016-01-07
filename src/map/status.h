@@ -758,6 +758,7 @@ typedef enum sc_type {
 	SC_MTF_MSP,
 	SC_MTF_PUMPKIN,
 	SC_MTF_HITFLEE,
+	
 	SC_LJOSALFAR,
 	SC_MERMAID_LONGING,
 
@@ -795,6 +796,39 @@ typedef enum sc_type {
 	SC_SKF_MATK,
 	SC_GM_BATTLE,
 	SC_GM_BATTLE2,
+
+	// Eden Crystal Synthesis
+	SC_QUEST_BUFF1,
+	SC_QUEST_BUFF2,
+	SC_QUEST_BUFF3,
+	
+	// Geffen Magic Tournament
+	SC_GEFFEN_MAGIC1,
+	SC_GEFFEN_MAGIC2,
+	SC_GEFFEN_MAGIC3,
+	SC_FENRIR_CARD,
+	
+	SC_FOOD_CRITICALSUCCESSVALUE,
+	SC_CUP_OF_BOZA,
+
+	SC_HAT_EFFECT,
+	SC_FLOWERSMOKE,
+	SC_FSTONE,
+	SC_HAPPINESS_STAR,
+	SC_MAPLE_FALLS,
+	SC_TIME_ACCESSORY,
+	SC_MAGICAL_FEATHER,
+	SC_BLOSSOM_FLUTTERING,
+
+	SC_STR_SCROLL,
+	SC_INT_SCROLL,
+	SC_MOVHASTE_POTION,
+	SC_MOVESLOW_POTION,
+	SC_PHI_DEMON,
+	SC_PROMOTE_HEALTH_RESERCH,
+	SC_ENERGY_DRINK_RESERCH,
+	SC_M_LIFEPOTION,
+	SC_MYSTICPOWDER,
 
 	SC_MAX, //Automatically updated max, used in for's to check we are within bounds.
 } sc_type;
@@ -972,8 +1006,8 @@ enum si_type {
 	//SI_FRIENDUP                            = 163,
 	//SI_SG_WARM                             = 164,
 	SI_SG_SUN_WARM                           = 165,
-	//SI_SG_MOON_WARM                        = 166 | The three show the exact same display: ultra red character (165, 166, 167)
-	//SI_SG_STAR_WARM                        = 167 | Their names would be SI_SG_SUN_WARM, SI_SG_MOON_WARM, SI_SG_STAR_WARM
+	//SI_SG_MOON_WARM                        = 166, // The three show the exact same display: ultra red character (165, 166, 167)
+	//SI_SG_STAR_WARM                        = 167,
 	//SI_EMOTION                             = 168,
 	SI_SUN_COMFORT                           = 169,
 	SI_MOON_COMFORT                          = 170,
@@ -991,7 +1025,7 @@ enum si_type {
 	SI_INCSTR                                = 182,
 	//SI_NOT_EXTREMITYFIST                   = 183,
 	SI_CLAIRVOYANCE                          = 184,
-	//SI_MOVESLOW_POTION                     = 185,
+	SI_MOVESLOW_POTION                       = 185,
 	SI_DOUBLECASTING                         = 186,
 	//SI_GRAVITATION                         = 187,
 	SI_OVERTHRUSTMAX                         = 188,
@@ -1068,11 +1102,11 @@ enum si_type {
 	//SI_DA_SPACE                            = 257,
 	//SI_DA_TRANSFORM                        = 258,
 	//SI_DA_ITEMREBUILD                      = 259,
-	//SI_DA_ILLUSION                         = 260, //All mobs display as Turtle General
+	//SI_DA_ILLUSION                         = 260, // All mobs display as Turtle General
 	//SI_DA_DARKPOWER                        = 261,
 	//SI_DA_EARPLUG                          = 262,
-	//SI_DA_CONTRACT                         = 263, //Bio Mob effect on you and SI_TRICKDEAD icon
-	//SI_DA_BLACK                            = 264, //For short time blurry screen
+	//SI_DA_CONTRACT                         = 263, // Bio Mob effect on you and SI_TRICKDEAD icon
+	//SI_DA_BLACK                            = 264, // For short time blurry screen
 	//SI_DA_MAGICCART                        = 265,
 	//SI_CRYSTAL                             = 266,
 	//SI_DA_REBUILD                          = 267,
@@ -1400,7 +1434,16 @@ enum si_type {
 	SI_ODINS_POWER                           = 583,
 	SI_STYLE_CHANGE                          = 584,
 	SI_SONIC_CLAW_POSTDELAY                  = 585,
-	// ID's 586 - 595 Currently Unused
+	//SI_                                    = 586,
+	//SI_                                    = 587,
+	//SI_                                    = 588,
+	//SI_                                    = 589,
+	//SI_                                    = 590,
+	//SI_                                    = 591,
+	//SI_                                    = 592,
+	//SI_                                    = 593,
+	//SI_                                    = 594,
+	//SI_                                    = 595,
 	SI_SILVERVEIN_RUSH_POSTDELAY             = 596,
 	SI_MIDNIGHT_FRENZY_POSTDELAY             = 597,
 	SI_GOLDENE_FERSE                         = 598,
@@ -1549,7 +1592,6 @@ enum si_type {
 	//SI_PCCAFE_PLAY_TIME                      = 738,
 	//SI_TWISTED_TIME                          = 739,
 	SI_FLASHCOMBO                            = 740,
-
 	//SI_JITTER_BUFF1                          = 741,
 	//SI_JITTER_BUFF2                          = 742,
 	//SI_JITTER_BUFF3                          = 743,
@@ -1559,8 +1601,9 @@ enum si_type {
 	//SI_JITTER_BUFF7                          = 747,
 	//SI_JITTER_BUFF8                          = 748,
 	//SI_JITTER_BUFF9                          = 749,
+
 	//SI_JITTER_BUFF10                         = 750,
-	//SI_CUP_OF_BOZA                           = 751,
+	SI_CUP_OF_BOZA                           = 751,
 	SI_B_TRAP                                = 752,
 	SI_E_CHAIN                               = 753,
 	SI_E_QD_SHOT_READY                       = 754,
@@ -1602,14 +1645,14 @@ enum si_type {
 	//SI_CHUSEOK_WEEKEND                       = 790,
 	//SI_ALL_LIGHTGUARD                        = 791,
 	//SI_ALL_LIGHTGUARD_COOL_TIME              = 792,
-	//SI_MTF_MHP                               = 793,
-	//SI_MTF_MSP                               = 794,
-	//SI_MTF_PUMPKIN                           = 795,
-	//SI_MTF_HITFLEE                           = 796,
+	SI_MTF_MHP                               = 793,
+	SI_MTF_MSP                               = 794,
+	SI_MTF_PUMPKIN                           = 795,
+	SI_MTF_HITFLEE                           = 796,
 	//SI_MTF_CRIDAMAGE2                        = 797,
 	//SI_MTF_SPDRAIN                           = 798,
 	//SI_ACUO_MINT_GUM                         = 799,
-	
+
 	//SI_S_HEALPOTION                          = 800,
 	//SI_REUSE_LIMIT_S_HEAL_POTION             = 801,
 	//SI_PLAYTIME_STATISTICS                   = 802,
@@ -1631,6 +1674,10 @@ enum si_type {
 	//SI_MTF_RANGEATK2                         = 818,
 	//SI_MTF_ASPD2                             = 819,
 	//SI_MTF_MATK2                             = 820,
+	//SI_SHOW_NPCHPBAR                       = 821,
+	SI_FLOWERSMOKE                           = 822,
+	SI_FSTONE                                = 823,
+	//SI_DAILYSENDMAILCNT                    = 824,
 	//SI_QSCARABA                              = 825,
 	SI_LJOSALFAR                             = 826,
 	//SI_PAD_READER_KNIGHT                     = 827,
@@ -1651,13 +1698,35 @@ enum si_type {
 	//SI_PAD_READER_GUNSLINGER                 = 842,
 	//SI_PAD_READER_SUPERNOVICE                = 843,
 	//SI_ESSENCE_OF_TIME                       = 844,
+	//SI_MINIGAME_ROULETTE                   = 845,
+	//SI_MINIGAME_GOLD_POINT                 = 846,
+	//SI_MINIGAME_SILVER_POINT               = 847,
+	//SI_MINIGAME_BRONZE_POINT               = 848,
+	SI_HAPPINESS_STAR                        = 849,
+
+	//SI_SUMMEREVENT01                       = 850,
+	//SI_SUMMEREVENT02                       = 851,
+	//SI_SUMMEREVENT03                       = 852,
+	//SI_SUMMEREVENT04                       = 853,
+	//SI_SUMMEREVENT05                       = 854,
+	//SI_MINIGAME_ROULETTE_BONUS_ITEM        = 855,
+	//SI_DRESS_UP                            = 856,
+	SI_MAPLE_FALLS                           = 857,
+	//SI_ALL_NIFLHEIM_RECALL                 = 858,
+	//SI_                                    = 859,
 	//SI_MTF_MARIONETTE                        = 860,
 	//SI_MTF_LUDE                              = 861,
 	//SI_MTF_CRUISER                           = 862,
 	SI_MERMAID_LONGING                       = 863,
+	SI_MAGICAL_FEATHER                       = 864,
 	//SI_DRACULA_CARD                          = 865,
+	//SI_                                    = 866,
 	//SI_LIMIT_POWER_BOOSTER                   = 867,
-	//SI_TIME_ACCESSORY                        = 872,
+	//SI_                                    = 868,
+	//SI_                                    = 869,
+	//SI_                                    = 870,
+	//SI_                                    = 871,
+	SI_TIME_ACCESSORY                        = 872,
 	//SI_EP16_DEF                              = 873,
 	//SI_NORMAL_ATKED_SP                       = 874,
 	//SI_BODYSTATE_STONECURSE                  = 875,
@@ -1680,10 +1749,12 @@ enum si_type {
 	//SI_CHERRY_BLOSSOM_CAKE                   = 892,
 	//SI_SU_STOOP                              = 893,
 	//SI_CATNIPPOWDER                          = 894,
+	SI_BLOSSOM_FLUTTERING                    = 895,
+	//SI_SV_ROOTTWIST                        = 896,
 	//SI_ATTACK_PROPERTY_NOTHING               = 897,
 	//SI_ATTACK_PROPERTY_WATER                 = 898,
 	//SI_ATTACK_PROPERTY_GROUND                = 899,
-	
+
 	//SI_ATTACK_PROPERTY_FIRE                  = 900,
 	//SI_ATTACK_PROPERTY_WIND                  = 901,
 	//SI_ATTACK_PROPERTY_POISON                = 902,
@@ -1701,6 +1772,11 @@ enum si_type {
 	//SI_RESIST_PROPERTY_DARKNESS              = 914,
 	//SI_RESIST_PROPERTY_TELEKINESIS           = 915,
 	//SI_RESIST_PROPERTY_UNDEAD                = 916,
+	//SI_BITESCAR                            = 917,
+	//SI_ARCLOUSEDASH                        = 918,
+	//SI_TUNAPARTY                           = 919,
+	//SI_SHRIMP                              = 920,
+	//SI_FRESHSHRIMP                         = 921,
 	//SI_PERIOD_RECEIVEITEM                    = 922,
 	//SI_PERIOD_PLUSEXP                        = 923,
 	//SI_PERIOD_PLUSJOBEXP                     = 924,
@@ -1712,16 +1788,11 @@ enum si_type {
 	//SI_HELM_ISIA                             = 930,
 	//SI_HELM_ASIR                             = 931,
 	//SI_HELM_URJ                              = 932,
-	//SI_SV_ROOTTWIST                          = 896,
-	//SI_BITESCAR                              = 917,
-	//SI_ARCLOUSEDASH                          = 918,
-	//SI_TUNAPARTY                             = 919,
-	//SI_SHRIMP                                = 920,
-	//SI_FRESHSHRIMP                           = 921,
 	//SI_SUHIDE                                = 933,
-	//SI_SPRITEMABLE                           = 937,
+	//SI_                                    = 934,
 	//SI_DORAM_BUF_01                          = 935,
 	//SI_DORAM_BUF_02                          = 936,
+	//SI_SPRITEMABLE                         = 937,
 
 	SI_MAX,
 };
@@ -1856,6 +1927,9 @@ enum scb_flag
 	SCB_RANGE   = 0x10000000,
 	SCB_REGEN   = 0x20000000,
 	SCB_DYE     = 0x40000000, // force cloth-dye change to 0 to avoid client crashes.
+#if 0 // Currently No SC use it. Also, when this will be implemented, there will be need to change to 64bit variable
+	SCB_BODY    = 0x80000000, // Force bodysStyle change to 0
+#endif
 
 	SCB_BATTLE  = 0x3FFFFFFE,
 	SCB_ALL     = 0x3FFFFFFF

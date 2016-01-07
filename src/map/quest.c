@@ -93,6 +93,7 @@ int quest_pc_login(TBL_PC *sd)
 		clif->quest_update_objective(sd, &sd->quest_log[i]);
 	}
 #endif
+
 	return 0;
 }
 

@@ -39,6 +39,7 @@
 #define STORAGE_MEMINC 16
 
 struct inter_storage_interface inter_storage_s;
+struct inter_storage_interface *inter_storage;
 
 /// Save storage data to sql
 int inter_storage_tosql(int account_id, struct storage_data* p)

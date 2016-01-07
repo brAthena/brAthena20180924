@@ -21,7 +21,7 @@
 #define CONFIG_GENERAL_H
 
 /**
- * Hercules configuration file (http://hercules.ws)
+ * Hercules configuration file (http://herc.ws)
  **/
 
 /**

@@ -238,12 +238,13 @@ typedef enum c_op {
 #endif // PCRE_SUPPORT
 } c_op;
 
-enum hQueueOpt {
-	HQO_NONE,
-	HQO_onLogOut,
-	HQO_OnDeath,
-	HQO_OnMapChange,
-	HQO_MAX,
+/// Script queue options
+enum ScriptQueueOptions {
+	SQO_NONE,        ///< No options set
+	SQO_ONLOGOUT,    ///< Execute event on logout
+	SQO_ONDEATH,     ///< Execute event on death
+	SQO_ONMAPCHANGE, ///< Execute event on map change
+	SQO_MAX,
 };
 
 enum e_script_state { RUN,STOP,END,RERUNLINE,GOTO,RETFUNC,CLOSE };
@@ -334,7 +335,8 @@ enum {
 	MF_BATTLEGROUND,
 	MF_RESET,
 	MF_NOTOMB,
-	MF_NOCASHSHOP
+	MF_NOCASHSHOP,
+	MF_NOVIEWID
 };
 
 /**
@@ -406,22 +408,27 @@ struct script_stack {
 	struct reg_db scope;            ///< scope variables
 };
 
-/* [Ind/Hercules] */
-struct hQueue {
-	int id;
-	int *item;
-	int items;/* how many actual items are in the array */
-	int size;/* size of the *item array, not the current amount of items in it since it can have empty slots */
-	/* events */
-	char onLogOut[EVENT_NAME_LENGTH];
-	char onDeath[EVENT_NAME_LENGTH];
-	char onMapChange[EVENT_NAME_LENGTH];
+/**
+ * Data structure to represent a script queue.
+ * @author Ind/Hercules
+ */
+struct script_queue {
+	int id;                              ///< Queue identifier
+	VECTOR_DECL(int) entries;            ///< Items in the queue.
+	bool valid;                          ///< Whether the queue is valid.
+	/// Events
+	char event_logout[EVENT_NAME_LENGTH];    ///< Logout event
+	char event_death[EVENT_NAME_LENGTH];     ///< Death event
+	char event_mapchange[EVENT_NAME_LENGTH]; ///< Map change event
 };
 
-struct hQueueIterator {
-	int *item;
-	int items;
-	int pos;
+/**
+ * Iterator for a struct script_queue.
+ */
+struct script_queue_iterator {
+	VECTOR_DECL(int) entries; ///< Entries in the queue (iterator's cached copy)
+	bool valid;               ///< Whether the queue is valid (initialized - not necessarily having entries available)
+	int pos;                  ///< Iterator's cursor
 };
 
 struct script_state {
@@ -530,9 +537,8 @@ struct script_interface {
 	struct eri *st_ers;
 	struct eri *stack_ers;
 	/* */
-	struct hQueue *hq;
-	struct hQueueIterator *hqi;
-	int hqs, hqis;
+	VECTOR_DECL(struct script_queue) hq;
+	VECTOR_DECL(struct script_queue_iterator) hqi;
 	/*  */
 	char **buildin;
 	unsigned int buildin_count;
@@ -606,7 +612,7 @@ struct script_interface {
 	FILE *lang_export_fp;
 	char *lang_export_file;/* for lang_export_fp */
 	/* set and unset on npc_parse_script */
-	char *parser_current_npc_name;
+	const char *parser_current_npc_name;
 	/* */
 	int buildin_mes_offset;
 	int buildin_select_offset;
@@ -641,6 +647,9 @@ struct script_interface {
 	int (*conv_num) (struct script_state *st,struct script_data *data);
 	const char* (*conv_str) (struct script_state *st,struct script_data *data);
 	TBL_PC *(*rid2sd) (struct script_state *st);
+	TBL_PC *(*id2sd) (struct script_state *st, int account_id);
+	TBL_PC *(*charid2sd) (struct script_state *st, int char_id);
+	TBL_PC *(*nick2sd) (struct script_state *st, const char *name);
 	void (*detach_rid) (struct script_state* st);
 	struct script_data* (*push_val)(struct script_stack* stack, enum c_op type, int64 val, struct reg_db *ref);
 	struct script_data *(*get_val) (struct script_state* st, struct script_data* data);
@@ -682,12 +691,12 @@ struct script_interface {
 	void (*setd_sub) (struct script_state *st, struct map_session_data *sd, const char *varname, int elem, void *value, struct reg_db *ref);
 	void (*attach_state) (struct script_state* st);
 	/* */
-	struct hQueue *(*queue) (int idx);
+	struct script_queue *(*queue) (int idx);
 	bool (*queue_add) (int idx, int var);
 	bool (*queue_del) (int idx);
 	bool (*queue_remove) (int idx, int var);
 	int (*queue_create) (void);
-	void (*queue_clear) (int idx);
+	bool (*queue_clear) (int idx);
 	/* */
 	const char * (*parse_curly_close) (const char *p);
 	const char * (*parse_syntax_close) (const char *p);

@@ -27,12 +27,7 @@
 #include "common/mmo.h" // ITEM_NAME_LENGTH
 #include "common/sql.h"
 
-/**
- * Declarations
- **/
-struct item_group;
-struct item_package;
-
+struct script_code;
 /**
  * Defines
  **/
@@ -67,6 +62,7 @@ enum item_itemid {
 	ITEMID_BRANCH_OF_DEAD_TREE   = 604,
 	ITEMID_ANODYNE               = 605,
 	ITEMID_ALOEBERA              = 606,
+	ITEMID_POISON_BOTTLE         = 678,
 	ITEMID_EMPTY_BOTTLE          = 713,
 	ITEMID_EMPERIUM              = 714,
 	ITEMID_YELLOW_GEMSTONE       = 715,
@@ -107,6 +103,8 @@ enum item_itemid {
 	ITEMID_FRAGMENT_OF_CRYSTAL   = 7321,
 	ITEMID_SKULL_                = 7420,
 	ITEMID_TOKEN_OF_SIEGFRIED    = 7621,
+	ITEMID_GOLD_KEY77            = 7782,
+	ITEMID_SILVER_KEY77          = 7783,
 	ITEMID_TRAP_ALLOY            = 7940,
 	ITEMID_RED_POUCH_OF_SURPRISE = 12024,
 	ITEMID_BLOODY_DEAD_BRANCH    = 12103,
@@ -141,7 +139,7 @@ enum item_itemid {
 	ITEMID_NOBLE_NAMEPLATE       = 12705,
 	ITEMID_DUN_TELE_SCROLL1      = 14527,
 	ITEMID_BATTLE_MANUAL25       = 14532,
-	ITEMIDBATTLE_MANUAL100       = 14533,
+	ITEMID_BATTLE_MANUAL100      = 14533,
 	ITEMID_BATTLE_MANUAL_X3      = 14545,
 	ITEMID_DUN_TELE_SCROLL2      = 14581,
 	ITEMID_WOB_RUNE              = 14582,
@@ -413,9 +411,9 @@ struct item_chain {
 struct item_package_rand_entry {
 	unsigned short id;
 	unsigned short qty;
-	unsigned short probability;
-	unsigned short hour;
-	unsigned int onair : 1;
+	unsigned short rate;
+	unsigned short hours;
+	unsigned int announce : 1;
 	unsigned int named : 1;
 	unsigned int force_serial: 1;
 	struct item_package_rand_entry *next;
@@ -424,8 +422,8 @@ struct item_package_rand_entry {
 struct item_package_must_entry {
 	unsigned short id;
 	unsigned short qty;
-	unsigned short hour;
-	unsigned int onair : 1;
+	unsigned short hours;
+	unsigned int announce : 1;
 	unsigned int named : 1;
 	unsigned int force_serial : 1;
 };
@@ -537,6 +535,8 @@ struct item_data {
 #define itemdb_iscashfood(n)     ((n) >= ITEMID_STR_DISH10_ && (n) <= ITEMID_VIT_DISH10_)
 #define itemdb_is_GNbomb(n)      ((n) >= ITEMID_APPLE_BOMB && (n) <= ITEMID_VERY_HARD_LUMP)
 #define itemdb_is_GNthrowable(n) ((n) >= ITEMID_MYSTERIOUS_POWDER && (n) <= ITEMID_BLACK_THING_TO_THROW)
+#define itemdb_is_shadowequip(n) ((n) & (EQP_SHADOW_ARMOR|EQP_SHADOW_WEAPON|EQP_SHADOW_SHIELD|EQP_SHADOW_SHOES|EQP_SHADOW_ACC_R|EQP_SHADOW_ACC_L))
+#define itemdb_is_costumeequip(n) ((n) & (EQP_COSTUME_HEAD_TOP|EQP_COSTUME_HEAD_MID|EQP_COSTUME_HEAD_LOW|EQP_COSTUME_GARMENT))
 
 //Item trade restrictions [Skotlex]
 #define itemdb_isdropable(item, gmlv)             (itemdb->isrestricted((item), (gmlv), 0, itemdb->isdropable_sub))

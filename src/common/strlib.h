@@ -28,14 +28,13 @@
 /// Convenience macros
 
 #define remove_control_chars(str)  (strlib->remove_control_chars_(str))
- #define trim(str)                  (strlib->trim_(str))
- #define normalize_name(str, delims) (strlib->normalize_name_((str), (delims)))
- #define stristr(haystack, needle)   (strlib->stristr_((haystack), (needle)))
+#define trim(str)                  (strlib->trim_(str))
+#define normalize_name(str,delims) (strlib->normalize_name_((str),(delims)))
+#define stristr(haystack,needle)   (strlib->stristr_((haystack),(needle)))
 
 #if !(defined(WIN32) && defined(_MSC_VER) && _MSC_VER >= 1400) && !defined(HAVE_STRNLEN)
-#define strnlen(string, maxlen) (strlib->strnlen_((string), (maxlen)))
- #endif
-
+	#define strnlen(string,maxlen) (strlib->strnlen_((string),(maxlen)))
+#endif
 
 #ifdef WIN32
 	#define HAVE_STRTOK_R
@@ -44,11 +43,11 @@
 
 #define e_mail_check(email)          (strlib->e_mail_check_(email))
 #define config_switch(str)           (strlib->config_switch_(str))
-#define safestrncpy(dst, src, n)       (strlib->safestrncpy_((dst), (src), (n)))
-#define safestrnlen(string, maxlen)   (strlib->safestrnlen_((string), (maxlen)))
-#define safesnprintf(buf, sz, fmt, ...) (strlib->safesnprintf_((buf), (sz), (fmt), ##__VA_ARGS__))
-#define strline(str, pos)             (strlib->strline_((str), (pos)))
-#define bin2hex(output, input, count)  (strlib->bin2hex_((output), (input), (count)))
+#define safestrncpy(dst,src,n)       (strlib->safestrncpy_((dst),(src),(n)))
+#define safestrnlen(string,maxlen)   (strlib->safestrnlen_((string),(maxlen)))
+#define safesnprintf(buf,sz,fmt,...) (strlib->safesnprintf_((buf),(sz),(fmt),##__VA_ARGS__))
+#define strline(str,pos)             (strlib->strline_((str),(pos)))
+#define bin2hex(output,input,count)  (strlib->bin2hex_((output),(input),(count)))
 
 /// Bitfield determining the behavior of sv_parse and sv_split.
 typedef enum e_svopt {
@@ -93,42 +92,40 @@ struct strlib_interface {
 	char *(*jstrescape) (char* pt);
 	char *(*jstrescapecpy) (char* pt, const char* spt);
 	int (*jmemescapecpy) (char* pt, const char* spt, int size);
-	int(*remove_control_chars_) (char* str);
+	int (*remove_control_chars_) (char* str);
 	char *(*trim_) (char* str);
-	char *(*normalize_name_) (char* str, const char* delims);
+	char *(*normalize_name_) (char* str,const char* delims);
 	const char *(*stristr_) (const char *haystack, const char *needle);
 
 	/* only used when '!(defined(WIN32) && defined(_MSC_VER) && _MSC_VER >= 1400) && !defined(HAVE_STRNLEN)', needs to be defined at all times however  */
-	size_t(*strnlen_) (const char* string, size_t maxlen);
+	size_t (*strnlen_) (const char* string, size_t maxlen);
 
 	/* only used when 'WIN32' */
 	char * (*strtok_r_) (char *s1, const char *s2, char **lasts);
 
-	int(*e_mail_check_) (char* email);
-	int(*config_switch_) (const char* str);
+	int (*e_mail_check_) (char* email);
+	int (*config_switch_) (const char* str);
 
 	/// strncpy that always null-terminates the string
 	char *(*safestrncpy_) (char* dst, const char* src, size_t n);
 
 	/// doesn't crash on null pointer
-	size_t(*safestrnlen_) (const char* string, size_t maxlen);
+	size_t (*safestrnlen_) (const char* string, size_t maxlen);
 
 	/// Works like snprintf, but always null-terminates the buffer.
 	/// Returns the size of the string (without null-terminator)
 	/// or -1 if the buffer is too small.
-	int(*safesnprintf_) (char *buf, size_t sz, const char *fmt, ...) __attribute__((format(printf, 3, 4)));
+	int (*safesnprintf_) (char *buf, size_t sz, const char *fmt, ...) __attribute__((format(printf, 3, 4)));
 
 	/// Returns the line of the target position in the string.
 	/// Lines start at 1.
-	int(*strline_) (const char* str, size_t pos);
+	int (*strline_) (const char* str, size_t pos);
 
 	/// Produces the hexadecimal representation of the given input.
 	/// The output buffer must be at least count*2+1 in size.
 	/// Returns true on success, false on failure.
-	bool(*bin2hex_) (char* output, unsigned char* input, size_t count);
+	bool (*bin2hex_) (char* output, unsigned char* input, size_t count);
 };
-
-struct strlib_interface *strlib;
 
 struct stringbuf_interface {
 	StringBuf* (*Malloc) (void);
@@ -143,8 +140,6 @@ struct stringbuf_interface {
 	void (*Destroy) (StringBuf* self);
 	void (*Free) (StringBuf* self);
 };
-
-struct stringbuf_interface *StrBuf;
 
 struct sv_interface {
 	/// Parses a single field in a delim-separated string.
@@ -188,10 +183,12 @@ struct sv_interface {
 	bool (*readdb) (const char* directory, const char* filename, char delim, int mincols, int maxcols, int maxrows, bool (*parseproc)(char* fields[], int columns, int current));
 };
 
-struct sv_interface *sv;
-
 #ifdef BRATHENA_CORE
 void strlib_defaults(void);
 #endif // BRATHENA_CORE
+
+struct strlib_interface *strlib;
+struct stringbuf_interface *StrBuf;
+struct sv_interface *sv;
 
 #endif /* COMMON_STRLIB_H */

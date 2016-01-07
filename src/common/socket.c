@@ -252,7 +252,11 @@ fd_set readfds;
 
 // Maximum packet size in bytes, which the client is able to handle.
 // Larger packets cause a buffer overflow and stack corruption.
-static size_t socket_max_client_packet = 24576;
+#if PACKETVER >= 20131223
+static size_t socket_max_client_packet = 0xFFFF;
+#else
+static size_t socket_max_client_packet = 0x6000;
+#endif
 
 #ifdef SHOW_SERVER_STATS
 // Data I/O statistics
@@ -306,7 +310,6 @@ void set_defaultparse(ParseFunc defaultparse)
 	default_func_parse = defaultparse;
 }
 
-
 /*======================================
  * CORE : Socket options
  *--------------------------------------*/
@@ -318,53 +321,68 @@ void set_nonblocking(int fd, unsigned long yes)
 		ShowError("set_nonblocking: Falha ao setar socket #%d para modo non-blocking (%s) - Por favor reporte isso!!!\n", fd, error_msg());
 }
 
-void setsocketopts(int fd, struct hSockOpt *opt) {
-	int yes = 1; // reuse fix
-	struct linger lopt;
+/**
+ * Sets the options for a socket.
+ *
+ * @param fd  The socket descriptor
+ * @param opt Optional, additional options to set (Can be NULL).
+ */
+void setsocketopts(int fd, struct hSockOpt *opt)
+{
+#if defined(WIN32)
+	BOOL yes = TRUE;
+#else // not WIN32
+	int yes = 1;
+#endif // WIN32
+	struct linger lopt = { 0 };
 
+	// Note: We cast the fourth argument to (char *) because, while in UNIX
+	// it takes a const void *, in Windows it takes a const char *.
 #if !defined(WIN32)
 	// set SO_REAUSEADDR to true, unix only. on windows this option causes
 	// the previous owner of the socket to give up, which is not desirable
 	// in most cases, neither compatible with unix.
-	if (sSetsockopt(fd,SOL_SOCKET,SO_REUSEADDR,(char *)&yes,sizeof(yes)))
-		ShowWarning("setsocketopts: Nao foi possivel setar SO_REUSEADDR para modo de conexao #%d!\n", fd);
+	if (sSetsockopt(fd, SOL_SOCKET, SO_REUSEADDR, (char *)&yes, sizeof(yes)))
+		ShowWarning("setsocketopts: Unable to set SO_REUSEADDR mode for connection #%d!\n", fd);
 #ifdef SO_REUSEPORT
-	if (sSetsockopt(fd,SOL_SOCKET,SO_REUSEPORT,(char *)&yes,sizeof(yes)))
-		ShowWarning("setsocketopts: Nao foi possivel setar SO_REUSEPORT para modo de conexao #%d!\n", fd);
+	if (sSetsockopt(fd, SOL_SOCKET, SO_REUSEPORT, (char *)&yes, sizeof(yes)))
+		ShowWarning("setsocketopts: Unable to set SO_REUSEPORT mode for connection #%d!\n", fd);
 #endif // SO_REUSEPORT
 #endif // WIN32
 
 	// Set the socket into no-delay mode; otherwise packets get delayed for up to 200ms, likely creating server-side lag.
 	// The RO protocol is mainly single-packet request/response, plus the FIFO model already does packet grouping anyway.
 	if (sSetsockopt(fd, IPPROTO_TCP, TCP_NODELAY, (char *)&yes, sizeof(yes)))
-		ShowWarning("setsocketopts: Nao foi possivel setar TCP_NODELAY para modo de conexao #%d!\n", fd);
+		ShowWarning("setsocketopts: Unable to set TCP_NODELAY mode for connection #%d!\n", fd);
 
-	if( opt && opt->setTimeo ) {
-		struct timeval timeout;
-
+	if (opt && opt->setTimeo) {
+#if defined(WIN32)
+		DWORD timeout = 5000; // https://msdn.microsoft.com/en-us/library/windows/desktop/ms740476(v=vs.85).aspx
+#else // not WIN32
+		struct timeval timeout = { 0 };
 		timeout.tv_sec = 5;
-		timeout.tv_usec = 0;
+#endif // WIN32
 
-		if (sSetsockopt(fd,SOL_SOCKET,SO_RCVTIMEO,(char *)&timeout,sizeof(timeout)))
-			ShowWarning("setsocketopts: Nao foi possivel setar SO_RCVTIMEO para conexao #%d!\n", fd);
-		if (sSetsockopt(fd,SOL_SOCKET,SO_SNDTIMEO,(char *)&timeout,sizeof(timeout)))
-			ShowWarning("setsocketopts: Nao foi possivel setar SO_SNDTIMEO para conexao #%d!\n", fd);
+		if (sSetsockopt(fd, SOL_SOCKET, SO_RCVTIMEO, (char *)&timeout, sizeof(timeout)))
+			ShowWarning("setsocketopts: Unable to set SO_RCVTIMEO for connection #%d!\n", fd);
+		if (sSetsockopt(fd, SOL_SOCKET, SO_SNDTIMEO, (char *)&timeout, sizeof(timeout)))
+			ShowWarning("setsocketopts: Unable to set SO_SNDTIMEO for connection #%d!\n", fd);
 	}
 
 	// force the socket into no-wait, graceful-close mode (should be the default, but better make sure)
 	//(http://msdn.microsoft.com/library/default.asp?url=/library/en-us/winsock/winsock/closesocket_2.asp)
 	lopt.l_onoff = 0; // SO_DONTLINGER
 	lopt.l_linger = 0; // Do not care
-	if( sSetsockopt(fd, SOL_SOCKET, SO_LINGER, (char*)&lopt, sizeof(lopt)) )
-		ShowWarning("setsocketopts: Nao foi possivel setar SO_LINGER para modo de conexao #%d!\n", fd);
+	if (sSetsockopt(fd, SOL_SOCKET, SO_LINGER, (char *)&lopt, sizeof(lopt)))
+		ShowWarning("setsocketopts: Unable to set SO_LINGER mode for connection #%d!\n", fd);
 
 #ifdef TCP_THIN_LINEAR_TIMEOUTS
     if (sSetsockopt(fd, IPPROTO_TCP, TCP_THIN_LINEAR_TIMEOUTS, (char *)&yes, sizeof(yes)))
-	    ShowWarning("setsocketopts: Nao foi possivel setar TCP_THIN_LINEAR_TIMEOUTS para modo de conexao #%d!\n", fd);
+	    ShowWarning("setsocketopts: Unable to set TCP_THIN_LINEAR_TIMEOUTS mode for connection #%d!\n", fd);
 #endif
 #ifdef TCP_THIN_DUPACK
     if (sSetsockopt(fd, IPPROTO_TCP, TCP_THIN_DUPACK, (char *)&yes, sizeof(yes)))
-	    ShowWarning("setsocketopts: Nao foi possivel setar TCP_THIN_DUPACK para modo de conexao #%d!\n", fd);
+	    ShowWarning("setsocketopts: Unable to set TCP_THIN_DUPACK mode for connection #%d!\n", fd);
 #endif
 }
 
@@ -506,7 +524,7 @@ int connect_client(int listen_fd) {
 	}
 
 	setsocketopts(fd,NULL);
-	set_nonblocking(fd, 1);
+	sockt->set_nonblocking(fd, 1);
 
 #ifndef MINICORE
 	if( ip_rules && !connect_check(ntohl(client_address.sin_addr.s_addr)) ) {

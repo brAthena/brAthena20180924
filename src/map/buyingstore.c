@@ -25,7 +25,7 @@
 #include "map/atcommand.h" // msg_txt
 #include "map/battle.h" // battle_config.*
 #include "map/chrif.h"
-#include "map/clif.h" // clif->buyingstore_*
+#include "map/clif.h" // clif-"buyingstore_*
 #include "map/log.h" // log_pick_pc, log_zeny
 #include "map/pc.h" // struct map_session_data
 #include "common/cbasetypes.h"
@@ -36,6 +36,7 @@
 #include "common/strlib.h" // safestrncpy
 
 struct buyingstore_interface buyingstore_s;
+struct buyingstore_interface *buyingstore;
 
 /// Returns unique buying store id
 unsigned int buyingstore_getuid(void) {
@@ -50,7 +51,7 @@ bool buyingstore_setup(struct map_session_data* sd, unsigned char slots)
 		return false;
 	}
 
-	if( sd->sc.data[SC_NOCHAT] && (sd->sc.data[SC_NOCHAT]->val1&MANNER_NOROOM) )
+	if(pc_ismuted(&sd->sc, MANNER_NOROOM))
 	{// custom: mute limitation
 		return false;
 	}
@@ -104,7 +105,7 @@ void buyingstore_create(struct map_session_data* sd, int zenylimit, unsigned cha
 		return;
 	}
 
-	if( sd->sc.data[SC_NOCHAT] && (sd->sc.data[SC_NOCHAT]->val1&MANNER_NOROOM) )
+	if(pc_ismuted(&sd->sc, MANNER_NOROOM))
 	{// custom: mute limitation
 		return;
 	}

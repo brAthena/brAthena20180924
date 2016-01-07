@@ -1,72 +1,85 @@
-//===== Hercules Script ======================================
-//= Lighthalzen Dungeon(Biolabs) Monster Spawn Script
-//===== By: ==================================================
-// The Prometheus Project, Hercules Dev Team
-//===== Current Version: =====================================
+//================= Hercules Script =======================================
+//=       _   _                     _
+//=      | | | |                   | |
+//=      | |_| | ___ _ __ ___ _   _| | ___  ___
+//=      |  _  |/ _ \ '__/ __| | | | |/ _ \/ __|
+//=      | | | |  __/ | | (__| |_| | |  __/\__ \
+//=      \_| |_/\___|_|  \___|\__,_|_|\___||___/
+//================= License ===============================================
+//= This file is part of Hercules.
+//= http://herc.ws - http://github.com/HerculesWS/Hercules
+//=
+//= Copyright (C) 2012-2015  Hercules Dev Team
+//= Copyright (C)  rAthena Dev Team
+//= Copyright (C)  Chilly
+//= Copyright (C)  eAthena Dev Team
+//= Copyright (C)  L0ne_W0lf
+//= Copyright (C)  Playtester
+//= Copyright (C)  MasterOfMuppets
+//= Copyright (C)  Poki#3
+//= Copyright (C)  Skotlex
+//= Copyright (C)  The Prometheus Project
+//= Copyright (C)  Muad_Dib
+//=
+//= Hercules is free software: you can redistribute it and/or modify
+//= it under the terms of the GNU General Public License as published by
+//= the Free Software Foundation, either version 3 of the License, or
+//= (at your option) any later version.
+//=
+//= This program is distributed in the hope that it will be useful,
+//= but WITHOUT ANY WARRANTY; without even the implied warranty of
+//= MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//= GNU General Public License for more details.
+//=
+//= You should have received a copy of the GNU General Public License
+//= along with this program.  If not, see <http://www.gnu.org/licenses/>.
+//=========================================================================
+//= Lighthalzen Dungeon(Biolabs) Monster Spawn Script (Renewal)
+//================= Description ===========================================
+//= Monster Spawns for Lighthalzen Dungeon
+//================= Current Version =======================================
 //= 1.9
-//===== Additional Comments: =================================
-//= 08/24/05 : Added 1st version. [Muad_Dib]
-//= 1.1 Some corrections to level 1, 2 as pointed out by
-//=     MasterofMuppets. [Skotlex]
-//= 1.3 Some fixes based on kRO's "RO Map" [Poki#3]
-//=     I also made the place more Moby ^^
-//= 1.4 Adjusted spawns according to own info from iRO [MasterOfMuppets]
-//= 1.5 More accurate spawn numbers and iRO names thanks to Tharis [Playtester]
-//= 1.6 Official X.3 spawns [Playtester]
-//= 1.7 Corrected MVP spawn function to be standard to iRO. [L0ne_W0lf]
-//=	- A random 99 will now be spawned when the MVP spawns.
-//=	- Spare spawn and MVP spawn now spawn in official locations.
-//=	- Expandeded timer to allow for varying spawn times.
-//= 1.7a Added dummy event to keep from causnig warnings. [L0ne_W0lf]
-//= 1.8 Corrected MVP spawn variance (Labs2 MVP). [L0ne_W0lf]
-//= 1.9 Added Bio4 spawns. [Chilly]
-//============================================================
+//=========================================================================
 
-//==================================================
-// lhz_dun01 - Somatology Laboratory
-//==================================================
-lhz_dun01,0,0,0,0	monster	Remover	REMOVAL,100,5000,0,0
-lhz_dun01,0,0,0,0	monster	Anopheles	ANOPHELES,70,5000,0,0
-lhz_dun01,0,0,0,0	monster	Metaling	METALING,50,5000,0,0
-lhz_dun01,0,0,0,0	monster	Kavach Icarus	KAVAC,13,5000,0,0
-lhz_dun01,0,0,0,0	monster	Errende Ebecee	EREND,13,5000,0,0
-lhz_dun01,0,0,0,0	monster	Laurell Weinder	RAWREL,11,5000,0,0
-lhz_dun01,0,0,0,0	monster	Wickebine Tres	WHIKEBAIN,11,5000,0,0
-lhz_dun01,0,0,0,0	monster	Armeyer Dinze	ARMAIA,8,5000,0,0
-lhz_dun01,0,0,0,0	monster	Egnigem Cenia	YGNIZEM,8,5000,0,0
-lhz_dun01,0,0,0,0	monster	Gemini-S58	GEMINI,1,5000,0,0
+//== lhz_dun01 - Somatology Laboratory =====================
+lhz_dun01,0,0,0,0	monster	Remover	1682,100,5000,0,0
+lhz_dun01,0,0,0,0	monster	Anopheles	1627,70,5000,0,0
+lhz_dun01,0,0,0,0	monster	Metaling	1613,50,5000,0,0
+lhz_dun01,0,0,0,0	monster	Kavach Icarus	1656,13,5000,0,0
+lhz_dun01,0,0,0,0	monster	Errende Ebecee	1655,13,5000,0,0
+lhz_dun01,0,0,0,0	monster	Laurell Weinder	1657,11,5000,0,0
+lhz_dun01,0,0,0,0	monster	Wickebine Tres	1653,11,5000,0,0
+lhz_dun01,0,0,0,0	monster	Armeyer Dinze	1654,8,5000,0,0
+lhz_dun01,0,0,0,0	monster	Egnigem Cenia	1652,8,5000,0,0
+lhz_dun01,0,0,0,0	monster	Gemini-S58	1681,1,5000,0,0
 
-//==================================================
-// lhz_dun02 - Somatology Laboratory
-//==================================================
-lhz_dun02,0,0,0,0	monster	Laurell Weinder	RAWREL,50,5000,0,0
-lhz_dun02,0,0,0,0	monster	Wickebine Tres	WHIKEBAIN,50,5000,0,0
-lhz_dun02,0,0,0,0	monster	Kavach Icarus	KAVAC,50,5000,0,0
-lhz_dun02,0,0,0,0	monster	Errende Ebecee	EREND,50,5000,0,0
-lhz_dun02,0,0,0,0	monster	Egnigem Cenia	YGNIZEM,50,5000,0,0
-lhz_dun02,0,0,0,0	monster	Armeyer Dinze	ARMAIA,50,5000,0,0
-lhz_dun02,0,0,0,0	monster	Remover	REMOVAL,20,5000,0,0
-lhz_dun02,0,0,0,0	monster	Gemini-S58	GEMINI,10,5000,0,0
-lhz_dun02,0,0,0,0	monster	Eremes Guile	EREMES,1,5000,0,0
-lhz_dun02,0,0,0,0	boss_monster	Egnigem Cenia	B_YGNIZEM,1,7200000,600000,1
+//== lhz_dun02 - Somatology Laboratory =====================
+lhz_dun02,0,0,0,0	monster	Laurell Weinder	1657,50,5000,0,0
+lhz_dun02,0,0,0,0	monster	Wickebine Tres	1653,50,5000,0,0
+lhz_dun02,0,0,0,0	monster	Kavach Icarus	1656,50,5000,0,0
+lhz_dun02,0,0,0,0	monster	Errende Ebecee	1655,50,5000,0,0
+lhz_dun02,0,0,0,0	monster	Egnigem Cenia	1652,50,5000,0,0
+lhz_dun02,0,0,0,0	monster	Armeyer Dinze	1654,50,5000,0,0
+lhz_dun02,0,0,0,0	monster	Remover	1682,20,5000,0,0
+lhz_dun02,0,0,0,0	monster	Gemini-S58	1681,10,5000,0,0
+lhz_dun02,0,0,0,0	monster	Eremes Guile	1635,1,5000,0,0
+lhz_dun02,0,0,0,0	boss_monster	Egnigem Cenia	1658,1,7200000,600000,1
 
-//==================================================
-// lhz_dun03 - Somatology Laboratory
-//==================================================
-lhz_dun03,0,0,0,0	monster	Cecil Damon	SHECIL,81,5000,0,0
-lhz_dun03,0,0,0,0	monster	Kathryne Keyron	KATRINN,57,5000,0,0
-lhz_dun03,0,0,0,0	monster	Margaretha Sorin	MAGALETA,42,5000,0,0
-lhz_dun03,0,0,0,0	monster	Howard Alt-Eisen	HARWORD,42,5000,0,0
-lhz_dun03,0,0,0,0	monster	Eremes Guile	EREMES,42,5000,0,0
-lhz_dun03,0,0,0,0	monster	Seyren Windsor	SEYREN,42,5000,0,0
-lhz_dun03,139,158,20,11	monster	Assassin Cross Eremes	G_EREMES,1,2580000,2340000,1
-lhz_dun03,138,138,36,34	monster	High Wizard Kathryne	G_KATRINN,1,2580000,2460000,1
-lhz_dun03,114,138,12,16	monster	Lord Knight Seyren	G_SEYREN,1,2700000,2400000,1
-lhz_dun03,139,117,20,11	monster	Sniper Cecil	G_SHECIL,1,2700000,2500000,1
-lhz_dun03,163,138,12,16	monster	Whitesmith Howard	G_HARWORD,1,3000000,2700000,1
-lhz_dun03,138,138,36,34	monster	High Priest Margaretha	G_MAGALETA,1,3300000,3000000,1
+//== lhz_dun03 - Somatology Laboratory =====================
+lhz_dun03,0,0,0,0	monster	Cecil Damon	1638,81,5000,0,0
+lhz_dun03,0,0,0,0	monster	Kathryne Keyron	1639,57,5000,0,0
+lhz_dun03,0,0,0,0	monster	Margaretha Sorin	1637,42,5000,0,0
+lhz_dun03,0,0,0,0	monster	Howard Alt-Eisen	1636,42,5000,0,0
+lhz_dun03,0,0,0,0	monster	Eremes Guile	1635,42,5000,0,0
+lhz_dun03,0,0,0,0	monster	Seyren Windsor	1634,42,5000,0,0
+lhz_dun03,139,158,20,11	monster	Assassin Cross Eremes	1641,1,2580000,2340000,1
+lhz_dun03,138,138,36,34	monster	High Wizard Kathryne	1645,1,2580000,2460000,1
+lhz_dun03,114,138,12,16	monster	Lord Knight Seyren	1640,1,2700000,2400000,1
+lhz_dun03,139,117,20,11	monster	Sniper Cecil	1644,1,2700000,2500000,1
+lhz_dun03,163,138,12,16	monster	Whitesmith Howard	1642,1,3000000,2700000,1
+lhz_dun03,138,138,36,34	monster	High Priest Margaretha	1643,1,3300000,3000000,1
 
-lhz_dun03,0,0,0	script	mvp_lhz_dun03	-1,{
+lhz_dun03,0,0,0	script	mvp_lhz_dun03	FAKE_NPC,{
 OnTimer6000000: // delay1 = 6000000 ms (100 min)
 	stopnpctimer;
 	sleep rand(0,30)*60000; // 0 to 30 minutes
@@ -103,25 +116,23 @@ OnMy99Dead:
 	end;
 }
 
-//========================================================================================
-// lhz_dun04 - Bio-life Labs 4F
-//========================================================================================
-lhz_dun04,0,0,0,0	monster	Randel	RANDEL,42,5000,0,0
-lhz_dun04,0,0,0,0	monster	Flamel	FLAMEL,42,5000,0,0
-lhz_dun04,0,0,0,0	monster	Celia	CELIA,81,5000,0,0
-lhz_dun04,0,0,0,0	monster	Chen	CHEN,42,5000,0,0
-lhz_dun04,0,0,0,0	monster	Gertie	GERTIE,57,5000,0,0
-lhz_dun04,0,0,0,0	monster	Alphoccio	ALPHOCCIO,42,5000,0,0
-lhz_dun04,0,0,0,0	monster	Trentini	TRENTINI,42,5000,0,0
-lhz_dun04,0,0,0,0	monster	Paladin Randel	G_RANDEL,1,3300000,3000000,1
-lhz_dun04,0,0,0,0	monster	Creator Flamel	G_FLAMEL,1,3300000,3000000,1
-lhz_dun04,0,0,0,0	monster	Professor Celia	G_CELIA,1,3300000,3000000,1
-lhz_dun04,0,0,0,0	monster	Champion Chen	G_CHEN,1,3300000,3000000,1
-lhz_dun04,0,0,0,0	monster	Stalker Gertie	G_GERTIE,1,3300000,3000000,1
-lhz_dun04,0,0,0,0	monster	Clown Alphoccio	G_ALPHOCCIO,1,3300000,3000000,1
-lhz_dun04,0,0,0,0	monster	Gypsy Trentini	G_TRENTINI,1,3300000,3000000,1
+//== lhz_dun04 - Bio-life Labs 4F ==========================
+lhz_dun04,0,0,0,0	monster	Randel	2221,42,5000,0,0
+lhz_dun04,0,0,0,0	monster	Flamel	2222,42,5000,0,0
+lhz_dun04,0,0,0,0	monster	Celia	2223,81,5000,0,0
+lhz_dun04,0,0,0,0	monster	Chen	2224,42,5000,0,0
+lhz_dun04,0,0,0,0	monster	Gertie	2225,57,5000,0,0
+lhz_dun04,0,0,0,0	monster	Alphoccio	2226,42,5000,0,0
+lhz_dun04,0,0,0,0	monster	Trentini	2227,42,5000,0,0
+lhz_dun04,0,0,0,0	monster	Paladin Randel	2228,1,3300000,3000000,1
+lhz_dun04,0,0,0,0	monster	Creator Flamel	2229,1,3300000,3000000,1
+lhz_dun04,0,0,0,0	monster	Professor Celia	2230,1,3300000,3000000,1
+lhz_dun04,0,0,0,0	monster	Champion Chen	2231,1,3300000,3000000,1
+lhz_dun04,0,0,0,0	monster	Stalker Gertie	2232,1,3300000,3000000,1
+lhz_dun04,0,0,0,0	monster	Clown Alphoccio	2233,1,3300000,3000000,1
+lhz_dun04,0,0,0,0	monster	Gypsy Trentini	2234,1,3300000,3000000,1
 
-lhz_dun04,0,0,0	script	mvp_lhz_dun04	-1,{
+lhz_dun04,0,0,0	script	mvp_lhz_dun04	FAKE_NPC,{
 OnTimer6000000: // delay1 = 6000000 ms (100 min)
 	stopnpctimer;
 	sleep rand(0,30)*60000; // 0 to 30 minutes

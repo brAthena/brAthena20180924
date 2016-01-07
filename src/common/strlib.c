@@ -35,6 +35,10 @@ struct strlib_interface strlib_s;
 struct stringbuf_interface stringbuf_s;
 struct sv_interface sv_s;
 
+struct strlib_interface *strlib;
+struct stringbuf_interface *StrBuf;
+struct sv_interface *sv;
+
 // escapes a string in-place (' -> \' , \ -> \\ , % -> _)
 char* jstrescape (char* pt) {
 	//copy from here
@@ -248,14 +252,14 @@ char* strlib_strtok_r(char *s1, const char *s2, char **lasts)
 
 	if (s1 == NULL)
 		s1 = *lasts;
-	while (*s1 && strchr(s2, *s1))
+	while(*s1 && strchr(s2, *s1))
 		++s1;
-	if (*s1 == '\0')
+	if(*s1 == '\0')
 		return NULL;
 	ret = s1;
-	while (*s1 && !strchr(s2, *s1))
+	while(*s1 && !strchr(s2, *s1))
 		++s1;
-	if (*s1)
+	if(*s1)
 		*s1++ = '\0';
 	*lasts = s1;
 	return ret;
@@ -266,11 +270,11 @@ char* strlib_strtok_r(char *s1, const char *s2, char **lasts)
 
 size_t strlib_strnlen(const char *string, size_t maxlen)
 {
-	// TODO: The _MSC_VER check can probably be removed (we no longer support VS
-	// versions <= 2003, do we?), but this implementation might be still necessary
-	// for NetBSD 5.x and possibly some Solaris versions.
+// TODO: The _MSC_VER check can probably be removed (we no longer support VS
+// versions <= 2003, do we?), but this implementation might be still necessary
+// for NetBSD 5.x and possibly some Solaris versions.
 #if !(defined(WIN32) && defined(_MSC_VER) && _MSC_VER >= 1400) && !defined(HAVE_STRNLEN)
-	/* Find the length of STRING, but scan at most MAXLEN characters.
+/* Find the length of STRING, but scan at most MAXLEN characters.
 	 * If no '\0' terminator is found in that many characters, return MAXLEN.
 	 */
 	const char* end = (const char*)memchr(string, '\0', maxlen);
@@ -434,8 +438,6 @@ bool strlib_bin2hex(char *output, unsigned char *input, size_t count)
 	return true;
 }
 
-
-
 /////////////////////////////////////////////////////////////////////
 /// Parses a single field in a delim-separated string.
 /// The delimiter after the field is skipped.
@@ -592,7 +594,6 @@ int sv_parse_next(struct s_svstate* svstate)
 
 	return 1;
 }
-
 
 /// Parses a delim-separated string.
 /// Starts parsing at startoff and fills the pos array with position pairs.
@@ -903,7 +904,6 @@ const char* skip_escaped_c(const char* p) {
 	return p;
 }
 
-
 /// Opens and parses a file containing delim-separated columns, feeding them to the specified callback function row by row.
 /// Tracks the progress of the operation (current line number, number of successfully processed rows).
 /// Returns 'true' if it was able to process the specified file, or 'false' if it could not be read.
@@ -980,7 +980,6 @@ bool sv_readdb(const char* directory, const char* filename, char delim, int minc
 
 	return true;
 }
-
 
 /////////////////////////////////////////////////////////////////////
 // StringBuf - dynamic string
@@ -1125,6 +1124,7 @@ void strlib_defaults(void) {
 #else
 	strlib->strtok_r_ = NULL;
 #endif
+
 	strlib->e_mail_check_ = strlib_e_mail_check;
 	strlib->config_switch_ = strlib_config_switch;
 	strlib->safestrncpy_ = strlib_safestrncpy;

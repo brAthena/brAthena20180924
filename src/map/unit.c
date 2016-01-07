@@ -63,6 +63,7 @@ const short dirx[8]={0,-1,-1,-1,0,1,1,1};
 const short diry[8]={1,1,0,-1,-1,-1,0,1};
 
 struct unit_interface unit_s;
+struct unit_interface *unit;
 
 /**
  * Returns the unit_data for the given block_list. If the object is using
@@ -2182,8 +2183,8 @@ int unit_attack_timer_sub(struct block_list* src, int tid, int64 tick) {
 
 	if(ud->state.attack_continue) {
 		unit->setdir(src, map->calc_dir(src, target->x, target->y));
-		if( src->type == BL_PC && battle_config.idletime_criteria & BCIDLE_ATTACK )
-			((TBL_PC*)src)->idletime = sockt->last_tick;
+		if( src->type == BL_PC )
+			pc->update_idle_time(sd, BCIDLE_ATTACK);
 		ud->attacktimer = timer->add(ud->attackabletime,unit->attack_timer,src->id,0);
 	}
 
@@ -2658,10 +2659,7 @@ int unit_free(struct block_list *bl, clr_type clrtype) {
 				aFree(sd->instance);
 				sd->instance = NULL;
 			}
-			if( sd->queues != NULL ) {
-				aFree(sd->queues);
-				sd->queues = NULL;
-			}
+			VECTOR_CLEAR(sd->script_queues);
 			if( sd->quest_log != NULL ) {
 				aFree(sd->quest_log);
 				sd->quest_log = NULL;

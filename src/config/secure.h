@@ -21,8 +21,8 @@
 #define CONFIG_SECURE_H
 
 /**
- * Hercules configuration file (http://hercules.ws)
- * For detailed guidance on these check http://hercules.ws/wiki/SRC/config/
+ * Hercules configuration file (http://herc.ws)
+ * For detailed guidance on these check http://herc.ws/wiki/SRC/config/
  **/
 
 /**
@@ -35,7 +35,7 @@
  * - On 'timeout' the npc dialog window changes its next/menu to a 'close' button
  * Uncomment to enable
  **/
-#define SECURE_NPCTIMEOUT
+//#define SECURE_NPCTIMEOUT
 
 /**
  * number of seconds to 'timeout' if the user is on idle for longer than the value allowed after a 'input' field is displayed.

@@ -60,25 +60,6 @@ enum E_MAPSERVER_ST {
 #define block_free_max 1048576
 #define BL_LIST_MAX 1048576
 
-
-// Added definitions for WoESE objects. [L0ne_W0lf]
-enum MOBID {
-	MOBID_EMPERIUM = 1288,
-	MOBID_TREAS01 = 1324,
-	MOBID_TREAS40 = 1363,
-	MOBID_BARRICADE1 = 1905,
-	MOBID_BARRICADE2,
-	MOBID_GUARIDAN_STONE1,
-	MOBID_GUARIDAN_STONE2,
-	MOBID_FOOD_STOR,
-	MOBID_BLUE_CRYST = 1914,
-	MOBID_PINK_CRYST,
-	MOBID_TREAS41 = 1938,
-	MOBID_TREAS49 = 1946,
-	MOBID_SILVERSNIPER = 2042,
-	MOBID_MAGICDECOY_WIND = 2046,
-};
-
 // For filtering and quick checking.
 #define MAPID_BASEMASK 0x00ff
 #define MAPID_UPPERMASK 0x0fff
@@ -241,6 +222,8 @@ enum {
 #define map_flag_gvg2(m) (map->list[m].flag.gvg || map->list[m].flag.gvg_castle)
 // No Kill Steal Protection
 #define map_flag_ks(m) (map->list[m].flag.town || map->list[m].flag.pvp || map->list[m].flag.gvg || map->list[m].flag.battleground)
+// No ViewID
+#define map_no_view(m, view) (map->list[m].flag.noviewid & (view))
 
 //This stackable implementation does not means a BL can be more than one type at a time, but it's
 // meant to make it easier to check for multiple types at a time on invocations such as map_foreach* calls [Skotlex]
@@ -265,26 +248,64 @@ enum bl_type {
 
 enum npc_subtype { WARP, SHOP, SCRIPT, CASHSHOP, TOMB };
 
-enum {
-	RC_FORMLESS=0,
-	RC_UNDEAD,
-	RC_BRUTE,
-	RC_PLANT,
-	RC_INSECT,
-	RC_FISH,
-	RC_DEMON,
-	RC_DEMIHUMAN,
-	RC_ANGEL,
-	RC_DRAGON,
-	RC_PLAYER,
-	RC_BOSS,
-	RC_NONBOSS,
-	RC_MAX,
-	RC_NONDEMIHUMAN,
-	RC_NONPLAYER,
-	RC_DEMIPLAYER,
-	RC_NONDEMIPLAYER,
-	RC_ALL = 0xFF
+/**
+ * Race type IDs.
+ *
+ * Mostly used by scripts/bonuses.
+ */
+enum Race {
+	// Base Races
+	RC_FORMLESS = 0,  ///< Formless
+	RC_UNDEAD,        ///< Undead
+	RC_BRUTE,         ///< Beast/Brute
+	RC_PLANT,         ///< Plant
+	RC_INSECT,        ///< Insect
+	RC_FISH,          ///< Fish
+	RC_DEMON,         ///< Demon
+	RC_DEMIHUMAN,     ///< Demi-Human (not including Player)
+	RC_ANGEL,         ///< Angel
+	RC_DRAGON,        ///< Dragon
+	RC_PLAYER,        ///< Player
+	// Boss
+	RC_BOSS,          ///< Boss
+	RC_NONBOSS,       ///< Non-boss
+
+	RC_MAX,           // Array size delimiter (keep before the combination races)
+
+	// Combination Races
+	RC_NONDEMIHUMAN,   ///< Every race except Demi-Human (including Player)
+	RC_NONPLAYER,      ///< Every non-player race
+	RC_DEMIPLAYER,     ///< Demi-Human (including Player)
+	RC_NONDEMIPLAYER,  ///< Every race except Demi-Human (and except Player)
+	RC_ALL = 0xFF,     ///< Every race (implemented as equivalent to RC_BOSS and RC_NONBOSS)
+};
+
+/**
+ * Race type bitmasks.
+ *
+ * Used by several bonuses internally, to simplify handling of race combinations.
+ */
+enum RaceMask {
+	RCMASK_NONE      = 0,
+	RCMASK_FORMLESS  = 1<<RC_FORMLESS,
+	RCMASK_UNDEAD    = 1<<RC_UNDEAD,
+	RCMASK_BRUTE     = 1<<RC_BRUTE,
+	RCMASK_PLANT     = 1<<RC_PLANT,
+	RCMASK_INSECT    = 1<<RC_INSECT,
+	RCMASK_FISH      = 1<<RC_FISH,
+	RCMASK_DEMON     = 1<<RC_DEMON,
+	RCMASK_DEMIHUMAN = 1<<RC_DEMIHUMAN,
+	RCMASK_ANGEL     = 1<<RC_ANGEL,
+	RCMASK_DRAGON    = 1<<RC_DRAGON,
+	RCMASK_PLAYER    = 1<<RC_PLAYER,
+	RCMASK_BOSS      = 1<<RC_BOSS,
+	RCMASK_NONBOSS   = 1<<RC_NONBOSS,
+	RCMASK_NONDEMIPLAYER = RCMASK_FORMLESS | RCMASK_UNDEAD | RCMASK_BRUTE | RCMASK_PLANT | RCMASK_INSECT | RCMASK_FISH | RCMASK_DEMON | RCMASK_ANGEL | RCMASK_DRAGON,
+	RCMASK_NONDEMIHUMAN = RCMASK_NONDEMIPLAYER | RCMASK_PLAYER,
+	RCMASK_NONPLAYER    = RCMASK_NONDEMIPLAYER | RCMASK_DEMIHUMAN,
+	RCMASK_DEMIPLAYER   = RCMASK_DEMIHUMAN | RCMASK_PLAYER,
+	RCMASK_ALL          = RCMASK_BOSS | RCMASK_NONBOSS,
+	RCMASK_ANY          = RCMASK_NONPLAYER | RCMASK_PLAYER,
 };
 
 enum {
@@ -425,7 +446,7 @@ enum status_point_types {
 	SP_WEAPON_ATK,SP_WEAPON_ATK_RATE, // 1081-1082
 	SP_DELAYRATE,SP_HP_DRAIN_RATE_RACE,SP_SP_DRAIN_RATE_RACE, // 1083-1085
 	SP_IGNORE_MDEF_RATE,SP_IGNORE_DEF_RATE,SP_SKILL_HEAL2,SP_ADDEFF_ONSKILL, //1086-1089
-	SP_ADD_HEAL_RATE,SP_ADD_HEAL2_RATE, //1090-1091
+	SP_ADD_HEAL_RATE, SP_ADD_HEAL2_RATE, SP_HP_VANISH_RATE, //1090-1092
 
 	SP_RESTART_FULL_RECOVER=2000,SP_NO_CASTCANCEL,SP_NO_SIZEFIX,SP_NO_MAGIC_DAMAGE,SP_NO_WEAPON_DAMAGE,SP_NO_GEMSTONE, // 2000-2005
 	SP_NO_CASTCANCEL2,SP_NO_MISC_DAMAGE,SP_UNBREAKABLE_WEAPON,SP_UNBREAKABLE_ARMOR, SP_UNBREAKABLE_HELM, // 2006-2010
@@ -443,7 +464,7 @@ enum status_point_types {
 	SP_SKILL_COOLDOWN,SP_SKILL_FIXEDCAST, SP_SKILL_VARIABLECAST, SP_FIXCASTRATE, SP_VARCASTRATE, //2050-2054
 	SP_SKILL_USE_SP,SP_MAGIC_ATK_ELE, SP_ADD_FIXEDCAST, SP_ADD_VARIABLECAST,  //2055-2058
 	SP_SET_DEF_RACE,SP_SET_MDEF_RACE, //2059-2060
-	SP_RACE_TOLERANCE, //2061
+	SP_RACE_TOLERANCE,SP_ADDMAXWEIGHT, //2061-2062
 
 	/* must be the last, plugins add bonuses from this value onwards */
 	SP_LAST_KNOWN,
@@ -463,6 +484,7 @@ enum look {
 	LOOK_BODY,
 	LOOK_FLOOR,
 	LOOK_ROBE,
+	LOOK_BODY2,
 };
 
 // used by map_setcell()
@@ -692,6 +714,7 @@ struct map_data {
 		unsigned noknockback : 1;
 		unsigned notomb : 1;
 		unsigned nocashshop : 1;
+		unsigned noviewid : 22;
 	} flag;
 	struct point save;
 	struct npc_data *npc[MAX_NPC_PER_MAP];
@@ -774,7 +797,7 @@ enum e_mapitflags {
 
 struct s_mapiterator;
 
-
+/* temporary until the map.c "Hercules Renewal Phase One" design is complete. */
 struct mapit_interface {
 	struct s_mapiterator*   (*alloc) (enum e_mapitflags flags, enum bl_type types);
 	void                    (*free) (struct s_mapiterator* iter);
@@ -830,9 +853,11 @@ struct map_cache_map_info {
 };
 
 
-/**
- * map.c Interface
- **/
+/*=====================================
+* Interface : map.h
+* Generated by HerculesInterfaceMaker
+* created by Susu
+*-------------------------------------*/
 struct map_interface {
 
 	/* vars */
@@ -1044,6 +1069,7 @@ END_ZEROED_BLOCK;
 	struct map_session_data * (*nick2sd) (const char *nick);
 	struct mob_data * (*getmob_boss) (int16 m);
 	struct mob_data * (*id2boss) (int id);
+	uint32 (*race_id2mask) (int race);
 	// reload config file looking only for npcs
 	void (*reloadnpc) (bool clear);
 

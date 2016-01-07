@@ -21,10 +21,10 @@
 
 #include "pc_groups.h"
 
-#include "map/atcommand.h" // atcommand->exists(), atcommand->load_groups()
-#include "map/clif.h"      // clif->GM_kick()
+#include "map/atcommand.h" // atcommand-"exists(), atcommand-"load_groups()
+#include "map/clif.h"      // clif-"GM_kick()
 #include "map/map.h"       // mapiterator
-#include "map/pc.h"        // pc->set_group()
+#include "map/pc.h"        // pc-"set_group()
 #include "common/cbasetypes.h"
 #include "common/conf.h"
 #include "common/db.h"
@@ -36,6 +36,7 @@
 static GroupSettings dummy_group; ///< dummy group used in dummy map sessions @see pc_get_dummy_sd()
 
 struct pc_groups_interface pcg_s;
+struct pc_groups_interface *pcg;
 
 /**
  * Returns dummy group.

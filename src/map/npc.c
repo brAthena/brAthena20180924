@@ -58,6 +58,7 @@
 #include <time.h>
 
 struct npc_interface npc_s;
+struct npc_interface *npc;
 
 static int npc_id=START_NPC_NUM;
 static int npc_warp=0;
@@ -67,8 +68,8 @@ static int npc_mob=0;
 static int npc_delay_mob=0;
 static int npc_cache_mob=0;
 
-static char *npc_last_path;
-static char *npc_last_ref;
+static const char *npc_last_path;
+static const char *npc_last_ref;
 struct npc_path_data *npc_last_npd;
 
 //For holding the view data of npc classes. [Skotlex]
@@ -149,6 +150,9 @@ int npc_isnear_sub(struct block_list* bl, va_list args) {
 	struct npc_data *nd = (struct npc_data*)bl;
 
 	if( nd->option & (OPTION_HIDE|OPTION_INVISIBLE) )
+		return 0;
+
+	if( battle_config.vendchat_near_hiddennpc && ( nd->class_ == FAKE_NPC || nd->class_ == HIDDEN_WARP_CLASS ) )
 		return 0;
 
 	return 1;
@@ -304,13 +308,17 @@ int npc_rr_secure_timeout_timer(int tid, int64 tick, int id, intptr_t data) {
 			sd->st->state = END;
 		sd->state.menu_or_input = 0;
 		sd->npc_menu = 0;
-		clif->scriptmes(sd, sd->npc_id, " ");
 		/**
 		 * This guy's been idle for longer than allowed, close him.
 		 **/
 		clif->scriptclose(sd,sd->npc_id);
-		clif->scriptclear(sd,sd->npc_id);
 		sd->npc_idle_timer = INVALID_TIMER;
+		/**
+		* We will end the script ourselves, client will request to end it again if it have dialog,
+		* however it will be ignored, workaround for client stuck if NPC have no dialog. [hemagx]
+		**/
+		sd->state.dialog = 0;
+		npc->scriptcont(sd, sd->npc_id, true);
 	} else //Create a new instance of ourselves to continue
 		sd->npc_idle_timer = timer->add(timer->gettick() + (SECURE_NPCTIMEOUT_INTERVAL*1000),npc->secure_timeout_timer,sd->bl.id,0);
 #endif
@@ -1295,7 +1303,7 @@ int npc_scriptcont(struct map_session_data* sd, int id, bool closing) {
 			nd?(char*)nd->name:"'NPC desconhecido'", (int)id);
 		return 1;
 	}
-	
+
 	if(id != npc->fake_nd->bl.id) { // Not item script
 		if ((npc->checknear(sd,target)) == NULL){
 			ShowWarning("npc_scriptcont: falha em npc->checknear teste.\n");
@@ -2097,6 +2105,7 @@ int npc_selllist(struct map_session_data* sd, int n, unsigned short* item_list) 
 	double z;
 	int i,skill_t, skill_idx = skill->get_index(MC_OVERCHARGE);
 	struct npc_data *nd;
+	bool duplicates[MAX_INVENTORY] = { 0 };
 
 	nullpo_retr(1, sd);
 	nullpo_retr(1, item_list);
@@ -2113,29 +2122,36 @@ int npc_selllist(struct map_session_data* sd, int n, unsigned short* item_list) 
 	z = 0;
 
 	// verify the sell list
-	for( i = 0; i < n; i++ ) {
+	for (i = 0; i < n; i++) {
 		int nameid, amount, idx, value;
 
 		idx    = item_list[i*2]-2;
 		amount = item_list[i*2+1];
 
-		if( idx >= MAX_INVENTORY || idx < 0 || amount < 0 ) {
+		if (idx >= MAX_INVENTORY || idx < 0 || amount < 0) {
 			return 1;
 		}
+
+		if (duplicates[idx]) {
+			// Sanity check. The client sends each inventory index at most once [Haru]
+			return 1;
+		}
+		duplicates[idx] = true;
 
 		nameid = sd->status.inventory[idx].nameid;
 
-		if( !nameid || !sd->inventory_data[idx] || sd->status.inventory[idx].amount < amount ) {
+		if (!nameid || !sd->inventory_data[idx] || sd->status.inventory[idx].amount < amount) {
 			return 1;
 		}
 
-		if( nd->master_nd ) {// Script-controlled shops decide by themselves, what can be sold and at what price.
+		if (nd->master_nd) {
+			// Script-controlled shops decide by themselves, what can be sold and at what price.
 			continue;
 		}
 
 		value = pc->modifysellvalue(sd, sd->inventory_data[idx]->value_sell);
 
-		z+= (double)value*amount;
+		z += (double)value*amount;
 	}
 
 	if( nd->master_nd ) { // Script-controlled shops
@@ -2270,16 +2286,9 @@ int npc_unload(struct npc_data* nd, bool single)
 	npc_chat->finalize(nd); // deallocate npc PCRE data structures
 #endif
 
-	if( single && nd->path ) {
-		struct npc_path_data* npd = NULL;
-		if( nd->path && nd->path != npc_last_ref ) {
-			npd = strdb_get(npc->path_db, nd->path);
-		}
-
-		if( npd && --npd->references == 0 ) {
-			strdb_remove(npc->path_db, nd->path);/* remove from db */
-			aFree(nd->path);/* remove now that no other instances exist */
-		}
+	if (single && nd->path != NULL) {
+		npc->releasepathreference(nd->path);
+		nd->path = NULL;
 	}
 
 	if( single && nd->bl.m != -1 )
@@ -2428,6 +2437,64 @@ void npc_delsrcfile(const char* name)
 	}
 }
 
+/**
+ * Retains a reference to filepath, for use in nd->path
+ *
+ * @param filepath The file path to retain.
+ * @return A retained reference to filepath.
+ */
+const char *npc_retainpathreference(const char *filepath)
+{
+	struct npc_path_data * npd = NULL;
+	nullpo_ret(filepath);
+
+	if (npc_last_path == filepath) {
+		if (npc_last_npd != NULL)
+			npc_last_npd->references++;
+		return npc_last_ref;
+	}
+
+	if ((npd = strdb_get(npc->path_db,filepath)) == NULL) {
+		CREATE(npd, struct npc_path_data, 1);
+		strdb_put(npc->path_db, filepath, npd);
+
+		CREATE(npd->path, char, strlen(filepath)+1);
+		safestrncpy(npd->path, filepath, strlen(filepath)+1);
+
+		npd->references = 0;
+	}
+
+	npd->references++;
+
+	npc_last_npd = npd;
+	npc_last_ref = npd->path;
+	npc_last_path = filepath;
+
+	return npd->path;
+}
+
+/**
+ * Releases a previously retained filepath.
+ *
+ * @param filepath The file path to release.
+ */
+void npc_releasepathreference(const char *filepath)
+{
+	struct npc_path_data* npd = NULL;
+
+	nullpo_retv(filepath);
+
+	if (filepath != npc_last_ref) {
+		npd = strdb_get(npc->path_db, filepath);
+	}
+
+	if (npd != NULL && --npd->references == 0) {
+		char *npcpath = npd->path;
+		strdb_remove(npc->path_db, filepath);/* remove from db */
+		aFree(npcpath);
+	}
+}
+
 /// Parses and sets the name and exname of a npc.
 /// Assumes that m, x and y are already set in nd.
 void npc_parsename(struct npc_data* nd, const char* name, const char* start, const char* buffer, const char* filepath) {
@@ -2482,37 +2549,12 @@ void npc_parsename(struct npc_data* nd, const char* name, const char* start, con
 		ShowDebug("outro npc em '%s' :\n   nome de exibicao '%s'\n   nome exclusivo '%s'\n   mapa=%s, x=%d, y=%d\n",dnd->path, dnd->name, dnd->exname, other_mapname, dnd->bl.x, dnd->bl.y);
 		safestrncpy(nd->exname, newname, sizeof(nd->exname));
 	}
-
-	if( npc_last_path != filepath ) {
-		struct npc_path_data * npd = NULL;
-
-		if( !(npd = strdb_get(npc->path_db,filepath) ) ) {
-			CREATE(npd, struct npc_path_data, 1);
-			strdb_put(npc->path_db, filepath, npd);
-
-			CREATE(npd->path, char, strlen(filepath)+1);
-			safestrncpy(npd->path, filepath, strlen(filepath)+1);
-
-			npd->references = 0;
-		}
-
-		nd->path = npd->path;
-		npd->references++;
-
-		npc_last_npd = npd;
-		npc_last_ref = npd->path;
-		npc_last_path = (char*) filepath;
-	} else {
-		nd->path = npc_last_ref;
-		if( npc_last_npd )
-			npc_last_npd->references++;
-	}
 }
 
 // Parse View
 // Support for using Constants in place of NPC View IDs.
 int npc_parseview(const char* w4, const char* start, const char* buffer, const char* filepath) {
-	int val = -1, i = 0;
+	int val = FAKE_NPC, i = 0;
 	char viewid[1024]; // Max size of name from const.txt, see script->read_constdb.
 
 	// Extract view ID / constant
@@ -2548,8 +2590,7 @@ int npc_parseview(const char* w4, const char* start, const char* buffer, const c
 // Checks if given view is an ID or constant.
 bool npc_viewisid(const char * viewid)
 {
-	if(atoi(viewid) != -1)
-	{
+	if (atoi(viewid) != FAKE_NPC) {
 		// Loop through view, looking for non-numeric character.
 		while (*viewid) {
 			if (ISDIGIT(*viewid++) == 0) return false;
@@ -2559,17 +2600,33 @@ bool npc_viewisid(const char * viewid)
 	return true;
 }
 
-struct npc_data* npc_create_npc(int m, int x, int y)
+/**
+ * Creates a new NPC.
+ *
+ * @param subtype The NPC subtype.
+ * @param m       The map id.
+ * @param x       The x coordinate on map.
+ * @param y       The y coordinate on map.
+ * @param dir     The facing direction.
+ * @param class_  The NPC view class.
+ * @return A pointer to the created NPC data (ownership passed to the caller).
+ */
+struct npc_data *npc_create_npc(enum npc_subtype subtype, int m, int x, int y, uint8 dir, int16 class_)
 {
 	struct npc_data *nd;
 
 	CREATE(nd, struct npc_data, 1);
+	nd->subtype = subtype;
+	nd->bl.type = BL_NPC;
 	nd->bl.id = npc->get_new_npc_id();
 	nd->bl.prev = nd->bl.next = NULL;
 	nd->bl.m = m;
 	nd->bl.x = x;
 	nd->bl.y = y;
+	nd->dir = dir;
 	nd->area_size = AREA_SIZE + 1;
+	nd->class_ = class_;
+	nd->speed = 200;
 
 	return nd;
 }
@@ -2579,8 +2636,7 @@ struct npc_data* npc_add_warp(char* name, short from_mapid, short from_x, short 
 	int i, flag = 0;
 	struct npc_data *nd;
 
-	nd = npc->create_npc(from_mapid, from_x, from_y);
-	map->addnpc(from_mapid, nd);
+	nd = npc->create_npc(WARP, from_mapid, from_x, from_y, 0, battle_config.warp_point_debug ? WARP_DEBUG_CLASS : WARP_CLASS);
 
 	safestrncpy(nd->exname, name, ARRAYLENGTH(nd->exname));
 	if (npc->name2id(nd->exname) != NULL)
@@ -2593,32 +2649,36 @@ struct npc_data* npc_add_warp(char* name, short from_mapid, short from_x, short 
 		snprintf(nd->exname, ARRAYLENGTH(nd->exname), "warp%d_%d_%d_%d", i, from_mapid, from_x, from_y);
 	safestrncpy(nd->name, nd->exname, ARRAYLENGTH(nd->name));
 
-	if( battle_config.warp_point_debug )
-		nd->class_ = WARP_DEBUG_CLASS;
-	else
-		nd->class_ = WARP_CLASS;
-	nd->speed = 200;
-
 	nd->u.warp.mapindex = to_mapindex;
 	nd->u.warp.x = to_x;
 	nd->u.warp.y = to_y;
 	nd->u.warp.xs = xs;
 	nd->u.warp.ys = xs;
-	nd->bl.type = BL_NPC;
-	nd->subtype = WARP;
-	npc->setcells(nd);
-	map->addblock(&nd->bl);
-	status->set_viewdata(&nd->bl, nd->class_);
-	nd->ud = &npc->base_ud;
-	if( map->list[nd->bl.m].users )
-		clif->spawn(&nd->bl);
-	strdb_put(npc->name_db, nd->exname, nd);
+
+	npc->add_to_location(nd);
 
 	return nd;
 }
 
-/// Parses a warp npc.
-const char* npc_parse_warp(char* w1, char* w2, char* w3, char* w4, const char* start, const char* buffer, const char* filepath, int *retval) {
+/**
+ * Parses a warp NPC.
+ *
+ * @param[in]  w1       First tab-delimited part of the string to parse.
+ * @param[in]  w2       Second tab-delimited part of the string to parse.
+ * @param[in]  w3       Third tab-delimited part of the string to parse.
+ * @param[in]  w4       Fourth tab-delimited part of the string to parse.
+ * @param[in]  start    Pointer to the beginning of the string inside buffer.
+ *                      This must point to the same buffer as `buffer`.
+ * @param[in]  buffer   Pointer to the buffer containing the script. For
+ *                      single-line mapflags not inside a script, this may be
+ *                      an empty (but initialized) single-character buffer.
+ * @param[in]  filepath Source file path.
+ * @param[out] retval   Pointer to return the success (EXIT_SUCCESS) or failure
+ *                      (EXIT_FAILURE) status. May be NULL.
+ * @return A pointer to the advanced buffer position.
+ */
+const char *npc_parse_warp(const char *w1, const char *w2, const char *w3, const char *w4, const char *start, const char *buffer, const char *filepath, int *retval)
+{
 	int x, y, xs, ys, to_x, to_y, m;
 	unsigned short i;
 	char mapname[32], to_mapname[32];
@@ -2648,15 +2708,9 @@ const char* npc_parse_warp(char* w1, char* w2, char* w3, char* w4, const char* s
 		return strchr(start,'\n');;//try next
 	}
 
-	nd = npc->create_npc(m, x, y);
-	map->addnpc(m, nd);
+	nd = npc->create_npc(WARP, m, x, y, 0, battle_config.warp_point_debug ? WARP_DEBUG_CLASS : WARP_CLASS);
 	npc->parsename(nd, w3, start, buffer, filepath);
-
-	if (!battle_config.warp_point_debug)
-		nd->class_ = WARP_CLASS;
-	else
-		nd->class_ = WARP_DEBUG_CLASS;
-	nd->speed = 200;
+	nd->path = npc->retainpathreference(filepath);
 
 	nd->u.warp.mapindex = i;
 	nd->u.warp.x = to_x;
@@ -2664,25 +2718,31 @@ const char* npc_parse_warp(char* w1, char* w2, char* w3, char* w4, const char* s
 	nd->u.warp.xs = xs;
 	nd->u.warp.ys = ys;
 	npc_warp++;
-	nd->bl.type = BL_NPC;
-	nd->subtype = WARP;
-	npc->setcells(nd);
-	map->addblock(&nd->bl);
-	status->set_viewdata(&nd->bl, nd->class_);
-	nd->ud = &npc->base_ud;
-	if( map->list[nd->bl.m].users )
-		clif->spawn(&nd->bl);
-	strdb_put(npc->name_db, nd->exname, nd);
+
+	npc->add_to_location(nd);
 
 	return strchr(start,'\n');// continue
 }
 
 /**
- * Parses a SHOP/CASHSHOP npc
- * @param retval Pointer to the status, used to know whether there was an error or not, if so it will be EXIT_FAILURE
- * @retval Parsing position (currently only '\n')
- **/
-const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const char* start, const char* buffer, const char* filepath, int *retval) {
+ * Parses a SHOP/CASHSHOP NPC.
+ *
+ * @param[in]  w1       First tab-delimited part of the string to parse.
+ * @param[in]  w2       Second tab-delimited part of the string to parse.
+ * @param[in]  w3       Third tab-delimited part of the string to parse.
+ * @param[in]  w4       Fourth tab-delimited part of the string to parse.
+ * @param[in]  start    Pointer to the beginning of the string inside buffer.
+ *                      This must point to the same buffer as `buffer`.
+ * @param[in]  buffer   Pointer to the buffer containing the script. For
+ *                      single-line mapflags not inside a script, this may be
+ *                      an empty (but initialized) single-character buffer.
+ * @param[in]  filepath Source file path.
+ * @param[out] retval   Pointer to return the success (EXIT_SUCCESS) or failure
+ *                      (EXIT_FAILURE) status. May be NULL.
+ * @return A pointer to the advanced buffer position.
+ */
+const char *npc_parse_shop(const char *w1, const char *w2, const char *w3, const char *w4, const char *start, const char *buffer, const char *filepath, int *retval)
+{
 	//TODO: could be rewritten to NOT need this temp array [ultramage]
 	// We could use nd->u.shop.shop_item to store directly the items, but this could lead
 	// to unecessary memory usage by the server, using a temp dynamic array is the
@@ -2691,7 +2751,7 @@ const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const char* s
 	size_t items_count = 40; // Starting items size
 
 	char *p;
-	int x, y, dir, m, i;
+	int x, y, dir, m, i, class_;
 	struct npc_data *nd;
 	enum npc_subtype type;
 
@@ -2708,11 +2768,13 @@ const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const char* s
 			if (retval) *retval = EXIT_FAILURE;
 			return strchr(start,'\n');// skip and continue
 		}
+
 		if (dir < 0 || dir > 7) {
 			ShowError("npc_parse_ship: Configuracao da rotacao de npc invalida - '%d' no arquivo '%s', linha '%d'.\n", dir, filepath, strline(buffer, start - buffer));
 			if (retval) *retval = EXIT_FAILURE;
-			return strchr(start, '\n');//continue
+			return strchr(start,'\n');//continue
 		}
+
 		m = map->mapname2mapid(mapname);
 	}
 
@@ -2788,31 +2850,18 @@ const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const char* s
 		return strchr(start,'\n');// continue
 	}
 
-	nd = npc->create_npc(m, x, y);
+	class_ = m == -1 ? FAKE_NPC : npc->parseview(w4, start, buffer, filepath);
+	nd = npc->create_npc(type, m, x, y, dir, class_);
 	CREATE(nd->u.shop.shop_item, struct npc_item_list, i);
 	memcpy(nd->u.shop.shop_item, items, sizeof(items[0])*i);
 	aFree(items);
 
 	nd->u.shop.count = i;
 	npc->parsename(nd, w3, start, buffer, filepath);
-	nd->class_ = m == -1 ? -1 : npc->parseview(w4, start, buffer, filepath);
-	nd->speed = 200;
+	nd->path = npc->retainpathreference(filepath);
 
 	++npc_shop;
-	nd->bl.type = BL_NPC;
-	nd->subtype = type;
-	if( m >= 0 ) {// normal shop npc
-		map->addnpc(m,nd);
-		map->addblock(&nd->bl);
-		status->set_viewdata(&nd->bl, nd->class_);
-		nd->ud = &npc->base_ud;
-		nd->dir = dir;
-		if( map->list[nd->bl.m].users )
-			clif->spawn(&nd->bl);
-	} else {// 'floating' shop
-		map->addiddb(&nd->bl);
-	}
-	strdb_put(npc->name_db, nd->exname, nd);
+	npc->add_to_location(nd);
 
 	return strchr(start,'\n');// continue
 }
@@ -2903,16 +2952,42 @@ const char* npc_skip_script(const char* start, const char* buffer, const char* f
 	return p+1;// return after the last '}'
 }
 
-/// Parses a npc script.
-///
-/// -%TAB%script%TAB%<NPC Name>%TAB%-1,{<code>}
-/// <map name>,<x>,<y>,<facing>%TAB%script%TAB%<NPC Name>%TAB%<sprite id>,{<code>}
-/// <map name>,<x>,<y>,<facing>%TAB%script%TAB%<NPC Name>%TAB%<sprite id>,<triggerX>,<triggerY>,{<code>}
-const char* npc_parse_script(char* w1, char* w2, char* w3, char* w4, const char* start, const char* buffer, const char* filepath, int options, int *retval)
+/**
+ * Parses a NPC script.
+ *
+ * Example:
+ * @code
+ * -<TAB>script<TAB><NPC Name><TAB>FAKE_NPC,{
+ *   <code>
+ * }
+ * <map name>,<x>,<y>,<facing><TAB>script<TAB><NPC Name><TAB><sprite id>,{
+ *   <code>
+ * }
+ * <map name>,<x>,<y>,<facing><TAB>script<TAB><NPC Name><TAB><sprite id>,<triggerX>,<triggerY>,{
+ *   <code>
+ * }
+ * @endcode
+ *
+ * @param[in]  w1       First tab-delimited part of the string to parse.
+ * @param[in]  w2       Second tab-delimited part of the string to parse.
+ * @param[in]  w3       Third tab-delimited part of the string to parse.
+ * @param[in]  w4       Fourth tab-delimited part of the string to parse.
+ * @param[in]  start    Pointer to the beginning of the string inside buffer.
+ *                      This must point to the same buffer as `buffer`.
+ * @param[in]  buffer   Pointer to the buffer containing the script. For
+ *                      single-line mapflags not inside a script, this may be
+ *                      an empty (but initialized) single-character buffer.
+ * @param[in]  filepath Source file path.
+ * @param[in]  options  NPC parse/load options (@see enum npc_parse_options).
+ * @param[out] retval   Pointer to return the success (EXIT_SUCCESS) or failure
+ *                      (EXIT_FAILURE) status. May be NULL.
+ * @return A pointer to the advanced buffer position.
+ */
+const char *npc_parse_script(const char *w1, const char *w2, const char *w3, const char *w4, const char *start, const char *buffer, const char *filepath, int options, int *retval)
 {
 	int x, y, dir = 0, m, xs = 0, ys = 0; // [Valaris] thanks to fov
 	struct script_code *scriptroot;
-	int i;
+	int i, class_;
 	const char* end;
 	const char* script_start;
 
@@ -2969,54 +3044,34 @@ const char* npc_parse_script(char* w1, char* w2, char* w3, char* w4, const char*
 		npc->convertlabel_db(label_list,filepath);
 	}
 
-	nd = npc->create_npc(m, x, y);
-	if( sscanf(w4, "%*[^,],%d,%d", &xs, &ys) == 2 )
-	{// OnTouch area defined
+	class_ = m == -1 ? FAKE_NPC : npc->parseview(w4, start, buffer, filepath);
+	nd = npc->create_npc(SCRIPT, m, x, y, dir, class_);
+	if (sscanf(w4, "%*[^,],%d,%d", &xs, &ys) == 2) {
+		// OnTouch area defined
 		nd->u.scr.xs = xs;
 		nd->u.scr.ys = ys;
-	}
-	else
-	{// no OnTouch area
+	} else {
+		// no OnTouch area
 		nd->u.scr.xs = -1;
 		nd->u.scr.ys = -1;
 	}
 
 	npc->parsename(nd, w3, start, buffer, filepath);
-	nd->class_ = m == -1 ? -1 : npc->parseview(w4, start, buffer, filepath);
-	nd->speed = 200;
+	nd->path = npc->retainpathreference(filepath);
 	nd->u.scr.script = scriptroot;
 	nd->u.scr.label_list = label_list;
 	nd->u.scr.label_list_num = label_list_num;
 	if( options&NPO_TRADER )
 		nd->u.scr.trader = true;
 	nd->u.scr.shop = NULL;
-
 	++npc_script;
-	nd->bl.type = BL_NPC;
-	nd->subtype = SCRIPT;
-
-	if( m >= 0 ) {
-		map->addnpc(m, nd);
-		nd->ud = &npc->base_ud;
-		nd->dir = dir;
-		npc->setcells(nd);
-		map->addblock(&nd->bl);
-		if( nd->class_ >= 0 ) {
-			status->set_viewdata(&nd->bl, nd->class_);
-			if( map->list[nd->bl.m].users )
-				clif->spawn(&nd->bl);
-		}
-	} else {
-		// we skip map->addnpc, but still add it to the list of ID's
-		map->addiddb(&nd->bl);
-	}
-	strdb_put(npc->name_db, nd->exname, nd);
+	npc->add_to_location(nd);
 
 	//-----------------------------------------
 	// Loop through labels to export them as necessary
 	for (i = 0; i < nd->u.scr.label_list_num; i++) {
 		if (npc->event_export(nd, i)) {
-			ShowWarning("npc_parse_script: evento duplicado %s::%s no arquivo '%s'.\n",
+			ShowWarning("npc_parse_script: duplicate event %s::%s in file '%s'.\n",
 			             nd->exname, nd->u.scr.label_list[i].name, filepath);
 			if (retval) *retval = EXIT_FAILURE;
 		}
@@ -3034,7 +3089,7 @@ const char* npc_parse_script(char* w1, char* w2, char* w3, char* w4, const char*
 		if( ( ev = (struct event_data*)strdb_get(npc->ev_db, evname) ) ) {
 
 			//Execute OnInit
-			script->run_npc(nd->u.scr.script, ev->pos, 0, nd->bl.id);
+			script->run_npc(nd->u.scr.script,ev->pos,0,nd->bl.id);
 
 		}
 	}
@@ -3042,22 +3097,189 @@ const char* npc_parse_script(char* w1, char* w2, char* w3, char* w4, const char*
 	return end;
 }
 
-/// Duplicate a warp, shop, cashshop or script. [Orcao]
-/// warp: <map name>,<x>,<y>,<facing>%TAB%duplicate(<name of target>)%TAB%<NPC Name>%TAB%<spanx>,<spany>
-/// shop/cashshop/npc: -%TAB%duplicate(<name of target>)%TAB%<NPC Name>%TAB%<sprite id>
-/// shop/cashshop/npc: <map name>,<x>,<y>,<facing>%TAB%duplicate(<name of target>)%TAB%<NPC Name>%TAB%<sprite id>
-/// npc: -%TAB%duplicate(<name of target>)%TAB%<NPC Name>%TAB%<sprite id>,<triggerX>,<triggerY>
-/// npc: <map name>,<x>,<y>,<facing>%TAB%duplicate(<name of target>)%TAB%<NPC Name>%TAB%<sprite id>,<triggerX>,<triggerY>
-/// !!Only NPO_ONINIT is available trough options!!
-const char* npc_parse_duplicate(char* w1, char* w2, char* w3, char* w4, const char* start, const char* buffer, const char* filepath, int options, int *retval) {
+/**
+ * Registers the NPC and adds it to its location (on map or floating).
+ *
+ * @param nd The NPC to register.
+ */
+void npc_add_to_location(struct npc_data *nd)
+{
+	nullpo_retv(nd);
+
+	if (nd->bl.m >= 0) {
+		map->addnpc(nd->bl.m, nd);
+		npc->setcells(nd);
+		map->addblock(&nd->bl);
+		nd->ud = &npc->base_ud;
+		if (nd->class_ >= 0) {
+			status->set_viewdata(&nd->bl, nd->class_);
+			if( map->list[nd->bl.m].users )
+				clif->spawn(&nd->bl);
+		}
+	} else {
+		// we skip map->addnpc, but still add it to the list of ID's
+		map->addiddb(&nd->bl);
+	}
+	strdb_put(npc->name_db, nd->exname, nd);
+}
+
+/**
+ * Duplicates a script (@see npc_duplicate_sub)
+ */
+bool npc_duplicate_script_sub(struct npc_data *nd, const struct npc_data *snd, int xs, int ys, int options)
+{
+	int i;
+	bool retval = true;
+
+	++npc_script;
+	nd->u.scr.xs = xs;
+	nd->u.scr.ys = ys;
+	nd->u.scr.script = snd->u.scr.script;
+	nd->u.scr.label_list = snd->u.scr.label_list;
+	nd->u.scr.label_list_num = snd->u.scr.label_list_num;
+	nd->u.scr.shop = snd->u.scr.shop;
+	nd->u.scr.trader = snd->u.scr.trader;
+
+	//add the npc to its location
+	npc->add_to_location(nd);
+
+	// Loop through labels to export them as necessary
+	for (i = 0; i < nd->u.scr.label_list_num; i++) {
+		if (npc->event_export(nd, i)) {
+			ShowWarning("npc_parse_duplicate: duplicate event %s::%s in file '%s'.\n",
+			             nd->exname, nd->u.scr.label_list[i].name, nd->path);
+			retval = false;
+		}
+		npc->timerevent_export(nd, i);
+	}
+
+	nd->u.scr.timerid = INVALID_TIMER;
+
+	if (options&NPO_ONINIT) {
+		// From npc_parse_script
+		char evname[EVENT_NAME_LENGTH];
+		struct event_data *ev;
+
+		snprintf(evname, ARRAYLENGTH(evname), "%s::OnInit", nd->exname);
+
+		if ((ev = (struct event_data*)strdb_get(npc->ev_db, evname)) != NULL) {
+			//Execute OnInit
+			script->run_npc(nd->u.scr.script,ev->pos,0,nd->bl.id);
+		}
+	}
+	return retval;
+}
+
+/**
+ * Duplicates a shop or cash shop (@see npc_duplicate_sub)
+ */
+bool npc_duplicate_shop_sub(struct npc_data *nd, const struct npc_data *snd, int xs, int ys, int options)
+{
+	++npc_shop;
+	nd->u.shop.shop_item = snd->u.shop.shop_item;
+	nd->u.shop.count = snd->u.shop.count;
+
+	//add the npc to its location
+	npc->add_to_location(nd);
+
+	return true;
+}
+
+/**
+ * Duplicates a warp (@see npc_duplicate_sub)
+ */
+bool npc_duplicate_warp_sub(struct npc_data *nd, const struct npc_data *snd, int xs, int ys, int options)
+{
+	++npc_warp;
+	nd->u.warp.xs = xs;
+	nd->u.warp.ys = ys;
+	nd->u.warp.mapindex = snd->u.warp.mapindex;
+	nd->u.warp.x = snd->u.warp.x;
+	nd->u.warp.y = snd->u.warp.y;
+
+	//Add the npc to its location
+	npc->add_to_location(nd);
+
+	return true;
+}
+
+/**
+ * Duplicates a warp, shop, cashshop or script.
+ *
+ * @param nd      An already initialized NPC data. Expects bl->m, bl->x, bl->y,
+ *                name, exname, path, dir, class_, speed, subtype to be already
+ *                filled.
+ * @param snd     The source NPC to duplicate.
+ * @param class_  The npc view class.
+ * @param dir     The facing direction.
+ * @param xs      The x-span, if any.
+ * @param ys      The y-span, if any.
+ * @param options The NPC options.
+ * @retval false if there were any issues while creating and validating the NPC.
+ */
+bool npc_duplicate_sub(struct npc_data *nd, const struct npc_data *snd, int xs, int ys, int options)
+{
+	nd->src_id = snd->bl.id;
+	switch (nd->subtype) {
+		case SCRIPT:
+			return npc->duplicate_script_sub(nd, snd, xs, ys, options);
+
+		case SHOP:
+		case CASHSHOP:
+			return npc->duplicate_shop_sub(nd, snd, xs, ys, options);
+
+		case WARP:
+			return npc->duplicate_warp_sub(nd, snd, xs, ys, options);
+
+		case TOMB:
+			return false;
+	}
+	return false;
+}
+
+/**
+ * Parses a duplicate warp, shop, cashshop or script NPC. [Orcao]
+ *
+ * Example:
+ * @code
+ * warp:
+ *   <map name>,<x>,<y>,<facing><TAB>duplicate(<name of target>)<TAB><NPC Name><TAB><spanx>,<spany>
+ * shop/cashshop/npc:
+ *   -<TAB>duplicate(<name of target>)<TAB><NPC Name><TAB><sprite id>
+ * shop/cashshop/npc:
+ *   <map name>,<x>,<y>,<facing><TAB>duplicate(<name of target>)<TAB><NPC Name><TAB><sprite id>
+ * npc:
+ *   -<TAB>duplicate(<name of target>)<TAB><NPC Name><TAB><sprite id>,<triggerX>,<triggerY>
+ * npc:
+ *   <map name>,<x>,<y>,<facing><TAB>duplicate(<name of target>)<TAB><NPC Name><TAB><sprite id>,<triggerX>,<triggerY>
+ * @endcode
+ *
+ * @param[in]  w1       First tab-delimited part of the string to parse.
+ * @param[in]  w2       Second tab-delimited part of the string to parse.
+ * @param[in]  w3       Third tab-delimited part of the string to parse.
+ * @param[in]  w4       Fourth tab-delimited part of the string to parse.
+ * @param[in]  start    Pointer to the beginning of the string inside buffer.
+ *                      This must point to the same buffer as `buffer`.
+ * @param[in]  buffer   Pointer to the buffer containing the script. For
+ *                      single-line mapflags not inside a script, this may be
+ *                      an empty (but initialized) single-character buffer.
+ * @param[in]  filepath Source file path.
+ * @param[in]  options  NPC parse/load options (@see enum npc_parse_options).
+ * @param[out] retval   Pointer to return the success (EXIT_SUCCESS) or failure
+ *                      (EXIT_FAILURE) status. May be NULL.
+ * @return A pointer to the advanced buffer position.
+ *
+ * @remark
+ *   Only `NPO_ONINIT` is available trough the options argument.
+ */
+const char *npc_parse_duplicate(const char *w1, const char *w2, const char *w3, const char *w4, const char *start, const char *buffer, const char *filepath, int options, int *retval)
+{
 	int x, y, dir, m, xs = -1, ys = -1;
 	char srcname[128];
-	int i;
-	const char* end;
+	const char *end;
 	size_t length;
 
-	int src_id;
-	int type;
+	int class_;
 	struct npc_data* nd;
 	struct npc_data* dnd;
 
@@ -3079,18 +3301,16 @@ const char* npc_parse_duplicate(char* w1, char* w2, char* w3, char* w4, const ch
 		if (retval) *retval = EXIT_FAILURE;
 		return end;// next line, try to continue
 	}
-	src_id = dnd->bl.id;
-	type = dnd->subtype;
 
 	// get placement
-	if ((type==SHOP || type==CASHSHOP || type==SCRIPT) && strcmp(w1, "-") == 0) {
+	if ((dnd->subtype==SHOP || dnd->subtype==CASHSHOP || dnd->subtype==SCRIPT) && strcmp(w1, "-") == 0) {
 		// floating shop/chashshop/script
 		x = y = dir = 0;
 		m = -1;
 	} else {
 		char mapname[32];
 		int fields = sscanf(w1, "%31[^,],%d,%d,%d", mapname, &x, &y, &dir);
-		if (type == WARP && fields == 3) {
+		if (dnd->subtype == WARP && fields == 3) {
 			// <map name>,<x>,<y>
 			dir = 0;
 		} else if (fields != 4) {
@@ -3113,107 +3333,40 @@ const char* npc_parse_duplicate(char* w1, char* w2, char* w3, char* w4, const ch
 		return end;//try next
 	}
 
-	if( type == WARP && sscanf(w4, "%d,%d", &xs, &ys) == 2 );// <spanx>,<spany>
-	else if( type == SCRIPT && sscanf(w4, "%*[^,],%d,%d", &xs, &ys) == 2);// <sprite id>,<triggerX>,<triggerY>
-	else if( type == WARP ) {
-		ShowError("npc_parse_duplicate: Formato invalido para duplicate warp '%s', linha '%d'. Pulando linha...\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer,start-buffer), w1, w2, w3, w4);
+	if (dnd->subtype == WARP && sscanf(w4, "%d,%d", &xs, &ys) == 2) { // <spanx>,<spany>
+		;
+	} else if (dnd->subtype == SCRIPT && sscanf(w4, "%*[^,],%d,%d", &xs, &ys) == 2) { // <sprite id>,<triggerX>,<triggerY>
+		;
+	} else if (dnd->subtype == WARP) {
+		ShowError("npc_parse_duplicate: Invalid span format for duplicate warp in file '%s', line '%d'. Skipping line...\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer,start-buffer), w1, w2, w3, w4);
 		if (retval) *retval = EXIT_FAILURE;
 		return end;// next line, try to continue
 	}
 
-	nd = npc->create_npc(m, x, y);
+	class_ = m == -1 ? FAKE_NPC : npc->parseview(w4, start, buffer, filepath);
+	nd = npc->create_npc(dnd->subtype, m, x, y, dir, class_);
 	npc->parsename(nd, w3, start, buffer, filepath);
-	nd->class_ = m == -1 ? -1 : npc->parseview(w4, start, buffer, filepath);
-	nd->speed = 200;
-	nd->src_id = src_id;
-	nd->bl.type = BL_NPC;
-	nd->subtype = (enum npc_subtype)type;
-	switch( type ) {
-		case SCRIPT:
-			++npc_script;
-			nd->u.scr.xs = xs;
-			nd->u.scr.ys = ys;
-			nd->u.scr.script = dnd->u.scr.script;
-			nd->u.scr.label_list = dnd->u.scr.label_list;
-			nd->u.scr.label_list_num = dnd->u.scr.label_list_num;
-			nd->u.scr.shop = dnd->u.scr.shop;
-			nd->u.scr.trader = dnd->u.scr.trader;
-			break;
-
-		case SHOP:
-		case CASHSHOP:
-			++npc_shop;
-			nd->u.shop.shop_item = dnd->u.shop.shop_item;
-			nd->u.shop.count = dnd->u.shop.count;
-			break;
-
-		case WARP:
-			++npc_warp;
-			if( !battle_config.warp_point_debug )
-				nd->class_ = WARP_CLASS;
-			else
-				nd->class_ = WARP_DEBUG_CLASS;
-			nd->u.warp.xs = xs;
-			nd->u.warp.ys = ys;
-			nd->u.warp.mapindex = dnd->u.warp.mapindex;
-			nd->u.warp.x = dnd->u.warp.x;
-			nd->u.warp.y = dnd->u.warp.y;
-			break;
-	}
-
-	//Add the npc to its location
-	if( m >= 0 ) {
-		map->addnpc(m, nd);
-		nd->ud = &npc->base_ud;
-		nd->dir = dir;
-		npc->setcells(nd);
-		map->addblock(&nd->bl);
-		if( nd->class_ >= 0 ) {
-			status->set_viewdata(&nd->bl, nd->class_);
-			if( map->list[nd->bl.m].users )
-				clif->spawn(&nd->bl);
-		}
-	} else {
-		// we skip map->addnpc, but still add it to the list of ID's
-		map->addiddb(&nd->bl);
-	}
-	strdb_put(npc->name_db, nd->exname, nd);
-
-	if( type != SCRIPT )
-		return end;
-
-	//-----------------------------------------
-	// Loop through labels to export them as necessary
-	for (i = 0; i < nd->u.scr.label_list_num; i++) {
-		if (npc->event_export(nd, i)) {
-			ShowWarning("npc_parse_duplicate: evento duplicado %s::%s no arquivo '%s'.\n",
-			             nd->exname, nd->u.scr.label_list[i].name, filepath);
+	nd->path = npc->retainpathreference(filepath);
+	if (!npc->duplicate_sub(nd, dnd, xs, ys, options)) {
 			if (retval) *retval = EXIT_FAILURE;
 		}
-		npc->timerevent_export(nd, i);
-	}
 
-	nd->u.scr.timerid = INVALID_TIMER;
-
-	if (options&NPO_ONINIT) {
-		// From npc_parse_script
-		char evname[EVENT_NAME_LENGTH];
-		struct event_data *ev;
-
-		snprintf(evname, ARRAYLENGTH(evname), "%s::OnInit", nd->exname);
-
-		if( ( ev = (struct event_data*)strdb_get(npc->ev_db, evname) ) ) {
-
-			//Execute OnInit
-			script->run_npc(nd->u.scr.script, ev->pos, 0, nd->bl.id);
-
-		}
-	}
 	return end;
 }
 
-int npc_duplicate4instance(struct npc_data *snd, int16 m) {
-	char newname[NPC_NAME_LENGTH];
+/**
+ * Duplicates an NPC for instancing purposes.
+ *
+ * @param snd The NPC to duplicate.
+ * @param m   The instanced map ID.
+ * @return success state.
+ * @retval 0 in case of successful creation.
+ */
+int npc_duplicate4instance(struct npc_data *snd, int16 m)
+{
+	char newname[NAME_LENGTH];
+	int dm = -1, im = -1, xs = -1, ys = -1;
+	struct npc_data *nd = NULL;
 
 	if( m == -1 || map->list[m].instance_id == -1 )
 		return 1;
@@ -3224,50 +3377,35 @@ int npc_duplicate4instance(struct npc_data *snd, int16 m) {
 		return 1;
 	}
 
-	if( snd->subtype == WARP ) { // Adjust destination, if instanced
-		struct npc_data *wnd = NULL; // New NPC
-		int dm = map->mapindex2mapid(snd->u.warp.mapindex), im;
-		if( dm < 0 ) return 1;
-
-		if( ( im = instance->mapid2imapid(dm, map->list[m].instance_id) ) == -1 ) {
-			ShowError("npc_duplicate4instance: warp (%s) leva ao mapa instanciado (%s), mas o mapa instanciado nao esta attachado a instancia.\n", map->list[dm].name, snd->exname);
+	switch (snd->subtype) {
+	case SCRIPT:
+		xs = snd->u.scr.xs;
+		ys = snd->u.scr.ys;
+		break;
+	case WARP:
+		xs = snd->u.warp.xs;
+		ys = snd->u.warp.ys;
+		// Adjust destination, if instanced
+		if ((dm = map->mapindex2mapid(snd->u.warp.mapindex)) < 0) {
 			return 1;
 		}
+		if ((im = instance->mapid2imapid(dm, map->list[m].instance_id)) == -1) {
+			ShowError("npc_duplicate4instance: warp (%s) leading to instanced map (%s), but instance map is not attached to current instance.\n", map->list[dm].name, snd->exname);
+			return 1;
+		}
+		break;
+	default: // Other types have no xs/ys
+		break;
+	}
 
-		wnd = npc->create_npc(m, snd->bl.x, snd->bl.y);
-		map->addnpc(m, wnd);
-		safestrncpy(wnd->name, "", ARRAYLENGTH(wnd->name));
-		safestrncpy(wnd->exname, newname, ARRAYLENGTH(wnd->exname));
-		wnd->class_ = WARP_CLASS;
-		wnd->speed = 200;
-		wnd->u.warp.mapindex = map_id2index(im);
-		wnd->u.warp.x = snd->u.warp.x;
-		wnd->u.warp.y = snd->u.warp.y;
-		wnd->u.warp.xs = snd->u.warp.xs;
-		wnd->u.warp.ys = snd->u.warp.ys;
-		wnd->bl.type = BL_NPC;
-		wnd->subtype = WARP;
-		npc->setcells(wnd);
-		map->addblock(&wnd->bl);
-		status->set_viewdata(&wnd->bl, wnd->class_);
-		wnd->ud = &npc->base_ud;
-		if( map->list[wnd->bl.m].users )
-			clif->spawn(&wnd->bl);
-		strdb_put(npc->name_db, wnd->exname, wnd);
-	} else {
-		static char w1[50], w2[50], w3[50], w4[50];
-		const char* stat_buf = "- chamar sub-sistema de instancia -\n";
-
-		snprintf(w1, sizeof(w1), "%s,%d,%d,%d", map->list[m].name, snd->bl.x, snd->bl.y, snd->dir);
-		snprintf(w2, sizeof(w2), "duplicate(%s)", snd->exname);
-		snprintf(w3, sizeof(w3), "%s::%s", snd->name, newname);
-
-		if( snd->u.scr.xs >= 0 && snd->u.scr.ys >= 0 )
-			snprintf(w4, sizeof(w4), "%d,%d,%d", snd->class_, snd->u.scr.xs, snd->u.scr.ys); // Touch Area
-		else
-			snprintf(w4, sizeof(w4), "%d", snd->class_);
-
-		npc->parse_duplicate(w1, w2, w3, w4, stat_buf, stat_buf, "INSTANCING", NPO_NONE, NULL);
+	nd = npc->create_npc(snd->subtype, m, snd->bl.x, snd->bl.y, snd->dir, snd->class_);
+	safestrncpy(nd->name, snd->name, sizeof(nd->name));
+	safestrncpy(nd->exname, newname, sizeof(nd->exname));
+	nd->path = npc->retainpathreference("INSTANCING");
+	npc->duplicate_sub(nd, snd, xs, ys, NPO_NONE);
+	if (nd->subtype == WARP) {
+		// Adjust destination, if instanced
+		nd->u.warp.mapindex = map_id2index(im);
 	}
 
 	return 0;
@@ -3454,9 +3592,32 @@ int npc_do_atcmd_event(struct map_session_data* sd, const char* command, const c
 	return 0;
 }
 
-/// Parses a function.
-/// function%TAB%script%TAB%<function name>%TAB%{<code>}
-const char* npc_parse_function(char* w1, char* w2, char* w3, char* w4, const char* start, const char* buffer, const char* filepath, int *retval) {
+/**
+ * Parses a function.
+ *
+ * Example:
+ * @code
+ * function<TAB>script<TAB><function name><TAB>{
+ *   <code>
+ * }
+ * @endcode
+ *
+ * @param[in]  w1       First tab-delimited part of the string to parse.
+ * @param[in]  w2       Second tab-delimited part of the string to parse.
+ * @param[in]  w3       Third tab-delimited part of the string to parse.
+ * @param[in]  w4       Fourth tab-delimited part of the string to parse.
+ * @param[in]  start    Pointer to the beginning of the string inside buffer.
+ *                      This must point to the same buffer as `buffer`.
+ * @param[in]  buffer   Pointer to the buffer containing the script. For
+ *                      single-line mapflags not inside a script, this may be
+ *                      an empty (but initialized) single-character buffer.
+ * @param[in]  filepath Source file path.
+ * @param[out] retval   Pointer to return the success (EXIT_SUCCESS) or failure
+ *                      (EXIT_FAILURE) status. May be NULL.
+ * @return A pointer to the advanced buffer position.
+ */
+const char *npc_parse_function(const char *w1, const char *w2, const char *w3, const char *w4, const char *start, const char *buffer, const char *filepath, int *retval)
+{
 	DBMap* func_db;
 	DBData old_data;
 	struct script_code *scriptroot;
@@ -3514,31 +3675,48 @@ void npc_parse_mob2(struct spawn_data* mobspawn)
 	}
 }
 
-const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const char* start, const char* buffer, const char* filepath, int *retval) {
+/**
+ * Parses a mob permanent spawn.
+ *
+ * @param[in]  w1       First tab-delimited part of the string to parse.
+ * @param[in]  w2       Second tab-delimited part of the string to parse.
+ * @param[in]  w3       Third tab-delimited part of the string to parse.
+ * @param[in]  w4       Fourth tab-delimited part of the string to parse.
+ * @param[in]  start    Pointer to the beginning of the string inside buffer.
+ *                      This must point to the same buffer as `buffer`.
+ * @param[in]  buffer   Pointer to the buffer containing the script. For
+ *                      single-line mapflags not inside a script, this may be
+ *                      an empty (but initialized) single-character buffer.
+ * @param[in]  filepath Source file path.
+ * @param[out] retval   Pointer to return the success (EXIT_SUCCESS) or failure
+ *                      (EXIT_FAILURE) status. May be NULL.
+ * @return A pointer to the advanced buffer position.
+ */
+const char *npc_parse_mob(const char *w1, const char *w2, const char *w3, const char *w4, const char *start, const char *buffer, const char *filepath, int *retval)
+{
 	int num, class_, m,x,y,xs,ys, i,j;
 	int mob_lv = -1, ai = -1, size = -1;
-	char mapname[32], mobname[NAME_LENGTH], mobname2[NAME_LENGTH];
+	char mapname[32], mobname[NAME_LENGTH];
 	struct spawn_data mobspawn, *data;
 	struct mob_db* db;
 
 	memset(&mobspawn, 0, sizeof(struct spawn_data));
-	memset(mobname2, '\0', sizeof(mobname2));
 
 	mobspawn.state.boss = (strcmp(w2,"boss_monster") == 0 ? 1 : 0);
 
 	// w1=<map name>,<x>,<y>,<xs>,<ys>
 	// w3=<mob name>{,<mob level>}
 	// w4=<mob id>,<amount>,<delay1>,<delay2>{,<event>,<mob size>,<mob ai>}
-	if (sscanf(w1, "%31[^,],%d,%d,%d,%d", mapname, &x, &y, &xs, &ys) < 5
+	if( sscanf(w1, "%31[^,],%d,%d,%d,%d", mapname, &x, &y, &xs, &ys) < 5
 	 || sscanf(w3, "%23[^,],%d", mobname, &mob_lv) < 1
-	 || sscanf(w4, "%23[^,],%d,%u,%u,%50[^,],%d,%d[^\t\r\n]", mobname2, &num, &mobspawn.delay1, &mobspawn.delay2, mobspawn.eventname, &size, &ai) < 4
+	 || sscanf(w4, "%d,%d,%u,%u,%50[^,],%d,%d[^\t\r\n]", &class_, &num, &mobspawn.delay1, &mobspawn.delay2, mobspawn.eventname, &size, &ai) < 4
 	 ) {
-		ShowError("npc_parse_mob: Definicao de monstro invalida '%s', linha '%d'.\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer,start-buffer), w1, w2, w3, w4);
+		ShowError("npc_parse_mob: Invalid mob definition in file '%s', line '%d'.\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer,start-buffer), w1, w2, w3, w4);
 		if (retval) *retval = EXIT_FAILURE;
 		return strchr(start,'\n');// skip and continue
 	}
 	if( mapindex->name2id(mapname) == 0 ) {
-		ShowError("npc_parse_mob: Mapa desconhecido '%s' no arquivo '%s', linha '%d'.\n", mapname, filepath, strline(buffer,start-buffer));
+		ShowError("npc_parse_mob: Unknown map '%s' in file '%s', line '%d'.\n", mapname, filepath, strline(buffer,start-buffer));
 		if (retval) *retval = EXIT_FAILURE;
 		return strchr(start,'\n');// skip and continue
 	}
@@ -3548,38 +3726,38 @@ const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const char* st
 	mobspawn.m = (unsigned short)m;
 
 	if( x < 0 || x >= map->list[mobspawn.m].xs || y < 0 || y >= map->list[mobspawn.m].ys ) {
-		ShowError("npc_parse_mob: Coodernadas de invocacao fora de alcance: %s (%d,%d), tamanho do mapa (%d,%d) - %s %s no arquivo '%s', linha '%d'.\n", map->list[mobspawn.m].name, x, y, (map->list[mobspawn.m].xs-1), (map->list[mobspawn.m].ys-1), w1, w3, filepath, strline(buffer,start-buffer));
+		ShowError("npc_parse_mob: Spawn coordinates out of range: %s (%d,%d), map size is (%d,%d) - %s %s in file '%s', line '%d'.\n", map->list[mobspawn.m].name, x, y, (map->list[mobspawn.m].xs-1), (map->list[mobspawn.m].ys-1), w1, w3, filepath, strline(buffer,start-buffer));
 		if (retval) *retval = EXIT_FAILURE;
 		return strchr(start,'\n');// skip and continue
 	}
 
 	// check monster ID if exists!
-	if((class_ = mob->db_searchname(mobname2)) == 0 && (class_ = mob->db_checkid(atoi(mobname2))) == 0) {
-		ShowError("npc_parse_mob: Mob desconhecido %s no arquivo '%s', linha '%d'.\n", mobname2, filepath, strline(buffer,start-buffer));
+	if( mob->db_checkid(class_) == 0 ) {
+		ShowError("npc_parse_mob: Unknown mob ID %d in file '%s', line '%d'.\n", class_, filepath, strline(buffer,start-buffer));
 		if (retval) *retval = EXIT_FAILURE;
 		return strchr(start,'\n');// skip and continue
 	}
 
 	if( num < 1 || num > 1000 ) {
-		ShowError("npc_parse_mob: Numero de monstros invalido %d, deve estar dentro do intervalo [1,1000] no arquivo '%s', linha '%d'.\n", num, filepath, strline(buffer,start-buffer));
+		ShowError("npc_parse_mob: Invalid number of monsters %d, must be inside the range [1,1000] in file '%s', line '%d'.\n", num, filepath, strline(buffer,start-buffer));
 		if (retval) *retval = EXIT_FAILURE;
 		return strchr(start,'\n');// skip and continue
 	}
 
 	if (mobspawn.state.size > 2 && size != -1) {
-		ShowError("npc_parse_mob: Numero de tamanho invalido %d para o monstro %d no arquivo '%s', linha '%d'.\n", mobspawn.state.size, class_, filepath, strline(buffer, start - buffer));
+		ShowError("npc_parse_mob: Invalid size number %d for mob ID %d in file '%s', line '%d'.\n", mobspawn.state.size, class_, filepath, strline(buffer, start - buffer));
 		if (retval) *retval = EXIT_FAILURE;
 		return strchr(start, '\n');
 	}
 
 	if (mobspawn.state.ai >= AI_MAX && ai != -1) {
-		ShowError("npc_parse_mob: AI invalida %d para o monstro %d no arquivo '%s', linha '%d'.\n", mobspawn.state.ai, class_, filepath, strline(buffer, start - buffer));
+		ShowError("npc_parse_mob: Invalid ai %d for mob ID %d in file '%s', line '%d'.\n", mobspawn.state.ai, class_, filepath, strline(buffer, start - buffer));
 		if (retval) *retval = EXIT_FAILURE;
 		return strchr(start, '\n');
 	}
 
 	if( (mob_lv == 0 || mob_lv > MAX_LEVEL) && mob_lv != -1 ) {
-		ShowError("npc_parse_mob: Nivel invalido %d para o monstro %d no arquivo '%s', linha '%d'.\n", mob_lv, class_, filepath, strline(buffer, start - buffer));
+		ShowError("npc_parse_mob: Invalid level %d for mob ID %d in file '%s', line '%d'.\n", mob_lv, class_, filepath, strline(buffer, start - buffer));
 		if (retval) *retval = EXIT_FAILURE;
 		return strchr(start, '\n');
 	}
@@ -3610,16 +3788,22 @@ const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const char* st
 	}
 
 	if(mobspawn.delay1>0xfffffff || mobspawn.delay2>0xfffffff) {
-		ShowError("npc_parse_mob: Tempo de spawn invalido %u %u no arquivo '%s', linha '%d'.\n", mobspawn.delay1, mobspawn.delay2, filepath, strline(buffer,start-buffer));
+		ShowError("npc_parse_mob: Invalid spawn delays %u %u in file '%s', line '%d'.\n", mobspawn.delay1, mobspawn.delay2, filepath, strline(buffer,start-buffer));
 		if (retval) *retval = EXIT_FAILURE;
 		return strchr(start,'\n');// skip and continue
 	}
 
+	//Use db names instead of the spawn file ones.
+	if(battle_config.override_mob_names==1)
+		strcpy(mobspawn.name,"--en--");
+	else if (battle_config.override_mob_names==2)
+		strcpy(mobspawn.name,"--ja--");
+	else
 	safestrncpy(mobspawn.name, mobname, sizeof(mobspawn.name));
 
 	//Verify dataset.
 	if( !mob->parse_dataset(&mobspawn) ) {
-		ShowError("npc_parse_mob: Dataset invalido para o monstro %d no arquivo '%s', linha '%d'.\n", class_, filepath, strline(buffer,start-buffer));
+		ShowError("npc_parse_mob: Invalid dataset for monster ID %d in file '%s', line '%d'.\n", class_, filepath, strline(buffer,start-buffer));
 		if (retval) *retval = EXIT_FAILURE;
 		return strchr(start,'\n');// skip and continue
 	}
@@ -3677,19 +3861,47 @@ const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const char* st
 	return strchr(start,'\n');// continue
 }
 
-void npc_parse_unknown_mapflag(const char *name, char *w3, char *w4, const char* start, const char* buffer, const char* filepath, int *retval)
+/**
+ * Parses an unknown mapflag.
+ *
+ * The purpose of this function is to be an override or hooking point for plugins.
+ *
+ * @see npc_parse_mapflag
+ */
+void npc_parse_unknown_mapflag(const char *name, const char *w3, const char *w4, const char* start, const char* buffer, const char* filepath, int *retval)
 {
 	ShowError("npc_parse_mapflag: mapflag nao reconhecido '%s' no arquivo '%s', linha '%d'.\n", w3, filepath, strline(buffer,start-buffer));
 	if (retval)
 		*retval = EXIT_FAILURE;
 }
 
-/*==========================================
- * Set or disable mapflag on map
- * eg : bat_c01<TAB>mapflag<TAB>battleground<TAB>2
- * also chking if mapflag conflict with another
- *------------------------------------------*/
-const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, const char* start, const char* buffer, const char* filepath, int *retval) {
+/**
+ * Parses a mapflag and sets or disables it on a map.
+ *
+ * @remark
+ *   This also checks if the mapflag conflicts with another.
+ *
+ * Example:
+ * @code
+ *   bat_c01<TAB>mapflag<TAB>battleground<TAB>2
+ * @endcode
+ *
+ * @param[in]  w1       First tab-delimited part of the string to parse.
+ * @param[in]  w2       Second tab-delimited part of the string to parse.
+ * @param[in]  w3       Third tab-delimited part of the string to parse.
+ * @param[in]  w4       Fourth tab-delimited part of the string to parse.
+ * @param[in]  start    Pointer to the beginning of the string inside buffer.
+ *                      This must point to the same buffer as `buffer`.
+ * @param[in]  buffer   Pointer to the buffer containing the script. For
+ *                      single-line mapflags not inside a script, this may be
+ *                      an empty (but initialized) single-character buffer.
+ * @param[in]  filepath Source file path.
+ * @param[out] retval   Pointer to return the success (EXIT_SUCCESS) or failure
+ *                      (EXIT_FAILURE) status. May be NULL.
+ * @return A pointer to the advanced buffer position.
+ */
+const char *npc_parse_mapflag(const char *w1, const char *w2, const char *w3, const char *w4, const char *start, const char *buffer, const char *filepath, int *retval)
+{
 	int16 m;
 	char mapname[32];
 	int state = 1;
@@ -4090,6 +4302,8 @@ const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, const char
 		map->list[m].flag.src4instance = (state) ? 1 : 0;
 	} else if ( !strcmpi(w3,"nocashshop") ) {
 		map->list[m].flag.nocashshop = (state) ? 1 : 0;
+	} else if (!strcmpi(w3,"noviewid")) {
+		map->list[m].flag.noviewid = (state) ? atoi(w4) : 0;
 	} else {
 		npc->parse_unknown_mapflag(mapname, w3, w4, start, buffer, filepath, retval);
 	}
@@ -4097,7 +4311,24 @@ const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, const char
 	return strchr(start,'\n');// continue
 }
 
-const char* npc_parse_unknown_object(char *w1, char *w2, char *w3, char *w4, const char* start, const char* buffer, const char* filepath, int *retval)
+/**
+ * Parses an unknown NPC object. This function may be used as override or hooking point by plugins.
+ *
+ * @param[in]  w1       First tab-delimited part of the string to parse.
+ * @param[in]  w2       Second tab-delimited part of the string to parse.
+ * @param[in]  w3       Third tab-delimited part of the string to parse.
+ * @param[in]  w4       Fourth tab-delimited part of the string to parse.
+ * @param[in]  start    Pointer to the beginning of the string inside buffer.
+ *                      This must point to the same buffer as `buffer`.
+ * @param[in]  buffer   Pointer to the buffer containing the script. For
+ *                      single-line mapflags not inside a script, this may be
+ *                      an empty (but initialized) single-character buffer.
+ * @param[in]  filepath Source file path.
+ * @param[out] retval   Pointer to return the success (EXIT_SUCCESS) or failure
+ *                      (EXIT_FAILURE) status. May be NULL.
+ * @return A pointer to the advanced buffer position.
+ */
+const char *npc_parse_unknown_object(const char *w1, const char *w2, const char *w3, const char *w4, const char *start, const char *buffer, const char *filepath, int *retval)
 {
 	ShowError("npc_parsesrcfile: Ocorreu um erro, provavelmente esta faltando um extra TAB no arquivo '%s', linha '%d'. Pulando linha...\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer,start-buffer), w1, w2, w3, w4);
 	start = strchr(start,'\n');// skip and continue
@@ -4661,7 +4892,7 @@ int do_init_npc(bool minimal) {
 	npc->fake_nd = (struct npc_data *)aCalloc(1,sizeof(struct npc_data));
 	npc->fake_nd->bl.m = -1;
 	npc->fake_nd->bl.id = npc->get_new_npc_id();
-	npc->fake_nd->class_ = -1;
+	npc->fake_nd->class_ = FAKE_NPC;
 	npc->fake_nd->speed = 200;
 	strcpy(npc->fake_nd->name,"FAKE_NPC");
 	memcpy(npc->fake_nd->exname, npc->fake_nd->name, 9);
@@ -4750,6 +4981,8 @@ void npc_defaults(void) {
 	npc->clearsrcfile = npc_clearsrcfile;
 	npc->addsrcfile = npc_addsrcfile;
 	npc->delsrcfile = npc_delsrcfile;
+	npc->retainpathreference = npc_retainpathreference;
+	npc->releasepathreference = npc_releasepathreference;
 	npc->parsename = npc_parsename;
 	npc->parseview = npc_parseview;
 	npc->viewisid = npc_viewisid;
@@ -4760,6 +4993,11 @@ void npc_defaults(void) {
 	npc->convertlabel_db = npc_convertlabel_db;
 	npc->skip_script = npc_skip_script;
 	npc->parse_script = npc_parse_script;
+	npc->add_to_location = npc_add_to_location;
+	npc->duplicate_script_sub = npc_duplicate_script_sub;
+	npc->duplicate_shop_sub = npc_duplicate_shop_sub;
+	npc->duplicate_warp_sub = npc_duplicate_warp_sub;
+	npc->duplicate_sub = npc_duplicate_sub;
 	npc->parse_duplicate = npc_parse_duplicate;
 	npc->duplicate4instance = npc_duplicate4instance;
 	npc->setcells = npc_setcells;

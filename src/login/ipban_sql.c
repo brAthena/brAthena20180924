@@ -21,8 +21,8 @@
 
 #include "ipban.h"
 
-#include "login.h"
-#include "loginlog.h"
+#include "login/login.h"
+#include "login/loginlog.h"
 #include "common/cbasetypes.h"
 #include "common/nullpo.h"
 #include "common/sql.h"

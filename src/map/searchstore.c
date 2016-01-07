@@ -22,7 +22,7 @@
 #include "searchstore.h" // struct s_search_store_info
 
 #include "map/battle.h" // battle_config.*
-#include "map/clif.h" // clif->open_search_store_info, clif->search_store_info_*
+#include "map/clif.h" // clif-"open_search_store_info, clif-"search_store_info_*
 #include "map/pc.h" // struct map_session_data
 #include "common/cbasetypes.h"
 #include "common/memmgr.h" // aMalloc, aRealloc, aFree
@@ -30,6 +30,7 @@
 #include "common/strlib.h" // safestrncpy
 
 struct searchstore_interface searchstore_s;
+struct searchstore_interface *searchstore;
 
 /// retrieves search function by type
 static inline searchstore_search_t searchstore_getsearchfunc(unsigned char type) {

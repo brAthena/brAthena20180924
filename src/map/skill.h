@@ -1864,8 +1864,8 @@ struct skill_interface {
 	/* */
 	struct eri *unit_ers; //For handling skill_unit's [Skotlex]
 	struct eri *timer_ers; //For handling skill_timerskills [Skotlex]
-	struct eri *cd_ers; // ERS Storage for skill cool down managers [Ind]
-	struct eri *cd_entry_ers; // ERS Storage for skill cool down entries [Ind]
+	struct eri *cd_ers; // ERS Storage for skill cool down managers [Ind/Hercules]
+	struct eri *cd_entry_ers; // ERS Storage for skill cool down entries [Ind/Hercules]
 	/* */
 	struct s_skill_dbs *dbs;
 	/* */

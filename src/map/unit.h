@@ -80,13 +80,11 @@ struct unit_data {
 
 struct view_data {
 #ifdef __64BIT__
-	unsigned int class_;
-#endif
-	unsigned short
-#ifndef __64BIT__
-		class_,
-#endif
-		weapon,
+	uint32 class_; // FIXME: This shouldn't really depend on the architecture.
+#else // not __64BIT__
+	uint16 class_;
+#endif // __64BIT__
+	uint16 weapon,
 		shield, //Or left-hand weapon.
 		robe,
 		head_top,
@@ -94,7 +92,8 @@ struct view_data {
 		head_bottom,
 		hair_style,
 		hair_color,
-		cloth_color;
+		cloth_color,
+		body_style;
 	char sex;
 	unsigned dead_sit : 2;
 };

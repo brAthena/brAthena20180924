@@ -209,9 +209,6 @@ enum _max_level_ {
 // Base Homun skill.
 #define HM_SKILLBASE 8001
 #define MAX_HOMUNSKILL 43
-#define MAX_HOMUNCULUS_CLASS 52 // [orn] Increased to 60 from 16 to allow new Homun-S.
-#define HM_CLASS_BASE 6001
-#define HM_CLASS_MAX (HM_CLASS_BASE+MAX_HOMUNCULUS_CLASS-1)
 
 // Mail System
 #define MAIL_MAX_INBOX 30
@@ -221,15 +218,11 @@ enum _max_level_ {
 // Mercenary System
 #define MC_SKILLBASE 8201
 #define MAX_MERCSKILL 40
-#define MAX_MERCENARY_CLASS 61
 
 // Elemental System
 #define MAX_ELEMENTALSKILL 42
 #define EL_SKILLBASE 8401
 #define MAX_ELESKILLTREE 3
-#define MAX_ELEMENTAL_CLASS 12
-#define EL_CLASS_BASE 2114
-#define EL_CLASS_MAX (EL_CLASS_BASE+MAX_ELEMENTAL_CLASS-1)
 
 // The following system marks a different job ID system used by the map server,
 // which makes a lot more sense than the normal one. [Skotlex]
@@ -240,6 +233,8 @@ enum _max_level_ {
 #define JOBL_UPPER 0x1000 //4096
 #define JOBL_BABY 0x2000  //8192
 #define JOBL_THIRD 0x4000 //16384
+
+#define SCRIPT_VARNAME_LENGTH 32 ///< Maximum length of a script variable
 
 enum item_types {
 	IT_HEALING = 0,
@@ -375,18 +370,15 @@ enum {
 	OPTION_DRAGON5      = 0x04000000,
 	OPTION_HANBOK       = 0x08000000,
 	OPTION_OKTOBERFEST  = 0x10000000,
-	
 #ifndef NEW_CARTS
 	OPTION_CART1     = 0x00000008,
 	OPTION_CART2     = 0x00000080,
 	OPTION_CART3     = 0x00000100,
 	OPTION_CART4     = 0x00000200,
 	OPTION_CART5     = 0x00000400,
-	
 	/*  compound constant for older carts */
 	OPTION_CART      = OPTION_CART1|OPTION_CART2|OPTION_CART3|OPTION_CART4|OPTION_CART5,
 #endif
-	
 	// compound constants
 	OPTION_DRAGON    = OPTION_DRAGON1|OPTION_DRAGON2|OPTION_DRAGON3|OPTION_DRAGON4|OPTION_DRAGON5,
 	OPTION_COSTUME   = OPTION_WEDDING|OPTION_XMAS|OPTION_SUMMER|OPTION_HANBOK|OPTION_OKTOBERFEST,
@@ -506,13 +498,15 @@ struct s_friend {
 	char name[NAME_LENGTH];
 };
 
-#ifdef HOTKEY_SAVING
 struct hotkey {
+#ifdef HOTKEY_SAVING
 	unsigned int id;
 	unsigned short lv;
 	unsigned char type; // 0: item, 1: skill
-};
+#else // not HOTKEY_SAVING
+	UNAVAILABLE_STRUCT;
 #endif
+};
 
 struct mmo_charstatus {
 	int char_id;
@@ -533,7 +527,7 @@ struct mmo_charstatus {
 	unsigned int option;
 	short manner; // Defines how many minutes a char will be muted, each negative point is equivalent to a minute.
 	unsigned char karma;
-	short hair,hair_color,clothes_color;
+	short hair,hair_color,clothes_color,body;
 	int party_id,guild_id,pet_id,hom_id,mer_id,ele_id;
 	int fame;
 
@@ -796,7 +790,6 @@ enum {
 	GD_DEVELOPMENT=10014,
 	GD_MAX,
 };
-
 
 //These mark the ID of the jobs, as expected by the client. [Skotlex]
 enum {

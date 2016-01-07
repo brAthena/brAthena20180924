@@ -35,7 +35,6 @@ enum E_LOGINSERVER_ST
 	LOGINSERVER_ST_LAST
 };
 
-// supported encryption types: 1- passwordencrypt, 2- passwordencrypt2, 3- both
 enum password_enc {
 	PWENC_NONE     = 0x0, ///< No encryption
 	PWENC_ENCRYPT  = 0x1, ///< passwordencrypt
@@ -120,7 +119,6 @@ struct Login_Config {
 
 	int client_hash_check;                          ///< flags for checking client md5
 	struct client_hash_node *client_hash_nodes;     ///< linked list containg md5 hash for each gm group
-
 };
 
 struct login_auth_node {
@@ -148,10 +146,6 @@ struct online_login_data {
 #define sex_str2num(str) ( ((str) == 'F') ? SEX_FEMALE : ((str) == 'M') ? SEX_MALE : SEX_SERVER )
 
 #define MAX_SERVERS 30
-#ifdef BRATHENA_CORE
-extern struct mmo_char_server server[MAX_SERVERS];
-extern struct Login_Config login_config;
-#endif // BRATHENA_CORE
 
 /**
  * Login.c Interface
@@ -175,7 +169,7 @@ struct login_interface {
 	int (*sync_ip_addresses) (int tid, int64 tick, int id, intptr_t data);
 	bool (*check_encrypted) (const char* str1, const char* str2, const char* passwd);
 	bool (*check_password) (const char* md5key, int passwdenc, const char* passwd, const char* refpass);
-	uint32(*lan_subnet_check) (uint32 ip);
+	uint32 (*lan_subnet_check) (uint32 ip);
 	void (*fromchar_accinfo) (int fd, int account_id, int u_fd, int u_aid, int u_group, int map_fd, struct mmo_account *acc);
 	void (*fromchar_account) (int fd, int account_id, struct mmo_account *acc);
 	void (*fromchar_account_update_other) (int account_id, unsigned int state);
@@ -221,10 +215,13 @@ struct login_interface {
 	char *NET_CONF_NAME; ///< Network configuration filename
 };
 
-struct login_interface *login;
-
 #ifdef BRATHENA_CORE
+extern struct mmo_char_server server[MAX_SERVERS];
+extern struct Login_Config login_config;
+
 void login_defaults(void);
 #endif // BRATHENA_CORE
+
+struct login_interface *login;
 
 #endif /* LOGIN_LOGIN_H */

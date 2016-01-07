@@ -1069,7 +1069,7 @@ void convert_const_db(void)
 			if(type)
 				snprintf(write, sizeof(write), "REPLACE INTO const_db VALUES('%s','%s',%d);\n", name, val, type);
 			else
-				snprintf(write, sizeof(write), "REPLACE INTO const_db VALUES('%s','%s',%s);\n", name, val, "NULL");
+				snprintf(write, sizeof(write), "REPLACE INTO const_db VALUES('%s','%s',%d);\n", name, val, 0);
 			fprintf(fwrite, write);
 			count++;
 		}
@@ -1950,52 +1950,52 @@ void convert_mob_skill_db(void)
 	file_count++;
 }
 
-char *item_parse_i32(config_setting_t *it, char *field, char *pos) {
-	char *rep = pos;
+char *item_parse_i32(config_setting_t *it, char *field, char *pos, char *tip) {
+	char *ret = pos;
 	int i = 0;
 
 	if (config_setting_lookup_int(it, field, &i))
-		rep += sprintf(rep, "%d,", i);
+		ret += sprintf(ret, "%d,", i);
 	else
-		rep += sprintf(rep, "NULL,");
+		ret += sprintf(ret, "%s,", tip);
 
-	return rep;
+	return ret;
 }
 
 char *item_parse_i32_(config_setting_t *it, char *field, char *pos) {
-	char *rep = pos;
+	char *ret = pos;
 	int i = 0;
 
 	if (config_setting_lookup_int(it, field, &i) && i >= 0)
-		rep += sprintf(rep, "%d,", i);
+		ret += sprintf(ret, "%d,", i);
 	else
-		rep += sprintf(rep, "NULL,");
+		ret += sprintf(ret, "NULL,");
 
-	return rep;
+	return ret;
 }
 
 char *item_parse_job(config_setting_t *it, char *field, char *pos) {
-	char *rep = pos;
+	char *ret = pos;
 	int i = 0;
 
 	if (config_setting_lookup_int(it, field, &i))
-		rep += sprintf(rep, "0x%"PRIXS",", (unsigned int)i);
+		ret += sprintf(ret, "0x%"PRIXS",", (unsigned int)i);
 	else
-		rep += sprintf(rep, "NULL,");
+		ret += sprintf(ret, "0x%"PRIXS",", UINT_MAX);
 
-	return rep;
+	return ret;
 }
 
 char *item_parse_gender(config_setting_t *it, char *field, char *pos) {
-	char *rep = pos;
+	char *ret = pos;
 	int i = 0;
 
 	if (config_setting_lookup_int(it, field, &i) && i >= 0)
-		rep += sprintf(rep, "%d,", i);
+		ret += sprintf(ret, "%d,", i);
 	else
-		rep += sprintf(rep, "2,");
+		ret += sprintf(ret, "2,");
 
-	return rep;
+	return ret;
 }
 
 char *item_parse_str(config_setting_t *it, char *field, char *pos) {
@@ -2010,15 +2010,15 @@ char *item_parse_str(config_setting_t *it, char *field, char *pos) {
 }
 
 char *item_parse_bool(config_setting_t *it, char *field, char *pos) {
-	char *rep = pos;
+	char *ret = pos;
 	int i = 0;
 
 	if ((it = config_setting_get_member(it, field)))
-		rep += sprintf(rep, "%d,", (config_setting_get_bool(it) ? 1 : 0));
+		ret += sprintf(ret, "%d,", (config_setting_get_bool(it) ? 1 : 0));
 	else
-		rep += sprintf(rep, "NULL,");
+		ret += sprintf(ret, "NULL,");
 
-	return rep;
+	return ret;
 }
 
 char *item_parse_script(config_setting_t *it, char *field, char *pos, bool coma) {
@@ -2040,7 +2040,7 @@ void convert_item_db(void)
 	config_setting_t *itdb, *it;
 	config_t item_db_conf;
 	FILE *fwrite;
-	int i = 0;
+	int i = 0, count = 0;
 	
 	sprintf(filepath, "%s/%s", "db", filename);
 	config_init(&item_db_conf);
@@ -2057,17 +2057,17 @@ void convert_item_db(void)
 		config_setting_t *t = NULL;
 
 		// Item ID
-		pos = item_parse_i32(it, "Id", pos);
+		pos = item_parse_i32(it, "Id", pos, "NULL");
 		// AegisName
 		pos = item_parse_str(it, "AegisName", pos);
 		// Name
 		pos = item_parse_str(it, "Name", pos);
 		// Type
-		pos = item_parse_i32(it, "Type", pos);
+		pos = item_parse_i32(it, "Type", pos, "0");
 		// Buy
-		pos = item_parse_i32(it, "Buy", pos);
+		pos = item_parse_i32(it, "Buy", pos, "NULL");
 		// Sell
-		pos = item_parse_i32(it, "Sell", pos);
+		pos = item_parse_i32(it, "Sell", pos, "NULL");
 		// Weight
 		pos = item_parse_i32_(it, "Weight", pos);
 		// Atk
@@ -2083,7 +2083,7 @@ void convert_item_db(void)
 		// Job
 		pos = item_parse_job(it, "Job", pos);
 		// Upper
-		pos = item_parse_i32(it, "Upper", pos);
+		pos = item_parse_i32(it, "Upper", pos, "NULL");
 		// Gender
 		pos = item_parse_gender(it, "Gender", pos);
 		// Loc
@@ -2102,8 +2102,7 @@ void convert_item_db(void)
 				pos += sprintf(pos, "%d,", config_setting_get_int(t));
 				pos += sprintf(pos, "NULL,");
 			}
-		}
-		else{
+		} else {
 			pos += sprintf(pos, "NULL,");
 			pos += sprintf(pos, "NULL,");
 		}
@@ -2118,8 +2117,6 @@ void convert_item_db(void)
 		pos = item_parse_bool(it, "ForceSerial", pos);
 		// BuyingStore
 		pos = item_parse_bool(it, "BuyingStore", pos);
-		// KeepAfterUse
-		pos = item_parse_bool(it, "KeepAfterUse", pos);
 		// Delay
 		pos = item_parse_i32_(it, "Delay", pos);
 
@@ -2243,9 +2240,12 @@ void convert_item_db(void)
 
 		sprintf(write, "REPLACE INTO item_db VALUES(%s);\n", buf);
 		fprintf(fwrite, write);
+		count++;
 	}
 
+	ShowStatus("Arquivo %s convertido com sucesso! linhas afetadas: %d\n", filepath, count);
 	config_destroy(&item_db_conf);
+	file_count++;
 }
 
 // Função Inicial
