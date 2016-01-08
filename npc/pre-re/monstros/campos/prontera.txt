@@ -10,130 +10,106 @@
 //= 1.4 More accurate spawns [Playtester]
 //============================================================
 
-//==================================================
-// prt_fild00 - Prontera Field
-//==================================================
-prt_fild00,0,0,0,0	monster	Creamy	CREAMY,10,0,0,0
-prt_fild00,0,0,0,0	monster	Fabre	FABRE,20,0,0,0
-prt_fild00,0,0,0,0	monster	Pupa	PUPA,30,0,0,0
-prt_fild00,0,0,0,0	monster	Lunatic	LUNATIC,30,0,0,0
-prt_fild00,0,0,0,0	monster	Poring	PORING,40,0,0,0
-prt_fild00,0,0,0,0	monster	Hornet	HORNET,70,0,0,0
-prt_fild00,227,212,0,0	monster	Shining Plant	SHINING_PLANT,1,1800000,900000,1
-prt_fild00,285,138,10,10	monster	Green Plant	GREEN_PLANT,5,360000,180000,1
+//== prt_fild00 - Prontera Field ===========================
+prt_fild00,0,0,0,0	monster	Creamy	1018,10,0,0,0
+prt_fild00,0,0,0,0	monster	Fabre	1007,20,0,0,0
+prt_fild00,0,0,0,0	monster	Pupa	1008,30,0,0,0
+prt_fild00,0,0,0,0	monster	Lunatic	1063,30,0,0,0
+prt_fild00,0,0,0,0	monster	Poring	1002,40,0,0,0
+prt_fild00,0,0,0,0	monster	Hornet	1004,70,0,0,0
+prt_fild00,227,212,0,0	monster	Shining Plant	1083,1,1800000,900000,1
+prt_fild00,285,138,10,10	monster	Green Plant	1080,5,360000,180000,1
 
-//==================================================
-// prt_fild01 - Prontera Field
-//==================================================
-prt_fild01,0,0,0,0	monster	Thief Bug	THIEF_BUG,30,0,0,0
-prt_fild01,0,0,0,0	monster	Fabre	FABRE,20,0,0,0
-prt_fild01,0,0,0,0	monster	Pupa	PUPA,10,0,0,0
-prt_fild01,0,0,0,0	monster	Lunatic	LUNATIC,80,0,0,0
-prt_fild01,0,0,0,0	monster	Poring	PORING,30,0,0,0
-prt_fild01,199,266,3,3	monster	Green Plant	GREEN_PLANT,3,360000,180000,1
-prt_fild01,199,266,3,3	monster	Blue Plant	BLUE_PLANT,1,900000,450000,1
+//== prt_fild01 - Prontera Field ===========================
+prt_fild01,0,0,0,0	monster	Thief Bug	1051,30,0,0,0
+prt_fild01,0,0,0,0	monster	Fabre	1007,20,0,0,0
+prt_fild01,0,0,0,0	monster	Pupa	1008,10,0,0,0
+prt_fild01,0,0,0,0	monster	Lunatic	1063,80,0,0,0
+prt_fild01,0,0,0,0	monster	Poring	1002,30,0,0,0
+prt_fild01,199,266,3,3	monster	Green Plant	1080,3,360000,180000,1
+prt_fild01,199,266,3,3	monster	Blue Plant	1079,1,900000,450000,1
 
-//==================================================
-// prt_fild02 - Prontera Field
-//==================================================
-prt_fild02,0,0,0,0	monster	Mandragora	MANDRAGORA,70,0,0,0
-prt_fild02,0,0,0,0	monster	Fabre	FABRE,50,0,0,0
-prt_fild02,0,0,0,0	monster	Pupa	PUPA,20,0,0,0
-prt_fild02,0,0,0,0	monster	Lunatic	LUNATIC,10,0,0,0
-prt_fild02,0,0,0,0	monster	Poring	PORING,30,0,0,0
-prt_fild02,0,0,0,0	monster	Eclipse	ECLIPSE,1,1800000,1200000,0
-prt_fild02,339,309,3,3	monster	Shining Plant	SHINING_PLANT,1,1800000,900000,1
-prt_fild02,0,0,0,0	monster	Shining Plant	SHINING_PLANT,2,1800000,900000,1
+//== prt_fild02 - Prontera Field ===========================
+prt_fild02,0,0,0,0	monster	Mandragora	1020,70,0,0,0
+prt_fild02,0,0,0,0	monster	Fabre	1007,50,0,0,0
+prt_fild02,0,0,0,0	monster	Pupa	1008,20,0,0,0
+prt_fild02,0,0,0,0	monster	Lunatic	1063,10,0,0,0
+prt_fild02,0,0,0,0	monster	Poring	1002,30,0,0,0
+prt_fild02,0,0,0,0	monster	Eclipse	1093,1,1800000,1200000,0
+prt_fild02,339,309,3,3	monster	Shining Plant	1083,1,1800000,900000,1
+prt_fild02,0,0,0,0	monster	Shining Plant	1083,2,1800000,900000,1
 
-//==================================================
-// prt_fild03 - Prontera Field
-//==================================================
-prt_fild03,0,0,0,0	monster	Yoyo	YOYO,80,0,0,0
-prt_fild03,0,0,0,0	monster	Smokie	SMOKIE,40,0,0,0
-prt_fild03,0,0,0,0	monster	Choco	CHOCO,1,0,0,0
-prt_fild03,0,0,0,0	monster	Poporing	POPORING,10,0,0,0
-prt_fild03,296,58,15,15	monster	Green Plant	GREEN_PLANT,5,180000,90000,1
-prt_fild03,296,58,15,15	monster	Blue Plant	BLUE_PLANT,2,900000,450000,1
-prt_fild03,307,75,5,5	monster	Green Plant	GREEN_PLANT,5,360000,180000,1
-prt_fild03,0,0,0,0	monster	Green Plant	GREEN_PLANT,5,360000,180000,1
-prt_fild03,148,107,5,5	monster	Green Plant	GREEN_PLANT,5,360000,180000,1
+//== prt_fild03 - Prontera Field ===========================
+prt_fild03,0,0,0,0	monster	Yoyo	1057,80,0,0,0
+prt_fild03,0,0,0,0	monster	Smokie	1056,40,0,0,0
+prt_fild03,0,0,0,0	monster	Choco	1214,1,0,0,0
+prt_fild03,0,0,0,0	monster	Poporing	1031,10,0,0,0
+prt_fild03,296,58,15,15	monster	Green Plant	1080,5,180000,90000,1
+prt_fild03,296,58,15,15	monster	Blue Plant	1079,2,900000,450000,1
+prt_fild03,307,75,5,5	monster	Green Plant	1080,5,360000,180000,1
+prt_fild03,0,0,0,0	monster	Green Plant	1080,5,360000,180000,1
+prt_fild03,148,107,5,5	monster	Green Plant	1080,5,360000,180000,1
 
-//==================================================
-// prt_fild04 - Prontera Field
-//==================================================
-prt_fild04,0,0,0,0	monster	Rocker	ROCKER,70,0,0,0
-prt_fild04,0,0,0,0	monster	Creamy	CREAMY,40,0,0,0
-prt_fild04,0,0,0,0	monster	Pupa	PUPA,10,0,0,0
-prt_fild04,0,0,0,0	monster	Poring	PORING,30,0,0,0
-prt_fild04,0,0,0,0	monster	Vocal	VOCAL,1,1800000,1200000,0
-prt_fild04,350,114,10,10	monster	Green Plant	GREEN_PLANT,5,900000,450000,1
+//== prt_fild04 - Prontera Field ===========================
+prt_fild04,0,0,0,0	monster	Rocker	1052,70,0,0,0
+prt_fild04,0,0,0,0	monster	Creamy	1018,40,0,0,0
+prt_fild04,0,0,0,0	monster	Pupa	1008,10,0,0,0
+prt_fild04,0,0,0,0	monster	Poring	1002,30,0,0,0
+prt_fild04,0,0,0,0	monster	Vocal	1088,1,1800000,1200000,0
+prt_fild04,350,114,10,10	monster	Green Plant	1080,5,900000,450000,1
 
-//==================================================
-// prt_fild05 - Prontera Field
-//==================================================
-prt_fild05,0,0,0,0	monster	Poring	PORING,70,0,0,0
-prt_fild05,0,0,0,0	monster	Thief Bug Egg	THIEF_BUG_EGG,20,0,0,0
-prt_fild05,0,0,0,0	monster	Lunatic	LUNATIC,30,0,0,0
-prt_fild05,0,0,0,0	monster	Pupa	PUPA,30,0,0,0
-prt_fild05,0,0,0,0	monster	Thief Bug	THIEF_BUG,10,0,0,0
-prt_fild05,208,37,10,10	monster	Green Plant	GREEN_PLANT,6,900000,450000,1
-prt_fild05,208,37,10,10	monster	Blue Plant	BLUE_PLANT,1,900000,450000,1
+//== prt_fild05 - Prontera Field ===========================
+prt_fild05,0,0,0,0	monster	Poring	1002,70,0,0,0
+prt_fild05,0,0,0,0	monster	Thief Bug Egg	1048,20,0,0,0
+prt_fild05,0,0,0,0	monster	Lunatic	1063,30,0,0,0
+prt_fild05,0,0,0,0	monster	Pupa	1008,30,0,0,0
+prt_fild05,0,0,0,0	monster	Thief Bug	1051,10,0,0,0
+prt_fild05,208,37,10,10	monster	Green Plant	1080,6,900000,450000,1
+prt_fild05,208,37,10,10	monster	Blue Plant	1079,1,900000,450000,1
 
-//==================================================
-// prt_fild06 - Prontera Field
-//==================================================
-prt_fild06,0,0,0,0	monster	Lunatic	LUNATIC,60,0,0,0
-prt_fild06,0,0,0,0	monster	Thief Bug Egg	THIEF_BUG_EGG,20,0,0,0
-prt_fild06,0,0,0,0	monster	Thief Bug	THIEF_BUG,10,0,0,0
-prt_fild06,0,0,0,0	monster	Pupa	PUPA,20,0,0,0
-prt_fild06,0,0,0,0	monster	Poring	PORING,60,0,0,0
-prt_fild06,222,30,40,10	monster	Green Plant	GREEN_PLANT,15,900000,450000,1
+//== prt_fild06 - Prontera Field ===========================
+prt_fild06,0,0,0,0	monster	Lunatic	1063,60,0,0,0
+prt_fild06,0,0,0,0	monster	Thief Bug Egg	1048,20,0,0,0
+prt_fild06,0,0,0,0	monster	Thief Bug	1051,10,0,0,0
+prt_fild06,0,0,0,0	monster	Pupa	1008,20,0,0,0
+prt_fild06,0,0,0,0	monster	Poring	1002,60,0,0,0
+prt_fild06,222,30,40,10	monster	Green Plant	1080,15,900000,450000,1
 
-//==================================================
-// prt_fild07 - Prontera Field
-//==================================================
-prt_fild07,0,0,0,0	monster	Rocker	ROCKER,80,0,0,0
-prt_fild07,0,0,0,0	monster	Poporing	POPORING,30,0,0,0
-prt_fild07,0,0,0,0	monster	Vocal	VOCAL,1,1800000,1200000,0
-prt_fild07,225,110,5,5	monster	Black Mushroom	BLACK_MUSHROOM,3,360000,180000,1
+//== prt_fild07 - Prontera Field ===========================
+prt_fild07,0,0,0,0	monster	Rocker	1052,80,0,0,0
+prt_fild07,0,0,0,0	monster	Poporing	1031,30,0,0,0
+prt_fild07,0,0,0,0	monster	Vocal	1088,1,1800000,1200000,0
+prt_fild07,225,110,5,5	monster	Black Mushroom	1084,3,360000,180000,1
 
-//==================================================
-// prt_fild08 - Prontera Field
-//==================================================
-prt_fild08,0,0,0,0	monster	Lunatic	LUNATIC,40,0,0,0
-prt_fild08,0,0,0,0	monster	Pupa	PUPA,20,0,0,0
-prt_fild08,0,0,0,0	monster	Poring	PORING,70,0,0,0
-prt_fild08,0,0,0,0	monster	Drops	DROPS,10,0,0,0
+//== prt_fild08 - Prontera Field ===========================
+prt_fild08,0,0,0,0	monster	Lunatic	1063,40,0,0,0
+prt_fild08,0,0,0,0	monster	Pupa	1008,20,0,0,0
+prt_fild08,0,0,0,0	monster	Poring	1002,70,0,0,0
+prt_fild08,0,0,0,0	monster	Drops	1113,10,0,0,0
 
-//==================================================
-// prt_fild09 - Prontera Field
-//==================================================
-prt_fild09,0,0,0,0	monster	Savage Babe	SAVAGE_BABE,70,0,0,0
-prt_fild09,0,0,0,0	monster	Baby Desert Wolf	DESERT_WOLF_B,20,0,0,0
-prt_fild09,0,0,0,0	monster	Peco Peco Egg	PECOPECO_EGG,20,0,0,0
-prt_fild09,0,0,0,0	monster	Picky	PICKY,20,0,0,0
-prt_fild09,0,0,0,0	monster	Condor	CONDOR,10,0,0,0
-prt_fild09,237,115,5,5	monster	Yellow Plant	YELLOW_PLANT,3,360000,180000,1
+//== prt_fild09 - Prontera Field ===========================
+prt_fild09,0,0,0,0	monster	Savage Babe	1167,70,0,0,0
+prt_fild09,0,0,0,0	monster	Baby Desert Wolf	1107,20,0,0,0
+prt_fild09,0,0,0,0	monster	Peco Peco Egg	1047,20,0,0,0
+prt_fild09,0,0,0,0	monster	Picky	1049,20,0,0,0
+prt_fild09,0,0,0,0	monster	Condor	1009,10,0,0,0
+prt_fild09,237,115,5,5	monster	Yellow Plant	1081,3,360000,180000,1
 
-//==================================================
-// prt_fild10 - Prontera Field
-//==================================================
-prt_fild10,0,0,0,0	monster	Savage	SAVAGE,70,0,0,0
-prt_fild10,0,0,0,0	monster	Savage Babe	SAVAGE_BABE,40,0,0,0
-prt_fild10,0,0,0,0	monster	Poporing	POPORING,20,0,0,0
-prt_fild10,0,0,0,0	monster	Thief Bug	THIEF_BUG,10,0,0,0
-prt_fild10,99,114,20,5	monster	Red Mushroom	RED_MUSHROOM,15,360000,180000,1
-prt_fild10,155,179,10,10	monster	Shining Plant	SHINING_PLANT,1,1800000,900000,1
+//== prt_fild10 - Prontera Field ===========================
+prt_fild10,0,0,0,0	monster	Savage	1166,70,0,0,0
+prt_fild10,0,0,0,0	monster	Savage Babe	1167,40,0,0,0
+prt_fild10,0,0,0,0	monster	Poporing	1031,20,0,0,0
+prt_fild10,0,0,0,0	monster	Thief Bug	1051,10,0,0,0
+prt_fild10,99,114,20,5	monster	Red Mushroom	1085,15,360000,180000,1
+prt_fild10,155,179,10,10	monster	Shining Plant	1083,1,1800000,900000,1
 
-//==================================================
-// prt_fild11 - Prontera Field
-//==================================================
-prt_fild11,0,0,0,0	monster	Goblin	GOBLIN_1,10,0,0,0
-prt_fild11,0,0,0,0	monster	Goblin	GOBLIN_2,20,0,0,0
-prt_fild11,0,0,0,0	monster	Goblin	GOBLIN_3,20,0,0,0
-prt_fild11,0,0,0,0	monster	Goblin	GOBLIN_4,30,0,0,0
-prt_fild11,0,0,0,0	monster	Goblin	GOBLIN_5,30,0,0,0
-prt_fild11,0,0,0,0	monster	Goblin Archer	GOBLIN_ARCHER,10,0,0,0
-prt_fild11,0,0,0,0	monster	Panzer Goblin	PANZER_GOBLIN,1,1800000,1200000,0
-prt_fild11,0,0,0,0	monster	Goblin Steamrider	STEAM_GOBLIN,30,0,0,0
-prt_fild11,0,0,0,0	monster	Red Mushroom	RED_MUSHROOM,10,180000,90000,1
+//== prt_fild11 - Prontera Field ===========================
+prt_fild11,0,0,0,0	monster	Goblin	1122,10,0,0,0
+prt_fild11,0,0,0,0	monster	Goblin	1123,20,0,0,0
+prt_fild11,0,0,0,0	monster	Goblin	1124,20,0,0,0
+prt_fild11,0,0,0,0	monster	Goblin	1125,30,0,0,0
+prt_fild11,0,0,0,0	monster	Goblin	1126,30,0,0,0
+prt_fild11,0,0,0,0	monster	Goblin Archer	1258,10,0,0,0
+prt_fild11,0,0,0,0	monster	Panzer Goblin	1308,1,1800000,1200000,0
+prt_fild11,0,0,0,0	monster	Goblin Steamrider	1280,30,0,0,0
+prt_fild11,0,0,0,0	monster	Red Mushroom	1085,10,180000,90000,1

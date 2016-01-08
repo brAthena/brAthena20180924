@@ -1908,7 +1908,7 @@ void convert_refine_db(void)
 		line[strlen(line)-1] = '\0';
 		token = strtok(line, ",");
 
-		for (i = 0; i < 24; i++) {
+		for (i = 0; token != NULL; i++) {
 			if (i) {
 				pos += sprintf(pos, ",");
 			}
