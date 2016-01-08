@@ -2004,7 +2004,7 @@ void convert_mob_skill_db(void)
 			if (i) {
 				pos += sprintf(pos, ",");
 			}
-			
+
 			if (i > 0)
 				pos += (rows[i] == NULL || !strlen(rows[i])) ? sprintf(pos, "%s", (i == 7) ? "'0'" : "NULL") : sprintf(pos, "'%s'", escape_str(rows[i]));
 			else
@@ -2345,6 +2345,8 @@ void translation(void) {
 	memset(item_data, 0, sizeof(item_data));
 	memset(mob_data, 0, sizeof(mob_data));
 	memset(skill_data, 0, sizeof(skill_data));
+	memset(castle_data, 0, sizeof(castle_data));
+	memset(chat_mob_data, 0, sizeof(chat_mob_data));
 
 	if ((fp = fopen("item_name.txt", "r"))) {
 		while (fgets(line, sizeof(line), fp) != NULL) {
