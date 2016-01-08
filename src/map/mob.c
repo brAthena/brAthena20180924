@@ -4329,7 +4329,7 @@ bool mob_parse_row_mobskilldb(char** str, int columns, int current)
 	if( j < ARRAYLENGTH(target) )
 		ms->target = target[j].id;
 	else {
-		ShowWarning("mob_parse_row_mobskilldb: Alvo inexistente %s para %d\n", str[9], mob_id);
+		ShowWarning("mob_parse_row_mobskilldb: Alvo inexistente %s para %d - Dummy %s\n", str[9], mob_id, str[1]);
 		ms->target = MST_TARGET;
 	}
 

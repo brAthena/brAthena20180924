@@ -24,19 +24,14 @@ void cmdline_args_init_local(void) {}
 
 // Tradução de tabelas
 struct data {
-	char name[24];
+	char name[1024];
 };
 
 struct data item_data[0x8000];
-struct data mob_name[0x2710];
-struct data skill_name[0x271F];
-struct data castle_name[24];
-struct data merc_name[0x1B58];
-struct data elem_name[0xBB8];
-struct data homun_name[0x1B58];
-struct data chat_mob[40];
-struct data mob_skill[0x2710];
-struct data pet_name[0xBB8];
+struct data mob_data[0x2710];
+struct data skill_data[0x271F];
+struct data castle_data[34];
+struct data chat_mob_data[40];
 
 // Variável para contagem dos arquivos convertidos.
 static unsigned int file_count;
@@ -162,10 +157,46 @@ char *parse_script(char *str)
 // Retorna o nome do item conforme arquivo de tradução.
 char *getitemname(int item_id)
 {
-	if(!strlen(item_data[item_id].name))
+	if (!strlen(item_data[item_id].name))
 		return NULL;
 
 	return escape_str(item_data[item_id].name);
+}
+
+// Retorna o nome do monstro conforme arquivo de tradução.
+char *getmobname(int mob_id)
+{
+	if (!strlen(mob_data[mob_id].name))
+		return NULL;
+
+	return escape_str(mob_data[mob_id].name);
+}
+
+// Retorna o nome de uma habilidade conforme arquivo de tradução.
+char *getskillname(int skill_id)
+{
+	if (!strlen(skill_data[skill_id].name))
+		return NULL;
+
+	return escape_str(skill_data[skill_id].name);
+}
+
+// Retorna o nome de um castelo conforme arquivo de tradução.
+char *getcastlename(int castle_id)
+{
+	if (!strlen(castle_data[castle_id].name))
+		return NULL;
+
+	return escape_str(castle_data[castle_id].name);
+}
+
+// Retorna a mensagem de um monstro conforme arquivo de tradução.
+char *getchatname(int line_id)
+{
+	if (!strlen(chat_mob_data[line_id].name))
+		return NULL;
+
+	return escape_str(chat_mob_data[line_id].name);
 }
 
 // Converte o arquivo abra_db.txt para SQL.
@@ -183,21 +214,24 @@ void convert_abra_db(void)
 	fwrite = fopen("sql/conversor/abra_db.sql", "w+");
 
 	while (fgets(line, sizeof(line), fread) != NULL) {
-		char *token, buf[1024], write[1024], *pos = buf;
+		char **rows, *str = line, buf[1024], write[1024], *pos = buf;
 
 		if ((line[0] == '/' && line[1] == '/') || line[0] == '\n')
 			continue;
 
 		line[strlen(line)-1] = '\0';
-		token = strtok(line, ",");
+		explode(&rows, str, ',');
 
 		for (i = 0; i < 4; i++) {
 			if (i) {
 				pos += sprintf(pos, ",");
 			}
+			
+			if (i == 1)
+				if (getskillname(atoi(rows[0])))
+					rows[i] = getskillname(atoi(rows[0]));			
 
-			pos += ((i == 1)) ? sprintf(pos, "'%s'", escape_str(token)) : sprintf(pos, "%d", atoi(token));
-			token = strtok(NULL, ",");
+			pos += ((i == 1)) ? sprintf(pos, "'%s'", rows[i]) : sprintf(pos, "%d", atoi(rows[i]));
 		}
 
 		snprintf(write, sizeof(write), "REPLACE INTO abra_db VALUES(%s);\n", buf);
@@ -226,21 +260,24 @@ void convert_castle_db(void)
 	fwrite = fopen("sql/conversor/castle_db.sql", "w+");
 
 	while (fgets(line, sizeof(line), fread) != NULL) {
-		char *token, buf[1024], write[1024], *pos = buf;
+		char **rows, *str = line, buf[1024], write[1024], *pos = buf;
 
 		if ((line[0] == '/' && line[1] == '/') || line[0] == '\n')
 			continue;
 
 		line[strlen(line)-1] = '\0';
-		token = strtok(line, ",");
+		explode(&rows, str, ',');
 
 		for (i = 0; i < 5; i++) {
 			if (i) {
 				pos += sprintf(pos, ",");
 			}
 
-			pos += ((i >= 1 && i <= 3)) ? sprintf(pos, "'%s'", escape_str(token)) : sprintf(pos, "%d", atoi(token));
-			token = strtok(NULL, ",");
+			if (i == 2)
+				if (getcastlename(atoi(rows[0])))
+					rows[i] = getcastlename(atoi(rows[0]));
+
+			pos += ((i >= 1 && i <= 3)) ? sprintf(pos, "'%s'", escape_str(rows[i])) : sprintf(pos, "%d", atoi(rows[i]));
 		}
 
 		snprintf(write, sizeof(write), "REPLACE INTO castle_db VALUES(%s);\n", buf);
@@ -656,21 +693,24 @@ void convert_mob_chat_db(void)
 	fwrite = fopen("sql/conversor/mob_chat_db.sql", "w+");
 
 	while (fgets(line, sizeof(line), fread) != NULL) {
-		char *token, buf[1024], write[1024], *pos = buf;
+		char **rows, *str = line, buf[1024], write[1024], *pos = buf;
 
 		if ((line[0] == '/' && line[1] == '/') || line[0] == '\n')
 			continue;
 
 		line[strlen(line)-1] = '\0';
-		token = strtok(line, ",");
+		explode(&rows, str, ',');
 
 		for (i = 0; i < 3; i++) {
 			if (i) {
 				pos += sprintf(pos, ",");
 			}
+			
+			if (i == 2)
+				if (getchatname(atoi(rows[0])))
+					rows[i] = getchatname(atoi(rows[0]));
 
-			pos += (i == 2) ? sprintf(pos, "'%s'", escape_str(token)) : sprintf(pos, "%s", token);
-			token = strtok(NULL, ",");
+			pos += (i == 2) ? sprintf(pos, "'%s'", escape_str(rows[i])) : sprintf(pos, "%s", rows[i]);
 		}
 
 		snprintf(write, sizeof(write), "REPLACE INTO mob_chat_db VALUES(%s);\n", buf);
@@ -1418,7 +1458,7 @@ void convert_mob_race2_db(void)
 		line[strlen(line)-1] = '\0';
 		token = strtok(line, ",");
 
-		for (i = 0; i < 12; i++) {
+		for (i = 0; i < 10; i++) {
 			if (i) {
 				pos += sprintf(pos, ",");
 			}
@@ -1539,21 +1579,24 @@ void convert_skill_db(void)
 	fwrite = fopen("sql/conversor/skill_db.sql", "w+");
 
 	while (fgets(line, sizeof(line), fread) != NULL) {
-		char *token, buf[1024], write[1024], *pos = buf;
+		char **rows, *str = line, buf[1024], write[1024], *pos = buf;
 
 		if ((line[0] == '/' && line[1] == '/') || line[0] == '\n')
 			continue;
 
 		line[strlen(line)-1] = '\0';
-		token = strtok(line, ",");
+		explode(&rows, str, ',');
 
 		for (i = 0; i < 17; i++) {
 			if (i) {
 				pos += sprintf(pos, ",");
 			}
 
-			pos += (i == 1 || i >= 4) ? sprintf(pos, "'%s'", escape_str(token)) : sprintf(pos, "%s", token);
-			token = strtok(NULL, ",");
+			if (i == 16)
+				if (getskillname(atoi(rows[0])))
+					rows[i] = getskillname(atoi(rows[0]));
+
+			pos += (i == 1 || i >= 4) ? sprintf(pos, "'%s'", escape_str(rows[i])) : sprintf(pos, "%s", rows[i]);
 		}
 
 		strip_char(buf, '\t');
@@ -1900,21 +1943,27 @@ void convert_mob_db(void)
 	fwrite = fopen("sql/conversor/mob_db.sql", "w+");
 
 	while (fgets(line, sizeof(line), fread) != NULL) {
-		char *token, buf[1024], write[1024], *pos = buf;
+		char **rows, *str = line, buf[1024], write[1024], *pos = buf;
 
 		if ((line[0] == '/' && line[1] == '/') || line[0] == '\n')
 			continue;
 
 		line[strlen(line)-1] = '\0';
-		token = strtok(line, ",");
+		explode(&rows, str, ',');
 
 		for (i = 0; i < 57; i++) {
 			if (i) {
 				pos += sprintf(pos, ",");
 			}
+			
+			if (rows[i] == NULL)
+				rows[i] = 0;
+			
+			if (i > 1 && i <= 3)
+				if (getmobname(atoi(rows[0])))
+					rows[i] = getmobname(atoi(rows[0]));
 
-			pos += ((i == 0 || i > 3)) ? sprintf(pos, "%d", atoi(token)) : sprintf(pos, "'%s'", escape_str(token));
-			token = strtok(NULL, ",");
+			pos += ((i == 0 || i > 3)) ? sprintf(pos, "%d", atoi(rows[i])) : sprintf(pos, "'%s'", escape_str(rows[i]));
 		}
 
 		snprintf(write, sizeof(write), "REPLACE INTO mob_db VALUES(%s);\n", buf);
@@ -1943,25 +1992,23 @@ void convert_mob_skill_db(void)
 	fwrite = fopen("sql/conversor/mob_skill_db.sql", "w+");
 
 	while (fgets(line, sizeof(line), fread) != NULL) {
-		char *token, buf[1024], write[1024], *pos = buf;
+		char **rows, *str = line, buf[1024], write[1024], *pos = buf;
 
 		if ((line[0] == '/' && line[1] == '/') || line[0] == '\n')
 			continue;
 
 		line[strlen(line)-1] = '\0';
-		token = strtok(line, ",");
+		explode(&rows, str, ',');
 
 		for (i = 0; i < 19; i++) {
 			if (i) {
 				pos += sprintf(pos, ",");
 			}
-
+			
 			if (i > 0)
-				pos += (token == NULL) ? sprintf(pos, "%s", "NULL") : sprintf(pos, "'%s'", escape_str(token));
+				pos += (rows[i] == NULL || !strlen(rows[i])) ? sprintf(pos, "%s", (i == 7) ? "'0'" : "NULL") : sprintf(pos, "'%s'", escape_str(rows[i]));
 			else
-				pos += sprintf(pos, "%d", atoi(token));
-
-			token = strtok(NULL, ",");
+				pos += sprintf(pos, "%d", atoi(rows[i]));
 		}
 
 		snprintf(write, sizeof(write), "REPLACE INTO mob_skill_db VALUES(%s);\n", buf);
@@ -2296,19 +2343,121 @@ void translation(void) {
 	FILE *fp;
 
 	memset(item_data, 0, sizeof(item_data));
+	memset(mob_data, 0, sizeof(mob_data));
+	memset(skill_data, 0, sizeof(skill_data));
 
-	if((fp = fopen("item_name.txt", "r"))) {
-		while(fgets(line, sizeof(line), fp) != NULL) {
+	if ((fp = fopen("item_name.txt", "r"))) {
+		while (fgets(line, sizeof(line), fp) != NULL) {
 			char **rows, *str = line;
 
-			if((line[0] == '/' && line[1] == '/') || line[0] == '\n')
+			if ((line[0] == '/' && line[1] == '/') || line[0] == '\n')
 				continue;
 
 			line[strlen(line)-1] = '\0';
 			explode(&rows, str, ',');
 			strncpy(item_data[atoi(rows[0])].name, rows[1], sizeof((*item_data).name));
 		}
+		fclose(fp);
 	}
+
+	if ((fp = fopen("mob_name.txt", "r"))) {
+		while (fgets(line, sizeof(line), fp) != NULL) {
+			char **rows, *str = line;
+
+			if ((line[0] == '/' && line[1] == '/') || line[0] == '\n')
+				continue;
+
+			line[strlen(line)-1] = '\0';
+			explode(&rows, str, ',');
+			strncpy(mob_data[atoi(rows[0])].name, rows[1], sizeof((*mob_data).name));
+		}
+		fclose(fp);
+	}
+
+	if ((fp = fopen("skill_name.txt", "r"))) {
+		while (fgets(line, sizeof(line), fp) != NULL) {
+			char **rows, *str = line;
+
+			if ((line[0] == '/' && line[1] == '/') || line[0] == '\n')
+				continue;
+
+			line[strlen(line)-1] = '\0';
+			explode(&rows, str, ',');
+			strncpy(skill_data[atoi(rows[0])].name, rows[1], sizeof((*skill_data).name));
+		}
+		fclose(fp);
+	}
+
+	if ((fp = fopen("castle_name.txt", "r"))) {
+		while (fgets(line, sizeof(line), fp) != NULL) {
+			char **rows, *str = line;
+
+			if ((line[0] == '/' && line[1] == '/') || line[0] == '\n')
+				continue;
+
+			line[strlen(line)-1] = '\0';
+			explode(&rows, str, ',');
+			strncpy(castle_data[atoi(rows[0])].name, rows[1], sizeof((*castle_data).name));
+		}
+		fclose(fp);
+	}
+
+	if ((fp = fopen("mob_chat_name.txt", "r"))) {
+		while (fgets(line, sizeof(line), fp) != NULL) {
+			char **rows, *str = line;
+
+			if ((line[0] == '/' && line[1] == '/') || line[0] == '\n')
+				continue;
+
+			line[strlen(line)-1] = '\0';
+			explode(&rows, str, ',');
+			strncpy(chat_mob_data[atoi(rows[0])].name, rows[1], sizeof((*chat_mob_data).name));
+		}
+		fclose(fp);
+	}
+}
+
+// Converte o arquivo level_penalty.txt para SQL.
+void convert_level_penalty_db(void)
+{
+	FILE *fread, *fwrite;
+	char line[1024], path[256];
+	int count = 0, i;
+
+	sprintf(path, "%s", "db/level_penalty.txt");
+
+	if (!(fread = fopen(path, "r")))
+		return;
+
+	fwrite = fopen("sql/conversor/level_penalty_db.sql", "w+");
+
+	while (fgets(line, sizeof(line), fread) != NULL) {
+		char *token, buf[1024], write[1024], *pos = buf;
+
+		if ((line[0] == '/' && line[1] == '/') || line[0] == '\n')
+			continue;
+
+		line[strlen(line)-1] = '\0';
+		token = strtok(line, ",");
+
+		for (i = 0; i < 4; i++) {
+			if (i) {
+				pos += sprintf(pos, ",");
+			}
+
+			pos += sprintf(pos, "%d", atoi(token));
+			token = strtok(NULL, ",");
+		}
+
+		snprintf(write, sizeof(write), "REPLACE INTO level_penalty_db VALUES(%s);\n", buf);
+		fprintf(fwrite, write);
+		count++;
+	}
+
+	ShowStatus("Arquivo %s convertido com sucesso! linhas afetadas: %d\n", path, count);
+	fclose(fread);
+	fclose(fwrite);
+	file_count++;
 }
 
 // Função Inicial
@@ -2361,6 +2510,7 @@ int do_init(void) {
 	convert_mob_db();
 	convert_mob_skill_db();
 	convert_item_db();
+	convert_level_penalty_db();
 
 	ShowMessage(""CL_BT_YELLOW"Total de arquivos convertidos: %d"CL_CLL""CL_NORMAL"\n", file_count);
 	system("pause");
