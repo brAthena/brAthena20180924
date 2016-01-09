@@ -9697,6 +9697,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(cddebug),
 		ACMD_DEF(lang),
 		ACMD_DEF(bodystyle),
+		ACMD_DEF(reloadcashshop),
 	};
 	int i;
 
