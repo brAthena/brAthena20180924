@@ -19071,24 +19071,6 @@ bool skill_parse_row_improvisedb(char* split[], int columns, int current) {
 
 	return true;
 }
-bool skill_parse_row_magicmushroomdb(char* split[], int column, int current) {
-// SkillID
-	uint16 skill_id = atoi(split[0]);
-
-	if( !skill->get_index(skill_id) || !skill->get_max(skill_id) ) {
-		ShowError("magicmushroom_db: Invalid skill ID %d\n", skill_id);
-		return false;
-	}
-	if ( !skill->get_inf(skill_id) ) {
-		ShowError("magicmushroom_db: Passive skills cannot be casted (%d/%s)\n", skill_id, skill->get_name(skill_id));
-		return false;
-	}
-
-	skill->dbs->magicmushroom_db[current].skill_id = skill_id;
-
-	return true;
-}
-
 bool skill_parse_row_reproducedb(char* split[], int column, int current) {
 	uint16 skill_id = atoi(split[0]);
 	uint16 idx = skill->get_index(skill_id);
@@ -19154,17 +19136,20 @@ bool skill_parse_row_changematerialdb(char* split[], int columns, int current) {
 
 /*===============================
  * DB reading.
- * skill_db.txt
- * skill_require_db.txt
- * skill_cast_db.txt
- * skill_castnodex_db.txt
- * skill_nocast_db.txt
- * skill_unit_db.txt
- * produce_db.txt
- * create_arrow_db.txt
- * abra_db.txt
+ * skill_db
+ * skill_require_db
+ * skill_cast_db
+ * skill_castnodex_db
+ * skill_nocast_db
+ * skill_unit_db
+ * produce_db
+ * create_arrow_db
+ * abra_db
  *------------------------------*/
 void skill_readdb(bool minimal) {
+	uint16 magicmushroom_db[] = { 7, 8, 10, 24, 32, 33, 45, 61, 74, 110, 114, 142, 150, 151, 157, 249, 256, 261, 270, 326, 500, 527, 531 };
+	int i;
+
 	// init skill db structures
 	db_clear(skill->name2id_db);
 
@@ -19202,11 +19187,23 @@ void skill_readdb(bool minimal) {
 	sv_readsqldb(get_database_name(7), 1+2*MAX_ARROW_RESOURCE,  -1, skill->parse_row_createarrowdb);
 	sv_readsqldb(get_database_name(8), 4,  -1, skill->parse_row_abradb);
 	sv_readsqldb(get_database_name(9), 3,  -1, skill->parse_row_spellbookdb);
-	sv_readsqldb(get_database_name(10), 1,  -1, skill->parse_row_magicmushroomdb);
 	sv_readsqldb(get_database_name(11), 1,  -1, skill->parse_row_reproducedb);
 	sv_readsqldb(get_database_name(12), 2,  -1, skill->parse_row_improvisedb);
 	sv_readsqldb(get_database_name(13), 4+2*5,  -1, skill->parse_row_changematerialdb);
 
+	for (i = 0; i < ARRAYLENGTH(magicmushroom_db); i++) {
+		if (!skill->get_index(magicmushroom_db[i]) || !skill->get_max(magicmushroom_db[i])) {
+			ShowError("magicmushroom_db: Habilidade Invalida, ID %d\n", magicmushroom_db[i]);
+			continue;
+		}
+
+		if (!skill->get_inf(magicmushroom_db[i])) {
+			ShowError("magicmushroom_db: Habilidade passiva nao pode ser conjurada (%d/%s)\n", magicmushroom_db[i], skill->get_name(magicmushroom_db[i]));
+			continue;
+		}
+
+		skill->dbs->magicmushroom_db[i].skill_id = magicmushroom_db[i];
+	}
 }
 
 void skill_reload(void)
@@ -19487,7 +19484,6 @@ void skill_defaults(void) {
 	skill->parse_row_createarrowdb = skill_parse_row_createarrowdb;
 	skill->parse_row_abradb = skill_parse_row_abradb;
 	skill->parse_row_spellbookdb = skill_parse_row_spellbookdb;
-	skill->parse_row_magicmushroomdb = skill_parse_row_magicmushroomdb;
 	skill->parse_row_reproducedb = skill_parse_row_reproducedb;
 	skill->parse_row_improvisedb = skill_parse_row_improvisedb;
 	skill->parse_row_changematerialdb = skill_parse_row_changematerialdb;

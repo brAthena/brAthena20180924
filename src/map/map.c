@@ -3941,7 +3941,7 @@ int inter_config_read(char *cfgName) {
 
 /**
  * brAthena Parser v2.0
- * Fun��o destinada a leitura de v�rias tabelas da database de itens, habilidades, monstros e etc.
+ * Funcao destinada a leitura de varias tabelas da database de itens, habilidades, monstros e etc.
  **/
 void sv_readsqldb(char *table_name, int param_size, int max_allowed, bool (*sub_parse_row)(char *string[], int columns, int current))
 {
@@ -3974,7 +3974,7 @@ void sv_readsqldb(char *table_name, int param_size, int max_allowed, bool (*sub_
 		}
 
 		if(!sub_parse_row(str, param_size, count))
-		continue;
+			continue;
 		count++;
 	}
 
@@ -3997,7 +3997,7 @@ char *get_database_name(int database_id)
 		case 8: db_name = "abra_db"; break;
 #ifdef RENEWAL
 		case 9: db_name = "spellbook_db"; break;
-		case 10: db_name = "magicmushroom_db"; break;
+		// 10 Vazio
 		case 11: db_name = "skill_reproduce_db"; break;
 		case 12: db_name = "skill_improvise_db"; break;
 		case 13: db_name = "skill_changematerial_db"; break;

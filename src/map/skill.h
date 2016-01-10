@@ -2041,7 +2041,6 @@ struct skill_interface {
 	bool (*parse_row_createarrowdb) (char* split[], int columns, int current);
 	bool (*parse_row_abradb) (char* split[], int columns, int current);
 	bool (*parse_row_spellbookdb) (char* split[], int columns, int current);
-	bool (*parse_row_magicmushroomdb) (char* split[], int column, int current);
 	bool (*parse_row_reproducedb) (char* split[], int column, int current);
 	bool (*parse_row_improvisedb) (char* split[], int columns, int current);
 	bool (*parse_row_changematerialdb) (char* split[], int columns, int current);
