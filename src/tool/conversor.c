@@ -199,6 +199,89 @@ char *getchatname(int line_id)
 	return escape_str(chat_mob_data[line_id].name);
 }
 
+// Reaproveitamento de Tradução
+// http://tools.brathena.org
+void translation(void) {
+	char line[1024];
+	FILE *fp;
+
+	memset(item_data, 0, sizeof(item_data));
+	memset(mob_data, 0, sizeof(mob_data));
+	memset(skill_data, 0, sizeof(skill_data));
+	memset(castle_data, 0, sizeof(castle_data));
+	memset(chat_mob_data, 0, sizeof(chat_mob_data));
+
+	if ((fp = fopen("item_name.txt", "r"))) {
+		while (fgets(line, sizeof(line), fp) != NULL) {
+			char **rows, *str = line;
+
+			if ((line[0] == '/' && line[1] == '/') || line[0] == '\n')
+				continue;
+
+			line[strlen(line)-1] = '\0';
+			explode(&rows, str, ',');
+			strncpy(item_data[atoi(rows[0])].name, rows[1], sizeof((*item_data).name));
+		}
+		fclose(fp);
+	}
+
+	if ((fp = fopen("mob_name.txt", "r"))) {
+		while (fgets(line, sizeof(line), fp) != NULL) {
+			char **rows, *str = line;
+
+			if ((line[0] == '/' && line[1] == '/') || line[0] == '\n')
+				continue;
+
+			line[strlen(line)-1] = '\0';
+			explode(&rows, str, ',');
+			strncpy(mob_data[atoi(rows[0])].name, rows[1], sizeof((*mob_data).name));
+		}
+		fclose(fp);
+	}
+
+	if ((fp = fopen("skill_name.txt", "r"))) {
+		while (fgets(line, sizeof(line), fp) != NULL) {
+			char **rows, *str = line;
+
+			if ((line[0] == '/' && line[1] == '/') || line[0] == '\n')
+				continue;
+
+			line[strlen(line)-1] = '\0';
+			explode(&rows, str, ',');
+			strncpy(skill_data[atoi(rows[0])].name, rows[1], sizeof((*skill_data).name));
+		}
+		fclose(fp);
+	}
+
+	if ((fp = fopen("castle_name.txt", "r"))) {
+		while (fgets(line, sizeof(line), fp) != NULL) {
+			char **rows, *str = line;
+
+			if ((line[0] == '/' && line[1] == '/') || line[0] == '\n')
+				continue;
+
+			line[strlen(line)-1] = '\0';
+			explode(&rows, str, ',');
+			strncpy(castle_data[atoi(rows[0])].name, rows[1], sizeof((*castle_data).name));
+		}
+		fclose(fp);
+	}
+
+	if ((fp = fopen("mob_chat_name.txt", "r"))) {
+		while (fgets(line, sizeof(line), fp) != NULL) {
+			char **rows, *str = line;
+
+			if ((line[0] == '/' && line[1] == '/') || line[0] == '\n')
+				continue;
+
+			line[strlen(line)-1] = '\0';
+			explode(&rows, str, ',');
+			strncpy(chat_mob_data[atoi(rows[0])].name, rows[1], sizeof((*chat_mob_data).name));
+		}
+		fclose(fp);
+	}
+}
+
 // Converte o arquivo abra_db.txt para SQL.
 void convert_abra_db(void)
 {
@@ -2334,89 +2417,6 @@ void convert_item_db(void)
 	ShowStatus("Arquivo %s convertido com sucesso! linhas afetadas: %d\n", filepath, count);
 	config_destroy(&item_db_conf);
 	file_count++;
-}
-
-// Reaproveitamento de Tradução
-// http://tools.brathena.org
-void translation(void) {
-	char line[1024];
-	FILE *fp;
-
-	memset(item_data, 0, sizeof(item_data));
-	memset(mob_data, 0, sizeof(mob_data));
-	memset(skill_data, 0, sizeof(skill_data));
-	memset(castle_data, 0, sizeof(castle_data));
-	memset(chat_mob_data, 0, sizeof(chat_mob_data));
-
-	if ((fp = fopen("item_name.txt", "r"))) {
-		while (fgets(line, sizeof(line), fp) != NULL) {
-			char **rows, *str = line;
-
-			if ((line[0] == '/' && line[1] == '/') || line[0] == '\n')
-				continue;
-
-			line[strlen(line)-1] = '\0';
-			explode(&rows, str, ',');
-			strncpy(item_data[atoi(rows[0])].name, rows[1], sizeof((*item_data).name));
-		}
-		fclose(fp);
-	}
-
-	if ((fp = fopen("mob_name.txt", "r"))) {
-		while (fgets(line, sizeof(line), fp) != NULL) {
-			char **rows, *str = line;
-
-			if ((line[0] == '/' && line[1] == '/') || line[0] == '\n')
-				continue;
-
-			line[strlen(line)-1] = '\0';
-			explode(&rows, str, ',');
-			strncpy(mob_data[atoi(rows[0])].name, rows[1], sizeof((*mob_data).name));
-		}
-		fclose(fp);
-	}
-
-	if ((fp = fopen("skill_name.txt", "r"))) {
-		while (fgets(line, sizeof(line), fp) != NULL) {
-			char **rows, *str = line;
-
-			if ((line[0] == '/' && line[1] == '/') || line[0] == '\n')
-				continue;
-
-			line[strlen(line)-1] = '\0';
-			explode(&rows, str, ',');
-			strncpy(skill_data[atoi(rows[0])].name, rows[1], sizeof((*skill_data).name));
-		}
-		fclose(fp);
-	}
-
-	if ((fp = fopen("castle_name.txt", "r"))) {
-		while (fgets(line, sizeof(line), fp) != NULL) {
-			char **rows, *str = line;
-
-			if ((line[0] == '/' && line[1] == '/') || line[0] == '\n')
-				continue;
-
-			line[strlen(line)-1] = '\0';
-			explode(&rows, str, ',');
-			strncpy(castle_data[atoi(rows[0])].name, rows[1], sizeof((*castle_data).name));
-		}
-		fclose(fp);
-	}
-
-	if ((fp = fopen("mob_chat_name.txt", "r"))) {
-		while (fgets(line, sizeof(line), fp) != NULL) {
-			char **rows, *str = line;
-
-			if ((line[0] == '/' && line[1] == '/') || line[0] == '\n')
-				continue;
-
-			line[strlen(line)-1] = '\0';
-			explode(&rows, str, ',');
-			strncpy(chat_mob_data[atoi(rows[0])].name, rows[1], sizeof((*chat_mob_data).name));
-		}
-		fclose(fp);
-	}
 }
 
 // Converte o arquivo level_penalty.txt para SQL.

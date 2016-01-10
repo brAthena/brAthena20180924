@@ -4031,6 +4031,7 @@ char *get_database_name(int database_id)
 		case 52: db_name = "item_db"; break;
 		case 53: db_name = "size_fix_db"; break;
 		case 54: db_name = "exp_db"; break;
+		case 55: db_name = "sc_config"; break;
 	}
 
 	return db_name;
