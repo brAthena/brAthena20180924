@@ -8,14 +8,14 @@
 *                            www.brathena.org                                *
 ******************************************************************************
 * src/map/pc.c                                                               *
-* Funções referentes aos parâmetros do personagem e verificações             *
+* Funï¿½ï¿½es referentes aos parï¿½metros do personagem e verificaï¿½ï¿½es             *
 ******************************************************************************
 * Copyright (c) brAthena Dev Team                                            *
 * Copyright (c) Hercules Dev Team                                            *
 * Copyright (c) Athena Dev Teams                                             *
 *                                                                            *
-* Licenciado sob a licença GNU GPL                                           *
-* Para mais informações leia o arquivo LICENSE na raíz do emulador           *
+* Licenciado sob a licenï¿½a GNU GPL                                           *
+* Para mais informaï¿½ï¿½es leia o arquivo LICENSE na raï¿½z do emulador           *
 *****************************************************************************/
 
 #define BRATHENA_CORE
@@ -226,10 +226,11 @@ bool pc_should_log_commands(struct map_session_data *sd)
 	return pcg->should_log_commands(sd->group);
 }
 
-int pc_invincible_timer(int tid, int64 tick, int id, intptr_t data) {
-	struct map_session_data *sd;
+int pc_invincible_timer(int tid, int64 tick, int id, intptr_t data)
+{
+	struct map_session_data *sd = map->id2sd(id);
 
-	if( (sd=(struct map_session_data *)map->id2sd(id)) == NULL || sd->bl.type!=BL_PC )
+	if (sd == NULL)
 		return 1;
 
 	if(sd->invincible_timer != tid){
@@ -265,10 +266,10 @@ void pc_delinvincibletimer(struct map_session_data* sd)
 }
 
 int pc_spiritball_timer(int tid, int64 tick, int id, intptr_t data) {
-	struct map_session_data *sd;
+	struct map_session_data *sd = map->id2sd(id);
 	int i;
 
-	if( (sd=(struct map_session_data *)map->id2sd(id)) == NULL || sd->bl.type!=BL_PC )
+	if (sd == NULL)
 		return 1;
 
 	if( sd->spiritball <= 0 )
@@ -389,14 +390,17 @@ int pc_delspiritball(struct map_session_data *sd,int count,int type)
 	}
 	return 0;
 }
-int pc_check_banding( struct block_list *bl, va_list ap ) {
+int pc_check_banding(struct block_list *bl, va_list ap)
+{
 	int *c, *b_sd;
 	struct block_list *src;
-	struct map_session_data *tsd;
+	const struct map_session_data *tsd;
 	struct status_change *sc;
 
 	nullpo_ret(bl);
-	nullpo_ret(tsd = (struct map_session_data*)bl);
+	Assert_ret(bl->type == BL_PC);
+	tsd = BL_UCCAST(BL_PC, bl);
+
 	nullpo_ret(src = va_arg(ap,struct block_list *));
 	c = va_arg(ap,int *);
 	b_sd = va_arg(ap, int *);
@@ -1969,9 +1973,9 @@ int pc_disguise(struct map_session_data *sd, int class_) {
 			clif->updatestatus(sd,SP_CARTINFO);
 		}
 		if (sd->chatID) {
-			struct chat_data* cd;
+			struct chat_data *cd = map->id2cd(sd->chatID);
 
-			if( (cd = (struct chat_data*)map->id2bl(sd->chatID)) )
+			if (cd != NULL)
 				clif->dispchat(cd,0);
 		}
 	}
@@ -5340,7 +5344,7 @@ void pc_bound_clear(struct map_session_data *sd, enum e_item_bound_type type) {
  *------------------------------------------*/
 int pc_show_steal(struct block_list *bl,va_list ap)
 {
-	struct map_session_data *sd;
+	struct map_session_data *sd = NULL, *tsd = NULL;
 	int itemid;
 
 	struct item_data *item=NULL;
@@ -5348,6 +5352,11 @@ int pc_show_steal(struct block_list *bl,va_list ap)
 
 	sd=va_arg(ap,struct map_session_data *);
 	itemid=va_arg(ap,int);
+
+	nullpo_ret(bl);
+	Assert_ret(bl->type == BL_PC);
+	tsd = BL_UCAST(BL_PC, bl);
+	nullpo_ret(sd);
 
 	if((item=itemdb->exists(itemid))==NULL)
 		sprintf(output,"%s roubou um item desconhecido (id: %i).",sd->status.name, itemid);
@@ -5368,14 +5377,12 @@ int pc_steal_item(struct map_session_data *sd,struct block_list *bl, uint16 skil
 	int i,itemid,flag;
 	double rate;
 	struct status_data *sd_status, *md_status;
-	struct mob_data *md;
+	struct mob_data *md = BL_CAST(BL_MOB, bl);
 	struct item tmp_item;
 	struct item_data *data = NULL;
 
-	if(!sd || !bl || bl->type!=BL_MOB)
+	if (sd == NULL || md == NULL)
 		return 0;
-
-	md = (TBL_MOB *)bl;
 
 	if(md->state.steal_flag == UCHAR_MAX || ( md->sc.opt1 && md->sc.opt1 != OPT1_BURNING && md->sc.opt1 != OPT1_CRYSTALIZE ) ) //already stolen from / status change check
 		return 0;
@@ -5446,12 +5453,11 @@ int pc_steal_item(struct map_session_data *sd,struct block_list *bl, uint16 skil
  **/
 int pc_steal_coin(struct map_session_data *sd, struct block_list *target) {
 	int rate, skill_lv;
-	struct mob_data *md;
+	struct mob_data *md = BL_CAST(BL_MOB, target);
 
-	if (!sd || !target || target->type != BL_MOB)
+	if (sd == NULL || md == NULL)
 		return 0;
 
-	md = (TBL_MOB*)target;
 	if (md->state.steal_coin_flag || md->sc.data[SC_STONE] || md->sc.data[SC_FREEZE] || md->status.mode&MD_BOSS)
 		return 0;
 
@@ -6816,7 +6822,7 @@ bool pc_gainexp(struct map_session_data *sd, struct block_list *src, unsigned in
 	if(sd->state.showexp) {
 		char output[256];
 		sprintf(output,
-			"Experiência Base:%u (%.2f%%) Classe:%u (%.2f%%)",base_exp,nextbp*(float)100,job_exp,nextjp*(float)100);
+			"Experiï¿½ncia Base:%u (%.2f%%) Classe:%u (%.2f%%)",base_exp,nextbp*(float)100,job_exp,nextjp*(float)100);
 		clif_disp_onlyself(sd,output,strlen(output));
 	}
 
@@ -7136,7 +7142,7 @@ int pc_skillup(struct map_session_data *sd,uint16 skill_id) {
 		else if (sd->sktree.third)
 			clif->msgtable_num(sd, MSG_SKILL_POINTS_LEFT_JOB2, sd->sktree.third);
 		else if (pc->calc_skillpoint(sd) < 9) /* TODO: official response? */
-			clif->messagecolor_self(sd->fd, COLOR_RED, "Você precisa das habilidades básicas.");
+			clif->messagecolor_self(sd->fd, COLOR_RED, "Vocï¿½ precisa das habilidades bï¿½sicas.");
 	}
 	return 0;
 }
@@ -7711,11 +7717,11 @@ int pc_dead(struct map_session_data *sd,struct block_list *src) {
 	if (sd->charm_type != CHARM_TYPE_NONE && sd->charm_count > 0)
 		pc->del_charm(sd, sd->charm_count, sd->charm_type);
 
-	if (src) {
+	if (src != NULL) {
 		switch (src->type) {
 			case BL_MOB:
 			{
-				struct mob_data *md=(struct mob_data *)src;
+				struct mob_data *md = BL_UCAST(BL_MOB, src);
 				if (md->target_id==sd->bl.id)
 					mob->unlocktarget(md,tick);
 				if (battle_config.mobs_level_up && md->status.hp
@@ -7737,19 +7743,19 @@ int pc_dead(struct map_session_data *sd,struct block_list *src) {
 			}
 			break;
 			case BL_PET: //Pass on to master...
-				src = &((TBL_PET*)src)->msd->bl;
+				src = &BL_UCAST(BL_PET, src)->msd->bl;
 			break;
 			case BL_HOM:
-				src = &((TBL_HOM*)src)->master->bl;
+				src = &BL_UCAST(BL_HOM, src)->master->bl;
 			break;
 			case BL_MER:
-				src = &((TBL_MER*)src)->master->bl;
+				src = &BL_UCAST(BL_MER, src)->master->bl;
 			break;
 		}
 	}
 
-	if (src && src->type == BL_PC) {
-		struct map_session_data *ssd = (struct map_session_data *)src;
+	if (src != NULL && src->type == BL_PC) {
+		struct map_session_data *ssd = BL_UCAST(BL_PC, src);
 		pc->setparam(ssd, SP_KILLEDRID, sd->bl.id);
 		npc->script_event(ssd, NPCE_KILLPC);
 
@@ -7935,9 +7941,8 @@ int pc_dead(struct map_session_data *sd,struct block_list *src) {
 	if( map->list[sd->bl.m].flag.pvp && !battle_config.pk_mode && !map->list[sd->bl.m].flag.pvp_nocalcrank ) {
 		sd->pvp_point -= 5;
 		sd->pvp_lost++;
-		if( src && src->type == BL_PC )
-		{
-			struct map_session_data *ssd = (struct map_session_data *)src;
+		if (src != NULL && src->type == BL_PC) {
+			struct map_session_data *ssd = BL_UCAST(BL_PC, src);
 			ssd->pvp_point++;
 			ssd->pvp_won++;
 		}
@@ -8437,11 +8442,12 @@ int pc_percentheal(struct map_session_data *sd,int hp,int sp)
 
 int jobchange_killclone(struct block_list *bl, va_list ap)
 {
-	struct mob_data *md;
-		int flag;
-	md = (struct mob_data *)bl;
-	nullpo_ret(md);
-	flag = va_arg(ap, int);
+	struct mob_data *md = NULL;
+	int flag = va_arg(ap, int);
+
+	nullpo_ret(bl);
+	Assert_ret(bl->type == BL_MOB);
+	md = BL_UCAST(BL_MOB, bl);
 
 	if (md->master_id && md->special_state.clone && md->master_id == flag)
 		status_kill(&md->bl);
@@ -8892,7 +8898,7 @@ int pc_setcart(struct map_session_data *sd,int type) {
  * @param sd Target player.
  * @param flag New state.
  **/
-void pc_setfalcon(TBL_PC* sd, bool flag)
+void pc_setfalcon(struct map_session_data *sd, bool flag)
 {
 	if (flag) {
 		if (pc->checkskill(sd,HT_FALCON) > 0) // add falcon if he have the skill
@@ -8910,7 +8916,7 @@ void pc_setfalcon(TBL_PC* sd, bool flag)
  * @param sd Target player.
  * @param flag New state.
  **/
-void pc_setridingpeco(TBL_PC* sd, bool flag)
+void pc_setridingpeco(struct map_session_data *sd, bool flag)
 {
 	if (flag) {
 		if (pc->checkskill(sd, KN_RIDING))
@@ -8946,7 +8952,7 @@ void pc_setmadogear(struct map_session_data *sd, bool flag)
  * @param sd Target player.
  * @param type New state. This must be a valid OPTION_DRAGON* or 0.
  **/
-void pc_setridingdragon(TBL_PC* sd, unsigned int type)
+void pc_setridingdragon(struct map_session_data *sd, unsigned int type)
 {
 	if (type&OPTION_DRAGON) {
 		// Ensure only one dragon is set at a time.
@@ -8978,7 +8984,7 @@ void pc_setridingdragon(TBL_PC* sd, unsigned int type)
  * @param sd Target player.
  * @param flag New state.
  **/
-void pc_setridingwug(TBL_PC* sd, bool flag)
+void pc_setridingwug(struct map_session_data *sd, bool flag)
 {
 	if (flag) {
 		if (pc->checkskill(sd, RA_WUGRIDER) > 0)
@@ -10113,12 +10119,15 @@ int pc_checkitem(struct map_session_data *sd)
 /*==========================================
  * Update PVP rank for sd1 in cmp to sd2
  *------------------------------------------*/
-int pc_calc_pvprank_sub(struct block_list *bl,va_list ap)
+int pc_calc_pvprank_sub(struct block_list *bl, va_list ap)
 {
-	struct map_session_data *sd1,*sd2;
+	struct map_session_data *sd1 = NULL;
+	struct map_session_data *sd2 = va_arg(ap,struct map_session_data *);
 
-	sd1=(struct map_session_data *)bl;
-	sd2=va_arg(ap,struct map_session_data *);
+	nullpo_ret(bl);
+	Assert_ret(bl->type == BL_PC);
+	sd1 = BL_UCAST(BL_PC, bl);
+	nullpo_ret(sd2);
 
 	if (pc_isinvisible(sd1) ||pc_isinvisible(sd2)) {
 		// cannot register pvp rank for hidden GMs
@@ -10375,8 +10384,7 @@ int pc_autosave(int tid, int64 tick, int id, intptr_t data) {
 		save_flag = 1; //Noone was saved, so save first found char.
 
 	iter = mapit_getallusers();
-	for( sd = (TBL_PC*)mapit->first(iter); mapit->exists(iter); sd = (TBL_PC*)mapit->next(iter) )
-	{
+	for (sd = BL_UCAST(BL_PC, mapit->first(iter)); mapit->exists(iter); sd = BL_UCAST(BL_PC, mapit->next(iter))) {
 		if(sd->bl.id == last_save_id && save_flag != 1) {
 			save_flag = 1;
 			continue;
@@ -10519,10 +10527,10 @@ bool pc_can_use_command(struct map_session_data *sd, const char *command) {
  */
 int pc_charm_timer(int tid, int64 tick, int id, intptr_t data)
 {
-	struct map_session_data *sd;
+	struct map_session_data *sd = map->id2sd(id);
 	int i;
 
-	if( (sd=(struct map_session_data *)map->id2sd(id)) == NULL || sd->bl.type!=BL_PC )
+	if (sd == NULL)
 		return 1;
 
 	if (sd->charm_count <= 0) {
@@ -10930,7 +10938,7 @@ void pc_read_skill_tree(void)
 
 	/* lets update all players skill tree */
 	iter = mapit_getallusers();
-	for( sd = (TBL_PC*)mapit->first(iter); mapit->exists(iter); sd = (TBL_PC*)mapit->next(iter) )
+	for (sd = BL_UCAST(BL_PC, mapit->first(iter)); mapit->exists(iter); sd = BL_UCAST(BL_PC, mapit->next(iter)))
 		clif->skillinfoblock(sd);
 	mapit->free(iter);
 }
@@ -10960,7 +10968,7 @@ bool pc_readdb_levelpenalty(char* fields[], int columns, int current) {
 	race = atoi(fields[1]);
 	diff = atoi(fields[2]);
 
-	if (type != 1 && type != 2) {
+	if ( type != 1 && type != 2 ) {
 		ShowWarning("pc_readdb_levelpenalty: Tipo invalido %d.\n", type);
 		return false;
 	}
@@ -11307,7 +11315,7 @@ int pc_global_expiration_timer(int tid, int64 tick, int id, intptr_t data) {
 	struct map_session_data* sd;
 
 	iter = mapit_getallusers();
-	for( sd = (TBL_PC*)mapit->first(iter); mapit->exists(iter); sd = (TBL_PC*)mapit->next(iter) ) {
+	for (sd = BL_UCAST(BL_PC, mapit->first(iter)); mapit->exists(iter); sd = BL_UCAST(BL_PC, mapit->next(iter))) {
 		if( sd->expiration_time )
 			pc->expire_check(sd);
 	}
@@ -11353,7 +11361,7 @@ void pc_autotrade_load(void)
 		SQL->GetData(map->mysql_handle, 2, &data, NULL); sex = atoi(data);
 		SQL->GetData(map->mysql_handle, 3, &data, NULL); safestrncpy(title, data, sizeof(title));
 
-		CREATE(sd, TBL_PC, 1);
+		CREATE(sd, struct map_session_data, 1);
 
 		pc->setnewpc(sd, account_id, char_id, 0, 0, sex, 0);
 
@@ -11499,7 +11507,7 @@ void pc_autotrade_prepare(struct map_session_data *sd) {
 	map->quit(sd);
 	chrif->auth_delete(account_id, char_id, ST_LOGOUT);
 
-	CREATE(sd, TBL_PC, 1);
+	CREATE(sd, struct map_session_data, 1);
 
 	pc->setnewpc(sd, account_id, char_id, 0, 0, sex, 0);
 

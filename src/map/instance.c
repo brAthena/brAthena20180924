@@ -8,14 +8,14 @@
 *                            www.brathena.org                                *
 ******************************************************************************
 * src/map/instance.c                                                         *
-* Funções responsáveis pelo funcionamento das instâncias dentro do emulador  *
+* Funï¿½ï¿½es responsï¿½veis pelo funcionamento das instï¿½ncias dentro do emulador  *
 ******************************************************************************
 * Copyright (c) brAthena Dev Team                                            *
 * Copyright (c) Hercules Dev Team                                            *
 * Copyright (c) Athena Dev Teams                                             *
 *                                                                            *
-* Licenciado sob a licença GNU GPL                                           *
-* Para mais informações leia o arquivo LICENSE na raíz do emulador           *
+* Licenciado sob a licenï¿½a GNU GPL                                           *
+* Para mais informaï¿½ï¿½es leia o arquivo LICENSE na raï¿½z do emulador           *
 *****************************************************************************/
 
 #define BRATHENA_CORE
@@ -195,7 +195,7 @@ int instance_add_map(const char *name, int instance_id, bool usebasename, const 
 	}
 
 	if( map_name != NULL && strdb_iget(mapindex->db, map_name) ) {
-		ShowError("instance_add_map: tentando criar mapa para instância com nome existente '%s'\n", map_name);
+		ShowError("instance_add_map: tentando criar mapa para instï¿½ncia com nome existente '%s'\n", map_name);
 		return -2;
 	}
 
@@ -368,20 +368,30 @@ int instance_mapid2imapid(int16 m, int instance_id) {
 /*--------------------------------------
  * Used on Init instance. Duplicates each script on source map
  *--------------------------------------*/
-int instance_map_npcsub(struct block_list* bl, va_list args) {
-	struct npc_data* nd = (struct npc_data*)bl;
+int instance_map_npcsub(struct block_list* bl, va_list args)
+{
+	struct npc_data *nd = NULL;
 	int16 m = va_arg(args, int); // Destination Map
 
-	if ( npc->duplicate4instance(nd, m) )
+	nullpo_ret(bl);
+	Assert_ret(bl->type == BL_NPC);
+	nd = BL_UCAST(BL_NPC, bl);
+
+	if (npc->duplicate4instance(nd, m))
 		ShowDebug("instance_map_npcsub:npc_duplicate4instance falhou (%s/%d)\n",nd->name,m);
 
 	return 1;
 }
 
-int instance_init_npc(struct block_list* bl, va_list args) {
-	struct npc_data *nd = (struct npc_data*)bl;
+int instance_init_npc(struct block_list* bl, va_list args)
+{
+	struct npc_data *nd = NULL;
 	struct event_data *ev;
 	char evname[EVENT_NAME_LENGTH];
+
+	nullpo_ret(bl);
+	Assert_ret(bl->type == BL_NPC);
+	nd = BL_UCAST(BL_NPC, bl);
 
 	snprintf(evname, EVENT_NAME_LENGTH, "%s::OnInstanceInit", nd->exname);
 
@@ -429,10 +439,10 @@ int instance_cleanup_sub(struct block_list *bl, va_list ap) {
 
 	switch(bl->type) {
 		case BL_PC:
-			map->quit((struct map_session_data *) bl);
+			map->quit(BL_UCAST(BL_PC, bl));
 			break;
 		case BL_NPC:
-			npc->unload((struct npc_data *)bl,true);
+			npc->unload(BL_UCAST(BL_NPC, bl), true);
 			break;
 		case BL_MOB:
 			unit->free(bl,CLR_OUTSIGHT);
@@ -444,7 +454,7 @@ int instance_cleanup_sub(struct block_list *bl, va_list ap) {
 			map->clearflooritem(bl);
 			break;
 		case BL_SKILL:
-			skill->delunit((struct skill_unit *) bl);
+			skill->delunit(BL_UCAST(BL_SKILL, bl));
 			break;
 	}
 
@@ -721,7 +731,7 @@ void do_reload_instance(void) {
 	}
 
 	iter = mapit_getallusers();
-	for( sd = (TBL_PC*)mapit->first(iter); mapit->exists(iter); sd = (TBL_PC*)mapit->next(iter) ) {
+	for (sd = BL_UCAST(BL_PC, mapit->first(iter)); mapit->exists(iter); sd = BL_UCAST(BL_PC, mapit->next(iter))) {
 		if(sd && map->list[sd->bl.m].instance_id >= 0) {
 			pc->setpos(sd,instance->list[map->list[sd->bl.m].instance_id].respawn.map,instance->list[map->list[sd->bl.m].instance_id].respawn.x,instance->list[map->list[sd->bl.m].instance_id].respawn.y,CLR_TELEPORT);
 		}

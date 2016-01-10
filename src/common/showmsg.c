@@ -13,8 +13,8 @@
 * Copyright (c) Hercules Dev Team                                            *
 * Copyright (c) Athena Dev Teams                                             *
 *                                                                            *
-* Licenciado sob a licença GNU GPL                                           *
-* Para mais informações leia o arquivo LICENSE na raíz do emulador           *
+* Licenciado sob a licenï¿½a GNU GPL                                           *
+* Para mais informaï¿½ï¿½es leia o arquivo LICENSE na raï¿½z do emulador           *
 *****************************************************************************/
 
 #define BRATHENA_CORE
@@ -477,7 +477,7 @@ int FPRINTF(HANDLE handle, const char *fmt, ...) {
 	return ret;
 }
 
-#define FFLUSH(handle)
+#define FFLUSH(handle) (void)(handle)
 
 #define STDOUT GetStdHandle(STD_OUTPUT_HANDLE)
 #define STDERR GetStdHandle(STD_ERROR_HANDLE)
@@ -661,7 +661,7 @@ int vShowMessage_(enum msg_type flag, const char *string, va_list ap)
 		case MSG_STATUS: //Bright Green (To inform about good things)
 			strcat(prefix,CL_LT_GREEN"[Sucesso]"CL_RESET":");
 			break;
-		case MSG_CONF: // Cor Ciano Escuro (Leitura para arquivo de configuração)
+		case MSG_CONF: // Cor Ciano Escuro (Leitura para arquivo de configuraï¿½ï¿½o)
 			strcat(prefix,CL_LT_CYAN"[Conf]"CL_RESET":");
 			break;
 		case MSG_NPC: //Cor Amarelo escuro (Leitura para arquivos de NPCS)
@@ -689,7 +689,7 @@ int vShowMessage_(enum msg_type flag, const char *string, va_list ap)
 			strcat(prefix,CL_LT_RED"[Erro Critico]"CL_RESET":");
 			break;
 		default:
-			ShowError("Na funcao vShowMessage_() -> Flag inválido.\n");
+			ShowError("Na funcao vShowMessage_() -> Flag invï¿½lido.\n");
 			return 1;
 	}
 

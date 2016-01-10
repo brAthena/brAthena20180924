@@ -13,8 +13,8 @@
 * Copyright (c) Hercules Dev Team                                            *
 * Copyright (c) Athena Dev Teams                                             *
 *                                                                            *
-* Licenciado sob a licença GNU GPL                                           *
-* Para mais informações leia o arquivo LICENSE na raíz do emulador           *
+* Licenciado sob a licenï¿½a GNU GPL                                           *
+* Para mais informaï¿½ï¿½es leia o arquivo LICENSE na raï¿½z do emulador           *
 *****************************************************************************/
 
 #ifndef COMMON_MUTEX_H
@@ -31,7 +31,7 @@ typedef struct racond racond; // Condition Var
  *
  * @return not NULL
  */
-ramutex *ramutex_create();
+ramutex *ramutex_create(void);
 
 /**
  * Destroys a Mutex
@@ -69,7 +69,7 @@ void ramutex_unlock(ramutex *m);
  *
  * @return not NULL
  */
-racond *racond_create();
+racond *racond_create(void);
 
 /**
  * Destroy a Condition variable

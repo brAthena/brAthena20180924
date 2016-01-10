@@ -13,8 +13,8 @@
 * Copyright (c) Hercules Dev Team                                            *
 * Copyright (c) Athena Dev Teams                                             *
 *                                                                            *
-* Licenciado sob a licença GNU GPL                                           *
-* Para mais informações leia o arquivo LICENSE na raíz do emulador           *
+* Licenciado sob a licenï¿½a GNU GPL                                           *
+* Para mais informaï¿½ï¿½es leia o arquivo LICENSE na raï¿½z do emulador           *
 *****************************************************************************/
 
 #define BRATHENA_CORE
@@ -74,11 +74,11 @@ struct socket_interface *sockt;
 struct socket_data **session;
 
 #ifdef SEND_SHORTLIST
-	// Add a fd to the shortlist so that it'll be recognized as a fd that needs
-	// sending done on it.
-	void send_shortlist_add_fd(int fd);
-	// Do pending network sends (and eof handling) from the shortlist.
-	void send_shortlist_do_sends();
+// Add a fd to the shortlist so that it'll be recognized as a fd that needs
+// sending done on it.
+void send_shortlist_add_fd(int fd);
+// Do pending network sends (and eof handling) from the shortlist.
+void send_shortlist_do_sends(void);
 #endif
 
 /////////////////////////////////////////////////////////////////////
@@ -1566,7 +1566,7 @@ void send_shortlist_add_fd(int fd)
 }
 
 // Do pending network sends and eof handling from the shortlist.
-void send_shortlist_do_sends()
+void send_shortlist_do_sends(void)
 {
 	int i;
 
@@ -1749,7 +1749,7 @@ void socket_net_config_read(const char *filename)
 	ARR_FIND(0, VECTOR_LENGTH(sockt->allowed_ips), i, SUBNET_MATCH(0, VECTOR_INDEX(sockt->allowed_ips, i).ip, VECTOR_INDEX(sockt->allowed_ips, i).mask));
 	if (i != VECTOR_LENGTH(sockt->allowed_ips)) {
 		ShowWarning("Utilizar uma faixa de IPs coringa na lista de IPs permitidos NAO E RECOMENDADA.\n");
-		ShowNotice("Por favor edite sua lista de permissões '%s' para adequar na configuracao da sua rede.\n", filename);
+		ShowNotice("Por favor edite sua lista de permissï¿½es '%s' para adequar na configuracao da sua rede.\n", filename);
 	}
 	libconfig->destroy(&network_config);
 	return;

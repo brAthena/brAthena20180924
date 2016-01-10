@@ -13,15 +13,15 @@
 * Copyright (c) Hercules Dev Team                                            *
 * Copyright (c) Athena Dev Teams                                             *
 *                                                                            *
-* Licenciado sob a licença GNU GPL                                           *
-* Para mais informações leia o arquivo LICENSE na raíz do emulador           *
+* Licenciado sob a licenï¿½a GNU GPL                                           *
+* Para mais informaï¿½ï¿½es leia o arquivo LICENSE na raï¿½z do emulador           *
 *****************************************************************************/
 
 #ifndef CONFIG_CONSTANTS_H
 #define CONFIG_CONSTANTS_H
 
 /**
- * Checagens de segurança para tempo de intervalo nos diálogos com npcs.
+ * Checagens de seguranï¿½a para tempo de intervalo nos diï¿½logos com npcs.
  **/
 #if SECURE_NPCTIMEOUT_INTERVAL <= 0
 	#error SECURE_NPCTIMEOUT_INTERVAL should be at least 1 (1s)
@@ -37,7 +37,7 @@
 #endif
 
 /**
- * Sufixo para arquivos no banco de dados da renovação/pré-renovação ou old-times
+ * Sufixo para arquivos no banco de dados da renovaï¿½ï¿½o/prï¿½-renovaï¿½ï¿½o ou old-times
  **/
 #ifdef RENEWAL
 	#define DBPATH "re/"
@@ -91,9 +91,9 @@
 		md.damage = md.damage * 150 / 100 + md.damage * status->get_lv(src) / 100; \
 	} while(0)
 #else
-	#define RE_LVL_DMOD(val)
-	#define RE_LVL_MDMOD(val)
-	#define RE_LVL_TMDMOD()
+	#define RE_LVL_DMOD(val) (void)(val)
+	#define RE_LVL_MDMOD(val) (void)(val)
+	#define RE_LVL_TMDMOD() (void)0
 #endif
 
 // Renewal variable cast time reduction

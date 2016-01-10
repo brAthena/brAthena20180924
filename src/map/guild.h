@@ -13,8 +13,8 @@
 * Copyright (c) Hercules Dev Team                                            *
 * Copyright (c) Athena Dev Teams                                             *
 *                                                                            *
-* Licenciado sob a licença GNU GPL                                           *
-* Para mais informações leia o arquivo LICENSE na raíz do emulador           *
+* Licenciado sob a licenï¿½a GNU GPL                                           *
+* Para mais informaï¿½ï¿½es leia o arquivo LICENSE na raï¿½z do emulador           *
 *****************************************************************************/
 
 #ifndef MAP_GUILD_H
@@ -24,6 +24,8 @@
 #include "common/cbasetypes.h"
 #include "common/db.h"
 #include "common/mmo.h"
+
+struct map_session_data;
 
 /**
  * Defines
@@ -160,7 +162,7 @@ struct guild_interface {
 	void (*retrieveitembound) (int char_id,int aid,int guild_id);
 	/* */
 	int (*payexp_timer) (int tid, int64 tick, int id, intptr_t data);
-	TBL_PC* (*sd_check) (int guild_id, int account_id, int char_id);
+	struct map_session_data *(*sd_check) (int guild_id, int account_id, int char_id);
 	bool (*read_guildskill_tree_db) (char* split[], int columns, int current);
 	bool (*read_castledb) (char* str[], int columns, int current);
 	int (*payexp_timer_sub) (DBKey key, DBData *data, va_list ap);

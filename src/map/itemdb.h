@@ -13,8 +13,8 @@
 * Copyright (c) Hercules Dev Team                                            *
 * Copyright (c) Athena Dev Teams                                             *
 *                                                                            *
-* Licenciado sob a licença GNU GPL                                           *
-* Para mais informações leia o arquivo LICENSE na raíz do emulador           *
+* Licenciado sob a licenï¿½a GNU GPL                                           *
+* Para mais informaï¿½ï¿½es leia o arquivo LICENSE na raï¿½z do emulador           *
 *****************************************************************************/
 
 #ifndef MAP_ITEMDB_H
@@ -94,6 +94,10 @@ enum item_itemid {
 	ITEMID_ANGRA_MANYU           = 1599,
 	ITEMID_STRANGE_EMBRYO        = 6415,
 	ITEMID_FACE_PAINT            = 6120,
+	ITEMID_SCARLET_POINT         = 6360,
+	ITEMID_INDIGO_POINT          = 6361,
+	ITEMID_YELLOW_WISH_POINT     = 6362,
+	ITEMID_LIME_GREEN_POINT      = 6363,
 	ITEMID_STONE                 = 7049,
 	ITEMID_FIRE_BOTTLE           = 7135,
 	ITEMID_ACID_BOTTLE           = 7136,
@@ -148,6 +152,9 @@ enum item_itemid {
 	ITEMID_WOB_LOCAL             = 14585,
 	ITEMID_SIEGE_TELEPORT_SCROLL = 14591,
 	ITEMID_JOB_MANUAL50          = 14592,
+	ITEMID_PILEBUNCKER_S         = 16030,
+	ITEMID_PILEBUNCKER_P         = 16031,
+	ITEMID_PILEBUNCKER_T         = 16032,
 };
 
 enum cards_item_list {
@@ -528,13 +535,14 @@ struct item_data {
 #define itemdb_canrefine(n)   (!itemdb->search(n)->flag.no_refine)
 
 #define itemdb_is_rune(n)        (((n) >= ITEMID_NAUTHIZ && (n) <= ITEMID_HAGALAZ) || (n) == ITEMID_LUX_ANIMA)
-#define itemdb_is_element(n)     ((n) >= ITEMID_BOODY_RED && (n) <= ITEMID_YELLOW_LIVE)
+#define itemdb_is_element(n)     ((n) >= ITEMID_SCARLET_POINT && (n) <= ITEMID_LIME_GREEN_POINT)
 #define itemdb_is_spellbook(n)   ((n) >= ITEMID_MAGIC_BOOK_FB && (n) <= ITEMID_MAGIC_BOOK_DL)
 #define itemdb_is_poison(n)      ((n) >= ITEMID_POISON_PARALYSIS && (n) <= ITEMID_POISON_FATIGUE)
 #define itemid_isgemstone(n)     ((n) >= ITEMID_YELLOW_GEMSTONE && (n) <= ITEMID_BLUE_GEMSTONE)
 #define itemdb_iscashfood(n)     ((n) >= ITEMID_STR_DISH10_ && (n) <= ITEMID_VIT_DISH10_)
 #define itemdb_is_GNbomb(n)      ((n) >= ITEMID_APPLE_BOMB && (n) <= ITEMID_VERY_HARD_LUMP)
 #define itemdb_is_GNthrowable(n) ((n) >= ITEMID_MYSTERIOUS_POWDER && (n) <= ITEMID_BLACK_THING_TO_THROW)
+#define itemid_is_pilebunker(n)  ((n) == ITEMID_PILEBUNCKER || (n) == ITEMID_PILEBUNCKER_P || (n) == ITEMID_PILEBUNCKER_S || (n) == ITEMID_PILEBUNCKER_T)
 #define itemdb_is_shadowequip(n) ((n) & (EQP_SHADOW_ARMOR|EQP_SHADOW_WEAPON|EQP_SHADOW_SHIELD|EQP_SHADOW_SHOES|EQP_SHADOW_ACC_R|EQP_SHADOW_ACC_L))
 #define itemdb_is_costumeequip(n) ((n) & (EQP_COSTUME_HEAD_TOP|EQP_COSTUME_HEAD_MID|EQP_COSTUME_HEAD_LOW|EQP_COSTUME_GARMENT))
 
@@ -615,7 +623,7 @@ struct itemdb_interface {
 	int (*isidentified) (int nameid);
 	int (*isidentified2) (struct item_data *data);
 	int (*combo_split_atoi) (char *str, int *val);
-	void (*read_combos) ();
+	void (*read_combos) (void);
 	int (*gendercheck) (struct item_data *id);
 	int (*validate_entry) (struct item_data *entry, int n, const char *source);
 	void (*readdb_additional_fields) (int itemid, config_setting_t *it, int n, const char *source);

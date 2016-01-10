@@ -8,14 +8,14 @@
 *                            www.brathena.org                                *
 ******************************************************************************
 * src/map/party.c                                                            *
-* Funções referentes ao sistema de grupos de jogadores                       *
+* Funï¿½ï¿½es referentes ao sistema de grupos de jogadores                       *
 ******************************************************************************
 * Copyright (c) brAthena Dev Team                                            *
 * Copyright (c) Hercules Dev Team                                            *
 * Copyright (c) Athena Dev Teams                                             *
 *                                                                            *
-* Licenciado sob a licença GNU GPL                                           *
-* Para mais informações leia o arquivo LICENSE na raíz do emulador           *
+* Licenciado sob a licenï¿½a GNU GPL                                           *
+* Para mais informaï¿½ï¿½es leia o arquivo LICENSE na raï¿½z do emulador           *
 *****************************************************************************/
 
 #define BRATHENA_CORE
@@ -95,8 +95,9 @@ struct map_session_data* party_getavailablesd(struct party_data *p)
 /*==========================================
  * Retrieves and validates the sd pointer for this party member [Skotlex]
  *------------------------------------------*/
-TBL_PC* party_sd_check(int party_id, int account_id, int char_id) {
-	TBL_PC* sd = map->id2sd(account_id);
+struct map_session_data *party_sd_check(int party_id, int account_id, int char_id)
+{
+	struct map_session_data *sd = map->id2sd(account_id);
 
 	if (!(sd && sd->status.char_id == char_id))
 		return NULL;
@@ -949,8 +950,8 @@ int party_exp_share(struct party_data* p, struct block_list* src, unsigned int b
 
 	for (i = 0; i < c; i++) {
 #ifdef RENEWAL_EXP
-		if( !(src && src->type == BL_MOB && ((TBL_MOB*)src)->db->mexp) ){
-			struct mob_data *md = (TBL_MOB*)src;
+		struct mob_data *md = BL_CAST(BL_MOB, src);
+		if (md != NULL && md->db->mexp == 0) {
 			int rate = pc->level_penalty_mod(md->level - (sd[i])->status.base_level, md->status.race, md->status.mode, 1);
 
 			base_exp = (unsigned int)cap_value(base_exp_bonus * rate / 100, 1, UINT_MAX);
@@ -968,16 +969,16 @@ int party_exp_share(struct party_data* p, struct block_list* src, unsigned int b
 //Does party loot. first_charid holds the charid of the player who has time priority to take the item.
 int party_share_loot(struct party_data* p, struct map_session_data* sd, struct item* item_data, int first_charid)
 {
-	TBL_PC* target = NULL;
+	struct map_session_data *target = NULL;
 	int i;
 	if (p && p->party.item&2 && (first_charid || !(battle_config.party_share_type&1)))
 	{
 		//item distribution to party members.
 		if (battle_config.party_share_type&2) {
 			//Round Robin
-			TBL_PC* psd;
 			i = p->itemc;
 			do {
+				struct map_session_data *psd;
 				i++;
 				if (i >= MAX_PARTY)
 					i = 0; // reset counter to 1st person in party so it'll stop when it reaches "itemc"
@@ -995,7 +996,7 @@ int party_share_loot(struct party_data* p, struct map_session_data* sd, struct i
 			} while (i != p->itemc);
 		} else {
 			//Random pick
-			TBL_PC* psd[MAX_PARTY];
+			struct map_session_data *psd[MAX_PARTY];
 			int count = 0;
 			//Collect pick candidates
 			for (i = 0; i < MAX_PARTY; i++) {
@@ -1045,7 +1046,11 @@ int party_send_dot_remove(struct map_session_data *sd)
 // party_foreachsamemap(party->sub_count, sd, 0, &c);
 int party_sub_count(struct block_list *bl, va_list ap)
 {
-	struct map_session_data *sd = (TBL_PC *)bl;
+	const struct map_session_data *sd = NULL;
+
+	nullpo_ret(bl);
+	Assert_ret(bl->type == BL_PC);
+	sd = BL_UCCAST(BL_PC, bl);
 
 	if (sd->state.autotrade)
 		return 0;
@@ -1106,8 +1111,13 @@ int party_vforeachsamemap(int (*func)(struct block_list*,va_list), struct map_se
 }
 
 // Special check for Minstrel's and Wanderer's chorus skills.
-int party_sub_count_chorus(struct block_list *bl, va_list ap) {
-	struct map_session_data *sd = (TBL_PC *)bl;
+int party_sub_count_chorus(struct block_list *bl, va_list ap)
+{
+	const struct map_session_data *sd = NULL;
+
+	nullpo_ret(bl);
+	Assert_ret(bl->type == BL_PC);
+	sd = BL_UCCAST(BL_PC, bl);
 
 	if (sd->state.autotrade)
 		return 0;

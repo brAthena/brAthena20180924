@@ -13,8 +13,8 @@
 * Copyright (c) Hercules Dev Team                                            *
 * Copyright (c) Athena Dev Teams                                             *
 *                                                                            *
-* Licenciado sob a licença GNU GPL                                           *
-* Para mais informações leia o arquivo LICENSE na raíz do emulador           *
+* Licenciado sob a licenï¿½a GNU GPL                                           *
+* Para mais informaï¿½ï¿½es leia o arquivo LICENSE na raï¿½z do emulador           *
 *****************************************************************************/
 
 #define BRATHENA_CORE
@@ -507,7 +507,7 @@ void pc_groups_reload(void) {
 
 	/* refresh online users permissions */
 	iter = mapit_getallusers();
-	for (sd = (TBL_PC*)mapit->first(iter); mapit->exists(iter); sd = (TBL_PC*)mapit->next(iter)) {
+	for (sd = BL_UCAST(BL_PC, mapit->first(iter)); mapit->exists(iter); sd = BL_UCAST(BL_PC, mapit->next(iter))) {
 		if (pc->set_group(sd, sd->group_id) != 0) {
 			ShowWarning("pc_groups_reload: %s (AID:%d) tem um grupo desconhecido (id %d)! Expulsando...\n",
 				sd->status.name, sd->status.account_id, pc_get_group_id(sd));

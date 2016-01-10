@@ -13,8 +13,8 @@
 * Copyright (c) Hercules Dev Team                                            *
 * Copyright (c) Athena Dev Teams                                             *
 *                                                                            *
-* Licenciado sob a licença GNU GPL                                           *
-* Para mais informações leia o arquivo LICENSE na raíz do emulador           *
+* Licenciado sob a licenï¿½a GNU GPL                                           *
+* Para mais informaï¿½ï¿½es leia o arquivo LICENSE na raï¿½z do emulador           *
 *****************************************************************************/
 
 #ifndef COMMON_SQL_H
@@ -259,8 +259,6 @@ struct sql_interface {
 
 };
 
-struct sql_interface *SQL;
-
 #ifdef BRATHENA_CORE
 void sql_defaults(void);
 
@@ -270,14 +268,16 @@ void Sql_brAthenaUpdateCheck(Sql* self);
 void Sql_brAthenaUpdateSkip(Sql* self,const char *filename);
 #endif // BRATHENA_CORE
 
+struct sql_interface *SQL;
+
 #if defined(SQL_REMOVE_SHOWDEBUG)
-#define Sql_ShowDebug(self) (void)0
+#define Sql_ShowDebug(self) (void)(self)
 #else
 #define Sql_ShowDebug(self) (SQL->ShowDebug_((self), __FILE__, __LINE__))
 #endif
 
 #if defined(SQL_REMOVE_SHOWDEBUG)
-#define SqlStmt_ShowDebug(self) (void)0
+#define SqlStmt_ShowDebug(self) (void)(self)
 #else
 /// Shows debug information (with statement).
 #define SqlStmt_ShowDebug(self) (SQL->StmtShowDebug_((self), __FILE__, __LINE__))

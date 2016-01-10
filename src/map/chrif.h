@@ -13,16 +13,16 @@
 * Copyright (c) Hercules Dev Team                                            *
 * Copyright (c) Athena Dev Teams                                             *
 *                                                                            *
-* Licenciado sob a licença GNU GPL                                           *
-* Para mais informações leia o arquivo LICENSE na raíz do emulador           *
+* Licenciado sob a licenï¿½a GNU GPL                                           *
+* Para mais informaï¿½ï¿½es leia o arquivo LICENSE na raï¿½z do emulador           *
 *****************************************************************************/
 
 #ifndef MAP_CHRIF_H
 #define MAP_CHRIF_H
 
-#include "map/map.h" //TBL_PC
 #include "common/cbasetypes.h"
 #include "common/db.h"
+#include "common/mmo.h"
 
 struct eri;
 struct map_session_data;
@@ -128,9 +128,9 @@ struct chrif_interface {
 	bool (*flush) (void);
 	void (*skillid2idx) (int fd);
 
-	bool (*sd_to_auth) (TBL_PC* sd, enum sd_state state);
+	bool (*sd_to_auth) (struct map_session_data *sd, enum sd_state state);
 	int (*check_connect_char_server) (int tid, int64 tick, int id, intptr_t data);
-	bool (*auth_logout) (TBL_PC* sd, enum sd_state state);
+	bool (*auth_logout) (struct map_session_data *sd, enum sd_state state);
 	void (*save_ack) (int fd);
 	int (*reconnect) (DBKey key, DBData *data, va_list ap);
 	int (*auth_db_cleanup_sub) (DBKey key, DBData *data, va_list ap);

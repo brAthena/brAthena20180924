@@ -8,14 +8,14 @@
 *                            www.brathena.org                                *
 ******************************************************************************
 * src/map/npc_chat.c                                                         *
-* Funções referentes ao uso de expressões regulares no chat em NPCs          *
+* Funï¿½ï¿½es referentes ao uso de expressï¿½es regulares no chat em NPCs          *
 ******************************************************************************
 * Copyright (c) brAthena Dev Team                                            *
 * Copyright (c) Hercules Dev Team                                            *
 * Copyright (c) Athena Dev Teams                                             *
 *                                                                            *
-* Licenciado sob a licença GNU GPL                                           *
-* Para mais informações leia o arquivo LICENSE na raíz do emulador           *
+* Licenciado sob a licenï¿½a GNU GPL                                           *
+* Para mais informaï¿½ï¿½es leia o arquivo LICENSE na raï¿½z do emulador           *
 *****************************************************************************/
 
 #define BRATHENA_CORE
@@ -339,14 +339,19 @@ void npc_chat_finalize(struct npc_data* nd)
  */
 int npc_chat_sub(struct block_list* bl, va_list ap)
 {
-	struct npc_data *nd = (struct npc_data *) bl;
-	struct npc_parse *npcParse = nd->chatdb;
-	char* msg;
+	struct npc_data *nd = NULL;
+	struct npc_parse *npcParse = NULL;
+	char *msg;
 	int len, i;
 	struct map_session_data* sd;
 	struct npc_label_list* lst;
 	struct pcrematch_set* pcreset;
 	struct pcrematch_entry* e;
+
+	nullpo_ret(bl);
+	Assert_ret(bl->type == BL_NPC);
+	nd = BL_UCAST(BL_NPC, bl);
+	npcParse = nd->chatdb;
 
 	// Not interested in anything you might have to say...
 	if (npcParse == NULL || npcParse->active == NULL)
@@ -395,38 +400,46 @@ int npc_chat_sub(struct block_list* bl, va_list ap)
 }
 
 // Various script built-ins used to support these functions
-BUILDIN(defpattern) {
+BUILDIN(defpattern)
+{
 	int setid = script_getnum(st,2);
 	const char* pattern = script_getstr(st,3);
 	const char* label = script_getstr(st,4);
-	struct npc_data* nd = (struct npc_data *)map->id2bl(st->oid);
+	struct npc_data *nd = map->id2nd(st->oid);
+	nullpo_retr(false, nd);
 
 	npc_chat->def_pattern(nd, setid, pattern, label);
 
 	return true;
 }
 
-BUILDIN(activatepset) {
+BUILDIN(activatepset)
+{
 	int setid = script_getnum(st,2);
-	struct npc_data* nd = (struct npc_data *)map->id2bl(st->oid);
+	struct npc_data *nd = map->id2nd(st->oid);
+	nullpo_retr(false, nd);
 
 	npc_chat->activate_pcreset(nd, setid);
 
 	return true;
 }
 
-BUILDIN(deactivatepset) {
+BUILDIN(deactivatepset)
+{
 	int setid = script_getnum(st,2);
-	struct npc_data* nd = (struct npc_data *)map->id2bl(st->oid);
+	struct npc_data *nd = map->id2nd(st->oid);
+	nullpo_retr(false, nd);
 
 	npc_chat->deactivate_pcreset(nd, setid);
 
 	return true;
 }
 
-BUILDIN(deletepset) {
+BUILDIN(deletepset)
+{
 	int setid = script_getnum(st,2);
-	struct npc_data* nd = (struct npc_data *)map->id2bl(st->oid);
+	struct npc_data *nd = map->id2nd(st->oid);
+	nullpo_retr(false, nd);
 
 	npc_chat->delete_pcreset(nd, setid);
 

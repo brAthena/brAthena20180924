@@ -13,8 +13,8 @@
 * Copyright (c) Hercules Dev Team                                            *
 * Copyright (c) Athena Dev Teams                                             *
 *                                                                            *
-* Licenciado sob a licença GNU GPL                                           *
-* Para mais informações leia o arquivo LICENSE na raíz do emulador           *
+* Licenciado sob a licenï¿½a GNU GPL                                           *
+* Para mais informaï¿½ï¿½es leia o arquivo LICENSE na raï¿½z do emulador           *
 *****************************************************************************/
 
 #ifndef MAP_HOMUNCULUS_H
@@ -62,13 +62,14 @@ enum homun_id {
 
 #ifdef RENEWAL
 #define	HOMUN_LEVEL_STATWEIGHT_VALUE 0
-#define APPLY_HOMUN_LEVEL_STATWEIGHT()( \
+#define APPLY_HOMUN_LEVEL_STATWEIGHT() \
+	do { \
 	hom->str_value = hom->agi_value = \
 	hom->vit_value = hom->int_value = \
-	hom->dex_value = hom->luk_value = hom->level / 10 - HOMUN_LEVEL_STATWEIGHT_VALUE \
-	)
+		hom->dex_value = hom->luk_value = hom->level / 10 - HOMUN_LEVEL_STATWEIGHT_VALUE; \
+	} while (false)
 #else
-#define APPLY_HOMUN_LEVEL_STATWEIGHT()
+#define APPLY_HOMUN_LEVEL_STATWEIGHT() (void)0
 #endif
 
 struct h_stats {

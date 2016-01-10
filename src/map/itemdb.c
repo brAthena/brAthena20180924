@@ -8,14 +8,14 @@
 *                            www.brathena.org                                *
 ******************************************************************************
 * src/map/itemdb.c                                                           *
-* Responsável pela leitura e verificações dos itens do banco de dados        *
+* Responsï¿½vel pela leitura e verificaï¿½ï¿½es dos itens do banco de dados        *
 ******************************************************************************
 * Copyright (c) brAthena Dev Team                                            *
 * Copyright (c) Hercules Dev Team                                            *
 * Copyright (c) Athena Dev Teams                                             *
 *                                                                            *
-* Licenciado sob a licença GNU GPL                                           *
-* Para mais informações leia o arquivo LICENSE na raíz do emulador           *
+* Licenciado sob a licenï¿½a GNU GPL                                           *
+* Para mais informaï¿½ï¿½es leia o arquivo LICENSE na raï¿½z do emulador           *
 *****************************************************************************/
 
 #define BRATHENA_CORE
@@ -328,17 +328,17 @@ const char* itemdb_typename(int type)
 {
 	switch(type)
 	{
-		case IT_HEALING:        return "Poção/Comida";
-		case IT_USABLE:         return "Usável";
+		case IT_HEALING:        return "Poï¿½ï¿½o/Comida";
+		case IT_USABLE:         return "Usï¿½vel";
 		case IT_ETC:            return "Etc.";
 		case IT_WEAPON:         return "Arma";
 		case IT_ARMOR:          return "Armadura";
 		case IT_CARD:           return "Carta";
 		case IT_PETEGG:         return "Ovo de Bichinho";
-		case IT_PETARMOR:       return "Acessório de Bicinho";
-		case IT_AMMO:           return "Flecha/Munição";
-		case IT_DELAYCONSUME:   return "[Delay] Item Consumível";
-		case IT_CASH:           return "Cash Usável";
+		case IT_PETARMOR:       return "Acessï¿½rio de Bicinho";
+		case IT_AMMO:           return "Flecha/Muniï¿½ï¿½o";
+		case IT_DELAYCONSUME:   return "[Delay] Item Consumï¿½vel";
+		case IT_CASH:           return "Cash Usï¿½vel";
 	}
 	return "Unknown Type";
 }
@@ -1256,7 +1256,7 @@ int itemdb_combo_split_atoi (char *str, int *val) {
 /*==========================================
  * Leitura item_combo_db SQL [Shiraz]
  *------------------------------------------*/
-void itemdb_read_combos() {
+void itemdb_read_combos(void) {
 	int items[MAX_ITEMS_PER_COMBO], v = 0, retcount = 0, rows = 0, i;
 	struct item_combo *combo = NULL;
 
@@ -1272,7 +1272,7 @@ void itemdb_read_combos() {
 			SQL->GetData(map->brAmysql_handle, i, &row[i], NULL);
 
 		if((retcount = itemdb_combo_split_atoi(row[0], items)) < 2) {
-			ShowError("itemdb_read_combos: Não tem elementos suficientes (min:2).\n");
+			ShowError("itemdb_read_combos: Nï¿½o tem elementos suficientes (min:2).\n");
 			continue;
 		}
 
@@ -1819,7 +1819,7 @@ void itemdb_reload(void) {
 
 	// readjust itemdb pointer cache for each player
 	iter = mapit_geteachpc();
-	for( sd = (struct map_session_data*)mapit->first(iter); mapit->exists(iter); sd = (struct map_session_data*)mapit->next(iter) ) {
+	for (sd = BL_UCAST(BL_PC, mapit->first(iter)); mapit->exists(iter); sd = BL_UCAST(BL_PC, mapit->next(iter))) {
 		memset(sd->item_delay, 0, sizeof(sd->item_delay));  // reset item delays
 		pc->setinventorydata(sd);
 		if( battle_config.item_check )
@@ -1842,7 +1842,7 @@ void itemdb_name_constants(void) {
 	struct item_data *data;
 
 #ifdef ENABLE_CASE_CHECK
-	script->parser_current_file = "Database de Item (Provavelmente um Nome Aegis inválido ou em Conflito)";
+	script->parser_current_file = "Database de Item (Provavelmente um Nome Aegis invï¿½lido ou em Conflito)";
 #endif // ENABLE_CASE_CHECK
 	for( data = dbi_first(iter); dbi_exists(iter); data = dbi_next(iter) )
 		script->set_constant2(data->name,data->nameid,0);

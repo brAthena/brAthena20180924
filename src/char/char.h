@@ -14,7 +14,7 @@
 * Copyright (c) Athena Dev Teams                                             *
 *                                                                            *
 * Licenciado sob a licenca GNU GPL                                           *
-* Para mais informações leia o arquivo LICENSE na raíz do emulador           *
+* Para mais informaï¿½ï¿½es leia o arquivo LICENSE na raï¿½z do emulador           *
 *****************************************************************************/
 
 #ifndef CHAR_CHAR_H
@@ -313,15 +313,11 @@ extern char acc_reg_str_db[32];
 extern char char_reg_str_db[32];
 extern char char_reg_num_db[32];
 
-extern int db_use_sql_item_db;
-extern int db_use_sql_mob_db;
-extern int db_use_sql_mob_skill_db;
-
 extern int guild_exp_rate;
 extern int log_inter;
 
-void char_load_defaults();
-void char_defaults();
+void char_load_defaults(void);
+void char_defaults(void);
 #endif // BRATHENA_CORE
 
 struct char_interface *chr;

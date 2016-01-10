@@ -21756,6 +21756,7 @@ REPLACE INTO skill_db VALUES(2534,'0',0,4,'0','0x1','0','1','0','no','0','0','0'
 REPLACE INTO skill_db VALUES(2535,'0',0,4,'0','0x1','0','1','0','no','0','0x1','0','none','0','ALL_BUYING_STORE','Abrir Venda');
 REPLACE INTO skill_db VALUES(2536,'0',0,4,'0','0x1','0','1','0','no','0','0','0','none','0','ALL_GUARDIAN_RECALL','Chamar Guardiões');
 REPLACE INTO skill_db VALUES(2537,'9',6,16,'0','0x1','0','2','1','yes','0','0','0','magic','0','ALL_ODINS_POWER','Poder de Odin');
+REPLACE INTO skill_db VALUES(2544,'0',6,4,'0','0x1','0','1','1','no','0','0x1','0','none','0','MC_CARTDECORATE','Change Cart 2');
 REPLACE INTO skill_db VALUES(2551,'0',0,0,'0','0','0','10','0','no','0','0','0','none','0','RL_GLITTERING_GREED','Flip The Coin Greed');
 REPLACE INTO skill_db VALUES(2552,'0',6,4,'0','0x1','0','1','1','no','0','0','0','none','0','RL_RICHS_COIN','Rich\\\'s Coin');
 REPLACE INTO skill_db VALUES(2553,'15',6,1,'-1','0','0','5','1','no','0','0','0','weapon','0','RL_MASS_SPIRAL','Mass Spiral');
@@ -22850,6 +22851,7 @@ REPLACE INTO skill_require_db VALUES(2534,'0','0','1','0','0',0,'99',0,'0','none
 REPLACE INTO skill_require_db VALUES(2535,'0','0','1','0','0',0,'99',0,'0','none','0',6377,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
 REPLACE INTO skill_require_db VALUES(2536,'0','0','1','0','0',0,'99',0,'0','none','0',0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
 REPLACE INTO skill_require_db VALUES(2537,'0','0','70:100','0','0',0,'99',0,'0','none','0',0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+REPLACE INTO skill_require_db VALUES(2544,'0','0','40','0','0',0,'99',0,'0','none','0',0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
 REPLACE INTO skill_require_db VALUES(2551,'0','0','1','0','0',0,'99',0,'0','none','0',0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
 REPLACE INTO skill_require_db VALUES(2552,'0','0','10','0','0',0,'99',0,'0','none','0',0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
 REPLACE INTO skill_require_db VALUES(2553,'0','0','80:84:88:92:96','0','0',0,'99',0,'0','none','0',0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);

@@ -13,8 +13,8 @@
 * Copyright (c) Hercules Dev Team                                            *
 * Copyright (c) Athena Dev Teams                                             *
 *                                                                            *
-* Licenciado sob a licença GNU GPL                                           *
-* Para mais informações leia o arquivo LICENSE na raíz do emulador           *
+* Licenciado sob a licenï¿½a GNU GPL                                           *
+* Para mais informaï¿½ï¿½es leia o arquivo LICENSE na raï¿½z do emulador           *
 *****************************************************************************/
 
 /// See sysinfo.h for a description of this file
@@ -60,7 +60,7 @@ struct sysinfo_interface *sysinfo;
 #define VCSTYPE_UNKNOWN 0
 #define VCSTYPE_GIT 1
 #define VCSTYPE_SVN 2
-#define VCSTYPE_NONE -1
+#define VCSTYPE_NONE (-1)
 
 #ifdef WIN32
 /**
@@ -850,7 +850,7 @@ const char *sysinfo_arch(void) {
 }
 
 /**
- * Returns info about the 32 or 64 bit build of brAthena.
+ * Returns info about the 32 or 64 bit build of Hercules.
  *
  * @retval true  if this is a 64 bit build.
  * @retval false if this isn't a 64 bit build (i.e. it is a 32 bit build).

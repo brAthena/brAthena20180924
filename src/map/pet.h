@@ -13,8 +13,8 @@
 * Copyright (c) Hercules Dev Team                                            *
 * Copyright (c) Athena Dev Teams                                             *
 *                                                                            *
-* Licenciado sob a licença GNU GPL                                           *
-* Para mais informações leia o arquivo LICENSE na raíz do emulador           *
+* Licenciado sob a licenï¿½a GNU GPL                                           *
+* Para mais informaï¿½ï¿½es leia o arquivo LICENSE na raï¿½z do emulador           *
 *****************************************************************************/
 
 #ifndef MAP_PET_H
@@ -165,7 +165,7 @@ struct pet_interface {
 	int (*skill_bonus_timer) (int tid, int64 tick, int id, intptr_t data);
 	int (*recovery_timer) (int tid, int64 tick, int id, intptr_t data);
 	int (*skill_support_timer) (int tid, int64 tick, int id, intptr_t data);
-	void (*read_db) (void);
+	int (*read_db) (void);
 };
 
 struct pet_interface *pet;

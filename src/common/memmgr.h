@@ -13,8 +13,8 @@
 * Copyright (c) Hercules Dev Team                                            *
 * Copyright (c) Athena Dev Teams                                             *
 *                                                                            *
-* Licenciado sob a licença GNU GPL                                           *
-* Para mais informações leia o arquivo LICENSE na raíz do emulador           *
+* Licenciado sob a licenï¿½a GNU GPL                                           *
+* Para mais informaï¿½ï¿½es leia o arquivo LICENSE na raï¿½z do emulador           *
 *****************************************************************************/
 
 #ifndef COMMON_MEMMGR_H
@@ -59,7 +59,7 @@
 #ifdef __GNUC__ // GCC has variable length arrays
 
 #define CREATE_BUFFER(name, type, size) type name[size]
-#define DELETE_BUFFER(name)
+#define DELETE_BUFFER(name) (void)0
 
 #else // others don't, so we emulate them
 
@@ -74,12 +74,6 @@
 #define RECREATE(result, type, number) ((result) = (type *) aReallocz((result), sizeof(type) * (number)))
 
 ////////////////////////////////////////////////
-
-#ifdef BRATHENA_CORE
-void malloc_defaults(void);
-
-void memmgr_report(int extra);
-#endif // BRATHENA_CORE
 
 struct malloc_interface {
 	void (*init) (void);
@@ -100,5 +94,12 @@ struct malloc_interface {
 	void (*init_messages) (void);
 };
 
+#ifdef BRATHENA_CORE
+void malloc_defaults(void);
+
+void memmgr_report(int extra);
+#endif // BRATHENA_CORE
+
 struct malloc_interface *iMalloc;
+
 #endif /* COMMON_MEMMGR_H */

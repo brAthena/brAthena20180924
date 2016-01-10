@@ -8,14 +8,14 @@
 *                            www.brathena.org                                *
 ******************************************************************************
 * src/map/elemental.c                                                        *
-* Funções referentes aos Elementais de Feiticeiro                            *
+* Funï¿½ï¿½es referentes aos Elementais de Feiticeiro                            *
 ******************************************************************************
 * Copyright (c) brAthena Dev Team                                            *
 * Copyright (c) Hercules Dev Team                                            *
 * Copyright (c) Athena Dev Teams                                             *
 *                                                                            *
-* Licenciado sob a licença GNU GPL                                           *
-* Para mais informações leia o arquivo LICENSE na raíz do emulador           *
+* Licenciado sob a licenï¿½a GNU GPL                                           *
+* Para mais informaï¿½ï¿½es leia o arquivo LICENSE na raï¿½z do emulador           *
 *****************************************************************************/
 
 #define BRATHENA_CORE
@@ -273,9 +273,10 @@ int elemental_data_received(struct s_elemental *ele, bool flag) {
 	db = &elemental->db[i];
 	if( !sd->ed ) {
 		// Initialize it after first summon.
-		sd->ed = ed = (struct elemental_data*)aCalloc(1,sizeof(struct elemental_data));
+		CREATE(ed, struct elemental_data, 1);
 		ed->bl.type = BL_ELEM;
 		ed->bl.id = npc->get_new_npc_id();
+		sd->ed = ed;
 		ed->master = sd;
 		ed->db = db;
 		memcpy(&ed->elemental, ele, sizeof(struct s_elemental));
@@ -843,14 +844,14 @@ int read_elementaldb(void) {
 				continue;
 			}
 			if(elemental->search_index(int_value)!=-1){
-				ShowWarning("elemental_db: Membro %d de elemental_db com id já existente, ignorando...\n",count);
+				ShowWarning("elemental_db: Membro %d de elemental_db com id jï¿½ existente, ignorando...\n",count);
 				libconfig->setting_remove_elem(ele_db, count);
 				count--;
 				ele_count--;
 				continue;				
 			}
 			if (!libconfig->setting_lookup_string(elemental_, "AegisName", &str)) {
-				ShowWarning("elemental_db: Membro %d : AegisName não definido , ignorando...\n",count);
+				ShowWarning("elemental_db: Membro %d : AegisName nï¿½o definido , ignorando...\n",count);
 				libconfig->setting_remove_elem(ele_db, count);
 				count--;
 				ele_count--;
@@ -894,7 +895,7 @@ int read_elementaldb(void) {
 			db->status.ele_lv    = ele/20;
 
 			if( db->status.def_ele >= ELE_MAX ) {
-				ShowWarning("Elemental %d tem o tipo de elemento invalido %d (elemento maximo é %d)\n", db->class_, db->status.def_ele, ELE_MAX - 1);
+				ShowWarning("Elemental %d tem o tipo de elemento invalido %d (elemento maximo ï¿½ %d)\n", db->class_, db->status.def_ele, ELE_MAX - 1);
 				db->status.def_ele = ELE_NEUTRAL;
 			}
 			
@@ -955,7 +956,7 @@ int read_elemental_skilldb(void) {
 
 		ARR_FIND(0, MAX_ELESKILLTREE, i, db->skill[i].id == 0 || db->skill[i].id == skill_id);
 		if(i == MAX_ELESKILLTREE) {
-			ShowWarning("Nao foi possivel carregar  arvore de habilidade %d em Elemental %d's. O numero maximo de habilidades por elemental foi atingido.\n", skill_id, class_);
+			ShowWarning("Nao foi possivel carregar ï¿½arvore de habilidade %d em Elemental %d's. O numero maximo de habilidades por elemental foi atingido.\n", skill_id, class_);
 			continue;
 		}
 

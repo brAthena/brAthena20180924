@@ -14,7 +14,7 @@
 * Copyright (c) Athena Dev Teams                                             *
 *                                                                            *
 * Licenciado sob a licenca GNU GPL                                           *
-* Para mais informações leia o arquivo LICENSE na raíz do emulador           *
+* Para mais informaï¿½ï¿½es leia o arquivo LICENSE na raï¿½z do emulador           *
 *****************************************************************************/
 
 #ifndef LOGIN_LOGIN_H
@@ -154,7 +154,7 @@ struct login_interface {
 	DBMap* auth_db;
 	DBMap* online_db;
 	int fd;
-	struct Login_Config *lc;
+	struct Login_Config *config;
 	struct AccountDB* accounts;
 
 	int (*mmo_auth) (struct login_session_data* sd, bool isServer);
@@ -211,13 +211,14 @@ struct login_interface {
 	void (*char_server_connection_status) (int fd, struct login_session_data* sd, uint8 status);
 	void (*parse_request_connection) (int fd, struct login_session_data* sd, const char *ip, uint32 ipl);
 	int (*parse_login) (int fd);
+	void (*config_set_defaults) (void);
+	int (*config_read) (const char *cfgName);
 	char *LOGIN_CONF_NAME;
 	char *NET_CONF_NAME; ///< Network configuration filename
 };
 
 #ifdef BRATHENA_CORE
 extern struct mmo_char_server server[MAX_SERVERS];
-extern struct Login_Config login_config;
 
 void login_defaults(void);
 #endif // BRATHENA_CORE

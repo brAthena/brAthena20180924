@@ -8,17 +8,17 @@
 *                            www.brathena.org                                *
 ******************************************************************************
 * src/map/packets.h                                                          *
-* Banco de packets para comunicação com o client                             *
+* Banco de packets para comunicaï¿½ï¿½o com o client                             *
 ******************************************************************************
 * Copyright (c) brAthena Dev Team                                            *
 * Copyright (c) Hercules Dev Team                                            *
 * Copyright (c) Athena Dev Teams                                             *
 *                                                                            *
-* Licenciado sob a licença GNU GPL                                           *
-* Para mais informações leia o arquivo LICENSE na raíz do emulador           *
+* Licenciado sob a licenï¿½a GNU GPL                                           *
+* Para mais informaï¿½ï¿½es leia o arquivo LICENSE na raï¿½z do emulador           *
 *****************************************************************************/
 
-//Incluído diretamente pelo clif.h em packet_loaddb()
+//Incluï¿½do diretamente pelo clif.h em packet_loaddb()
 
 #ifndef MAP_PACKETS_H
 #define MAP_PACKETS_H
@@ -35,7 +35,7 @@
  * Sintaxe de Pacote
  * - packet(id_do_pacote,comprimento)
  * Ou
- * - packet(id_do_pacote,comprimento,função,deslocamento ( Especifica o deslocamento de um campo de pacote em bytes desde o início do pacote ),...)
+ * - packet(id_do_pacote,comprimento,funï¿½ï¿½o,deslocamento ( Especifica o deslocamento de um campo de pacote em bytes desde o inï¿½cio do pacote ),...)
  * - Exemplo: packet(0x0072,19,clif->pWantToConnection,2,6,10,14,18);
  */
 
@@ -1870,8 +1870,8 @@ packet(0x96e,-1,clif->ackmergeitems);
 
 //2011-07-18aRagexe (Thanks to Yommy!)
 #if PACKETVER >= 20110718
-	packet(0x0844,2,clif->pCashShopOpen,2);/* diz ao servidor que a janela de cashshop está sendo aberta */
-	packet(0x084a,2,clif->pCashShopClose,2);/* diz ao servidor que a janela de cashshop está sendo fechada */
+	packet(0x0844,2,clif->pCashShopOpen,2);/* diz ao servidor que a janela de cashshop estï¿½ sendo aberta */
+	packet(0x084a,2,clif->pCashShopClose,2);/* diz ao servidor que a janela de cashshop estï¿½ sendo fechada */
 	packet(0x0846,4,clif->pCashShopReqTab,2);
 	packet(0x08c9,2,clif->pCashShopSchedule,0);
 	packet(0x0848,-1,clif->pCashShopBuy,2);
@@ -2058,8 +2058,8 @@ packet(0x96e,-1,clif->ackmergeitems);
 #endif
 
 // ========== 2012-07-02aRagexeRE  =============
-// - 2012-07-02  Não é Estável.
-// - Os pacotes são mantidos aqui para referência, Não Use-os.
+// - 2012-07-02  Nï¿½o ï¿½ Estï¿½vel.
+// - Os pacotes sï¿½o mantidos aqui para referï¿½ncia, Nï¿½o Use-os.
 #if PACKETVER >= 20120702
 	packet(0x0363,19,clif->pWantToConnection,2,6,10,14,18);
 	packet(0x0364,6,clif->pTickSend,2);
@@ -2912,6 +2912,11 @@ packet(0x96e,-1,clif->ackmergeitems);
 	packet(0x09e8,11,clif->pDull);	// CZ_OPEN_MAILBOX
 	packet(0x0a2e,6,clif->pDull);	// TITLE
 	packet(0x0a02,4);	// ZC_DRESSROOM_OPEN
+#endif
+
+#if PACKETVER >= 20150805 // RagexeRE
+	packet(0x097f,-1); // ZC_SELECTCART
+	packet(0x0980,7,clif->pSelectCart); // CZ_SELECTCART
 #endif
 
 /* PacketKeys: http://herc.ws/board/topic/1105-hercules-wpe-free-june-14th-patch/ */
