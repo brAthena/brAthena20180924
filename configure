@@ -667,6 +667,7 @@ infodir
 docdir
 oldincludedir
 includedir
+runstatedir
 localstatedir
 sharedstatedir
 sysconfdir
@@ -758,6 +759,7 @@ datadir='${datarootdir}'
 sysconfdir='${prefix}/etc'
 sharedstatedir='${prefix}/com'
 localstatedir='${prefix}/var'
+runstatedir='${localstatedir}/run'
 includedir='${prefix}/include'
 oldincludedir='/usr/include'
 docdir='${datarootdir}/doc/${PACKAGE}'
@@ -1010,6 +1012,15 @@ do
   | -silent | --silent | --silen | --sile | --sil)
     silent=yes ;;
 
+  -runstatedir | --runstatedir | --runstatedi | --runstated \
+  | --runstate | --runstat | --runsta | --runst | --runs \
+  | --run | --ru | --r)
+    ac_prev=runstatedir ;;
+  -runstatedir=* | --runstatedir=* | --runstatedi=* | --runstated=* \
+  | --runstate=* | --runstat=* | --runsta=* | --runst=* | --runs=* \
+  | --run=* | --ru=* | --r=*)
+    runstatedir=$ac_optarg ;;
+
   -sbindir | --sbindir | --sbindi | --sbind | --sbin | --sbi | --sb)
     ac_prev=sbindir ;;
   -sbindir=* | --sbindir=* | --sbindi=* | --sbind=* | --sbin=* \
@@ -1147,7 +1158,7 @@ fi
 for ac_var in	exec_prefix prefix bindir sbindir libexecdir datarootdir \
 		datadir sysconfdir sharedstatedir localstatedir includedir \
 		oldincludedir docdir infodir htmldir dvidir pdfdir psdir \
-		libdir localedir mandir
+		libdir localedir mandir runstatedir
 do
   eval ac_val=\$$ac_var
   # Remove trailing slashes.
@@ -1300,6 +1311,7 @@ Fine tuning of the installation directories:
   --sysconfdir=DIR        read-only single-machine data [PREFIX/etc]
   --sharedstatedir=DIR    modifiable architecture-independent data [PREFIX/com]
   --localstatedir=DIR     modifiable single-machine data [PREFIX/var]
+  --runstatedir=DIR       modifiable per-process data [LOCALSTATEDIR/run]
   --libdir=DIR            object code libraries [EPREFIX/lib]
   --includedir=DIR        C header files [PREFIX/include]
   --oldincludedir=DIR     C header files for non-gcc [/usr/include]
@@ -1332,7 +1344,7 @@ Optional Features:
   --enable-packetver=ARG  Sets the PACKETVER define. (see src/common/mmo.h)
   --enable-packetver-re   Sets or unsets the PACKETVER_RE define - see
                           src/common/mmo.h (currently disabled by default)
-  --enable-debug[=ARG]    Compiles extra debug code. (disabled by default)
+  --enable-debug[=ARG]    Compiles extra debug code. (yes by default)
                           (available options: yes, no, gdb)
   --enable-buildbot[=ARG] (available options: yes, no)
   --enable-rdtsc          Uses rdtsc as timing source (disabled by default)
@@ -1351,7 +1363,8 @@ Optional Features:
                           both your CPU and OS before enabling this option.
   --enable-profiler=ARG   Profilers: no, gprof (disabled by default)
   --disable-64bit         Enforce 32bit output on x86_64 systems.
-  --enable-lto            Enables or Disables Linktime Code Optimization (LTO is disabled by default)
+  --enable-lto            Enables or Disables Linktime Code Optimization (LTO
+                          is disabled by default)
   --enable-static         Enables or Disables Statick Linking (STATIC is
                           disabled by default)
   --enable-sanitize[=ARG] Enables sanitizer. (disabled by default) (available
@@ -3559,7 +3572,7 @@ if test "${enable_debug+set}" = set; then :
 		esac
 
 else
-  enable_debug="no"
+  enable_debug="yes"
 
 fi
 
@@ -4607,7 +4620,7 @@ ac_compiler_gnu=$ac_cv_c_compiler_gnu
 
 
 
-CFLAGS="$CFLAGS -pipe -ffast-math -Wall -Wextra -Wno-sign-compare"
+CFLAGS="$CFLAGS -pipe -ffast-math -fvisibility=hidden -Wall -Wextra -Wno-sign-compare"
 CPPFLAGS="$CPPFLAGS -I../common"
 LDFLAGS="$LDFLAGS"
 
@@ -4998,6 +5011,7 @@ fi
 rm -f core *.core core.conftest.* gmon.out bb.out conftest$ac_exeext \
   conftest.$ac_objext conftest.beam conftest.$ac_ext
 fi
+
 
 #
 # Check if the linker supports/accepts -rdynamic
@@ -6843,13 +6857,12 @@ if ac_fn_c_try_compile "$LINENO"; then :
 
 		{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
 $as_echo "yes" >&6; }
-		compiler_supports_pic="yes"
+		SOFLAGS="$SOFLAGS -fPIC"
 
 else
 
 		{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
-		compiler_supports_pic="no"
 
 
 fi
@@ -6864,9 +6877,7 @@ $as_echo_n "checking how to make shared objects... " >&6; }
 OLD_CFLAGS="$CFLAGS"
 compiler_shared_objects=""
 compiler_supports_shared_objects="no"
-if test "$compiler_supports_pic" = "yes" ; then
-	my_shared_test_flags="$CFLAGS -fPIC"
-fi
+my_shared_test_flags="$CFLAGS $SOFLAGS"
 # default
 CFLAGS="$my_shared_test_flags -shared"
 cat confdefs.h - <<_ACEOF >conftest.$ac_ext
@@ -6979,81 +6990,9 @@ fi
 rm -f core conftest.err conftest.$ac_objext \
     conftest$ac_exeext conftest.$ac_ext
 	CFLAGS="$OLD_CFLAGS"
-
-	#
-	# shared objects need position independent code; some platforms emit
-	# it always, others need -fPIC
-	#
-	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether $CC needs -fPIC for shared objects" >&5
-$as_echo_n "checking whether $CC needs -fPIC for shared objects... " >&6; }
-	OLD_CFLAGS="$CFLAGS"
-	CFLAGS="$CFLAGS $SOFLAGS"
-	WITH_PLUGINS="yes"
-	cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-
-			int bar = 0;
-
-			int foo(void)
-			{
-				return bar;
-			}
-
-_ACEOF
-if ac_fn_c_try_link "$LINENO"; then :
-
-			{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
-$as_echo "no" >&6; }
-			CFLAGS="$OLD_CFLAGS"
-
-else
-
-			if test "$compiler_supports_pic" = "yes" ; then
-				# Verify if -shared really fails due to lack of -fPIC or something else
-				CFLAGS="$CFLAGS -fPIC"
-				cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-
-						int bar = 0;
-
-						int foo(void)
-						{
-							return bar;
-						}
-
-_ACEOF
-if ac_fn_c_try_link "$LINENO"; then :
-
-						{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
-$as_echo "yes" >&6; }
-						CFLAGS="$OLD_CFLAGS -fPIC"
-
-else
-
-						{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no, but fails for another reason" >&5
-$as_echo "no, but fails for another reason" >&6; }
-						as_fn_error $? "compiler is unable to compile shared objects for an unhandled reason, please report this with attached config.log... stopping" "$LINENO" 5
-
-
-fi
-rm -f core conftest.err conftest.$ac_objext \
-    conftest$ac_exeext conftest.$ac_ext
-			else
-				# Disable compilation of plugins (optional), so 'make all' does not fail
-				{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes, but unsupported" >&5
-$as_echo "yes, but unsupported" >&6; }
-				{ $as_echo "$as_me:${as_lineno-$LINENO}: compiler is unable to generate position independent code, disabled plugins (optional)" >&5
-$as_echo "$as_me: compiler is unable to generate position independent code, disabled plugins (optional)" >&6;}
-				WITH_PLUGINS="no"
-			fi
-
-
-fi
-rm -f core conftest.err conftest.$ac_objext \
-    conftest$ac_exeext conftest.$ac_ext
-
 fi
 my_shared_test_flags=""
+
 
 
 
@@ -8233,6 +8172,7 @@ fi
 
 		if test "$HAVE_PCRE" = "yes" ; then
 			PCRE_LIBS="-lpcre"
+			PCRE_CFLAGS="-DPCRE_SUPPORT"
 		fi
 	else
 		PCRE_OLD_LDFLAGS="$LDFLAGS" ; LDFLAGS="$LDFLAGS -L$PCRE_HOME/lib"
@@ -8281,7 +8221,7 @@ fi
 		LDFLAGS="$PCRE_OLD_LDFLAGS"
 		if test "$HAVE_PCRE" = "yes" ; then
 			PCRE_LIBS="-L$PCRE_HOME/lib -lpcre"
-			test -d "$PCRE_HOME/include" && PCRE_CFLAGS="-I$PCRE_HOME/include"
+			test -d "$PCRE_HOME/include" && PCRE_CFLAGS="-I$PCRE_HOME/include -DPCRE_SUPPORT"
 		fi
 	fi
 	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking PCRE library (optional)" >&5
