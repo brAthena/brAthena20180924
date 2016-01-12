@@ -31,6 +31,9 @@
     <ClCompile Include="..\src\common\nullpo.c">
       <Filter>common</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\common\mapindex.c">
+      <Filter>common</Filter>
+    </ClCompile>
     <ClCompile Include="..\src\tool\mapcache.c">
       <Filter>mapcache</Filter>
     </ClCompile>
@@ -73,6 +76,9 @@
       <Filter>common</Filter>
     </ClInclude>
     <ClInclude Include="..\src\common\nullpo.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\common\mapindex.h">
       <Filter>common</Filter>
     </ClInclude>
     <ClInclude Include="..\src\config\renewal.h" />

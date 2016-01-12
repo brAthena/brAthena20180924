@@ -75,6 +75,8 @@
 #define mapindex_id2name(n) mapindex->id2name((n),__FILE__, __LINE__, __func__)
 #define mapindex_exists(n) ( mapindex->list[(n)].name[0] != '\0' )
 
+extern const char *map_list[MAX_MAPINDEX];
+
 /**
  * mapindex.c interface
  **/
