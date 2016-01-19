@@ -11944,4 +11944,7 @@ void pc_defaults(void) {
 
 	pc->check_job_name = pc_check_job_name;
 	pc->update_idle_time = pc_update_idle_time;
+	
+	// BrAthena
+	pc->get_ip = pc_get_ip;
 }
