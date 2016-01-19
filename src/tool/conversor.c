@@ -2046,7 +2046,7 @@ void convert_mob_db(void)
 				if (getmobname(atoi(rows[0])))
 					rows[i] = getmobname(atoi(rows[0]));
 
-			pos += ((i == 0 || i > 3)) ? sprintf(pos, "%d", atoi(rows[i])) : sprintf(pos, "'%s'", escape_str(rows[i]));
+			pos += ((i == 0 || (i > 3 && i != 25))) ? sprintf(pos, "%d", atoi(rows[i])) : sprintf(pos, (i == 25) ? "%s" : "'%s'", escape_str(rows[i]));
 		}
 
 		snprintf(write, sizeof(write), "REPLACE INTO mob_db VALUES(%s);\n", buf);
