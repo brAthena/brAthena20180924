@@ -11821,7 +11821,7 @@ BUILDIN(setmapflag) {
 			case MF_RESET:              map->list[m].flag.reset = 1; break;
 			case MF_NOTOMB:             map->list[m].flag.notomb = 1; break;
 			case MF_NOCASHSHOP:         map->list[m].flag.nocashshop = 1; break;
-			case MF_NOVIEWID:			map->list[m].flag.noviewid = (val <= 0) ? 0 : val; break;
+			case MF_NOVIEWID:			map->list[m].flag.noviewid = (val <= 0) ? EQP_NONE : val; break;
 		}
 	}
 
@@ -11908,7 +11908,7 @@ BUILDIN(removemapflag) {
 			case MF_RESET:              map->list[m].flag.reset = 0; break;
 			case MF_NOTOMB:             map->list[m].flag.notomb = 0; break;
 			case MF_NOCASHSHOP:         map->list[m].flag.nocashshop = 0; break;
-			case MF_NOVIEWID:           map->list[m].flag.noviewid = 0; break;
+			case MF_NOVIEWID:           map->list[m].flag.noviewid = EQP_NONE; break;
 		}
 	}
 
@@ -18472,7 +18472,7 @@ BUILDIN(setcashmount)
 		if (sd->sc.data[SC_ALL_RIDING])
 			status_change_end(&sd->bl, SC_ALL_RIDING, INVALID_TIMER);
 		else
-			sc_start(NULL,&sd->bl, SC_ALL_RIDING, 100, 0, -1);
+			sc_start(NULL,&sd->bl, SC_ALL_RIDING, 100, 25, -1);
 		script_pushint(st,1);//in both cases, return 1.
 	}
 	return true;
@@ -21521,6 +21521,45 @@ void script_hardcoded_constants(void) {
 	script->set_constant("BG_AREA",BG_AREA,false);
 	script->set_constant("BG_AREA_WOS",BG_AREA_WOS,false);
 	script->set_constant("BG_QUEUE",BG_QUEUE,false);
+	
+	/* LOOK_ constants, use in setlook/changelook script commands */
+	script->set_constant("LOOK_BASE", LOOK_BASE, false);
+	script->set_constant("LOOK_HAIR", LOOK_HAIR, false);
+	script->set_constant("LOOK_WEAPON", LOOK_WEAPON, false);
+	script->set_constant("LOOK_HEAD_BOTTOM", LOOK_HEAD_BOTTOM, false);
+	script->set_constant("LOOK_HEAD_TOP", LOOK_HEAD_TOP, false);
+	script->set_constant("LOOK_HEAD_MID", LOOK_HEAD_MID, false);
+	script->set_constant("LOOK_HAIR_COLOR", LOOK_HAIR_COLOR, false);
+	script->set_constant("LOOK_CLOTHES_COLOR", LOOK_CLOTHES_COLOR, false);
+	script->set_constant("LOOK_SHIELD", LOOK_SHIELD, false);
+	script->set_constant("LOOK_SHOES", LOOK_SHOES, false);
+	script->set_constant("LOOK_BODY", LOOK_BODY, false);
+	script->set_constant("LOOK_FLOOR", LOOK_FLOOR, false);
+	script->set_constant("LOOK_ROBE", LOOK_ROBE, false);
+	script->set_constant("LOOK_BODY2", LOOK_BODY2, false);
+	
+	/* Equip Position in Bits, use with *getiteminfo type 5, or @inventorylist_equip */
+	script->set_constant("EQP_HEAD_LOW", EQP_HEAD_LOW, false);
+	script->set_constant("EQP_HEAD_MID", EQP_HEAD_MID, false);
+	script->set_constant("EQP_HEAD_TOP", EQP_HEAD_TOP, false);
+	script->set_constant("EQP_HAND_R", EQP_HAND_R, false);
+	script->set_constant("EQP_HAND_L", EQP_HAND_L, false);
+	script->set_constant("EQP_ARMOR", EQP_ARMOR, false);
+	script->set_constant("EQP_SHOES", EQP_SHOES, false);
+	script->set_constant("EQP_GARMENT", EQP_GARMENT, false);
+	script->set_constant("EQP_ACC_L", EQP_ACC_L, false);
+	script->set_constant("EQP_ACC_R", EQP_ACC_R, false);
+	script->set_constant("EQP_COSTUME_HEAD_TOP", EQP_COSTUME_HEAD_TOP, false);
+	script->set_constant("EQP_COSTUME_HEAD_MID", EQP_COSTUME_HEAD_MID, false);
+	script->set_constant("EQP_COSTUME_HEAD_LOW", EQP_COSTUME_HEAD_LOW, false);
+	script->set_constant("EQP_COSTUME_GARMENT", EQP_COSTUME_GARMENT, false);
+	script->set_constant("EQP_AMMO", EQP_AMMO, false);
+	script->set_constant("EQP_SHADOW_ARMOR", EQP_SHADOW_ARMOR, false);
+	script->set_constant("EQP_SHADOW_WEAPON", EQP_SHADOW_WEAPON, false);
+	script->set_constant("EQP_SHADOW_SHIELD", EQP_SHADOW_SHIELD, false);
+	script->set_constant("EQP_SHADOW_SHOES", EQP_SHADOW_SHOES, false);
+	script->set_constant("EQP_SHADOW_ACC_R", EQP_SHADOW_ACC_R, false);
+	script->set_constant("EQP_SHADOW_ACC_L", EQP_SHADOW_ACC_L, false);
 
 	/* Renewal */
 #ifdef RENEWAL

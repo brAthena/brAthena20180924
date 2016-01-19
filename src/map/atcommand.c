@@ -3921,7 +3921,7 @@ ACMD(mapinfo)
 		strcat(atcmd_output, msg_fd(fd,1096)); // PartyLock |
 	if (map->list[m_id].flag.guildlock)
 		strcat(atcmd_output, msg_fd(fd,1097)); // GuildLock |
-	if (map->list[m_id].flag.noviewid)
+	if (map->list[m_id].flag.noviewid != EQP_NONE)
 		strcat(atcmd_output, msg_fd(fd,1079)); // NoViewID |
 	clif->message(fd, atcmd_output);
 
@@ -8419,6 +8419,7 @@ ACMD(charcommands)
 	atcommand->commands_sub(sd, fd, COMMAND_CHARCOMMAND);
 	return true;
 }
+
 /* for new mounts */
 ACMD(cashmount)
 {
@@ -8430,7 +8431,7 @@ ACMD(cashmount)
 	clif->message(sd->fd,msg_fd(fd,1362)); // NOTICE: If you crash with mount your LUA is outdated.
 	if (!sd->sc.data[SC_ALL_RIDING]) {
 		clif->message(sd->fd,msg_fd(fd,1363)); // You have mounted.
-		sc_start(NULL,&sd->bl,SC_ALL_RIDING,100,0,-1);
+		sc_start(NULL,&sd->bl,SC_ALL_RIDING,100,25,-1);
 	} else {
 		clif->message(sd->fd,msg_fd(fd,1364)); // You have released your mount.
 		status_change_end(&sd->bl, SC_ALL_RIDING, INVALID_TIMER);
