@@ -1,0 +1,34 @@
+0,Sirius
+1,Astrum
+2,Canopus
+3,Rigel
+4,Acrux
+5,Arsulf
+6,Trapesac
+7,Ruaden
+8,Saffran
+9,Arima
+10,Palácio do Sol
+11,Palácio do Lago Sagrado
+12,Palácio da Sombra
+13,Palácio Escarlate
+14,Palácio da Colina
+15,Kriemhild
+16,Hrist
+17,Brynhildr
+18,Skoegul
+19,Gondul
+20,Terra
+21,Vento
+22,Água
+23,Fogo
+24,Himinn
+25,Andlangr
+26,Viblainn
+27,Hljod
+28,Skidbladnir
+29,Mardol
+30,Cyr
+31,Horn
+32,Gefn
+33,Bandis

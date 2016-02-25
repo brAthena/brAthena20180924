@@ -1,0 +1,1105 @@
+1,Habilidades Básicas
+2,Perícia com Espada
+3,Perícia com Espada de Duas Mãos
+4,Aumentar Recuperação de HP
+5,Golpe Fulminante
+6,Provocar
+7,Impacto Explosivo
+8,Vigor
+9,Aumentar Recuperação de SP
+10,Chama Reveladora
+11,Ataque Espiritual
+12,Escudo Mágico
+13,Espíritos Anciões
+14,Lanças de Gelo
+15,Rajada Congelante
+16,Petrificar
+17,Bolas de Fogo
+18,Barreira de Fogo
+19,Lanças de Fogo
+20,Relâmpago
+21,Tempestade de Raios
+22,Proteção Divina
+23,Flagelo do Mal
+24,Revelação
+25,Escudo Sagrado
+26,Teleporte
+27,Portal
+28,Curar
+29,Aumentar Agilidade
+30,Diminuir Agilidade
+31,Aqua Benedicta
+32,Signum Crucis
+33,Angelus
+34,Bênção
+35,Medicar
+36,Aumentar Capacidade de Carga
+37,Desconto
+38,Superfaturar
+39,Usar Carrinho
+40,Identificar Item
+41,Comércio
+42,Mammonita
+43,Precisão
+44,Olhos de Águia
+45,Concentração
+46,Rajada de Flechas
+47,Chuva de Flechas
+48,Ataque Duplo
+49,Perícia em Esquiva
+50,Furto
+51,Esconderijo
+52,Envenenar
+53,Desintoxicar
+54,Ressuscitar
+55,Perícia com Lança
+56,Perfurar
+57,Brandir Lança
+58,Estocada
+59,Lança Bumerangue
+60,Rapidez com Duas Mãos
+61,Contra-Ataque
+62,Impacto de Tyr
+63,Montaria
+64,Perícia em Montaria
+65,Perícia com Maça
+66,Impositio Manus
+67,Suffragium
+68,Aspersio
+69,B.S. Sacramenti
+70,Santuário
+71,Retardar Veneno
+72,Graça Divina
+73,Kyrie Eleison
+74,Magnificat
+75,Glória
+76,Lex Divina
+77,Esconjurar
+78,Lex Aeterna
+79,Magnus Exorcismus
+80,Coluna de Fogo
+81,Supernova
+83,Chuva de Meteoros
+84,Trovão de Júpiter
+85,Ira de Thor
+86,Esfera dÁgua
+87,Barreira de Gelo
+88,Congelar
+89,Nevasca
+90,Coluna de Pedra
+91,Fúria da Terra
+92,Pântano dos Mortos
+93,Sentido Sobrenatural
+94,Trabalhar Ferro
+95,Trabalhar Aço
+96,Produzir Pedra Fundamental
+97,Perícia com Oridecon
+98,Forjar Adaga
+99,Forjar Espada
+100,Forjar Espada de Duas Mãos
+101,Forjar Machado
+102,Forjar Maça
+103,Forjar Soqueira
+104,Forjar Lança
+105,Punho Firme
+106,Encontrar Minério
+107,Perícia em Armamento
+108,Consertar Armas
+109,Resistência ao Fogo
+110,Martelo de Thor
+111,Adrenalina Pura
+112,Manejo Perfeito
+113,Força Violenta
+114,Amplificar Poder
+115,Armadilha Escorregadia
+116,Armadilha Atordoante
+117,Instalar Armadilha
+118,Armadilha Extenuante
+119,Armadilha Sonífera
+120,Armadilha Luminosa
+121,Armadilha Congelante
+122,Instalar Mina
+123,Armadilha Explosiva
+124,Remover Armadilha
+125,Mensagem Secreta
+126,Flagelo das Feras
+127,Adestrar Falcão
+128,Garras de Aço
+129,Ataque Aéreo
+130,Alerta
+131,Desativar Armadilha
+132,Perícia com Mão Direita
+133,Perícia com Mão Esquerda
+134,Perícia com Katar
+135,Furtividade
+136,Lâminas Destruidoras
+137,Tocaia
+138,Envenenar Arma
+139,Refletir Veneno
+140,Névoa Tóxica
+141,Explosão Tóxica
+142,Primeiros Socorros
+143,Fingir de Morto
+144,Recuperar HP em Movimento
+145,Ataque Fatal
+146,Instinto de Sobrevivência
+147,Fabricar Flechas
+148,Disparo Violento
+149,Chutar Areia
+150,Recuar
+151,Procurar Pedras
+152,Arremessar Pedra
+153,Cavalo-de-Pau
+154,Personalizar Carrinho
+155,Grito de Guerra
+156,Luz Divina
+157,Proteção Arcana
+158,Ataque Perfeurar
+159,Espírito da Desturição
+160,Ataque fora de alcanço
+161,Mudar Propriedae
+162,Mudar propriedade para Água
+163,Mudar propiedade para Terra
+164,Mudar propriedade para Fogo
+165,Mudar propriedade para Vento
+166,Mudar propriedade para Veneno
+167,Mudar propriedade para Sagrado
+168,Mudar Propriedade para Sombrio
+169,Mudar Propriedade para Fantasma
+170,Ignorar Defesa
+171,Ataque em Combo
+172,Ataque Teleguiado
+173,Bomba Suicida
+174,Ataque em Área
+175,Suicídio
+176,Envenenar
+177,Cegueira
+178,Silêncio
+179,Atordoar
+180,Petrificar
+181,Maldição
+182,Sono
+183,Ataque Aleatório
+184,Ataque Aquático
+185,Ataque Térreo
+186,Ataque em Fogo
+187,Ataque Ventania
+188,Ataque Venenoso
+189,Ataque Sagrado
+190,Ataque Sombrio
+191,Ataque Fantasma
+192,Ataque Elétrico
+193,Metamorfose
+194,Provocar
+195,Fumar
+196,Invocar Plantas
+197,Emoção
+198,Transformação
+199,Sede de Sangue
+200,Drenar Energia
+201,Manutenção
+202,Sopro Sombrio
+203,Benção Sombria
+204,Barreira
+205,Defender
+206,Golpear
+207,Halucinação
+208,Renascer
+209,Invocar Monstros
+210,Mãos Leves
+211,Afanar
+212,Apunhalar
+213,Túnel de Fuga
+214,Ataque Surpresa
+215,Remover Arma
+216,Remover Escudo
+217,Remover Armadura
+218,Remover Capacete
+219,Rapto
+220,Grafitti
+221,Pichar
+222,Faxina
+223,Malandragem
+224,Extorquir
+225,Plágio
+226,Perícia com Machado e Espadar
+227,Pesquisa de Poções
+228,Preparar Poção
+229,Fogo Grego
+230,Terror Ácido
+231,Arremessar Poção
+232,Criar Monstro Planta
+233,Criar Esfera Marinha
+234,Revestir Arma
+235,Revestir Escudo
+236,Revestir Armadura
+237,Revestir Capacete
+238,Biotecnologia
+243,Criar Homunculus
+244,Vaporizar
+247,Ressuscitar Homunculus
+248,Fé
+249,Bloqueio
+250,Punição Divina
+251,Escudo Bumerangue
+252,Escudo Refletor
+253,Crux Divinum
+254,Crux Magnun
+255,Redenção
+256,Divina Providência
+257,Aura Sagrada
+258,Rapidez com Lança
+259,Punhos de Ferro
+260,Meditação
+261,Invocar Esfera Espiritual
+262,Absorver Esferas Espirituais
+263,Combo Triplo
+264,Passo Etéreo
+265,Cair das Pétalas
+266,Impacto Psíquico
+267,Disparo de Esferas Espirituais
+268,Corpo Fechado
+269,Dilema
+270,Fúria Interior
+271,Punho Supremo de Asura
+272,Combo Quádruplo
+273,O Último Dragão
+274,Estudo de Livros
+275,Cancelar magia
+276,Espelho Mágico
+277,Desconcentrar
+278,Conjuração Livre
+279,Desejo Arcano
+280,Encantar com Chama
+281,Encantar com Geada
+282,Encantar com Ventania
+283,Encantar com Terremoto
+284,Dragonologia
+285,Vulcão
+286,Dilúvio
+287,Furacão
+288,Proteger Terreno
+289,Desencantar
+290,Abracadabra
+291,Monocell
+292,Transformação
+293,Invocar Monstro
+294,Transformação Orc
+295,Extermínio
+296,Toque de Midas
+297,Hipnose
+298,Interrogatório
+299,Gravidade
+300,Level Up!
+301,Suicídio
+302,Recuperação
+303,Coma
+304,Encerramento
+305,Bis
+306,Cantiga de Ninar
+307,Banquete de Njord
+308,Ritmo Caótico
+309,Rufar dos Tambores
+310,Anel dos Nibelungos
+311,Lamento de Loki
+312,Canção Preciosa
+313,Ode a Siegfried
+315,Lições de Música
+316,Flecha Melódica
+317,Dissonância
+318,Piada Infame
+319,Assovio
+320,Crepúsculo Sangrento
+321,Poema de Bragi
+322,Maçãs de Idun
+323,Lições de Dança
+324,Estilingue
+325,Dança do Ventre
+326,Escândalo
+327,Sibilo
+328,Não Me Abandones
+329,Beijo da Sorte
+330,Dança Cigana
+331,Movimento Aleatório
+332,Aumentar Agilidade
+333,Vingaçna
+334,Amor Verdadeiro
+335,Amor Eterno
+336,Saudades de Você
+337,Lançar Tomahawk
+338,Cruz Sombria
+339,Cruz Magnum Sombrio
+340,Espíritos Anciões Sombrio
+341,Trovão de Júpiter Sombrio
+342,Pare
+343,Quebrar Arma
+344,Quebrar Armadura
+345,Quebrar Elmo
+346,Quebrar Escudo
+347,Mudar Propriedade de Ataque para Morto-Vivo
+348,Mudar Propriedade para Morto-Vivo
+349,Aumentar Poder
+350,Aumentar Agilidade
+351,Modo
+352,Chamar Escravos
+353,Invisibilidade
+354,Executar
+355,Lâmina de Aura
+356,Aparar Golpe
+357,Dedicação
+358,Relaxar
+359,Frenesi
+361,Assumptio
+362,Basílica
+363,Meditação
+364,Soul Drain
+365,Esmagamento Mágico
+366,Amplificação Mística
+367,Gloria Domini
+368, Sacrifício do Mártir
+369,Canto de Batalha
+370,Golpe da Palma em Fúria
+371,Punho do Tigre
+372,Combo Esmagador
+373,Indulgir
+374,Exalar Alma
+375,Sifão de Alma
+376,Perícia com Katar Avançada
+378,Encantar com Veneno Mortal
+379,Destruidor de Almas
+380,Visão Real
+381,Assalto do Falcão
+382,Tiro Preciso
+383,Caminho do Vento
+384,Golpe Estilhaçante
+387,Impulso no Carrinho
+389,Espreitar
+390,Roubar Bolso
+392,Alquimia
+393,Síntese de Poção
+394,Vulcão de Flechas
+395,Bênção Protetora
+396,Controle de Marionete
+397,Perfurar em Espiral
+398,Golpe Traumático
+399,Ataque Vital
+400,Vulcão Napalm
+401,Zen
+402,Enlouquecedor
+403,Presciência
+404,Bruma Ofuscante
+405,Prisão da Teia
+406,Impacto Meteoro
+407,Criar Veneno Mortal
+408,Pai amo vocês!
+409,Mãe Pai cadê vocês?
+410,Vem cá filhote!
+411,Corrida
+412,Postura do Tornado
+413,Chute do Tornado
+414,Postura da Rasteira
+415,Patada Voadora
+416,Postura do Tornado
+417,Chute do Tornado
+418,Postura do Contrachute
+419,Contrachute
+420,Cambalhota
+421,Chute Aéreo
+422,Trégua Rápida
+423,Retiro Rápido
+424,Kihop
+425,Brisa Leve
+426,Salto
+427,Percepção Solar Lunar e Estelar
+428,Calor Solar
+429,Calor Lunar
+430,Calor Estelar
+431,Proteção Solar
+432,Proteção Lunar
+433,Proteção Estelar
+434,Oposição Solar Lunar e Estelar
+435,Fúria Solar
+436,Fúria Lunar
+437,Fúria Estelar
+438,Bênção Solar
+439,Bênção Lunar
+440,Bênção Estelar
+441,Sombra Solar Lunar e Estelar
+442,Auxílio Solar Lunar e Estelar
+443,Transmissão Solar Lunar e Estelar
+444,União Solar Lunar e Estelar
+445,Espírito do Alquimista
+446,Arremessar Poção da Fúria Selvagem
+447,Espírito do Monge
+448,Espírito do Mestre Taekwon
+449,Espírito do Sábio
+450,Espírito do Templário
+451,Espírito do Superaprendiz
+452,Espírito do Cavaleiro
+453,Espírito do Bruxo
+454,Espírito do Sacerdote
+455,Espírito do Artista
+456,Espírito do Arruaceiro
+457,Espírito do Mercenário
+458,Espírito do Ferreiro
+459,Adrenalina Concentrada
+460,Espírito do Caçador
+461,Espírito do Espiritualista
+462,Kaizel
+463,Kaahi
+464,Kaupe
+465,Kaite
+466,Kaina
+467,Estin
+468,Estun
+469,Esma
+470,Eswoo
+471,Eske
+472,Eska
+473,Auto Provocar
+474,Emoticons ON
+475,Preservar
+476,Remoção Total
+477,Aprimorar Armamento
+478,Arremessar Poção Compacta
+479,Proteção Química Total
+480,Choque Rápido
+481,Riqueza de Espírito
+482,Lanças Duplas
+483,Ganbantein
+484,Campo Gravitacional
+485,Choque de Carrinho
+486,Força Violentíssima
+487,Grito de Liberdade
+488,Bastão de Hermod
+489,Destino das Cartas
+490,Bomba Ácida
+491,Cultivar Planta
+492,Encantar Arma
+493,Missão Taekwon
+494,Espírito dos Transcendentais
+495,Rapidez com Uma Mão
+496,Criação Espiritual de Poções 1
+497,Criação Espiritual de Poções 2
+498,Criação Espiritual de Poções 3
+499,Ataque da Fera
+500,Cara ou Coroa
+501,Atirar Moedas
+502,Ataque Triplo
+503,Ataque Certeiro
+504,Resistência Final
+505,Pânico do Justiceiro
+506,Aumentar Precisão
+507,Bala Mágica
+508,Tiro Bombinha
+509,Ataque Concentrado
+510,Olhos de Serpente
+511,Reação em Cadeia
+512,Rastrear o Alvo
+513,Desarmar
+514,Ferir Alvo
+515,Rajada Certeira
+516,Desperado
+517,Ataque Gatling
+518,Controle de Multidão
+519,Ataque Total
+520,Disparo Espalhado
+521,Mina do Justiceiro
+522,Prática de Arremesso de Shuriken
+523,Arremessar Shuriken
+524,Arremessar Shuriken
+525,Arremessar Shuriken Huuma
+526,Chuva de Moedas
+527,Virar Tatami
+528,Corte da Névoa
+529,Salto das Sombras
+530,Corte das Sombras
+531,Troca de Pele
+532,Imagem Falsa
+533,Perícia Ninja
+534,Pétalas Flamejantes
+535,Escudo de Chamas
+536,Dragão Explosivo
+537,Lança Congelante
+538,Evasão Aquática
+539,Grande Floco de Neve
+540,Lâmina de Vento
+541,Descarga Elétrica
+542,Brisa Cortante
+543,Aura Ninja
+544,Ataque Mortal
+653,Terremoto
+654,Sopro de Fogo
+655,Sopro de Gelo
+656,Sopro do Trovão
+657,Sopro Ácido
+658,Sopo Sombrio
+659,Dragão Selvagem
+660,Silêncio
+661,Greve de pulso
+662,Julgamento do Inferno
+663,Silêncio Avançado
+664,Congelar Avançado
+665,Silêncio Avançado
+666,Petrificar Avançado
+667,Confusão Avançada
+668,Sono Avançado
+669,Revelação Avançada
+670,Terra Amaldiçoada
+671,Espelho Mágico
+672,Cast Lento
+673,Ferimento Crítico
+674,Expulsão
+675,Pele de Pedra
+676,Anti Magias
+677,Maldição Avançada
+678,Atordoamento Avançado
+679,Beijo do Vampiro
+680,Drenar Alma Avançado
+681,Aumentar Capacidade de Carga Especial
+682,Conversar
+683,Poder Infernal
+684,Dignidade
+685,Invencível
+686,Invencibilidade desligada
+687,Cura Completa
+688,Durma bem,minha criança
+689,Benção em Grupo
+690,Aumentar Agilidade em Grupo
+691,Assumptio em Grupo
+692,Rugido da Fera
+693,Vento Uivante
+694,Muito obrigado!
+695,Sonho de Verão
+697,Transformação Orc
+698,Noite Feliz!
+1001,Avanço Ofensivo
+1002,Submissão
+1003,Lâminas Aceleradas
+1004,Faca Envenenada
+1005,Confinamento
+1006,Explosão Protetora
+1007,Criar Conversor Elemental
+1008,Mudança Elemental - Água
+1009,Flecha Fantasma
+1010,Voz Dolorosa
+1011,Piscadela
+1012,Venda Duvidosa
+1013,Ganância
+1014,Martírio
+1015,Concessão Espiritual
+1016,Punhos Intensos
+1017,Mudança Elemental - Terra
+1018,Mudança Elemental - Fogo
+1019,Mudança Elemental - Vento
+2001,Encantar Lâmina
+2002,Onda de Choque
+2003,Revidar Dano
+2004,Lança das Mil Pontas
+2005,Vento Cortante
+2006,Impacto Flamejante
+2007,Adestrar Dragão
+2008,Sopro do Dragão
+2009,Rugido do Dragão
+2010,Perícia em Runas
+2011,Escudos Milenares
+2012,Golpe Titânico
+2013,Purificação
+2014,Força Titânica
+2015,Escamas Rochosas
+2016,Vitalidade Rúnica
+2017,Explosão Rúnica
+2018,Aura de Combate
+2019,Regeneração Espiritual
+2020,Arpão
+2021,Potencializar Veneno
+2022,Lâminas Retalhadoras
+2023,Passo Sombrio
+2024,Pesquisa de Toxinas
+2025,Criar Toxina
+2026,Aplicar Antídoto
+2027,Aplicar Toxina
+2028,Reflexo de Combate
+2029,Retaliação
+2030,Estilhaçar Arma
+2031,Intoxicar
+2032,Nevoeiro Tóxico
+2033,Ocultação
+2034,Ameaça Fantasma
+2035,Passos da Ilusão
+2036,Lâminas de Loki
+2037,Castigo de Loki
+2038,Judex
+2039,Criar Ancilla
+2040,Adoramus
+2041,Crementia
+2042,Canto Candidus
+2043,Sopro Divino
+2044,Epiclesis
+2045,Praefatio
+2046,Oratio
+2047,Lauda Agnus
+2048,Lauda Ramus
+2049,Eucharistica
+2050,Renovatio
+2051,Curatio
+2052,Gênese
+2053,Expiatio
+2054,Gemini Lumen
+2055,Gemini Lumen
+2056,Gemini Lumen
+2057,Silentium
+2201,Exílio
+2202,Impacto Espiritual
+2203,Zero Absoluto
+2204,Esquife de Gelo
+2205,Pântano de Nifflheim
+2206,Maestria Arcana
+2207,Fúria da Medusa
+2208,Expansão Arcana
+2209,Distorção Arcana
+2210,Drenar Vida
+2211,Meteoro Escarlate
+2212,Chamas de Hela
+2213,Cometa
+2214,Corrente Elétrica
+2215,Corrente Elétrica
+2216,Abalo Sísmico
+2217,Tetra Vortex
+2218,Tetra Vortex Fogo
+2219,Tetra Vortex Água
+2220,Tetra Vortex Vento
+2221,Tetra Vortex Terra
+2222,Invocar Esfera de Fogo
+2223,Invocar Esfera de Vento
+2224,Invocar Esfera de Água
+2225,Invocar Esfera de Fogo 
+2226,Invocar Esfera de Vento
+2227,Invocar Esfera de Água
+2228,Invocar Esfera da Terra
+2229,Invocar Esfera
+2230,Disparo Arcano
+2231,Estudo Arcano
+2232,Estudo Arcano Avançado
+2233,Tempestade de Flechas
+2234,Disparo Selvagem
+2235,Táticas de Sobrevivência
+2236,Disparo Certeiro
+2237,Detonador
+2238,Armadilha Energizada
+2239,Bomba Relógio
+2240,Adestrar Warg
+2241,Montaria em Warg
+2242,Avanço Warg
+2243,Investida de Warg
+2244,Mordida Feroz
+2245,Presas Afiadas
+2246,Faro Aguçado
+2247,Camuflagem
+2248,Perícia com Armadilha
+2249,Armadilha Escarlate
+2250,Armadilha Cobalto
+2251,Armadilha Ocre
+2252,Armadilha Esmeralda
+2253,Armadilha Incendiária
+2254,Armadilha Glacial
+2255,Licença de Pilotagem
+2256,Punho Foguete
+2257,Bate Estaca
+2258,Metralhadora
+2259,Lança Chamas
+2260,Gás Criogênico
+2261,Canhão
+2262,Aceleração
+2263,Planar
+2264,Propulsão Dianteira
+2265,Propulsão Traseira
+2266,Reforçar Estrutura
+2267,Autodestruição
+2268,Reconfigurar Elemento
+2269,Resfriamento
+2270,Sensor Infravermelho
+2271,Analisar
+2272,Campo Magnético
+2273,Campo Protetor
+2274,Campo de Invisibilidade
+2275,Reparar
+2276,Maestria com Machados
+2277,Sabedoria de Hefesto
+2278,Arremesso de Machado
+2279,Brandir Machado
+2280,Fúria do Furacão
+2281,Artilharia Caçadora
+2282,Artilharia Arcana
+2283,Remover Artilharia
+2284,Acerto de Contas
+2285,Mimetismo
+2286,Desejo das Sombras
+2287,Vínculo Sombrio
+2288,Disparo Triplo
+2289,Borrifar Tinta
+2290,Forma Etérea
+2291,Pestilência
+2292,Máscara da Fraqueza
+2293,Máscara da Melancolia
+2294,Máscara da Tolice
+2295,Máscara da Ociosidade
+2296,Máscara do Infortúnio
+2297,Máscara da Vulnerabilidade
+2298,Remover Acessório
+2299,Pintar Armadilha
+2300,Portal Dimensional
+2301,Símbolo do Caos
+2302,Redemoinho de Absorção
+2303,Sede de Sangue
+2304,Cópia Explosiva
+2307,Disparo Perfurante
+2308,Toque do Oblívio
+2309,Pisotear Armadilha
+2310,Escudo Compressor
+2311,Reflexão Amplificada
+2312,Estocada Precisa
+2313,Proteção da Vanguarda
+2314,Retribuição da Vanguarda
+2315,Aegis Domini
+2316,Exceder Limite
+2317,Lança do Destino
+2318,Prestígio Divino
+2319,Formação Real
+2320,Espiral Lunar
+2321,Luz da Criação
+2322,Devoção
+2323,Aegis Inferi
+2324,Trindade
+2325,Consagração
+2326,Punho do Dragão
+2327,Soco Furacão
+2328,Impacto Sísmico
+2329,Ruína
+2330,Garra do Tigre
+2331,Portões do Inferno
+2332,Explosão Espiritual
+2333,Cotovelada Ascendente
+2334,Campo Amaldiçoado
+2335,Salto Relâmpago
+2336,Investida de Shura
+2337,Rasteira
+2338,Dragão Ascendente
+2339,Chakra
+2340,Absorção Espiritual
+2341,Renúncia Espiritual
+2342,Cotovelada Ascendente
+2343,Portões do Inferno
+2344,Chakra do Silêncio
+2345,Chakra da Cura
+2346,Chakra da Energia
+2347,Chakra da Fúria
+2348,Chakra do Vigor
+2350,Ritmo Contagiante
+2351,Balada Sinfônica
+2352,Serenata ao Luar
+2381,Sinfonia dos Ventos Ataque
+2382,Canção de Balder
+2383,Harmonizar
+2412,Domínio Musical
+2413,Ruído Estridente
+2414,Ressonância
+2415,Ressonância
+2416,Ressonância
+2417,Ativar Ressonância
+2418,Temporal de Mil Flechas
+2419,Poema de Nifflheim
+2420,Canto da Sereia
+2421,Réquiem de Orfeu
+2422,Melodia de Morfeu
+2423,Sibilo de Eir
+2424,Improviso
+2425,Ode a Hela
+2426,Brado de Odin
+2427,Canção de Alfheim
+2428,Dança com Lobos
+2429,Prelúdio do Ragnarök
+2430,Embalos de Sábado a Noite
+2431,Orvalho de Idun
+2432,Cântico da Iluminação
+2433,Clamor de Batalha
+2434,Murmúrio Perene
+2443,Passos de Salamandra
+2444,Passos de Sílfide
+2445,Punho Arcano
+2446,Castigo de Nerthus
+2447,Pó de Diamante
+2448,Implosão Tóxica
+2449,Onda Psíquica
+2450,Maldição de Jormungand
+2451,Encanto de Órion
+2452,Aquecer Terreno
+2453,Tornado
+2454,Lanças de Aesir
+2455,Onda Hipnótica
+2456,Domínio Elemental
+2457,Invocar Agni
+2458,Invocar Varuna
+2459,Invocar Vayu
+2460,Invocar Chandra
+2461,Incitar Elemental
+2462,Análise Elemental
+2463,Empatia Elemental
+2464,Troca Espiritual
+2465,Insígnia do Fogo
+2466,Insígnia da Água
+2467,Insígnia do Vento
+2468,Insígnia da Terra
+2474,Perícia em Esgrima
+2475,Aprimorar Carrinho
+2476,Tornado de Carrinho
+2477,Canhão de Prótons
+2478,Propulsão do Carrinho
+2479,Armadilha de Espinhos
+2480,Planta Sanguessuga
+2481,Esporo Explosivo
+2482,Muralha de Espinhos
+2483,Erva Daninha
+2484,Erva Daninha Ataque
+2485,Bomba Napalm
+2486,Catalisador Alquímico
+2487,Catalisador Alquímico - Cortina de Fumaça em Pó
+2488,Catalisador Alquímico - Gás Lacrimogêneo
+2489,Catalisador Alquímico - Garrafa de Ácido
+2490,Planta Infernal
+2491,Planta Infernal Ataque
+2492,Grito da Mandrágora
+2493,Arremessar Item
+2494,Reação Alquímica
+2495,Culinária Avançada
+2496,Criar Bomba Orgânica
+2497,Farmacologia Avançada
+2498,Arremessar Item Ataque
+2515,Sacramentum
+2516,Temporal de Mil Flechas
+2517,Rugido do Leão
+2518,Tempestade Espiritual
+2519,Lança do Destino
+2533,Odins Recall
+2534,Retornar para El Dicastes
+2535,Abrir Venda
+2536,Chamar Guardiões
+2537,Poder de Odin
+2540,Dissonance 2
+2541,Ugly Dance 2
+2551,Flip The Coin Greed
+2552,Rich's Coin
+2553,Mass Spiral
+2554,Banishing Buster
+2555,Bind Trap
+2556,Flicker
+2557,Shatter Storm
+2558,Eternal Chain
+2559,Quick DrawShot
+2560,Crimson Marker
+2561,Fire Dance
+2562,Howling Mine
+2563,Platinum Alter
+2564,Fallen Angel
+2565,Round Trip
+2566,Dragon Tail
+2567,Fire Rain
+2568,Heat Barrel
+2569,Anti-Material Blast
+2570,Slug Shot
+2571,Hammer of God
+2572,Round Trip PlusAttack
+2573,Bind Flicker Attack
+2574,Flip The Coin Greed Attack
+3001,Yamikumo
+3002,Perícia com a Mão Direita
+3003,Perícia com a Mão Esquerda
+3004,Cross Strike
+3005,Soul Sever
+3006,Bakuretsu Kunai
+3007,Happo Kunai
+3008,Mucha Nage
+3009,Huuma Shuriken Ranka 
+3010,Makibishi
+3011,Meikyo Shisui
+3012,Zanzou
+3013,Kyougaku
+3014,Jyusatsu
+3015,Kahu Enten
+3016,Hyouhu Hubuki
+3017,Kazehu Seiran
+3018,Dohu Koukai
+3019,Tecnica Kaihou
+3020,Zenkai
+3021,Genwaku
+3022,Izayoi
+3023,Kagehumi
+3024,Kyomu
+3025,Kagemusha
+3026,Zangetsu
+3027,Oboro Gensou
+3028,Oboro Gensou
+3029,Akaitsuki
+3031,Snow Flip
+3032,Peony Mamy
+3033,Sadagui
+3034,Sequoia Dust
+3035,Return To Eclage
+5001,Garra Sombria
+5002,Sem Limite
+5003,Bebida das Ilusões
+5004,Sopro do Dragão de Gelo
+5005,Lux Anima
+5006,Erupção
+5007,Canção de Frigga
+5008,Escudo Elemental
+5009,Combo Rápido
+5010,Saída de Emergência
+5011,Offertorium
+5012,Telecinese Intensa
+5013,Graça do Rei
+5014,Aceleração Total
+5015,Combo Rápido Ataque Passo 1
+5016,Combo Rápido Ataque Passo 2
+5017,Combo Rápido Ataque Passo 3
+5018,Combo Rápido Ataque Passo 4
+8001,Cura pelas Mãos
+8002,,Bater em Retirada
+8003,Cirurgia Cerebral
+8004,Esforço Mental
+8005,Troca de Lugar
+8006,Fortaleza
+8007,Pele de Adamantium
+8008,Sede de Sangue
+8009,Pica-Pau
+8010,Vôo Frenético
+8011,Vôo Acelerado
+8012,S.B.R.44
+8013,Capricho
+8014,Bênção Caótica
+8015,Mudança de Planos
+8016,Autodestruição
+8018,Convocação
+8019,Ponto de Paralisia
+8020,Névoa Venenosa
+8021,Analgésico
+8022,Luz da Criação
+8023,Esquiva Especial
+8024,Choque Supersônico
+8025,Onda Supersônica
+8026,Brisa da Calmaria
+8027,Estilo de Luta
+8028,Garra Supersônica
+8029,Rastro Brilhante
+8030,Delírio Noturno
+8031,Impacto Preciso
+8032,Fúria Iluminada
+8033,Luz Salvadora
+8034,Illuminatus
+8035,Raiva Iluminada
+8036,Quebra Costelas
+8037,Dreno Traumático
+8038,Estado Traumático
+8039,Inundação de Magma
+8040,Armadura de Granito
+8041,Derretimento com Lava
+8042,Piroclastia
+8043,Cinzas Vulcânicas
+8201,Golpe Fulminante
+8202,Impacto Explosivo
+8203,Impacto de Tyr
+8204,Aparar Golpe
+8205,Escudo Refletor
+8206,Fúria Insana
+8207,Rajada de Flechas
+8208,Chuva de Flechas
+8209,Armadilha Escorregadia
+8210,Armadilha Atordoante
+8211,Armadilha Sonífera
+8212,Armadilha Congelante
+8213,Remover Armadilha
+8214,Carregar Flechas
+8215,Tiro Preciso
+8216,Perfurar
+8217,Brandir Lança
+8218,Perfurar em Espiral
+8219,Aura Sagrada
+8220,Bloqueio
+8221,Redenção
+8222,Magnificat
+8223,Rapidez com Arma
+8224,Chama Reveladora
+8225,Impacto
+8226,Recompor
+8227,Amolecer
+8228,Bendição
+8229,Restabelecer
+8230,Cura Mental
+8231,Compressa
+8232,Provocar
+8233,Instinto de Sobrevivência Automático
+8234,Diminuir Agilidade
+8235,Bode Expiatório
+8236,Lex Divina
+8237,Propriedades do Monstro
+8238,Kyrie Eleison
+8239,Benção
+8240,Aumentar Agilidade
+8401,Circulo de Fogo
+8402,Capa de Fogo
+8403,Manto de Fogo
+8404,Imagem de Água
+8405,Lágrima de Água
+8406,Barreira de Água
+8407,Passo do Vento
+8408,Cortina de Vento
+8409,Zephyr
+8410,Pele Sólida
+8411,Escudo de Pedra
+8412,Poder de Gaia
+8413,Pirotecnia
+8414,Aquecido
+8415,Trópico
+8416,Brincar com Água
+8417,Refrigerador
+8418,Refrigerador de Ar
+8419,Temporal
+8420,Explosão
+8421,Tempestade Selvagem
+8422,Petrologia
+8423,Solo Maldito
+8424,Agitação
+8425,Flecha de Fogo
+8426,Bomba de Fogo
+8427,Bomba de Fogo - Ataque
+8428,Onda de Fogo
+8429,Onda de Fogo Ataque
+8430,Agulha de Gelo
+8431,Lanças de Água
+8432,Lanças de Água Ataque
+8433,Arma das Marés
+8434,Vento Cortante
+8435,Fúria do Furacão
+8436,Fúria do Furacão - Ataque
+8437,Míssil Tufão
+8438,Míssil Tufão - Ataque
+8439,Martelo de Pedra
+8440,Disparador de Rochas
+8441,Disparador de Rochas - Ataque
+8442,Chuva de Pedras
+10000,Autorização Oficial
+10001,Contrato com Kafra
+10002,Comandar Guardiões
+10003,Fortalecer Guardiões
+10004,Expandir Clã
+10005,Glória da Guilda
+10006,Grande Liderança
+10007,Ferimentos de Glória
+10008,Coração de Frio
+10009,Olhar Apurado
+10010,Comando de Batalha
+10011,Regeneração
+10012,Restauração
+10013,Chamado Urgente
+10014,Desenvolvimento Permanente
+10015,Chamado Urgente

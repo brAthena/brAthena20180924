@@ -19,6 +19,9 @@
 #include <unistd.h>
 #endif
 
+#define DATADIR "conversor/data/"
+#define OUTPUTDIR "conversor/sql/"
+
 // Função de suporte ao console.
 void cmdline_args_init_local(void) {}
 
@@ -211,7 +214,7 @@ void translation(void) {
 	memset(castle_data, 0, sizeof(castle_data));
 	memset(chat_mob_data, 0, sizeof(chat_mob_data));
 
-	if ((fp = fopen("item_name.txt", "r"))) {
+	if ((fp = fopen(DATADIR"item_name.txt", "r"))) {
 		while (fgets(line, sizeof(line), fp) != NULL) {
 			char **rows, *str = line;
 
@@ -225,7 +228,7 @@ void translation(void) {
 		fclose(fp);
 	}
 
-	if ((fp = fopen("mob_name.txt", "r"))) {
+	if ((fp = fopen(DATADIR"mob_name.txt", "r"))) {
 		while (fgets(line, sizeof(line), fp) != NULL) {
 			char **rows, *str = line;
 
@@ -239,7 +242,7 @@ void translation(void) {
 		fclose(fp);
 	}
 
-	if ((fp = fopen("skill_name.txt", "r"))) {
+	if ((fp = fopen(DATADIR"skill_name.txt", "r"))) {
 		while (fgets(line, sizeof(line), fp) != NULL) {
 			char **rows, *str = line;
 
@@ -253,7 +256,7 @@ void translation(void) {
 		fclose(fp);
 	}
 
-	if ((fp = fopen("castle_name.txt", "r"))) {
+	if ((fp = fopen(DATADIR"castle_name.txt", "r"))) {
 		while (fgets(line, sizeof(line), fp) != NULL) {
 			char **rows, *str = line;
 
@@ -267,7 +270,7 @@ void translation(void) {
 		fclose(fp);
 	}
 
-	if ((fp = fopen("mob_chat_name.txt", "r"))) {
+	if ((fp = fopen(DATADIR"mob_chat_name.txt", "r"))) {
 		while (fgets(line, sizeof(line), fp) != NULL) {
 			char **rows, *str = line;
 
@@ -294,7 +297,7 @@ void convert_abra_db(void)
 	if (!(fread = fopen(path, "r")))
 		return;
 
-	fwrite = fopen("sql/conversor/abra_db.sql", "w+");
+	fwrite = fopen(OUTPUTDIR"abra_db.sql", "w+");
 
 	while (fgets(line, sizeof(line), fread) != NULL) {
 		char **rows, *str = line, buf[1024], write[1024], *pos = buf;
@@ -340,7 +343,7 @@ void convert_castle_db(void)
 	if (!(fread = fopen(path, "r")))
 		return;
 
-	fwrite = fopen("sql/conversor/castle_db.sql", "w+");
+	fwrite = fopen(OUTPUTDIR"castle_db.sql", "w+");
 
 	while (fgets(line, sizeof(line), fread) != NULL) {
 		char **rows, *str = line, buf[1024], write[1024], *pos = buf;
@@ -386,7 +389,7 @@ void convert_create_arrow_db(void)
 	if (!(fread = fopen(path, "r")))
 		return;
 
-	fwrite = fopen("sql/conversor/create_arrow_db.sql", "w+");
+	fwrite = fopen(OUTPUTDIR"create_arrow_db.sql", "w+");
 
 	while (fgets(line, sizeof(line), fread) != NULL) {
 		char *token, buf[1024], write[1024], *pos = buf;
@@ -429,7 +432,7 @@ void convert_elemental_db(void)
 	if (!(fread = fopen(path, "r")))
 		return;
 
-	fwrite = fopen("sql/conversor/elemental_db.sql", "w+");
+	fwrite = fopen(OUTPUTDIR"elemental_db.sql", "w+");
 
 	while (fgets(line, sizeof(line), fread) != NULL) {
 		char *token, buf[1024], write[1024], *pos = buf;
@@ -472,7 +475,7 @@ void convert_elemental_skill_db(void)
 	if (!(fread = fopen(path, "r")))
 		return;
 
-	fwrite = fopen("sql/conversor/elemental_skill_db.sql", "w+");
+	fwrite = fopen(OUTPUTDIR"elemental_skill_db.sql", "w+");
 
 	while (fgets(line, sizeof(line), fread) != NULL) {
 		char *token, buf[1024], write[1024], *pos = buf;
@@ -515,7 +518,7 @@ void convert_guild_skill_tree_db(void)
 	if (!(fread = fopen(path, "r")))
 		return;
 
-	fwrite = fopen("sql/conversor/guild_skill_tree.sql", "w+");
+	fwrite = fopen(OUTPUTDIR"guild_skill_tree.sql", "w+");
 
 	while (fgets(line, sizeof(line), fread) != NULL) {
 		char *token, buf[1024], write[1024], *pos = buf;
@@ -558,7 +561,7 @@ void convert_homunculus_db(void)
 	if (!(fread = fopen(path, "r")))
 		return;
 
-	fwrite = fopen("sql/conversor/homunculus_db.sql", "w+");
+	fwrite = fopen(OUTPUTDIR"homunculus_db.sql", "w+");
 
 	while (fgets(line, sizeof(line), fread) != NULL) {
 		char *token, buf[1024], write[1024], *pos = buf;
@@ -601,7 +604,7 @@ void convert_homun_skill_tree_db(void)
 	if (!(fread = fopen(path, "r")))
 		return;
 
-	fwrite = fopen("sql/conversor/homun_skill_tree.sql", "w+");
+	fwrite = fopen(OUTPUTDIR"homun_skill_tree.sql", "w+");
 
 	while (fgets(line, sizeof(line), fread) != NULL) {
 		char *token, buf[1024], write[1024], *pos = buf;
@@ -644,7 +647,7 @@ void convert_mercenary_db(void)
 	if (!(fread = fopen(path, "r")))
 		return;
 
-	fwrite = fopen("sql/conversor/mercenary_db.sql", "w+");
+	fwrite = fopen(OUTPUTDIR"mercenary_db.sql", "w+");
 
 	while (fgets(line, sizeof(line), fread) != NULL) {
 		char *token, buf[1024], write[1024], *pos = buf;
@@ -687,7 +690,7 @@ void convert_mercenary_skill_db(void)
 	if (!(fread = fopen(path, "r")))
 		return;
 
-	fwrite = fopen("sql/conversor/mercenary_skill_db.sql", "w+");
+	fwrite = fopen(OUTPUTDIR"mercenary_skill_db.sql", "w+");
 
 	while (fgets(line, sizeof(line), fread) != NULL) {
 		char *token, buf[1024], write[1024], *pos = buf;
@@ -730,7 +733,7 @@ void convert_mob_avail_db(void)
 	if (!(fread = fopen(path, "r")))
 		return;
 
-	fwrite = fopen("sql/conversor/mob_avail.sql", "w+");
+	fwrite = fopen(OUTPUTDIR"mob_avail.sql", "w+");
 
 	while (fgets(line, sizeof(line), fread) != NULL) {
 		char *token, buf[1024], write[1024], *pos = buf;
@@ -773,7 +776,7 @@ void convert_mob_chat_db(void)
 	if (!(fread = fopen(path, "r")))
 		return;
 
-	fwrite = fopen("sql/conversor/mob_chat_db.sql", "w+");
+	fwrite = fopen(OUTPUTDIR"mob_chat_db.sql", "w+");
 
 	while (fgets(line, sizeof(line), fread) != NULL) {
 		char **rows, *str = line, buf[1024], write[1024], *pos = buf;
@@ -819,7 +822,7 @@ void convert_mob_classchange_db(void)
 	if (!(fread = fopen(path, "r")))
 		return;
 
-	fwrite = fopen("sql/conversor/mob_classchange.sql", "w+");
+	fwrite = fopen(OUTPUTDIR"mob_classchange.sql", "w+");
 
 	while (fgets(line, sizeof(line), fread) != NULL) {
 		char *token, buf[1024], write[1024], *pos = buf;
@@ -862,7 +865,7 @@ void convert_mob_item_ratio_db(void)
 	if (!(fread = fopen(path, "r")))
 		return;
 
-	fwrite = fopen("sql/conversor/mob_item_ratio.sql", "w+");
+	fwrite = fopen(OUTPUTDIR"mob_item_ratio.sql", "w+");
 
 	while (fgets(line, sizeof(line), fread) != NULL) {
 		char *token, buf[1024], write[1024], *pos = buf;
@@ -905,7 +908,7 @@ void convert_pet_db(void)
 	if (!(fread = fopen(path, "r")))
 		return;
 
-	fwrite = fopen("sql/conversor/pet_db.sql", "w+");
+	fwrite = fopen(OUTPUTDIR"pet_db.sql", "w+");
 
 	while (fgets(line, sizeof(line), fread) != NULL) {
 		char *token, **script, buf[1024], write[1024], *pos = buf;
@@ -953,7 +956,7 @@ void convert_produce_db(void)
 	if (!(fread = fopen(path, "r")))
 		return;
 
-	fwrite = fopen("sql/conversor/produce_db.sql", "w+");
+	fwrite = fopen(OUTPUTDIR"produce_db.sql", "w+");
 
 	while (fgets(line, sizeof(line), fread) != NULL) {
 		char *token, buf[1024], write[1024], *pos = buf;
@@ -996,7 +999,7 @@ void convert_skill_changematerial_db(void)
 	if (!(fread = fopen(path, "r")))
 		return;
 
-	fwrite = fopen("sql/conversor/skill_changematerial_db.sql", "w+");
+	fwrite = fopen(OUTPUTDIR"skill_changematerial_db.sql", "w+");
 
 	while (fgets(line, sizeof(line), fread) != NULL) {
 		char *token, buf[1024], write[1024], *pos = buf;
@@ -1039,7 +1042,7 @@ void convert_skill_improvise_db(void)
 	if (!(fread = fopen(path, "r")))
 		return;
 
-	fwrite = fopen("sql/conversor/skill_improvise_db.sql", "w+");
+	fwrite = fopen(OUTPUTDIR"skill_improvise_db.sql", "w+");
 
 	while (fgets(line, sizeof(line), fread) != NULL) {
 		char *token, buf[1024], write[1024], *pos = buf;
@@ -1082,7 +1085,7 @@ void convert_skill_reproduce_db(void)
 	if (!(fread = fopen(path, "r")))
 		return;
 
-	fwrite = fopen("sql/conversor/skill_reproduce_db.sql", "w+");
+	fwrite = fopen(OUTPUTDIR"skill_reproduce_db.sql", "w+");
 
 	while (fgets(line, sizeof(line), fread) != NULL) {
 		char write[1024];
@@ -1115,7 +1118,7 @@ void convert_spellbook_db(void)
 	if (!(fread = fopen(path, "r")))
 		return;
 
-	fwrite = fopen("sql/conversor/spellbook_db.sql", "w+");
+	fwrite = fopen(OUTPUTDIR"spellbook_db.sql", "w+");
 
 	while (fgets(line, sizeof(line), fread) != NULL) {
 		char *token, buf[1024], write[1024], *pos = buf;
@@ -1158,7 +1161,7 @@ void convert_quest_db(void)
 	if (!(fread = fopen(path, "r")))
 		return;
 
-	fwrite = fopen("sql/conversor/quest_db.sql", "w+");
+	fwrite = fopen(OUTPUTDIR"quest_db.sql", "w+");
 
 	while (fgets(line, sizeof(line), fread) != NULL) {
 		char *token, buf[1024], write[1024], *pos = buf;
@@ -1201,7 +1204,7 @@ void convert_const_db(void)
 	if (!(fread = fopen(path, "r")))
 		return;
 
-	fwrite = fopen("sql/conversor/const_db.sql", "w+");
+	fwrite = fopen(OUTPUTDIR"const_db.sql", "w+");
 
 	while (fgets(line, sizeof(line), fread) != NULL) {
 		char write[1024], name[1024], val[1024];
@@ -1241,7 +1244,7 @@ void convert_job_db2(void)
 	if (!(fread = fopen(path, "r")))
 		return;
 
-	fwrite = fopen("sql/conversor/job_db2.sql", "w+");
+	fwrite = fopen(OUTPUTDIR"job_db2.sql", "w+");
 
 	while (fgets(line, sizeof(line), fread) != NULL) {
 		if ((line[0] == '/' && line[1] == '/') || line[0] == '\n')
@@ -1271,7 +1274,7 @@ void convert_sc_config(void)
 	if (!(fread = fopen(path, "r")))
 		return;
 
-	fwrite = fopen("sql/conversor/sc_config.sql", "w+");
+	fwrite = fopen(OUTPUTDIR"sc_config.sql", "w+");
 
 	while (fgets(line, sizeof(line), fread) != NULL) {
 		char *token, buf[1024], write[1024], *pos = buf;
@@ -1314,7 +1317,7 @@ void convert_size_fix_db(void)
 	if (!(fread = fopen(path, "r")))
 		return;
 
-	fwrite = fopen("sql/conversor/size_fix_db.sql", "w+");
+	fwrite = fopen(OUTPUTDIR"size_fix_db.sql", "w+");
 
 	while (fgets(line, sizeof(line), fread) != NULL) {
 		char *token, buf[1024], write[1024], *pos = buf;
@@ -1357,7 +1360,7 @@ void convert_item_combo_db(void)
 	if (!(fread = fopen(path, "r")))
 		return;
 
-	fwrite = fopen("sql/conversor/item_combo_db.sql", "w+");
+	fwrite = fopen(OUTPUTDIR"item_combo_db.sql", "w+");
 
 	while (fgets(line, sizeof(line), fread) != NULL) {
 		char *token, write[1024], *row[2];
@@ -1401,7 +1404,7 @@ void convert_mob_boss_db(void)
 	if (!(fread = fopen(path, "r")))
 		return;
 
-	fwrite = fopen("sql/conversor/mob_boss_db.sql", "w+");
+	fwrite = fopen(OUTPUTDIR"mob_boss_db.sql", "w+");
 
 	while (fgets(line, sizeof(line), fread) != NULL) {
 		char *token, buf[1024], write[1024], *pos = buf;
@@ -1444,7 +1447,7 @@ void convert_mob_branch_db(void)
 	if (!(fread = fopen(path, "r")))
 		return;
 
-	fwrite = fopen("sql/conversor/mob_branch_db.sql", "w+");
+	fwrite = fopen(OUTPUTDIR"mob_branch_db.sql", "w+");
 
 	while (fgets(line, sizeof(line), fread) != NULL) {
 		char *token, buf[1024], write[1024], *pos = buf;
@@ -1487,7 +1490,7 @@ void convert_mob_poring_db(void)
 	if (!(fread = fopen(path, "r")))
 		return;
 
-	fwrite = fopen("sql/conversor/mob_poring_db.sql", "w+");
+	fwrite = fopen(OUTPUTDIR"mob_poring_db.sql", "w+");
 
 	while (fgets(line, sizeof(line), fread) != NULL) {
 		char *token, buf[1024], write[1024], *pos = buf;
@@ -1530,7 +1533,7 @@ void convert_mob_race2_db(void)
 	if (!(fread = fopen(path, "r")))
 		return;
 
-	fwrite = fopen("sql/conversor/mob_race2_db.sql", "w+");
+	fwrite = fopen(OUTPUTDIR"mob_race2_db.sql", "w+");
 
 	while (fgets(line, sizeof(line), fread) != NULL) {
 		char *token, buf[1024], write[1024], *pos = buf;
@@ -1573,7 +1576,7 @@ void convert_skill_cast_db(void)
 	if (!(fread = fopen(path, "r")))
 		return;
 
-	fwrite = fopen("sql/conversor/skill_cast_db.sql", "w+");
+	fwrite = fopen(OUTPUTDIR"skill_cast_db.sql", "w+");
 
 	while (fgets(line, sizeof(line), fread) != NULL) {
 		char *token, buf[1024], write[1024], *pos = buf;
@@ -1616,7 +1619,7 @@ void convert_skill_castnodex_db(void)
 	if (!(fread = fopen(path, "r")))
 		return;
 
-	fwrite = fopen("sql/conversor/skill_castnodex_db.sql", "w+");
+	fwrite = fopen(OUTPUTDIR"skill_castnodex_db.sql", "w+");
 
 	while (fgets(line, sizeof(line), fread) != NULL) {
 		char *token, buf[1024], write[1024], *pos = buf;
@@ -1659,7 +1662,7 @@ void convert_skill_db(void)
 	if (!(fread = fopen(path, "r")))
 		return;
 
-	fwrite = fopen("sql/conversor/skill_db.sql", "w+");
+	fwrite = fopen(OUTPUTDIR"skill_db.sql", "w+");
 
 	while (fgets(line, sizeof(line), fread) != NULL) {
 		char **rows, *str = line, buf[1024], write[1024], *pos = buf;
@@ -1707,7 +1710,7 @@ void convert_skill_nocast_db(void)
 	if (!(fread = fopen(path, "r")))
 		return;
 
-	fwrite = fopen("sql/conversor/skill_nocast_db.sql", "w+");
+	fwrite = fopen(OUTPUTDIR"skill_nocast_db.sql", "w+");
 
 	while (fgets(line, sizeof(line), fread) != NULL) {
 		char *token, buf[1024], write[1024], *pos = buf;
@@ -1750,7 +1753,7 @@ void convert_skill_require_db(void)
 	if (!(fread = fopen(path, "r")))
 		return;
 
-	fwrite = fopen("sql/conversor/skill_require_db.sql", "w+");
+	fwrite = fopen(OUTPUTDIR"skill_require_db.sql", "w+");
 
 	while (fgets(line, sizeof(line), fread) != NULL) {
 		char *token, buf[1024], write[1024], *pos = buf;
@@ -1793,7 +1796,7 @@ void convert_skill_tree_db(void)
 	if (!(fread = fopen(path, "r")))
 		return;
 
-	fwrite = fopen("sql/conversor/skill_tree_db.sql", "w+");
+	fwrite = fopen(OUTPUTDIR"skill_tree_db.sql", "w+");
 
 	while (fgets(line, sizeof(line), fread) != NULL) {
 		char *token, buf[1024], write[1024], *pos = buf;
@@ -1836,7 +1839,7 @@ void convert_skill_unit_db(void)
 	if (!(fread = fopen(path, "r")))
 		return;
 
-	fwrite = fopen("sql/conversor/skill_unit_db.sql", "w+");
+	fwrite = fopen(OUTPUTDIR"skill_unit_db.sql", "w+");
 
 	while (fgets(line, sizeof(line), fread) != NULL) {
 		char *token, **last, buf[1024], write[1024], *pos = buf;
@@ -1890,7 +1893,7 @@ void convert_exp_guild_db(void)
 	if (!(fread = fopen(path, "r")))
 		return;
 
-	fwrite = fopen("sql/conversor/exp_guild_db.sql", "w+");
+	fwrite = fopen(OUTPUTDIR"exp_guild_db.sql", "w+");
 
 	while (fgets(line, sizeof(line), fread) != NULL) {
 		if ((line[0] == '/' && line[1] == '/') || line[0] == '\n')
@@ -1920,7 +1923,7 @@ void convert_exp_homun_db(void)
 	if (!(fread = fopen(path, "r")))
 		return;
 
-	fwrite = fopen("sql/conversor/exp_homun_db.sql", "w+");
+	fwrite = fopen(OUTPUTDIR"exp_homun_db.sql", "w+");
 
 	while (fgets(line, sizeof(line), fread) != NULL) {
 		if ((line[0] == '/' && line[1] == '/') || line[0] == '\n')
@@ -1950,7 +1953,7 @@ void convert_statpoint_db(void)
 	if (!(fread = fopen(path, "r")))
 		return;
 
-	fwrite = fopen("sql/conversor/statpoint_db.sql", "w+");
+	fwrite = fopen(OUTPUTDIR"statpoint_db.sql", "w+");
 
 	while (fgets(line, sizeof(line), fread) != NULL) {
 		if ((line[0] == '/' && line[1] == '/') || line[0] == '\n')
@@ -1980,7 +1983,7 @@ void convert_refine_db(void)
 	if (!(fread = fopen(path, "r")))
 		return;
 
-	fwrite = fopen("sql/conversor/refine_db.sql", "w+");
+	fwrite = fopen(OUTPUTDIR"refine_db.sql", "w+");
 
 	while (fgets(line, sizeof(line), fread) != NULL) {
 		char *token, buf[1024], write[1024], *pos = buf;
@@ -2023,7 +2026,7 @@ void convert_mob_db(void)
 	if (!(fread = fopen(path, "r")))
 		return;
 
-	fwrite = fopen("sql/conversor/mob_db.sql", "w+");
+	fwrite = fopen(OUTPUTDIR"mob_db.sql", "w+");
 
 	while (fgets(line, sizeof(line), fread) != NULL) {
 		char **rows, *str = line, buf[1024], write[1024], *pos = buf;
@@ -2072,7 +2075,7 @@ void convert_mob_skill_db(void)
 	if (!(fread = fopen(path, "r")))
 		return;
 
-	fwrite = fopen("sql/conversor/mob_skill_db.sql", "w+");
+	fwrite = fopen(OUTPUTDIR"mob_skill_db.sql", "w+");
 
 	while (fgets(line, sizeof(line), fread) != NULL) {
 		char **rows, *str = line, buf[1024], write[1024], *pos = buf;
@@ -2089,7 +2092,7 @@ void convert_mob_skill_db(void)
 			}
 
 			if (i > 0)
-				pos += (rows[i] == NULL || !strlen(rows[i])) ? sprintf(pos, "%s", (i == 7) ? "'0'" : "NULL") : sprintf(pos, "'%s'", escape_str(rows[i]));
+				pos += (rows[i] == NULL || !strlen(rows[i])) ? sprintf(pos, "%s", (i == 7) ? "'0'" : "NULL") : (i >= 12 && i <= 16) ? sprintf(pos, "%s", escape_str(rows[i])) : sprintf(pos, "'%s'", escape_str(rows[i]));
 			else
 				pos += sprintf(pos, "%d", atoi(rows[i]));
 		}
@@ -2221,7 +2224,7 @@ void convert_item_db(void)
 		return;
 	}
 
-	fwrite = fopen("sql/conversor/item_db.sql", "w+");
+	fwrite = fopen(OUTPUTDIR"item_db.sql", "w+");
 
 	while ((it = config_setting_get_elem(itdb, i++))) {
 		char buf[2048], write[2048], *pos = buf;
@@ -2234,7 +2237,7 @@ void convert_item_db(void)
 		// Name
 		pos = item_parse_name(it, "Name", pos);
 		// Type
-		pos = item_parse_i32(it, "Type", pos, "0");
+		pos = item_parse_i32(it, "Type", pos, "3");
 		// Buy
 		pos = item_parse_i32(it, "Buy", pos, "NULL");
 		// Sell
@@ -2431,7 +2434,7 @@ void convert_level_penalty_db(void)
 	if (!(fread = fopen(path, "r")))
 		return;
 
-	fwrite = fopen("sql/conversor/level_penalty_db.sql", "w+");
+	fwrite = fopen(OUTPUTDIR"level_penalty_db.sql", "w+");
 
 	while (fgets(line, sizeof(line), fread) != NULL) {
 		char *token, buf[1024], write[1024], *pos = buf;

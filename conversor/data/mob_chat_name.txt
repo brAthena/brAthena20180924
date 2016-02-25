@@ -1,0 +1,40 @@
+1,Fraco! Me desafie se tiver alguma coragem!
+2,Impressionante! Eu me pergunto até onde sua imprudencia irá levá-lo.
+3,Tenho pena de você estar contra mim. Agora se prepare para meu ataque!
+4,Meus servos fiéis! O recebram com uma morte dolorosa!
+5,Não fuja!
+6,Vocês, humanos inúteis. Seus poderes sagrados não tem efeito sobre mim!
+7,Subalternos inúteis!... Tudo bem, eu tenho mais armas descartáveis para usar.
+8,Reze para seus deuses!
+9,Você ainda acha que é um jogo para mim?
+10,Desapareça!
+11,Vamos ver por quanto tempo você pode agüentar meu poder!
+12,Isso é tudo que você tem?
+13,Você está me fazendo cócegas!
+14,Chama isso de ataque? Assista e aprenda, seus fracos!
+15,É hora de terminar o jogo!
+16,Ha! Você é mais forte do que eu pensava!
+17,Não! Isso não poder estar acontecendo! Eu sou Satan Morroc, o Rei da Destruição!
+18,Eu nunca morrei! Sempre estarei voltando para lhe pegar!
+19,Eu nasci para conquistar este mundo! Nada poderá me impedir!
+20,Seus dias estão contados!
+21,Strike! Meus dedos dilaceradores de aço!
+22,Hahaha! Me diga quem sou! Eo sou Bafomé! O herdeiro do inferno!
+23,Aproveite sua vida enquanto pode! Sua esperança em breve irá se transformar em desespero!
+24,Quando você aprenderá a lição? Quando morrer?
+25,Não... Eu não posso perder! Não vou implorar por minha vida! Eu não estou fugindo! Eu não aceito isso como derrota!
+26,Argh... Eu... Eu, estou enfraquecendo...
+27,O que você quer de mim?
+28,Não! Eu não fiz isso! Ele é quem planejou tudo isso!
+29,Eu só queria encontrar a paz..! É por isso que eu estava fugindo!
+30,Ahhhh!!! Agora, só tenho que matá-lo!
+31,Moscas irritantes!! Saiam de mim!
+32,Sofra no Inferno!
+33,Muahahaha! Sinta a fúria da terra!!!
+34,Não... Eu não irei aceitar esta derrota!
+35,Será que me bater irá aliviar a sua solidão? Por que você não fica aqui comigo para sempre, humano?
+36,Você esqueceu o significado do tempo. Eu me pergunto quanto tempo você poderá durar aqui...
+37,Existe alguém esperando por você? Desista de tudo, você é meu agora...
+38,Esqueça sua vida e fique confinado aqui. Você vai desejar a liberdade preso em cativeiro cativeiro !!
+39,Quais serão as mudanças no mundo exterior, enquanto você estiver aqui na solidão durante mil anos?
+40,Sim! Desejar a sua liberdade neste local confinado, sua permanência aqui será eterna !!
