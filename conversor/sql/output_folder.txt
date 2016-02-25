@@ -1,0 +1,3 @@
+Seus arquivos convertidos ficarão nessa pasta.
+
+Para instruções de como converter, leia o README da pasta conversor.
