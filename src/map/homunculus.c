@@ -271,6 +271,10 @@ int homunculus_calc_skilltree(struct homun_data *hd, int flag_evolve) {
 
 int homunculus_checkskill(struct homun_data *hd,uint16 skill_id) {
 	int i = skill_id - HM_SKILLBASE;
+
+	if (i < 0) // Invalid skill
+		return 0;
+
 	if(!hd)
 		return 0;
 
