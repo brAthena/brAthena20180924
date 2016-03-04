@@ -1168,7 +1168,7 @@ ACMD(heal)
 ACMD(item)
 {
 	char item_name[100];
-	int number = 0, item_id, flag = 0, bound = 0;
+	int number = 0, item_id, flag = 0, bound = 0, costume = 0;
 	struct item item_tmp;
 	struct item_data *item_data;
 	int get_count, i;
@@ -1223,6 +1223,24 @@ ACMD(item)
 		}
 	}
 
+	if( !strcmpi(command+1,"costumeitem") ) {
+		if( !battle_config.reserved_costume_id ) {
+			clif->message(fd, "A conversão visual está desabilitada. Defina um valor para a variável reserved_costume_id no arquivo battle/items.conf");
+			return -1;
+		}
+		if( !(item_data->equip&EQP_HEAD_LOW) &&
+			!(item_data->equip&EQP_HEAD_MID) &&
+			!(item_data->equip&EQP_HEAD_TOP) &&
+			!(item_data->equip&EQP_COSTUME_HEAD_LOW) &&
+			!(item_data->equip&EQP_COSTUME_HEAD_MID) &&
+			!(item_data->equip&EQP_COSTUME_HEAD_TOP) )
+		{
+			clif->message(fd, "Você não pode converter este item. A conversão visual só pode ser feita em chapéus.");
+			return -1;
+		}
+		costume = 1;
+	}
+
 	item_id = item_data->nameid;
 	get_count = number;
 	//Check if it's stackable.
@@ -1241,6 +1259,12 @@ ACMD(item)
 			item_tmp.nameid = item_id;
 			item_tmp.identify = 1;
 			item_tmp.bound = (unsigned char)bound;
+
+			if( costume == 1 ) { // Costume Item
+				item_tmp.card[0] = CARD0_CREATE;
+				item_tmp.card[2] = GetWord(battle_config.reserved_costume_id, 0);
+				item_tmp.card[3] = GetWord(battle_config.reserved_costume_id, 1);
+			}
 
 			if ((flag = pc->additem(sd, &item_tmp, get_count)))
 				clif->additem(sd, 0, 0, flag);
@@ -9687,6 +9711,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(lang),
 		ACMD_DEF(bodystyle),
 		ACMD_DEF(reloadcashshop),
+		ACMD_DEF2("costumeitem", item),
 	};
 	int i;
 

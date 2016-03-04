@@ -785,7 +785,7 @@ int pc_setnewpc(struct map_session_data *sd, int account_id, int char_id, int lo
 
 int pc_equippoint(struct map_session_data *sd,int n)
 {
-	int ep = 0;
+	int ep = 0, char_id = 0;
 
 	nullpo_ret(sd);
 
@@ -810,6 +810,14 @@ int pc_equippoint(struct map_session_data *sd,int n)
 			if( ep == EQP_SHADOW_WEAPON )
 				return EQP_SHADOW_ARMS;
 		}
+	}
+	if( battle_config.reserved_costume_id &&
+		sd->status.inventory[n].card[0] == CARD0_CREATE &&
+		(char_id = MakeDWord(sd->status.inventory[n].card[2],sd->status.inventory[n].card[3])) == battle_config.reserved_costume_id )
+	{ // Costume Item - Converted
+		if( ep&EQP_HEAD_TOP ) { ep &= ~EQP_HEAD_TOP; ep |= EQP_COSTUME_HEAD_TOP; }
+		if( ep&EQP_HEAD_MID ) { ep &= ~EQP_HEAD_MID; ep |= EQP_COSTUME_HEAD_MID; }
+		if( ep&EQP_HEAD_LOW ) { ep &= ~EQP_HEAD_LOW; ep |= EQP_COSTUME_HEAD_LOW; }
 	}
 	return ep;
 }
@@ -9432,6 +9440,9 @@ int pc_checkcombo(struct map_session_data *sd, struct item_data *data ) {
 				if( k == EQI_HAND_R   &&  sd->equip_index[EQI_HAND_L] == index ) continue;
 				if( k == EQI_HEAD_MID &&  sd->equip_index[EQI_HEAD_LOW] == index ) continue;
 				if( k == EQI_HEAD_TOP && (sd->equip_index[EQI_HEAD_MID] == index || sd->equip_index[EQI_HEAD_LOW] == index) ) continue;
+
+				if( (int)MakeDWord(sd->status.inventory[index].card[2],sd->status.inventory[index].card[3]) == battle_config.reserved_costume_id )
+					continue;
 
 				if(!sd->inventory_data[index])
 					continue;

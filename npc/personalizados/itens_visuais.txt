@@ -1,0 +1,148 @@
+//===== Hercules Script ======================================
+//= Conversor de chapéu para visual > Conversor de visual para chapéu
+//===== Por: =================================================
+//= Rebel, Zephyrus [rAthena]
+//= Mhalicot [Hercules]
+//= Aly [brAthena]
+//===== Current Version: =====================================
+//= 1.1
+//===== Compatível com: ======================================
+//= Hercules/brAthena
+//===== Descrição: ===========================================
+//= Allows a user to convert the equipped headgear 
+//	(on Top, Mid or Low) into a costume item. 
+//	It will remove any card and refine of the Item.
+//= Allows a user to restore the equipped costume headgear 
+//	(on Top, Mid or Low) into its original form. 
+//	It will not return any card or refine of the item.
+//===== Additional Comments: =================================
+//= 1.0 Initial script [All of this script are credit to
+//	Rebel, Zephyrus of [rAthena] and revised by [Mhalicot]
+//	to make it compatible in Hercules.]
+//= 1.1 Denied if Headgear is rental, has refine,
+//	or has card[Mhalicot]
+//	Note: You must apply the patch in order to use this script
+//============================================================
+-	script	Arlequim_dos_Visuais	-1,{
+	mes "[Arlequim]";
+	mes "Olá! Eu posso converter seus chapéus em itens visuais, ou restaurá-los para forma original.";
+	switch(select("Converter para visual.:Restaurar ao chapéu.:Não, obrigado.")) {
+	case 1:
+			next;
+			mes "[Arlequim]";
+			mes "Por favor, selecione o que deseja converter.";
+			mes "Lembre-se, cartas e refinamentos serão perdidos.";
+			next;
+				setarray .@Position$[1],"Topo","Meio","Baixo";
+				setarray .@Position[1],     1,    9,   10;
+				set .@Menu$,"";
+			for( set .@i, 1; .@i < 5; set .@i, .@i + 1 )
+			{
+				if( getequipisequiped(.@Position[.@i]) )
+				set .@Menu$, .@Menu$ + .@Position$[.@i] + "-" + "[" + getequipname(.@Position[.@i]) + "]";
+				set .@Menu$, .@Menu$ + ":";
+			}
+			set .@Part, .@Position[ select(.@Menu$) ];
+			set .@id, getequipid(.@Part);
+			set .@ref, getequiprefinerycnt(.@Part);
+			if( !getequipisequiped(.@Part) )
+			{
+				mes "[Arlequim]";
+				mes "Você não está usando nada aí...";
+				close;
+			}
+			mes "[Arlequim]";
+			mes "Você deseja converter seu " + getitemname(getequipid(.@Part)) + " para visual?";
+			next;
+			if( select("Sim, por favor:Não, desculpe.") == 2 )
+			{
+				mes "[Arlequim]";
+				mes "Precisa de algum tempo pra pensar sobre isso, né?";
+				mes "Tudo bem, eu entendo.";
+				close;
+			}
+			for(set .@i,0; .@i<4; set .@i,.@i+1)
+				set .@slot[.@i], getequipcardid(.@Part,.@i);
+			if (.@slot[0]>4000 && .@slot[0]<5000) { // Se houver cartas, não converta
+				mes "[Arlequim]";
+				mes "Uma carta? Aqui?!";
+				mes "Como eu disse, eu não posso converter chapéus com cartas, ou elas seriam perdidas.";
+				emotion e_hmm;
+				close;
+			}
+			getinventorylist;
+			for(set .@i,0; .@i<@inventorylist_count; set .@i,.@i+1)
+				if (@inventorylist_expire[.@i] != 0 && @inventorylist_equip[.@i] != 0) { // If rental don't convert
+				mes "[Arlequim]";
+				mes "Opa, desculpe mas eu não posso convrter um chapéu de aluguel!";
+				emotion e_hmm;
+				close;
+				}
+				if (.@ref > 0) { // Se estiver refinado, não converta
+				mes "[Arlequim]";
+				mes "Desculpe, eu não posso converter chapéus com refinamentos, ou eles seriam perdidos.";
+				emotion e_hmm;
+				close;
+				}
+			if (!countitem(.@id)) { 
+				mes "[Arlequim]";
+				mes "Onde está seu "+getitemname(@id)+"...?";
+				npctalk "Peraí, você está tentando me enganar?!";
+				logmes "Trapaceiro: tentou converter um item sem estar usando: "+getitemname(@id);
+				emotion e_wah;
+				close;
+			}
+			costume .@Part; // Convertendo o chapéu
+			mes "[Arlequim]";
+			mes "Pronto! Aproveite seu chapéu.";
+			close;
+	case 2:
+			next;
+			mes "[Arlequim]";
+			mes "Por favor, escolha qual item quer restaurar.";
+			mes "Lembre-se, eu só restauro itens sem refinamentos e cartas.";
+			next;
+				setarray .@Position$[1],"Top","Mid","Low";
+				setarray .@Position[1],     13,    12,   11;
+				set .@Menu$,"";
+			for( set .@i, 1; .@i < 5; set .@i, .@i + 1 )
+			{
+				if( getequipisequiped(.@Position[.@i]) )
+				set .@Menu$, .@Menu$ + .@Position$[.@i] + "-" + "[" + getequipname(.@Position[.@i]) + "]";
+				set .@Menu$, .@Menu$ + ":";
+			}
+			set .@Part, .@Position[ select(.@Menu$) ];
+			if( !getequipisequiped(.@Part) )
+			{
+				mes "[Arlequim]";
+				mes "Você não está usando nada aí...";
+				close;
+			}
+			mes "[Arlequim]";
+			mes "Você quer restaurar o seu " + getitemname(getequipid(.@Part)) + "?";
+			next;
+			if( select("Sim, prossiga.:Não, me desculpe.") == 2 )
+			{
+				mes "[Arlequim]";
+				mes "Precisa de um tempo pra pensar, né?";
+				mes "Tudo bem, eu entendo.";
+				close;
+			}
+			a = getequipid(.@Part);			
+			delitem a,1;
+			getitem a,1;
+			
+			mes "[Arlequim]";
+			mes "Pronto, seu chapéu foi restaurado.";
+			close;
+	case 3:
+		next;
+		mes "[Arlequim]";
+		mes "Muito bem. Retorne quando precisar de meus serviços.";
+		close;
+	}
+}
+// --------------------------------------------------------------------------
+// Use duplicates to put your npc on different cities
+// --------------------------------------------------------------------------
+prontera,155,181,4	duplicate(Arlequim_dos_Visuais)	Arlequim dos Visuais#1	4_M_PIERROT
