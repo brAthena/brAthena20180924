@@ -5895,9 +5895,7 @@ void map_load_defaults(void) {
 	pet_defaults();
 	path_defaults();
 	quest_defaults();
-#ifdef PCRE_SUPPORT
 	npc_chat_defaults();
-#endif
 }
 /**
  * --run-once handler
