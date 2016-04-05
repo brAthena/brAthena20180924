@@ -17,7 +17,7 @@
 
 CREATE TABLE IF NOT EXISTS `atcommandlog` (
   `atcommand_id` mediumint(9) unsigned NOT NULL,
-  `atcommand_date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `atcommand_date` datetime NOT NULL DEFAULT '1970-01-01 00:00:00',
   `account_id` int(11) unsigned NOT NULL DEFAULT '0',
   `char_id` int(11) unsigned NOT NULL DEFAULT '0',
   `char_name` varchar(25) NOT NULL DEFAULT '',
@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS `atcommandlog` (
 
 CREATE TABLE IF NOT EXISTS `branchlog` (
   `branch_id` mediumint(9) unsigned NOT NULL,
-  `branch_date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `branch_date` datetime NOT NULL DEFAULT '1970-01-01 00:00:00',
   `account_id` int(11) NOT NULL DEFAULT '0',
   `char_id` int(11) NOT NULL DEFAULT '0',
   `char_name` varchar(25) NOT NULL DEFAULT '',
@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS `branchlog` (
 
 CREATE TABLE IF NOT EXISTS `buyingstore_log` (
   `Index` int(11) NOT NULL,
-  `Date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `Date` datetime NOT NULL DEFAULT '1970-01-01 00:00:00',
   `Mapname` varchar(24) NOT NULL DEFAULT '',
   `Shop_Name` varchar(23) NOT NULL DEFAULT '',
   `Buyer_CharID` int(11) NOT NULL DEFAULT '0',
@@ -74,7 +74,7 @@ CREATE TABLE IF NOT EXISTS `buyingstore_log` (
 
 CREATE TABLE IF NOT EXISTS `card_log` (
   `Index` int(11) NOT NULL,
-  `Date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `Date` datetime NOT NULL DEFAULT '1970-01-01 00:00:00',
   `Mapname` varchar(24) NOT NULL DEFAULT '',
   `PosX` smallint(4) NOT NULL DEFAULT '0',
   `PosY` smallint(4) NOT NULL DEFAULT '0',
@@ -102,7 +102,7 @@ CREATE TABLE IF NOT EXISTS `card_log` (
 
 CREATE TABLE IF NOT EXISTS `cashitemshop` (
   `Index` int(11) NOT NULL,
-  `Date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `Date` datetime NOT NULL DEFAULT '1970-01-01 00:00:00',
   `Mapname` varchar(24) NOT NULL DEFAULT '',
   `AccountID` int(11) NOT NULL DEFAULT '0',
   `AccountName` varchar(23) NOT NULL DEFAULT '',
@@ -133,7 +133,7 @@ CREATE TABLE IF NOT EXISTS `cashitemshop` (
 
 CREATE TABLE IF NOT EXISTS `chatlog` (
   `id` bigint(20) NOT NULL,
-  `time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `time` datetime NOT NULL DEFAULT '1970-01-01 00:00:00',
   `type` enum('O','W','P','G','M') NOT NULL DEFAULT 'O',
   `type_id` int(11) NOT NULL DEFAULT '0',
   `src_charid` int(11) NOT NULL DEFAULT '0',
@@ -151,7 +151,7 @@ CREATE TABLE IF NOT EXISTS `chatlog` (
 
 CREATE TABLE IF NOT EXISTS `guild_storage_log` (
   `Index` int(11) NOT NULL,
-  `Date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `Date` datetime NOT NULL DEFAULT '1970-01-01 00:00:00',
   `Type_` enum('D','W') NOT NULL DEFAULT 'D',
   `Mapname` varchar(24) NOT NULL DEFAULT '',
   `PosX` smallint(4) NOT NULL DEFAULT '0',
@@ -179,7 +179,7 @@ CREATE TABLE IF NOT EXISTS `guild_storage_log` (
 
 CREATE TABLE IF NOT EXISTS `itemconsume_log` (
   `Index` int(11) NOT NULL,
-  `Date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `Date` datetime NOT NULL DEFAULT '1970-01-01 00:00:00',
   `Mapname` varchar(24) NOT NULL DEFAULT '',
   `PosX` smallint(4) NOT NULL DEFAULT '0',
   `PosY` smallint(4) NOT NULL DEFAULT '0',
@@ -199,7 +199,7 @@ CREATE TABLE IF NOT EXISTS `itemconsume_log` (
 
 CREATE TABLE IF NOT EXISTS `itemproduce_log` (
   `Index` int(11) NOT NULL,
-  `Date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `Date` datetime NOT NULL DEFAULT '1970-01-01 00:00:00',
   `Mapname` varchar(24) NOT NULL DEFAULT '',
   `PosX` smallint(4) NOT NULL DEFAULT '0',
   `PosY` smallint(4) NOT NULL DEFAULT '0',
@@ -219,7 +219,7 @@ CREATE TABLE IF NOT EXISTS `itemproduce_log` (
 
 CREATE TABLE IF NOT EXISTS `item_get_removelog` (
   `Index` int(11) NOT NULL,
-  `Date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `Date` datetime NOT NULL DEFAULT '1970-01-01 00:00:00',
   `Type_` enum('Get','Del') NOT NULL DEFAULT 'Get',
   `Source` enum('Script','Cmd','Mail','Box','Egg','C_Rem','Expired','Divorce') NOT NULL DEFAULT 'Script',
   `Mapname` varchar(24) NOT NULL DEFAULT '',
@@ -245,7 +245,7 @@ CREATE TABLE IF NOT EXISTS `item_get_removelog` (
 --
 
 CREATE TABLE IF NOT EXISTS `loginlog` (
-  `time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `time` datetime NOT NULL DEFAULT '1970-01-01 00:00:00',
   `ip` varchar(15) NOT NULL DEFAULT '',
   `user` varchar(23) NOT NULL DEFAULT '',
   `rcode` tinyint(4) NOT NULL DEFAULT '0',
@@ -258,7 +258,7 @@ CREATE TABLE IF NOT EXISTS `loginlog` (
 
 CREATE TABLE IF NOT EXISTS `mail_log` (
   `Index` int(11) NOT NULL,
-  `Date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `Date` datetime NOT NULL DEFAULT '1970-01-01 00:00:00',
   `SenderID` int(11) NOT NULL DEFAULT '0',
   `SenderName` varchar(23) NOT NULL DEFAULT '',
   `DestID` int(11) NOT NULL DEFAULT '0',
@@ -281,7 +281,7 @@ CREATE TABLE IF NOT EXISTS `mail_log` (
 
 CREATE TABLE IF NOT EXISTS `npclog` (
   `npc_id` mediumint(9) unsigned NOT NULL,
-  `npc_date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `npc_date` datetime NOT NULL DEFAULT '1970-01-01 00:00:00',
   `account_id` int(11) unsigned NOT NULL DEFAULT '0',
   `char_id` int(11) unsigned NOT NULL DEFAULT '0',
   `char_name` varchar(25) NOT NULL DEFAULT '',
@@ -295,7 +295,7 @@ CREATE TABLE IF NOT EXISTS `npclog` (
 
 CREATE TABLE IF NOT EXISTS `npcshop_log` (
   `Index` int(11) NOT NULL,
-  `Date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `Date` datetime NOT NULL DEFAULT '1970-01-01 00:00:00',
   `Mapname` varchar(24) NOT NULL DEFAULT '',
   `NPC_Name` varchar(23) NOT NULL DEFAULT '',
   `Player_CharID` int(11) NOT NULL DEFAULT '0',
@@ -320,7 +320,7 @@ CREATE TABLE IF NOT EXISTS `npcshop_log` (
 
 CREATE TABLE IF NOT EXISTS `pickdrop_log` (
   `Index` int(11) NOT NULL,
-  `Date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `Date` datetime NOT NULL DEFAULT '1970-01-01 00:00:00',
   `Action` enum('Pick','Drop','Loot','MvP Award','Party Pick','Steal') NOT NULL DEFAULT 'Pick',
   `Mapname` varchar(24) NOT NULL DEFAULT '',
   `PosX` smallint(4) NOT NULL DEFAULT '0',
@@ -348,7 +348,7 @@ CREATE TABLE IF NOT EXISTS `pickdrop_log` (
 
 CREATE TABLE IF NOT EXISTS `storage_log` (
   `Index` int(11) NOT NULL,
-  `Date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `Date` datetime NOT NULL DEFAULT '1970-01-01 00:00:00',
   `Type_` enum('D','W') NOT NULL DEFAULT 'D',
   `Mapname` varchar(24) NOT NULL DEFAULT '',
   `PosX` smallint(4) NOT NULL DEFAULT '0',
@@ -374,7 +374,7 @@ CREATE TABLE IF NOT EXISTS `storage_log` (
 
 CREATE TABLE IF NOT EXISTS `trade_log` (
   `Index` int(11) NOT NULL,
-  `Date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `Date` datetime NOT NULL DEFAULT '1970-01-01 00:00:00',
   `Mapname` varchar(24) NOT NULL DEFAULT '',
   `P1_CharID` int(11) NOT NULL DEFAULT '0',
   `P1_Name` varchar(23) NOT NULL DEFAULT '',
@@ -404,7 +404,7 @@ CREATE TABLE IF NOT EXISTS `trade_log` (
 
 CREATE TABLE IF NOT EXISTS `vending_log` (
   `Index` int(11) NOT NULL,
-  `Date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `Date` datetime NOT NULL DEFAULT '1970-01-01 00:00:00',
   `Mapname` varchar(24) NOT NULL DEFAULT '',
   `Shop_Name` varchar(23) NOT NULL DEFAULT '',
   `Buyer_CharID` int(11) NOT NULL DEFAULT '0',
@@ -435,7 +435,7 @@ CREATE TABLE IF NOT EXISTS `vending_log` (
 
 CREATE TABLE IF NOT EXISTS `zenylog` (
   `id` int(11) NOT NULL,
-  `time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `time` datetime NOT NULL DEFAULT '1970-01-01 00:00:00',
   `char_id` int(11) NOT NULL DEFAULT '0',
   `src_id` int(11) NOT NULL DEFAULT '0',
   `type` enum('Auction','Bank','Monster','Script','bStore','Steal','Cmd','Npc','Trade','Mail','Vending','Other') NOT NULL DEFAULT 'Other',
