@@ -17,54 +17,54 @@
 2@gl_k	mapflag	src4instance
 //============================================================
 glast_01,204,273,6	script	Hugin#ghinstance	4_M_SAGE_C,{
-	mes "^ff0000This isn't considered a normal progression dungeon. Please note this point.^000000";
+	mes "^ff0000Esse não é considerado um calabouço de progressão normal. Por favor note isso.^000000";
 	next;
 	mes "[Hugin]";
-	mes "Huh? You feel like you have seen me in different places? I see. What can I say?";
+	mes "Huh? Você sente como se tivesse me visto em lugares diferentes? Entendo. O que posso dizer?";
 	next;
 	.@ghins_time = questprogress(12317,PLAYTIME);
 	if (!.@ghins_time) {
 
 		.@party_id = getcharid(1);
 		.@p_name$ = getpartyname(.@party_id);
-		.@md_name$ = "Old Glast Heim";
+		.@md_name$ = "Velha Glast Heim";
 
 		if (!instance_check_party(.@party_id,2)) {	// Custom
 			mes "[Hugin]";
-			mes "Where are your party members?";
+			mes "Onde estão os membros do seu grupo?";
 			close;
 		}
 
 		if (getcharid(0) == getpartyleader(.@party_id,2))
-			.@menu$ = "Create the time gap.:Enter the Old Glast Heim.:Cancel.";
+			.@menu$ = "Criar a brecha temporal.:Entrar na Velha Glast Heim.:Cancelar.";
 		else
-			.@menu$ = ":Enter the Old Glast Heim.:Cancel.";
+			.@menu$ = ":Entrar na Velha Glast Heim.:Cancelar.";
 		switch(select(.@menu$)) {
 		case 1:
 			.@instance = instance_create(.@md_name$,.@party_id);
 			if (.@instance < 0) {
-				mes "Party Name: "+.@p_name$;
-				mes "Party Leader: "+strcharinfo(0);
-				mes "^0000ff"+.@md_name$+" ^000000- Reservation Failed!";
+				mes "Nome do grupo: "+.@p_name$;
+				mes "Líder do grupo: "+strcharinfo(0);
+				mes "^0000ff"+.@md_name$+" ^000000- Falha na reserva!";
 				close;
 			}
 			if (instance_attachmap("1@gl_k",.@instance) == "" || instance_attachmap("2@gl_k",.@instance) == "") {
-				mes "^0000ff"+.@md_name$+"^000000 - Reservation Failed!";
+				mes "^0000ff"+.@md_name$+"^000000 - Falha na reserva!";
 				instance_destroy(.@instance);
 				close;
 			}
 			instance_set_timeout 3600,300,.@instance;
 			instance_init(.@instance);
 			mes "[Hugin]";
-			mes "The time gap was created. When you're ready, talk to me again.";
+			mes "A brecha temporal foi criada. Quando vocês estiverem prontos, falem comigo para entrar.";
 			close;
 		case 2:
 			if( has_instance("1@gl_k") == "" ) {
-				mes "The memorial dungeon "+.@md_name$+" does not exist.";
-				mes "The party leader did not generate the dungeon yet.";
+				mes "O calabouço memorial "+.@md_name$+" não existe.";
+				mes "O líder do grupo não criou a instância ainda.";
 				close;
 			} else {
-				mapannounce "glast_01",strcharinfo(0)+", member of the party "+.@p_name$+" entered the instance "+.@md_name$+".",bc_map,"0x00ff99";
+				mapannounce "glast_01",strcharinfo(0)+", membro do grupo "+.@p_name$+" entrou na instância "+.@md_name$+".",bc_map,"0x00ff99";
 				setquest 12317;
 				setquest 12318;
 				warp "1@gl_k",150,20;
@@ -75,14 +75,14 @@ glast_01,204,273,6	script	Hugin#ghinstance	4_M_SAGE_C,{
 		}
 	} else if (.@ghins_time == 1) {
 		mes "[Hugin]";
-		mes "Oh, geez.";
-		mes "Your body is still under the effects of time travel. In this state, you will not be able to travel again.";
+		mes "Oh, nossa.";
+		mes "Seu corpo ainda está sobre os efeitos da viagem temporal. Neste estado, você não será capaz de viajar novamente.";
 		next;
 		mes "[Hugin]";
-		mes "You should rest and come back later for more.";
+		mes "Você deve descansar e voltar mais tarde para mais.";
 		close;
 	} else {
-		mes "^0000ffOld Glast Heim access trail has been cleared. It is now possible to talk to Hugin.^000000";
+		mes "^0000ffO acesso à Velha Glast Heim foi liberado. Agora é possível falar com o Hugin.^000000";
 		erasequest 12317;
 		if (questprogress(12318)) erasequest 12318;
 		if (questprogress(12319)) erasequest 12319;
@@ -90,54 +90,54 @@ glast_01,204,273,6	script	Hugin#ghinstance	4_M_SAGE_C,{
 	}
 }
 
-// Floor 1
+// 1º Andar
 //============================================================
 1@gl_k,149,41,6	script	Varmunt#ghinstance1	4_M_BARMUND,{
 	if (getcharid(0) == getpartyleader(getcharid(1),2)) {
-		mes "Hey ^0000ffguys^000000, were you sent here to help me?";
-		npctalk "Hey guys, were you sent here to help me?";
+		mes "[Varmunt]";
+		mes "Ei ^0000ffpessoal^000000, vocês foram enviados para me ajudar?";
+		npctalk "Ei pessoal, vocês foram enviados para me ajudar?";
 		cutin "gl_barmund1",2;
 		next;
-		select("Oh. Well, about that...");
+		select("Ah. Bem, sobre isso...");
 		mes "["+strcharinfo(0)+"]";
-		mes "Oh yeah, hahaha, we were told to meet someone called Varmunt.";
-		unittalk getcharid(3),"Oh yeah, hahaha, we were told to meet someone called Varmunt.";
+		mes "Ah sim, hahaha, nós disseram para se encontrar com alguém chamado Varmunt.";
+		unittalk getcharid(3),"Ah sim, hahaha, nós disseram para se encontrar com alguém chamado Varmunt.";
 		next;
 		mes "[Varmunt]";
-		mes "We don't have time. We must tell Sir Heinrich about Himmelmez's invasion.";
-		npctalk "We don't have time. We must tell Sir Heinrich about Himmelmez's invasion.";
+		mes "Nós não temos tempo. Precisamos falar com o Sir Heinrich sobre a invasão de Himmelmez.";
+		npctalk "Nós não temos tempo. Precisamos falar com o Sir Heinrich sobre a invasão de Himmelmez.";
 		cutin "gl_barmund2",2;
 		next;
-		select("What Himmelmez...");
+		select("Que Himmelmez...");
 		mes "["+strcharinfo(0)+"]";
-		mes "Himmelmez? Who the hell is she?";
-		unittalk getcharid(3),"Himmelmez? Who the hell is she?";
+		mes "Himmelmez? Quem diabos é ela?";
+		unittalk getcharid(3),"Himmelmez? Quem diabos é ela?";
 		next;
 		mes "[Varmunt]";
-		mes "Didn't anybody give you the basic informations?";
-		npctalk "Didn't anybody give you the basic informations?";
+		mes "Ninguém lhe deu as informações básicas?";
+		npctalk "Ninguém lhe deu as informações básicas?";
 		cutin "gl_barmund3",2;
 		next;
 		mes "[Varmunt]";
-		mes "The Valkyrie of the dead. She's after the Ymir's Heart pieces hidden here.";
-		npctalk "The Valkyrie of the dead. She's after the Ymir's Heart pieces hidden here";
+		mes "A Valquíria dos mortos. Ela está atrás dos fragmentos do Coração de Ymir escondidos aqui.";
+		npctalk "A Valquíria dos mortos. Ela está atrás dos fragmentos do Coração de Ymir escondidos aqui.";
 		cutin "gl_barmund2",2;
 		next;
 		mes "[Varmunt]";
-		mes "She's capable of destroying the whole castle for this purpose.";
-		npctalk "She's capable of destroying the whole castle for this purpose.";
+		mes "Ela é capaz de destruir o castelo inteiro para este propósito.";
+		npctalk "Ela é capaz de destruir o castelo inteiro para este propósito.";
 		next;
 		mes "[Varmunt]";
-		mes "Hurry up! Inform Sir Heinrich that Himmelmez is coming. I will briefly explore the enchantments she made to this place!";
-		npctalk "Hurry up! Inform Sir Heinrich that Himmelmez is coming. I will briefly explore the enchantments she made to this place!";
+		mes "Apressem-se! Informem Sir Heinrich que Himmelmez está vindo. Eu vou brevemente explorar os encantamentos que ela fez nesse lugar!";
+		npctalk "Apressem-se! Informem Sir Heinrich que Himmelmez está vindo. Eu vou brevemente explorar os encantamentos que ela fez nesse lugar!";
 		close2;
 		cutin "gl_barmund2",255;
 		donpcevent instance_npcname("Varmunt#ghinstance1")+"::OnDisable2";
 		end;
 	} else {
 		mes "[Varmunt]";
-		mes "Where is he? We";
-		mes "need his help.";
+		mes "Onde ele está? Precisamos da ajuda dele.";
 		cutin "gl_barmund2",2;
 		close2;
 		cutin "gl_barmund2",255;
@@ -153,13 +153,13 @@ OnDisable2:
 	hideonnpc instance_npcname("Varmunt#ghinstance1");
 
 	for(.@i = 1; .@i<=20; .@i += 4) {
-		hideoffnpc instance_npcname("Khalitzburg Crusader#"+.@i);
-		hideoffnpc instance_npcname("Khalitzburg Crusader#"+(.@i+1));
-		hideoffnpc instance_npcname("White Knight#"+(.@i+2));
-		hideoffnpc instance_npcname("White Knight#"+(.@i+3));
+		hideoffnpc instance_npcname("Templária Khalitzburg#"+.@i);
+		hideoffnpc instance_npcname("Templária Khalitzburg#"+(.@i+1));
+		hideoffnpc instance_npcname("Cavaleiro Branco#"+(.@i+2));
+		hideoffnpc instance_npcname("Cavaleiro Branco#"+(.@i+3));
 	}
-	hideoffnpc instance_npcname("Khalitzburg Crusader#21");
-	hideoffnpc instance_npcname("Khalitzburg Crusader#22");
+	hideoffnpc instance_npcname("Templária Khalitzburg#21");
+	hideoffnpc instance_npcname("Templária Khalitzburg#22");
 
 	hideoffnpc instance_npcname("Heinrich#ghinstance1");
 	hideoffnpc instance_npcname("Varmunt#ghinstance2");
@@ -169,20 +169,20 @@ OnEnable:
 	end;
 }
 
-1@gl_k,145,54,6	script	Khalitzburg Crusader#1	4_F_KHALITZBURG,{
+1@gl_k,145,54,6	script	Templária Khalitzburg#1	4_F_KHALITZBURG,{
 	mes "["+strnpcinfo(1)+"]";
 	switch((atoi(strnpcinfo(2)) + 1) / 2) {
-		case 1: mes "Would I be recruited?"; break;
-		case 2: mes "May I help you?"; break;
+		case 1: mes "Eu iria ser recrutada?"; break;
+		case 2: mes "Posso ajudá-lo?"; break;
 		case 3: mes "..."; break;
-		case 4: mes "I do not like to chit-chat during work."; break;
-		case 5: mes "The aura of the castle has changed, don't you think? Something like a presence seemed to appear a little while ago."; break;
-		case 6: mes "I wonder what commandant Varmunt is doing. I heard people are running away..."; break;
-		case 7: mes "Quiet please."; break;
-		case 8: mes "A fuss seems to be near."; break;
-		case 9: mes "A dream last night really bothered me. My mother used to say that these dreams may come true..."; break;
-		case 10: mes "Is Varmunt going with you? The commandant is waiting for you."; break;
-		case 11: mes "Soon it's time to change shifts. I wonder what happened to the other knights."; break;
+		case 4: mes "Eu não gosto de bate papo durante o trabalho."; break;
+		case 5: mes "A aura do castelo mudou, não acha? Parece que algo como uma presença apareceu pouco tempo atrás."; break;
+		case 6: mes "Eu fico pensando o que o comandante Varmunt está fazendo. Eu ouvi dizer que pessoas estão fugindo..."; break;
+		case 7: mes "Quieto por favor."; break;
+		case 8: mes "Parece que uma agitação está perto."; break;
+		case 9: mes "Um sonho noite passada realmente me incomodou. Minha mãe costumava dizer que esses sonhos podem se tornar realidade..."; break;
+		case 10: mes "Varmunt está com você? O comandante está esperando por vocês."; break;
+		case 11: mes "Logo será hora da troca de turnos. O que será que aconteceu com os outros cavaleiros?"; break;
 	}
 	close;
 OnInstanceInit:
@@ -193,89 +193,89 @@ OnEnable:
 	hideoffnpc instance_npcname(strnpcinfo(0));
 	end;
 }
-1@gl_k,154,54,3	duplicate(Khalitzburg Crusader#1)	Khalitzburg Crusader#2	4_F_KHALITZBURG
-1@gl_k,145,59,6	duplicate(Khalitzburg Crusader#1)	White Knight#3	4_WHITEKNIGHT
-1@gl_k,154,59,3	duplicate(Khalitzburg Crusader#1)	White Knight#4	4_WHITEKNIGHT
-1@gl_k,145,64,6	duplicate(Khalitzburg Crusader#1)	Khalitzburg Crusader#5	4_F_KHALITZBURG
-1@gl_k,154,64,3	duplicate(Khalitzburg Crusader#1)	Khalitzburg Crusader#6	4_F_KHALITZBURG
-1@gl_k,145,69,6	duplicate(Khalitzburg Crusader#1)	White Knight#7	4_WHITEKNIGHT
-1@gl_k,154,69,3	duplicate(Khalitzburg Crusader#1)	White Knight#8	4_WHITEKNIGHT
-1@gl_k,145,74,6	duplicate(Khalitzburg Crusader#1)	Khalitzburg Crusader#9	4_F_KHALITZBURG
-1@gl_k,154,74,3	duplicate(Khalitzburg Crusader#1)	Khalitzburg Crusader#10	4_F_KHALITZBURG
-1@gl_k,145,79,6	duplicate(Khalitzburg Crusader#1)	White Knight#11	4_WHITEKNIGHT
-1@gl_k,154,79,3	duplicate(Khalitzburg Crusader#1)	White Knight#12	4_WHITEKNIGHT
-1@gl_k,145,84,6	duplicate(Khalitzburg Crusader#1)	Khalitzburg Crusader#13	4_F_KHALITZBURG
-1@gl_k,154,84,3	duplicate(Khalitzburg Crusader#1)	Khalitzburg Crusader#14	4_F_KHALITZBURG
-1@gl_k,145,89,6	duplicate(Khalitzburg Crusader#1)	White Knight#15	4_WHITEKNIGHT
-1@gl_k,154,89,3	duplicate(Khalitzburg Crusader#1)	White Knight#16	4_WHITEKNIGHT
-1@gl_k,145,94,6	duplicate(Khalitzburg Crusader#1)	Khalitzburg Crusader#17	4_F_KHALITZBURG
-1@gl_k,154,94,3	duplicate(Khalitzburg Crusader#1)	Khalitzburg Crusader#18	4_F_KHALITZBURG
-1@gl_k,145,99,6	duplicate(Khalitzburg Crusader#1)	White Knight#19	4_WHITEKNIGHT
-1@gl_k,154,99,3	duplicate(Khalitzburg Crusader#1)	White Knight#20	4_WHITEKNIGHT
-1@gl_k,145,104,6	duplicate(Khalitzburg Crusader#1)	Khalitzburg Crusader#21	4_F_KHALITZBURG
-1@gl_k,154,104,3	duplicate(Khalitzburg Crusader#1)	Khalitzburg Crusader#22	4_F_KHALITZBURG
+1@gl_k,154,54,3	duplicate(Templária Khalitzburg#1)	Templária Khalitzburg#2	4_F_KHALITZBURG
+1@gl_k,145,59,6	duplicate(Templária Khalitzburg#1)	Cavaleiro Branco#3	4_WHITEKNIGHT
+1@gl_k,154,59,3	duplicate(Templária Khalitzburg#1)	Cavaleiro Branco#4	4_WHITEKNIGHT
+1@gl_k,145,64,6	duplicate(Templária Khalitzburg#1)	Templária Khalitzburg#5	4_F_KHALITZBURG
+1@gl_k,154,64,3	duplicate(Templária Khalitzburg#1)	Templária Khalitzburg#6	4_F_KHALITZBURG
+1@gl_k,145,69,6	duplicate(Templária Khalitzburg#1)	Cavaleiro Branco#7	4_WHITEKNIGHT
+1@gl_k,154,69,3	duplicate(Templária Khalitzburg#1)	Cavaleiro Branco#8	4_WHITEKNIGHT
+1@gl_k,145,74,6	duplicate(Templária Khalitzburg#1)	Templária Khalitzburg#9	4_F_KHALITZBURG
+1@gl_k,154,74,3	duplicate(Templária Khalitzburg#1)	Templária Khalitzburg#10	4_F_KHALITZBURG
+1@gl_k,145,79,6	duplicate(Templária Khalitzburg#1)	Cavaleiro Branco#11	4_WHITEKNIGHT
+1@gl_k,154,79,3	duplicate(Templária Khalitzburg#1)	Cavaleiro Branco#12	4_WHITEKNIGHT
+1@gl_k,145,84,6	duplicate(Templária Khalitzburg#1)	Templária Khalitzburg#13	4_F_KHALITZBURG
+1@gl_k,154,84,3	duplicate(Templária Khalitzburg#1)	Templária Khalitzburg#14	4_F_KHALITZBURG
+1@gl_k,145,89,6	duplicate(Templária Khalitzburg#1)	Cavaleiro Branco#15	4_WHITEKNIGHT
+1@gl_k,154,89,3	duplicate(Templária Khalitzburg#1)	Cavaleiro Branco#16	4_WHITEKNIGHT
+1@gl_k,145,94,6	duplicate(Templária Khalitzburg#1)	Templária Khalitzburg#17	4_F_KHALITZBURG
+1@gl_k,154,94,3	duplicate(Templária Khalitzburg#1)	Templária Khalitzburg#18	4_F_KHALITZBURG
+1@gl_k,145,99,6	duplicate(Templária Khalitzburg#1)	Cavaleiro Branco#19	4_WHITEKNIGHT
+1@gl_k,154,99,3	duplicate(Templária Khalitzburg#1)	Cavaleiro Branco#20	4_WHITEKNIGHT
+1@gl_k,145,104,6	duplicate(Templária Khalitzburg#1)	Templária Khalitzburg#21	4_F_KHALITZBURG
+1@gl_k,154,104,3	duplicate(Templária Khalitzburg#1)	Templária Khalitzburg#22	4_F_KHALITZBURG
 
 1@gl_k,149,100,6	script	Heinrich#ghinstance1	4_M_HEINRICH,{
 	if (getcharid(0) == getpartyleader(getcharid(1),2)) {
 		cutin "gl_heinrich2",2;
-		select("Heinrich, about the castle...");
+		select("Heinrich, sobre o castelo...");
 		mes "["+strcharinfo(0)+"]";
-		mes "Do you know what is happening now in the castle, Heinrich?";
-		unittalk getcharid(3),"Do you know what is happening now in the castle, Heinrich?";
+		mes "Você sabe o que está acontecendo agora no castelo, Heinrich?";
+		unittalk getcharid(3),"Você sabe o que está acontecendo agora no castelo, Heinrich?";
 		next;
 		mes "[Heinrich]";
-		mes "You are the adventurers who have come with Varmunt, right?";
-		npctalk "You are the adventurers who have come with Varmunt, right?";
+		mes "Você são os aventureiros que vieram com o Varmunt, certo?";
+		npctalk "Você são os aventureiros que vieram com o Varmunt, certo?";
 		next;
 		mes "[Heinrich]";
-		mes "What can I do for you? Is there something wrong?";
-		npctalk "What can I do for you? Is there something wrong?";
+		mes "O que posso fazer por vocês? Algo errado?";
+		npctalk "O que posso fazer por vocês? Algo errado?";
 		next;
-		select("The Ymir's Heart. Himmelmez...");
+		select("O Coração de Ymir. Himmelmez...");
 		mes "["+strcharinfo(0)+"]";
-		mes "Himmelmez, the Valkyrie of the dead is looking to get a piece of the Ymir's heart hidden in the castle!";
-		unittalk getcharid(3),"Himmelmez, the Valkyrie of the dead is looking to get a piece of the Ymir's heart hidden in the castle!";
+		mes "Himmelmez, a Valquíria dos mortos está querendo pegar um fragmento do Coração de Ymir escondido no castelo!";
+		unittalk getcharid(3),"Himmelmez, a Valquíria dos mortos está querendo pegar um fragmento do Coração de Ymir escondido no castelo!";
 		next;
 		mes "[Heinrich]";
-		mes "Haha. That's a nice joke. Now tell me what brings you here.";
-		npctalk "Haha. That's a nice joke. Now tell me what brings you here.";
+		mes "Haha. Boa piada. Agora conte-me o que traz vocês aqui.";
+		npctalk "Haha. Boa piada. Agora conte-me o que traz vocês aqui.";
 		cutin "gl_heinrich1",2;
 		next;
 		mes "[Varmunt]";
-		mes "I am not joking Heinrich, Sir. Now, if my judgement is correct, she will be here soon.";
+		mes "Eu não estou brincando Heinrich, Senhor. Agora, se meu julgamento estiver correto, ela estará aqui logo.";
 		donpcevent instance_npcname("Varmunt#ghinstance2")+"::OnTalk1";
 		cutin "gl_barmund2",2;
 		next;
 		mes "[Varmunt]";
-		mes "I trust this guy following me. The Ymir's Heart pieces must be hidden in a safe place before Himmelmez takes them!";
+		mes "Eu confio nesse cara comigo. Os fragmentos do Coração de Ymir precisam ser escondidos em um lugar seguro antes que Himmelmez os pegue!";
 		donpcevent instance_npcname("Varmunt#ghinstance2")+"::OnTalk2";
 		next;
-		select("Even if you do not believe...");
+		select("Mesmo que você não acredite...");
 		mes "["+strcharinfo(0)+"]";
-		mes "Even if you don't believe it, do something. We do not have much time!";
-		unittalk getcharid(3),"Even if you don't believe it, do something. We do not have much time!";
+		mes "Mesmo que você não acredite nisso, faça algo. Nós não temos muito tempo!";
+		unittalk getcharid(3),"Mesmo que você não acredite nisso, faça algo. Nós não temos muito tempo!";
 		cutin "gl_barmund2",255;
 		next;
 		mes "[Heinrich]";
-		mes "I will be glad if you give me two minutes, please. But now the king isn't in his room.";
-		npctalk "I will be glad if you give me two minutes, please. But now the king isn't in his room.";
+		mes "Eu ficarei grato se vocês me derem dois minutos, por favor. Mas agora o rei não está em seu quarto.";
+		npctalk "Eu ficarei grato se vocês me derem dois minutos, por favor. Mas agora o rei não está em seu quarto.";
 		cutin "gl_heinrich1",2;
 		next;
 		mes "[Heinrich]";
-		mes "But I think that with such a busy agenda, he won't be able to take care of this.";
-		npctalk "But I think that with such a busy agenda, he won't be able to take care of this.";
+		mes "Mas eu acho que com uma agenda tão ocupada, ele não será capaz de cuidar disso.";
+		npctalk "Mas eu acho que com uma agenda tão ocupada, ele não será capaz de cuidar disso.";
 		donpcevent instance_npcname("Heinrich#ghinstance1")+"::OnDisable";
 		donpcevent instance_npcname("Heinrich#ghinstance2")+"::OnEnable";
 		donpcevent instance_npcname("Himmelmez#ghinstance1")+"::OnEnable";
 		donpcevent instance_npcname("#talkinstance1")+"::OnEnable";
-		mapannounce instance_mapname("1@gl_k"), "???? Shout: Ohohohoho~!",bc_map,"0xFFFF00";
+		mapannounce instance_mapname("1@gl_k"), "???? Grita : Ohohohoho~!",bc_map,"0xFFFF00";
 		close2;
 		cutin "gl_heinrich1",255;
 		end;
 	} else {
 		mes "[Heinrich]";
-		mes "Where is your representative?";
-		mes "I need to talk to him.";
+		mes "Onde está seu representante?";
+		mes "Eu preciso falar com ele.";
 		cutin "gl_heinrich2",2;
 		close2;
 		cutin "gl_heinrich2",255;
@@ -300,25 +300,25 @@ OnEnable:
 	hideoffnpc instance_npcname("Varmunt#ghinstance2");
 	end;
 OnTalk1:
-	npctalk "I am not joking Heinrich, Sir. Now, if my judgement is correct, she will be here soon.";
+	npctalk "Eu não estou brincando Heinrich, Senhor. Agora, se meu julgamento estiver correto, ela estará aqui logo.";
 	end;
 OnTalk2:
-	npctalk "I trust this guy following me. The Ymir's Heart pieces must be hidden in a safe place before Himmelmez takes them!";
+	npctalk "Eu confio nesse cara comigo. Os fragmentos do Coração de Ymir precisam ser escondidos em um lugar seguro antes que Himmelmez os pegue!";
 	end;
 OnTalk3:
-	npctalk "Himmelmez!! Through the cracks!";
+	npctalk "Himmelmez!! Através das fissuras!";
 	end;
 OnTalk4:
-	npctalk "Unbelievable. My men are...This kind of thing is not possible!";
+	npctalk "Inacreditável. Meus homens foram... Este tipo de coisa é impossível!";
 	end;
 OnTalk5:
-	npctalk "Heinrich, Sir! I need a quick decision.";
+	npctalk "Heinrich, Senhor! Eu preciso de uma rápida decisão.";
 	end;
 OnTalk6:
-	npctalk "To prevent other attacks, go chase her!";
+	npctalk "Para prevenir outros ataques, corram atrás dela!";
 	end;
 OnTalk7:
-	npctalk "Now, your help is desperately needed. I hopefully ask you.";
+	npctalk "Agora, sua ajuda é desesperadamente necessária. Eu esperançosamente peço à vocês.";
 	end;
 }
 
@@ -332,34 +332,34 @@ OnEnable:
 	hideoffnpc instance_npcname("Heinrich#ghinstance2");
 	end;
 OnTalk1:
-	npctalk "Who?!";
+	npctalk "Quem?!";
 	end;
 OnTalk2:
-	npctalk "That who rules the dead? No doubt, a pretty story. Here, some tea will be served to entertain the ladies. Unfortunately, I do not...";
+	npctalk "Que governa os mortos? Sem dúvida, uma linda história. Aqui, um pouco de chá será servido para entreter as senhoritas. Infelizmente, eu não...";
 	end;
 OnTalk3:
-	npctalk "What did you say?";
+	npctalk "O que você disse?";
 	end;
 OnTalk4:
-	npctalk "The King responded to the invitation of the Rune Midgard's Royal Family and hasn't come back yet.";
+	npctalk "O Rei respondeu à um convite da Família Real de Rune Midgard e não voltou ainda.";
 	end;
 OnTalk5:
-	npctalk "Just leave before you get in trouble. This is the King's will!";
+	npctalk "Apenas vá antes que entre em apuros. Essa é a vontade do Rei!";
 	end;
 OnTalk6:
-	npctalk "Damn! She has detected the position of the Ymir's Heart pieces.";
+	npctalk "Droga! Ela detectou a posição dos fragmentos do Coração de Ymir.";
 	end;
 OnTalk7:
-	npctalk "Now, Khalitzburg Crusaders and White Knights, follow me...";
+	npctalk "Agora, Templárias Khalitzburg e Cavaleiros Brancos, sigam-me...";
 	end;
 OnTalk8:
-	npctalk "Unbelievable. My men are...This kind of thing is not possible!";
+	npctalk "Inacreditável. Meus homens foram... Esse tipo de coisa não é possível!";
 	end;
 OnTalk9:
-	npctalk "I'm sorry...";
+	npctalk "Sinto muito...";
 	end;
 OnTalk10:
-	npctalk "I'm sorry, my lord! Do not forgive me!";
+	npctalk "Desculpe-me, meu lorde! Não me perdoe!";
 	end;
 }
 
@@ -373,28 +373,28 @@ OnEnable:
 	hideoffnpc instance_npcname("Heinrich#ghinstance3");
 	end;
 OnTalk1:
-	npctalk "I cannot believe I killed my men with my own hands!";
+	npctalk "Eu não consigo acreditar que matei meus homens com minhas próprias mãos!";
 	end;
 OnTalk2:
-	npctalk "Varmunt is right about that. Now is not the time to regret.";
+	npctalk "Varmunt está certo sobre isso. Agora não é hora de remorso.";
 	end;
 OnTalk3:
-	npctalk "People, gather around and follow my orders.";
+	npctalk "Pessoal, juntem-se e sigam minhas ordens.";
 	end;
 OnTalk4:
-	npctalk "Himmelmez is turning into monsters all the people she put to sleep.";
+	npctalk "Himmelmez está transformando em monstros todos as pessoas que ela coloca para dormir.";
 	end;
 OnTalk5:
-	npctalk "I don't know if there are survivors around here yet.";
+	npctalk "Eu não sei se existem sobreviventes por aqui ainda.";
 	end;
 OnTalk6:
-	npctalk "If there are survivors from this evil thing, please rescue them.";
+	npctalk "Se existirem sobreviventes desta coisa maligna, por favor resgatem eles.";
 	end;
 OnTalk7:
-	npctalk "With Varmunt by my side, I'm going to chase Himmelmez down.";
+	npctalk "Com Varmunt ao meu lado, perseguirei Himmelmez.";
 	end;
 OnTalk8:
-	npctalk "Hurry up Varmunt, let's chase her down.";
+	npctalk "Rápido Varmunt, vamos atrás dela.";
 	end;
 }
 
@@ -408,32 +408,32 @@ OnEnable:
 	hideoffnpc instance_npcname("Himmelmez#ghinstance1");
 	end;
 OnTalk1:
-	npctalk "This~ Did I interrupt your conversation? The thing is, it's been too long since the last guests saw some sadness spread...";
+	npctalk "Isso~ Eu interrompi a conversa? A questão é, já faz muito tempo desde que os últimos hóspedes viram um pouco de tristeza propagar...";
 	end;
 OnTalk2:
-	npctalk "My name is Lisa Kahn Himmelmez. I am called the Valkyrie of the dead, master of the Dullahan.";
+	npctalk "Meu nome é Lisa Kahn Himmelmez. Eu sou chamada de a Valquíria dos mortos, mestra do Dullahan.";
 	end;
 OnTalk3:
-	npctalk "There's no need to pretend to be so laid back. Don't bluff about the whereabouts of you Majesty and things will be alright.";
+	npctalk "Não há necessidade de fingir estar tão tranquilo. Não blefe sobre o paradeiro de sua Majestade e tudo correrá bem.";
 	end;
 OnTalk4:
-	npctalk "Hohoho, do you have any questions? You're a really mysterious man.";
+	npctalk "Hohoho, você tem perguntas? Você é realmente um homem misterioso.";
 	end;
 OnTalk5:
-	npctalk "Not coveting the king's throne, you're such a stupid man, only waiting for his return. Your innocence is true, I love it.";
+	npctalk "Não cobiçar o trono do rei, você é um homem tão estúpido, apenas esperando pelo seu retorno. Sua inocência é verdadeira, eu amo isso.";
 	end;
 OnTalk6:
-	npctalk "You make me wish we hadn't met in this situation. Too bad we did.";
+	npctalk "Você me faz desejar que nós não tenhamos nos encontrado nessa situação. Uma pena que aconteceu.";
 	end;
 OnTalk7:
-	npctalk "Well~ Today, with such a busy commandant, I won't be able to talk as much as I'd love for you to contemplate my explanation~";
+	npctalk "Bem~ Hoje, com um comandante tão ocupado, eu não serei capaz de conversar tanto quanto eu gostaria para que vocês pudessem contemplar minha explicação~";
 	end;
 OnTalk8:
-	npctalk "I gotta get my job done. Meanwhile why don't you meet my men? Hohoho.";
+	npctalk "Eu tenho que fazer meu trabalho. Enquanto isso por que vocês não conhecem meus homens? Hohoho.";
 	end;
 }
 
-// Control Timer
+// Timer de Controle
 //============================================================
 1@gl_k,0,0,0	script	#talkinstance1	-1,{
 OnInstanceInit:
@@ -495,26 +495,26 @@ OnTimer85000:
 	hideonnpc instance_npcname("Varmunt#ghinstance1");
 
 	for(.@i = 1; .@i<=20; .@i += 4) {
-		hideonnpc instance_npcname("Khalitzburg Crusader#"+.@i);
-		hideonnpc instance_npcname("Khalitzburg Crusader#"+(.@i+1));
-		hideonnpc instance_npcname("White Knight#"+(.@i+2));
-		hideonnpc instance_npcname("White Knight#"+(.@i+3));
+		hideonnpc instance_npcname("Templária Khalitzburg#"+.@i);
+		hideonnpc instance_npcname("Templária Khalitzburg#"+(.@i+1));
+		hideonnpc instance_npcname("Cavaleiro Branco#"+(.@i+2));
+		hideonnpc instance_npcname("Cavaleiro Branco#"+(.@i+3));
 	}
-	hideonnpc instance_npcname("Khalitzburg Crusader#21");
-	hideonnpc instance_npcname("Khalitzburg Crusader#22");
+	hideonnpc instance_npcname("Templária Khalitzburg#21");
+	hideonnpc instance_npcname("Templária Khalitzburg#22");
 
 	.@map$ = instance_mapname("1@gl_k");
 	.@label$ = instance_npcname("#talkinstance1")+"::OnMyMobDead";
-	monster .@map$,145,59,"Abyss Knight",2470,1,.@label$;
-	monster .@map$,154,59,"Abyss Knight",2470,1,.@label$;
-	monster .@map$,145,69,"Abyss Knight",2470,1,.@label$;
-	monster .@map$,154,69,"Abyss Knight",2470,1,.@label$;
-	monster .@map$,145,79,"Abyss Knight",2470,1,.@label$;
-	monster .@map$,154,79,"Abyss Knight",2470,1,.@label$;
-	monster .@map$,145,89,"Abyss Knight",2470,1,.@label$;
-	monster .@map$,154,89,"Abyss Knight",2470,1,.@label$;
-	monster .@map$,145,99,"Abyss Knight",2470,1,.@label$;
-	monster .@map$,154,99,"Abyss Knight",2470,1,.@label$;
+	monster .@map$,145,59,"Cavaleiro do Abismo",2470,1,.@label$;
+	monster .@map$,154,59,"Cavaleiro do Abismo",2470,1,.@label$;
+	monster .@map$,145,69,"Cavaleiro do Abismo",2470,1,.@label$;
+	monster .@map$,154,69,"Cavaleiro do Abismo",2470,1,.@label$;
+	monster .@map$,145,79,"Cavaleiro do Abismo",2470,1,.@label$;
+	monster .@map$,154,79,"Cavaleiro do Abismo",2470,1,.@label$;
+	monster .@map$,145,89,"Cavaleiro do Abismo",2470,1,.@label$;
+	monster .@map$,154,89,"Cavaleiro do Abismo",2470,1,.@label$;
+	monster .@map$,145,99,"Cavaleiro do Abismo",2470,1,.@label$;
+	monster .@map$,154,99,"Cavaleiro do Abismo",2470,1,.@label$;
 
 	for(.@i = 1; .@i<=22; .@i++)
 		hideoffnpc instance_npcname(".#ghinstance"+.@i);
@@ -567,10 +567,10 @@ OnTimer97000:
 	end;
 OnTimer105000:
 	donpcevent instance_npcname("Heinrich#ghinstance2")+"::OnTalk10";
-	mapannounce instance_mapname("1@gl_k"), "Heinrich's Shout: Dead men, dead men all over the place!",bc_map,"0xFFFF00";
+	mapannounce instance_mapname("1@gl_k"), "Grito do Heinrich : Homem morto, homem morto por toda parte!",bc_map,"0xFFFF00";
 	end;
 OnTimer107000:
-	mapannounce instance_mapname("1@gl_k"), "Heinrich's Shout: Everybody! Go back!",bc_map,"0xFFFF00";
+	mapannounce instance_mapname("1@gl_k"), "Grito do Heinrich : Todos! Voltem!",bc_map,"0xFFFF00";
 	end;
 OnTimer110000:
 	donpcevent instance_npcname(".#ghinstance22")+"::OnEffect1";
@@ -681,7 +681,7 @@ OnTimer168000:
 	stopnpctimer;
 	donpcevent instance_npcname("#ghinstancewarp1")+"::OnEnable";
 	donpcevent instance_npcname("#ghinstancewarp2")+"::OnEnable";
-	mapannounce instance_mapname("1@gl_k"), "9 o'clock warp leading to zone 2 is now open.",bc_map,"0xFFFF00";
+	mapannounce instance_mapname("1@gl_k"), "O portal às 9 horas levando para a zona 2 agora está aberto.",bc_map,"0xFFFF00";
 	donpcevent instance_npcname("#talkinstance1")+"::OnDisable";
 	donpcevent instance_npcname("#ghmemorialmob01")+"::OnEnable";
 	end;
@@ -704,18 +704,18 @@ OnEffect1:
 	end;
 OnTalkK:
 	switch(atoi(replacestr(strnpcinfo(2),"ghinstance",""))) {
-		case 1: npctalk "I do not want to die."; break;
-		case 2: npctalk "Mom..."; break;
-		case 5: npctalk "Help."; break;
-		case 6: npctalk "My stomach hurts..."; break;
-		case 9: npctalk "Heinrich Sir, help!"; break;
+		case 1: npctalk "Eu não quero morrer."; break;
+		case 2: npctalk "Mãe..."; break;
+		case 5: npctalk "Ajuda."; break;
+		case 6: npctalk "Meu estômago dói..."; break;
+		case 9: npctalk "Heinrich Senhor, ajude!"; break;
 		case 10: npctalk "Ack... Ugh."; break;
-		case 13: npctalk "I'm thirsty."; break;
-		case 14: npctalk "Oh... No... I cannot die..."; break;
-		case 17: npctalk "This is so uncomfortable. Eww!"; break;
-		case 18: npctalk "Who am I..."; break;
-		case 21: npctalk "Uhh... My body."; break;
-		case 22: npctalk "I'm so thirsty!"; break;
+		case 13: npctalk "Estou com sede."; break;
+		case 14: npctalk "Ah... Não... Eu não posso morrer..."; break;
+		case 17: npctalk "Isso é tão desconfortante. Eww!"; break;
+		case 18: npctalk "Quem sou eu..."; break;
+		case 21: npctalk "Uhh... Meu corpo."; break;
+		case 22: npctalk "Tanta sede!"; break;
 	}
 	end;
 }
@@ -796,7 +796,7 @@ OnTouch:
 2@gl_k,150,163,0	duplicate(#ghinstancewarp1)	#ghinstancewarp12	WARPNPC,1,2
 
 
-// Sector 1 Mobs
+// Mobs Setor 1
 //============================================================
 1@gl_k,0,0,0	script	#ghmemorialmob01	-1,{
 OnInstanceInit:
@@ -807,126 +807,126 @@ OnEnable:
 	enablenpc instance_npcname("#ghmemorialmob01");
 	.@map$ = instance_mapname("1@gl_k");
 	.@label$ = instance_npcname("#ghmemorialmob01")+"::OnMyMobDead";
-	areamonster .@map$,76,99,87,10,"Suffering Chamberlain",2466,15,.@label$;
-	areamonster .@map$,67,39,12,6,"Fallen Monk",2465,20,.@label$;
-	areamonster .@map$,67,39,12,6,"Suffering Chamberlain",2466,3,.@label$;
-	areamonster .@map$,32,75,51,58,"Decayed Butler",2464,6,.@label$;
-	areamonster .@map$,45,84,6,137,"Decayed Butler",2464,12,.@label$;
+	areamonster .@map$,76,99,87,10,"Camareiro em Sofrimento",2466,15,.@label$;
+	areamonster .@map$,67,39,12,6,"Monge Caído",2465,20,.@label$;
+	areamonster .@map$,67,39,12,6,"Camareiro em Sofrimento",2466,3,.@label$;
+	areamonster .@map$,32,75,51,58,"Mordomo Decaído",2464,6,.@label$;
+	areamonster .@map$,45,84,6,137,"Mordomo Decaído",2464,12,.@label$;
 	end;
 OnMyMobDead:
 	.@map$ = instance_mapname("1@gl_k");
 	.@label$ = instance_npcname("#ghmemorialmob01")+"::OnMyMobDead";
 	.@mob_dead_num = 56 - mobcount(.@map$,.@label$);
 	if (.@mob_dead_num > 35) {
-		mapannounce .@map$, "Seems like Himmelmez drains the dead's souls. They must be destroyed.",bc_map,"0xFFFFFF";
+		mapannounce .@map$, "Parece que Himmelmez drena as almas dos mortos. Elas precisam ser destruídas.",bc_map,"0xFFFFFF";
 		killmonster .@map$,.@label$;
-		donpcevent instance_npcname("Aspiring Butcher#clearGH")+"::OnEnable";
+		donpcevent instance_npcname("Açogueiro Aspirante#clearGH")+"::OnEnable";
 		donpcevent instance_npcname("#ghmemorialmob01")+"::OnDisable";
 	}
 	end;
 }
 
-1@gl_k,17,51,3	script	Aspiring Butcher#clearGH	4_M_KID1,{
+1@gl_k,17,51,3	script	Açogueiro Aspirante#clearGH	4_M_KID1,{
 	if (getcharid(0) == getpartyleader(getcharid(1),2)) {
-		mes "[Aspiring Butcher]";
-		mes "Help me! Help me!!!";
+		mes "[Açogueiro Aspirante]";
+		mes "Ajudem-me! Ajudem-me!!!";
 		next;
-		select("Hey, wake up! Are there any other survivors?");
+		select("Ei, acorde! Existem outros sobreviventes?");
 		mes "["+strcharinfo(0)+"]";
-		mes "Hey, wake up! Are you alone?";
-		unittalk getcharid(3),"Hey, wake up! Are you alone?";
+		mes "Ei, acorde! Você está sozinho?";
+		unittalk getcharid(3),"Ei, acorde! Você está sozinho?";
 		next;
-		mes "[Aspiring Butcher]";
-		mes "The Chamberlain... the Monk... They've become monsters. I couldn't do anything.";
-		npctalk "The Chamberlain... the Monk... They've become monsters. I couldn't do anything.";
+		mes "[Açogueiro Aspirante]";
+		mes "O Camareiro... o Monge... Eles se tornaram monstros. Eu não pude fazer nada.";
+		npctalk "O Camareiro... o Monge... Eles se tornaram monstros. Eu não pude fazer nada.";
 		next;
-		mes "[Aspiring Butcher]";
-		mes "I just stood still... Nothing, I couldn't do anything...";
-		npctalk "I just stood still... Nothing, I couldn't do anything...";
+		mes "[Açogueiro Aspirante]";
+		mes "Eu só fiquei parado... Nada, eu não pude fazer nada...";
+		npctalk "Eu só fiquei parado... Nada, eu não pude fazer nada...";
 		next;
-		select("Wake up!");
+		select("Acorda!");
 		mes "["+strcharinfo(0)+"]";
-		mes "Wake up kid! Go east along the central passage to the outside! The path is safe!";
-		unittalk getcharid(3),"Wake up kid! Go east along the central passage to the outside! The path is safe!";
+		mes "Acorda criança! Vá para o leste ao longo da passagem central para o exterior! O caminho está seguro!";
+		unittalk getcharid(3),"Acorda criança! Vá para o leste ao longo da passagem central para o exterior! O caminho está seguro!";
 		next;
-		mes "[Aspiring Butcher]";
-		mes "East passage? Alone? How?";
-		npctalk "East passage? Alone? How?";
+		mes "[Açogueiro Aspirante]";
+		mes "Passagem leste? Sozinho? Como?";
+		npctalk "Passagem leste? Sozinho? Como?";
 		next;
-		select("I can guide you through the path.");
+		select("Eu posso guiá-lo através do caminho.");
 		mes "["+strcharinfo(0)+"]";
-		mes "I will guide you, perhaps that will help. If you want to close your eyes try not to hit anything.";
-		unittalk getcharid(3),"I will guide you, perhaps that will help. If you want to close your eyes try not to hit anything.";
+		mes "Eu vou guiá-lo, talvez isso ajude. Se você quiser fechar seus olhos tente não bater em nada.";
+		unittalk getcharid(3),"Eu vou guiá-lo, talvez isso ajude. Se você quiser fechar seus olhos tente não bater em nada.";
 		next;
-		mes "[Aspiring Butcher]";
-		mes "Aspiring Butcher: I know, I... I'm trying to.";
-		npctalk "Aspiring Butcher: I know, I... I'm trying to.";
-		donpcevent instance_npcname("Aspiring Butcher#clearGH")+"::OnDisable";
+		mes "[Açogueiro Aspirante]";
+		mes "Eu sei, eu... eu estou tentanto.";
+		npctalk "Eu sei, eu... eu estou tentanto.";
+		donpcevent instance_npcname("Açogueiro Aspirante#clearGH")+"::OnDisable";
 		donpcevent instance_npcname("#ghmemorialmob02")+"::OnEnable";
 		close;
 	} else {
-		mes "[Aspiring Butcher]";
-		mes "Somebody help me, somebody help me, please.";
+		mes "[Açogueiro Aspirante]";
+		mes "Alguém me ajude, alguém me ajude, por favor.";
 		close;
 	}
 OnInstanceInit:
 OnDisable:
-	hideonnpc instance_npcname("Aspiring Butcher#clearGH");
+	hideonnpc instance_npcname("Açogueiro Aspirante#clearGH");
 	end;
 OnEnable:
-	hideoffnpc instance_npcname("Aspiring Butcher#clearGH");
+	hideoffnpc instance_npcname("Açogueiro Aspirante#clearGH");
 	end;
 }
 
-// Sector 2 Mobs
+// Mobs Setor 2
 //============================================================
-1@gl_k,291,145,3	script	Hollgrehenn Destroyer	4_F_JOB_BLACKSMITH,{
+1@gl_k,291,145,3	script	Destruidora Hollgrehenn	4_F_JOB_BLACKSMITH,{
 	if (getcharid(0) == getpartyleader(getcharid(1),2)) {
-		mes "[Hollgrehenn Destroyer]";
-		mes "Yaaa!! Die!!!";
-		npctalk "Yaaa!! Die!!!";
+		mes "[Destruidora Hollgrehenn]";
+		mes "Yaaa!! Morre!!!";
+		npctalk "Yaaa!! Morre!!!";
 		specialeffect EF_CRASHEARTH;
 		next;
-		select("Don't worry!");
+		select("Não se preocupe!");
 		mes "["+strcharinfo(0)+"]";
-		mes "Don't worry! Mam. Are you alone? No other survivors?";
-		unittalk getcharid(3),"Don't worry! Mam. Are you alone? No other survivors?";
+		mes "Não se preocupe! Senhora. Você está sozinha? Não há outros sobreviventes?";
+		unittalk getcharid(3),"Não se preocupe! Senhora. Você está sozinha? Não há outros sobreviventes?";
 		next;
-		mes "[Hollgrehenn Destroyer]";
-		mes "I'm the only survivor left";
-		npctalk "I'm the only survivor left";
+		mes "[Destruidora Hollgrehenn]";
+		mes "Eu sou a única sobrevivente restante.";
+		npctalk "Eu sou a única sobrevivente restante.";
 		next;
-		select("This is a very dangerous place.");
+		select("Esse é um lugar muito perigoso.");
 		mes "["+strcharinfo(0)+"]";
-		mes "This is a very dangerous place. You know the central passage? Do you think you can move... and get to a safer place?";
-		unittalk getcharid(3),"This is a very dangerous place. You know the central passage? Do you think you can move... and get to a safer place?";
+		mes "Esse é um lugar muito perigoso. Você conhece a passagem central? Acha que consegue se mover... e ir para um lugar mais seguro?";
+		unittalk getcharid(3),"Esse é um lugar muito perigoso. Você conhece a passagem central? Acha que consegue se mover... e ir para um lugar mais seguro?";
 		next;
-		mes "[Hollgrehenn Destroyer]";
-		mes "Yes, I am able to move. I'll move for my baby's sake.";
-		npctalk "Yes, I am able to move. I'll move for my baby's sake.";
+		mes "[Destruidora Hollgrehenn]";
+		mes "Sim, eu sou capaz de me mover. Eu irei pelo bem do meu bebê.";
+		npctalk "Sim, eu sou capaz de me mover. Eu irei pelo bem do meu bebê.";
 		next;
-		select("Survive the road...");
+		select("Sobreviva ao caminho...");
 		mes "["+strcharinfo(0)+"]";
-		mes "You and your baby will get out of here safely. But I'm sorry I can't help you more.";
-		unittalk getcharid(3),"You and your baby will get out of here safely. But I'm sorry I can't help you more.";
+		mes "Você e seu bebê sairão daqui em segurança. Mas me desculpe eu não poder te ajudar mais.";
+		unittalk getcharid(3),"Você e seu bebê sairão daqui em segurança. Mas me desculpe eu não poder te ajudar mais.";
 		next;
-		mes "[Hollgrehenn Destroyer]";
-		mes "That's ok. Thank you for helping us. I'm good to go alone. Ah and good luck also.";
-		npctalk "That's ok. Thank you for helping us. I'm good to go alone. Ah and good luck also.";
-		donpcevent instance_npcname("Hollgrehenn Destroyer")+"::OnDisable";
+		mes "[Destruidora Hollgrehenn]";
+		mes "Está tudo bem. Obrigado por nos ajudar. Estou bem para ir sozinha. Ah e boa sorte também.";
+		npctalk "Está tudo bem. Obrigado por nos ajudar. Estou bem para ir sozinha. Ah e boa sorte também.";
+		donpcevent instance_npcname("Destruidora Hollgrehenn")+"::OnDisable";
 		donpcevent instance_npcname("#ghmemorialmob03")+"::OnEnable";
 		close;
 	} else {
-		mes "[Hollgrehenn Destroyer]";
-		mes "Somebody help me, somebody help me, please";
+		mes "[Destruidora Hollgrehenn]";
+		mes "Alguém ajude-me, alguém ajude-me, por favor.";
 		close;
 	}
 OnInstanceInit:
 OnDisable:
-	hideonnpc instance_npcname("Hollgrehenn Destroyer");
+	hideonnpc instance_npcname("Destruidora Hollgrehenn");
 	end;
 OnEnable:
-	hideoffnpc instance_npcname("Hollgrehenn Destroyer");
+	hideoffnpc instance_npcname("Destruidora Hollgrehenn");
 	end;
 }
 
@@ -941,28 +941,28 @@ OnEnable:
 	donpcevent instance_npcname("#ghinstancewarp4")+"::OnEnable";
 	.@map$ = instance_mapname("1@gl_k");
 	.@label$ = instance_npcname("#ghmemorialmob02")+"::OnMyMobDead";
-	mapannounce .@map$,"3 o'clock warp leading to zone 3 is now open.",bc_map,"0xFFFF00";
-	areamonster .@map$,241,113,291,19,"Suffering Chamberlain",2466,12,.@label$;
-	areamonster .@map$,241,113,291,19,"Decayed Monk",2464,12,.@label$;
-	areamonster .@map$,227,217,291,135,"Suffering Chamberlain",2466,12,.@label$;
-	areamonster .@map$,227,217,291,135,"Decayed Monk",2464,12,.@label$;
+	mapannounce .@map$,"O portal às 3 horas levando para a zona 3 agora está aberto.",bc_map,"0xFFFF00";
+	areamonster .@map$,241,113,291,19,"Camareiro em Sofrimento",2466,12,.@label$;
+	areamonster .@map$,241,113,291,19,"Monge Decaído",2464,12,.@label$;
+	areamonster .@map$,227,217,291,135,"Camareiro em Sofrimento",2466,12,.@label$;
+	areamonster .@map$,227,217,291,135,"Monge Decaído",2464,12,.@label$;
 	end;
 OnMyMobDead:
 	.@map$ = instance_mapname("1@gl_k");
 	.@label$ = instance_npcname("#ghmemorialmob02")+"::OnMyMobDead";
 	.@mob_dead_num = 48 - mobcount(.@map$,.@label$);
 	if (.@mob_dead_num > 28) {
-		mapannounce .@map$, "Seems like Himmelmez drains the dead's souls. They must be destroyed.",bc_map,"0xFFFFFF";
+		mapannounce .@map$, "Parece que Himmelmez drena as almas dos mortos. Elas precisam ser destruídas.",bc_map,"0xFFFFFF";
 		killmonster .@map$,.@label$;
-		donpcevent instance_npcname("Hollgrehenn Destroyer")+"::OnEnable";
+		donpcevent instance_npcname("Destruidora Hollgrehenn")+"::OnEnable";
 		donpcevent instance_npcname("#ghmemorialmob02")+"::OnDisable";
 	}
 	end;
 }
 
-// Tramp Mobs
+// Mobs Vagabundos
 //============================================================
-1@gl_k,221,82,3	script	Breathless Man#GHtramp1	4_M_DIEMAN,4,4,{
+1@gl_k,221,82,3	script	Homem Ofegante#GHtramp1	4_M_DIEMAN,4,4,{
 	end;
 OnTouch:
 	.@i = rand(1,10);
@@ -973,7 +973,7 @@ OnTouch:
 	else .@mobs = 7;
 	getmapxy(.@map$,.@x,.@y,1);
 	specialeffect EF_VENOMDUST;
-	monster .@map$,.@x,.@y,"Muck Worm",2467,.@mobs,instance_npcname(strnpcinfo(0))+"::OnMyMobDead";
+	monster .@map$,.@x,.@y,"Verme de Sujeira",2467,.@mobs,instance_npcname(strnpcinfo(0))+"::OnMyMobDead";
 	disablenpc instance_npcname(strnpcinfo(0));
 	end;
 OnMyMobDead:
@@ -986,39 +986,39 @@ OnDisable:
 	disablenpc instance_npcname(strnpcinfo(0));
 	end;
 }
-1@gl_k,213,63,7	duplicate(Breathless Man#GHtramp1)	Breathless Man#GHtramp2	4_M_DIEMAN,4,4
-1@gl_k,230,50,2	duplicate(Breathless Man#GHtramp1)	Breathless Man#GHtramp3	4_M_DIEMAN,4,4
-1@gl_k,222,39,2	duplicate(Breathless Man#GHtramp1)	Breathless Man#GHtramp4	4_M_DIEMAN,4,4
-1@gl_k,214,27,3	duplicate(Breathless Man#GHtramp1)	Breathless Man#GHtramp5	4_M_DIEMAN,4,4
-1@gl_k,223,17,2	duplicate(Breathless Man#GHtramp1)	Breathless Man#GHtramp6	4_M_DIEMAN,4,4
-1@gl_k,235,16,4	duplicate(Breathless Man#GHtramp1)	Breathless Man#GHtramp7	4_M_DIEMAN,4,4
-1@gl_k,251,20,5	duplicate(Breathless Man#GHtramp1)	Breathless Man#GHtramp8	4_M_DIEMAN,4,4
-1@gl_k,240,43,5	duplicate(Breathless Man#GHtramp1)	Breathless Man#GHtramp9	4_M_DIEMAN,4,4
-1@gl_k,271,19,1	duplicate(Breathless Man#GHtramp1)	Breathless Man#GHtramp10	4_M_DIEMAN,4,4
-1@gl_k,246,62,7	duplicate(Breathless Man#GHtramp1)	Breathless Man#GHtramp11	4_M_DIEMAN,4,4
-1@gl_k,282,48,7	duplicate(Breathless Man#GHtramp1)	Breathless Man#GHtramp12	4_M_DIEMAN,4,4
-1@gl_k,285,81,7	duplicate(Breathless Man#GHtramp1)	Breathless Man#GHtramp13	4_M_DIEMAN,4,4
-1@gl_k,241,86,5	duplicate(Breathless Man#GHtramp1)	Breathless Man#GHtramp14	4_M_DIEMAN,4,4
-1@gl_k,249,101,3	duplicate(Breathless Man#GHtramp1)	Breathless Man#GHtramp15	4_M_DIEMAN,4,4
-1@gl_k,276,106,7	duplicate(Breathless Man#GHtramp1)	Breathless Man#GHtramp16	4_M_DIEMAN,4,4
-1@gl_k,252,120,7	duplicate(Breathless Man#GHtramp1)	Breathless Man#GHtramp17	4_M_DIEMAN,4,4
-1@gl_k,258,150,1	duplicate(Breathless Man#GHtramp1)	Breathless Man#GHtramp18	4_M_DIEMAN,4,4
-1@gl_k,255,157,6	duplicate(Breathless Man#GHtramp1)	Breathless Man#GHtramp19	4_M_DIEMAN,4,4
-1@gl_k,261,164,7	duplicate(Breathless Man#GHtramp1)	Breathless Man#GHtramp20	4_M_DIEMAN,4,4
-1@gl_k,269,173,7	duplicate(Breathless Man#GHtramp1)	Breathless Man#GHtramp21	4_M_DIEMAN,4,4
-1@gl_k,280,167,3	duplicate(Breathless Man#GHtramp1)	Breathless Man#GHtramp22	4_M_DIEMAN,4,4
-1@gl_k,293,161,3	duplicate(Breathless Man#GHtramp1)	Breathless Man#GHtramp23	4_M_DIEMAN,4,4
-1@gl_k,226,96,3	duplicate(Breathless Man#GHtramp1)	Breathless Man#GHtramp24	4_M_DIEMAN,4,4
-1@gl_k,222,119,5	duplicate(Breathless Man#GHtramp1)	Breathless Man#GHtramp25	4_M_DIEMAN,4,4
-1@gl_k,233,123,3	duplicate(Breathless Man#GHtramp1)	Breathless Man#GHtramp26	4_M_DIEMAN,4,4
-2@gl_k,147,203,5	duplicate(Breathless Man#GHtramp1)	Breathless Man#GHtramp27	4_M_DIEMAN,4,4
-2@gl_k,141,222,1	duplicate(Breathless Man#GHtramp1)	Breathless Man#GHtramp28	4_M_DIEMAN,4,4
-2@gl_k,167,225,3	duplicate(Breathless Man#GHtramp1)	Breathless Man#GHtramp29	4_M_DIEMAN,4,4
-2@gl_k,145,236,3	duplicate(Breathless Man#GHtramp1)	Breathless Man#GHtramp30	4_M_DIEMAN,4,4
-2@gl_k,143,260,3	duplicate(Breathless Man#GHtramp1)	Breathless Man#GHtramp31	4_M_DIEMAN,4,4
-2@gl_k,173,258,3	duplicate(Breathless Man#GHtramp1)	Breathless Man#GHtramp32	4_M_DIEMAN,4,4
+1@gl_k,213,63,7	duplicate(Homem Ofegante#GHtramp1)	Homem Ofegante#GHtramp2	4_M_DIEMAN,4,4
+1@gl_k,230,50,2	duplicate(Homem Ofegante#GHtramp1)	Homem Ofegante#GHtramp3	4_M_DIEMAN,4,4
+1@gl_k,222,39,2	duplicate(Homem Ofegante#GHtramp1)	Homem Ofegante#GHtramp4	4_M_DIEMAN,4,4
+1@gl_k,214,27,3	duplicate(Homem Ofegante#GHtramp1)	Homem Ofegante#GHtramp5	4_M_DIEMAN,4,4
+1@gl_k,223,17,2	duplicate(Homem Ofegante#GHtramp1)	Homem Ofegante#GHtramp6	4_M_DIEMAN,4,4
+1@gl_k,235,16,4	duplicate(Homem Ofegante#GHtramp1)	Homem Ofegante#GHtramp7	4_M_DIEMAN,4,4
+1@gl_k,251,20,5	duplicate(Homem Ofegante#GHtramp1)	Homem Ofegante#GHtramp8	4_M_DIEMAN,4,4
+1@gl_k,240,43,5	duplicate(Homem Ofegante#GHtramp1)	Homem Ofegante#GHtramp9	4_M_DIEMAN,4,4
+1@gl_k,271,19,1	duplicate(Homem Ofegante#GHtramp1)	Homem Ofegante#GHtramp10	4_M_DIEMAN,4,4
+1@gl_k,246,62,7	duplicate(Homem Ofegante#GHtramp1)	Homem Ofegante#GHtramp11	4_M_DIEMAN,4,4
+1@gl_k,282,48,7	duplicate(Homem Ofegante#GHtramp1)	Homem Ofegante#GHtramp12	4_M_DIEMAN,4,4
+1@gl_k,285,81,7	duplicate(Homem Ofegante#GHtramp1)	Homem Ofegante#GHtramp13	4_M_DIEMAN,4,4
+1@gl_k,241,86,5	duplicate(Homem Ofegante#GHtramp1)	Homem Ofegante#GHtramp14	4_M_DIEMAN,4,4
+1@gl_k,249,101,3	duplicate(Homem Ofegante#GHtramp1)	Homem Ofegante#GHtramp15	4_M_DIEMAN,4,4
+1@gl_k,276,106,7	duplicate(Homem Ofegante#GHtramp1)	Homem Ofegante#GHtramp16	4_M_DIEMAN,4,4
+1@gl_k,252,120,7	duplicate(Homem Ofegante#GHtramp1)	Homem Ofegante#GHtramp17	4_M_DIEMAN,4,4
+1@gl_k,258,150,1	duplicate(Homem Ofegante#GHtramp1)	Homem Ofegante#GHtramp18	4_M_DIEMAN,4,4
+1@gl_k,255,157,6	duplicate(Homem Ofegante#GHtramp1)	Homem Ofegante#GHtramp19	4_M_DIEMAN,4,4
+1@gl_k,261,164,7	duplicate(Homem Ofegante#GHtramp1)	Homem Ofegante#GHtramp20	4_M_DIEMAN,4,4
+1@gl_k,269,173,7	duplicate(Homem Ofegante#GHtramp1)	Homem Ofegante#GHtramp21	4_M_DIEMAN,4,4
+1@gl_k,280,167,3	duplicate(Homem Ofegante#GHtramp1)	Homem Ofegante#GHtramp22	4_M_DIEMAN,4,4
+1@gl_k,293,161,3	duplicate(Homem Ofegante#GHtramp1)	Homem Ofegante#GHtramp23	4_M_DIEMAN,4,4
+1@gl_k,226,96,3	duplicate(Homem Ofegante#GHtramp1)	Homem Ofegante#GHtramp24	4_M_DIEMAN,4,4
+1@gl_k,222,119,5	duplicate(Homem Ofegante#GHtramp1)	Homem Ofegante#GHtramp25	4_M_DIEMAN,4,4
+1@gl_k,233,123,3	duplicate(Homem Ofegante#GHtramp1)	Homem Ofegante#GHtramp26	4_M_DIEMAN,4,4
+2@gl_k,147,203,5	duplicate(Homem Ofegante#GHtramp1)	Homem Ofegante#GHtramp27	4_M_DIEMAN,4,4
+2@gl_k,141,222,1	duplicate(Homem Ofegante#GHtramp1)	Homem Ofegante#GHtramp28	4_M_DIEMAN,4,4
+2@gl_k,167,225,3	duplicate(Homem Ofegante#GHtramp1)	Homem Ofegante#GHtramp29	4_M_DIEMAN,4,4
+2@gl_k,145,236,3	duplicate(Homem Ofegante#GHtramp1)	Homem Ofegante#GHtramp30	4_M_DIEMAN,4,4
+2@gl_k,143,260,3	duplicate(Homem Ofegante#GHtramp1)	Homem Ofegante#GHtramp31	4_M_DIEMAN,4,4
+2@gl_k,173,258,3	duplicate(Homem Ofegante#GHtramp1)	Homem Ofegante#GHtramp32	4_M_DIEMAN,4,4
 
-// Sector 3 Mobs
+// Mobs Setor 3
 //============================================================
 1@gl_k,0,0,0	script	#ghmemorialmob03	-1,{
 OnInstanceInit:
@@ -1031,22 +1031,22 @@ OnEnable:
 	donpcevent instance_npcname("#ghinstancewarp6")+"::OnEnable";
 	.@map$ = instance_mapname("1@gl_k");
 	.@label$ = instance_npcname("#ghmemorialmob03")+"::OnMyMobDead";
-	mapannounce .@map$,"12 o'clock warp leading to the zone 4 was opened.",bc_map,"0xFFFF00";
-	areamonster .@map$,17,259,53,180,"Decayed Guard",2468,11,.@label$;
-	areamonster .@map$,17,259,53,180,"Sharpshooter Ranger",2469,14,.@label$;
-	areamonster .@map$,62,281,73,186,"Decayed Guard",2468,11,.@label$;
-	areamonster .@map$,62,281,73,186,"Sharpshooter Ranger",2469,14,.@label$;
-	areamonster .@map$,74,251,109,224,"Decayed Guard",2468,11,.@label$;
-	areamonster .@map$,74,251,109,224,"Sharpshooter Ranger",2469,14,.@label$;
-	areamonster .@map$,108,281,231,234,"Decayed Guard",2468,11,.@label$;
-	areamonster .@map$,108,281,231,234,"Sharpshooter Ranger",2469,14,.@label$;
+	mapannounce .@map$,"O portal às 12 horas levando para a zona 4 agora está aberto.",bc_map,"0xFFFF00";
+	areamonster .@map$,17,259,53,180,"Guarda Decaído",2468,11,.@label$;
+	areamonster .@map$,17,259,53,180,"Arqueiro de Elite",2469,14,.@label$;
+	areamonster .@map$,62,281,73,186,"Guarda Decaído",2468,11,.@label$;
+	areamonster .@map$,62,281,73,186,"Arqueiro de Elite",2469,14,.@label$;
+	areamonster .@map$,74,251,109,224,"Guarda Decaído",2468,11,.@label$;
+	areamonster .@map$,74,251,109,224,"Arqueiro de Elite",2469,14,.@label$;
+	areamonster .@map$,108,281,231,234,"Guarda Decaído",2468,11,.@label$;
+	areamonster .@map$,108,281,231,234,"Arqueiro de Elite",2469,14,.@label$;
 	end;
 OnMyMobDead:
 	.@map$ = instance_mapname("1@gl_k");
 	.@label$ = instance_npcname("#ghmemorialmob03")+"::OnMyMobDead";
 	.@mob_dead_num = 100 - mobcount(.@map$,.@label$);
 	if (.@mob_dead_num > 85) {
-		mapannounce .@map$,"Himmelmez: Nice parry. I thought you were going to die slowly surrounded by the dead I summoned~",bc_map,"0xFFFFFF";
+		mapannounce .@map$,"Himmelmez : Boa defesa. Eu pensei que vocês morreriam lentamente cercados pelos mortos que eu invoquei~",bc_map,"0xFFFFFF";
 		killmonster .@map$,.@label$;
 		donpcevent instance_npcname("#GHMclear3")+"::OnEnable";
 		donpcevent instance_npcname("Heinrich#ghinstance4")+"::OnEnable";
@@ -1057,7 +1057,7 @@ OnMyMobDead:
 	end;
 }
 
-// 1st MVP
+// 1º MVP
 //============================================================
 1@gl_k,0,0,0	script	#ghmemorialmob04	-1,{
 OnInstanceInit:
@@ -1066,12 +1066,12 @@ OnDisable:
 	end;
 OnEnable:
 	enablenpc instance_npcname("#ghmemorialmob04");
-	monster instance_mapname("1@gl_k"),150,258,"Root of Corruption",2475,1,instance_npcname("#ghmemorialmob04")+"::OnMyMobDead";
+	monster instance_mapname("1@gl_k"),150,258,"Raiz da Corrupção",2475,1,instance_npcname("#ghmemorialmob04")+"::OnMyMobDead";
 	end;
 OnMyMobDead:
 	.@map$ = instance_mapname("1@gl_k");
 	if (mobcount(.@map$,instance_npcname("#ghmemorialmob04")+"::OnMyMobDead") < 1) {
-		mapannounce .@map$, "12 o'clock warp leading to the Chivalry's Second Floor is now open.",bc_map,"0xFFFF00";
+		mapannounce .@map$, "O portal às 12 horas levando para o Segundo Andar da Cavalaria agora está aberto.",bc_map,"0xFFFF00";
 		donpcevent instance_npcname("#ghinstancewarp7")+"::OnEnable";
 		donpcevent instance_npcname("Varmunt#ghinstance3")+"::OnTalk2";
 		donpcevent instance_npcname("#effectGH01")+"::OnEnable";
@@ -1098,7 +1098,7 @@ OnEnable:
 	initnpctimer;
 	end;
 OnTimer2000:
-	mapannounce instance_mapname("1@gl_k"), "Himmelmez: You got me tempted to go to the 2nd floor, come to the entrance. I'm curious about how far your luck goes.",bc_map,"0xFFFFFF";
+	mapannounce instance_mapname("1@gl_k"), "Himmelmez : Você conseguiu me deixar tentada à ir para o 2º andar, venha para a entrada. Estou curiosa sobre o quão longe a sua sorte vai.",bc_map,"0xFFFFFF";
 	stopnpctimer;
 	end;
 }
@@ -1149,7 +1149,7 @@ OnTimer32000:
 	donpcevent instance_npcname("Heinrich#ghinstance4")+"::OnDisable";
 	end;
 OnTimer35000:
-	mapannounce instance_mapname("1@gl_k"), "An eerie echo from the depths can be heard as you get closer.",bc_map,"0xFFFFFF";
+	mapannounce instance_mapname("1@gl_k"), "Um eco sinistro das profundezas pode ser ouvido a medida que vocês se aproximam.",bc_map,"0xFFFFFF";
 	end;
 OnTimer38000:
 	donpcevent instance_npcname("#ghmemorialmob04")+"::OnEnable";
@@ -1160,7 +1160,7 @@ OnTimer38000:
 
 1@gl_k,144,258,6	script	Heinrich#ghinstance4	4_M_HEINRICH,{
 	mes "[Heinrich]";
-	mes "Himmelmez... You made my men get killed and I will never forget that.";
+	mes "Himmelmez... Você fez meus homens serem assassinados e eu nunca irei esquecer isso.";
 	cutin "gl_heinrich1",2;
 	close2;
 	cutin "gl_heinrich1",255;
@@ -1173,19 +1173,19 @@ OnEnable:
 	hideoffnpc instance_npcname("Heinrich#ghinstance4");
 	end;
 OnTalk1:
-	npctalk "Himmelmez! I won't let you take even a single more step here.";
+	npctalk "Himmelmez! Eu não permitirei que dê nem mais um passo aqui.";
 	end;
 OnTalk2:
-	npctalk "What... is this?!";
+	npctalk "O que... é isso?!";
 	end;
 OnTalk3:
-	npctalk "Varmunt Sir! Help the adventurers and I'll chase Himmelmez!";
+	npctalk "Varmunt Senhor! Ajude os aventureiros e eu perseguirei Himmelmez!";
 	end;
 }
 
 1@gl_k,150,257,3	script	Himmelmez#ghinstance2	4_F_HIMEL,{
 	mes "[Himmelmez]";
-	mes "No need to stare at me with so insecure eyes. Soon they'll become relaxed...";
+	mes "Não há necessidade de me encarar com olhos tão inseguros. Logo eles estarão relaxados...";
 	cutin "gl_himel2",2;
 	close2;
 	cutin "gl_himel2",255;
@@ -1198,22 +1198,22 @@ OnEnable:
 	hideoffnpc instance_npcname("Himmelmez#ghinstance2");
 	end;
 OnTalk1:
-	npctalk "What an awfully lucky, I flew all the way over here and just one of them is really powerful.";
+	npctalk "Que sorte terrível, eu voei todo o caminho até aqui e apenas um deles é realmente poderoso.";
 	end;
 OnTalk2:
-	npctalk "But it doesn't matter to me.";
+	npctalk "Mas isso não importa para mim.";
 	end;
 OnTalk3:
-	npctalk "Now, all of you will die.";
+	npctalk "Agora, todos vocês morrerão.";
 	end;
 OnTalk4:
-	npctalk "Hahaha, so you guys thought I would come alone?";
+	npctalk "Hahaha, então vocês pensaram que eu viria sozinha?";
 	end;
 OnTalk5:
-	npctalk "This is my new toy to keep you at my feet. Why don't you guys play while I entertain?";
+	npctalk "Este é meu novo brinquedo para manter vocês aos meus pés. Por que vocês não brincam enquanto eu entretenho?";
 	end;
 OnTalk6:
-	npctalk "Sincerely~, If I am given the opportunity I'd like to meet you again, Heinrich.";
+	npctalk "Sinceramente~, se eu receber a oportunidade eu gostaria de encontrá-lo novamente, Heinrich.";
 	end;
 }
 
@@ -1221,9 +1221,9 @@ OnTalk6:
 	if (questprogress(12318,HUNTING) == 2) {
 		if (!questprogress(12319,HUNTING)) {
 			mes "[Varmunt]";
-			mes "There's something unusual about this thing's aura. Maybe someday we will be able to understand what is behind all of this.";
+			mes "Há algo incomum em relação a aura desta coisa. Talvez um dia nós seremos capazes de entender o que está por trás de tudo isso.";
 			cutin "gl_barmund1",2;
-			getitem 6608,1; //Coagulated Spell
+			getitem 6608,1; //Feitiço Coagulado
 			setquest 12319;
 			close2;
 			cutin "gl_barmund1",255;
@@ -1231,7 +1231,7 @@ OnTalk6:
 		}
 	}
 	mes "[Varmunt]";
-	mes "Even after all this time, it is impossible to prevent from the will of the Transcendent.";
+	mes "Mesmo depois de todo esse tempo, é impossível impedir a vontade do Transcendente.";
 	cutin "gl_barmund1",2;
 	close2;
 	cutin "gl_barmund2",255;
@@ -1244,19 +1244,18 @@ OnEnable:
 	hideoffnpc instance_npcname("Varmunt#ghinstance3");
 	end;
 OnTalk1:
-	npctalk "Heinrich Sir! Something unknown holds an inexplicably powerful force!";
+	npctalk "Heinrich Senhor! Algo desconhecido detém uma poderosa força inexplicável!";
 	end;
 OnTalk2:
-	npctalk "From the monster I picked up some great stuff. People who are interested, talk to me.";
+	npctalk "Eu peguei coisas muito boas do monstro. Pessoas que estiverem interessadas, falem comigo.";
 	end;
 }
 
-// Floor 2
+// 2º Andar
 //============================================================
 2@gl_k,148,67,1	script	Heinrich#ghinstance5	4_M_HEINRICH,{
 	mes "[Heinrich]";
-	mes "Himmelmez's blocking spells";
-	mes "are everywhere around here...";
+	mes "Os feitiços de bloqueio da Himmelmez estão por toda parte em volta daqui...";
 	cutin "gl_heinrich1",2;
 	close2;
 	cutin "gl_heinrich1",255;
@@ -1269,16 +1268,16 @@ OnEnable:
 	hideoffnpc instance_npcname("Heinrich#ghinstance5");
 	end;
 OnTalk1:
-	npctalk "These things have never been in the castle!";
+	npctalk "Essas coisas nunca estiveram no castelo!";
 	end;
 OnTalk2:
-	npctalk "Trying to break this power with common weapons doesn't work. I tried it.";
+	npctalk "Tentar quebrar esse poder com armas comuns não funcionará. Eu tentei.";
 	end;
 OnTalk3:
-	npctalk "It is really unforgivable.";
+	npctalk "É realmente imperdoável.";
 	end;
 OnTalk4:
-	npctalk "I, who already was a subordinate of genocide. How much more in the future...";
+	npctalk "Eu, que já fui um subordinado do genocídio. Quanto mais no futuro...";
 	end;
 OnTalk5:
 	npctalk "...";
@@ -1287,7 +1286,7 @@ OnTalk5:
 
 2@gl_k,151,71,7	script	Varmunt#ghinstance4	4_M_BARMUND,{
 	mes "[Varmunt]";
-	mes "Why am I doing this again? Doesn't seem like the first time. I've seen this place repeatedly dozens of times in my dreams. This feeling...";
+	mes "Porque eu estou fazendo isso de novo? Não parece a primeira vez. Eu tenho visto este lugar repetidamente dezenas de vezes em meus sonhos. Essa sensação...";
 	cutin "gl_barmund1",2;
 	close2;
 	cutin "gl_barmund1",255;
@@ -1300,52 +1299,52 @@ OnEnable:
 	hideoffnpc instance_npcname("Varmunt#ghinstance4");
 	end;
 OnTalk2:
-	npctalk "Himmelmez's enchantment has completely blocked the passage to each section.";
+	npctalk "O encantamento de Himmelmez bloqueou completamente a passagem para cada zona.";
 	end;
 OnTalk3:
-	npctalk "Get out of the way for a moment. I'll try to somehow break the spell with magical powers.";
+	npctalk "Saiam do caminho por um momento. Vou tentar de alguma forma quebrar o feitiço com poderes mágicos.";
 	end;
 OnTalk4:
-	npctalk "The enchantment seems to be broken.";
+	npctalk "O encantamento parece estar quebrado.";
 	end;
 OnTalk5:
-	npctalk "I've never seen this spell before.";
+	npctalk "Eu nunca vi esse feitiço antes.";
 	end;
 OnTalk6:
-	npctalk "Himmelmez doesn't use a seal on a person's body to turn it into an undead.";
+	npctalk "Himmelmez não usa um selo no corpo de uma pessoa para transformá-la em morto-vivo.";
 	end;
 OnTalk7:
-	npctalk "She uses enchantment stones.This way, the spell is probably maintained.";
+	npctalk "Ela usa pedras de encantamento. Dessa maneira, a magia é provavelmente conservada.";
 	end;
 OnTalk8:
-	npctalk "We should kill the people who have the enchantment stones to break the spell.";
+	npctalk "Devemos matar as pessoas que têm as pedras de encantamento para quebrar o feitiço.";
 	end;
 OnTalk9:
-	npctalk "However, we can't identify them. The purification can only be done randomly.";
+	npctalk "No entanto, não podemos identificá-los. A purificação só pode ser feita aleatoriamente.";
 	end;
 OnTalk10:
-	npctalk "Commandant...";
+	npctalk "Comandante...";
 	end;
 OnTalk11:
-	npctalk "Commandant, it seems too loose.";
+	npctalk "Comandante, parece muito solto.";
 	end;
 OnTalk12:
-	npctalk "We are related to all these people, not just a few.";
+	npctalk "Nós somos relacionados com todas essas pessoas, não apenas algumas.";
 	end;
 OnTalk13:
-	npctalk "We can't deny that it's not their fault for what is going on.";
+	npctalk "Não podemos negar que não é culpa deles o que está acontecendo.";
 	end;
 OnTalk14:
-	npctalk "Well, let's do it then.";
+	npctalk "Bem, vamos fazer isso então.";
 	end;
 OnTalk15:
-	npctalk "You guys are of a great help. Try to follow us.";
+	npctalk "Vocês são uma grande ajuda. Tente seguir-nos.";
 	end;
 OnTalk16:
-	npctalk "There can be a tough fight. Hold on, and it would be nice to eat something.";
+	npctalk "Pode ser uma luta dura. Esperem um pouco, e seria bom comer alguma coisa.";
 	end;
 OnTalk17:
-	npctalk "Guys. It is time to depart, Heinrich Sir.";
+	npctalk "Pessoal. É hora de partir, Heinrich Senhor.";
 	end;
 }
 
@@ -1449,7 +1448,7 @@ OnTimer66000:
 	donpcevent instance_npcname("Varmunt#ghinstance4")+"::OnTalk17";
 	end;
 OnTimer69000:
-	mapannounce instance_mapname("2@gl_k"), "9 o'clock positioned warp leading to the 1st zone has been opened. Move from the central hallway. A being with an evil aura seems to be appearing in this region.",bc_map,"0xFFFF00";
+	mapannounce instance_mapname("2@gl_k"), "O portal às 9 horas levando para a 1º zona foi aberto. Mova-se a partir do corredor central.",bc_map,"0xFFFF00";
 	donpcevent instance_npcname("#ghinstancewarp8")+"::OnEnable";
 	donpcevent instance_npcname("#ghinstancewarp9")+"::OnEnable";
 	donpcevent instance_npcname("#ghmemorialmob06")+"::OnEnable";
@@ -1471,18 +1470,18 @@ OnEnable:
 	enablenpc instance_npcname("#ghmemorialmob05");
 	.@map$ = instance_mapname("2@gl_k");
 	.@label$ = instance_npcname("#ghmemorialmob05")+"::OnMyMobDead";
-	areamonster .@map$,124,20,31,162,"Decayed Guard",2468,8,.@label$;
-	areamonster .@map$,124,20,31,162,"Sharpshooter Ranger",2469,8,.@label$;
-	areamonster .@map$,124,20,31,162,"Fallen Abyss Knight",2470,8,.@label$;
-	areamonster .@map$,124,20,31,162,"Suffering Khalitzburg",2471,8,.@label$;
-	areamonster .@map$,124,20,31,162,"Swollen Knight",2472,8,.@label$;
+	areamonster .@map$,124,20,31,162,"Guarda Decaído",2468,8,.@label$;
+	areamonster .@map$,124,20,31,162,"Arqueiro de Elite",2469,8,.@label$;
+	areamonster .@map$,124,20,31,162,"Cavaleiro do Abismo",2470,8,.@label$;
+	areamonster .@map$,124,20,31,162,"Khalitzburg Angustiada",2471,8,.@label$;
+	areamonster .@map$,124,20,31,162,"Cavaleiro Inchado",2472,8,.@label$;
 	.MyMobs = 80;
 	end;
 OnMyMobDead:
 	.@map$ = instance_mapname("2@gl_k");
 	.MyMobs--;
 	if (.MyMobs == 0) {
-		mapannounce .@map$, "A being with an evil aura seems to be appearing in this region.",bc_map,"0xFFFF00";
+		mapannounce .@map$, "Um ser com uma aura maligna parece estar surgindo nessa região.",bc_map,"0xFFFF00";
 		donpcevent instance_npcname("#ghmemorialmob06")+"::OnDisable2";
 		donpcevent instance_npcname("#ghmemorialmob07")+"::OnEnable";
 		donpcevent instance_npcname("#ghmemorialmob05")+"::OnDisable";
@@ -1490,19 +1489,19 @@ OnMyMobDead:
 		.@label$ = instance_npcname("#ghmemorialmob05")+"::OnMyMobDead";
 		switch(rand(5)) {
 		case 0:
-			areamonster .@map$,124,20,31,162,"Decayed Guard",2468,1,.@label$;
+			areamonster .@map$,124,20,31,162,"Guarda Decaído",2468,1,.@label$;
 			break;
 		case 1:
-			areamonster .@map$,124,20,31,162,"Sharpshooter Ranger",2469,1,.@label$;
+			areamonster .@map$,124,20,31,162,"Arqueiro de Elite",2469,1,.@label$;
 			break;
 		case 2:
-			areamonster .@map$,124,20,31,162,"Fallen Abyss Knight",2470,1,.@label$;
+			areamonster .@map$,124,20,31,162,"Cavaleiro do Abismo",2470,1,.@label$;
 			break;
 		case 3:
-			areamonster .@map$,124,20,31,162,"Suffering Khalitzburg",2471,1,.@label$;
+			areamonster .@map$,124,20,31,162,"Khalitzburg Angustiada",2471,1,.@label$;
 			break;
 		case 4:
-			areamonster .@map$,124,20,31,162,"Swollen Knight",2472,1,.@label$;
+			areamonster .@map$,124,20,31,162,"Cavaleiro Inchado",2472,1,.@label$;
 			break;
 		}
 	}
@@ -1537,11 +1536,11 @@ OnTimer90000:
 		69,138,80,127,
 		34,143,39,138;
 	for(.@i = 0; .@i<getarraysize(.@c); .@i += 4) {
-		areamonster .@map$,.@c[.@i],.@c[.@i+1],.@c[.@i+2],.@c[.@i+3],"Decayed Guard",2468,1,.@label$;
-		areamonster .@map$,.@c[.@i],.@c[.@i+1],.@c[.@i+2],.@c[.@i+3],"Sharpshooter Ranger",2469,1,.@label$;
-		areamonster .@map$,.@c[.@i],.@c[.@i+1],.@c[.@i+2],.@c[.@i+3],"Fallen Abyss Knight",2470,1,.@label$;
-		areamonster .@map$,.@c[.@i],.@c[.@i+1],.@c[.@i+2],.@c[.@i+3],"Suffering Khalitzburg",2471,1,.@label$;
-		areamonster .@map$,.@c[.@i],.@c[.@i+1],.@c[.@i+2],.@c[.@i+3],"Swollen Knight",2472,1,.@label$;
+		areamonster .@map$,.@c[.@i],.@c[.@i+1],.@c[.@i+2],.@c[.@i+3],"Guarda Decaído",2468,1,.@label$;
+		areamonster .@map$,.@c[.@i],.@c[.@i+1],.@c[.@i+2],.@c[.@i+3],"Arqueiro de Elite",2469,1,.@label$;
+		areamonster .@map$,.@c[.@i],.@c[.@i+1],.@c[.@i+2],.@c[.@i+3],"Cavaleiro do Abismo",2470,1,.@label$;
+		areamonster .@map$,.@c[.@i],.@c[.@i+1],.@c[.@i+2],.@c[.@i+3],"Khalitzburg Angustiada",2471,1,.@label$;
+		areamonster .@map$,.@c[.@i],.@c[.@i+1],.@c[.@i+2],.@c[.@i+3],"Cavaleiro Inchado",2472,1,.@label$;
 	}
 	end;
 OnTimer92000:
@@ -1557,12 +1556,12 @@ OnDisable:
 	end;
 OnEnable:
 	enablenpc instance_npcname("#ghmemorialmob07");
-	areamonster instance_mapname("2@gl_k"),124,20,31,162,"The Destruction of the First Captain",2473,1,instance_npcname("#ghmemorialmob07")+"::OnMyMobDead";
+	areamonster instance_mapname("2@gl_k"),124,20,31,162,"1º Capitão da Perdição",2473,1,instance_npcname("#ghmemorialmob07")+"::OnMyMobDead";
 	end;
 OnMyMobDead:
 	.@map$ = instance_mapname("2@gl_k");
 	if (mobcount(.@map$,instance_npcname("#ghmemorialmob07")+"::OnMyMobDead") < 1) {
-		mapannounce .@map$, "3 o'clock positioned warp leading to the 2nd zone has been opened. Use the central hallway to get there.",bc_map,"0xFFFF00";
+		mapannounce .@map$, "O portal às 3 horas levando para a 2º zona foi aberto. Use o corredor central para chegar lá.",bc_map,"0xFFFF00";
 		donpcevent instance_npcname("#ghinstancewarp10")+"::OnEnable";
 		donpcevent instance_npcname("#ghinstancewarp11")+"::OnEnable";
 		donpcevent instance_npcname("#ghmemorialmob08")+"::OnEnable";
@@ -1580,37 +1579,37 @@ OnEnable:
 	enablenpc instance_npcname("#ghmemorialmob08");
 	.@map$ = instance_mapname("2@gl_k");
 	.@label$ = instance_npcname("#ghmemorialmob08")+"::OnMyMobDead";
-	areamonster .@map$,175,163,265,18,"Decayed Guard",2468,7,.@label$;
-	areamonster .@map$,175,163,265,18,"Sharpshooter Ranger",2469,7,.@label$;
-	areamonster .@map$,175,163,265,18,"Fallen Abyss Knight",2470,7,.@label$;
-	areamonster .@map$,175,163,265,18,"Suffering Khalitzburg",2471,7,.@label$;
-	areamonster .@map$,175,163,265,18,"Swollen Knight",2472,7,.@label$;
+	areamonster .@map$,175,163,265,18,"Guarda Decaído",2468,7,.@label$;
+	areamonster .@map$,175,163,265,18,"Arqueiro de Elite",2469,7,.@label$;
+	areamonster .@map$,175,163,265,18,"Cavaleiro do Abismo",2470,7,.@label$;
+	areamonster .@map$,175,163,265,18,"Khalitzburg Angustiada",2471,7,.@label$;
+	areamonster .@map$,175,163,265,18,"Cavaleiro Inchado",2472,7,.@label$;
 	.MyMobs = 35;
 	end;
 OnMyMobDead:
 	.@map$ = instance_mapname("2@gl_k");
 	.MyMobs--;
 	if (.MyMobs == 0) {
-		mapannounce .@map$, "A being with an evil aura seems to be appearing in this region.",bc_map,"0xFFFF00";
+		mapannounce .@map$, "Um ser com uma aura maligna parece estar surgindo nessa região.",bc_map,"0xFFFF00";
 		donpcevent instance_npcname("#ghmemorialmob09")+"::OnEnable";
 		donpcevent instance_npcname("#ghmemorialmob08")+"::OnDisable";
 	} else {
 		.@label$ = instance_npcname("#ghmemorialmob08")+"::OnMyMobDead";
 		switch(rand(5)) {
 		case 0:
-			areamonster .@map$,175,163,265,18,"Decayed Guard",2468,1,.@label$;
+			areamonster .@map$,175,163,265,18,"Guarda Decaído",2468,1,.@label$;
 			break;
 		case 1:
-			areamonster .@map$,175,163,265,18,"Sharpshooter Ranger",2469,1,.@label$;
+			areamonster .@map$,175,163,265,18,"Arqueiro de Elite",2469,1,.@label$;
 			break;
 		case 2:
-			areamonster .@map$,175,163,265,18,"Fallen Abyss Knight",2470,1,.@label$;
+			areamonster .@map$,175,163,265,18,"Cavaleiro do Abismo",2470,1,.@label$;
 			break;
 		case 3:
-			areamonster .@map$,175,163,265,18,"Suffering Khalitzburg",2471,1,.@label$;
+			areamonster .@map$,175,163,265,18,"Khalitzburg Angustiada",2471,1,.@label$;
 			break;
 		case 4:
-			areamonster .@map$,175,163,265,18,"Swollen Knight",2472,1,.@label$;
+			areamonster .@map$,175,163,265,18,"Cavaleiro Inchado",2472,1,.@label$;
 			break;
 		}
 	}
@@ -1624,12 +1623,12 @@ OnDisable:
 	end;
 OnEnable:
 	enablenpc instance_npcname("#ghmemorialmob09");
-	areamonster instance_mapname("2@gl_k"),175,163,265,18,"The Destruction of the Second Captain",2474,1,instance_npcname("#ghmemorialmob09")+"::OnMyMobDead";
+	areamonster instance_mapname("2@gl_k"),175,163,265,18,"2º Capitão da Perdição",2474,1,instance_npcname("#ghmemorialmob09")+"::OnMyMobDead";
 	end;
 OnMyMobDead:
 	.@map$ = instance_mapname("2@gl_k");
 	if (mobcount(.@map$,instance_npcname("#ghmemorialmob09")+"::OnMyMobDead") < 1) {
-		mapannounce .@map$, "12 o'clock positioned warp leading to the 3rd zone has been opened. Use the central hallway to get there.",bc_map,"0xFFFF00";
+		mapannounce .@map$, "O portal às 12 horas levando para a 3º zona foi aberto. Use o corredor central para chegar lá.",bc_map,"0xFFFF00";
 		donpcevent instance_npcname("#ghinstancewarp12")+"::OnEnable";
 		donpcevent instance_npcname("#controlGH6")+"::OnEnable";
 		donpcevent instance_npcname("#ghmemorialmob08")+"::OnDisable";
@@ -1669,26 +1668,25 @@ OnTalk1:
 	npctalk "Gerhard!";
 	end;
 OnTalk2:
-	npctalk "What are you doing to my men, Himmelmez?!";
+	npctalk "O que você está fazendo ao meu homem, Himmelmez?!";
 	end;
 OnTalk3:
-	npctalk "Himmelmez! You don't need to make any more sacrifices!";
+	npctalk "Himmelmez! Você não precisa fazer mais nenhum sacrifícios!";
 	end;
 OnTalk4:
-	npctalk "Let him go! I don't want one more sacrifice!";
+	npctalk "Deixe ele ir! Eu não quero mais um sacrifício!";
 	end;
 OnTalk5:
-	npctalk "I will not forgive you.";
+	npctalk "Não irei perdoar você.";
 	end;
 OnTalk6:
-	npctalk "Just leave us alone, Himmelmez!!";
+	npctalk "Apenas deixe-nos, Himmelmez!!";
 	end;
 }
 
 2@gl_k,162,250,1	script	Varmunt#ghinstance5	4_M_BARMUND,{
 	mes "[Varmunt]";
-	mes "We can't escape this";
-	mes "eternal confinement...";
+	mes "Nós não podemos escapar desse confinamento eterno...";
 	cutin "gl_barmund2",2;
 	close2;
 	cutin "gl_barmund2",255;
@@ -1701,7 +1699,7 @@ OnEnable:
 	hideoffnpc instance_npcname("Varmunt#ghinstance5");
 	end;
 OnTalk1:
-	npctalk "What? This cannot be. We must prevent Amdarias's attacks!";
+	npctalk "O que? Não pode ser. Temos que impedir os ataques de Amdarias!";
 	end;
 }
 
@@ -1715,44 +1713,44 @@ OnEnable:
 	hideoffnpc instance_npcname("Himmelmez#ghinstance4");
 	end;
 OnTalk1:
-	npctalk "Great~ I thought you wouldn't come near the end...";
+	npctalk "Ótimo~ Achei que vocês não viriam perto do fim...";
 	end;
 OnTalk2:
-	npctalk "Huhu, I have already found a piece of Ymir's Heart, Heinrich.";
+	npctalk "Huhu, Eu já encontrei um fragmento do Coração de Ymir, Heinrich.";
 	end;
 OnTalk3:
-	npctalk "It would've been faster if there were no distractions.";
+	npctalk "Teria sido mais rápido se não houvesse distrações.";
 	end;
 OnTalk4:
-	npctalk "What do you think? Making it look like an accidental disease infected the king and the people around...";
+	npctalk "O que você acha? Fazendo pareçer que uma doença acidental infectou o rei e as pessoas ao redor...";
 	end;
 OnTalk5:
-	npctalk "You want that?";
+	npctalk "Você quer isso?";
 	end;
 OnTalk6:
-	npctalk "This one is your final blow, Heinrich.";
+	npctalk "Este é o seu golpe final, Heinrich.";
 	end;
 OnTalk7:
-	npctalk "It is said that stopping me requires a skillfull person.";
+	npctalk "Diz-se que parar me requer uma pessoa habilidosa.";
 	end;
 OnTalk8:
-	npctalk "Seems like a perfect scenario to make my new monster, Amdarias.";
+	npctalk "Parece um cenário perfeito para fazer o meu novo monstro, Amdarias.";
 	end;
 OnTalk9:
-	npctalk "Booh~ I'm scared.";
+	npctalk "Booh~ Estou assustada.";
 	end;
 OnTalk10:
-	npctalk "Anyway, it was nice talking to you. Maybe we'll have the chance to meet again in the next story.";
+	npctalk "De qualquer modo, foi legal conversar com você. Talvez a gente tenha a chance de se encontrar novamente na próxima história.";
 	end;
 OnTalk11:
-	npctalk "Well, make sure you will come back again.";
+	npctalk "Bem, certifique-se que vai voltar novamente.";
 	end;
 }
 
 2@gl_k,150,179,0	script	#controlGH6	HIDDEN_NPC,2,2,{
 	end;
 OnTouch:
-	mapannounce instance_mapname("2@gl_k"), "???: Do not come! There are traps everywhere here... Aaaaack!!!!",bc_map,"0xFF0000";
+	mapannounce instance_mapname("2@gl_k"), "??? : Não venham! Tem armadilhas em todo lugar por aqui... Aaaaack!!!!",bc_map,"0xFF0000";
 	specialeffect EF_BASH;
 	donpcevent instance_npcname("Himmelmez#ghinstance3")+"::OnEnable";
 	donpcevent instance_npcname("Heinrich#ghinstance6")+"::OnEnable";
@@ -1796,13 +1794,13 @@ OnEnable:
 	hideoffnpc instance_npcname("Gerhard#ghinstance1");
 	end;
 OnTalk1:
-	npctalk "Damn it! Run away! I can't withstand anymore!";
+	npctalk "Maldição! Fujam! Eu não posso suportar mais!";
 	end;
 OnTalk2:
-	npctalk "Commandant... Come on, you need to run away from here... Ugh.";
+	npctalk "Comandante... Vamos lá, você precisa fugir daqui... Ugh.";
 	end;
 OnTalk3:
-	npctalk "Even if you defile my body, I won't let you take my soul, Himmelmez!";
+	npctalk "Mesmo se você contaminar o meu corpo, eu não vou deixá-la tomar minha alma, Himmelmez!";
 	end;
 OnEffect1:
 	specialeffect EF_BARRIER;
@@ -1910,7 +1908,7 @@ OnTimer70000:
 	donpcevent instance_npcname("Varmunt#ghinstance5")+"::OnTalk1";
 	end;
 OnTimer73000:
-	mapannounce instance_mapname("2@gl_k"), "Leads toward Gerhard's body.",bc_map,"0xFFFFFF";
+	mapannounce instance_mapname("2@gl_k"), "Vão em direção ao corpo de Gerhard.",bc_map,"0xFFFFFF";
 	end;
 OnTimer76000:
 	donpcevent instance_npcname("Gerhard#ghinstance1")+"::OnEffect5";
@@ -1925,26 +1923,26 @@ OnTimer80000:
 2@gl_k,158,241,1	script	Hugin#ghinstance1	4_M_SAGE_C,{
 	if (questprogress(12319,HUNTING) == 2) {
 		mes "[Hugin]";
-		mes "Well, you are pretty ridiculous. Beginners shouldn't get the loot Amdarias drops.";
+		mes "Bem, você é bem ridículo. Principiantes não deveriam pegar os itens que Amdarias derruba.";
 		erasequest 12318;
 		erasequest 12319;
-		getitem 6608,1; //Coagulated Spell
+		getitem 6608,1; //Feitiço Coagulado
 		next;
 		mes "[Hugin]";
-		mes "Varmunt, I have arbitrarily stopped time. And soon, the time gap will be gone.";
+		mes "Varmunt, Eu arbitrariamente parei o tempo. E em breve, a brecha temporal irá desaparecer.";
 		specialeffect2 EF_BLIND,AREA;
 		soundeffect "_blind.wav",0;
 		next;
 		mes "[Hugin]";
-		mes "Poor time travelers.";
-		mes "They will endlessly retry to prevent the tragedy that affected this city.";
+		mes "Pobre viajantes do tempo.";
+		mes "Eles vão infinitamente tentar evitar a tragédia que afetou essa cidade.";
 		next;
 		mes "[Hugin]";
-		mes "But the beggining of these time travels won't redempt your actions.";
-		mes "This will continue forever...";
+		mes "Mas o início destas viagens temporais não vai resgatar suas ações.";
+		mes "Isso irá continuar para sempre...";
 		next;
 		mes "[Hugin]";
-		mes "Now, I may erase your memory again. Perhaps you will have a different fate next time.";
+		mes "Agora, eu posso apagar a sua memória novamente. Talvez você terá um destino diferente na próxima vez.";
 		specialeffect2 EF_FREEZE;
 		close2;
 		getmapxy(.@map$,.@x,.@y,0);
@@ -1952,16 +1950,16 @@ OnTimer80000:
 		end;
 	} else {
 		mes "[Hugin]";
-		mes "The gap of time is almost distorted.";
-		mes "Done. There you go. Come!";
-		mes "I have to get out!";
+		mes "A brecha temporal está quase distorcida.";
+		mes "Feito. Aí está. Venha!";
+		mes "Eu tenho que sair!";
 		next;
-		select("Bah... Soon after you...");
+		select("Bah... Logo depois de você...");
 		mes "[Hugin]";
-		mes "Soon after me? Anyways...";
-		mes "Doesn't matter, soon the gap of time will be closed, I have to get out of here.";
+		mes "Logo depois de mim? De qualquer jeito...";
+		mes "Não importa, logo a brecha temporal será fechada, eu tenho que sair daqui.";
 		next;
-		switch(select("Since I'm here, let's explore more.:Please, send me out.")) {
+		switch(select("Já que eu estou aqui, vamos explorar mais.:Por favor, me envie para fora daqui.")) {
 		case 1:
 			mes "[Hugin]";
 			mes "..................";
