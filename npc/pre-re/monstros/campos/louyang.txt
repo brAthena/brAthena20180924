@@ -1,29 +1,44 @@
-//===== Hercules Script ======================================
-//= Louyang Fields Monster Spawn Script
-//===== By: ==================================================
-//= Evera/Lorri
-//===== Current Version: =====================================
-//= 1.2
-//===== Additional Comments: =================================
-//= 1.1 updated by MasterOfMuppets
-//= 1.2 Official kRO 10.1 spawns [Playtester]
-//============================================================
+//    ________________________________________________________
+//   /                                                        \
+//   |       _           _   _   _                            |
+//   |      | |__  _ __ / \ | |_| |__   ___ _ __   __ _       |
+//   |      | '_ \| '__/ _ \| __| '_ \ / _ \ '_ \ / _` |      |
+//   |      | |_) | | / ___ \ |_| | | |  __/ | | | (_| |      |
+//   |      |_.__/|_|/_/   \_\__|_| |_|\___|_| |_|\__,_|      |
+//   |                                                        |
+//   |                    brAthena Script                     |
+//   |--------------------------------------------------------|
+//   | Nome do Script:  louyang.txt                           |
+//   |--------------------------------------------------------|
+//   | Criado por: eA/rA/Herc/brA Dev. Team                   |
+//   |--------------------------------------------------------|
+//   | Versões eA/rA/Herc/brA: 1.0/1.0/1.2/1.0                |
+//   |--------------------------------------------------------|
+//   | Descrição: Monstros invocados nos campos de Louyang.   |
+//   |--------------------------------------------------------|
+//   | Changelog:                                             |
+//   | 1.0 Cabeçalho brAthena & Tradução PT-BR [Sir Will]     |
+//   |--------------------------------------------------------|
+//   | - Anotações                                            |
+//   \________________________________________________________/
 
-//== lou_fild01 - Louyang Field ============================
-lou_fild01,224,315,100,50	monster	Bigfoot	1060,7,0,0,0
-lou_fild01,203,225,110,35	monster	Bigfoot	1060,4,60000,30000,1
-lou_fild01,273,128,75,50	monster	Bigfoot	1060,4,0,0,0
-lou_fild01,224,315,100,50	monster	Caramel	1103,7,0,0,0
-lou_fild01,203,225,110,35	monster	Caramel	1103,7,0,0,0
-lou_fild01,273,128,75,50	monster	Caramel	1103,7,0,0,0
-lou_fild01,224,315,100,50	monster	Mantis	1139,10,0,0,0
-lou_fild01,203,225,110,35	monster	Mantis	1139,10,0,0,0
-lou_fild01,273,128,75,50	monster	Mantis	1139,10,0,0,0
+//==================================================
+// lou_fild01 - Campo de Louyang
+//==================================================
+lou_fild01,224,315,100,50	monster	Pé Grande	1060,7,0,0,0
+lou_fild01,203,225,110,35	monster	Pé Grande	1060,4,60000,30000,1
+lou_fild01,273,128,75,50	monster	Pé Grande	1060,4,0,0,0
+lou_fild01,224,315,100,50	monster	Caramelo	1103,7,0,0,0
+lou_fild01,203,225,110,35	monster	Caramelo	1103,7,0,0,0
+lou_fild01,273,128,75,50	monster	Caramelo	1103,7,0,0,0
+lou_fild01,224,315,100,50	monster	Louva-a-Deus	1139,10,0,0,0
+lou_fild01,203,225,110,35	monster	Louva-a-Deus	1139,10,0,0,0
+lou_fild01,273,128,75,50	monster	Louva-a-Deus	1139,10,0,0,0
 lou_fild01,224,315,100,50	monster	Mi Gao	1516,8,0,0,0
 lou_fild01,203,225,110,35	monster	Mi Gao	1516,15,60000,30000,1
 lou_fild01,273,128,75,50	monster	Mi Gao	1516,7,0,0,0
-lou_fild01,224,315,100,50	monster	Anacondaq	1030,2,0,0,0
-lou_fild01,203,225,110,35	monster	Anacondaq	1030,1,0,0,0
-lou_fild01,273,128,75,50	monster	Anacondaq	1030,2,0,0,0
-lou_fild01,0,0,0,0	monster	Black Mushroom	1084,5,0,0,0
-lou_fild01,0,0,0,0	monster	Yellow Plant	1081,10,0,0,0
+lou_fild01,224,315,100,50	monster	Anaconda	1030,2,0,0,0
+lou_fild01,203,225,110,35	monster	Anaconda	1030,1,0,0,0
+lou_fild01,273,128,75,50	monster	Anaconda	1030,2,0,0,0
+lou_fild01,0,0,0,0	monster	Cogumelo Negro	1084,5,0,0,0
+lou_fild01,0,0,0,0	monster	Planta Amarela	1081,10,0,0,0

@@ -8,21 +8,23 @@
 //   |                                                        |
 //   |                    brAthena Script                     |
 //   |--------------------------------------------------------|
-//   | Nome do Script:  cidades.txt                           |
+//   | Nome do Script:  limpeza_das_cidades.txt               |
 //   |--------------------------------------------------------|
 //   | Criado por: eA/rA/Herc/brA Dev. Team                   |
 //   |--------------------------------------------------------|
-//   | Vers√µes eA/rA/Herc/brA: 1.0/1.0/1.0/1.0                |
+//   | Versıes eA/rA/Herc/brA: 1.0/1.0/1.0/1.0                |
 //   |--------------------------------------------------------|
-//   | Descri√ß√£o: Monstros invocados para limpar as cidades.  |
+//   | DescriÁ„o: Monstros invocados para limpar as cidades.  |
 //   |--------------------------------------------------------|
 //   | Changelog:                                             |
-//   | 1.0 Cabe√ßalho brAthena [Axl]                           |
+//   | 1.0 CabeÁalho brAthena & TraduÁ„o PT-BR [Sir Will]     |
 //   |--------------------------------------------------------|
-//   | - Anota√ß√µes                                            |
+//   | - AnotaÁıes                                            |
 //   \________________________________________________________/
 
-//== Thief Bug City Spawns =================================
-payon_in02,23,68,5,5	monster	Besouro-Ladr√£o	1051,7,1200000,600000,0
-jawaii_in,73,117,4,4	monster	Besouro-Ladr√£o	1051,1,5400000,3000000,0
-jawaii_in,83,117,5,5	monster	Besouro-Ladr√£o	1051,1,4800000,2400000,0
+//==================================================
+// Spawns de Besouro-Ladr„o em cidades
+//==================================================
+payon_in02,23,68,5,5	monster	Besouro-Ladr„o	1051,7,1200000,600000,0
+jawaii_in,73,117,4,4	monster	Besouro-Ladr„o	1051,1,5400000,3000000,0
+jawaii_in,83,117,5,5	monster	Besouro-Ladr„o	1051,1,4800000,2400000,0

@@ -1,66 +1,88 @@
-//===== Hercules Script ======================================
-//= Clock Tower Monster Spawn Script
-//===== By: ==================================================
-//= Athena (1.0)
-//===== Current Version: =====================================
-//= 1.0
-//===== Additional Comments: =================================
-//= 1.0 Split from combined Alde and CT spawn file. [L0ne_W0lf]
-//============================================================
+//    ________________________________________________________
+//   /                                                        \
+//   |       _           _   _   _                            |
+//   |      | |__  _ __ / \ | |_| |__   ___ _ __   __ _       |
+//   |      | '_ \| '__/ _ \| __| '_ \ / _ \ '_ \ / _` |      |
+//   |      | |_) | | / ___ \ |_| | | |  __/ | | | (_| |      |
+//   |      |_.__/|_|/_/   \_\__|_| |_|\___|_| |_|\__,_|      |
+//   |                                                        |
+//   |                    brAthena Script                     |
+//   |--------------------------------------------------------|
+//   | Nome do Script:  c_tower.txt                           |
+//   |--------------------------------------------------------|
+//   | Criado por: eA/rA/Herc/brA Dev. Team                   |
+//   |--------------------------------------------------------|
+//   | Versões eA/rA/Herc/brA: 1.0/1.0/1.0/1.0                |
+//   |--------------------------------------------------------|
+//   | Descrição: Monstros da Torre do Relógio.               |
+//   |--------------------------------------------------------|
+//   | Changelog:                                             |
+//   | 1.0 Cabeçalho brAthena & Tradução PT-BR [Sir Will]     |
+//   |--------------------------------------------------------|
+//   | - Anotações                                            |
+//   \________________________________________________________/
 
-//== c_tower1 - Clock Tower F1 =============================
+//==================================================
+// c_tower1 - Torre do Relógio (1° Andar)
+//==================================================
 c_tower1,0,0,0,0	monster	Punk	1199,70,0,0,0
 c_tower1,0,0,0,0	monster	Rideword	1195,70,0,0,0
-c_tower1,0,0,0,0	monster	Clock Tower Manager	1270,1,0,0,0
+c_tower1,0,0,0,0	monster	Gerente	1270,1,0,0,0
 c_tower1,0,0,0,0	monster	Bathory	1102,1,0,0,0
 
-//== c_tower2 - Clock Tower F2 =============================
+//==================================================
+// c_tower2 - Torre do Relógio (2° Andar)
+//==================================================
 c_tower2,0,0,0,0	monster	Punk	1199,40,0,0,0
-c_tower2,0,0,0,0	monster	Clock	1269,40,0,0,0
+c_tower2,0,0,0,0	monster	Relógio	1269,40,0,0,0
 c_tower2,0,0,0,0	monster	Rideword	1195,7,0,0,0
 c_tower2,128,100,10,10	monster	Rideword	1195,1,60000,30000,0
 c_tower2,149,199,10,10	monster	Rideword	1195,1,120000,60000,0
 c_tower2,149,199,10,10	monster	Rideword	1195,1,300000,120000,0
 c_tower2,273,286,20,20	monster	Rideword	1195,1,120000,60000,0
 c_tower2,273,286,20,20	monster	Rideword	1195,1,300000,120000,0
-c_tower2,0,0,0,0	monster	Mimic	1191,3,0,0,0
-c_tower2,0,0,0,0	monster	Clock Tower Manager	1270,1,0,0,0
-c_tower2,0,0,0,0	monster	Elder	1377,1,3600000,1800000,0
-c_tower2,0,0,0,0	monster	Elder	1377,1,3600000,1800000,0
+c_tower2,0,0,0,0	monster	Mímico	1191,3,0,0,0
+c_tower2,0,0,0,0	monster	Gerente	1270,1,0,0,0
+c_tower2,0,0,0,0	monster	Ancião	1377,1,3600000,1800000,0
+c_tower2,0,0,0,0	monster	Ancião	1377,1,3600000,1800000,0
 
-//== c_tower3 - Clock Tower F3 =============================
-c_tower3,0,0,0,0	monster	Alarm	1193,80,0,0,0
+//==================================================
+// c_tower3 - Torre do Relógio (3° Andar)
+//==================================================
+c_tower3,0,0,0,0	monster	Alarme	1193,80,0,0,0
 c_tower3,0,0,0,0	monster	Rideword	1195,5,0,0,0
 c_tower3,153,220,10,10	monster	Rideword	1195,1,126000,100000,0
-c_tower3,0,0,0,0	monster	Mimic	1191,7,0,0,0
-c_tower3,0,0,0,0	monster	Clock Tower Manager	1270,3,0,0,0
+c_tower3,0,0,0,0	monster	Mímico	1191,7,0,0,0
+c_tower3,0,0,0,0	monster	Gerente	1270,3,0,0,0
 
-//== c_tower4 - Clock Tower F4 =============================
-c_tower4,0,0,0,0	monster	Clock Tower Manager	1270,2,1800000,0,0
-c_tower4,0,0,0,0	monster	Clock Tower Manager	1270,1,3600000,0,0
-c_tower4,0,0,0,0	monster	Whisper	1179,5,0,0,0
-c_tower4,0,0,0,0	monster	Elder	1377,1,3600000,1800000,0
-c_tower4,0,0,0,0	monster	Elder	1377,1,1800000,600000,0
-c_tower4,108,198,100,10	monster	Alarm	1193,6,0,0,0
-c_tower4,108,178,100,10	monster	Alarm	1193,6,0,0,0
-c_tower4,108,158,100,10	monster	Alarm	1193,6,0,0,0
-c_tower4,108,138,100,10	monster	Alarm	1193,6,0,0,0
-c_tower4,108,118,100,10	monster	Alarm	1193,6,0,0,0
-c_tower4,108,98,100,10	monster	Clock	1269,7,0,0,0
-c_tower4,108,78,100,10	monster	Clock	1269,7,0,0,0
-c_tower4,108,58,100,10	monster	Clock	1269,7,0,0,0
-c_tower4,108,38,100,10	monster	Clock	1269,7,0,0,0
-c_tower4,108,18,100,10	monster	Clock	1269,7,0,0,0
-c_tower4,108,198,100,10	monster	Owl Duke	1320,3,0,0,0
-c_tower4,108,178,100,10	monster	Owl Duke	1320,3,0,0,0
-c_tower4,108,158,100,10	monster	Owl Duke	1320,3,0,0,0
-c_tower4,108,138,100,10	monster	Owl Duke	1320,3,0,0,0
-c_tower4,108,118,100,10	monster	Owl Duke	1320,3,0,0,0
-c_tower4,108,98,100,10	monster	Owl Duke	1320,3,0,0,0
-c_tower4,108,78,100,10	monster	Owl Duke	1320,3,0,0,0
-c_tower4,108,58,100,10	monster	Owl Duke	1320,3,0,0,0
-c_tower4,108,38,100,10	monster	Owl Duke	1320,3,0,0,0
-c_tower4,108,18,100,10	monster	Owl Duke	1320,3,0,0,0
+//==================================================
+// c_tower4 - Torre do Relógio (4° Andar)
+//==================================================
+c_tower4,0,0,0,0	monster	Gerente	1270,2,1800000,0,0
+c_tower4,0,0,0,0	monster	Gerente	1270,1,3600000,0,0
+c_tower4,0,0,0,0	monster	Sussurro	1179,5,0,0,0
+c_tower4,0,0,0,0	monster	Ancião	1377,1,3600000,1800000,0
+c_tower4,0,0,0,0	monster	Ancião	1377,1,1800000,600000,0
+c_tower4,108,198,100,10	monster	Alarme	1193,6,0,0,0
+c_tower4,108,178,100,10	monster	Alarme	1193,6,0,0,0
+c_tower4,108,158,100,10	monster	Alarme	1193,6,0,0,0
+c_tower4,108,138,100,10	monster	Alarme	1193,6,0,0,0
+c_tower4,108,118,100,10	monster	Alarme	1193,6,0,0,0
+c_tower4,108,98,100,10	monster	Relógio	1269,7,0,0,0
+c_tower4,108,78,100,10	monster	Relógio	1269,7,0,0,0
+c_tower4,108,58,100,10	monster	Relógio	1269,7,0,0,0
+c_tower4,108,38,100,10	monster	Relógio	1269,7,0,0,0
+c_tower4,108,18,100,10	monster	Relógio	1269,7,0,0,0
+c_tower4,108,198,100,10	monster	Duque Coruja	1320,3,0,0,0
+c_tower4,108,178,100,10	monster	Duque Coruja	1320,3,0,0,0
+c_tower4,108,158,100,10	monster	Duque Coruja	1320,3,0,0,0
+c_tower4,108,138,100,10	monster	Duque Coruja	1320,3,0,0,0
+c_tower4,108,118,100,10	monster	Duque Coruja	1320,3,0,0,0
+c_tower4,108,98,100,10	monster	Duque Coruja	1320,3,0,0,0
+c_tower4,108,78,100,10	monster	Duque Coruja	1320,3,0,0,0
+c_tower4,108,58,100,10	monster	Duque Coruja	1320,3,0,0,0
+c_tower4,108,38,100,10	monster	Duque Coruja	1320,3,0,0,0
+c_tower4,108,18,100,10	monster	Duque Coruja	1320,3,0,0,0
 c_tower4,98,180,0,0	monster	Rideword	1195,1,300000,150000,1
 c_tower4,97,180,0,0	monster	Rideword	1195,1,240000,150000,1
 c_tower4,96,180,0,0	monster	Rideword	1195,1,350000,150000,1
@@ -76,16 +98,16 @@ c_tower4,80,180,0,0	monster	Rideword	1195,1,350000,150000,1
 c_tower4,80,181,0,0	monster	Rideword	1195,1,290000,150000,1
 c_tower4,80,182,0,0	monster	Rideword	1195,1,300000,150000,1
 c_tower4,80,183,0,0	monster	Rideword	1195,1,340000,150000,1
-c_tower4,128,194,0,0	monster	Mimic	1191,1,1800000,900000,1
-c_tower4,38,193,0,0	monster	Mimic	1191,1,1800000,900000,1
-c_tower4,37,159,0,0	monster	Mimic	1191,1,1800000,900000,1
-c_tower4,31,139,0,0	monster	Mimic	1191,1,1800000,900000,1
-c_tower4,104,14,0,0	monster	Mimic	1191,1,1800000,900000,1
-c_tower4,104,27,0,0	monster	Mimic	1191,1,900000,400000,1
-c_tower4,105,24,0,0	monster	Mimic	1191,1,900000,400000,1
-c_tower4,205,105,0,0	monster	Mimic	1191,1,1800000,900000,1
-c_tower4,0,0,0,0	monster	Mimic	1191,1,1800000,900000,1
-c_tower4,148,85,0,0	monster	Mimic	1191,1,1800000,900000,1
-c_tower4,189,51,0,0	monster	Mimic	1191,1,1800000,900000,1
-c_tower4,170,34,0,0	monster	Mimic	1191,1,1800000,900000,1
-c_tower4,42,41,0,0	monster	Executioner	1205,1,7200000,3600000,1
+c_tower4,128,194,0,0	monster	Mímico	1191,1,1800000,900000,1
+c_tower4,38,193,0,0	monster	Mímico	1191,1,1800000,900000,1
+c_tower4,37,159,0,0	monster	Mímico	1191,1,1800000,900000,1
+c_tower4,31,139,0,0	monster	Mímico	1191,1,1800000,900000,1
+c_tower4,104,14,0,0	monster	Mímico	1191,1,1800000,900000,1
+c_tower4,104,27,0,0	monster	Mímico	1191,1,900000,400000,1
+c_tower4,105,24,0,0	monster	Mímico	1191,1,900000,400000,1
+c_tower4,205,105,0,0	monster	Mímico	1191,1,1800000,900000,1
+c_tower4,0,0,0,0	monster	Mímico	1191,1,1800000,900000,1
+c_tower4,148,85,0,0	monster	Mímico	1191,1,1800000,900000,1
+c_tower4,189,51,0,0	monster	Mímico	1191,1,1800000,900000,1
+c_tower4,170,34,0,0	monster	Mímico	1191,1,1800000,900000,1
+c_tower4,42,41,0,0	monster	Executor	1205,1,7200000,3600000,1

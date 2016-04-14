@@ -1,16 +1,30 @@
-//===== Hercules Script ======================================
-//= Rachel Sanctuary Monster Spawn Script
-//===== By: ==================================================
-//= Athena (1.0)
-//===== Current Version: =====================================
-//= 1.2
-//===== Additional Comments: =================================
-//= 1.0 First version with guessed amounts [Playtester]
-//= 1.1 More accurate spawns [Playtester]
-//= 1.2 Corrected MVP spawn variance. [L0ne_W0lf]
-//============================================================
+//    ________________________________________________________
+//   /                                                        \
+//   |       _           _   _   _                            |
+//   |      | |__  _ __ / \ | |_| |__   ___ _ __   __ _       |
+//   |      | '_ \| '__/ _ \| __| '_ \ / _ \ '_ \ / _` |      |
+//   |      | |_) | | / ___ \ |_| | | |  __/ | | | (_| |      |
+//   |      |_.__/|_|/_/   \_\__|_| |_|\___|_| |_|\__,_|      |
+//   |                                                        |
+//   |                    brAthena Script                     |
+//   |--------------------------------------------------------|
+//   | Nome do Script: ra_san.txt                             |
+//   |--------------------------------------------------------|
+//   | Criado por: eA/rA/Herc/brA Dev. Team                   |
+//   |--------------------------------------------------------|
+//   | Versões eA/rA/Herc/brA: 1.0/1.0/1.2/1.0                |
+//   |--------------------------------------------------------|
+//   | Descrição: Monstros do Templo de Rachel.               |
+//   |--------------------------------------------------------|
+//   | Changelog:                                             |
+//   | 1.0 Cabeçalho brAthena & Tradução PT-BR [Sir Will]     |
+//   |--------------------------------------------------------|
+//   | - Anotações                                            |
+//   \________________________________________________________/
 
-//== ra_san01 - Holy Ground ================================
+//===============================================================
+// ra_san01 - Templo de Rachel (Primeiro Andar)
+//===============================================================
 ra_san01,0,0,0,0	monster	Vanberk	1771,20,180000,0,1
 ra_san01,0,0,0,0	monster	Isilla	1772,10,0,0,1
 ra_san01,61,141,58,98	monster	Vanberk	1771,20,300000,0,1
@@ -34,7 +48,9 @@ ra_san01,215,215,23,23	monster	Vanberk	1771,2,420000,0,1
 ra_san01,64,65,23,23	monster	Vanberk	1771,2,420000,0,1
 ra_san01,215,65,23,23	monster	Vanberk	1771,2,420000,0,1
 
-//== ra_san02 - Holy Ground ================================
+//==============================================================
+// ra_san02 - Templo de Rachel (Segundo Andar)
+//==============================================================
 ra_san02,0,0,0,0	monster	Isilla	1772,35,0,0,0
 ra_san02,100,150,92,140	monster	Isilla	1772,25,0,0,0
 ra_san02,240,147,50,145	monster	Isilla	1772,25,0,0,0
@@ -44,27 +60,33 @@ ra_san02,240,147,50,145	monster	Vanberk	1771,10,0,0,0
 ra_san02,0,0,0,0	monster	Gremlin	1632,10,0,0,0
 ra_san02,0,0,0,0	monster	Hodremlin	1773,3,0,0,0
 ra_san02,0,0,0,0	monster	Beholder	1633,10,0,0,0
-ra_san02,0,0,0,0	monster	Seeker	1774,2,0,0,0
+ra_san02,0,0,0,0	monster	Rastreador	1774,2,0,0,0
 
-//== ra_san03 - Holy Ground ================================
+//================================================================
+// ra_san03 - Templo de Rachel (Terceiro Andar)
+//================================================================
 ra_san03,0,0,0,0	monster	Beholder	1633,5,0,0,0
 ra_san03,0,0,0,0	monster	Gremlin	1632,5,0,0,0
-ra_san03,148,221,145,71	monster	Seeker	1774,40,0,0,0
+ra_san03,148,221,145,71	monster	Rastreador	1774,40,0,0,0
 ra_san03,0,0,0,0	monster	Hodremlin	1773,20,0,0,0
 ra_san03,148,79,146,71	monster	Hodremlin	1773,40,0,0,0
 
-//== ra_san04 - Holy Ground ================================
+//===========================================================
+// ra_san04 - Templo de Rachel (Quarto Andar)
+//===========================================================
 ra_san04,0,0,0,0	monster	Echio	1770,60,0,0,0
 ra_san04,0,0,0,0	monster	Agav	1769,20,0,0,0
-ra_san04,0,0,0,0	monster	Seeker	1774,10,0,0,0
+ra_san04,0,0,0,0	monster	Rastreador	1774,10,0,0,0
 ra_san04,0,0,0,0	monster	Hodremlin	1773,10,0,0,0
 
-//== ra_san05 - Holy Ground ================================
+//===========================================================
+// ra_san05 - Templo de Rachel (Quinto Andar)
+//===========================================================
 ra_san05,0,0,0,0	monster	Agav	1769,70,0,0,0
 ra_san05,0,0,0,0	monster	Echio	1770,20,0,0,0
 ra_san05,0,0,0,0	monster	Isilla	1772,10,0,0,0
-ra_san05,0,0,0,0	monster	Seeker	1774,20,0,0,0
+ra_san05,0,0,0,0	monster	Rastreador	1774,20,0,0,0
 ra_san05,0,0,0,0	monster	Hodremlin	1773,20,0,0,0
 ra_san05,0,0,0,0	monster	Agav	1769,10,18000000,14400000,0
 ra_san05,0,0,0,0	monster	Echio	1770,10,18000000,14400000,0
-ra_san05,0,0,0,0	boss_monster	Gloom Under Night	1768,1,18000000,600000,0
+ra_san05,0,0,0,0	boss_monster	Pesar Noturno	1768,1,18000000,600000,0

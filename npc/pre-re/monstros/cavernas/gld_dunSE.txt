@@ -1,23 +1,40 @@
-//===== Hercules Script ======================================
-//= Guild Dungeons Monster Spawn Script
-//===== By: ==================================================
-//= Athena (1.0)
-//===== Current Version: =====================================
-//= 1.1
-//===== Additional Comments: =================================
-//= 1.0 First version
-//= 1.1 Updated spawns to official. [L0ne_W0lf]
-//============================================================
+//    ________________________________________________________
+//   /                                                        \
+//   |       _           _   _   _                            |
+//   |      | |__  _ __ / \ | |_| |__   ___ _ __   __ _       |
+//   |      | '_ \| '__/ _ \| __| '_ \ / _ \ '_ \ / _` |      |
+//   |      | |_) | | / ___ \ |_| | | |  __/ | | | (_| |      |
+//   |      |_.__/|_|/_/   \_\__|_| |_|\___|_| |_|\__,_|      |
+//   |                                                        |
+//   |                    brAthena Script                     |
+//   |--------------------------------------------------------|
+//   | Nome do Script: gld_dunSE.txt                          |
+//   |--------------------------------------------------------|
+//   | Criado por: eA/rA/Herc/brA Dev. Team                   |
+//   |--------------------------------------------------------|
+//   | Versões eA/rA/Herc/brA: 1.0/1.0/1.1/1.0                |
+//   |--------------------------------------------------------|
+//   | Descrição: Monstros das cavernas de Gld_dunSE.         |
+//   |--------------------------------------------------------|
+//   | Changelog:                                             |
+//   | 1.0 Cabeçalho brAthena & Tradução PT-BR [Sir Will]     |
+//   |--------------------------------------------------------|
+//   | - Anotações                                            |
+//   \________________________________________________________/
 
-//== arug_dun01 - Arunafeltz Guild Dungeon =================
-arug_dun01,0,0,0,0	monster	Banshee Master	1974,22,0,0,0
-arug_dun01,0,0,0,0	monster	Necromancer	1870,18,0,0,0
-arug_dun01,0,0,0,0	monster	Beholder Master	1975,17,0,0,0
+//==================================================
+// arug_dun01 - Calabouço de Arunafeltz
+//==================================================
+arug_dun01,0,0,0,0	monster	Senhora das Banshees	1974,22,0,0,0
+arug_dun01,0,0,0,0	monster	Necromante	1870,18,0,0,0
+arug_dun01,0,0,0,0	monster	Mestre Beholder	1975,17,0,0,0
 arug_dun01,0,0,0,0	monster	Fanat	1797,17,0,0,0
 arug_dun01,0,0,0,0	monster	Aunoe	1796,17,0,0,0
 
-//== schg_dun01 - Schwarzwald Guild Dungeon ================
-schg_dun01,0,0,0,0	monster	Hell Apocalypse	1978,20,0,0,0
+//==================================================
+// schg_dun01 -  Calabouço de Schwartzwald
+//==================================================
+schg_dun01,0,0,0,0	monster	Apocalipse Infernal	1978,20,0,0,0
 schg_dun01,0,0,0,0	monster	Zakudam	1979,20,0,0,0
-schg_dun01,0,0,0,0	monster	Heavy Metaling	1977,15,0,0,0
-schg_dun01,0,0,0,0	monster	Cobalt Mineral	1976,15,0,0,0
+schg_dun01,0,0,0,0	monster	Metaling Pesado	1977,15,0,0,0
+schg_dun01,0,0,0,0	monster	Cobalto	1976,15,0,0,0

@@ -8,28 +8,32 @@
 //   |                                                        |
 //   |                    brAthena Script                     |
 //   |--------------------------------------------------------|
-//   | Nome do Script:  cidades.txt                           |
+//   | Nome do Script:  ayothaya.txt                          |
 //   |--------------------------------------------------------|
 //   | Criado por: eA/rA/Herc/brA Dev. Team                   |
 //   |--------------------------------------------------------|
-//   | VersÃµes eA/rA/Herc/brA: 1.0/1.0/1.0/1.0                |
+//   | Versões eA/rA/Herc/brA: 1.0/1.0/1.4/1.0                |
 //   |--------------------------------------------------------|
-//   | DescriÃ§Ã£o: Monstros invocados nos campos de Ayothaya.  |
+//   | Descrição: Monstros invocados nos campos de Ayothaya.  |
 //   |--------------------------------------------------------|
 //   | Changelog:                                             |
-//   | 1.0 CabeÃ§alho brAthena [Axl]                           |
+//   | 1.0 Cabeçalho brAthena & Tradução PT-BR [Sir Will]     |
 //   |--------------------------------------------------------|
-//   | - AnotaÃ§Ãµes                                            |
+//   | - Anotações                                            |
 //   \________________________________________________________/
 
-//== ayo_fild01 - Ayothaya Field ===========================
+//==================================================
+// ayo_fild01 - Campo de Ayothaya
+//==================================================
 ayo_fild01,0,0,0,0	monster	Koko	1104,30,0,0,0
 ayo_fild01,0,0,0,0	monster	Yoyo	1057,30,0,0,0
 ayo_fild01,0,0,0,0	monster	Fumacento	1056,30,0,0,0
 ayo_fild01,0,0,0,0	monster	Gato de Folha	1586,3,3600000,1800000,0
 ayo_fild01,0,0,0,0	monster	Planta Verde	1080,10,0,0,0
 
-//== ayo_fild02 - Ayothaya Field ===========================
+//==================================================
+// ayo_fild02 - Campo de Ayothaya
+//==================================================
 ayo_fild02,0,0,0,0	monster	Gato de Folha	1586,50,0,0,0
 ayo_fild02,0,0,0,0	monster	Guerreiro Wootan	1499,20,0,0,0
 ayo_fild02,0,0,0,0	monster	Besouro-Rei	1494,30,0,0,0
