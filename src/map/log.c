@@ -745,7 +745,8 @@ void log_npc(struct map_session_data* sd, const char* message)
 void log_chat_sub_sql(e_log_chat_type type, int type_id, int src_charid, int src_accid, const char *mapname, int x, int y, const char* dst_charname, const char* message) {
 	SqlStmt* stmt;
 
-	nullpo_retv(dst_charname);
+	if(dst_charname)
+		nullpo_retv(dst_charname);
 	nullpo_retv(message);
 	stmt = SQL->StmtMalloc(logs->mysql_handle);
 	if( SQL_SUCCESS != SQL->StmtPrepare(stmt, LOG_QUERY " INTO `%s` (`time`, `type`, `type_id`, `src_charid`, `src_accountid`, `src_map`, `src_map_x`, `src_map_y`, `dst_charname`, `message`) VALUES (NOW(), '%c', '%d', '%d', '%d', '%s', '%d', '%d', ?, ?)", logs->config.log_chat, logs->chattype2char(type), type_id, src_charid, src_accid, mapname, x, y)

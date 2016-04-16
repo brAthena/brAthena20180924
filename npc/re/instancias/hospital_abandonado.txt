@@ -1,24 +1,34 @@
-//===== Hercules Script ======================================
-//= Bangungot Hospital 2F
-//===== By: ==================================================
-//= Euphy
-//===== Current Version: =====================================
-//= 1.1
-//===== Description: =========================================
-//= [Official Conversion]
-//= Save the hospital in Port Malaya from Bangungot.
-//= Part of the "Nurse in Port Malaya" quest.
-//===== Additional Comments: =================================
-//= 1.0 First version. [Euphy]
-//= 1.1 Added GM management function. [Euphy]
-//============================================================
+//    ________________________________________________________
+//   /                                                        \
+//   |       _           _   _   _                            |
+//   |      | |__  _ __ / \ | |_| |__   ___ _ __   __ _       |
+//   |      | '_ \| '__/ _ \| __| '_ \ / _ \ '_ \ / _` |      |
+//   |      | |_) | | / ___ \ |_| | | |  __/ | | | (_| |      |
+//   |      |_.__/|_|/_/   \_\__|_| |_|\___|_| |_|\__,_|      |
+//   |                                                        |
+//   |                    brAthena Script                     |
+//   |--------------------------------------------------------|
+//   | Nome do Script: hospital_abandonado.txt                |
+//   |--------------------------------------------------------|
+//   | Criado por: Herc/brA Dev. Team                         |
+//   |--------------------------------------------------------|
+//   | Versões Herc/brA: 1.0/1.0                              |
+//   |--------------------------------------------------------|
+//   | Descrição: Hospital Abandonado                         |
+//   |--------------------------------------------------------|
+//   | Changelog:                                             |
+//   | 1.0 First version. [Euphy]                             |
+//   | 1.1 Added GM management function. [Euphy]              |
+//   | 1.2 Cabeçalho brAthena e tradução [DiegoOli]           |
+//   |--------------------------------------------------------|
+//   | - Anotações                                            |
+//   \________________________________________________________/
 
+//============================================================
 1@ma_h	mapflag	src4instance
 //============================================================
 
-// Instance Creation
-//============================================================
-ma_dun01,147,10,5	script	Nurse#ma_dun01	4_F_NURSE,{
+ma_dun01,147,10,5	script	Enfermeira Maenne#ma_dun01	4_F_NURSE,{
 	if (BaseLevel < 100) end;
 
 	.@party_id = getcharid(1);
@@ -44,7 +54,7 @@ ma_dun01,147,10,5	script	Nurse#ma_dun01	4_F_NURSE,{
 					else if (malaya_bang > 39)
 						callsub L_Enter,(getcharid(0) == getpartyleader(.@party_id,2))?1:0,0,0;
 					else {
-						mes "[Nurse Maenne]";
+						mes "[Enfermeira]";
 						mes "..........";
 						close2;
 						cutin "",255;
@@ -52,22 +62,17 @@ ma_dun01,147,10,5	script	Nurse#ma_dun01	4_F_NURSE,{
 					}
 				} else if (.@playtime == 1) {
 					if (!questprogress(11309)) {
-						mes "[Nurse Maenne]";
-						mes "This is a fatal situation.";
+						mes "[Enfermeira]";
+						mes "Está é uma situação muito preocupante.";
 						close2;
 						cutin "",255;
 						end;
 					} else {
-						mes "[Nurse Maenne]";
-						mes "Now the entrance";
-						mes "to the second floor";
-						mes "is closed.";
+						mes "[Enfermeira]";
+						mes "A entrada para o 2ª andar está fechada.";
 						next;
-						mes "[Nurse Maenne]";
-						mes "To go up to";
-						mes "the second floor again,";
-						mes "open the gate";
-						mes "after a lapse of time.";
+						mes "[Enfermeira]";
+						mes "Para subir ao 2ª andar novamente, abra o portão no tempo previsto.";
 						close2;
 						cutin "",255;
 						end;
@@ -84,11 +89,11 @@ ma_dun01,147,10,5	script	Nurse#ma_dun01	4_F_NURSE,{
 						cutin "",255;
 						end;
 					} else {
-						//if (!.@party_id) goto L_NoParty; //unneeded
+						//if (!.@party_id) goto L_NoParty; //Não utilizado
 						if (malaya_bang > 39)
 							callsub L_Enter,(getcharid(0) == getpartyleader(.@party_id,2))?1:0,1,1;
 						else {
-							mes "[Nurse Maenne]";
+							mes "[Enfermeira]";
 							mes ".......";
 							close2;
 							cutin "",255;
@@ -97,10 +102,9 @@ ma_dun01,147,10,5	script	Nurse#ma_dun01	4_F_NURSE,{
 					}
 				}
 			} else {
-				mes "[Nurse Maenne]";
-				mes "You got rid of Bangungot!"; //?
-				mes "The nurse might be waiting for you";
-				mes "in front of the hospital!";
+				mes "[Enfermeira]";
+				mes "Você se livrou de Bangungot!"; //?
+				mes "A enfermeira está a sua espera na frente do hospital!";
 				close2;
 				cutin "",255;
 				end;
@@ -111,44 +115,42 @@ ma_dun01,147,10,5	script	Nurse#ma_dun01	4_F_NURSE,{
 				if (questprogress(9222,HUNTING) == 1) {
 					.@playtime = questprogress(9224,PLAYTIME);
 					if (.@playtime == 1) {
-						mes "[Nurse Maenne]";
-						mes "Do you want go up to the second floor again?";
+						mes "[Enfermeira]";
+						mes "Você pretende ir até o 2ª andar novamente?";
 						next;
 						callsub L_Enter,0,0;
 					} else if (.@playtime == 2) {
-						//if (!.@party_id) goto L_NoParty; //unneeded
+						//if (!.@party_id) goto L_NoParty; //Desnecessário
 						if (malaya_bang > 39)
 							callsub L_Enter,(getcharid(0) == getpartyleader(.@party_id,2))?1:0,1,1;
 						else {
-							mes "[Nurse Maenne]";
+							mes "[Enfermeira]";
 							mes ".......";
 							close2;
 							cutin "",255;
 							end;
 						}
 					} else {
-						mes "[Nurse Maenne]";
-						mes "This is a fatal situation.";
-						mes "You can't go up to the 2nd floor.";
+						mes "[Enfermeira]";
+						mes "Está situação é muito preocupante.";
+						mes "Você não pode ir até o 2º andar.";
 						close2;
 						cutin "",255;
 						end;
 					}
 				} else {
 					if (checkweight(607,1) == 0) {
-						mes "[Nurse Maenne]";
-						mes "You have too much stuff.";
-						mes "Please reduce your stuff and";
-						mes "come to me again.";
+						mes "[Enfermeira]";
+						mes "Você possui muitos itens/equipamentos.";
+						mes "Porque não joga alguns fora e depois retorna.";
 						close2;
 						cutin "",255;
 						end;
 					}
 					if (checkweight(607,11) == 0) {
-						mes "[Nurse Maenne]";
-						mes "It's too heavy.";
-						mes "Please reduce the weight and";
-						mes "come to me again.";
+						mes "[Enfermeira]";
+						mes "Certamente você está muito pesado.";
+						mes "Porque não joga alguns fora e depois retorna.";
 						close2;
 						cutin "",255;
 						end;
@@ -161,18 +163,17 @@ ma_dun01,147,10,5	script	Nurse#ma_dun01	4_F_NURSE,{
 					setquest 9223;
 					getexp 500000,0;
 //					if (IsPremiumPcCafe == 10)
-						getitem 6499,7; //Ancient_Grudge
+						getitem 6499,7; //Rancor Antigo
 //					else
-//						getitem 6499,5; //Ancient_Grudge
+//						getitem 6499,5; //Rancor Antigo
 					close2;
 					cutin "",255;
 					end;
 				}
 			} else {
-				mes "[Nurse Maenne]";
-				mes ".....?";
-				mes "Now you can't go up";
-				mes "to the 2nd floor.";
+				mes "[Enfermeira]";
+				mes "...?";
+				mes "Você ainda não pode ir para o 2º andar.";
 				close2;
 				cutin "",255;
 				end;
@@ -199,7 +200,7 @@ ma_dun01,147,10,5	script	Nurse#ma_dun01	4_F_NURSE,{
 			if (malaya_bang > 39)
 				callsub L_Enter,(getcharid(0) == getpartyleader(.@party_id,2))?1:0,1,1;
 			else {
-				mes "[Nurse Maenne]";
+				mes "[Enfermeira]";
 				mes ".......";
 				close2;
 				cutin "",255;
@@ -209,11 +210,10 @@ ma_dun01,147,10,5	script	Nurse#ma_dun01	4_F_NURSE,{
 	}
 
 L_Closed:
-	mes "[Nurse Maenne]";
-	mes "- The door is closed to 1st floor";
-	mes "When this Nurse came in?";
-	mes "I call her behind, but";
-	mes "she doesn't respond. -";
+	mes "[Enfermeira]";
+	mes "- A porta do 1º andar está fechada.";
+	mes "Quando a enfermeira entrou?";
+	mes "Estou tentando chamá-la, mas ela não responde. -";
 	if (getarg(0)) {
 		malaya_bang = 31;
 		changequest 11302,11303;
@@ -223,88 +223,76 @@ L_Closed:
 	end;
 
 L_NoParty:
-	mes "- I guess...";
-	mes "I can't talk him alone.";
-	mes "After registering a party";
-	mes "let me try to say something. -";
+	mes "- Suponho que ainda não possa falar com você.";
+	mes "Organize um grupo, e volte depois. -";
 	close2;
 	cutin "",255;
 	end;
 
 L_Enter:
-	.@md_name$ = "Bangungot Hospital 2F";
+	.@md_name$ = "Hospital Abandonado";
 	if (getarg(2) == 0) {
-		mes "[Nurse Maenne]";
-		mes "I already heard that story so";
-		mes "I pretty much know that.";
-		mes "What are you going to do?";
-		mes "Do you want to go up";
-		mes "to the second floor?";
+		mes "[Enfermeira]";
+		mes "Já ouvi essa história antes, a conheço muito bem.";
+		mes "O que você pretende fazer?";
+		mes "Deseja ir até o 2ª andar?";
 	} else {
-		mes "[Nurse Maenne]";
-		mes "You are back...";
-		mes "There is bad news.";
-		mes "I heard that";
-		mes "the Bangungot has";
-		mes "appeared again.";
+		mes "[Enfermeira]";
+		mes "Você está de volta...";
+		mes "Não é uma má notícia.";
+		mes "Ouvi dizer que o Bangungot ressurgiu.";
 		next;
-		mes "[Nurse Maenne]";
-		mes strcharinfo(0) + "'s help";
-		mes "is needed again.";
-		mes "Please, could you give me";
-		mes "one more chance?";
+		mes "[Enfermeira]";
+		mes strcharinfo(PC_NAME)+", precisamos de sua ajuda mais uma vez.";
+		mes "Por favor, nos dê uma segunda chance?";
 	}
 	next;
-	switch(select(((getarg(0))?"Prepare to enter the second floor.":"")+":Enter the second floor.:Do not enter.")) {
+	switch(select(((getarg(0))?"Preparar para entrar no 2ª andar.":"")+":Entrar no 2ª andar.:Não quero entrar.")) {
 	case 1:
 		.@instance = instance_create(.@md_name$,getcharid(1));
 		if (.@instance < 0) {
-			mes "[Nurse Maenne]";
-			mes "A critical situation has happened.";
-			mes "You can't go up to the 2nd floor.";
+			mes "[Enfermeira]";
+			mes "Você não pôde entrar no 2ª andar.";
+			mes "Por favor, verifique o que está acontecendo.";
 			close2;
 			cutin "",255;
 			end;
 		}
 		if (instance_attachmap("1@ma_h",.@instance) == "") {
-			mes "^0000ff"+.@md_name$+"^000000 - Reservation Failed!";
+			mes "^0000ff"+.@md_name$+"^000000 - A Reserva Falhou!";
 			instance_destroy(.@instance);
 			close;
 		}
 		instance_set_timeout 3600,300,.@instance;
 		instance_init(.@instance);
-		mes "[Nurse Maenne]";
-		mes "We are preparing to go up";
-		mes "to the second floor.";
-		mes "At the second floor";
-		mes "there is a chaotic rumor that";
-		mes "the dead do not die.";
-		mes "Please refer to this story.";
+		mes "[Enfermeira]";
+		mes "Estamos nos preparando para ir até o 2ª andar.";
+		mes "Há rumores que neste andar, existem mortos que não morrem definitivamente.";
+		mes "Por favor, certifique se este rumor é verdadeiro.";
 		next;
-		mes "[Nurse Maenne]";
-		mes "When you finish everything,";
-		mes "please talk to me again.";
-		mes "I really appreciate it.";
+		mes "[Enfermeira]";
+		mes "Quando você terminar o que estiver fazendo.";
+		mes "Por favor, venha até mim novamente.";
 		close2;
 		cutin "",255;
 		end;
 	case 2:
 		if( has_instance("1@ma_h") == "" ) {
-			mes "The memorial dungeon "+.@md_name$+" does not exist.";
-			mes "The party leader did not generate the dungeon yet.";
+			mes "O Memorial do Calabouço do "+.@md_name$+" não existe.";
+			mes "O líder do grupo ainda não reservou o calabouço.";
 			close;
 		} else {
-			mapannounce "ma_dun01", getpartyname(getcharid(1))+" party's "+strcharinfo(0)+" member entered "+.@md_name$+".",bc_map,"0x00ff99";
+			mapannounce "ma_dun01", strcharinfo(PC_NAME)+" do grupo "+getpartyname(getcharid(1))+" entrou no "+.@md_name$+".",bc_map,"0x00ff99";
 			if (getarg(1)) {
 				if (questprogress(9223)) {
 					completequest 9223;
 					erasequest 9223;
 				}
-				if (questprogress(9222))
+				if (questprogress(9222)) 
 					erasequest 9222;
-				if (questprogress(9224))
+				if (questprogress(9224)) 
 					erasequest 9224;
-				setquest 9222;
+					setquest 9222;
 			}
 			setquest 9224;
 			cutin "",255;
@@ -312,39 +300,34 @@ L_Enter:
 			end;
 		}
 	case 3:
-		mes "[Nurse Maenne]";
-		mes "Alright.";
-		mes "If you change mind, come back again.";
+		mes "[Enfermeira]";
+		mes "Está bem!";
+		mes "Quando você mudar de opinião, estarei lhe esperando.";
 		close2;
 		cutin "",255;
 		end;
 	}
 
 L_Complete:
-	mes "[Nurse Maenne]";
-	mes "You returned safely from the Bangungot on the second floor!!";
-	mes "However, it's not";
-	mes "really over yet.";
+	mes "[Enfermeira]";
+	mes "Vejo que você voltou em segurança do 2ª andar!!";
+	mes "No entando, ainda não acabou.";
 	next;
-	mes "[Nurse Maenne]";
-	mes "I'm pretty sure it";
-	mes "never disappears easily.";
-	mes "I don't know what will happen";
-	mes "about Bangungot, so";
-	mes "after a lapse of time";
-	mes "please return to me.";
+	mes "[Enfermeira]";
+	mes "Com certeza ele não desaparecerá tão facilmente.";
+	mes "Não sei exatamente o que acontecerá com o hospital. Então, espere um tempo, e depois volte.";
 	return;
 }
 
-sec_in02,27,30,0	script	Bangungot Gate	2_MONEMUS,{
+sec_in02,27,30,0	script	Portão do Hospital	2_MONEMUS,{
 	callfunc "F_GM_NPC";
-	mes "Password";
+	mes "Senha";
 	next;
 	if (callfunc("F_GM_NPC","1854",1) == 0) {
-		mes "Good Luck.";
+		mes "Boa Sorte!";
 		close;
 	}
-	switch(select("Receive 9222:Receive 9223:Erase 9222:Erase 9223:Receive 9224:Erase 9224:Receive malaya_bang 30:Receive malaya_bang 40:Receive 11309:Erase 11309:Cancel")) {
+	switch(select("Aceitar 9222:Aceitar 9223:Desfazer 9222:Desfazer 9223:Aceitar 9224:Desfazer 9224:Aceitar malaya_bang 30:Aceitar malaya_bang 40:Aceitar 11309:Desfazer 11309:Cancelar")) {
 		case 1: setquest 9222; close;
 		case 2: setquest 9223; close;
 		case 3: erasequest 9222; close;
@@ -359,15 +342,16 @@ sec_in02,27,30,0	script	Bangungot Gate	2_MONEMUS,{
 	}
 }
 
-// Instance Scripts
+//============================================================
+// Código da Instância
 //============================================================
 1@ma_h,43,157,0	script	#Memorial Start	HIDDEN_WARP_NPC,2,2,{
 	end;
 OnTouch:
 	.@map$ = instance_mapname("1@ma_h");
-	mapannounce .@map$,"Bangungot: You silly "+strcharinfo(0)+" ....",bc_map,"0xFF82FF";
-	mapannounce .@map$,"Bangungot: Get out before you die...",bc_map,"0xFF82FF";
-	areamonster .@map$,44,156,46,158,"Bangungot's Mangkukulam",2339,1,instance_npcname("#Memorial Start")+"::OnMyMobDead";
+	mapannounce .@map$,"Bangungot: Você é tão estúpido...",bc_map,"0xFF82FF";
+	mapannounce .@map$,"Bangungot: Saia daqui antes que seja tarde demais, você poderá ser morto...",bc_map,"0xFF82FF";
+	areamonster .@map$,44,156,46,158,"Mangkukulam",MD_MANGKUKULAM,1,instance_npcname("#Memorial Start")+"::OnMyMobDead";
 	donpcevent instance_npcname("#Memorial Start_time")+"::OnEnable";
 	end;
 OnMyMobDead:
@@ -378,7 +362,7 @@ OnTimer1000:
 	if (mobcount(.@map$,instance_npcname("#Memorial Start")+"::OnMyMobDead") < 1) {
 		donpcevent instance_npcname("#Ward1 Entry")+"::OnEnable1";
 		donpcevent instance_npcname("#Memorial Start_time")+"::OnDisable";
-		mapannounce .@map$,"Bangungot: This is where your NIGHTMARE starts...",bc_map,"0xFF82FF";
+		mapannounce .@map$,"Bangungot: Seus pesadelos começarão neste lugar...",bc_map,"0xFF82FF";
 		disablenpc instance_npcname("#Memorial Start");
 	}
 	stopnpctimer;
@@ -398,7 +382,7 @@ OnDisable:
 	stopnpctimer;
 	end;
 OnTimer5000:
-	mapannounce instance_mapname("1@ma_h"),"Bangungot: You cannot help.... you can't defeat me.",bc_map,"0xFF82FF";
+	mapannounce instance_mapname("1@ma_h"),"Bangungot: Ninguém poderá te ajudar... Você jamais me derrotará.",bc_map,"0xFF82FF";
 	end;
 OnTimer10000:
 	mapannounce instance_mapname("1@ma_h"),"Bangungot: HAHAHAHAHAHAHAHA!!!!",bc_map,"0xFF82FF";
@@ -418,34 +402,36 @@ OnEnable1:
 	specialeffect EF_BAT2;
 	switch(atoi(charat(strnpcinfo(2),4))) {
 	case 1:
-		areamonster .@map$,49,171,51,173,"Bangungot's Mangkukulam",2339,1,.@label$;
-		areamonster .@map$,51,171,53,173,"Bangungot's Mangkukulam",2339,1,.@label$;
+		areamonster .@map$,49,171,51,173,"Mangkukulam",MD_MANGKUKULAM,1,.@label$;
+		areamonster .@map$,51,171,53,173,"Mangkukulam",MD_MANGKUKULAM,1,.@label$;
 		end;
 	case 2:
-		areamonster .@map$,49,137,51,139,"Bangungot's Mangkukulam",2339,1,.@label$;
-		areamonster .@map$,51,137,53,139,"Bangungot's Mangkukulam",2339,1,.@label$;
+		areamonster .@map$,49,137,51,139,"Mangkukulam",MD_MANGKUKULAM,1,.@label$;
+		areamonster .@map$,51,137,53,139,"Mangkukulam",MD_MANGKUKULAM,1,.@label$;
 		end;
 	case 3:
-		areamonster .@map$,69,171,71,173,"Bangungot's Mangkukulam",2339,1,.@label$;
-		areamonster .@map$,71,171,73,173,"Bangungot's Mangkukulam",2339,1,.@label$;
-		areamonster .@map$,73,171,75,173,"Bangungot's Mangkukulam",2339,1,.@label$;
+		areamonster .@map$,69,171,71,173,"Mangkukulam",MD_MANGKUKULAM,1,.@label$;
+		areamonster .@map$,71,171,73,173,"Mangkukulam",MD_MANGKUKULAM,1,.@label$;
+		areamonster .@map$,73,171,75,173,"Mangkukulam",MD_MANGKUKULAM,1,.@label$;
 		end;
 	case 4:
-		areamonster .@map$,71,139,73,141,"Bangungot's Mangkukulam",2339,1,.@label$;
-		areamonster .@map$,73,139,75,141,"Bangungot's Mangkukulam",2339,1,.@label$;
-		areamonster .@map$,75,139,77,141,"Bangungot's Mangkukulam",2339,1,.@label$;
+		areamonster .@map$,71,139,73,141,"Mangkukulam",MD_MANGKUKULAM,1,.@label$;
+		areamonster .@map$,73,139,75,141,"Mangkukulam",MD_MANGKUKULAM,1,.@label$;
+		areamonster .@map$,75,139,77,141,"Mangkukulam",MD_MANGKUKULAM,1,.@label$;
 		end;
 	case 5:
-		areamonster .@map$,93,173,95,175,"Bangungot's Mangkukulam",2339,1,.@label$;
-		areamonster .@map$,95,173,97,175,"Bangungot's Mangkukulam",2339,1,.@label$;
-		areamonster .@map$,97,173,99,175,"Bangungot's Mangkukulam",2339,1,.@label$;
-		areamonster .@map$,93,175,95,177,"Bangungot's Mangkukulam",2339,1,.@label$;
+		areamonster .@map$,93,173,95,175,"Mangkukulam",MD_MANGKUKULAM,1,.@label$;
+		areamonster .@map$,95,173,97,175,"Mangkukulam",MD_MANGKUKULAM,1,.@label$;
+		areamonster .@map$,97,173,99,175,"Mangkukulam",MD_MANGKUKULAM,1,.@label$;
+		areamonster .@map$,93,175,95,177,"Mangkukulam",MD_MANGKUKULAM,1,.@label$;
 		end;
 	}
 /*
-// Not called in official scripts.
+//============================================================
+// Desativado nos scripts oficiais
+//============================================================
 OnEnable2:
-	areamonster instance_mapname("1@ma_h"),140,38,142,40,"Bangungot's Mangkukulam",2339,1,instance_npcname("#Ward1 Entry")+"::OnMyMobDead";
+	areamonster instance_mapname("1@ma_h"),140,38,142,40,"Mangkukulam",MD_MANGKUKULAM,1,instance_npcname("#Ward1 Entry")+"::OnMyMobDead";
 	end;
 */
 OnEnable3:
@@ -462,11 +448,11 @@ OnTimer1000:
 		specialeffect EF_BAT2;
 		donpcevent instance_npcname(strnpcinfo(0))+"::OnEnable3";
 		switch(atoi(charat(strnpcinfo(2),4))) {
-			case 1: .@str$ = "Bangungot: I will let you see the pain and the agony actually be real....."; break;
-			case 2: .@str$ = "Bangungot: Diseased spirits are the source of my energy, and my life..."; break;
-			case 3: .@str$ = "Bangungot: Scream more....and more...... your pain..."; break;
-			case 4: .@str$ = "Bangungot: Deeply and more deeply in pain..."; break;
-			case 5: .@str$ = "Bangungot: Be horrified...be petrified."; break;
+			case 1: .@str$ = "Bangungot: Vou lhe apresentar o caminho de dor e sofrimento... "; break;
+			case 2: .@str$ = "Bangungot: Almas doentes são fonte de energia para minha vida..."; break;
+			case 3: .@str$ = "Bangungot: Grite mais... e mais... expresse sua dor..."; break;
+			case 4: .@str$ = "Bangungot: Profundamente e mais profundamente, exteriorize sua dor..."; break;
+			case 5: .@str$ = "Bangungot: Está horrorizado... fique paralisado de medo."; break;
 		}
 		mapannounce .@map$,.@str$,bc_map,"0xFF82FF";
 	}
@@ -488,16 +474,18 @@ OnEnable1:
 	.@label$ = instance_npcname("#Ward6 Entry")+"::OnMyMobDead";
 	enablenpc instance_npcname("#Ward6 Entry");
 	specialeffect EF_BAT2;
-	areamonster .@map$,93,137,95,139,"Bangungot's Mangkukulam",2339,1,.@label$;
-	areamonster .@map$,95,137,97,139,"Bangungot's Mangkukulam",2339,1,.@label$;
-	areamonster .@map$,97,137,99,139,"Bangungot's Mangkukulam",2339,1,.@label$;
-	areamonster .@map$,93,139,95,141,"Bangungot's Mangkukulam",2339,1,.@label$;
-	areamonster .@map$,95,139,97,141,"Bangungot's Manananggal",2338,1,.@label$;
+	areamonster .@map$,93,137,95,139,"Mangkukulam",MD_MANGKUKULAM,1,.@label$;
+	areamonster .@map$,95,137,97,139,"Mangkukulam",MD_MANGKUKULAM,1,.@label$;
+	areamonster .@map$,97,137,99,139,"Mangkukulam",MD_MANGKUKULAM,1,.@label$;
+	areamonster .@map$,93,139,95,141,"Mangkukulam",MD_MANGKUKULAM,1,.@label$;
+	areamonster .@map$,95,139,97,141,"Manananggal",MD_MANANANGGAL,1,.@label$;
 	end;
 /*
-// Not called in official scripts.
+//============================================================
+// Não utilizado nos servidores oficiais.
+//============================================================
 OnEnable2:
-	areamonster instance_mapname("1@ma_h"),140,38,142,40,"Bangungot's Mangkukulam",2339,1,instance_npcname("#Ward6 Entry")+"::OnMyMobDead";
+	areamonster instance_mapname("1@ma_h"),140,38,142,40,"Mangkukulam",MD_MANGKUKULAM,1,instance_npcname("#Ward6 Entry")+"::OnMyMobDead";
 	end;
 */
 OnMyMobDead:
@@ -508,7 +496,7 @@ OnTimer3000:
 	if (mobcount(.@map$,instance_npcname("#Ward6 Entry")+"::OnMyMobDead") < 1) {
 		specialeffect EF_BAT2;
 		donpcevent instance_npcname("#Summon Boss")+"::OnEnable";
-		mapannounce .@map$,"Bangungot: You had the choice to enter here, but you have no choice to get out as you want...",bc_map,"0xFF82FF";
+		mapannounce .@map$,"Bangungot: Você teve a liberdade de entrar aqui, mas não terá a mesma liberdade para sair...",bc_map,"0xFF82FF";
 	}
 	stopnpctimer;
 	end;
@@ -521,7 +509,7 @@ OnInstanceInit:
 	end;
 OnEnable:
 	enablenpc instance_npcname("#Summon Boss");
-	monster instance_mapname("1@ma_h"),143,158,"Bangungot",2317,1,instance_npcname("#Summon Boss")+"::OnMyMobDead";
+	monster instance_mapname("1@ma_h"),143,158,"Bangungot",BANGUNGOT_1,1,instance_npcname("#Summon Boss")+"::OnMyMobDead";
 	donpcevent instance_npcname("#Boss Room Entry")+"::OnEnableEntry";
 	donpcevent instance_npcname("#Boss Room Entry")+"::OnEnable";
 	end;
@@ -531,7 +519,7 @@ OnMyMobDead:
 OnTimer1000:
 	if (mobcount(instance_mapname("1@ma_h"),instance_npcname("#Summon Boss")+"::OnMyMobDead") < 1) {
 		donpcevent instance_npcname("#Summon Pillar")+"::OnEnable1";
-		mapannounce instance_mapname("1@ma_h"),"Bangungot: I....cannot.....finish...like.......this.",bc_map,"0xFF82FF";
+		mapannounce instance_mapname("1@ma_h"),"Bangungot: Eu... não posso... acabar... assim...",bc_map,"0xFF82FF";
 		disablenpc instance_npcname("#Summon Boss");
 	}
 	stopnpctimer;
@@ -554,7 +542,7 @@ OnEnable:
 	enablenpc instance_npcname("#Boss Room Door1");
 	end;
 OnSpawn:
-	areamonster instance_mapname("1@ma_h"),123,152,137,166,"Bangungot's Manananggal",2338,1,instance_npcname("#Boss Room Entry")+"::OnMyMobDead";
+	areamonster instance_mapname("1@ma_h"),123,152,137,166,"Manananggal",MD_MANANANGGAL,1,instance_npcname("#Boss Room Entry")+"::OnMyMobDead";
 	end;
 OnReset:
 	killmonster instance_mapname("1@ma_h"),instance_npcname("#Boss Room Entry")+"::OnMyMobDead";
@@ -565,11 +553,10 @@ OnMyMobDead:
 OnTimer1000:
 	.@map$ = instance_mapname("1@ma_h");
 	if (mobcount(.@map$,instance_npcname("#Boss Room Entry")+"::OnMyMobDead") < 1)
-		mapannounce .@map$,"Bangungot: HAHAHAH... That's not enough, I will be even stronger....",bc_map,"0xFF82FF";
+		mapannounce .@map$,"Bangungot: HAHAHAH! Este não é todo meu poder, ficarei ainda mais forte...",bc_map,"0xFF82FF";
 	stopnpctimer;
 	end;
 
-// Unofficial labels (to avoid duplicating code).
 OnEnableEntry:
 	enablenpc instance_npcname("#Boss Room Entry");
 	enablenpc instance_npcname("#Boss Room Entry_a");
@@ -600,24 +587,24 @@ OnInstanceInit:
 	disablenpc instance_npcname("#Boss Room Entry_time");
 	end;
 OnEnable:
-	mapannounce instance_mapname("1@ma_h"),"Bangungot: You poor little things. I will invite you to the world of infectious disease...",bc_map,"0xFF82FF";
+	mapannounce instance_mapname("1@ma_h"),"Bangungot: Coitado de você... Irei prendê-lo num mundo de doenças infecciosas.",bc_map,"0xFF82FF";
 	initnpctimer;
 	end;
 OnTimer25000:
-	mapannounce instance_mapname("1@ma_h"),"Bangungot: You will know what it is...",bc_map,"0xFF82FF";
+	mapannounce instance_mapname("1@ma_h"),"Bangungot: Você saberá do que se trata...",bc_map,"0xFF82FF";
 	for(.@i = 10; .@i<=22; ++.@i)
 		disablenpc instance_npcname("#Patternwarp"+.@i);
 	end;
 OnTimer35000:
-	mapannounce instance_mapname("1@ma_h"),"Bangungot: Real pain! You will know!!",bc_map,"0xFF82FF";
+	mapannounce instance_mapname("1@ma_h"),"Bangungot: Dor de verdade! Você conhecerá!!",bc_map,"0xFF82FF";
 	for(.@i = 25; .@i<=33; ++.@i)
 		disablenpc instance_npcname("#Patternwarp"+.@i);
 	end;
 OnTimer45000:
-	mapannounce instance_mapname("1@ma_h"),"Bangungot: Have you ever heard the patients screaming?",bc_map,"0xFF82FF";
+	mapannounce instance_mapname("1@ma_h"),"Bangungot: Você já ouviu os pacientes gritando?",bc_map,"0xFF82FF";
 	end;
 OnTimer55000:
-	mapannounce instance_mapname("1@ma_h"),"Bangungot: If you haven't, I will let you!!",bc_map,"0xFF82FF";
+	mapannounce instance_mapname("1@ma_h"),"Bangungot: Mesmo que não tenha ouvido, fazerei você gritar!!",bc_map,"0xFF82FF";
 	enablenpc instance_npcname("#Summon Ward Mob");
 	donpcevent instance_npcname("#Summon Ward Mob")+"::OnEnable7";
 	end;
@@ -632,15 +619,15 @@ OnTimer60500:
 		enablenpc instance_npcname("#Patternwarp"+.@i);
 	end;
 OnTimer90000:
-	mapannounce instance_mapname("1@ma_h"),"Bangungot: Delight coming from agony is my nutrient.",bc_map,"0xFF82FF";
+	mapannounce instance_mapname("1@ma_h"),"Bangungot: Sua agonia é fonte de nutriente para minha vida.",bc_map,"0xFF82FF";
 	donpcevent instance_npcname("#Boss Room Entry")+"::OnSpawn";
 	end;
 OnTimer110000:
-	mapannounce instance_mapname("1@ma_h"),"Bangungot: Remain here, cursed disease.....",bc_map,"0xFF82FF";
+	mapannounce instance_mapname("1@ma_h"),"Bangungot: Permaneça aqui, maldita moléstia...",bc_map,"0xFF82FF";
 	donpcevent instance_npcname("#Boss Room Entry")+"::OnSpawn";
 	end;
 OnTimer125000:
-	mapannounce instance_mapname("1@ma_h"),"Bangungot: You wanna hang out with me ......?",bc_map,"0xFF82FF";
+	mapannounce instance_mapname("1@ma_h"),"Bangungot: Você quer sair comigo...?",bc_map,"0xFF82FF";
 	end;
 OnTimer128000:
 	for(.@i = 1; .@i<=8; ++.@i)
@@ -676,14 +663,14 @@ OnInstanceInit:
 	disablenpc instance_npcname("#Boss Room Entry_2");
 	end;
 OnEnable:
-	mapannounce instance_mapname("1@ma_h"),"Bangungot: You are pretty powerful...",bc_map,"0xFF82FF";
+	mapannounce instance_mapname("1@ma_h"),"Bangungot: Você é tão poderoso...",bc_map,"0xFF82FF";
 	initnpctimer;
 	end;
 OnTimer3000:
-	mapannounce instance_mapname("1@ma_h"),"Bangungot: But can you...",bc_map,"0xFF82FF";
+	mapannounce instance_mapname("1@ma_h"),"Bangungot: Mas você consegue...",bc_map,"0xFF82FF";
 	end;
 OnTimer6000:
-	mapannounce instance_mapname("1@ma_h"),"Bangungot: ...defeat me again...?",bc_map,"0xFF82FF";
+	mapannounce instance_mapname("1@ma_h"),"Bangungot: ... me derrotar novamente...?",bc_map,"0xFF82FF";
 	end;
 OnTimer9000:
 	for(.@i = 1; .@i<=8; ++.@i)
@@ -696,7 +683,7 @@ OnTimer9500:
 		disablenpc instance_npcname("#Patternwarp"+.@i);
 	end;
 OnTimer10000:
-	mapannounce instance_mapname("1@ma_h"),"Bangungot: You stupid persoon....",bc_map,"0xFF82FF";
+	mapannounce instance_mapname("1@ma_h"),"Bangungot: Você é uma pessoa estúpida....",bc_map,"0xFF82FF";
 	for(.@i = 10; .@i<=22; ++.@i)
 		enablenpc instance_npcname("#Patternwarp"+.@i);
 	end;
@@ -719,68 +706,68 @@ OnTouch:
 OnEnable1:
 	.@map$ = instance_mapname("1@ma_h");
 	.@label$ = instance_npcname("#Summon Ward Mob")+"::OnMyMobDead";
-	areamonster .@map$,47,77,49,79,"Bangungot's Tiyanak",2340,1,.@label$;
-	areamonster .@map$,49,77,51,79,"Bangungot's Tiyanak",2340,1,.@label$;
-	areamonster .@map$,51,77,53,79,"Bangungot's Tiyanak",2340,1,.@label$;
-	areamonster .@map$,47,79,49,81,"Bangungot's Tiyanak",2340,1,.@label$;
-	areamonster .@map$,49,79,51,81,"Bangungot's Mangkukulam",2339,1,.@label$;
-	areamonster .@map$,47,81,49,83,"Bangungot's Tiyanak",2339,1,.@label$;
-	areamonster .@map$,49,81,51,83,"Bangungot's Tiyanak",2339,1,.@label$;
+	areamonster .@map$,47,77,49,79,"Tiyanak",MD_TIYANAK,1,.@label$;
+	areamonster .@map$,49,77,51,79,"Tiyanak",MD_TIYANAK,1,.@label$;
+	areamonster .@map$,51,77,53,79,"Tiyanak",MD_TIYANAK,1,.@label$;
+	areamonster .@map$,47,79,49,81,"Tiyanak",MD_TIYANAK,1,.@label$;
+	areamonster .@map$,49,79,51,81,"Mangkukulam",MD_MANGKUKULAM,1,.@label$;
+	areamonster .@map$,47,81,49,83,"Tiyanak",MD_TIYANAK,1,.@label$;
+	areamonster .@map$,49,81,51,83,"Tiyanak",MD_TIYANAK,1,.@label$;
 	end;
 OnEnable2:
 	.@map$ = instance_mapname("1@ma_h");
 	.@label$ = instance_npcname("#Summon Ward Mob")+"::OnMyMobDead";
-	areamonster .@map$,51,45,53,47,"Bangungot's Tiyanak",2339,1,.@label$;
-	areamonster .@map$,53,45,55,47,"Bangungot's Tiyanak",2339,1,.@label$;
-	areamonster .@map$,49,47,51,49,"Bangungot's Mangkukulam",2339,1,.@label$;
-	areamonster .@map$,53,47,55,49,"Bangungot's Tiyanak",2340,1,.@label$;
-	areamonster .@map$,49,49,51,51,"Bangungot's Tiyanak",2340,1,.@label$;
-	areamonster .@map$,51,49,53,51,"Bangungot's Tiyanak",2340,1,.@label$;
-	areamonster .@map$,53,49,55,51,"Bangungot's Tiyanak",2340,1,.@label$;
+	areamonster .@map$,51,45,53,47,"Tiyanak",MD_TIYANAK,1,.@label$;
+	areamonster .@map$,53,45,55,47,"Tiyanak",MD_TIYANAK,1,.@label$;
+	areamonster .@map$,49,47,51,49,"Mangkukulam",MD_MANGKUKULAM,1,.@label$;
+	areamonster .@map$,53,47,55,49,"Tiyanak",MD_TIYANAK,1,.@label$;
+	areamonster .@map$,49,49,51,51,"Tiyanak",MD_TIYANAK,1,.@label$;
+	areamonster .@map$,51,49,53,51,"Tiyanak",MD_TIYANAK,1,.@label$;
+	areamonster .@map$,53,49,55,51,"Tiyanak",MD_TIYANAK,1,.@label$;
 	end;
 OnEnable3:
 	.@map$ = instance_mapname("1@ma_h");
 	.@label$ = instance_npcname("#Summon Ward Mob")+"::OnMyMobDead";
-	areamonster .@map$,69,75,71,77,"Bangungot's Tiyanak",2340,1,.@label$;
-	areamonster .@map$,71,75,73,77,"Bangungot's Tiyanak",2340,1,.@label$;
-	areamonster .@map$,73,75,75,77,"Bangungot's Tiyanak",2340,1,.@label$;
-	areamonster .@map$,69,77,71,79,"Bangungot's Tiyanak",2340,1,.@label$;
-	areamonster .@map$,71,77,73,79,"Bangungot's Mangkukulam",2339,1,.@label$;
-	areamonster .@map$,69,79,71,81,"Bangungot's Tiyanak",2339,1,.@label$;
-	areamonster .@map$,71,79,73,81,"Bangungot's Tiyanak",2339,1,.@label$;
+	areamonster .@map$,69,75,71,77,"Tiyanak",MD_TIYANAK,1,.@label$;
+	areamonster .@map$,71,75,73,77,"Tiyanak",MD_TIYANAK,1,.@label$;
+	areamonster .@map$,73,75,75,77,"Tiyanak",MD_TIYANAK,1,.@label$;
+	areamonster .@map$,69,77,71,79,"Tiyanak",MD_TIYANAK,1,.@label$;
+	areamonster .@map$,71,77,73,79,"Mangkukulam",MD_MANGKUKULAM,1,.@label$;
+	areamonster .@map$,69,79,71,81,"Tiyanak",MD_MANGKUKULAM,1,.@label$;
+	areamonster .@map$,71,79,73,81,"Tiyanak",MD_MANGKUKULAM,1,.@label$;
 	end;
 OnEnable4:
 	.@map$ = instance_mapname("1@ma_h");
 	.@label$ = instance_npcname("#Summon Ward Mob")+"::OnMyMobDead";
-	areamonster .@map$,73,45,75,47,"Bangungot's Tiyanak",2339,1,.@label$;
-	areamonster .@map$,75,45,77,47,"Bangungot's Tiyanak",2339,1,.@label$;
-	areamonster .@map$,71,47,73,49,"Bangungot's Mangkukulam",2339,1,.@label$;
-	areamonster .@map$,75,47,77,49,"Bangungot's Tiyanak",2340,1,.@label$;
-	areamonster .@map$,71,49,73,51,"Bangungot's Tiyanak",2340,1,.@label$;
-	areamonster .@map$,73,49,75,51,"Bangungot's Tiyanak",2340,1,.@label$;
-	areamonster .@map$,75,49,77,51,"Bangungot's Tiyanak",2340,1,.@label$;
+	areamonster .@map$,73,45,75,47,"Tiyanak",MD_MANGKUKULAM,1,.@label$;
+	areamonster .@map$,75,45,77,47,"Tiyanak",MD_MANGKUKULAM,1,.@label$;
+	areamonster .@map$,71,47,73,49,"Mangkukulam",MD_MANGKUKULAM,1,.@label$;
+	areamonster .@map$,75,47,77,49,"Tiyanak",MD_TIYANAK,1,.@label$;
+	areamonster .@map$,71,49,73,51,"Tiyanak",MD_TIYANAK,1,.@label$;
+	areamonster .@map$,73,49,75,51,"Tiyanak",MD_TIYANAK,1,.@label$;
+	areamonster .@map$,75,49,77,51,"Tiyanak",MD_TIYANAK,1,.@label$;
 	end;
 OnEnable5:
 	.@map$ = instance_mapname("1@ma_h");
 	.@label$ = instance_npcname("#Summon Ward Mob")+"::OnMyMobDead";
-	areamonster .@map$,93,77,95,79,"Bangungot's Tiyanak",2340,1,.@label$;
-	areamonster .@map$,95,77,97,79,"Bangungot's Tiyanak",2340,1,.@label$;
-	areamonster .@map$,97,77,99,79,"Bangungot's Tiyanak",2340,1,.@label$;
-	areamonster .@map$,93,79,95,81,"Bangungot's Tiyanak",2340,1,.@label$;
-	areamonster .@map$,95,79,97,81,"Bangungot's Mangkukulam",2339,1,.@label$;
-	areamonster .@map$,93,81,95,83,"Bangungot's Tiyanak",2339,1,.@label$;
-	areamonster .@map$,95,81,97,83,"Bangungot's Tiyanak",2339,1,.@label$;
+	areamonster .@map$,93,77,95,79,"Tiyanak",MD_TIYANAK,1,.@label$;
+	areamonster .@map$,95,77,97,79,"Tiyanak",MD_TIYANAK,1,.@label$;
+	areamonster .@map$,97,77,99,79,"Tiyanak",MD_TIYANAK,1,.@label$;
+	areamonster .@map$,93,79,95,81,"Tiyanak",MD_TIYANAK,1,.@label$;
+	areamonster .@map$,95,79,97,81,"Mangkukulam",MD_MANGKUKULAM,1,.@label$;
+	areamonster .@map$,93,81,95,83,"Tiyanak",MD_MANGKUKULAM,1,.@label$;
+	areamonster .@map$,95,81,97,83,"Tiyanak",MD_MANGKUKULAM,1,.@label$;
 	end;
 OnEnable6:
 	.@map$ = instance_mapname("1@ma_h");
 	.@label$ = instance_npcname("#Summon Ward Mob")+"::OnMyMobDead";
-	areamonster .@map$,93,43,95,45,"Bangungot's Tiyanak",2339,1,.@label$;
-	areamonster .@map$,95,43,97,45,"Bangungot's Tiyanak",2339,1,.@label$;
-	areamonster .@map$,91,45,93,47,"Bangungot's Mangkukulam",2339,1,.@label$;
-	areamonster .@map$,95,45,97,47,"Bangungot's Tiyanak",2340,1,.@label$;
-	areamonster .@map$,91,47,93,49,"Bangungot's Tiyanak",2340,1,.@label$;
-	areamonster .@map$,93,47,95,49,"Bangungot's Tiyanak",2340,1,.@label$;
-	areamonster .@map$,95,47,97,49,"Bangungot's Tiyanak",2340,1,.@label$;
+	areamonster .@map$,93,43,95,45,"Tiyanak",MD_MANGKUKULAM,1,.@label$;
+	areamonster .@map$,95,43,97,45,"Tiyanak",MD_MANGKUKULAM,1,.@label$;
+	areamonster .@map$,91,45,93,47,"Mangkukulam",MD_MANGKUKULAM,1,.@label$;
+	areamonster .@map$,95,45,97,47,"Tiyanak",MD_TIYANAK,1,.@label$;
+	areamonster .@map$,91,47,93,49,"Tiyanak",MD_TIYANAK,1,.@label$;
+	areamonster .@map$,93,47,95,49,"Tiyanak",MD_TIYANAK,1,.@label$;
+	areamonster .@map$,95,47,97,49,"Tiyanak",MD_TIYANAK,1,.@label$;
 	end;
 OnEnable7:
 	killmonster instance_mapname("1@ma_h"),instance_npcname("#Summon Ward Mob")+"::OnMyMobDead";
@@ -808,18 +795,18 @@ OnEnable:
 	disablenpc instance_npcname("#Summon Ward Mob");
 	end;
 OnTimer2000:
-	mapannounce instance_mapname("1@ma_h"),"Bangungot: My spirit will be with your cursed body...",bc_map,"0xFF82FF";
+	mapannounce instance_mapname("1@ma_h"),"Bangungot: Minha alma amaldiçoará o seu corpo...",bc_map,"0xFF82FF";
 	end;
 OnTimer4000:
-	mapannounce instance_mapname("1@ma_h"),"Bangungot: My inferiors...!! Go!! Go torment the patients in the wards!!",bc_map,"0xFF82FF";
+	mapannounce instance_mapname("1@ma_h"),"Bangungot: Meus serviçais...!! Vão!! Vão!! atormente os pacientes nas enfermarias!!",bc_map,"0xFF82FF";
 	end;
 OnTimer6000:
-	mapannounce instance_mapname("1@ma_h"),"- Bangungot's inferiors are bothering patients!! If you don't slay them all, Bangungot will be stronger. -",bc_map,"0xFF8200";
+	mapannounce instance_mapname("1@ma_h"),"- Os serviçais de Bangungot estão atormentando os pacientes!! Se você não os matá-los, Bangungot poderá ficar mais poderoso. -",bc_map,"0xFF8200";
 	end;
 OnTimer10000:
 	setarray .@npc$[1],
-		"Moaning Patient","Screaming Patient","Patient in Pain","Passed Out Patient","Patient with Nightmare","Sick Looking Patient",
-		"Horrified Patient","Patient in Sorrow","Suffering Patient","Wriggling Patient","Patient in Cold Sweat","Howling Patient";
+		"Paciente Gemendo","Paciente Gritando","Paciente Agonizando","Paciente Inconsciente","Paciente com Pesadelos","Paciente muito Doente",
+		"Paciente Horrorizado","Paciente Triste","Paciente Sofrendo","Paciente se Contorcendo","Paciente Suando Frio","Paciente Berrando";
 	enablenpc instance_npcname("#Summon Ward Mob");
 	.@rand = rand(1,6);
 	donpcevent instance_npcname("#Summon Ward Mob")+"::OnEnable"+.@rand;
@@ -838,7 +825,7 @@ OnEnable1:
 	enablenpc instance_npcname("#Summon Pillar");
 	donpcevent instance_npcname("#Boss Room Entry_time")+"::OnStopTimer";
 	donpcevent instance_npcname("#Summon Pillar_time")+"::OnEnable";
-	monster instance_mapname("1@ma_h"),131,157,"Pillar of Spirit",2327,1,instance_npcname("#Summon Pillar")+"::OnMyMobDead";
+	monster instance_mapname("1@ma_h"),131,157,"Pilar dos Espíritos",BANGUNGOT_3,1,instance_npcname("#Summon Pillar")+"::OnMyMobDead";
 	end;
 OnEnable3:
 	enablenpc instance_npcname("#Boss Room Exit");
@@ -856,9 +843,9 @@ OnTimer1000:
 		donpcevent instance_npcname("#Summon Pillar_time")+"::OnStopTimer";
 		donpcevent instance_npcname("#Summon Pillar")+"::OnEnable3";
 		donpcevent instance_npcname("#Boss Room Entry")+"::OnReset";
-		mapannounce .@map$,"Bangungot: Oh....cannot believe that I lost...",bc_map,"0xFF4500";
-		mapannounce .@map$,"Bangungot: But don't think this is the end!!",bc_map,"0xFF4500";
-		mapannounce .@map$,"Bangungot: I WILL BE BACK!!!!!",bc_map,"0xFF4500";
+		mapannounce .@map$,"Bangungot: Ahhh... não posso acreditar que fui derrotado...",bc_map,"0xFF4500";
+		mapannounce .@map$,"Bangungot: Mas não acho que este seja o fim!!",bc_map,"0xFF4500";
+		mapannounce .@map$,"Bangungot: EU RETORNAREI!!!!!",bc_map,"0xFF4500";
 	}
 	stopnpctimer;
 	end;
@@ -876,26 +863,26 @@ OnStopTimer:
 	stopnpctimer;
 	end;
 OnTimer1000:
-	mapannounce instance_mapname("1@ma_h"),"- Bangungot's Pillar of Spirit is curing Bangungot. If you don't hunt it now, he will fully recover!! -",bc_map,"0xFF8200";
+	mapannounce instance_mapname("1@ma_h"),"- O Pilar dos Espíritos está curando o Bangungot. Se você não caçá-lo rapidamente, ele vai recuperar totalmente!! -",bc_map,"0xFF8200";
 	specialeffect EF_MAPPILLAR2,AREA,instance_npcname("#Patternwarp45");
 	end;
 OnTimer7000:
-	mapannounce instance_mapname("1@ma_h"),"Bangungot: I never die!!!!",bc_map,"0xFF82FF";
+	mapannounce instance_mapname("1@ma_h"),"Bangungot: Sou imortal, nunca morrerei!!!!",bc_map,"0xFF82FF";
 	specialeffect EF_MAPPILLAR2,AREA,instance_npcname("#Patternwarp45");
 	end;
 OnTimer14000:
-	mapannounce instance_mapname("1@ma_h"),"Bangungot: If you dare, kill me!! I will revive soon!!!",bc_map,"0xFF82FF";
+	mapannounce instance_mapname("1@ma_h"),"Bangungot: Se tiver coragem, tente me matar!! Mas posso retornar revitalizado!!!",bc_map,"0xFF82FF";
 	specialeffect EF_MAPPILLAR2,AREA,instance_npcname("#Patternwarp45");
 	end;
 OnTimer21000:
-	mapannounce instance_mapname("1@ma_h"),"Bangungot: I cannot die this way...!!!!",bc_map,"0xFF82FF";
+	mapannounce instance_mapname("1@ma_h"),"Bangungot: Não posso morrer dessa maneira!!!!",bc_map,"0xFF82FF";
 	specialeffect EF_MAPPILLAR2,AREA,instance_npcname("#Patternwarp45");
 	end;
 OnTimer30000:
 	donpcevent instance_npcname("#Summon Pillar")+"::OnReset";
 	end;
 OnTimer31000:
-	mapannounce instance_mapname("1@ma_h"),"Bangungot: Hahahahaha!! I'm back with the power from the pillar of spirit!!!",bc_map,"0xFF82FF";
+	mapannounce instance_mapname("1@ma_h"),"Bangungot: Hahahahaha!! Estou de volta com o poder do Pilar dos Espíritos!!!",bc_map,"0xFF82FF";
 	donpcevent instance_npcname("#Summon Pillar")+"::OnReset";
 	end;
 OnTimer36000:
@@ -937,13 +924,13 @@ OnTimer3000:
 	end;
 }
 
-1@ma_h,43,86,4	script	Moaning Patient#1	4_F_PATIENT,{
+1@ma_h,43,86,4	script	Paciente Gemendo#1	4_F_PATIENT,{
 	end;
 OnInstanceInit:
-	monster instance_mapname("1@ma_h"),131,62,"Bangungot",2318,1;
+	monster instance_mapname("1@ma_h"),131,62,"Bangungot",BANGUNGOT_2,1;
 	end;
 OnEnable:
-	mapannounce instance_mapname("1@ma_h"),"Moaning Patient: aaawwww....",bc_map,"0xFF0000";
+	mapannounce instance_mapname("1@ma_h"),"Paciente Gemendo: Aaawwww....",bc_map,"0xFF0000";
 	initnpctimer;
 	end;
 OnTimer5000:
@@ -964,21 +951,21 @@ OnTimer30000:
 	end;
 }
 
-1@ma_h,60,87,4	script	Screaming Patient#2	4_M_PATIENT,{
+1@ma_h,60,87,4	script	Paciente Gritando#2	4_M_PATIENT,{
 	end;
 OnEnable:
 	switch(atoi(strnpcinfo(2))) {
-		case 2: .@str$ = "Screaming Patient: Aaaaargh!!"; break;
-		case 3: .@str$ = "Patient in Pain: Oooooowwww!! It's killing me!!!"; break;
-		case 4: .@str$ = "Passed Out Patient: ........"; break;
-		case 5: .@str$ = "Patient with Nightmare: Help~!!! Save me!!!"; break;
-		case 6: .@str$ = "Sick Looking Patient: Hu..a...aaah.."; break;
-		case 7: .@str$ = "Horrified Patient: Get away!! Please...."; break;
-		case 8: .@str$ = "Patient in Sorrow: crying and crying......"; break;
-		case 9: .@str$ = "Suffering Patient: Stop... please..."; break;
-		case 10: .@str$ = "Wriggling Patient: awwww..."; break;
-		case 11: .@str$ = "Patient in Cold Sweat: Help.....help...."; break;
-		case 12: .@str$ = "Howling Patient: aaaaahhhhhhhhhh!!"; break;
+		case 2: .@str$ = "Paciente Gritando: Aaaaargh!!"; break;
+		case 3: .@str$ = "Paciente Agonizando: Oooooowwww!! Está me matando!!!"; break;
+		case 4: .@str$ = "Paciente Inconsciente: ........"; break;
+		case 5: .@str$ = "Paciente com Pesadelos: Me salve~!!! Me salve!!!"; break;
+		case 6: .@str$ = "Paciente muito Doente: Hu..a...aaah.."; break;
+		case 7: .@str$ = "Paciente Horrorizado: Deixe me sair!! Por favor...."; break;
+		case 8: .@str$ = "Paciente Triste: Chorando e chorando......"; break;
+		case 9: .@str$ = "Paciente Sofrendo: Pare... por favor... pare!!"; break;
+		case 10: .@str$ = "Paciente se Contorcendo: Awwww..."; break;
+		case 11: .@str$ = "Paciente Suando Frio: Me ajuda.....Me ajuda...."; break;
+		case 12: .@str$ = "Paciente Berrando: Aaaaahhhhhhhhhh!!"; break;
 	}
 	mapannounce instance_mapname("1@ma_h"),.@str$,bc_map,"0xFF0000";
 	initnpctimer;
@@ -1000,31 +987,32 @@ OnTimer30000:
 	stopnpctimer;
 	end;
 }
-1@ma_h,60,39,7	duplicate(Screaming Patient#2)	Patient in Pain#3	4_F_PATIENT
-1@ma_h,43,39,7	duplicate(Screaming Patient#2)	Passed Out Patient#4	4_M_PATIENT
-1@ma_h,77,86,4	duplicate(Screaming Patient#2)	Patient with Nightmare#5	4_F_PATIENT
-1@ma_h,69,87,4	duplicate(Screaming Patient#2)	Sick Looking Patient#6	4_M_PATIENT
-1@ma_h,73,39,7	duplicate(Screaming Patient#2)	Horrified Patient#7	4_F_PATIENT
-1@ma_h,65,51,7	duplicate(Screaming Patient#2)	Patient in Sorrow#8	4_M_PATIENT
-1@ma_h,87,86,4	duplicate(Screaming Patient#2)	Suffering Patient#9	4_F_PATIENT
-1@ma_h,104,86,4	duplicate(Screaming Patient#2)	Wriggling Patient#10	4_M_PATIENT
-1@ma_h,99,39,7	duplicate(Screaming Patient#2)	Patient in Cold Sweat#11	4_F_PATIENT
-1@ma_h,87,39,7	duplicate(Screaming Patient#2)	Howling Patient#12	4_M_PATIENT
+1@ma_h,60,39,7	duplicate(Paciente Gritando#2)	Paciente Agonizando#3	4_F_PATIENT
+1@ma_h,43,39,7	duplicate(Paciente Gritando#2)	Paciente Inconsciente#4	4_M_PATIENT
+1@ma_h,77,86,4	duplicate(Paciente Gritando#2)	Paciente com Pesadelos#5	4_F_PATIENT
+1@ma_h,69,87,4	duplicate(Paciente Gritando#2)	Paciente muito Doente#6	4_M_PATIENT
+1@ma_h,73,39,7	duplicate(Paciente Gritando#2)	Paciente Horrorizado#7	4_F_PATIENT
+1@ma_h,65,51,7	duplicate(Paciente Gritando#2)	Paciente Triste#8	4_M_PATIENT
+1@ma_h,87,86,4	duplicate(Paciente Gritando#2)	Paciente Sofrendo#9	4_F_PATIENT
+1@ma_h,104,86,4	duplicate(Paciente Gritando#2)	Paciente se Contorcendo#10	4_M_PATIENT
+1@ma_h,99,39,7	duplicate(Paciente Gritando#2)	Paciente Suando Frio#11	4_F_PATIENT
+1@ma_h,87,39,7	duplicate(Paciente Gritando#2)	Paciente Berrando#12	4_M_PATIENT
 
-1@ma_h,43,181,4	script	Moaning Patient#b	4_F_PATIENT,{ end; }
-1@ma_h,60,182,4	script	Screaming Patient#b	4_M_PATIENT,{ end; }
-1@ma_h,60,132,7	script	Patient in Pain#b	4_F_PATIENT,{ end; }
-1@ma_h,43,132,7	script	Passed Out Patient#b	4_M_PATIENT,{ end; }
-1@ma_h,77,182,4	script	Patient with Nightmare#b	4_F_PATIENT,{ end; }
-1@ma_h,69,182,4	script	Sick Looking Patient#b	4_M_PATIENT,{ end; }
-1@ma_h,73,132,7	script	Horrified Patient#b	4_F_PATIENT,{ end; }
-1@ma_h,65,144,7	script	Patient in Sorrow#b	4_M_PATIENT,{ end; }
-1@ma_h,87,181,4	script	Suffering Patient#b	4_F_PATIENT,{ end; }
-1@ma_h,104,181,4	script	Wriggling Patient#b	4_M_PATIENT,{ end; }
-1@ma_h,99,132,7	script	Patient in Cold Sweat#b	4_F_PATIENT,{ end; }
-1@ma_h,87,132,7	script	Howling Patient#b	4_M_PATIENT,{ end; }
+1@ma_h,43,181,4	script	Paciente Gemendo#b	4_F_PATIENT,{ end; }
+1@ma_h,60,182,4	script	Paciente Gritando#b	4_M_PATIENT,{ end; }
+1@ma_h,60,132,7	script	Paciente Agonizando#b	4_F_PATIENT,{ end; }
+1@ma_h,43,132,7	script	Paciente Inconsciente#b	4_M_PATIENT,{ end; }
+1@ma_h,77,182,4	script	Paciente com Pesadelos#b	4_F_PATIENT,{ end; }
+1@ma_h,69,182,4	script	Paciente muito Doente#b	4_M_PATIENT,{ end; }
+1@ma_h,73,132,7	script	Paciente Horrorizado#b	4_F_PATIENT,{ end; }
+1@ma_h,65,144,7	script	Paciente Triste#b	4_M_PATIENT,{ end; }
+1@ma_h,87,181,4	script	Paciente Sofrendo#b	4_F_PATIENT,{ end; }
+1@ma_h,104,181,4	script	Paciente se Contorcendo#b	4_M_PATIENT,{ end; }
+1@ma_h,99,132,7	script	Paciente Suando Frio#b	4_F_PATIENT,{ end; }
+1@ma_h,87,132,7	script	Paciente Berrando#b	4_M_PATIENT,{ end; }
 
-// Warp Portals
+//============================================================
+// Portais de Telerporte
 //============================================================
 1@ma_h,35,156,0	warp	#Boss Room Exit	2,2,ma_dun01,150,9
 1@ma_h,105,157,0	warp	#Boss Room Door	2,2,1@ma_h,116,157
@@ -1080,8 +1068,6 @@ OnTimer30000:
 1@ma_h,131,49,0	warp	#Patternwarp32	10,10,1@ma_h,116,157
 1@ma_h,146,49,0	warp	#Patternwarp33	10,10,1@ma_h,116,157
 
-// Disable select warps.
-// Custom, but saves processing and lines.
 1@ma_h,1,1,0	script	#ma_hos_warp_init	CLEAR_NPC,{
 	end;
 OnInstanceInit:
@@ -1092,7 +1078,7 @@ OnInstanceInit:
 		disablenpc instance_npcname("#Patternwarp"+.@i);
 	for(.@i = 34; .@i<=38; ++.@i)
 		disablenpc instance_npcname("#Patternwarp"+.@i);
-	// Skip 39-40 since they're disabled in the official script.
+	// Pular 39-40 já que estão desativados nos scripts oficiais.
 	for(.@i = 41; .@i<=49; ++.@i)
 		disablenpc instance_npcname("#Patternwarp"+.@i);
 	disablenpc instance_npcname("#ma_hos_warp_init");

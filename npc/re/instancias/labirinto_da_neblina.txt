@@ -1,0 +1,1172 @@
+//    ________________________________________________________
+//   /                                                        \
+//   |       _           _   _   _                            |
+//   |      | |__  _ __ / \ | |_| |__   ___ _ __   __ _       |
+//   |      | '_ \| '__/ _ \| __| '_ \ / _ \ '_ \ / _` |      |
+//   |      | |_) | | / ___ \ |_| | | |  __/ | | | (_| |      |
+//   |      |_.__/|_|/_/   \_\__|_| |_|\___|_| |_|\__,_|      |
+//   |                                                        |
+//   |                    brAthena Script                     |
+//   |--------------------------------------------------------|
+//   | Nome do Script: labirinto_da_neblina.txt               |
+//   |--------------------------------------------------------|
+//   | Criado por: Herc/brA Dev. Team                         |
+//   |--------------------------------------------------------|
+//   | Versões Herc/brA: 1.0/1.0                              |
+//   |--------------------------------------------------------|
+//   | Descrição: Labirinto da Neblina                        |
+//   |--------------------------------------------------------|
+//   | Changelog:                                             |
+//   | 1.0 First version. [Euphy]                             |
+//   | 1.1 Instance system rewrite. [Euphy]                   |
+//   | 1.0 Cabeçalho brAthena [DiegoOli]                      |
+//   |--------------------------------------------------------|
+//   | - Anotações                                            |
+//   | Atravesse o Labirinto da Neblina para chegar a Bifrost.|
+//   | Contém a quest do Nydhogg o Guardião.                 |
+//   \________________________________________________________/
+
+bif_fild01,158,340,5	script	Soldado Esplêndido#mist	4_M_FAIRYSOLDIER,{
+
+	.@party_id = getcharid(1);
+	.@md_name$ = "Labirinto da Neblina";
+
+	mes "[Soldado Esplêndido]";
+	mes "Você deseja entrar na Floresta da Neblina?";
+	next;
+	if (!.@party_id) {
+		mes "[Soldado Esplêndido]";
+		mes "Você não está sendo muito precipitado?";
+		mes "Por que pelo menos não organiza um grupo?";
+		close;
+	}
+	.@playtime = questprogress(7211,PLAYTIME);
+	if (getcharid(0) == getpartyleader(.@party_id,2)) {
+		if (.@playtime == 1) {
+			mes "[Soldado Esplêndido]";
+			mes "...Tem certeza de que você não está trabalhando muito?";
+			mes "Acredito que ficará bem se descansar um pouco.";
+			mes "Se você praticar muito, poderá ficar cansado demais.";
+			next;
+			mes "[Soldado Esplêndido]";
+			mes "Creio que as autoridades não poderão permitir a sua entrada.";
+			mes "...Mesmo um soldado poderia ser impedido de entrar nestas circunstâncias.";
+			next;
+			select("Você entende muito bem meu idioma, não é mesmo?");
+			mes "[Soldado Esplêndido]";
+			mes "...Eu?";
+			mes "Na verdade, não estou me comunicando com você em seu idioma.";
+			mes "E sim, com o idioma de Esplêndido.";
+			next;
+			mes "[Soldado Esplêndido]";
+			mes "Esse é um dos mistérios de Bifrost.";
+			mes "Nos permitindo a compreensão um do outro, a partir de idiomas diferentes.";
+			next;
+			mes "[Soldado Esplêndido]";
+			mes "Para que seja capaz o entendimento de todos os idiomas, talvez seja necessário o grande poder misterioso de Bifrost.";
+			close;
+		} else if (.@playtime == 2) {
+			mes "[Soldado Esplêndido]";
+			mes "Perfeito.";
+			mes "Agora a sua solicitação de entrada não será mais rejeitada.";
+			mes "O que você pretende fazer agora?";
+			erasequest 7211;
+		} else {
+			mes "[Soldado Esplêndido]";
+			mes "Os humanos que gostam de se aventurar são incríveis.";
+			mes "Sempre viajam até a Floresta Nebulosa, um lugar onde ninguém se atreve ir.";
+			next;
+			mes "[Soldado Esplêndido]";
+			mes "Mas preciso deixar as autoridades informadas quando alguém decide ir à Floresta.";
+			next;
+			mes "[Soldado Esplêndido]";
+			mes "Você obterá a permissão, a partir do momento que todos os trâmites forem concluídos.";
+			mes "Tem certeza de que deseja se aventurar na Floresta da Neblina?";
+		}
+		next;
+		switch(select("Aventurar-me na Floresta da Neblina.:Desistir.")) {
+		case 1:
+			mes "[Soldado Esplêndido]";
+			mes "Nome do Grupo: "+getpartyname(.@party_id)+"...";
+			mes "Nome do Líder: "+strcharinfo(PC_NAME)+"...";
+			mes "Está bem, informações anotada com sucesso.";
+			.@instance = instance_create(.@md_name$, .@party_id);
+			if (.@instance < 0) {
+				mes "Hmm...";
+				next;
+				mes "[Soldado Esplêndido]";
+				if (!.@playtime)
+					mes "A Floresta é muito perigosa.";
+				else
+				mes "O clima lá é bem tenso...";
+				mes "Por que você não tenta retornar mais tarde?";
+				close;
+			}
+			next;
+			if (instance_attachmap("1@mist",.@instance) != "") {
+				instance_set_timeout 7200,300,.@instance;
+				instance_init(.@instance);
+				mes "Você obterá a permissão em breve.";
+				mes "Agora, para entrar na Floresta da Neblina, você precisa ir até o Túnel.";
+				mes "Estamos entendidos?";
+				next;
+				mes "[Soldado Esplêndido]";
+				mes "Nós da corporação não podemos ir até a Floresta, mas talvez vocês humanos possam.";
+				mes "Boa sorte!";
+				close;
+			} else {
+				instance_destroy(.@instance);
+			}
+		case 2:
+			mes "[Soldado Esplêndido]";
+			mes "Bem, você fez uma ótima escolha.";
+			if (!.@playtime)
+				mes "Isso deve ser bom para você.";
+			close;
+		}
+	} else {
+		mes "[Soldado Esplêndido]";
+		mes "Cadê o líder do grupo?";
+		mes "É muito perigoso lá dentro.";
+		next;
+		if (.@playtime == 2) {
+			mes "[Soldado Esplêndido]";
+			mes "Parece que você já foi lá antes.";
+			mes "Sem problema, ao menos o Labirinto não rejeitará sua entrada.";
+			mes "Contudo...";
+			erasequest 7211;
+			next;
+		}
+		mes "[Soldado Esplêndido]";
+		mes "Ponha-se no meu lugar, preciso conhecer o líder de seu grupo.";
+		mes "Tenho alguns assuntos para serem tratados.";
+		close;
+	}
+}
+
+bif_fild01,161,355,0	script	Túnel	CLEAR_NPC,{
+
+	.@md_name$ = "Labirinto da Neblina";
+	
+	mes "Posso ver a Floresta daqui.";
+	mes "Tenho de passar pelo túnel de madeira para chegar até lá.";
+	next;
+	if(select("Entrar no túnel.:Desistir.") == 2)
+		close;
+	if (has_instance("1@mist") == "") {
+		if (questprogress(7211,PLAYTIME) == 1) {
+		    mes "Tentei entrar rastejando pelo túnel, porém, alguma força misteriosa me empurrou de volta para fora.";
+			mes "Parece que não posso forçar a entrada na Floresta.";
+			close;
+		}
+		mes "O mundo após o Túnel parece obscuro e sufocante.";
+		mes "Seus instintos estão lhe alertando que este lugar é perigoso.";
+		close;
+	} else {
+		if (questprogress(7211,PLAYTIME) == 2) erasequest 7211;
+		if (!questprogress(7211,PLAYTIME)) setquest 7211;
+		mapannounce "bif_fild01", strcharinfo(PC_NAME)+" do grupo "+getpartyname(getcharid(1))+" entrou no "+.@md_name$+".",bc_map,"0x00ff99";
+		warp "1@mist",89,29;
+		close;
+	}
+}
+
+//============================================================
+// Código da Instância
+//============================================================
+1@mist,89,29,0	script	#Whisper_mist	CLEAR_NPC,1,1,{
+	end;
+OnInstanceInit:
+	enablenpc instance_npcname("#Whisper_mist");
+	end;
+OnTouch:
+	disablenpc instance_npcname("#Whisper_mist");
+	initnpctimer;
+	end;
+OnTimer10000:
+	mapannounce instance_mapname("1@mist"),"Sussuro: Quem é? Quem está aí!? Os portões da Floresta estão abertos! Tom, Tomba, Cansado Rem, Remi! Acordem!",bc_map,"0xccffcc";
+	end;
+OnTimer20000:
+	mapannounce instance_mapname("1@mist"),"Sussuro: Quem é? Fechem bem a porta, Tom, Tomba! Não assustem a floresta!",bc_map,"0xccffcc";
+	end;
+OnTimer60000:
+	mapannounce instance_mapname("1@mist"),"Sussuro mais alto: O que os guardiões da floresta estão fazendo? O que os jardineiros estão fazendo?",bc_map,"0xccffcc";
+	end;
+OnTimer120000:
+	mapannounce instance_mapname("1@mist"),"Sussuro mais alto: Não saia, não fique andando para sempre. Venha brincar conosco?",bc_map,"0xccffcc";
+	end;
+OnTimer180000:
+	mapannounce instance_mapname("1@mist"),"Sussuro: Inútil, inútil. Andando e andando, você encontrará seu fim!",bc_map,"0xccffcc";
+	stopnpctimer;
+	end;
+}
+
+// callfunc "F_Mora_Mist",<warp to enable>,<success message>,<fail message>{,<end flag>}
+function	script	F_Mora_Mist	{
+	.@map$ = instance_mapname("1@mist");
+	if (mobcount(.@map$,instance_npcname(strnpcinfo(0))+"::OnMyMobDead") == 0) {
+	    mes "Aparentemente não há ninguém cuidando dela.";
+		mes "Parece que você pode cortar a árvore do jardim.";
+		next;
+		if(select("Cortar a árvore do jardim.:Desistir.") == 2)
+			close;
+		mes "Você cortou a árvore que estava bloqueando o caminho do labirinto. "+((getarg(3,0))?" Abrindo caminho para fora do Labirinto.":"Portanto, agora você pode continuar.");
+		mapannounce .@map$,getarg(1),bc_map,"0xccffcc";
+		enablenpc instance_npcname(getarg(0));
+		disablenpc instance_npcname(strnpcinfo(0));
+		close;
+	} else
+		mapannounce .@map$,((getarg(3,0))?getarg(2):getarg(2)+": Hã? Quem está fazendo maldade com a minha árvore??"),bc_map,"0xccffcc";
+	end;
+}
+
+1@mist,251,121,3	script	Jardim de Tom	4_BULLETIN_BOARD2,{ end; }
+1@mist,247,123,0	script	Árvore do Tom	4_CREEPER,{
+	callfunc "F_Mora_Mist",
+		"a25_a18-1",
+		"Grito vociferante: A lança de Tom está quebrada! Cuidado, Tomba! Cuidado, Tomba!",
+		"Tom";
+	end;
+OnInstanceInit:
+	monster instance_mapname("1@mist"),249,120,"Tom",LITTLE_FATUM,1,instance_npcname("Árvore do Tom")+"::OnMyMobDead";
+	end;
+OnMyMobDead:
+	end;
+}
+
+1@mist,226,95,3	script	Jardim de Tomba	4_BULLETIN_BOARD2,{ end; }
+1@mist,225,98,0	script	Árvore de Tomba	4_CREEPER,{
+	callfunc "F_Mora_Mist",
+		"a27-2_af1-2",
+		"Grito vociferante: A Árvore de Tomba foi cortada. Remi, o que você vai fazer agora?",
+		"Tomba";
+	end;
+OnInstanceInit:
+	monster instance_mapname("1@mist"),200,64,"Tomba",LITTLE_FATUM,1,instance_npcname("Árvore de Tomba")+"::OnMyMobDead";
+	end;
+OnMyMobDead:
+	end;
+}
+
+1@mist,157,183,3	script	Jardim de Remi	4_BULLETIN_BOARD2,{ end; }
+1@mist,159,184,0	script	Árvore de Remi	4_CREEPER,{
+	callfunc "F_Mora_Mist",
+		"a15-2_a4-1",
+		"Grito vociferante: Remi... A Árvore do Jardim de Remi foi cortada... Rem, você é o próximo. Pobre Rem!",
+		"Remi";
+	end;
+OnInstanceInit:
+	monster instance_mapname("1@mist"),154,184,"Remi",MIMING,1,instance_npcname("Árvore de Remi")+"::OnMyMobDead";
+	end;
+OnMyMobDead:
+	end;
+}
+
+1@mist,58,39,3	script	Jardim de Rem	4_BULLETIN_BOARD2,{ end; }
+1@mist,61,39,0	script	Árvore de Rem	4_CREEPER,{
+	callfunc "F_Mora_Mist",
+		"a4-2_a11",
+		"Grito desesperado de Rem: Argh... Rem vai dormir. Rem vai dormir agora e nunca mais acordar!",
+		"Rem";
+	end;
+OnInstanceInit:
+	monster instance_mapname("1@mist"),101,107,"Rem",LITTLE_FATUM,1,instance_npcname("Árvore de Rem")+"::OnMyMobDead";
+	end;
+OnTimer10000:
+	mapannounce instance_mapname("1@mist"),"Sussuro da floresta: Então, Tom, Tomba, Remi, todas as árvores do jardim do Rem foram derrubadas?",bc_map,"0xccffcc";
+	end;
+OnTimer15000:
+	mapannounce instance_mapname("1@mist"),"Sussuro da floresta: Encrenca, encrenca, estamos em apuros.",bc_map,"0xccffcc";
+	end;
+OnTimer20000:
+	mapannounce instance_mapname("1@mist"),"Sussuro mais alto: Segundo o Jardineiro, eles vieram pelo labirinto, cuidado!",bc_map,"0xccffcc";
+	stopnpctimer;
+	end;
+OnMyMobDead:
+	end;
+}
+
+1@mist,227,179,3	script	Jardim do Ron	4_BULLETIN_BOARD2,{ end; }
+1@mist,230,179,0	script	Árvore do Ron	4_CREEPER,{
+	callfunc "F_Mora_Mist",
+		"b4-2_b2",
+		"Grito de Ron, o jardineiro: Não trabalho mais! Não procurem mais por Ron, o segundo jardineiro!!",
+		"Ron";
+	end;
+OnInstanceInit:
+	monster instance_mapname("1@mist"),227,178,"Ron",PARUS,1,instance_npcname("Árvore do Ron")+"::OnMyMobDead";
+	end;
+OnMyMobDead:
+	end;
+}
+
+1@mist,288,226,3	script	Jardim do Rover	4_BULLETIN_BOARD2,{ end; }
+1@mist,285,225,0	script	Árvores do Rover	4_CREEPER,{
+	callfunc "F_Mora_Mist",
+		"b7_bf1-2",
+		"Grito vociferante: As árvores de Ron e Rover também foram cortadas. Quem está tentando abrir o caminho pelo labirinto? Quem?",
+		"Rover";
+	end;
+OnInstanceInit:
+	monster instance_mapname("1@mist"),304,237,"Rover",PARUS,1,instance_npcname("Árvores do Rover")+"::OnMyMobDead";
+	end;
+OnMyMobDead:
+	end;
+}
+
+1@mist,159,318,3	script	Jardim de Mona	4_BULLETIN_BOARD2,{ end; }
+1@mist,161,316,0	script	Árvore de Mona	4_CREEPER,{
+	callfunc "F_Mora_Mist",
+		"b31_b16",
+		"Sussurro Claro: A Árvore do Jardim de Mona, a Catadora de Sementes, se foi! Mona também! Namon vai ficar bem porque é corajoso, não é? Namon, você está bem?",
+		"Mona";
+	end;
+OnInstanceInit:
+	monster instance_mapname("1@mist"),239,253,"Mona",ANGRA_MANTIS,1,instance_npcname("Árvore de Mona")+"::OnMyMobDead";
+	end;
+OnMyMobDead:
+	end;
+}
+
+1@mist,205,300,3	script	Jardim de Namon	4_BULLETIN_BOARD2,{ end; }
+1@mist,204,299,0	script	Árvore do Namon	4_CREEPER,{
+	callfunc "F_Mora_Mist",
+		"b27-3_bN-1",
+		"Sussurro Claro: O Corajoso Namon encarou seu destino sem muita coragem... *hi hi hi*",
+		"Namon";
+	end;
+OnInstanceInit:
+	monster instance_mapname("1@mist"),89,173,"Namon",PARUS,1,instance_npcname("Árvore do Namon")+"::OnMyMobDead";
+	end;
+OnMyMobDead:
+	end;
+}
+
+1@mist,219,232,3	script	Jardim de Neo	4_BULLETIN_BOARD2,{ end; }
+1@mist,221,236,0	script	Árvore de Neo	4_CREEPER,{
+	callfunc "F_Mora_Mist",
+		"b6-1_b33",
+		"Grito de Neo: Hã? Quem está fazendo maldade com minha árvore??"
+		//"Sussuro de Lamentação: Neo ficou alegre! Aracnídeo, o que fazerá?",
+		"Neoron";
+	end;
+OnInstanceInit:
+	monster instance_mapname("1@mist"),143,265,"Neo",MIMING,1,instance_npcname("Árvore de Neo")+"::OnMyMobDead";
+	end;
+OnMyMobDead:
+	end;
+}
+
+1@mist,206,202,3	script	Jardim de Aracnídeo	4_BULLETIN_BOARD2,{ end; }
+1@mist,206,200,0	script	Árvore de Aracnídeo	4_CREEPER,{
+	callfunc "F_Mora_Mist",
+		"b5_b14",
+		"Sussuro Deprimido: Agora que o labirinto acabou. Os Jardineiros estão morrendo próximo da saída-",
+		"Aracnídeo";
+	end;
+OnInstanceInit:
+	monster instance_mapname("1@mist"),209,200,"Aracnídeo",POM_SPIDER,1,instance_npcname("Árvore de Aracnídeo")+"::OnMyMobDead";
+	end;
+OnTimer5000:
+	mapannounce instance_mapname("1@mist"),"Sussuro vociferante: O caminho está prestes a ser aberto. Os parafusos que o prendiam foram removidos!",bc_map,"0xccffcc";
+	end;
+OnTimer9000:
+	mapannounce instance_mapname("1@mist"),"Sussuro vociferante: Um caminho aberto, e o outro será aberto em seguida. Tito e Pumba, eles estão indo em sua direção!",bc_map,"0xccffcc";
+	end;
+OnTimer13000:
+	mapannounce instance_mapname("1@mist"),"Sussuro vociferante: Onde você chega depois de ter percorrido ao redor, ao redor ao redor, todos já o conhecem enquanto vagava ao redor, ao redor ao redor.",bc_map,"0xccffcc";
+	end;
+OnTimer17000:
+	mapannounce instance_mapname("1@mist"),"Sussuro vociferante: Todos os jardineiros estarão a sua espera, com suas tesouras nas mãos-!",bc_map,"0xccffcc";
+	stopnpctimer;
+	end;
+OnMyMobDead:
+	end;
+}
+
+1@mist,96,288,3	script	Jardim do Tito	4_BULLETIN_BOARD2,{ end; }
+1@mist,95,287,0	script	Árvore do Tito	4_CREEPER,{
+	callfunc "F_Mora_Mist",
+		"c1_c13-1",
+		"Grito de Tito: *snif* *snif* Tito se foi! Tito já era! Buááááá!!",
+		"Tito";
+	end;
+OnInstanceInit:
+	monster instance_mapname("1@mist"),264,291,"Tito",ANGRA_MANTIS,1,instance_npcname("Árvore do Tito")+"::OnMyMobDead";
+	end;
+OnMyMobDead:
+	end;
+}
+
+1@mist,326,325,3	script	Jardim do Pumba	4_BULLETIN_BOARD2,{ end; }
+1@mist,324,325,0	script	Árvore do Pumba	4_CREEPER,{
+	callfunc "F_Mora_Mist",
+		"c13-3_c4",
+		"Sussurro vociferante: Tito, o Trabalhador, foi derrotado! Pare de brincar e vá trabalhar, Tete! Comece a Trabalhar!",
+		"Pumba";
+	end;
+OnInstanceInit:
+	monster instance_mapname("1@mist"),309,165,"Pumba",PARUS,1,instance_npcname("Árvore do Pumba")+"::OnMyMobDead";
+	end;
+OnMyMobDead:
+	end;
+}
+
+1@mist,278,345,3	script	Jardim de Tete	4_BULLETIN_BOARD2,{ end; }
+1@mist,280,344,0	script	Árvore de Tete	4_CREEPER,{
+	callfunc "F_Mora_Mist",
+		"c19_c4",
+		"Sussurro: Eles são fortes, fortes mesmo. O que vamos fazer agora? Há algum jardineiro sobrando? Há algum?",
+		"Tete";
+	end;
+OnInstanceInit:
+	monster instance_mapname("1@mist"),277,343,"Tete",LITTLE_FATUM,1,instance_npcname("Árvore de Tete")+"::OnMyMobDead";
+	end;
+OnMyMobDead:
+	end;
+}
+
+1@mist,345,186,0	script	Jardim de Todos	4_CREEPER,{
+	callfunc "F_Mora_Mist",
+		"#to_bif02",
+		"Sussuro Rugidor: O labirinto se lembrará de você! Lembrará que você quebrou o cortador de todos os jardineiros!",
+		"Jardineiros: Ainda não estamos mortos!!!!",1;
+	end;
+OnInstanceInit:
+	.@map$ = instance_mapname("1@mist");
+	monster .@map$,318,137,"Bebê Fatum",LITTLE_FATUM,1,instance_npcname("Jardim de Todos")+"::OnMyMobDead";
+	monster .@map$,321,137,"Tomba, o Bebê",LITTLE_FATUM,1,instance_npcname("Jardim de Todos")+"::OnMyMobDead";
+	monster .@map$,324,137,"Exausto Remi",MIMING,1,instance_npcname("Jardim de Todos")+"::OnMyMobDead";
+	monster .@map$,319,135,"Rem, o Cansado",LITTLE_FATUM,1,instance_npcname("Jardim de Todos")+"::OnMyMobDead";
+	monster .@map$,323,135,"Ron, o Ex-Jardineiro",PARUS,1,instance_npcname("Jardim de Todos")+"::OnMyMobDead";
+	monster .@map$,320,133,"Rover, o Strutter",PARUS,1,instance_npcname("Jardim de Todos")+"::OnMyMobDead";
+	monster .@map$,323,133,"Mona, a Colecionadora de Sementes",ANGRA_MANTIS,1,instance_npcname("Jardim de Todos")+"::OnMyMobDead";
+	monster .@map$,317,132,"Tímido Namon",PARUS,1,instance_npcname("Jardim de Todos")+"::OnMyMobDead";
+	monster .@map$,326,132,"Indiferente Neo",MIMING,1,instance_npcname("Jardim de Todos")+"::OnMyMobDead";
+	monster .@map$,317,129,"Aracnídeo, o Seven-Legged",2132,1,instance_npcname("Jardim de Todos")+"::OnMyMobDead";
+	monster .@map$,320,129,"Tito, o Açoitador",ANGRA_MANTIS,1,instance_npcname("Jardim de Todos")+"::OnMyMobDead";
+	monster .@map$,324,129,"Preguiçoso Pumba",PARUS,1,instance_npcname("Jardim de Todos")+"::OnMyMobDead";
+	monster .@map$,327,129,"Desatento Tete",LITTLE_FATUM,1,instance_npcname("Jardim de Todos")+"::OnMyMobDead";
+	end;
+OnMyMobDead:
+	end;
+}
+
+1@mist,73,290,0	script	Flor Misteriosa#1	CLEAR_NPC,{
+	specialeffect EF_LEVEL99_4;
+	disablenpc instance_npcname(strnpcinfo(0));
+	getitem 12561,1; //Semente Misteriosa
+	end;
+}
+1@mist,69,295,0	duplicate(Flor Misteriosa#1)	Flor Misteriosa#2	CLEAR_NPC
+1@mist,62,291,0	duplicate(Flor Misteriosa#1)	Flor Misteriosa#3	CLEAR_NPC
+1@mist,54,293,0	duplicate(Flor Misteriosa#1)	Flor Misteriosa#4	CLEAR_NPC
+1@mist,48,286,0	duplicate(Flor Misteriosa#1)	Flor Misteriosa#5	CLEAR_NPC
+1@mist,54,277,0	duplicate(Flor Misteriosa#1)	Flor Misteriosa#6	CLEAR_NPC
+1@mist,52,270,0	duplicate(Flor Misteriosa#1)	Flor Misteriosa#7	CLEAR_NPC
+1@mist,62,268,0	duplicate(Flor Misteriosa#1)	Flor Misteriosa#8	CLEAR_NPC
+1@mist,72,271,0	duplicate(Flor Misteriosa#1)	Flor Misteriosa#9	CLEAR_NPC
+1@mist,72,276,0	duplicate(Flor Misteriosa#1)	Flor Misteriosa#10	CLEAR_NPC
+1@mist,118,194,0	duplicate(Flor Misteriosa#1)	Flor Misteriosa#11	CLEAR_NPC
+1@mist,122,204,0	duplicate(Flor Misteriosa#1)	Flor Misteriosa#12	CLEAR_NPC
+1@mist,137,209,0	duplicate(Flor Misteriosa#1)	Flor Misteriosa#13	CLEAR_NPC
+1@mist,144,203,0	duplicate(Flor Misteriosa#1)	Flor Misteriosa#14	CLEAR_NPC
+1@mist,146,186,0	duplicate(Flor Misteriosa#1)	Flor Misteriosa#15	CLEAR_NPC
+1@mist,142,182,0	duplicate(Flor Misteriosa#1)	Flor Misteriosa#16	CLEAR_NPC
+1@mist,132,179,0	duplicate(Flor Misteriosa#1)	Flor Misteriosa#17	CLEAR_NPC
+1@mist,123,184,0	duplicate(Flor Misteriosa#1)	Flor Misteriosa#18	CLEAR_NPC
+1@mist,194,118,0	duplicate(Flor Misteriosa#1)	Flor Misteriosa#19	CLEAR_NPC
+1@mist,188,109,0	duplicate(Flor Misteriosa#1)	Flor Misteriosa#20	CLEAR_NPC
+1@mist,193,94,0	duplicate(Flor Misteriosa#1)	Flor Misteriosa#21	CLEAR_NPC
+1@mist,205,92,0	duplicate(Flor Misteriosa#1)	Flor Misteriosa#22	CLEAR_NPC
+1@mist,213,96,0	duplicate(Flor Misteriosa#1)	Flor Misteriosa#23	CLEAR_NPC
+1@mist,216,103,0	duplicate(Flor Misteriosa#1)	Flor Misteriosa#24	CLEAR_NPC
+1@mist,212,116,0	duplicate(Flor Misteriosa#1)	Flor Misteriosa#25	CLEAR_NPC
+1@mist,207,120,0	duplicate(Flor Misteriosa#1)	Flor Misteriosa#26	CLEAR_NPC
+1@mist,169,310,0	duplicate(Flor Misteriosa#1)	Flor Misteriosa#27	CLEAR_NPC
+1@mist,172,296,0	duplicate(Flor Misteriosa#1)	Flor Misteriosa#28	CLEAR_NPC
+1@mist,191,301,0	duplicate(Flor Misteriosa#1)	Flor Misteriosa#30	CLEAR_NPC
+1@mist,195,301,0	duplicate(Flor Misteriosa#1)	Flor Misteriosa#31	CLEAR_NPC
+1@mist,192,316,0	duplicate(Flor Misteriosa#1)	Flor Misteriosa#32	CLEAR_NPC
+1@mist,187,320,0	duplicate(Flor Misteriosa#1)	Flor Misteriosa#33	CLEAR_NPC
+1@mist,174,318,0	duplicate(Flor Misteriosa#1)	Flor Misteriosa#34	CLEAR_NPC
+1@mist,308,136,0	duplicate(Flor Misteriosa#1)	Flor Misteriosa#35	CLEAR_NPC
+1@mist,314,122,0	duplicate(Flor Misteriosa#1)	Flor Misteriosa#36	CLEAR_NPC
+1@mist,321,118,0	duplicate(Flor Misteriosa#1)	Flor Misteriosa#37	CLEAR_NPC
+1@mist,331,123,0	duplicate(Flor Misteriosa#1)	Flor Misteriosa#38	CLEAR_NPC
+1@mist,335,126,0	duplicate(Flor Misteriosa#1)	Flor Misteriosa#39	CLEAR_NPC
+1@mist,332,141,0	duplicate(Flor Misteriosa#1)	Flor Misteriosa#40	CLEAR_NPC
+1@mist,328,144,0	duplicate(Flor Misteriosa#1)	Flor Misteriosa#41	CLEAR_NPC
+1@mist,314,144,0	duplicate(Flor Misteriosa#1)	Flor Misteriosa#42	CLEAR_NPC
+1@mist,238,224,0	duplicate(Flor Misteriosa#1)	Flor Misteriosa#43	CLEAR_NPC
+1@mist,244,231,0	duplicate(Flor Misteriosa#1)	Flor Misteriosa#44	CLEAR_NPC
+1@mist,257,232,0	duplicate(Flor Misteriosa#1)	Flor Misteriosa#45	CLEAR_NPC
+1@mist,262,229,0	duplicate(Flor Misteriosa#1)	Flor Misteriosa#46	CLEAR_NPC
+1@mist,265,216,0	duplicate(Flor Misteriosa#1)	Flor Misteriosa#47	CLEAR_NPC
+1@mist,260,214,0	duplicate(Flor Misteriosa#1)	Flor Misteriosa#48	CLEAR_NPC
+1@mist,252,206,0	duplicate(Flor Misteriosa#1)	Flor Misteriosa#49	CLEAR_NPC
+1@mist,244,211,0	duplicate(Flor Misteriosa#1)	Flor Misteriosa#50	CLEAR_NPC
+
+//============================================================
+// Dragão Púrpura - Missão
+//============================================================
+1@mist,2,2,0	script	#Dragon Herder	CLEAR_NPC,{
+	end;
+OnInstanceInit:
+	switch(rand(1,6)) {
+		case 1: setarray .@c[0],77,240; break;
+		case 2: setarray .@c[0],147,261; break;
+		case 3: setarray .@c[0],182,263; break;
+		case 4: setarray .@c[0],194,350; break;
+		case 5: setarray .@c[0],268,183; break;
+		case 6: setarray .@c[0],65,278; break;
+	}
+	monster instance_mapname("1@mist"),.@c[0],.@c[1],"Dragão Púrpura",LOST_DRAGON,1,instance_npcname("#Dragon Herder")+"::OnMyMobDead";
+	end;
+OnMyMobDead:
+	.@map$ = instance_mapname("1@mist");
+	if (mobcount(.@map$,instance_npcname("#Dragon Herder")+"::OnMyMobDead") == 0) {
+		donpcevent instance_npcname("Moça Desmaiada#mist")+"::OnEnable";
+		donpcevent instance_npcname("Jovem Misterioso#mis")+"::OnEnable";
+		donpcevent instance_npcname("Loki#mist")+"::OnEnable";
+		mapannounce .@map$,"O choro do Dragão: Estou sendo punido... por ter abandonado o caminho... do guardião...?",bc_map,"0xffff00";
+		disablenpc instance_npcname("#Dragon Herder");
+		initnpctimer;
+	}
+	end;
+OnTimer3000:
+	stopnpctimer;
+	mapannounce instance_mapname("1@mist"),"Voz em sua cabeça: ... Me... salve... por... favor...",bc_map,"0xffff00";
+	end;
+}
+
+1@mist,97,30,3	script	Jovem Misterioso#mis	4_M_ROKI2,{
+	if (BaseLevel < 98) {
+		mes "[Jovem Misterioso]";
+		mes "Hã? Você pretende andar por aqui?";
+		mes "... Tenho medo deste lugar, isto vai além da sua capacidade, mas não vou me intrometer nos seus assuntos.";
+		mes "Nos encontraremos novamente, isso se você sobreviver.";
+		close;
+	}
+	if (ep14_1_mistwoods == 0) {
+		if (ep13_3_secret > 23) {
+			mes "[Jovem Misterioso]";
+			mes "Você... lembro de vê-lo no campo.";
+			mes "A informação que você deu foi útil.";
+			mes "Obrigado!";
+			next;
+			mes "[Jovem Misterioso]";
+			mes "Mas você pretende andar por aqui?";
+			mes "O que é tão bom para querer atravessar Bifrost?";
+			next;
+		} else {
+			mes "[Jovem Misterioso]";
+			mes "Você pretende andar por aqui?";
+			mes "Não aconselho você continuar se só estiver curioso.";
+			mes "Pois este lugar trará a você, apenas uma morte prematura...";
+			next;
+		}
+		mes "[Jovem Misterioso]";
+		mes "Se você está determinado a percorrer por aqui.";
+		mes "Pedirei a sua ajuda com algumas coisas.";
+		next;
+		select("Quem é você?");
+		mes "[Loki]";
+		mes "Loki... da Guilda dos Mercenários.";
+		mes "Esse é o meu nome.";
+		mes "E o seu?";
+		next;
+		mes "["+strcharinfo(PC_NAME)+"]";
+		mes "....";
+		mes ".... "+strcharinfo(PC_NAME)+", senhor.";
+		next;
+		mes "[Loki]";
+		mes "Entendi. "+strcharinfo(PC_NAME)+".";
+		mes "Vou lhe perguntar novamente.";
+		mes "Você pretende passar por esta floresta?";
+		next;
+		switch(select("Sim.:Não.")) {
+		case 1:
+			mes "[Loki]";
+			mes "Então vou lhe fazer uma nova pergunta.";
+			mes "Você por acaso viu uma guardiã... uma garota de cabelo roxo?";
+			next;
+			switch(select("Não.:Acho que sim...")) {
+			case 1:
+				mes "[Loki]";
+				mes "Ah, não?";
+				mes "Está dizendo a verdade.";
+				next;
+				break;
+			case 2:
+				mes "[Loki]";
+				mes "Espere...";
+				mes "(Loki se aproxima.)";
+				mes "... Não.";
+				mes "Você está dizendo a verdade.";
+				next;
+				break;
+			}
+			mes "[Loki]";
+			mes "Então, agora, precisamos nos despedir.";
+			mes "Quem sabe num outro dia voltamos a nos ver, se você sobreviver a floresta, é claro.";
+			ep14_1_mistwoods = 2;
+			setquest 7212;
+			close;
+		case 2:
+			mes "[Loki]";
+			mes "Entendo.";
+			mes "Volte se você não estiver pronto.";
+			mes "Esta floresta não gosta de estranhos.";
+			ep14_1_mistwoods = 1;
+			close;
+		}
+	} else if (ep14_1_mistwoods == 1) {
+		mes "[Loki]";
+		mes "Eu lhe disse - volte se você não quiser morrer.";
+		mes "Não é nada fácil percorrer pelo labirinto.";
+		mes "Isso pode custar a sua vida.";
+		next;
+		switch(select("Está bem.:O que você quer?")) {
+		case 1:
+			mes "- Enquanto está de costas,";
+			mes "Loki acena um pouco com a cabeça e, em seguida, olha para o lado. -";
+			close;
+		case 2:
+			mes "[Loki]";
+			mes "Estou à procura de alguém.";
+			mes "Você por acaso viu uma guardiã... uma garota de cabelo roxo?";
+			next;
+			switch(select("Não.:Acho que sim...")) {
+			case 1:
+				mes "[Loki]";
+				mes "Ah, não?";
+				mes "Está dizendo a verdade.";
+				next;
+				break;
+			case 2:
+				mes "[Loki]";
+				mes "Espere...";
+				mes "(Loki se aproxima.)";
+				mes "...Não.";
+				mes "Você está dizendo a verdade.";
+				next;
+				break;
+			}
+			mes "[Loki]";
+			mes "Agora, precisamos dizer adeus.";
+			mes "Com sorte, vamos nos ver outra vez em Mora.";
+			ep14_1_mistwoods = 2;
+			setquest 7212;
+			close;
+		}
+	} else if (ep14_1_mistwoods == 2) {
+		mes "[Loki]";
+		mes "Não posso ir com você.";
+		mes "Porém, com sorte, nos encontraremos novamente em Mora.";
+		close;
+	} else if (ep14_1_mistwoods == 3) {
+		mes "[Loki]";
+		mes "Então nos encontramos novamente.";
+		mes "Você já se acostumou neste lugar?";
+		mes "Venha para a pousada em Mora.";
+		mes "Tenho algo para lhe dar.";
+		close;
+	} else {
+		mes "[Loki]";
+		mes "Estamos nos encontrando muitas vezes ultimamente.";
+		mes "Parece que você está completamente confortável com o ambiente.";
+		mes "Mas é melhor você não ficar orgulhoso de si mesmo.";
+		close;
+	}
+	end;
+OnEnable:
+	enablenpc instance_npcname("Jovem Misterioso#mis");
+	end;
+OnDisable:
+	disablenpc instance_npcname("Jovem Misterioso#mis");
+	end;
+}
+
+1@mist,183,304,3	script	Loki#mist	4_M_ROKI2,{
+	if (ep14_1_mistwoods < 2) {
+		mes "[Loki]";
+		mes "Um aventureiro na floresta.";
+		mes ".....";
+		mes "Você poderá chegar em Mora através deste labirinto.";
+		close;
+	} else if (ep14_1_mistwoods == 2) {
+		mes "[Loki]";
+		mes "Foi você quem deu um jeito nessa garota desobediente?";
+		mes "Acho que preciso lhe agradecer.";
+		mes "Você a acalmou.";
+		next;
+		select("O que está acontecendo?:Esta garota...?");
+		mes "[Loki]";
+		mes "Você pode mudar sua aparência, mas não sua luz inata. Ela é única.";
+		mes "Um odor forte o suficiente para queimar seu nariz.";
+		next;
+		mes "[Loki]";
+		mes "Este é Nydhogg, o Guardião de Yggdrasil.";
+		mes "Era ele que eu estava procurando.";
+		mes "Agora, ela não vai mais ficar enloquecida de um lado para outro.";
+		next;
+		select("O que vai fazer agora?");
+		mes "[Loki]";
+		mes "Irei esperar ela acordar e sair desta floresta.";
+		mes "Posso fazer isso sozinho.";
+		mes "Vejo você em Mora.";
+		ep14_1_mistwoods = 3;
+		erasequest 7212;
+		setquest 7213;
+		close;
+	} else if (ep14_1_mistwoods == 3) {
+		mes "[Loki]";
+		mes "Não quero ir com você.";
+		mes "Posso cuidar dela sozinho.";
+		mes "Se tiver algo para dizer, diga quando tivermos saído da floresta.";
+		close;
+	} else {
+		mes "[Loki]";
+		mes "Não quero ir com você.";
+		mes "Se tiver algo para dizer, diga quando tivermos saído da floresta.";
+		close;
+	}
+	end;
+OnInstanceInit:
+OnDisable:
+	disablenpc instance_npcname("Loki#mist");
+	end;
+OnEnable:
+	enablenpc instance_npcname("Loki#mist");
+	end;
+}
+
+1@mist,181,303,3	script	Garota Desmaiada#mist	4_F_NYDHOG2,{
+	mes "Você pode observar uma garota de cabelos estranhos caída no chão.";
+	mes "Seus cabelos cheiram tão forte que, quando você se aproxima fica zonzo.";
+	close;
+OnInstanceInit:
+OnDisable:
+	disablenpc instance_npcname("Moça Desmaiada#mist");
+	end;
+OnEnable:
+	enablenpc instance_npcname("Moça Desmaiada#mist");
+	end;
+}
+
+mora,46,152,5	script	Moça das Flores	4_F_NYDHOG,{
+	if (ep14_1_mistwoods < 3) {
+		mes "[Moça das Flores]";
+		mes "Preciso descansar.";
+		mes "Estou muito cansada para conversar com você.";
+		mes "Desculpe-me.";
+		close;
+	} else if (ep14_1_mistwoods == 3) {
+		mes "[Nydhogg o Guardião]";
+		mes "Estive esperando por você.";
+		mes "Ainda estou confuso, mas sei o que fiz de errado.";
+		next;
+		mes "[Nydhogg o Guardião]";
+		mes "Se não fosse por você, eu ainda estaria vagando na escuridão abissal.";
+		mes "Agradeço-lhe do fundo do meu coração.";
+		next;
+		mes "[Nydhogg o Guardião]";
+		mes "Tenho vergonha de mim mesmo, expresso palavras doces, mas vazias por causa de minha solidão.";
+		mes "....";
+		next;
+		mes "[Nydhogg o Guardião]";
+		mes "Não mereço mais ser um guardião.";
+		mes "Um dragão enlouquecido não é mais um guardião.";
+		next;
+		mes "[Loki]";
+		mes "Yggdrasil não pense assim.";
+		mes "Nidi, não se esqueça de suas responsabilidades.";
+		next;
+		mes "[Nydhogg o Guardião]";
+		mes "Você está...?";
+		mes "Entendo...";
+		mes "Pensei que estava sozinho...";
+		next;
+		mes "O Guardião lentamente olhou para o lado, como se imerso de pensamentos estava.";
+		ep14_1_mistwoods = 4;
+		close2;
+	} else if (ep14_1_mistwoods == 4) {
+		mes "- Ele parece estar imerso de pensamentos. -";
+		close;
+	} else {
+		mes "[Nydhogg o Guardião]";
+		mes "Ainda não obti todos meus poderes de volta.";
+		mes "Desculpe-me, não posso ajudar.";
+		next;
+		mes "[Nydhogg o Guardião]";
+		mes "Loki disse...";
+		mes "Que não vou chorar de solidão,";
+		mes "e que sempre terei amigos iguais a você...";
+		next;
+		mes "[Nydhogg o Guardião]";
+		mes "... Perdi tudo, mas estou feliz.";
+		close;
+	}
+}
+
+mora,48,152,3	script	Jovem Desconfiado	4_M_ROKI2,{
+	if (checkweight(1201,1) == 0 || MaxWeight - Weight < 1000) {
+		mes "- Você possui muitos itens para realizar está missão -";
+		close;
+	}
+	if (ep14_1_mistwoods < 3) {
+		mes "Ele não está interessado em conversar com você. Não está interessado por todos, sabia?";
+		close;
+	} else if (ep14_1_mistwoods == 3) {
+		mes "[Loki]";
+		mes "Então, você atravessou a floresta.";
+		mes "Parece que Niddy tem algo para lhe dizer.";
+		close;
+	} else if (ep14_1_mistwoods == 4) {
+		mes "[Loki]";
+		mes "Nydhogg foi um dos guardiões da Árvore do Mundo.";
+		mes "Mas ele abandonou suas responsabilidades como guardião quando cedeu à tentação de Morroc.";
+		next;
+		mes "[Loki]";
+		mes "Alguns tolos realizaram um ritual para quebrar o selo que mantinha aprisionado Morroc.";
+		mes "Mas o ritual não funcionou. O servo de Morroc não conseguiu quebrar o selo.";
+		next;
+		mes "[Loki]";
+		mes "Mas o selo é tão fraco que pode ser quebrado a qualquer momento.";
+		mes "Por meio da vontade da Árvore do Mundo, Yggdrasil manteve o selo inquebrável.";
+		next;
+		mes "[Nydhogg o Guardião]";
+		mes "Está certo. O poder da Árvore do Mundo está ligada ao mundo inteiro.";
+		mes "Quando a união entre os guardiãos e Yggdrasil se quebrou, Yggdrasil tornou-se instável.";
+		next;
+		mes "[Nydhogg o Guardião]";
+		mes "É por isso que todos estes desastres aconteceram com Yggdrasil.";
+		mes "Como a Árvore do Mundo tornou-se instável, a influência que teve sobre o selo enfraqueceu.";
+		next;
+		mes "[Loki]";
+		mes "E Morroc acabou se libertando do selo.";
+		mes "Parece que ele usou a maior parte de seus poderes para quebrar o selo.";
+		next;
+		mes "[Nydhogg o Guardião]";
+		mes "É tudo culpa minha.";
+		mes "Não consegui recusar as tentações de Morroc.";
+		mes "Por muito... muito tempo...";
+		next;
+		mes "[Nydhogg o Guardião]";
+		mes "... Como gostaria de aliviar minhas solidões de milhares de anos.";
+		mes "Eu não estava com minhas faculdades mentais estáveis naquele momento.";
+		mes "Eu não era a mesma pessoa quando quebrei meu vínculo com Yggdrasil.";
+		next;
+		mes "[Nydhogg o Guardião]";
+		mes "Perdi o controle de mim mesmo, e fiz o que não deveria ter feito.";
+		mes "O meu outro eu se tornou uma sombra, um tirano imprudente.";
+		next;
+		mes "[Nydhogg o Guardião]";
+		mes "Quando percebi o que o mundo estava enfrentando...";
+		mes "Senti uma grande perda, foi um sentimento tão doloroso, mais doloroso do que a solidão que senti por milhares de anos.";
+		next;
+		mes "[Nydhogg o Guardião]";
+		mes "Foi assim que me tornei uma pessoa solitária.";
+		next;
+		mes "[Nydhogg o Guardião]";
+		mes "Então acabei me tornando um ser esquecido para o mundo.";
+		next;
+		mes "[Loki]";
+		mes "Não é tão tarde.";
+		mes "Você ainda é um guardião.";
+		mes "Com certeza, tem muitas coisas para serem feitas.";
+		next;
+		mes "[Nydhogg o Guardião]";
+		mes "...Ah sim. Claro que é tarde. Mas ainda preciso cumprir meus deveres como tutor.";
+		mes "Pensando bem, já sei como resolver está situação... irei destruir Morroc com minhas próprias mãos.";
+		mes "Preciso cumprir meus deveres como um guardião.";
+		next;
+		switch(select("Você não está sozinho.:Essas funções são muito importantes.")) {
+		case 1:
+			mes "[Nydhogg o Guardião]";
+			mes "Você está certo.";
+			mes "Talvez seja por isso que ainda não fui totalmente abandonado -, percebo que não estou totalmente sozinho.";
+			mes "Você é uma alma muito caridosa.";
+			next;
+			break;
+		case 2:
+			mes "[Nydhogg o Guardião]";
+			mes "Mas isso é o que tinha de fazer.";
+			mes "De qualquer forma, estou feliz.";
+			next;
+			break;
+		}
+		mes "[Nydhogg o Guardião]";
+		mes strcharinfo(PC_NAME)+"...";
+		mes "Obrigado por ouvir minha longa história.";
+		next;
+		mes "[Nydhogg o Guardião]";
+		mes "É o que guardo comigo mesmo.";
+		mes "Tenho certeza de que irei protegê-lo algum dia.";
+		next;
+		mes "[Loki]";
+		mes "(Removeu o lenço do pescoço e entregou a você.)";
+		next;
+		mes "[Nydhogg o Guardião]";
+		mes "Que a benção da Mãe Yggdrasil esteja com você...";
+		ep14_1_mistwoods = 10;
+		completequest 7213;
+		getitem 2568,1; //Sobrepeliz Sombrio do Sicário
+		getitem 2858,1; //Pingente do Guardião
+		getexp 400000,400000;
+		close;
+	} else {
+		mes "[Loki]";
+		mes "Vou ficar aqui por mais algum tempo.";
+		mes "Nos encontraremos novamente.";
+		next;
+		mes "[Loki]";
+		mes "O dia em que Morroc revelar sua natureza desprezível...";
+		mes "Estarei aqui, esperando por ele.";
+		close;
+	}
+}
+
+//============================================================
+// Nascimento de Monstros
+//============================================================
+1@mist,1,1,0	script	#Mist Mobs Respawn1	CLEAR_NPC,{
+	end;
+OnInstanceInit:
+	monster instance_mapname("1@mist"),0,0,"Miming",MIMING,15,instance_npcname("#Mist Mobs Respawn1")+"::OnMyMobDead";
+	end;
+OnMyMobDead:
+	.@map$ = instance_mapname("1@mist");
+	.@num_mobs = 15 - mobcount(.@map$,instance_npcname("#Mist Mobs Respawn1")+"::OnMyMobDead");
+	if (.@num_mobs > 0)
+		monster .@map$,0,0,"Miming",MIMING,.@num_mobs,instance_npcname("#Mist Mobs Respawn1")+"::OnMyMobDead";
+	end;
+}
+
+1@mist,1,2,0	script	#Mist Mobs Respawn2	CLEAR_NPC,{
+	end;
+OnInstanceInit:
+	monster instance_mapname("1@mist"),0,0,"Aranha Pom",POM_SPIDER,35,instance_npcname("#Mist Mobs Respawn2")+"::OnMyMobDead";
+	end;
+OnMyMobDead:
+	.@map$ = instance_mapname("1@mist");
+	.@num_mobs = 35 - mobcount(.@map$,instance_npcname("#Mist Mobs Respawn2")+"::OnMyMobDead");
+	if (.@num_mobs > 0)
+		monster .@map$,0,0,"Aranha Pom",POM_SPIDER,.@num_mobs,instance_npcname("#Mist Mobs Respawn2")+"::OnMyMobDead";
+	end;
+}
+
+1@mist,1,3,0	script	#Mist Mobs Respawn3	CLEAR_NPC,{
+	end;
+OnInstanceInit:
+	monster instance_mapname("1@mist"),0,0,"Louva-a-Deus Angra",ANGRA_MANTIS,35,instance_npcname("#Mist Mobs Respawn3")+"::OnMyMobDead";
+	end;
+OnMyMobDead:
+	.@map$ = instance_mapname("1@mist");
+	.@num_mobs = 35 - mobcount(.@map$,instance_npcname("#Mist Mobs Respawn3")+"::OnMyMobDead");
+	if (.@num_mobs > 0)
+		monster .@map$,0,0,"Louva-a-Deus Angra",ANGRA_MANTIS,.@num_mobs,instance_npcname("#Mist Mobs Respawn3")+"::OnMyMobDead";
+	end;
+}
+
+1@mist,1,4,0	script	#Mist Mobs Respawn4	CLEAR_NPC,{
+	end;
+OnInstanceInit:
+	monster instance_mapname("1@mist"),0,0,"Chapim",PARUS,35,instance_npcname("#Mist Mobs Respawn4")+"::OnMyMobDead";
+	end;
+OnMyMobDead:
+	.@map$ = instance_mapname("1@mist");
+	.@num_mobs = 35 - mobcount(.@map$,instance_npcname("#Mist Mobs Respawn4")+"::OnMyMobDead");
+	if (.@num_mobs > 0)
+		monster .@map$,0,0,"Chapim",PARUS,.@num_mobs,instance_npcname("#Mist Mobs Respawn4")+"::OnMyMobDead";
+	end;
+}
+
+1@mist,1,5,0	script	#Mist Mobs Respawn5	CLEAR_NPC,{
+	end;
+OnInstanceInit:
+	monster instance_mapname("1@mist"),0,0,"Pequeno Fatum",LITTLE_FATUM,15,instance_npcname("#Mist Mobs Respawn5")+"::OnMyMobDead";
+	end;
+OnMyMobDead:
+	.@map$ = instance_mapname("1@mist");
+	.@num_mobs = 15 - mobcount(.@map$,instance_npcname("#Mist Mobs Respawn5")+"::OnMyMobDead");
+	if (.@num_mobs > 0)
+		monster .@map$,0,0,"Pequeno Fatum",LITTLE_FATUM,.@num_mobs,instance_npcname("#Mist Mobs Respawn5")+"::OnMyMobDead";
+	end;
+}
+
+1@mist,1,6,0	script	#Fragments of Memory	CLEAR_NPC,{
+	end;
+OnInstanceInit:
+	disablenpc instance_npcname("#Fragments of Memory");
+	monster instance_mapname("1@mist"),0,0,"Memória de Nidhogg",NYDHOG_MEMORY1_1,15;
+	end;
+}
+
+//============================================================
+// Portais de Teleporte
+//============================================================
+bif_fild01,38,374,0	script	Pétalas de Flores#ep14_1	CLEAR_NPC,{
+	mes "É uma flor gigante com energia misteriosa.";
+	if (countitem(12561)) {
+		mes "Ela está reagindo às Sementes de Flor Misteriosa que você possui.";
+		next;
+		switch(select("Observar a reação.:Interromper a reação.")) {
+		case 1:
+			mes "A flor começa a sacudir violentamente";
+			mes "e se lança para frente, como se estivesse tentando mandar as semente para bem longe!!";
+			close2;
+			delitem 12561,1; //Semente Misteriosa
+			warp "bif_fild02",160,230;
+			end;
+		case 2:
+			mes "Você segurou as sementes misteriosas com força, a flor tremeu com muita força e se acalmou em seguida.";
+			close;
+		}
+	}
+	mes "Existem pétalas de flores aqui...";
+	close;
+}
+
+1@mist,104,23,0	warp	#to_bif01	1,1,bif_fild01,160,352
+
+1@mist,109,70,0	script	a1_a2	WARPNPC,1,1,{
+	end;
+OnTouch:
+	if (!questprogress(7211,PLAYTIME))
+		setquest 7211;
+	warp instance_mapname("1@mist"),116,40;
+	end;
+}
+
+1@mist,113,40,0	warp	a2_a7	1,1,1@mist,90,81
+1@mist,93,81,0	warp	a7_a14	1,1,1@mist,108,152
+1@mist,111,154,0	warp	a14_a24	1,1,1@mist,236,108
+1@mist,236,110,0	warp	a24_a1	1,1,1@mist,106,69
+1@mist,161,67,0	warp	a18-1_a22	1,1,1@mist,159,85
+1@mist,180,116,0	warp	a23_a18-1	1,1,1@mist,164,66
+1@mist,180,63,0	warp	a18-2_a9	1,1,1@mist,141,90
+1@mist,116,84,0	warp	a8_a26	1,1,1@mist,222,133
+1@mist,220,133,0	warp	a26_a27-1	1,1,1@mist,200,64
+1@mist,197,64,0	warp	a27-1_a23	1,1,1@mist,177,116
+1@mist,146,194,0	warp	af1-2_a27-2	1,1,1@mist,225,96
+1@mist,133,195,0	warp	af1-1_af2-1	1,1,1@mist,202,110
+1@mist,202,107,0	warp	af2-1_af1-1	1,1,1@mist,134,189
+1@mist,217,110,0	warp	af2-2_a20-1	1,1,1@mist,240,56
+1@mist,240,54,0	warp	a20-1_af2-2	1,1,1@mist,214,110
+1@mist,234,67,0	warp	a20-2_a21	1,1,1@mist,239,80
+1@mist,242,77,0	warp	a21_a15-1	1,1,1@mist,153,137
+1@mist,156,139,0	warp	a15-1_a3	1,1,1@mist,123,55
+1@mist,124,51,0	warp	a3_a20-1	1,1,1@mist,240,56
+1@mist,48,41,0	warp	a4-1_a17	1,1,1@mist,174,165
+1@mist,171,165,0	warp	a17_a16	1,1,1@mist,168,143
+1@mist,169,141,0	warp	a16_a10	1,1,1@mist,101,107
+1@mist,99,107,0	warp	a10_a4-2	1,1,1@mist,57,38
+1@mist,65,113,0	warp	a11_a28	1,1,1@mist,218,151
+1@mist,221,151,0	warp	a28_a13	1,1,1@mist,117,126
+1@mist,114,126,0	warp	a13_a5	1,1,1@mist,36,62
+1@mist,61,88,0	warp	a6_a19	1,1,1@mist,189,139
+1@mist,186,140,0	warp	a19_a12	1,1,1@mist,98,126
+1@mist,101,126,0	warp	a12_a29-1	1,1,1@mist,238,151
+1@mist,235,152,0	warp	a29-1_af1-2	1,1,1@mist,144,194
+1@mist,254,151,0	warp	a29-2E_b1	1,1,1@mist,271,164
+1@mist,275,211,0	warp	b1_b13	1,1,1@mist,277,112
+1@mist,301,141,0	warp	b14_b24	1,1,1@mist,99,232
+1@mist,99,230,0	warp	b24_b25	1,1,1@mist,103,255
+1@mist,102,253,0	warp	b25_b4-1	1,1,1@mist,215,177
+1@mist,212,177,0	warp	b4-1_b1	1,1,1@mist,276,208
+1@mist,289,167,0	warp	b2_b19	1,1,1@mist,152,219
+1@mist,149,219,0	warp	b19_b20	1,1,1@mist,119,227
+1@mist,115,227,0	warp	b20_b23	1,1,1@mist,230,353
+1@mist,233,353,0	warp	b23_b7	1,1,1@mist,289,225
+1@mist,76,273,0	warp	bf1-2_b7	1,1,1@mist,289,225
+1@mist,61,282,0	warp	bf1-1_bf2-1	1,1,1@mist,256,220
+1@mist,252,220,0	warp	bf2-1_bf1-1	1,1,1@mist,65,282
+1@mist,267,213,0	warp	bf2-2_b28	1,1,1@mist,214,268
+1@mist,212,265,0	warp	b28_b12	1,1,1@mist,288,266
+1@mist,285,266,0	warp	b12_b21	1,1,1@mist,143,234
+1@mist,143,231,0	warp	b21_b29	1,1,1@mist,222,281
+1@mist,223,279,0	warp	b29_b31	1,1,1@mist,158,317
+1@mist,134,287,0	warp	b30_b3	1,1,1@mist,293,195
+1@mist,295,197,0	warp	b3_b10	1,1,1@mist,239,253
+1@mist,236,253,0	warp	b10_b12	1,1,1@mist,288,266
+1@mist,111,203,0	warp	b16_b34	1,1,1@mist,202,333
+1@mist,199,333,0	warp	b34_b27-1	1,1,1@mist,203,251
+1@mist,206,249,0	warp	b27-1_b22	1,1,1@mist,168,239
+1@mist,165,239,0	warp	b22_b15	1,1,1@mist,89,173
+1@mist,177,265,0	warp	b27-2_a14	1,1,1@mist,108,152
+1@mist,166,314,0	warp	bN-1_b27-3	1,1,1@mist,206,297
+1@mist,197,299,0	warp	bN-2_b17	1,1,1@mist,167,200
+1@mist,165,200,0	warp	b17_bN-2	1,1,1@mist,193,299
+1@mist,86,173,0	warp	b15_b32	1,1,1@mist,218,313
+1@mist,215,313,0	warp	b32_b28	1,1,1@mist,214,268
+1@mist,230,324,0	warp	b33_b6-1	1,1,1@mist,221,233
+1@mist,230,230,0	warp	b6-2_b11	1,1,1@mist,263,261
+1@mist,263,258,0	warp	b11_b9	1,1,1@mist,272,246
+1@mist,269,246,0	warp	b9_b26	1,1,1@mist,143,265
+1@mist,140,265,0	warp	b26_b5	1,1,1@mist,209,200
+1@mist,195,206,0	warp	b18_b35	1,1,1@mist,169,341
+1@mist,166,341,0	warp	b35_b36	1,1,1@mist,198,354
+1@mist,201,354,0	warp	b36_b37-1	1,1,1@mist,83,224
+1@mist,87,224,0	warp	b37-1_b35	1,1,1@mist,169,341
+1@mist,84,273,0	warp	b37-2_c1	1,1,1@mist,98,287
+1@mist,111,298,0	warp	c2_c3	1,1,1@mist,82,307
+1@mist,79,307,0	warp	c3_c7	1,1,1@mist,284,89
+1@mist,281,89,0	warp	c7_c12	1,1,1@mist,264,291
+1@mist,261,291,0	warp	c12_c2	1,1,1@mist,115,298
+1@mist,326,275,0	warp	c13-1_b13	1,1,1@mist,277,112
+1@mist,294,293,0	warp	c13-2_c5	1,1,1@mist,78,330
+1@mist,81,330,0	warp	c5_c17	1,1,1@mist,308,330
+1@mist,308,327,0	warp	c17_c10	1,1,1@mist,309,165
+1@mist,306,165,0	warp	c10_c13-2	1,1,1@mist,298,293
+1@mist,46,316,0	warp	c4_c6	1,1,1@mist,113,328
+1@mist,95,328,0	warp	c6_c9	1,1,1@mist,342,157
+1@mist,339,157,0	warp	c9_c16	1,1,1@mist,343,328
+1@mist,343,325,0	warp	c16_c8-2	1,1,1@mist,346,120
+1@mist,344,123,0	warp	c8-2_c19	1,1,1@mist,277,343
+1@mist,256,313,0	warp	c18_c15	1,1,1@mist,343,307
+1@mist,342,305,0	warp	c15_cKEY	1,1,1@mist,332,121
+1@mist,335,120,0	warp	cKEY_c18	1,1,1@mist,259,313
+1@mist,317,89,0	warp	c8-1_c14	1,1,1@mist,339,284
+1@mist,339,281,0	warp	c14_c11-1	1,1,1@mist,332,172
+1@mist,329,171,0	warp	c11-1_c8-2	1,1,1@mist,346,120
+1@mist,301,237,0	warp	b8_b2	1,1,1@mist,289,170
+
+//============================================================
+// Código Personalizado para desativar os teleportes das Árvores do Jardim.
+//============================================================
+1@mist,1,1,0	script	#mist_warp_init	CLEAR_NPC,{
+	end;
+OnInstanceInit:
+	disablenpc instance_npcname("a25_a18-1");
+	disablenpc instance_npcname("a27-2_af1-2");
+	disablenpc instance_npcname("a15-2_a4-1");
+	disablenpc instance_npcname("a4-2_a11");
+	disablenpc instance_npcname("b4-2_b2");
+	disablenpc instance_npcname("b7_bf1-2");
+	disablenpc instance_npcname("b31_b16");
+	disablenpc instance_npcname("b27-3_bN-1");
+	disablenpc instance_npcname("b6-1_b33");
+	disablenpc instance_npcname("b5_b14");
+	disablenpc instance_npcname("c1_c13-1");
+	disablenpc instance_npcname("c13-3_c4");
+	disablenpc instance_npcname("c19_c4");
+	disablenpc instance_npcname("#to_bif02");
+	disablenpc instance_npcname("#mist_warp_init");
+	end;
+}
+1@mist,247,123,0	warp	a25_a18-1	1,1,1@mist,164,66	//Tom
+1@mist,225,98,0	warp	a27-2_af1-2	1,1,1@mist,144,194	//Tomba
+1@mist,159,184,0	warp	a15-2_a4-1	1,1,1@mist,49,37	//Remi
+1@mist,61,39,0	warp	a4-2_a11	1,1,1@mist,68,113	//Rem
+1@mist,230,179,0	warp	b4-2_b2	1,1,1@mist,289,170	//Ron
+1@mist,285,225,0	warp	b7_bf1-2	1,1,1@mist,72,274	//Rover
+1@mist,161,316,0	warp	b31_b16	1,1,1@mist,108,203	//Mona
+1@mist,204,299,0	warp	b27-3_bN-1	1,1,1@mist,169,314	//Namon
+1@mist,221,236,0	warp	b6-1_b33	1,1,1@mist,233,324	//Neo
+1@mist,206,200,0	warp	b5_b14	1,1,1@mist,298,142	//Aracnídeo
+1@mist,95,287,0	warp	c1_c13-1	1,1,1@mist,323,276	//Tito
+1@mist,324,325,0	warp	c13-3_c4	1,1,1@mist,49,316	//Pumba
+1@mist,280,344,0	warp	c19_c4	1,1,1@mist,49,316	//Tete
+1@mist,345,186,0	warp	#to_bif02	1,1,bif_fild02,151,121	//Jardim de Todos
