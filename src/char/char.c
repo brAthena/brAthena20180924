@@ -1459,6 +1459,21 @@ int char_mmo_char_fromsql(int char_id, struct mmo_charstatus* p, bool load_every
 	if( SQL_SUCCESS == SQL->StmtNextRow(stmt) )
 		strcat(t_msg, " accdata");
 
+	// user_id, last_ip
+	if (SQL_ERROR == SQL->StmtPrepare(stmt, "SELECT `userid`,`last_ip` FROM `login` WHERE `account_id`=? LIMIT 1")
+	 || SQL_ERROR == SQL->StmtBindParam(stmt, 0, SQLDT_INT, &account_id, 0)
+	 || SQL_ERROR == SQL->StmtExecute(stmt)
+	 || SQL_ERROR == SQL->StmtBindColumn(stmt, 0, SQLDT_STRING, &p->userid, sizeof(p->userid), NULL, NULL)
+	 || SQL_ERROR == SQL->StmtBindColumn(stmt, 1, SQLDT_STRING, &p->last_ip, sizeof(p->last_ip), NULL, NULL)
+	) {
+		SqlStmt_ShowDebug(stmt);
+	}
+
+	if (SQL_SUCCESS != SQL->StmtNextRow(stmt)) {
+		ShowError("char.c: ocorreu um erro, char_id: %d!\n", char_id);
+		SQL->StmtFree(stmt);
+	}
+
 	if (save_log) ShowInfo("Personagem carregado (%d - %s): %s\n", char_id, p->name, t_msg); //ok. all data load successfully!
 	SQL->StmtFree(stmt);
 	StrBuf->Destroy(&buf);

@@ -1140,14 +1140,7 @@ int pc_isequip(struct map_session_data *sd,int n)
 
 	return 1;
 }
-/*===============BrAthena===================
- *Returns User Session IP Adress
- *------------------------------------------*/
-void pc_get_ip(struct map_session_data *sd,char * str){
-	uint32 ip = sockt->session[sd->fd]->client_addr;
-	sprintf(str,"%d.%d.%d.%d",CONVIP(ip));
-	return;
-}
+
 /*==========================================
  * No problem with the session id
  * set the status that has been sent from char server
@@ -11971,7 +11964,4 @@ void pc_defaults(void) {
 	pc->update_idle_time = pc_update_idle_time;
 	
 	pc->have_magnifier = pc_have_magnifier;
-	
-	// BrAthena
-	pc->get_ip = pc_get_ip;
 }

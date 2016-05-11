@@ -7309,8 +7309,7 @@ void brathena_report(char* date, char *time_c) {
 #endif
 
 	/* non-define part */
-	if( logs->config.sql_logs )
-		config |= C_SQL_LOGS;
+	config |= C_SQL_LOGS;
 
 #ifdef MEMWATCH
 	config |= C_MEMWATCH;

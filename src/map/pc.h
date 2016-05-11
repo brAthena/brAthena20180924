@@ -1087,8 +1087,6 @@ END_ZEROED_BLOCK; /* End */
 	void (*update_idle_time) (struct map_session_data* sd, enum e_battle_config_idletime type);
 
 	int (*have_magnifier) (struct map_session_data *sd);
-
-	void (*get_ip) (struct map_session_data *sd,char * str);
 };
 
 struct pc_interface *pc;
