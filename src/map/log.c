@@ -211,7 +211,7 @@ void log_npc_shop(struct map_session_data *sd, char *name, struct item *itm, int
 		}
 
 		if (SQL_ERROR == SQL->Query(logs->mysql_handle, LOG_QUERY " INTO `%s`\
-			(`Date`, `Mapname`,`NPC_Name`,`Player_CharID`,`Player_Name`,`Player_IP`,`Player_PosX`,`Player_PosY`,`Player_Action`,`Slots`,`ItemRefiningLevel`)\
+			(`Date`, `Mapname`,`NPC_Name`,`Player_CharID`,`Player_Name`,`Player_IP`,`Player_PosX`,`Player_PosY`,`Player_Action`,`ItemID`,`ItemName`,`Amount`,`Unit_Cost`,`Total_Cost`,`ItemSerial`,`Slots`,`ItemRefiningLevel`)\
 			VALUES (NOW(),'%s','%s', '%d','%s','%s','%d','%d','%s','%d','%s','%d','%d','%d','%"PRIu64"','%d','%d')",
 			logs->config.table_name[13], mapindex_id2name(sd->mapindex), name, sd->status.char_id, sd->status.name, sd->status.last_ip, sd->bl.x, sd->bl.y, action,
 			itm->nameid, idata->name, amount, unit_cost, (amount * unit_cost), itm->unique_id,
