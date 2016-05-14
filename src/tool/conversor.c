@@ -2,7 +2,7 @@
 * brA Conversor TXT para SQL
 * Autor:	Shiraz
 * Data:		22/10/2012
-* Rev:		08/11/2015
+* Rev:		13/05/2016
 ********************************/
 
 #include "common/cbasetypes.h"
@@ -2254,8 +2254,290 @@ void convert_item_db(void)
 		pos = item_parse_i32_(it, "Range", pos);
 		// Slots
 		pos = item_parse_i32_(it, "Slots", pos);
+		
 		// Job
-		pos = item_parse_job(it, "Job", pos);
+		if ((t = config_setting_get_member(it, "Job")))
+		{
+			if (config_setting_is_group(t))
+			{
+				int class_job = 0;
+				config_setting_t *tt = NULL;
+
+				if ((tt = config_setting_get_member(t, "All")))
+				{
+					if (config_setting_get_bool(tt))
+					class_job = 2146426879;
+				
+					if ((tt = config_setting_get_member(t, "Novice"))) {
+						class_job -= 1;
+					}
+                
+					if ((tt = config_setting_get_member(t, "Swordsman"))) {
+						class_job -= 2;
+					}
+                
+					if ((tt = config_setting_get_member(t, "Magician"))) {
+						class_job -= 4;
+					}
+                
+					if ((tt = config_setting_get_member(t, "Archer"))) {
+						class_job -= 8;
+					}
+                
+					if ((tt = config_setting_get_member(t, "Acolyte"))) {
+						class_job -= 16;
+					}
+                
+					if ((tt = config_setting_get_member(t, "Merchant"))) {
+						class_job -= 32;
+					}
+                
+					if ((tt = config_setting_get_member(t, "Thief"))) {
+						class_job -= 64;
+					}
+                
+					if ((tt = config_setting_get_member(t, "Knight"))) {
+						class_job -= 128;
+					}
+                
+					if ((tt = config_setting_get_member(t, "Priest"))) {
+						class_job -= 256;
+					}
+                
+					if ((tt = config_setting_get_member(t, "Wizard"))) {
+						class_job -= 512;
+					}
+                
+					if ((tt = config_setting_get_member(t, "Blacksmith"))) {
+						class_job -= 1024;
+					}
+                
+					if ((tt = config_setting_get_member(t, "Hunter"))) {
+						class_job -= 2048;
+					}
+                
+					if ((tt = config_setting_get_member(t, "Assassin"))) {
+						class_job -= 4096;
+					}
+                
+					if ((tt = config_setting_get_member(t, "Crusader"))) {
+						class_job -= 16384;
+					}
+                
+					if ((tt = config_setting_get_member(t, "Monk"))) {
+						class_job -= 32768;
+					}
+                
+					if ((tt = config_setting_get_member(t, "Sage"))) {
+						class_job -= 65536;
+					}
+                
+					if ((tt = config_setting_get_member(t, "Rogue"))) {
+						class_job -= 131072;
+					}
+                
+					if ((tt = config_setting_get_member(t, "Alchemist"))) {
+						class_job -= 262144;
+					}
+                
+					if ((tt = config_setting_get_member(t, "Bard"))) {
+						class_job -= 524288;
+					}
+                
+					if ((tt = config_setting_get_member(t, "Taekwon"))) {
+						class_job -= 2097152;
+					}
+                
+					if ((tt = config_setting_get_member(t, "Star_Gladiator"))) {
+						class_job -= 4194304;
+					}
+                
+					if ((tt = config_setting_get_member(t, "Soul_Linker"))) {
+						class_job -= 8388608;
+					}
+                
+					if ((tt = config_setting_get_member(t, "Gunslinger"))) {
+						class_job -= 16777216;
+					}
+                
+					if ((tt = config_setting_get_member(t, "Ninja"))) {
+						class_job -= 33554432;
+					}
+                
+					if ((tt = config_setting_get_member(t, "Gangsi"))) {
+						class_job -= 67108864;
+					}
+                
+					if ((tt = config_setting_get_member(t, "Death_Knight"))) {
+						class_job -= 134217728;
+					}
+                
+					if ((tt = config_setting_get_member(t, "Dark_Collector"))) {
+						class_job -= 268435456;
+					}
+                
+					if ((tt = config_setting_get_member(t, "Kagerou"))) {
+						class_job -= 536870912;
+					}
+                
+					if ((tt = config_setting_get_member(t, "Rebellion"))) {
+						class_job -= 1073741824;
+					}
+				}
+					else
+				{
+					if ((tt = config_setting_get_member(t, "Novice"))) {
+						if (config_setting_get_bool(tt))
+						class_job += 1;
+					}
+
+					if ((tt = config_setting_get_member(t, "Swordsman"))) {
+						if (config_setting_get_bool(tt))
+						class_job += 2;
+					}
+
+					if ((tt = config_setting_get_member(t, "Magician"))) {
+						if (config_setting_get_bool(tt))
+						class_job += 4;
+					}
+
+					if ((tt = config_setting_get_member(t, "Archer"))) {
+						if (config_setting_get_bool(tt))
+						class_job += 8;
+					}
+
+					if ((tt = config_setting_get_member(t, "Acolyte"))) {
+						if (config_setting_get_bool(tt))
+						class_job += 16;
+					}
+
+					if ((tt = config_setting_get_member(t, "Merchant"))) {
+						if (config_setting_get_bool(tt))
+						class_job += 32;
+					}
+
+					if ((tt = config_setting_get_member(t, "Thief"))) {
+						if (config_setting_get_bool(tt))
+						class_job += 64;
+					}
+
+					if ((tt = config_setting_get_member(t, "Knight"))) {
+						if (config_setting_get_bool(tt))
+						class_job += 128;
+					}
+
+					if ((tt = config_setting_get_member(t, "Priest"))) {
+						if (config_setting_get_bool(tt))
+						class_job += 256;
+					}
+
+					if ((tt = config_setting_get_member(t, "Wizard"))) {
+						if (config_setting_get_bool(tt))
+						class_job += 512;
+					}
+
+					if ((tt = config_setting_get_member(t, "Blacksmith"))) {
+						if (config_setting_get_bool(tt))
+						class_job += 1024;
+					}
+
+					if ((tt = config_setting_get_member(t, "Hunter"))) {
+						if (config_setting_get_bool(tt))
+						class_job += 2048;
+					}
+
+					if ((tt = config_setting_get_member(t, "Assassin"))) {
+						if (config_setting_get_bool(tt))
+						class_job += 4096;
+					}
+
+					if ((tt = config_setting_get_member(t, "Crusader"))) {
+						if (config_setting_get_bool(tt))
+						class_job += 16384;
+					}
+
+					if ((tt = config_setting_get_member(t, "Monk"))) {
+						if (config_setting_get_bool(tt))
+						class_job += 32768;
+					}
+
+					if ((tt = config_setting_get_member(t, "Sage"))) {
+						if (config_setting_get_bool(tt))
+						class_job += 65536;
+					}
+
+					if ((tt = config_setting_get_member(t, "Rogue"))) {
+						if (config_setting_get_bool(tt))
+						class_job += 131072;
+					}
+
+					if ((tt = config_setting_get_member(t, "Alchemist"))) {
+						if (config_setting_get_bool(tt))
+						class_job += 262144;
+					}
+
+					if ((tt = config_setting_get_member(t, "Bard"))) {
+						if (config_setting_get_bool(tt))
+						class_job += 524288;
+					}
+
+					if ((tt = config_setting_get_member(t, "Taekwon"))) {
+						if (config_setting_get_bool(tt))
+						class_job += 2097152;
+					}
+
+					if ((tt = config_setting_get_member(t, "Star_Gladiator"))) {
+						if (config_setting_get_bool(tt))
+						class_job += 4194304;
+					}
+
+					if ((tt = config_setting_get_member(t, "Soul_Linker"))) {
+						if (config_setting_get_bool(tt))
+						class_job += 8388608;
+					}
+
+					if ((tt = config_setting_get_member(t, "Gunslinger"))) {
+						if (config_setting_get_bool(tt))
+						class_job += 16777216;
+					}
+
+					if ((tt = config_setting_get_member(t, "Ninja"))) {
+						if (config_setting_get_bool(tt))
+						class_job += 33554432;
+					}
+
+					if ((tt = config_setting_get_member(t, "Gangsi"))) {
+						if (config_setting_get_bool(tt))
+						class_job += 67108864;
+					}
+
+					if ((tt = config_setting_get_member(t, "Death_Knight"))) {
+						if (config_setting_get_bool(tt))
+						class_job += 134217728;
+					}
+
+					if ((tt = config_setting_get_member(t, "Dark_Collector"))) {
+						if (config_setting_get_bool(tt))
+						class_job += 268435456;
+					}
+
+					if ((tt = config_setting_get_member(t, "Kagerou"))) {
+						if (config_setting_get_bool(tt))
+						class_job += 536870912;
+					}
+
+					if ((tt = config_setting_get_member(t, "Rebellion"))) {
+						if (config_setting_get_bool(tt))
+						class_job += 1073741824;
+					}
+				}
+					pos += sprintf(pos, "%d,", class_job);
+			}
+			
+		} else {
+			pos += sprintf(pos, "4294967295,");
+		}
+		
 		// Upper
 		pos = item_parse_i32(it, "Upper", pos, "NULL");
 		// Gender
