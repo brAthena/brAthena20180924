@@ -1,0 +1,1 @@
+ALTER TABLE `npcshop_log` CHANGE `Player_Action` `Player_Action` ENUM('Compra','Venda') CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL DEFAULT 'Compra';

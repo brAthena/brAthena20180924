@@ -303,7 +303,7 @@ CREATE TABLE IF NOT EXISTS `npcshop_log` (
   `Player_IP` varchar(20) NOT NULL DEFAULT '',
   `Player_PosX` smallint(4) NOT NULL DEFAULT '0',
   `Player_PosY` smallint(4) NOT NULL DEFAULT '0',
-  `Player_Action` enum('Buy','Sell') NOT NULL DEFAULT 'Buy',
+  `Player_Action` enum('Compra','Venda') NOT NULL DEFAULT 'Compra',
   `ItemID` int(11) unsigned NOT NULL DEFAULT '0',
   `ItemName` varchar(24) NOT NULL DEFAULT '',
   `Amount` int(11) unsigned NOT NULL DEFAULT '0',
