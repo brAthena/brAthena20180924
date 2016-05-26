@@ -65,12 +65,18 @@ bool should_log_item(int nameid, int amount, int refine, struct item_data *id) {
 
 // Verifica se o log de chat está ativo
 bool should_log_chat(e_log_chat_type type) {
-	return ((logs->config.log_chat2[5] && (map->agit_flag || map->agit2_flag)) &&
-			(logs->config.log_chat2[0] && type == LOG_CHAT_GLOBAL ||
-			logs->config.log_chat2[1] && type == LOG_CHAT_WHISPER ||
-			logs->config.log_chat2[2] && type == LOG_CHAT_PARTY ||
-			logs->config.log_chat2[3] && type == LOG_CHAT_GUILD ||
-			logs->config.log_chat2[4] && type == LOG_CHAT_MAINCHAT));
+	
+	if	( logs->config.log_chat2[5] && (map->agit_flag || map->agit2_flag) )
+			return false;	
+		
+	if(	( logs->config.log_chat2[0] && type == LOG_CHAT_GLOBAL ) ||
+		( logs->config.log_chat2[1] && type == LOG_CHAT_WHISPER ) ||
+		( logs->config.log_chat2[2] && type == LOG_CHAT_PARTY ) ||
+		( logs->config.log_chat2[3] && type == LOG_CHAT_GUILD ) ||
+		( logs->config.log_chat2[4] && type == LOG_CHAT_MAINCHAT )
+	) return true;
+	
+	return false;	
 }
 
 // Log de Galho Seco
@@ -499,7 +505,7 @@ void log_chat(e_log_chat_type type, int type_id, int src_charid, int src_accid, 
 		nullpo_retv(dst_charname);
 
 	if (should_log_chat(type)) {
-		char log_type;
+		char log_type=false;
 		
 		switch (type) {
 			case LOG_CHAT_GLOBAL:   log_type = 'O';  break;	// Gl(O)bal

@@ -68,11 +68,11 @@ typedef enum _log_action_type{
 struct log_interface {
 	bool enable_logs;
 	struct {
-		int item_type2[3], zeny;
+		int item_type2[4], zeny;
 		char table_name[20][64];
 		bool log_cards, log_buyingstore, log_vending, log_consume, log_mob_pick_drop, log_pc_pick_drop, log_npc_buy_sell, log_storage,
 		log_gstorage, log_get_remove_item, log_mail, log_trade, log_produce, branch, mvpdrop,
-		commands, npc, buycash, item_type[6], log_chat2[5];
+		commands, npc, buycash, item_type[7], log_chat2[6];
 	} config;
 	/* */
 	char db_ip[32];
