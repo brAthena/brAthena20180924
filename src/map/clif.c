@@ -17608,22 +17608,18 @@ void clif_maptypeproperty2(struct block_list *bl,enum send_target t) {
 }
 
 void clif_efst_set_enter(struct block_list *bl, int tid, enum send_target target, int type, int val1, int val2, int val3) {
-#if PACKETVER >= 20111101
-	struct PACKET_ZC_EFST_SET_ENTER p;
 
+	struct PACKET_ZC_EFST_SET_ENTER p;
+	
 	p.PacketType = efst_set_enterType;
-	p.AID = tid;
-	p.hEFST = type;
-#if PACKETVER >= 20120529
-	p.MaxMS = 9999;
-#endif
-	p.Time = 9999;
-	p.Val1 = val1;
-	p.Val2 = val2;
-	p.Val3 = val3;
+	p.index = type;
+	p.state = 1;
+	p.Left = 9999;
+	p.val1 = val1;
+	p.val2 = val2;
+	p.val3 = val3;
 
 	clif->send(&p,sizeof(p), bl, target);
-#endif
 }
 
 void clif_partytickack(struct map_session_data* sd, bool flag) {
