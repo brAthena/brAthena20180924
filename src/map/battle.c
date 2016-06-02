@@ -7211,6 +7211,10 @@ static const struct battle_data {
 	{ "max_body_style",                     &battle_config.max_body_style,                  4,      0,      SHRT_MAX,       },
 	{ "save_body_style",                    &battle_config.save_body_style,                 0,      0,      1,              },
 	{ "reserved_costume_id",                &battle_config.reserved_costume_id,             999998, 0,      INT_MAX,        },
+	/**
+	 * Configuração para a habilidade de revestimento dos criadores e alquimistas. [CarlosHenrq]
+	 */
+	{ "creator.fullprotect",				&battle_config.creator_fullprotect,				0,		0,		2,				},
 };
 #ifndef STATS_OPT_OUT
 /**

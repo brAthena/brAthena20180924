@@ -7508,6 +7508,25 @@ int status_change_start(struct block_list *src, struct block_list *bl, enum sc_t
 			}
 			if (tick == 1) return 1; //Minimal duration: Only strip without causing the SC
 			break;
+			/**
+			 * Nesses casos, caso a configuração esteja ativa para habilidades dos alquimistas, então, remove o debuf. [CarlosHenrq]
+			 */
+			case SC_PROTECTWEAPON:
+				if(battle_config.creator_fullprotect)
+					status_change_end(bl, SC_NOEQUIPWEAPON, INVALID_TIMER);
+				break;
+			case SC_PROTECTHELM:
+				if(battle_config.creator_fullprotect)
+					status_change_end(bl, SC_NOEQUIPHELM, INVALID_TIMER);
+				break;
+			case SC_PROTECTARMOR:
+				if(battle_config.creator_fullprotect)
+					status_change_end(bl, SC_NOEQUIPARMOR, INVALID_TIMER);
+				break;
+			case SC_PROTECTSHIELD:
+				if(battle_config.creator_fullprotect)
+					status_change_end(bl, SC_NOEQUIPSHIELD, INVALID_TIMER);
+				break;
 		case SC_MER_FLEE:
 		case SC_MER_ATK:
 		case SC_MER_HP:
