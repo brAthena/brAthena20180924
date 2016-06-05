@@ -1,0 +1,1 @@
+UPDATE `skill_require_db` SET `ZenyCost` = '100:200:300:400:500:600:700:800:900:1000' WHERE `SkillID` = 42 LIMIT 1 ;

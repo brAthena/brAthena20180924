@@ -1440,7 +1440,7 @@ bool clif_spawn(struct block_list *bl)
 			if (sd->bg_id != 0 && map->list[sd->bl.m].flag.battleground)
 					clif->sendbgemblem_area(sd);
 				for (i = 0; i < sd->sc_display_count; i++) {
-					clif->efst_set_enter(&sd->bl, sd->bl.id,AREA,status->dbs->IconChangeTable[sd->sc_display[i]->type],sd->sc_display[i]->val1,sd->sc_display[i]->val2,sd->sc_display[i]->val3);
+					clif->sc_load(&sd->bl, sd->bl.id,AREA,status->dbs->IconChangeTable[sd->sc_display[i]->type],sd->sc_display[i]->val1,sd->sc_display[i]->val2,sd->sc_display[i]->val3);
 				}
 				if (sd->charm_type != CHARM_TYPE_NONE && sd->charm_count > 0)
 					clif->spiritcharm(sd);
@@ -4141,7 +4141,7 @@ void clif_getareachar_pc(struct map_session_data* sd,struct map_session_data* ds
 		clif->charm_single(sd->fd, dstsd);
 
 	for( i = 0; i < dstsd->sc_display_count; i++ ) {
-		clif->efst_set_enter(&sd->bl,dstsd->bl.id,SELF,status->dbs->IconChangeTable[dstsd->sc_display[i]->type],dstsd->sc_display[i]->val1,dstsd->sc_display[i]->val2,dstsd->sc_display[i]->val3);
+		clif->sc_load(&sd->bl,dstsd->bl.id,SELF,status->dbs->IconChangeTable[dstsd->sc_display[i]->type],dstsd->sc_display[i]->val1,dstsd->sc_display[i]->val2,dstsd->sc_display[i]->val3);
 	}
 	if( (sd->status.party_id && dstsd->status.party_id == sd->status.party_id) || //Party-mate, or hpdisp setting.
 		(sd->bg_id && sd->bg_id == dstsd->bg_id) || //BattleGround
@@ -17607,12 +17607,12 @@ void clif_maptypeproperty2(struct block_list *bl,enum send_target t) {
 #endif
 }
 
-void clif_efst_set_enter(struct block_list *bl, int tid, enum send_target target, int type, int val1, int val2, int val3) {
+void clif_status_change2(struct block_list *bl, int tid, enum send_target target, int type, int val1, int val2, int val3) {
+struct packet_status_change2 p;
 
-	struct PACKET_ZC_EFST_SET_ENTER p;
-	
-	p.PacketType = efst_set_enterType;
+	p.PacketType = status_change2Type;
 	p.index = type;
+	p.AID = tid;
 	p.state = 1;
 	p.Left = 9999;
 	p.val1 = val1;
@@ -19160,7 +19160,7 @@ void clif_defaults(void) {
 	clif->poison_list = clif_poison_list;
 	clif->autoshadowspell_list = clif_autoshadowspell_list;
 	clif->skill_itemlistwindow = clif_skill_itemlistwindow;
-	clif->efst_set_enter = clif_efst_set_enter;
+	clif->sc_load = clif_status_change2;
 	clif->sc_end = clif_status_change_end;
 	clif->initialstatus = clif_initialstatus;
 	clif->cooldown_list = clif_skill_cooldown_list;
