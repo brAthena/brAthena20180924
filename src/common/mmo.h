@@ -8,14 +8,14 @@
 *                            www.brathena.org                                *
 ******************************************************************************
 * src/common/mmo.h                                                           *
-* Configurações básicas, definições e limites do emulador                    *
+* Configuraï¿½ï¿½es bï¿½sicas, definiï¿½ï¿½es e limites do emulador                    *
 ******************************************************************************
 * Copyright (c) brAthena Dev Team                                            *
 * Copyright (c) Hercules Dev Team                                            *
 * Copyright (c) Athena Dev Teams                                             *
 *                                                                            *
-* Licenciado sob a licença GNU GPL                                           *
-* Para mais informações leia o arquivo LICENSE na raíz do emulador           *
+* Licenciado sob a licenï¿½a GNU GPL                                           *
+* Para mais informaï¿½ï¿½es leia o arquivo LICENSE na raï¿½z do emulador           *
 *****************************************************************************/
 
 #ifndef COMMON_MMO_H
@@ -63,7 +63,7 @@
 // 20120307 - 2012-03-07aRagexeRE+ - 0x970
 
 #ifndef PACKETVER
-	#define PACKETVER 20141022
+	#define PACKETVER 20150513
 #endif // PACKETVER
 
 //Uncomment the following line if your client is ragexeRE instead of ragexe (required because of conflicting packets in ragexe vs ragexeRE).
@@ -125,30 +125,30 @@
 //Official Limit: 2.1b ( the var that stores the money doesn't go much higher than this by default )
 #define MAX_BANK_ZENY INT_MAX
 
-// Nível Max. Global (Base)
+// Nï¿½vel Max. Global (Base)
 #define MAX_LEVEL 175
 
-// Tabela de Nível Máximo por Classes
+// Tabela de Nï¿½vel Mï¿½ximo por Classes
 enum _max_level_ {
-/// Nível Max. de Base - Suporta até nível de base 1000
+/// Nï¿½vel Max. de Base - Suporta atï¿½ nï¿½vel de base 1000
 	BASE_MAX_1LV	= 99,	// Classes Normais e Classes Baby.
 	BASE_MAX_2LV	= 99,	// Classes Transcedentais.
-	BASE_MAX_3LV	= 175,	// Terceira Classe Normal, Terceira Classe Bebê.
+	BASE_MAX_3LV	= 175,	// Terceira Classe Normal, Terceira Classe Bebï¿½.
 	BASE_MAX_4LV	= 160,	// Super Aprendiz Expandido e Kagerou/Oboro.
-/// Nível Max. de Classe - Suporta até nível de classe 255
-	JOB_MAX_1LV		= 10,	// Aprendiz & Bebê Aprendiz.
-	JOB_MAX_2LV		= 50,	// Primeira Classe & Primeira Classe Bebê.
-	JOB_MAX_3LV		= 50,	// Segunda Classe & Segunda Classe Bebê.
+/// Nï¿½vel Max. de Classe - Suporta atï¿½ nï¿½vel de classe 255
+	JOB_MAX_1LV		= 10,	// Aprendiz & Bebï¿½ Aprendiz.
+	JOB_MAX_2LV		= 50,	// Primeira Classe & Primeira Classe Bebï¿½.
+	JOB_MAX_3LV		= 50,	// Segunda Classe & Segunda Classe Bebï¿½.
 	JOB_MAX_4LV		= 10,	// Aprendiz Transcedental.
 	JOB_MAX_5LV		= 50,	// Primeira Classe Transcedental.
 	JOB_MAX_6LV		= 70,	// Segunda Classe Transcedental.
-	JOB_MAX_7LV		= 60,	// Terceira Classe, Terceira Classe Bebê.
+	JOB_MAX_7LV		= 60,	// Terceira Classe, Terceira Classe Bebï¿½.
 	JOB_MAX_8LV		= 50,	// Super Aprendiz Expandido e Kagerou/Oboro.
 	JOB_MAX_9LV		= 70,	// Ninja/Gunslinger.
 	JOB_MAX_10LV	= 50,	// Taekwon.
 	JOB_MAX_11LV	= 50,	// Mestre Taekwon.
 	JOB_MAX_12LV	= 50,	// Espiritualista.
-	JOB_MAX_13LV	= 99,	// Super Aprendiz & Bebê Super Aprendiz.
+	JOB_MAX_13LV	= 99,	// Super Aprendiz & Bebï¿½ Super Aprendiz.
 };
 
 #define MAX_FAME 1000000000

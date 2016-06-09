@@ -8,14 +8,14 @@
 *                            www.brathena.org                                *
 ******************************************************************************
 * src/map/atcommand.c                                                        *
-* Responsável pelo funcionamento de @comandos dentro do emulador             *
+* Responsï¿½vel pelo funcionamento de @comandos dentro do emulador             *
 ******************************************************************************
 * Copyright (c) brAthena Dev Team                                            *
 * Copyright (c) Hercules Dev Team                                            *
 * Copyright (c) Athena Dev Teams                                             *
 *                                                                            *
-* Licenciado sob a licença GNU GPL                                           *
-* Para mais informações leia o arquivo LICENSE na raíz do emulador           *
+* Licenciado sob a licenï¿½a GNU GPL                                           *
+* Para mais informaï¿½ï¿½es leia o arquivo LICENSE na raï¿½z do emulador           *
 *****************************************************************************/
 
 #define BRATHENA_CORE
@@ -1225,7 +1225,7 @@ ACMD(item)
 
 	if( !strcmpi(command+1,"costumeitem") ) {
 		if( !battle_config.reserved_costume_id ) {
-			clif->message(fd, "A conversão visual está desabilitada. Defina um valor para a variável reserved_costume_id no arquivo battle/items.conf");
+			clif->message(fd, "A conversï¿½o visual estï¿½ desabilitada. Defina um valor para a variï¿½vel reserved_costume_id no arquivo battle/items.conf");
 			return -1;
 		}
 		if( !(item_data->equip&EQP_HEAD_LOW) &&
@@ -1235,7 +1235,7 @@ ACMD(item)
 			!(item_data->equip&EQP_COSTUME_HEAD_MID) &&
 			!(item_data->equip&EQP_COSTUME_HEAD_TOP) )
 		{
-			clif->message(fd, "Você não pode converter este item. A conversão visual só pode ser feita em chapéus.");
+			clif->message(fd, "Vocï¿½ nï¿½o pode converter este item. A conversï¿½o visual sï¿½ pode ser feita em chapï¿½us.");
 			return -1;
 		}
 		costume = 1;
@@ -5541,10 +5541,10 @@ ACMD(changelook)
 
 	if((i = sscanf(message, "%12d %12d", &j, &k)) < 1) {
 		clif->message(fd, msg_fd(fd,1177)); // Usage: @changelook {<position>} <view id>
-		clif->message(fd, msg_fd(fd,1178)); // Position: 1-Top 2-Middle 3-Bottom 4-Weapon 5-Shield 6-Shoes 7-Robe
+		clif->message(fd, msg_fd(fd,1178)); // Position: 1-Top 2-Middle 3-Bottom 4-Weapon 5-Shield 6-Shoes 7-Robe 8-Body
 		return false;
 	} else if ( i == 2 ) {
-		if (j < 1 || j > 7)
+		if (j < 1 || j > 8)
 			j = 1;
 		j = pos[j - 1];
 	} else if( i == 1 ) { // position not defined, use HEAD_TOP as default

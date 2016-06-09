@@ -11504,6 +11504,24 @@ void clif_parse_OneClick_ItemIdentify(int fd, struct map_session_data *sd)
 		skill->identify(sd, idx);
 }
 
+/// Show body view windows (ZC_DRESSROOM_OPEN).
+/// 0A02 <view>.W
+/// Value <flag> has the following effects:
+/// 0: Close an open Dress Room window.
+/// 1: Open a Dress Room window.
+void clif_dressing_room(struct map_session_data *sd, int flag) {
+ #if PACKETVER >= 20150513
+ 	int fd = sd->fd;
+  
+  	nullpo_retv(sd);
+  
+  	WFIFOHEAD(fd, packet_len(0xa02));
+  	WFIFOW(fd,0) = 0xa02;
+ 	WFIFOW(fd,2) = flag;
+  	WFIFOSET(fd, packet_len(0xa02));
+ #endif
+  }
+  
 void clif_parse_SelectArrow(int fd,struct map_session_data *sd) __attribute__((nonnull (2)));
 /// Answer to arrow crafting item selection dialog (CZ_REQ_MAKINGARROW).
 /// 01ae <name id>.W

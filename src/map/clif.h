@@ -1336,7 +1336,7 @@ struct clif_interface {
 	/* */
 	void (*add_random_options) (unsigned char* buf, struct item* item);
 	void (*pHotkeyRowShift) (int fd, struct map_session_data *sd);
-	void (*dressroom_open) (struct map_session_data *sd, int view);
+	void (*dressroom_open) (struct map_session_data *sd, int flag);
 	void (*pOneClick_ItemIdentify) (int fd,struct map_session_data *sd);
 	/* Cart Deco */
 	void(*selectcart) (struct map_session_data *sd);
