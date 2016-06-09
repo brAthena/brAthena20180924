@@ -18483,6 +18483,28 @@ BUILDIN(getargcount) {
 
 	return true;
 }
+
+/**
+ * [CarlosHenrq] Obtém o endereço mac-address do jogador no servidor de mapas se estiver logado
+ *
+ * getcharmac({account_id})
+ */
+BUILDIN(getcharmac)
+{
+	TBL_PC* sd = script_hasdata(st, 2) ? map->id2sd(script_getnum(st, 2)) : script->rid2sd(st);
+
+	if(sd == NULL)
+	{
+		ShowWarning("buildin_getcharmac: Jogador não encontrado!\n");
+		script_pushconststr(st, "");
+		script->reportfunc(st);
+		return false;
+	}
+
+	script_pushstrcopy(st, sd->mac_address);
+	return true;
+}
+
 /**
  * getcharip(<account ID>/<character ID>/<character name>)
  **/
@@ -21364,6 +21386,12 @@ void script_parse_builtin(void) {
 		 **/
 		BUILDIN_DEF(getargcount,""),
 		BUILDIN_DEF(getcharip,"?"),
+
+		/**
+		 * brAthena
+		 */
+		BUILDIN_DEF(getcharmac, "?"),
+
 		BUILDIN_DEF(is_function,"s"),
 		BUILDIN_DEF(freeloop,"i"),
 		BUILDIN_DEF(getrandgroupitem,"ii"),

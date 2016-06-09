@@ -266,9 +266,9 @@ uint32 login_lan_subnet_check(uint32 ip)
 	return sockt->lan_subnet_check(ip, NULL);
 }
 
-void login_fromchar_auth_ack(int fd, int account_id, uint32 login_id1, uint32 login_id2, uint8 sex, int request_id, struct login_auth_node* node)
+void login_fromchar_auth_ack(int fd, int account_id, uint32 login_id1, uint32 login_id2, uint8 sex, int request_id, const char* mac_address, struct login_auth_node* node)
 {
-	WFIFOHEAD(fd,33);
+	WFIFOHEAD(fd,33 + MAC_LENGTH);
 	WFIFOW(fd,0) = 0x2713;
 	WFIFOL(fd,2) = account_id;
 	WFIFOL(fd,6) = login_id1;
@@ -292,7 +292,8 @@ void login_fromchar_auth_ack(int fd, int account_id, uint32 login_id1, uint32 lo
 		WFIFOL(fd,25) = 0;
 		WFIFOL(fd,29) = 0;
 	}
-	WFIFOSET(fd,33);
+	memcpy(WFIFOP(fd,33), mac_address, MAC_LENGTH);
+	WFIFOSET(fd,33 + MAC_LENGTH);
 }
 
 void login_fromchar_parse_auth(int fd, int id, const char *const ip)
@@ -319,15 +320,15 @@ void login_fromchar_parse_auth(int fd, int id, const char *const ip)
 		//ShowStatus("Servidor de personagem '%s': authentication of the account %d accepted (ip: %s).\n", server[id].name, account_id, ip);
 
 		// send ack
-		login->fromchar_auth_ack(fd, account_id, login_id1, login_id2, sex, request_id, node);
+		login->fromchar_auth_ack(fd, account_id, login_id1, login_id2, sex, request_id, node->mac_address, node);
 		// each auth entry can only be used once
 		idb_remove(login->auth_db, account_id);
 	}
 	else
 	{// authentication not found
 		nullpo_retv(ip);
-		ShowStatus("Servidor de personagem '%s': autenticacao da conta %d RECUSADA (ip: %s).\n", server[id].name, account_id, ip);
-		login->fromchar_auth_ack(fd, account_id, login_id1, login_id2, sex, request_id, NULL);
+		ShowStatus("Servidor de personagem '%s': autenticacao da conta %d RECUSADA (ip: %s, mac: %s).\n", server[id].name, account_id, ip, node->mac_address);
+		login->fromchar_auth_ack(fd, account_id, login_id1, login_id2, sex, request_id, node->mac_address, NULL);
 	}
 }
 
@@ -717,7 +718,8 @@ bool login_fromchar_parse_wrong_pincode(int fd)
 			return true;
 		}
 
-		login_log(sockt->host2ip(acc.last_ip), acc.userid, 100, "Falha na verificacao do PIN"); // FIXME: Do we really want to log this with the same code as successful logins?
+		// [CarlosHenrq] Enviando mac_address no pacote entre os servidores.
+		login_log(sockt->host2ip(acc.last_ip), acc.userid, 100, "Falha na verificacao do PIN", acc.mac_address); // FIXME: Do we really want to log this with the same code as successful logins?
 	}
 
 	login->remove_online_user(acc.account_id);
@@ -1146,7 +1148,7 @@ int login_mmo_auth(struct login_session_data* sd, bool isServer) {
 		}
 	}
 
-	ShowNotice("Autenticacao aceita (conta: %s, id: %d, ip: %s mac: %s)\n", sd->userid, acc.account_id, ip, sd->mac_address);
+	ShowNotice("Autenticacao aceita (conta: %s, id: %d, ip: %s, mac: %s)\n", sd->userid, acc.account_id, ip, sockt->session[sd->fd]->mac_address);
 
 	// update session data
 	sd->account_id = acc.account_id;
@@ -1156,7 +1158,9 @@ int login_mmo_auth(struct login_session_data* sd, bool isServer) {
 	sd->sex = acc.sex;
 	sd->group_id = (uint8)acc.group_id;
 	sd->expiration_time = acc.expiration_time;
-	memcpy(acc.mac_address, sd->mac_address, sizeof(acc.mac_address));
+	// Author: Megasantos
+	// [CarlosHenrq] Enviando mac_address no pacote entre os servidores.
+	memcpy(acc.mac_address, sockt->session[sd->fd]->mac_address, sizeof(acc.mac_address));
 
 	// update account data
 	timestamp2string(acc.lastlogin, sizeof(acc.lastlogin), time(NULL), "%Y-%m-%d %H:%M:%S");
@@ -1254,7 +1258,8 @@ void login_auth_ok(struct login_session_data* sd)
 		}
 	}
 
-	login_log(ip, sd->userid, 100, "Conectado com sucesso");
+	// [CarlosHenrq] Enviando mac_address no pacote entre os servidores.
+	login_log(ip, sd->userid, 100, "Conectado com sucesso", sockt->session[fd]->mac_address);
 	ShowStatus("Conexao do usuario '%s' aceita.\n", sd->userid);
 
 	WFIFOHEAD(fd,47+32*server_num);
@@ -1301,6 +1306,8 @@ void login_auth_ok(struct login_session_data* sd)
 	node->clienttype = sd->clienttype;
 	node->group_id = sd->group_id;
 	node->expiration_time = sd->expiration_time;
+	// [CarlosHenrq] Enviando mac_address no pacote entre os servidores.
+	safestrncpy(node->mac_address, sockt->session[fd]->mac_address, MAC_LENGTH);
 	idb_put(login->auth_db, sd->account_id, node);
 
 	{
@@ -1350,7 +1357,8 @@ void login_auth_failed(struct login_session_data* sd, int result)
 		default : error = "Erro desconhecido"; break;
 		}
 
-		login_log(ip, sd->userid, result, error); // FIXME: result can be 100, conflicting with the value 100 we use for successful login...
+		// [CarlosHenrq] Enviando mac_address no pacote entre os servidores.
+		login_log(ip, sd->userid, result, error, sockt->session[fd]->mac_address); // FIXME: result can be 100, conflicting with the value 100 we use for successful login...
 	}
 
 	if (result == 1 && login->config->dynamic_pass_failure_ban && !sockt->trusted_ip_check(ip))
@@ -1425,7 +1433,6 @@ bool login_parse_client_login(int fd, struct login_session_data* sd, const char 
 		char *token = (char *)RFIFOP(fd, 0x5C);
 		char *macaddress = (char *)RFIFOP(fd, 0x3c);
 		size_t uAccLen = strlen(accname);
-		size_t uMacaddress = MAC_LENGTH;
 		size_t uTokenLen = RFIFOREST(fd) - 0x5C;
 
 		version = RFIFOL(fd,4);
@@ -1436,7 +1443,9 @@ bool login_parse_client_login(int fd, struct login_session_data* sd, const char 
 		}
 
 		safestrncpy(username, accname, NAME_LENGTH);
-		safestrncpy(sd->mac_address, macaddress, uMacaddress);
+		// Author: Megasantos
+		// [CarlosHenrq] Enviando mac_address no pacote entre os servidores.
+		safestrncpy(sockt->session[sd->fd]->mac_address, macaddress, MAC_LENGTH);
 		safestrncpy(password, token, min(uTokenLen+1, PASSWD_LEN)); // Variable-length field, don't copy more than necessary
 		clienttype = RFIFOB(fd, 8);
 	}
@@ -1462,7 +1471,9 @@ bool login_parse_client_login(int fd, struct login_session_data* sd, const char 
 	safestrncpy(sd->userid, username, NAME_LENGTH);
 	if( israwpass )
 	{
-		ShowStatus("Requisicao de conexao de %s (ip: %s mac: %s).\n", sd->userid, ip, sd->mac_address);
+		// Author: Megasantos
+		// [CarlosHenrq] Enviando mac_address no pacote entre os servidores.
+		ShowStatus("Requisicao de conexao de %s (ip: %s, mac: %s).\n", sd->userid, ip, sockt->session[sd->fd]->mac_address);
 		safestrncpy(sd->passwd, password, PASSWD_LEN);
 		if (login->config->use_md5_passwds)
 			MD5_String(sd->passwd, sd->passwd);
@@ -1470,7 +1481,9 @@ bool login_parse_client_login(int fd, struct login_session_data* sd, const char 
 	}
 	else
 	{
-		ShowStatus("Requisicao de conexao (modo passwdenc) de %s (ip: %s mac: %s).\n", sd->userid, ip, sd->mac_address);
+		// Author: Megasantos
+		// [CarlosHenrq] Enviando mac_address no pacote entre os servidores.
+		ShowStatus("Requisicao de conexao (modo passwdenc) de %s (ip: %s, mac: %s).\n", sd->userid, ip, sockt->session[sd->fd]->mac_address);
 		bin2hex(sd->passwd, passhash, 16); // raw binary data here!
 		sd->passwdenc = PASSWORDENC;
 	}
@@ -1544,7 +1557,8 @@ void login_parse_request_connection(int fd, struct login_session_data* sd, const
 
 	ShowInfo("Requisicao de conexao do servidor de personagem '%s' @ %u.%u.%u.%u:%u (conta: '%s', senha: '%s', ip: '%s')\n", server_name, CONVIP(server_ip), server_port, sd->userid, sd->passwd, ip);
 	sprintf(message, "charserver - %s@%u.%u.%u.%u:%u", server_name, CONVIP(server_ip), server_port);
-	login_log(sockt->session[fd]->client_addr, sd->userid, 100, message);
+	// [CarlosHenrq] Enviando mac_address no pacote entre os servidores.
+	login_log(sockt->session[fd]->client_addr, sd->userid, 100, message, sockt->session[fd]->mac_address);
 
 	result = login->mmo_auth(sd, true);
 	if (core->runflag == LOGINSERVER_ST_RUNNING &&
@@ -1600,8 +1614,11 @@ int login_parse_login(int fd)
 	{
 		// Perform ip-ban check
 		if (login->config->ipban && !sockt->trusted_ip_check(ipl) && ipban_check(ipl)) {
-			ShowStatus("Conexao recusada: IP nao esta autorizado (ip: %s mac: %s).\n", ip, sd->mac_address);
-			login_log(ipl, "unknown", -3, "ip banned");
+			// Author: Megasantos
+			// [CarlosHenrq] Enviando mac_address no pacote entre os servidores.
+			ShowStatus("Conexao recusada: IP nao esta autorizado (ip: %s, mac: %s).\n", ip, sockt->session[sd->fd]->mac_address);
+			// [CarlosHenrq] Enviando mac_address no pacote entre os servidores.
+			login_log(ipl, "unknown", -3, "ip banned", sockt->session[fd]->mac_address);
 			login->login_error(fd, 3); // 3 = Rejected from Server
 			sockt->eof(fd);
 			return 0;
@@ -1851,7 +1868,8 @@ int do_final(void) {
 		aFree(tmp);
 	}
 
-	login_log(0, "Servidor de login", 100, "Fechando...");
+	// [CarlosHenrq] Enviando mac_address no pacote entre os servidores.
+	login_log(0, "Servidor de login", 100, "Fechando...", "");
 
 	if (login->config->log_login)
 		loginlog_final();
@@ -2021,7 +2039,8 @@ int do_init(int argc, char** argv)
 	}
 
 	ShowStatus("O servidor de login esta "CL_GREEN"pronto"CL_RESET" (Escutando na porta %u).\n\n", login->config->login_port);
-	login_log(0, "Servidor de login", 100, "Iniciou");
+	// [CarlosHenrq] Enviando mac_address no pacote entre os servidores.
+	login_log(0, "Servidor de login", 100, "Iniciou", "");
 
 	return 0;
 }

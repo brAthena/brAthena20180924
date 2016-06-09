@@ -88,6 +88,9 @@ struct char_auth_node {
 	time_t expiration_time; // # of seconds 1/1/1970 (timestamp): Validity limit of the account (0 = unlimited)
 	int group_id;
 	unsigned changing_mapservers : 1;
+
+	// [CarlosHenrq] Enviando mac_address no pacote entre os servidores.
+	char mac_address[MAC_LENGTH];
 };
 
 /**

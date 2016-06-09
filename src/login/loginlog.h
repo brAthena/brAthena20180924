@@ -25,7 +25,8 @@
 #ifdef BRATHENA_CORE
 // TODO: Interface
 unsigned long loginlog_failedattempts(uint32 ip, unsigned int minutes);
-void login_log(uint32 ip, const char* username, int rcode, const char* message);
+// [CarlosHenrq] Enviando mac_address no pacote entre os servidores.
+void login_log(uint32 ip, const char* username, int rcode, const char* message, const char* mac_address);
 bool loginlog_init(void);
 bool loginlog_final(void);
 bool loginlog_config_read(const char* w1, const char* w2);

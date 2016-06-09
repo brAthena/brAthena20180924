@@ -1,0 +1,2 @@
+ALTER TABLE `loginlog`
+	ADD COLUMN `mac_address` VARCHAR(18) NULL DEFAULT NULL;

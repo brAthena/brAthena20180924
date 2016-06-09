@@ -249,7 +249,8 @@ CREATE TABLE IF NOT EXISTS `loginlog` (
   `ip` varchar(15) NOT NULL DEFAULT '',
   `user` varchar(23) NOT NULL DEFAULT '',
   `rcode` tinyint(4) NOT NULL DEFAULT '0',
-  `log` varchar(255) NOT NULL DEFAULT ''
+  `log` varchar(255) NOT NULL DEFAULT '',
+  `mac_address` VARCHAR(18) NULL DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --

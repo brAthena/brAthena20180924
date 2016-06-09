@@ -1145,12 +1145,14 @@ int pc_isequip(struct map_session_data *sd,int n)
  * No problem with the session id
  * set the status that has been sent from char server
  *------------------------------------------*/
-bool pc_authok(struct map_session_data *sd, int login_id2, time_t expiration_time, int group_id, struct mmo_charstatus *st, bool changing_mapservers) {
+bool pc_authok(struct map_session_data *sd, int login_id2, time_t expiration_time, int group_id, struct mmo_charstatus *st, bool changing_mapservers, const char* mac_address) {
 	int i;
 	int64 tick = timer->gettick();
 	uint32 ip = sockt->session[sd->fd]->client_addr;
 
 	sd->login_id2 = login_id2;
+	// [CarlosHenrq] Enviando mac_address no pacote entre os servidores.
+	safestrncpy(sd->mac_address, mac_address, MAC_LENGTH);
 
 	if (pc->set_group(sd, group_id) != 0) {
 		ShowWarning("pc_authok: %s (AID:%d) logado com grupo desconhecido id (%d)! expulsando...\n",
@@ -1325,9 +1327,11 @@ bool pc_authok(struct map_session_data *sd, int login_id2, time_t expiration_tim
 	ShowInfo("'"CL_WHITE"%s"CL_RESET"' logou."
 	         " (AID/CID: '"CL_WHITE"%d/%d"CL_RESET"',"
 	         " IP: '"CL_WHITE"%d.%d.%d.%d"CL_RESET"',"
+	         " MAC: '"CL_WHITE"%s"CL_RESET"',"
 	         " Grupo '"CL_WHITE"%d"CL_RESET"').\n",
 	         sd->status.name, sd->status.account_id, sd->status.char_id,
-	         CONVIP(ip), sd->group_id);
+			// [CarlosHenrq] Enviando mac_address no pacote entre os servidores.
+	         CONVIP(ip), sd->mac_address, sd->group_id);
 	// Send friends list
 	clif->friendslist_send(sd);
 

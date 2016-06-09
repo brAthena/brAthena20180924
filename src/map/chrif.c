@@ -397,7 +397,7 @@ bool chrif_changemapserver(struct map_session_data* sd, uint32 ip, uint16 port) 
 
 	chrif_check(false);
 
-	WFIFOHEAD(chrif->fd,35);
+	WFIFOHEAD(chrif->fd,35 + MAC_LENGTH);
 	WFIFOW(chrif->fd, 0) = 0x2b05;
 	WFIFOL(chrif->fd, 2) = sd->bl.id;
 	WFIFOL(chrif->fd, 6) = sd->login_id1;
@@ -411,7 +411,9 @@ bool chrif_changemapserver(struct map_session_data* sd, uint32 ip, uint16 port) 
 	WFIFOB(chrif->fd,30) = sd->status.sex;
 	WFIFOL(chrif->fd,31) = htonl(sockt->session[sd->fd]->client_addr);
 	WFIFOL(chrif->fd,35) = sd->group_id;
-	WFIFOSET(chrif->fd,39);
+	// [CarlosHenrq] Enviando mac_address no pacote entre os servidores.
+	memcpy(WFIFOP(chrif->fd,39), sd->mac_address, MAC_LENGTH);
+	WFIFOSET(chrif->fd,39 + MAC_LENGTH);
 
 	return true;
 }
@@ -592,11 +594,13 @@ void chrif_authok(int fd) {
 	time_t expiration_time;
 	struct mmo_charstatus* charstatus;
 	struct auth_node *node;
+	// [CarlosHenrq] Enviando mac_address no pacote entre os servidores.
+	char mac_address[MAC_LENGTH];
 	bool changing_mapservers;
 	struct map_session_data *sd = NULL;
 
 	//Check if both servers agree on the struct's size
-	if( RFIFOW(fd,2) - 25 != sizeof(struct mmo_charstatus) ) {
+	if( RFIFOW(fd,2) - (25 + MAC_LENGTH) != sizeof(struct mmo_charstatus) ) {
 		ShowError("chrif_authok: Tamanho de dados incompativel! %d != %"PRIuS"\n", RFIFOW(fd,2) - 25, sizeof(struct mmo_charstatus));
 		return;
 	}
@@ -607,7 +611,9 @@ void chrif_authok(int fd) {
 	expiration_time = (time_t)(int32)RFIFOL(fd,16);
 	group_id = RFIFOL(fd,20);
 	changing_mapservers = (RFIFOB(fd,24));
-	charstatus = (struct mmo_charstatus*)RFIFOP(fd,25);
+	// [CarlosHenrq] Enviando mac_address no pacote entre os servidores.
+	safestrncpy(mac_address, (const char*)RFIFOP(fd,25), MAC_LENGTH);
+	charstatus = (struct mmo_charstatus*)RFIFOP(fd,25 + MAC_LENGTH);
 	char_id = charstatus->char_id;
 
 	//Check if we don't already have player data in our server
@@ -637,7 +643,8 @@ void chrif_authok(int fd) {
 		node->char_id == char_id &&
 		node->login_id1 == login_id1 )
 	{ //Auth Ok
-		if (pc->authok(sd, login_id2, expiration_time, group_id, charstatus, changing_mapservers))
+		// [CarlosHenrq] Enviando mac_address no pacote entre os servidores.
+		if (pc->authok(sd, login_id2, expiration_time, group_id, charstatus, changing_mapservers, mac_address))
 			return;
 	} else { //Auth Failed
 		pc->authfail(sd);
@@ -718,14 +725,16 @@ bool chrif_charselectreq(struct map_session_data* sd, uint32 s_ip) {
 
 	chrif_check(false);
 
-	WFIFOHEAD(chrif->fd,22);
+	WFIFOHEAD(chrif->fd,22 + MAC_LENGTH);
 	WFIFOW(chrif->fd, 0) = 0x2b02;
 	WFIFOL(chrif->fd, 2) = sd->bl.id;
 	WFIFOL(chrif->fd, 6) = sd->login_id1;
 	WFIFOL(chrif->fd,10) = sd->login_id2;
 	WFIFOL(chrif->fd,14) = htonl(s_ip);
 	WFIFOL(chrif->fd,18) = sd->group_id;
-	WFIFOSET(chrif->fd,22);
+	// [CarlosHenrq] Enviando mac_address no pacote entre os servidores.
+	memcpy(WFIFOP(chrif->fd,22), sd->mac_address, MAC_LENGTH);
+	WFIFOSET(chrif->fd,22 + MAC_LENGTH);
 
 	return true;
 }
