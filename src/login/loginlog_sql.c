@@ -14,7 +14,7 @@
 * Copyright (c) Athena Dev Teams                                             *
 *                                                                            *
 * Licenciado sob a licenca GNU GPL                                           *
-* Para mais informações leia o arquivo LICENSE na raíz do emulador           *
+* Para mais informaÃ§Ãµes leia o arquivo LICENSE na raÃ­z do emulador           *
 *****************************************************************************/
 
 #define BRATHENA_CORE
@@ -95,7 +95,7 @@ void login_log(uint32 ip, const char* username, int rcode, const char* message, 
 
 	// [CarlosHenrq] Enviando mac_address no pacote entre os servidores.
 	retcode = SQL->Query(sql_handle,
-		"INSERT INTO `%s`(`time`,`ip`,`user`,`rcode`,`log`) VALUES (NOW(), '%s', '%s', '%d', '%s', '%s')",
+		"INSERT INTO `%s`(`time`,`ip`,`user`,`rcode`,`log`,`mac_address`) VALUES (NOW(), '%s', '%s', '%d', '%s', '%s')",
 		log_login_db, sockt->ip2str(ip,NULL), esc_username, rcode, esc_message, esc_mac_address);
 
 	if( retcode != SQL_SUCCESS )
