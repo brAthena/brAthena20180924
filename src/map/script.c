@@ -11285,6 +11285,46 @@ static struct map_session_data *prepareChangeSex(struct script_state *st)
 	return sd;
 }
 
+/**
+  * opendressroom({<char_id>});
+  */
+ BUILDIN(opendressroom)
+ {
+ #if PACKETVER >= 20150513
+ 	 struct map_session_data *sd;
+	   
+ 	sd = script->rid2sd(st);
+     if (sd == NULL)
+         return true;
+ 
+      clif_dressing_room(sd, 1);
+ 
+     return true;
+ #else
+     return false;
+ #endif
+ }
+ 
+ /**
+  * closedressroom({<char_id>});
+  */
+ BUILDIN(closedressroom)
+ {
+ #if PACKETVER >= 20150513
+	 struct map_session_data *sd;
+	 
+ 	sd = script->rid2sd(st);
+     if (sd == NULL)
+         return false;
+ 
+     clif_dressing_room(sd, 0);
+ 
+     return true;
+ #else
+     return false;
+ #endif
+ }
+
 /*==========================================
  * Unequip all item and request for a changesex to char-serv
  *------------------------------------------*/
@@ -21471,6 +21511,10 @@ void script_parse_builtin(void) {
 		BUILDIN_DEF(getunitdata,"i*"),
 		BUILDIN_DEF(setunitdata,"iii"),
 		BUILDIN_DEF(costume, "i"), // Costume System
+		
+		/* Camarim */
+		BUILDIN_DEF(opendressroom,"?"),
+ 		BUILDIN_DEF(closedressroom,"?"),
 		
 		BUILDIN_DEF(_,"s"),
 	};

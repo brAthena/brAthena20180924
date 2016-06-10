@@ -8,14 +8,14 @@
 *                            www.brathena.org                                *
 ******************************************************************************
 * src/map/buyingstore.c                                                      *
-* Funções referentes à loja de compra de itens                               *
+* FunÃ§Ãµes referentes Ã  loja de compra de itens                               *
 ******************************************************************************
 * Copyright (c) brAthena Dev Team                                            *
 * Copyright (c) Hercules Dev Team                                            *
 * Copyright (c) Athena Dev Teams                                             *
 *                                                                            *
-* Licenciado sob a licença GNU GPL                                           *
-* Para mais informações leia o arquivo LICENSE na raíz do emulador           *
+* Licenciado sob a licenÃ§a GNU GPL                                           *
+* Para mais informaÃ§Ãµes leia o arquivo LICENSE na raÃ­z do emulador           *
 *****************************************************************************/
 
 #define BRATHENA_CORE
@@ -384,7 +384,7 @@ void buyingstore_trade(struct map_session_data* sd, int account_id, unsigned int
 
 		// notify clients
 		clif->buyingstore_delete_item(sd, index, amount, pl_sd->buyingstore.items[listidx].price);
-		clif->buyingstore_update_item(pl_sd, nameid, amount);
+		clif->buyingstore_update_item(pl_sd, nameid, amount, sd->status.char_id, zeny);
 	}
 
 	if( map->save_settings&128 ) {

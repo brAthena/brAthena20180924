@@ -2866,6 +2866,12 @@ packet(0x96e,-1,clif->ackmergeitems);
 	packet(0x0899,5,clif->pHomMenu,2,4);
 	packet(0x0438,36,clif->pStoragePassword,0);
 	packet(0x0A01,3,clif->pHotkeyRowShift,2);
+	packet(0x09E5,18);		// ZC_DELETEITEM_FROM_MCSTORE2
+ 	packet(0x09E6,22);		// ZC_UPDATE_ITEM_FROM_BUYING_STORE2
+ 	packet(0x0A23,-1);		// ZC_ALL_ACH_LIST
+ 	packet(0x0A24,66);	// ZC_ACH_UPDATE
+ 	packet(0x0A25,6,clif->pDull);	// CZ_REQ_ACH_REWARD
+ 	packet(0x0A26,7);		// ZC_REQ_ACH_REWARD_ACK
 #endif
 
 #if PACKETVER >= 20150226

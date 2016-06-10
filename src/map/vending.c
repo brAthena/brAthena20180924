@@ -8,14 +8,14 @@
 *                            www.brathena.org                                *
 ******************************************************************************
 * src/map/vending.c                                                          *
-* Funções referentes à Habilidade Comércio                                   *
+* FunÃ§Ãµes referentes Ã  Habilidade ComÃ©rcio                                   *
 ******************************************************************************
 * Copyright (c) brAthena Dev Team                                            *
 * Copyright (c) Hercules Dev Team                                            *
 * Copyright (c) Athena Dev Teams                                             *
 *                                                                            *
-* Licenciado sob a licença GNU GPL                                           *
-* Para mais informações leia o arquivo LICENSE na raíz do emulador           *
+* Licenciado sob a licenÃ§a GNU GPL                                           *
+* Para mais informaÃ§Ãµes leia o arquivo LICENSE na raÃ­z do emulador           *
 *****************************************************************************/
 
 #define BRATHENA_CORE
@@ -185,14 +185,15 @@ void vending_purchasereq(struct map_session_data* sd, int aid, unsigned int uid,
 
 	for( i = 0; i < count; i++ ) {
 		short amount = *(uint16*)(data + 4*i + 0);
-		short idx    = *(uint16*)(data + 4*i + 2);
+		short idx  	 = *(uint16*)(data + 4*i + 2);
 		idx -= 2;
 		logs->vending(sd,vsd, &vsd->status.cart[idx],vsd->vending[vend_list[i]].value,amount);
 		pc->additem(sd, &vsd->status.cart[idx], amount);
 		vsd->vending[vend_list[i]].amount -= amount;
 		pc->cart_delitem(vsd, idx, amount, 0);
-		clif->vendingreport(vsd, idx, amount);
-
+		
+		clif->vendingreport(vsd, idx, amount,sd->status.char_id, (int)z);
+		
 		//print buyer's name
 		if( battle_config.buyer_name ) {
 			char temp[256];

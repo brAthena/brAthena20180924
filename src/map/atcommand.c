@@ -5541,10 +5541,10 @@ ACMD(changelook)
 
 	if((i = sscanf(message, "%12d %12d", &j, &k)) < 1) {
 		clif->message(fd, msg_fd(fd,1177)); // Usage: @changelook {<position>} <view id>
-		clif->message(fd, msg_fd(fd,1178)); // Position: 1-Top 2-Middle 3-Bottom 4-Weapon 5-Shield 6-Shoes 7-Robe
+		clif->message(fd, msg_fd(fd,1178)); // Position: 1-Top 2-Middle 3-Bottom 4-Weapon 5-Shield 6-Shoes 7-Robe 8-Body
 		return false;
 	} else if ( i == 2 ) {
-		if (j < 1 || j > 7)
+		if (j < 1 || j > 8)
 			j = 1;
 		j = pos[j - 1];
 	} else if( i == 1 ) { // position not defined, use HEAD_TOP as default
