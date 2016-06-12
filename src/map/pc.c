@@ -8,14 +8,14 @@
 *                            www.brathena.org                                *
 ******************************************************************************
 * src/map/pc.c                                                               *
-* Fun��es referentes aos par�metros do personagem e verifica��es             *
+* Funções referentes aos parâmetros do personagem e verificações             *
 ******************************************************************************
 * Copyright (c) brAthena Dev Team                                            *
 * Copyright (c) Hercules Dev Team                                            *
 * Copyright (c) Athena Dev Teams                                             *
 *                                                                            *
 * Licenciado sob a licen�a GNU GPL                                           *
-* Para mais informa��es leia o arquivo LICENSE na ra�z do emulador           *
+* Para mais informações leia o arquivo LICENSE na raíz do emulador           *
 *****************************************************************************/
 
 #define BRATHENA_CORE
@@ -8550,7 +8550,7 @@ int pc_jobchange(struct map_session_data *sd,int job, int upper)
 	// Reset body style to 0 before changing job to avoid
  	// errors since not every job has a alternate outfit.
  	sd->status.body = 0;
- 	clif_changelook(&sd->bl,LOOK_BODY2,0);
+ 	clif->changelook(&sd->bl,LOOK_BODY2,0);
 
 	sd->status.class_ = job;
 	fame_flag = pc->famerank(sd->status.char_id,sd->class_&MAPID_UPPERMASK);

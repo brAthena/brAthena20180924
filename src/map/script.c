@@ -8,14 +8,14 @@
 *                            www.brathena.org                                *
 ******************************************************************************
 * src/map/script.c                                                           *
-* Comandos de Script (NPCs) e fun��es necess�rias aos mesmos                 *
+* Comandos de Script (NPCs) e funções necessárias aos mesmos                 *
 ******************************************************************************
 * Copyright (c) brAthena Dev Team                                            *
 * Copyright (c) Hercules Dev Team                                            *
 * Copyright (c) Athena Dev Teams                                             *
 *                                                                            *
 * Licenciado sob a licen�a GNU GPL                                           *
-* Para mais informa��es leia o arquivo LICENSE na ra�z do emulador           *
+* Para mais informações leia o arquivo LICENSE na raíz do emulador           *
 *****************************************************************************/
 
 #define BRATHENA_CORE
@@ -11297,7 +11297,7 @@ static struct map_session_data *prepareChangeSex(struct script_state *st)
      if (sd == NULL)
          return true;
  
-      clif_dressing_room(sd, 1);
+      clif->dressing_room(sd, 1);
  
      return true;
  #else
@@ -11317,7 +11317,7 @@ static struct map_session_data *prepareChangeSex(struct script_state *st)
      if (sd == NULL)
          return false;
  
-     clif_dressing_room(sd, 0);
+     clif->dressing_room(sd, 0);
  
      return true;
  #else

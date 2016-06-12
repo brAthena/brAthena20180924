@@ -8,14 +8,14 @@
 *                            www.brathena.org                                *
 ******************************************************************************
 * src/map/clif.c                                                             *
-* Fun��es visuais do emulador                                                *
+* Funções visuais do emulador                                                *
 ******************************************************************************
 * Copyright (c) brAthena Dev Team                                            *
 * Copyright (c) Hercules Dev Team                                            *
 * Copyright (c) Athena Dev Teams                                             *
 *                                                                            *
 * Licenciado sob a licen�a GNU GPL                                           *
-* Para mais informa��es leia o arquivo LICENSE na ra�z do emulador           *
+* Para mais informações leia o arquivo LICENSE na raíz do emulador           *
 *****************************************************************************/
 
 #define BRATHENA_CORE
@@ -19524,6 +19524,8 @@ void clif_defaults(void) {
 	clif->ackmergeitems = clif_ackmergeitems;
 	/* Cart Deco */
 	clif->selectcart = clif_selectcart;
+	
+	clif->dressing_room = clif_dressing_room;
 
 	/*------------------------
 	 *- Parse Incoming Packet

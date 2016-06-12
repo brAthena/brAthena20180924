@@ -13,8 +13,8 @@
 * Copyright (c) Hercules Dev Team                                            *
 * Copyright (c) Athena Dev Teams                                             *
 *                                                                            *
-* Licenciado sob a licen�a GNU GPL                                           *
-* Para mais informa��es leia o arquivo LICENSE na ra�z do emulador           *
+* Licenciado sob a licença GNU GPL                                           *
+* Para mais informações leia o arquivo LICENSE na raíz do emulador          *
 *****************************************************************************/
 
 #ifndef MAP_CLIF_H
@@ -1341,6 +1341,8 @@ struct clif_interface {
 	/* Cart Deco */
 	void(*selectcart) (struct map_session_data *sd);
 	void(*pSelectCart) (int fd, struct map_session_data *sd);
+	
+	void (*dressing_room) (struct map_session_data *sd, int flag);
 };
 
 struct clif_interface *clif;
