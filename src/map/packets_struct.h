@@ -97,7 +97,7 @@ enum packet_headers {
 #else
 	status_changeType = sc_notickType,/* 0x196 */
 #endif
-	efst_set_enterType = 0x43f,
+	status_change2Type = 0x43f,
 	status_change_endType = 0x196,
 #if PACKETVER < 20091103
 	spawn_unit2Type = 0x7c,
@@ -739,7 +739,7 @@ struct packet_status_change_end {
 	unsigned char state;
 } __attribute__((packed));
 
-struct PACKET_ZC_EFST_SET_ENTER {
+struct packet_status_change2 {
 	short PacketType;
 	short index;
 	unsigned int AID;

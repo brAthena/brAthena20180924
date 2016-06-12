@@ -14,7 +14,7 @@
 * Copyright (c) Athena Dev Teams                                             *
 *                                                                            *
 * Licenciado sob a licenca GNU GPL                                           *
-* Para mais informações leia o arquivo LICENSE na raíz do emulador           *
+* Para mais informaÃ§Ãµes leia o arquivo LICENSE na raÃ­z do emulador           *
 *****************************************************************************/
 
 #define BRATHENA_CORE
@@ -77,10 +77,11 @@ unsigned long loginlog_failedattempts(uint32 ip, unsigned int minutes)
  * Records an event in the login log
  *---------------------------------------------*/
 // TODO: add an enum of rcode values
-void login_log(uint32 ip, const char* username, int rcode, const char* message)
+void login_log(uint32 ip, const char* username, int rcode, const char* message, const char* mac_address)
 {
 	char esc_username[NAME_LENGTH*2+1];
 	char esc_message[255*2+1];
+	char esc_mac_address[MAC_LENGTH];
 	int retcode;
 
 	nullpo_retv(username);
@@ -90,10 +91,12 @@ void login_log(uint32 ip, const char* username, int rcode, const char* message)
 
 	SQL->EscapeStringLen(sql_handle, esc_username, username, strnlen(username, NAME_LENGTH));
 	SQL->EscapeStringLen(sql_handle, esc_message, message, strnlen(message, 255));
+	SQL->EscapeStringLen(sql_handle, esc_mac_address, mac_address, strnlen(mac_address, MAC_LENGTH));
 
+	// [CarlosHenrq] Enviando mac_address no pacote entre os servidores.
 	retcode = SQL->Query(sql_handle,
-		"INSERT INTO `%s`(`time`,`ip`,`user`,`rcode`,`log`) VALUES (NOW(), '%s', '%s', '%d', '%s')",
-		log_login_db, sockt->ip2str(ip,NULL), esc_username, rcode, esc_message);
+		"INSERT INTO `%s`(`time`,`ip`,`user`,`rcode`,`log`,`mac_address`) VALUES (NOW(), '%s', '%s', '%d', '%s', '%s')",
+		log_login_db, sockt->ip2str(ip,NULL), esc_username, rcode, esc_message, esc_mac_address);
 
 	if( retcode != SQL_SUCCESS )
 		Sql_ShowDebug(sql_handle);

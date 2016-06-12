@@ -8,14 +8,14 @@
 *                            www.brathena.org                                *
 ******************************************************************************
 * src/map/pc.c                                                               *
-* Fun��es referentes aos par�metros do personagem e verifica��es             *
+* Funções referentes aos parâmetros do personagem e verificações             *
 ******************************************************************************
 * Copyright (c) brAthena Dev Team                                            *
 * Copyright (c) Hercules Dev Team                                            *
 * Copyright (c) Athena Dev Teams                                             *
 *                                                                            *
 * Licenciado sob a licen�a GNU GPL                                           *
-* Para mais informa��es leia o arquivo LICENSE na ra�z do emulador           *
+* Para mais informações leia o arquivo LICENSE na raíz do emulador           *
 *****************************************************************************/
 
 #define BRATHENA_CORE
@@ -1145,12 +1145,14 @@ int pc_isequip(struct map_session_data *sd,int n)
  * No problem with the session id
  * set the status that has been sent from char server
  *------------------------------------------*/
-bool pc_authok(struct map_session_data *sd, int login_id2, time_t expiration_time, int group_id, struct mmo_charstatus *st, bool changing_mapservers) {
+bool pc_authok(struct map_session_data *sd, int login_id2, time_t expiration_time, int group_id, struct mmo_charstatus *st, bool changing_mapservers, const char* mac_address) {
 	int i;
 	int64 tick = timer->gettick();
 	uint32 ip = sockt->session[sd->fd]->client_addr;
 
 	sd->login_id2 = login_id2;
+	// [CarlosHenrq] Enviando mac_address no pacote entre os servidores.
+	safestrncpy(sd->mac_address, mac_address, MAC_LENGTH);
 
 	if (pc->set_group(sd, group_id) != 0) {
 		ShowWarning("pc_authok: %s (AID:%d) logado com grupo desconhecido id (%d)! expulsando...\n",
@@ -1325,9 +1327,11 @@ bool pc_authok(struct map_session_data *sd, int login_id2, time_t expiration_tim
 	ShowInfo("'"CL_WHITE"%s"CL_RESET"' logou."
 	         " (AID/CID: '"CL_WHITE"%d/%d"CL_RESET"',"
 	         " IP: '"CL_WHITE"%d.%d.%d.%d"CL_RESET"',"
+	         " MAC: '"CL_WHITE"%s"CL_RESET"',"
 	         " Grupo '"CL_WHITE"%d"CL_RESET"').\n",
 	         sd->status.name, sd->status.account_id, sd->status.char_id,
-	         CONVIP(ip), sd->group_id);
+			// [CarlosHenrq] Enviando mac_address no pacote entre os servidores.
+	         CONVIP(ip), sd->mac_address, sd->group_id);
 	// Send friends list
 	clif->friendslist_send(sd);
 
@@ -8546,7 +8550,7 @@ int pc_jobchange(struct map_session_data *sd,int job, int upper)
 	// Reset body style to 0 before changing job to avoid
  	// errors since not every job has a alternate outfit.
  	sd->status.body = 0;
- 	clif_changelook(&sd->bl,LOOK_BODY2,0);
+ 	clif->changelook(&sd->bl,LOOK_BODY2,0);
 
 	sd->status.class_ = job;
 	fame_flag = pc->famerank(sd->status.char_id,sd->class_&MAPID_UPPERMASK);
@@ -8755,7 +8759,7 @@ int pc_setoption(struct map_session_data *sd,int type)
 
 	if( (type&OPTION_RIDING && !(p_type&OPTION_RIDING)) || (type&OPTION_DRAGON && !(p_type&OPTION_DRAGON) && pc->checkskill(sd,RK_DRAGONTRAINING) > 0) ) {
 		// Mounting
-		clif->efst_set_enter(&sd->bl,sd->bl.id,AREA,SI_RIDING, 0, 0, 0);
+		clif->sc_load(&sd->bl,sd->bl.id,AREA,SI_RIDING, 0, 0, 0);
 		status_calc_pc(sd,SCO_NONE);
 	} else if( (!(type&OPTION_RIDING) && p_type&OPTION_RIDING) || (!(type&OPTION_DRAGON) && p_type&OPTION_DRAGON) ) {
 		// Dismount
@@ -8779,12 +8783,12 @@ int pc_setoption(struct map_session_data *sd,int type)
 #endif
 
 	if (type&OPTION_FALCON && !(p_type&OPTION_FALCON)) //Falcon ON
-		clif->efst_set_enter(&sd->bl,sd->bl.id,AREA,SI_FALCON, 0, 0, 0);
+		clif->sc_load(&sd->bl,sd->bl.id,AREA,SI_FALCON, 0, 0, 0);
 	else if (!(type&OPTION_FALCON) && p_type&OPTION_FALCON) //Falcon OFF
 		clif->sc_end(&sd->bl,sd->bl.id,AREA,SI_FALCON);
 
 	if( type&OPTION_WUGRIDER && !(p_type&OPTION_WUGRIDER) ) { // Mounting
-		clif->efst_set_enter(&sd->bl,sd->bl.id,AREA,SI_WUGRIDER, 0, 0, 0);
+		clif->sc_load(&sd->bl,sd->bl.id,AREA,SI_WUGRIDER, 0, 0, 0);
 		status_calc_pc(sd,SCO_NONE);
 	} else if( !(type&OPTION_WUGRIDER) && p_type&OPTION_WUGRIDER ) { // Dismount
 		clif->sc_end(&sd->bl,sd->bl.id,AREA,SI_WUGRIDER);
@@ -8874,7 +8878,7 @@ int pc_setcart(struct map_session_data *sd,int type) {
 				clif->cartlist(sd);
 			clif->updatestatus(sd, SP_CARTINFO);
 			sc_start(NULL,&sd->bl, SC_PUSH_CART, 100, type, 0);
-			clif->efst_set_enter(&sd->bl, sd->bl.id, AREA, SI_ON_PUSH_CART, type, 0, 0);
+			clif->sc_load(&sd->bl, sd->bl.id, AREA, SI_ON_PUSH_CART, type, 0, 0);
 			if( sd->sc.data[SC_PUSH_CART] )/* forcefully update */
 				sd->sc.data[SC_PUSH_CART]->val1 = type;
 			break;

@@ -2348,7 +2348,10 @@ void char_parse_fromlogin_auth_state(int fd)
 	uint8 clienttype = RFIFOB(fd,24);
 	int group_id = RFIFOL(fd,25);
 	unsigned int expiration_time = RFIFOL(fd, 29);
-	RFIFOSKIP(fd,33);
+	// [CarlosHenrq] Enviando mac_address no pacote entre os servidores.
+	char mac_address[MAC_LENGTH];
+	safestrncpy(mac_address, (const char*)RFIFOP(fd, 33), MAC_LENGTH);
+	RFIFOSKIP(fd,33 + MAC_LENGTH);
 
 	if (sockt->session_is_active(request_id) && (sd=(struct char_session_data*)sockt->session[request_id]->session_data) &&
 		!sd->auth && sd->account_id == account_id && sd->login_id1 == login_id1 && sd->login_id2 == login_id2 && sd->sex == sex )
@@ -2368,6 +2371,8 @@ void char_parse_fromlogin_auth_state(int fd)
 					chr->auth_error(client_fd, 0);
 					break;
 				}
+				// [CarlosHenrq] Enviando mac_address no pacote entre os servidores.
+				safestrncpy(sockt->session[client_fd]->mac_address, mac_address, MAC_LENGTH);
 				chr->auth_ok(client_fd, sd);
 				break;
 			case 1:// auth failed
@@ -3267,7 +3272,10 @@ void char_parse_frommap_char_select_req(int fd)
 	uint32 login_id2 = RFIFOL(fd,10);
 	uint32 ip = RFIFOL(fd,14);
 	int32 group_id = RFIFOL(fd, 18);
-	RFIFOSKIP(fd,22);
+	// [CarlosHenrq] Enviando mac_address no pacote entre os servidores.
+	char mac_address[MAC_LENGTH];
+	safestrncpy(mac_address, (const char*)RFIFOP(fd, 22), MAC_LENGTH);
+	RFIFOSKIP(fd,22 + MAC_LENGTH);
 
 	if( core->runflag != CHARSERVER_ST_RUNNING )
 	{
@@ -3286,6 +3294,9 @@ void char_parse_frommap_char_select_req(int fd)
 		node->group_id = group_id;
 		//node->sex = 0;
 		node->ip = ntohl(ip);
+		// [CarlosHenrq] Enviando mac_address no pacote entre os servidores.
+		safestrncpy(node->mac_address, mac_address, MAC_LENGTH);
+		safestrncpy(sockt->session[fd]->mac_address, node->mac_address, MAC_LENGTH);
 		/* sounds troublesome. */
 		//node->expiration_time = 0; // unlimited/unknown time by default (not display in map-server)
 		//node->gmlevel = 0;
@@ -3346,6 +3357,8 @@ void char_parse_frommap_change_map_server(int fd)
 		node->ip = ntohl(RFIFOL(fd,31));
 		node->group_id = RFIFOL(fd,35);
 		node->changing_mapservers = 1;
+		// [CarlosHenrq] Enviando mac_address no pacote entre os servidores.
+ 		safestrncpy(node->mac_address, (const char*)RFIFOP(fd,39), MAC_LENGTH);
 		idb_put(auth_db, RFIFOL(fd,2), node);
 
 		data = idb_ensure(chr->online_char_db, RFIFOL(fd,2), chr->create_online_char_data);
@@ -3357,7 +3370,7 @@ void char_parse_frommap_change_map_server(int fd)
 	} else { //Reply with nak
 		chr->change_map_server_ack(fd, RFIFOP(fd,2), false);
 	}
-	RFIFOSKIP(fd,39);
+	RFIFOSKIP(fd,39 + MAC_LENGTH);
 }
 
 void char_parse_frommap_remove_friend(int fd)
@@ -3747,9 +3760,11 @@ void char_parse_frommap_ping(int fd)
 void char_map_auth_ok(int fd, int account_id, struct char_auth_node* node, struct mmo_charstatus* cd)
 {
 	nullpo_retv(cd);
-	WFIFOHEAD(fd,25 + sizeof(struct mmo_charstatus));
+	// [CarlosHenrq] Enviando mac_address no pacote entre os servidores.
+	WFIFOHEAD(fd,25 + sizeof(struct mmo_charstatus) + MAC_LENGTH);
 	WFIFOW(fd,0) = 0x2afd;
-	WFIFOW(fd,2) = 25 + sizeof(struct mmo_charstatus);
+	// [CarlosHenrq] Enviando mac_address no pacote entre os servidores.
+	WFIFOW(fd,2) = 25 + sizeof(struct mmo_charstatus) + MAC_LENGTH;
 	WFIFOL(fd,4) = account_id;
 	if (node)
 	{
@@ -3758,6 +3773,8 @@ void char_map_auth_ok(int fd, int account_id, struct char_auth_node* node, struc
 		WFIFOL(fd,16) = (uint32)node->expiration_time; // FIXME: will wrap to negative after "19-Jan-2038, 03:14:07 AM GMT"
 		WFIFOL(fd,20) = node->group_id;
 		WFIFOB(fd,24) = node->changing_mapservers;
+		// [CarlosHenrq] Enviando mac_address no pacote entre os servidores.
+		memcpy(WFIFOP(fd,25), node->mac_address, MAC_LENGTH);
 	}
 	else
 	{
@@ -3766,8 +3783,10 @@ void char_map_auth_ok(int fd, int account_id, struct char_auth_node* node, struc
 		WFIFOL(fd,16) = 0;
 		WFIFOL(fd,20) = 0;
 		WFIFOB(fd,24) = 0;
+		// [CarlosHenrq] Enviando mac_address no pacote entre os servidores.
+		memcpy(WFIFOP(fd,25), "00-00-00-00-00-00", MAC_LENGTH);
 	}
-	memcpy(WFIFOP(fd,25), cd, sizeof(struct mmo_charstatus));
+	memcpy(WFIFOP(fd,25 + MAC_LENGTH), cd, sizeof(struct mmo_charstatus));
 	WFIFOSET(fd, WFIFOW(fd,2));
 }
 
@@ -4496,6 +4515,8 @@ void char_parse_char_connect(int fd, struct char_session_data* sd, uint32 ipl)
 			chr->auth_error(fd, 0);
 			return;
 		}
+		// [CarlosHenrq] Enviando mac_address no pacote entre os servidores.
+		safestrncpy(sockt->session[fd]->mac_address, node->mac_address, MAC_LENGTH);
 		idb_remove(auth_db, account_id);
 		chr->auth_ok(fd, sd);
 	}
@@ -4690,6 +4711,8 @@ void char_parse_char_select(int fd, struct char_session_data* sd, uint32 ipl)
 	node->expiration_time = sd->expiration_time;
 	node->group_id = sd->group_id;
 	node->ip = ipl;
+	// [CarlosHenrq] Enviando mac_address no pacote entre os servidores.
+	safestrncpy(node->mac_address, sockt->session[fd]->mac_address, MAC_LENGTH);
 	idb_put(auth_db, sd->account_id, node);
 }
 

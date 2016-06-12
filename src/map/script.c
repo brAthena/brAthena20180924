@@ -8,14 +8,14 @@
 *                            www.brathena.org                                *
 ******************************************************************************
 * src/map/script.c                                                           *
-* Comandos de Script (NPCs) e fun��es necess�rias aos mesmos                 *
+* Comandos de Script (NPCs) e funções necessárias aos mesmos                 *
 ******************************************************************************
 * Copyright (c) brAthena Dev Team                                            *
 * Copyright (c) Hercules Dev Team                                            *
 * Copyright (c) Athena Dev Teams                                             *
 *                                                                            *
 * Licenciado sob a licen�a GNU GPL                                           *
-* Para mais informa��es leia o arquivo LICENSE na ra�z do emulador           *
+* Para mais informações leia o arquivo LICENSE na raíz do emulador           *
 *****************************************************************************/
 
 #define BRATHENA_CORE
@@ -11297,7 +11297,7 @@ static struct map_session_data *prepareChangeSex(struct script_state *st)
      if (sd == NULL)
          return true;
  
-      clif_dressing_room(sd, 1);
+      clif->dressing_room(sd, 1);
  
      return true;
  #else
@@ -11317,7 +11317,7 @@ static struct map_session_data *prepareChangeSex(struct script_state *st)
      if (sd == NULL)
          return false;
  
-     clif_dressing_room(sd, 0);
+     clif->dressing_room(sd, 0);
  
      return true;
  #else
@@ -18523,6 +18523,28 @@ BUILDIN(getargcount) {
 
 	return true;
 }
+
+/**
+ * [CarlosHenrq] Obtém o endereço mac-address do jogador no servidor de mapas se estiver logado
+ *
+ * getcharmac({account_id})
+ */
+BUILDIN(getcharmac)
+{
+	TBL_PC* sd = script_hasdata(st, 2) ? map->id2sd(script_getnum(st, 2)) : script->rid2sd(st);
+
+	if(sd == NULL)
+	{
+		ShowWarning("buildin_getcharmac: Jogador não encontrado!\n");
+		script_pushconststr(st, "");
+		script->reportfunc(st);
+		return false;
+	}
+
+	script_pushstrcopy(st, sd->mac_address);
+	return true;
+}
+
 /**
  * getcharip(<account ID>/<character ID>/<character name>)
  **/
@@ -21404,6 +21426,12 @@ void script_parse_builtin(void) {
 		 **/
 		BUILDIN_DEF(getargcount,""),
 		BUILDIN_DEF(getcharip,"?"),
+
+		/**
+		 * brAthena
+		 */
+		BUILDIN_DEF(getcharmac, "?"),
+
 		BUILDIN_DEF(is_function,"s"),
 		BUILDIN_DEF(freeloop,"i"),
 		BUILDIN_DEF(getrandgroupitem,"ii"),

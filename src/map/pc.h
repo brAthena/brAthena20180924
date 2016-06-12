@@ -585,6 +585,8 @@ END_ZEROED_BLOCK;
 	const char* delunit_prevfile;
 	int delunit_prevline;
 
+	// [CarlosHenrq] Enviando mac_address no pacote entre os servidores.
+	char mac_address[MAC_LENGTH];
 };
 
 #define EQP_WEAPON EQP_HAND_R
@@ -831,7 +833,7 @@ END_ZEROED_BLOCK; /* End */
 	int (*makesavestatus) (struct map_session_data *sd);
 	void (*respawn) (struct map_session_data* sd, clr_type clrtype);
 	int (*setnewpc) (struct map_session_data *sd, int account_id, int char_id, int login_id1, unsigned int client_tick, int sex, int fd);
-	bool (*authok) (struct map_session_data *sd, int login_id2, time_t expiration_time, int group_id, struct mmo_charstatus *st, bool changing_mapservers);
+	bool (*authok) (struct map_session_data *sd, int login_id2, time_t expiration_time, int group_id, struct mmo_charstatus *st, bool changing_mapservers, const char* mac_address);
 	void (*authfail) (struct map_session_data *sd);
 	int (*reg_received) (struct map_session_data *sd);
 

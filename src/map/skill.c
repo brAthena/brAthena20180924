@@ -6994,14 +6994,20 @@ int skill_castend_nodamage_id(struct block_list *src, struct block_list *bl, uin
 		{
 			unsigned int equip[] = { EQP_WEAPON, EQP_SHIELD, EQP_ARMOR, EQP_HEAD_TOP };
 			int index;
-			if ( sd && (bl->type != BL_PC || (battle_config.creator_fullprotect != 2 && (dstsd && pc->checkequip(dstsd, equip[skill_id - AM_CP_WEAPON]) < 0) ||
-				(dstsd && equip[skill_id - AM_CP_WEAPON] == EQP_SHIELD && pc->checkequip(dstsd, EQP_SHIELD) > 0
-				&& (index = dstsd->equip_index[EQI_HAND_L]) >= 0 && dstsd->inventory_data[index]
-				&& dstsd->inventory_data[index]->type != IT_ARMOR))) ) {
-				clif->skill_fail(sd, skill_id, USESKILL_FAIL_LEVEL, 0);
-				map->freeblock_unlock(); // Don't consume item requirements
-				return 0;
-			}
+			if ( sd && ( bl->type != BL_PC ||
+						( ( battle_config.creator_fullprotect != 2 && ( dstsd && pc->checkequip(dstsd, equip[skill_id - AM_CP_WEAPON]) < 0 ) ) ||
+							( ( dstsd && equip[skill_id - AM_CP_WEAPON] == EQP_SHIELD  &&  pc->checkequip(dstsd, EQP_SHIELD) > 0 )
+								&& ( (index = dstsd->equip_index[EQI_HAND_L]) >= 0 && dstsd->inventory_data[index] )
+								&& dstsd->inventory_data[index]->type != IT_ARMOR )
+							
+						)
+					)
+				)
+				{
+					clif->skill_fail(sd, skill_id, USESKILL_FAIL_LEVEL, 0);
+					map->freeblock_unlock(); // Don't consume item requirements
+					return 0;
+				}
 			clif->skill_nodamage(src, bl, skill_id, skill_lv,
 				sc_start(src, bl, type, 100, skill_lv, skill->get_time(skill_id, skill_lv)));
 			break;
@@ -7692,7 +7698,7 @@ int skill_castend_nodamage_id(struct block_list *src, struct block_list *bl, uin
 		case CR_FULLPROTECTION:
 		{
 			unsigned int equip[] = { EQP_WEAPON, EQP_SHIELD, EQP_ARMOR, EQP_HEAD_TOP };
-			const enum sc_type stripped[] = { SC_NOEQUIPWEAPON, SC_NOEQUIPSHIELD, SC_NOEQUIPARMOR, SC_NOEQUIPHELM };
+			// Variável não utilizada - Unused variable - const enum sc_type stripped[] = { SC_NOEQUIPWEAPON, SC_NOEQUIPSHIELD, SC_NOEQUIPARMOR, SC_NOEQUIPHELM };
 			int i, s = 0, skilltime = skill->get_time(skill_id, skill_lv);
 			for ( i = 0; i < 4; i++ ) {
 				/**
@@ -15460,7 +15466,7 @@ int skill_sit (struct map_session_data *sd, int type)
 	}
 
 	if( type ) {
-		clif->efst_set_enter(&sd->bl,sd->bl.id,SELF,SI_SIT,0,0,0);
+		clif->sc_load(&sd->bl,sd->bl.id,SELF,SI_SIT,0,0,0);
 	} else {
 		clif->sc_end(&sd->bl,sd->bl.id,SELF,SI_SIT);
 	}

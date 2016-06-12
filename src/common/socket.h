@@ -23,6 +23,7 @@
 #include "common/cbasetypes.h"
 #include "common/conf.h"
 #include "common/db.h"
+#include "common/mmo.h"
 
 #ifdef WIN32
 #	include "common/winapi.h"
@@ -106,6 +107,9 @@ struct socket_data {
 	} flag;
 
 	uint32 client_addr; // remote client address
+
+	// [CarlosHenrq] Enviando mac_address no pacote entre os servidores.
+	char mac_address[MAC_LENGTH];
 
 	uint8 *rdata, *wdata;
 	size_t max_rdata, max_wdata;

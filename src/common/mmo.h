@@ -242,6 +242,9 @@ enum _max_level_ {
 
 #define SCRIPT_VARNAME_LENGTH 32 ///< Maximum length of a script variable
 
+// [CarlosHenrq] Enviando mac_address no pacote entre os servidores.
+#define MAC_LENGTH 18
+
 enum item_types {
 	IT_HEALING = 0,
 	IT_UNKNOWN, //1

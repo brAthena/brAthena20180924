@@ -45,7 +45,6 @@ enum password_enc {
 #define PASSWORDENC PWENC_BOTH
 
 #define PASSWD_LEN (32+1) // 23+1 for plaintext, 32+1 for md5-ed passwords
-#define MAC_LENGTH 18
 
 struct login_session_data {
 	int account_id;
@@ -68,8 +67,6 @@ struct login_session_data {
 	int has_client_hash;
 
 	int fd;
-
-	char mac_address[MAC_LENGTH];
 
 	time_t expiration_time;
 };
@@ -131,6 +128,9 @@ struct login_auth_node {
 	uint8 clienttype;
 	int group_id;
 	time_t expiration_time;
+
+	// [CarlosHenrq] Enviando mac_address no pacote entre os servidores.
+	char mac_address[MAC_LENGTH];
 };
 
 //-----------------------------------------------------
@@ -173,7 +173,7 @@ struct login_interface {
 	void (*fromchar_accinfo) (int fd, int account_id, int u_fd, int u_aid, int u_group, int map_fd, struct mmo_account *acc);
 	void (*fromchar_account) (int fd, int account_id, struct mmo_account *acc);
 	void (*fromchar_account_update_other) (int account_id, unsigned int state);
-	void (*fromchar_auth_ack) (int fd, int account_id, uint32 login_id1, uint32 login_id2, uint8 sex, int request_id, struct login_auth_node* node);
+	void (*fromchar_auth_ack) (int fd, int account_id, uint32 login_id1, uint32 login_id2, uint8 sex, int request_id, const char* mac_address, struct login_auth_node* node);
 	void (*fromchar_ban) (int account_id, time_t timestamp);
 	void (*fromchar_change_sex_other) (int account_id, char sex);
 	void (*fromchar_pong) (int fd);
