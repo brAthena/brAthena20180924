@@ -1,0 +1,1 @@
+ALTER TABLE `itemproduce_log` CHANGE `Amount` `Amount` VARCHAR(24) NOT NULL DEFAULT '';
