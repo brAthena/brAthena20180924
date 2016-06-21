@@ -1,0 +1,1 @@
+ALTER TABLE `itemproduce_log` CHANGE `Amount` `Amount` INT(11) NOT NULL DEFAULT '0';

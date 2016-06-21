@@ -209,7 +209,7 @@ CREATE TABLE IF NOT EXISTS `itemproduce_log` (
   `ItemID` int(11) unsigned NOT NULL DEFAULT '0',
   `ItemName` varchar(24) NOT NULL DEFAULT '',
   `ItemSerial` bigint(20) unsigned NOT NULL DEFAULT '0',
-  `Amount` varchar(24) unsigned NOT NULL DEFAULT '',
+  `Amount` INT(11) NOT NULL DEFAULT '0',
   `Type_` enum('Fail Refine','Craft Requirement','Crafting Sucess','Cooking','Arrow Create','Ele.Analysis','Sucess Refine','Downgrade') NOT NULL DEFAULT 'Craft Requirement'
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
