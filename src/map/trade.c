@@ -384,6 +384,11 @@ void trade_tradeadditem(struct map_session_data *sd, short index, short amount) 
 		return;
 	}
 
+	if (item->refine > battle_config.get_refine) {
+        clif->message(sd->fd,msg_sd(sd,3004));
+        return;
+    }
+	
 	if( item->bound &&
 			!( item->bound == IBT_GUILD && sd->status.guild_id == target_sd->status.guild_id ) &&
 			!( item->bound == IBT_PARTY && sd->status.party_id == target_sd->status.party_id )

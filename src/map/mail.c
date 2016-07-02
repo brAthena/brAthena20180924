@@ -101,6 +101,8 @@ unsigned char mail_setitem(struct map_session_data *sd, int idx, int amount) {
 
 		if( idx < 0 || idx >= MAX_INVENTORY )
 			return 1;
+		if(sd->status.inventory[idx].refine > battle_config.get_refine)
+			return 1;		
 		if( amount <= 0 || amount > sd->status.inventory[idx].amount )
 			return 1;
 		if( !pc_can_give_items(sd) || sd->status.inventory[idx].expire_time ||

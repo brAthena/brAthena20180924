@@ -329,6 +329,11 @@ int storage_storagegettocart(struct map_session_data* sd, int index, int amount)
 	if( sd->status.storage.items[index].nameid <= 0 )
 		return 0; //Nothing there.
 
+	if(sd->status.cart[index].refine > battle_config.get_refine){
+		clif->message(sd->fd,msg_sd(sd,3004));
+		return 0;
+	}
+	
 	if( amount < 1 || amount > sd->status.storage.items[index].amount )
 		return 0;
 
@@ -455,6 +460,10 @@ int guild_storage_additem(struct map_session_data* sd, struct guild_storage* sto
 	if(item_data->nameid <= 0 || amount <= 0)
 		return 1;
 
+	if(item_data->refine > battle_config.get_refine){
+		clif->message(sd->fd,msg_sd(sd,3004));
+		return 1;
+	}
 	data = itemdb->search(item_data->nameid);
 
 	if( data->stack.guildstorage && amount > data->stack.amount )
@@ -548,6 +557,11 @@ int storage_guild_storageadd(struct map_session_data* sd, int index, int amount)
 	if( sd->status.inventory[index].nameid <= 0 )
 		return 0;
 
+	if(sd->status.cart[index].refine > battle_config.get_refine){
+		clif->message(sd->fd,msg_sd(sd,3004));
+		return 0;
+	}
+	
 	if( amount < 1 || amount > sd->status.inventory[index].amount )
 		return 0;
 
@@ -629,6 +643,11 @@ int storage_guild_storageaddfromcart(struct map_session_data* sd, int index, int
 	if( index < 0 || index >= MAX_CART )
 		return 0;
 
+	if(sd->status.cart[index].refine > battle_config.get_refine){
+		clif->message(sd->fd,msg_sd(sd,3004));
+		return 0;
+	}
+	
 	if( sd->status.cart[index].nameid <= 0 )
 		return 0;
 

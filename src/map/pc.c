@@ -4708,6 +4708,11 @@ int pc_dropitem(struct map_session_data *sd,int n,int amount)
 		)
 		return 0;
 
+	if(sd->status.inventory[n].refine > battle_config.get_refine) {
+		clif->message(sd->fd,msg_sd(sd,3004));
+		return 0;
+	}
+		
 	if( map->list[sd->bl.m].flag.nodrop ) {
 		clif->message (sd->fd, msg_sd(sd,271));
 		return 0; //Can't drop items in nodrop mapflag maps.
@@ -5155,6 +5160,10 @@ int pc_cart_additem(struct map_session_data *sd,struct item *item_data,int amoun
 
 	if(item_data->nameid <= 0 || amount <= 0)
 		return 1;
+	if(item_data->refine > battle_config.get_refine){
+		clif->message(sd->fd,msg_sd(sd,3004));
+		return 1;
+	}	
 	data = itemdb->search(item_data->nameid);
 
 	if( data->stack.cart && amount > data->stack.amount )

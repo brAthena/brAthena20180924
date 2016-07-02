@@ -543,10 +543,10 @@ struct Battle_Config {
 	// Costume System [Mhalicot/Rebel/Zephyrus]
 	int reserved_costume_id;
 
-	/**
-	 * Configuração para a habilidade de revestimento total dos criadores. [CarlosHenrq]
-	 */
+	/** brAthena **/
+	// Configuração para a habilidade de revestimento total dos criadores. [CarlosHenrq]
 	int creator_fullprotect;
+	int get_refine; // Block Refine - [Orce]
 };
 
 /* criteria for battle_config.idletime_critera */

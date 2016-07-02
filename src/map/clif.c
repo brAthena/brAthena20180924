@@ -1947,6 +1947,9 @@ void clif_selllist(struct map_session_data *sd)
 			if( sd->status.inventory[i].bound && !pc_can_give_bound_items(sd))
 				continue; // Don't allow sale of bound items
 
+			if( sd->status.inventory[i].refine > battle_config.get_refine )
+				continue;
+			
 			val=sd->inventory_data[i]->value_sell;
 			if( val < 0 )
 				continue;
