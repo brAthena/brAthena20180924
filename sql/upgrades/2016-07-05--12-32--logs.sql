@@ -1,0 +1,13 @@
+ALTER TABLE `buyingstore_log` CHANGE `ItemName` `ItemName` varchar(50) NOT NULL DEFAULT '';
+ALTER TABLE `card_log` CHANGE `ItemName` `ItemName` varchar(50) NOT NULL DEFAULT '';
+ALTER TABLE `cashitemshop` CHANGE `ItemName` `ItemName` varchar(50) NOT NULL DEFAULT '';
+ALTER TABLE `guild_storage_log` CHANGE `ItemName` `ItemName` varchar(50) NOT NULL DEFAULT '';
+ALTER TABLE `itemconsume_log` CHANGE `ItemName` `ItemName` varchar(50) NOT NULL DEFAULT '';
+ALTER TABLE `itemproduce_log` CHANGE `ItemName` `ItemName` varchar(50) NOT NULL DEFAULT '';
+ALTER TABLE `item_get_removelog` CHANGE `ItemName` `ItemName` varchar(50) NOT NULL DEFAULT '';
+ALTER TABLE `mail_log` CHANGE `ItemName` `ItemName` varchar(50) NOT NULL DEFAULT '';
+ALTER TABLE `npcshop_log` CHANGE `ItemName` `ItemName` varchar(50) NOT NULL DEFAULT '';
+ALTER TABLE `pickdrop_log` CHANGE `ItemName` `ItemName` varchar(50) NOT NULL DEFAULT '';
+ALTER TABLE `storage_log` CHANGE `ItemName` `ItemName` varchar(50) NOT NULL DEFAULT '';
+ALTER TABLE `trade_log` CHANGE `ItemName` `ItemName` varchar(50) NOT NULL DEFAULT '';
+ALTER TABLE `vending_log` CHANGE `ItemName` `ItemName` varchar(50) NOT NULL DEFAULT '';
