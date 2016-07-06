@@ -1,0 +1,1 @@
+ALTER TABLE `itemproduce_log` CHANGE `Type_` `Type_` ENUM('Fail Refine','Craft Requirement','Crafting Fail','Crafting Sucess','Cooking','Arrow Create','Ele.Analysis','Sucess Refine','Downgrade') CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL DEFAULT 'Craft Requirement';

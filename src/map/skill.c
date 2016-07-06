@@ -17563,7 +17563,15 @@ int skill_produce_mix(struct map_session_data *sd, uint16 skill_id, int nameid, 
 			return 1;
 		}
 	}
-	logs->produce(sd,NULL,0,"Crafting Fail"); //Craft Failure Log
+		else
+	{
+		struct item tmp_item;
+		memset(&tmp_item,0,sizeof(tmp_item));
+		tmp_item.nameid=nameid;
+		
+		logs->produce(sd,&tmp_item,-1,"Crafting Fail"); //Craft Failure Log
+	}	
+	
 	if(equip){
 		clif->produce_effect(sd,1,nameid);
 		clif->misceffect(&sd->bl,2);
