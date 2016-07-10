@@ -32,6 +32,7 @@
 #include "common/showmsg.h"
 #include "common/sql.h" // SQL_INNODB
 #include "common/strlib.h"
+#include "common/mmo.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -106,7 +107,7 @@ void log_cash_buy_sql(struct map_session_data *sd, char *type, char *npc_name, s
 			`ItemID`,`ItemName`,`ItemCount`,`ItemSerial`,`ItemSlot1`,`ItemSlot2`,`ItemSlot3`,`ItemSlot4`,`ItemRefiningLevel`,`Cash_Price`,`Cash_View`,`Cash_Before`,`Cash_After`)\
 			VALUES (NOW(), '%s','%d','%s','%d','%s','%s','%d','%d','%s','%d','%s','%d','%"PRIu64"','%d','%d','%d','%d','%d','%d','%d','%d','%d')",
 			logs->config.table_name[4], mapindex_id2name(sd->mapindex), sd->status.account_id, sd->status.userid, sd->status.char_id, sd->status.last_ip, type, sd->bl.x, sd->bl.y,
-			npc_name, itm->nameid, i_data->name, amount, itm->unique_id, itm->card[0], itm->card[1], itm->card[2], itm->card[3], itm->refine,
+			strlib->jstrescape(npc_name), itm->nameid, i_data->name, amount, itm->unique_id, itm->card[0], itm->card[1], itm->card[2], itm->card[3], itm->refine,
 			price, tcost, sd->cashPoints + tcost, sd->cashPoints)
 		) {
 			Sql_ShowDebug(logs->mysql_handle);
@@ -128,7 +129,7 @@ void log_card(struct map_session_data *sd, int slot, char *type, struct item *it
 		if (SQL_ERROR == SQL->Query(logs->mysql_handle, LOG_QUERY " INTO `%s` (`Date`, `Mapname`,`PosX`,`PosY`, `AccountID`,`CharacterID`,`CharName`,`CharacterIPaddr`,`ItemID`,\
 			`ItemName`,`ItemSerial`,`Type`,`Slot`,`Card_ID`,`CardName`,`ItemSlot1`,`ItemSlot2`,`ItemSlot3`,`ItemSlot4`,`ItemRefiningLevel`)\
 			VALUES (NOW(), '%s','%d','%d','%d','%d','%s','%s','%d','%s','%"PRIu64"','%s','%d','%d','%s','%d','%d','%d','%d','%d')",
-			logs->config.table_name[3], mapindex_id2name(sd->mapindex), sd->bl.x, sd->bl.y, sd->status.account_id, sd->status.char_id, sd->status.name, sd->status.last_ip, itm->nameid,
+			logs->config.table_name[3], mapindex_id2name(sd->mapindex), sd->bl.x, sd->bl.y, sd->status.account_id, sd->status.char_id, strlib->jstrescape(sd->status.name), sd->status.last_ip, itm->nameid,
 			data->name, itm->unique_id, type, slot, itm->card[slot], cd_data->name, itm->card[0], itm->card[1], itm->card[2], itm->card[3], itm->refine)
 		) {
 			Sql_ShowDebug(logs->mysql_handle);
@@ -152,8 +153,8 @@ void log_trade(int zeny, struct map_session_data *sd1, struct map_session_data *
 			(`Date`, `Mapname`,`P1_CharID`,`P1_Name`,`P1_PosX`,`P1_PosY`,`P1_IP`,`P2_CharID`,`P2_Name`,`P2_PosX`,`P2_PosY`,`P2_IP`,`Zeny`,`ItemID`,`ItemCount`,`ItemName`,`ItemSerial`,\
 			`ItemSlot1`,`ItemSlot2`,`ItemSlot3`,`ItemSlot4`,`ItemRefiningLevel`) \
 			VALUES (NOW(),'%s', '%d','%s','%d','%d','%s','%d','%s','%d','%d','%s','%d','%d','%d','%s','%"PRIu64"','%d','%d','%d','%d','%d')",
-			logs->config.table_name[16], mapindex_id2name(sd1->mapindex), sd1->status.char_id, sd1->status.name, sd1->bl.x, sd1->bl.y, sd1->status.last_ip,
-			sd2->status.char_id, sd2->status.name, sd2->bl.x, sd2->bl.y, sd1->status.last_ip,
+			logs->config.table_name[16], mapindex_id2name(sd1->mapindex), sd1->status.char_id, strlib->jstrescape(sd1->status.name), sd1->bl.x, sd1->bl.y, sd1->status.last_ip,
+			sd2->status.char_id, strlib->jstrescape(sd2->status.name), sd2->bl.x, sd2->bl.y, sd1->status.last_ip,
 			zeny, (itm) ? itm->nameid : 0, amount, (itm) ? idata->jname : "", (itm) ? itm->unique_id : 0,
 			(itm) ? itm->card[0] : 0, (itm) ? itm->card[1] : 0, (itm) ? itm->card[2] : 0, (itm) ? itm->card[3] : 0, (itm) ? itm->refine : 0)
 		) {
@@ -180,8 +181,8 @@ void log_vending(struct map_session_data *sd, struct map_session_data *vsd, stru
 			(`Date`, `Mapname`,`Shop_Name`,`Buyer_CharID`,`Buyer_Name`,`Buyer_IP`,`Vendor_CharID`,`Vendor_Name`,`Vendor_PosX`,`Vendor_PosY`,`Vendor_IP`,\
 			`ItemID`,`ItemName`,`Amount`,`Unit_Cost`,`Total_Cost`,`ItemSerial`,`ItemSlot1`,`ItemSlot2`,`ItemSlot3`,`ItemSlot4`,`ItemRefiningLevel`)\
 			VALUES (NOW(),'%s','%s', '%d','%s','%s','%d','%s','%d','%d','%s','%d','%s','%d','%d','%d','%"PRIu64"','%d','%d','%d','%d','%d')",
-			logs->config.table_name[17], mapindex_id2name(sd->mapindex),vsd->message, sd->status.char_id, sd->status.name, sd->status.last_ip,
-			vsd->status.char_id, vsd->status.name, vsd->bl.x, vsd->bl.y, (vsd->state.autotrade) ? "autotrade" : vsd->status.last_ip,
+			logs->config.table_name[17], mapindex_id2name(sd->mapindex),strlib->jstrescape(vsd->message), sd->status.char_id, strlib->jstrescape(sd->status.name), sd->status.last_ip,
+			vsd->status.char_id, strlib->jstrescape(vsd->status.name), vsd->bl.x, vsd->bl.y, (vsd->state.autotrade) ? "autotrade" : vsd->status.last_ip,
 			itm->nameid, idata->jname, amount, zeny, (zeny * amount), itm->unique_id,
 			itm->card[0], itm->card[1], itm->card[2], itm->card[3], itm->refine)
 		) {
@@ -219,7 +220,7 @@ void log_npc_shop(struct map_session_data *sd, char *name, struct item *itm, int
 		if (SQL_ERROR == SQL->Query(logs->mysql_handle, LOG_QUERY " INTO `%s`\
 			(`Date`, `Mapname`,`NPC_Name`,`Player_CharID`,`Player_Name`,`Player_IP`,`Player_PosX`,`Player_PosY`,`Player_Action`,`ItemID`,`ItemName`,`Amount`,`Unit_Cost`,`Total_Cost`,`ItemSerial`,`Slots`,`ItemRefiningLevel`)\
 			VALUES (NOW(),'%s','%s', '%d','%s','%s','%d','%d','%s','%d','%s','%d','%d','%d','%"PRIu64"','%d','%d')",
-			logs->config.table_name[13], mapindex_id2name(sd->mapindex), name, sd->status.char_id, sd->status.name, sd->status.last_ip, sd->bl.x, sd->bl.y, action,
+			logs->config.table_name[13], mapindex_id2name(sd->mapindex), strlib->jstrescape(name), sd->status.char_id, strlib->jstrescape(sd->status.name), sd->status.last_ip, sd->bl.x, sd->bl.y, action,
 			itm->nameid, idata->jname, amount, unit_cost, (amount * unit_cost), itm->unique_id,
 			idata->slot, itm->refine)
 		) {
@@ -248,7 +249,7 @@ void log_pickdrop(struct map_session_data *sd, struct mob_data *md, struct item 
 			`ItemSlot1`,`ItemSlot2`,`ItemSlot3`,`ItemSlot4`,`ItemRefiningLevel`)\
 			VALUES (NOW(),'%s','%s','%d','%d','%s','%s','%d','%d','%s','%s',\
 			'%d','%s','%d','%"PRIu64"','%d','%d','%d','%d','%d')",
-			logs->config.table_name[14], type, map->list[src->m].name, src->x, src->y, from, (sd) ? sd->status.name : md->name, (sd) ? sd->status.account_id : 0,
+			logs->config.table_name[14], type, map->list[src->m].name, src->x, src->y, from, (sd) ? strlib->jstrescape(sd->status.name) : md->name, (sd) ? sd->status.account_id : 0,
 			(sd) ? sd->status.char_id : 0, (sd) ? sd->status.last_ip : "", (sd) ? "Player" : "Monster",
 			itm->nameid, idata->jname, amount, itm->unique_id,
 			itm->card[0], itm->card[1], itm->card[2], itm->card[3], itm->refine)
@@ -278,7 +279,7 @@ void log_consume(struct map_session_data *sd, struct item *itm, int amount, char
 			`CharacterIPaddr`,`ItemID`,`ItemName`,`ItemSerial`,`Amount`,`Type_`)\
 			VALUES (NOW(),'%s','%d', '%d','%d','%s',\
 			'%s','%d','%s','%"PRIu64"','%d','%s')",
-			logs->config.table_name[7], mapindex_id2name(sd->mapindex), sd->bl.x, sd->bl.y, sd->status.char_id, sd->status.name,
+			logs->config.table_name[7], mapindex_id2name(sd->mapindex), sd->bl.x, sd->bl.y, sd->status.char_id, strlib->jstrescape(sd->status.name),
 			sd->status.last_ip, itm->nameid, idata->jname, itm->unique_id, amount, type_inf)
 		) {
 			Sql_ShowDebug(logs->mysql_handle);
@@ -305,7 +306,7 @@ void log_produce(struct map_session_data *sd, struct item *itm, int amount, char
 			`CharacterIPaddr`,`ItemID`,`ItemName`,`ItemSerial`,`Amount`,`Type_`)\
 			VALUES (NOW(),'%s','%d', '%d','%d','%s',\
 			'%s','%d','%s','%"PRIu64"','%d','%s')",
-			logs->config.table_name[8], mapindex_id2name(sd->mapindex), sd->bl.x, sd->bl.y, sd->status.char_id, sd->status.name,
+			logs->config.table_name[8], mapindex_id2name(sd->mapindex), sd->bl.x, sd->bl.y, sd->status.char_id, strlib->jstrescape(sd->status.name),
 			sd->status.last_ip, itm->nameid, idata->jname, itm->unique_id, amount, type_inf)
 		) {
 			Sql_ShowDebug(logs->mysql_handle);
@@ -332,7 +333,7 @@ void log_storage(struct map_session_data *sd, struct item *itm, int amount, char
 			VALUES (NOW(),'%c','%s', '%d','%d','%d','%d','%s',\
 			'%s','%d','%s','%"PRIu64"','%d','%d','%d','%d','%d','%d')",
 			logs->config.table_name[15], type, mapindex_id2name(sd->mapindex), sd->bl.x, sd->bl.y, sd->status.account_id,
-			sd->status.char_id, sd->status.name, sd->status.last_ip,
+			sd->status.char_id, strlib->jstrescape(sd->status.name), sd->status.last_ip,
 			itm->nameid, idata->jname, itm->unique_id, amount, itm->card[0], itm->card[1],
 			itm->card[2], itm->card[3], itm->refine)
 		) {
@@ -360,8 +361,8 @@ void log_gstorage(struct map_session_data *sd, struct item *itm, int amount, cha
 			VALUES (NOW(),'%c','%s', '%d','%d','%d','%s','%d','%d','%s',\
 			'%s','%d','%s','%"PRIu64"','%d','%d','%d','%d','%d','%d')",
 			logs->config.table_name[6], type, mapindex_id2name(sd->mapindex), sd->bl.x, sd->bl.y, sd->guild->guild_id,
-			sd->guild->name, sd->status.account_id,
-			sd->status.char_id, sd->status.name, sd->status.last_ip,
+			strlib->jstrescape(sd->guild->name), sd->status.account_id,
+			sd->status.char_id, strlib->jstrescape(sd->status.name), sd->status.last_ip,
 			itm->nameid, idata->jname, itm->unique_id, amount, itm->card[0], itm->card[1],
 			itm->card[2], itm->card[3], itm->refine)
 		) {
@@ -384,7 +385,7 @@ void log_mail(struct mail_message *msg) {
 			`ItemID`,`ItemName`,`ItemSerial`,`Amount`,`ItemSlot1`,`ItemSlot2`,`ItemSlot3`,`ItemSlot4`,`ItemRefiningLevel`)\
 			VALUES (NOW(),'%d','%s', '%d','%s','%d','%d','%s',\
 			'%"PRIu64"','%d','%d','%d','%d','%d','%d')",
-			logs->config.table_name[11], msg->send_id, msg->send_name, msg->dest_id, msg->dest_name, msg->zeny,
+			logs->config.table_name[11], msg->send_id, strlib->jstrescape(msg->send_name), msg->dest_id, strlib->jstrescape(msg->dest_name), msg->zeny,
 			(itm) ? itm->nameid : 0, (itm) ? idata->jname : "",
 			(itm) ? itm->unique_id : 0, (itm) ? itm->amount : 0,
 			(itm) ? itm->card[0] : 0 ,(itm) ? itm->card[1] : 0,
@@ -415,8 +416,8 @@ void log_buyingstore(struct map_session_data *bsd, struct map_session_data *vsd,
 			`Vendor_CharID`,`Vendor_Name`,`Vendor_IP`,\
 			`ItemID`,`ItemName`,`Amount`,`Unit_Cost`,`Total_Cost`,`ItemSerial`,`ItemSlot1`,`ItemSlot2`,`ItemSlot3`,`ItemSlot4`,`ItemRefiningLevel`)\
 			VALUES (NOW(),'%s','%s', '%d','%s','%s','%d','%d','%d','%s','%s','%d','%s','%d','%d','%d','%"PRIu64"','%d','%d','%d','%d','%d')",
-			logs->config.table_name[2], mapindex_id2name(vsd->mapindex), bsd->message, bsd->status.char_id, bsd->status.name, bsd->status.last_ip, bsd->bl.x, bsd->bl.y,
-			vsd->status.char_id, vsd->status.name, vsd->status.last_ip,
+			logs->config.table_name[2], mapindex_id2name(vsd->mapindex), strlib->jstrescape(bsd->message), bsd->status.char_id, strlib->jstrescape(bsd->status.name), bsd->status.last_ip, bsd->bl.x, bsd->bl.y,
+			vsd->status.char_id, strlib->jstrescape(vsd->status.name), vsd->status.last_ip,
 			itm->nameid, idata->jname, amount, zeny, (zeny * amount), itm->unique_id,
 			itm->card[0], itm->card[1], itm->card[2], itm->card[3], itm->refine)
 		) {
@@ -443,7 +444,7 @@ void log_item_getrem(int tp, struct map_session_data *sd, struct item *itm, int 
 			VALUES (NOW(),'%s','%s', '%s','%d','%d','%d','%d','%s','%s',\
 			'%d','%s','%d','%"PRIu64"','%d','%d','%d','%d','%d')",
 			logs->config.table_name[9], (tp) ? "Get" : "Del", type, mapindex_id2name(sd->mapindex), sd->bl.x, sd->bl.y,
-			sd->status.account_id, sd->status.char_id, sd->status.name, sd->status.last_ip, itm->nameid, idata->jname,
+			sd->status.account_id, sd->status.char_id, strlib->jstrescape(sd->status.name), sd->status.last_ip, itm->nameid, idata->jname,
 			amount, itm->unique_id, itm->card[0], itm->card[1], itm->card[2], itm->card[3], itm->refine)
 		) {
 			Sql_ShowDebug(logs->mysql_handle);
@@ -475,7 +476,7 @@ void log_atcommand(struct map_session_data *sd, const char *message) {
 		if (SQL_ERROR == SQL->Query(logs->mysql_handle, LOG_QUERY " INTO `%s`\
 			(`atcommand_date`, `account_id`, `char_id`, `char_name`, `map`, `command`)\
 			VALUES (NOW(), '%d', '%d', '%s', '%s', '%s')",
-			logs->config.table_name[0], sd->status.account_id, sd->status.char_id, sd->status.name, mapindex_id2name(sd->mapindex), message)
+			logs->config.table_name[0], sd->status.account_id, sd->status.char_id, sd->status.name, mapindex_id2name(sd->mapindex), strlib->jstrescape((char *)message))
 		) {
 			Sql_ShowDebug(logs->mysql_handle);
 			return;
@@ -489,7 +490,7 @@ void log_npc(struct map_session_data *sd, const char *message) {
 
 	if (logs->config.npc) {
 		if (SQL_ERROR == SQL->Query(logs->mysql_handle, LOG_QUERY " INTO `%s` (`npc_date`, `account_id`, `char_id`, `char_name`, `map`, `mes`) VALUES (NOW(), '%d', '%d', '%s', '%s', '%s')",
-			logs->config.table_name[12], sd->status.account_id, sd->status.char_id, sd->status.name, mapindex_id2name(sd->mapindex), message)
+			logs->config.table_name[12], sd->status.account_id, sd->status.char_id, sd->status.name, mapindex_id2name(sd->mapindex), strlib->jstrescape((char *)message))
 		) {
 			Sql_ShowDebug(logs->mysql_handle);
 			return;
@@ -519,7 +520,7 @@ void log_chat(e_log_chat_type type, int type_id, int src_charid, int src_accid, 
 			(`time`, `type`, `type_id`, `src_charid`, `src_accountid`, `src_map`, `src_map_x`,\
 			`src_map_y`, `dst_charname`, `message`) VALUES\
 			(NOW(), '%c', '%d', '%d', '%d', '%s', '%d', '%d', '%s', '%s')", 
-			logs->config.table_name[5], log_type, type_id, src_charid, src_accid, mapname, x, y, dst_charname, message)
+			logs->config.table_name[5], log_type, type_id, src_charid, src_accid, mapname, x, y, strlib->jstrescape((char *)dst_charname), strlib->jstrescape((char *)message))
 		) {
 			Sql_ShowDebug(logs->mysql_handle);
 			return;
