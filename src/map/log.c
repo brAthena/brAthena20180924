@@ -32,7 +32,6 @@
 #include "common/showmsg.h"
 #include "common/sql.h" // SQL_INNODB
 #include "common/strlib.h"
-#include "common/mmo.h"
 
 #include <stdio.h>
 #include <stdlib.h>
