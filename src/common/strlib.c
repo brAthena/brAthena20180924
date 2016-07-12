@@ -44,6 +44,9 @@ char* jstrescape (char* pt) {
 	//copy from here
 	char *ptr;
 	int i = 0, j = 0;
+	
+	// pointer is null
+	if (!(pt)) return pt;
 
 	//copy string to temporary
 	CREATE(ptr, char, J_MAX_MALLOC_SIZE);
