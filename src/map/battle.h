@@ -547,6 +547,9 @@ struct Battle_Config {
 	// Configuração para a habilidade de revestimento total dos criadores. [CarlosHenrq]
 	int creator_fullprotect;
 	int get_refine; // Block Refine - [Orce]
+	
+	// Configuração para habilidades de remover armas. [Sir Will]
+	int strip_weapon;
 };
 
 /* criteria for battle_config.idletime_critera */

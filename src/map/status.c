@@ -7460,6 +7460,15 @@ int status_change_start(struct block_list *src, struct block_list *bl, enum sc_t
 				opt_flag = 0; //Reuse to check success condition.
 				if(sd->bonus.unstripable_equip&EQP_WEAPON)
 					return 0;
+				
+				//Caso a configuração esteja ativa vai verificar se tem arma na mão esquerda para remover. [Sir Will]
+				if(battle_config.strip_weapon){
+					i = sd->equip_index[EQI_HAND_L];
+					if (i>=0 && sd->inventory_data[i] && sd->inventory_data[i]->type == IT_WEAPON) {
+						opt_flag|=1;
+						pc->unequipitem(sd, i, PCUNEQUIPITEM_RECALC|PCUNEQUIPITEM_FORCE);
+					}
+				}
 
 				i = sd->equip_index[EQI_HAND_R];
 				if (i>=0 && sd->inventory_data[i] && sd->inventory_data[i]->type == IT_WEAPON) {

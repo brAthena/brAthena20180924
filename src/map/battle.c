@@ -7218,6 +7218,8 @@ static const struct battle_data {
 	{ "creator.fullprotect",				&battle_config.creator_fullprotect,				0,		0,		2,				},
 	// Block Refine - [Orce]
 	{ "get_refine",                         &battle_config.get_refine,                      0,      1,      100,            },
+	// Configuração para habilidades de remover armas. [Sir Will]
+	{ "strip_weapon",                       &battle_config.strip_weapon,                    0,      0,      1,              },
 };
 #ifndef STATS_OPT_OUT
 /**
