@@ -1,7 +1,24 @@
-//===== Hercules Script ======================================
-//= Umbala Dungeon Monster Spawn Script
-//===== By: ==================================================
-//= Athena (1.0)
+//  ___________________________________________________________________           
+// /                                                                   \
+// |            _           _   _   _                                  |
+// |           | |__  _ __ / \ | |_| |__   ___ _ __   __ _             |
+// |           | '_ \| '__/ _ \| __| '_ \ / _ \ '_ \ / _` |            |
+// |           | |_) | | / ___ \ |_| | | |  __/ | | | (_| |            |
+// |           |_.__/|_|/_/   \_\__|_| |_|\___|_| |_|\__,_|            |
+// |                                                                   |
+// |                        brAthena  Script                           |
+// |                        www.brathena.org                           |
+// |-------------------------------------------------------------------|
+// |                                                                   |
+// | Copyright (c) brAthena Dev Team                                   |
+// | Copyright (c) Hercules Dev Team                                   |
+// | Copyright (c) Athena Dev Teams                                    |
+// |                                                                   |
+// |-------------------------------------------------------------------|
+// | Licenciado sob a licenca GNU GPL                                  | 
+// | Para mais informações leia o arquivo LICENSE na raíz do emulador  |
+// \___________________________________________________________________/
+//
 //===== Current Version: =====================================
 //= 1.4
 //===== Additional Comments: =================================
@@ -13,42 +30,42 @@
 //==================================================
 // um_dun01 - Carpenter's Shop in the Tree
 //==================================================
-um_dun01,0,0,0,0	monster	Stone Shooter	STONE_SHOOTER,70,0,0,0
-um_dun01,0,0,0,0	monster	Wootan Fighter	WOOTAN_FIGHTER,10,0,0,0
-um_dun01,0,0,0,0	monster	Wootan Shooter	WOOTAN_SHOOTER,10,0,0,0
-um_dun01,0,0,0,0	monster	Yellow Plant	YELLOW_PLANT,5,180000,90000,1
-um_dun01,0,0,0,0	monster	Green Plant	GREEN_PLANT,5,180000,90000,1
+um_dun01,0,0,0,0	monster	Atirador de Pedras	STONE_SHOOTER,70,0,0,0
+um_dun01,0,0,0,0	monster	Guerreiro Wootan	WOOTAN_FIGHTER,10,0,0,0
+um_dun01,0,0,0,0	monster	Artilheiro Wootan	WOOTAN_SHOOTER,10,0,0,0
+um_dun01,0,0,0,0	monster	Planta Amarela	YELLOW_PLANT,5,180000,90000,1
+um_dun01,0,0,0,0	monster	Planta Verde	GREEN_PLANT,5,180000,90000,1
 
 //==================================================
 // um_dun02 - Passage to a Foreign World
 //==================================================
-um_dun02,0,0,0,0	monster	Wooden Golem	WOODEN_GOLEM,50,0,0,0
-um_dun02,79,227,10,10	monster	Wooden Golem	WOODEN_GOLEM,2,240000,60000,0
-um_dun02,87,189,10,10	monster	Wooden Golem	WOODEN_GOLEM,2,240000,60000,0
-um_dun02,170,145,10,10	monster	Wooden Golem	WOODEN_GOLEM,2,240000,60000,0
-um_dun02,196,131,14,14	monster	Wooden Golem	WOODEN_GOLEM,2,240000,60000,0
-um_dun02,244,129,15,15	monster	Wooden Golem	WOODEN_GOLEM,2,360000,60000,0
-um_dun02,90,97,10,15	monster	Wooden Golem	WOODEN_GOLEM,2,360000,60000,0
-um_dun02,90,97,10,15	monster	Wooden Golem	WOODEN_GOLEM,2,240000,60000,0
-um_dun02,32,83,10,15	monster	Wooden Golem	WOODEN_GOLEM,2,360000,60000,0
-um_dun02,32,83,10,15	monster	Wooden Golem	WOODEN_GOLEM,2,240000,60000,0
-um_dun02,180,238,15,15	monster	Wooden Golem	WOODEN_GOLEM,2,180000,60000,0
-um_dun02,144,277,15,15	monster	Wooden Golem	WOODEN_GOLEM,2,360000,60000,0
-um_dun02,144,277,15,15	monster	Wooden Golem	WOODEN_GOLEM,2,180000,60000,0
-um_dun02,272,163,15,15	monster	Wooden Golem	WOODEN_GOLEM,2,360000,60000,0
-um_dun02,272,163,15,15	monster	Wooden Golem	WOODEN_GOLEM,2,180000,60000,0
-um_dun02,232,156,15,15	monster	Wooden Golem	WOODEN_GOLEM,2,300000,60000,0
-um_dun02,232,156,15,15	monster	Wooden Golem	WOODEN_GOLEM,2,180000,60000,0
-um_dun02,0,0,0,0	monster	Driller	DRILLER,5,0,0,0
-um_dun02,0,0,0,0	monster	Wootan Shooter	WOOTAN_SHOOTER,10,0,0,0
-um_dun02,213,217,15,15	monster	Wootan Shooter	WOOTAN_SHOOTER,2,120000,60000,0
-um_dun02,72,258,15,15	monster	Wootan Shooter	WOOTAN_SHOOTER,3,120000,60000,0
-um_dun02,79,227,10,10	monster	Wootan Shooter	WOOTAN_SHOOTER,1,120000,60000,0
-um_dun02,170,145,10,10	monster	Wootan Shooter	WOOTAN_SHOOTER,1,120000,60000,0
-um_dun02,209,34,15,15	monster	Wootan Shooter	WOOTAN_SHOOTER,1,120000,60000,0
-um_dun02,272,163,15,15	monster	Wootan Shooter	WOOTAN_SHOOTER,1,120000,60000,0
-um_dun02,232,156,15,15	monster	Wootan Shooter	WOOTAN_SHOOTER,1,120000,60000,0
-um_dun02,0,0,0,0	monster	Dryad	DRYAD,25,0,0,0
-um_dun02,0,0,0,0	monster	Yellow Plant	YELLOW_PLANT,5,180000,90000,1
-um_dun02,0,0,0,0	monster	Red Plant	RED_PLANT,5,180000,90000,1
-um_dun02,0,0,0,0	monster	Shining Plant	SHINING_PLANT,6,180000,90000,1
+um_dun02,0,0,0,0	monster	Golem de Madeira	WOODEN_GOLEM,50,0,0,0
+um_dun02,79,227,10,10	monster	Golem de Madeira	WOODEN_GOLEM,2,240000,60000,0
+um_dun02,87,189,10,10	monster	Golem de Madeira	WOODEN_GOLEM,2,240000,60000,0
+um_dun02,170,145,10,10	monster	Golem de Madeira	WOODEN_GOLEM,2,240000,60000,0
+um_dun02,196,131,14,14	monster	Golem de Madeira	WOODEN_GOLEM,2,240000,60000,0
+um_dun02,244,129,15,15	monster	Golem de Madeira	WOODEN_GOLEM,2,360000,60000,0
+um_dun02,90,97,10,15	monster	Golem de Madeira	WOODEN_GOLEM,2,360000,60000,0
+um_dun02,90,97,10,15	monster	Golem de Madeira	WOODEN_GOLEM,2,240000,60000,0
+um_dun02,32,83,10,15	monster	Golem de Madeira	WOODEN_GOLEM,2,360000,60000,0
+um_dun02,32,83,10,15	monster	Golem de Madeira	WOODEN_GOLEM,2,240000,60000,0
+um_dun02,180,238,15,15	monster	Golem de Madeira	WOODEN_GOLEM,2,180000,60000,0
+um_dun02,144,277,15,15	monster	Golem de Madeira	WOODEN_GOLEM,2,360000,60000,0
+um_dun02,144,277,15,15	monster	Golem de Madeira	WOODEN_GOLEM,2,180000,60000,0
+um_dun02,272,163,15,15	monster	Golem de Madeira	WOODEN_GOLEM,2,360000,60000,0
+um_dun02,272,163,15,15	monster	Golem de Madeira	WOODEN_GOLEM,2,180000,60000,0
+um_dun02,232,156,15,15	monster	Golem de Madeira	WOODEN_GOLEM,2,300000,60000,0
+um_dun02,232,156,15,15	monster	Golem de Madeira	WOODEN_GOLEM,2,180000,60000,0
+um_dun02,0,0,0,0	monster	Furador	DRILLER,5,0,0,0
+um_dun02,0,0,0,0	monster	Artilheiro Wootan	WOOTAN_SHOOTER,10,0,0,0
+um_dun02,213,217,15,15	monster	Artilheiro Wootan	WOOTAN_SHOOTER,2,120000,60000,0
+um_dun02,72,258,15,15	monster	Artilheiro Wootan	WOOTAN_SHOOTER,3,120000,60000,0
+um_dun02,79,227,10,10	monster	Artilheiro Wootan	WOOTAN_SHOOTER,1,120000,60000,0
+um_dun02,170,145,10,10	monster	Artilheiro Wootan	WOOTAN_SHOOTER,1,120000,60000,0
+um_dun02,209,34,15,15	monster	Artilheiro Wootan	WOOTAN_SHOOTER,1,120000,60000,0
+um_dun02,272,163,15,15	monster	Artilheiro Wootan	WOOTAN_SHOOTER,1,120000,60000,0
+um_dun02,232,156,15,15	monster	Artilheiro Wootan	WOOTAN_SHOOTER,1,120000,60000,0
+um_dun02,0,0,0,0	monster	Dríade	DRYAD,25,0,0,0
+um_dun02,0,0,0,0	monster	Planta Amarela	YELLOW_PLANT,5,180000,90000,1
+um_dun02,0,0,0,0	monster	Planta Vermelha	RED_PLANT,5,180000,90000,1
+um_dun02,0,0,0,0	monster	Planta Brilhante	SHINING_PLANT,6,180000,90000,1

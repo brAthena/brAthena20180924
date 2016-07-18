@@ -1,4 +1,24 @@
-//===== Hercules Script ======================================
+//  ___________________________________________________________________           
+// /                                                                   \
+// |            _           _   _   _                                  |
+// |           | |__  _ __ / \ | |_| |__   ___ _ __   __ _             |
+// |           | '_ \| '__/ _ \| __| '_ \ / _ \ '_ \ / _` |            |
+// |           | |_) | | / ___ \ |_| | | |  __/ | | | (_| |            |
+// |           |_.__/|_|/_/   \_\__|_| |_|\___|_| |_|\__,_|            |
+// |                                                                   |
+// |                        brAthena  Script                           |
+// |                        www.brathena.org                           |
+// |-------------------------------------------------------------------|
+// |                                                                   |
+// | Copyright (c) brAthena Dev Team                                   |
+// | Copyright (c) Hercules Dev Team                                   |
+// | Copyright (c) Athena Dev Teams                                    |
+// |                                                                   |
+// |-------------------------------------------------------------------|
+// | Licenciado sob a licenca GNU GPL                                  | 
+// | Para mais informações leia o arquivo LICENSE na raíz do emulador  |
+// \___________________________________________________________________/
+//
 //= Auction system
 //===== By: ==================================================
 //= L0ne_W0lf
@@ -16,37 +36,37 @@
 
 // Auction House warpers
 //============================================================
-moc_ruins,78,173,6	script	Auction Hall Guide#moc	4W_M_02,{
+moc_ruins,78,173,6	script	Guia do Leilão#moc	4W_M_02,{
 	callfunc "F_AuctionWarper",1;
 }
 
-prontera,218,120,4	script	Auction Hall Guide#prt	4_F_KAFRA1,{
+prontera,218,120,4	script	Guia do Leilão#prt	4_F_KAFRA1,{
 	callfunc "F_AuctionWarper",2;
 }
 
-yuno,129,116,0	script	Auction Hall Guide#yuno	4_F_01,{
+yuno,129,116,0	script	Guia do Leilão#yuno	4_F_01,{
 	callfunc "F_AuctionWarper",3;
 }
 
-lighthalzen,205,169,6	script	Auction Hall Guide#lhz	4_M_ZONDAOYAJI,{
+lighthalzen,205,169,6	script	Guia do Leilão#lhz	4_M_ZONDAOYAJI,{
 	callfunc "F_AuctionWarper",4;
 }
 
 function	script	F_AuctionWarper	{
-	mes "[Auction Hall Guide]";
-	mes "Hello, would you";
-	mes "like to enter the";
-	mes "Auction Hall?";
+	mes "[Guia do Leilão]";
+	mes "Olá, você gostaria";
+	mes "de entrar na sala de";
+	mes "Leilão?";
 	next;
-	if (select("Yes:No") == 1) {
+	if (select("Sim:Não") == 1) {
 		if (getarg(0) == 1 || getarg(0) == 4) {
-			mes "[Auction Hall Guide]";
-			mes "Great! Well then,";
-			mes "I hope you have fun";
-			mes "and enjoy the auction~";
-		} else {
-			mes "[Auction Hall Guide]";
-			mes "Enjoy your auction.";
+			mes "[Guia do Leilão]";
+			mes "Muito bem! Eu espero que,";
+			mes "se divirta muito e";
+			mes "aproveite o leilão~";
+		} else{
+			mes "[Guia do Leilão]";
+			mes "Bom proveito no leilão.";
 		}
 		close2;
 		switch(getarg(0)) {
@@ -60,27 +80,27 @@ function	script	F_AuctionWarper	{
 			warp "auction_02",43,24; end;
 		}
 	}
-	mes "[Auction Hall Guide]";
-	mes "Alright then,";
-	mes "see you later.";
-	mes "If you change your";
-	mes "mind, please come";
-	mes "and enjoy the auctions~";
+	mes "[Guia do Leilão]";
+	mes "Muito bem, mas se,";
+	mes "mais tarde.";
+	mes "você mudar de idéia";
+	mes "por favor, venha";
+	mes "e aprecie o leilão~";
 	close;
 }
 
 // Sign posts
 //============================================================
--	script	Information Post#dum::AuctionSign	-1,{
-	mes "[Information]";
-	mes "Auction Warp Guide";
+-	script	Mural de Informações#Leilão	-1,{
+	mes "[Informativo]";
+	mes "Guia de Teleporte do Leilão";
 	close;
 }
 
-moc_ruins,76,176,6	duplicate(AuctionSign)	Information Post#moc	2_BULLETIN_BOARD
-prontera,216,120,4	duplicate(AuctionSign)	Information Post#prt	2_BULLETIN_BOARD
-yuno,131,116,0	duplicate(AuctionSign)	Information Post#yuno	2_BULLETIN_BOARD
-lighthalzen,207,169,6	duplicate(AuctionSign)	Information Post#lhz	2_BULLETIN_BOARD
+moc_ruins,76,176,6	duplicate(Mural de Informações#Leilão)	Guia do Leilão#moc	2_BULLETIN_BOARD
+prontera,216,120,4	duplicate(Mural de Informações#Leilão)	Guia do Leilão#prt	2_BULLETIN_BOARD
+yuno,131,116,0	duplicate(Mural de Informações#Leilão)	Guia do Leilão#yuno	2_BULLETIN_BOARD
+lighthalzen,207,169,6	duplicate(Mural de Informações#Leilão)	Guia do Leilão#lhz	2_BULLETIN_BOARD
 
 // Warps
 //============================================================
@@ -89,48 +109,48 @@ auction_01,22,37,0	warp	auction_entrance_prt	1,1,prontera,214,120
 auction_02,151,17,0	warp	auction_enterance_juno	1,1,yuno,132,119
 auction_02,43,17,0	warp	auction_enterance_lhz	1,1,lighthalzen,209,169
 
-// Auction House NPCs
+// NPCs Casas de Leilão
 //============================================================
--	script	Auction Broker#dum::AuctionBroker	-1,{
-	mes "[Auction Broker]";
-	mes "Welcome to the Auction Hall.";
-	mes "Would you like to view the goods?";
+-	script	Corretor#dum::CorretorLeilão	-1,{
+	mes "[Corretor]";
+	mes "Bem vindo a sala de leilão.";
+	mes "Você gostaria de ver as ofertas?";
 	next;
-	if (select("Yes:No") == 1) {
-		mes "[Auction Broker]";
-		mes "Very well.";
+	if (select("Sim:Não") == 1) {
+		mes "[Corretor]";
+		mes "Muito bem.";
 		if ( getbattleflag( "feature.auction" ) ) {
-			mes "Very well.";
-			mes "Please take";
-			mes "a look, and see";
-			mes "What's being offered~";
+			mes "Muito bem.";
+			mes "Por favor";
+			mes "dê uma olhada, e veja";
+			mes "o que está sendo oferecido~";
 			openauction;
 		}
 		else {
-			mes "Auction feature isn't enabled.";
+			mes "O sistema de leilão não esta habilitado.";
 		}
 		close;
 	}
-	mes "[Auction Broker]";
-	mes "Very well, then.";
-	mes "If you change your";
-	mes "mind, then please";
-	mes "come and check";
-	mes "out the auctions~";
+	mes "[Corretor]";
+	mes "Muito bem, então.";
+	mes "se você mudar de";
+	mes "idéia, por favor";
+	mes "volte e confira";
+	mes "os leilões~";
 	close;
 }
 
-auction_01,182,68,6	duplicate(AuctionBroker)	Auction Broker#moc1	4W_M_02
-auction_01,182,75,0	duplicate(AuctionBroker)	Auction Broker#moc2	4W_M_03
-auction_01,177,75,2	duplicate(AuctionBroker)	Auction Broker#moc3	4W_M_02
-auction_01,177,68,4	duplicate(AuctionBroker)	Auction Broker#moc4	4W_M_03
-auction_01,21,74,4	duplicate(AuctionBroker)	Auction Broker#prt1	4_F_KAFRA1
-auction_01,27,78,4	duplicate(AuctionBroker)	Auction Broker#prt2	4_F_KAFRA2
-auction_01,16,78,4	duplicate(AuctionBroker)	Auction Broker#prt3	4_F_KAFRA3
-auction_02,158,47,6	duplicate(AuctionBroker)	Auction Broker#yuno1	4_F_01
-auction_02,145,47,2	duplicate(AuctionBroker)	Auction Broker#yuno2	4_F_01
-auction_02,151,54,0	duplicate(AuctionBroker)	Auction Broker#yuno3	4_F_01
-auction_02,152,41,4	duplicate(AuctionBroker)	Auction Broker#yuno4	4_F_01
-auction_02,57,46,2	duplicate(AuctionBroker)	Auction Broker#lhz1	4_M_ZONDAMAN
-auction_02,31,46,6	duplicate(AuctionBroker)	Auction Broker#lhz2	4_M_ZONDAMAN
-auction_02,43,65,4	duplicate(AuctionBroker)	Auction Broker#lhz3	4_M_ZONDAOYAJI
+auction_01,182,68,6	duplicate(Corretor#dum)	Corretor#moc1	4W_M_02
+auction_01,182,75,0	duplicate(Corretor#dum)	Corretor#moc2	4W_M_03
+auction_01,177,75,2	duplicate(Corretor#dum)	Corretor#moc3	4W_M_02
+auction_01,177,68,4	duplicate(Corretor#dum)	Corretor#moc4	4W_M_03
+auction_01,21,74,4	duplicate(Corretor#dum)	Corretor#prt1	4_F_KAFRA1
+auction_01,27,78,4	duplicate(Corretor#dum)	Corretor#prt2	4_F_KAFRA2
+auction_01,16,78,4	duplicate(Corretor#dum)	Corretor#prt3	4_F_KAFRA3
+auction_02,158,47,6	duplicate(Corretor#dum)	Corretor#yuno1	4_F_01
+auction_02,145,47,2	duplicate(Corretor#dum)	Corretor#yuno2	4_F_01
+auction_02,151,54,0	duplicate(Corretor#dum)	Corretor#yuno3	4_F_01
+auction_02,152,41,4	duplicate(Corretor#dum)	Corretor#yuno4	4_F_01
+auction_02,57,46,2	duplicate(Corretor#dum)	Corretor#lhz1	4_M_ZONDAMAN
+auction_02,31,46,6	duplicate(Corretor#dum)	Corretor#lhz2	4_M_ZONDAMAN
+auction_02,43,65,4	duplicate(Corretor#dum)	Corretor#lhz3	4_M_ZONDAOYAJI

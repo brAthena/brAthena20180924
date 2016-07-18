@@ -1,33 +1,30 @@
-//================= Hercules Script =======================================
-//=       _   _                     _
-//=      | | | |                   | |
-//=      | |_| | ___ _ __ ___ _   _| | ___  ___
-//=      |  _  |/ _ \ '__/ __| | | | |/ _ \/ __|
-//=      | | | |  __/ | | (__| |_| | |  __/\__ \
-//=      \_| |_/\___|_|  \___|\__,_|_|\___||___/
-//================= License ===============================================
-//= This file is part of Hercules.
-//= http://herc.ws - http://github.com/HerculesWS/Hercules
-//=
-//= Copyright (C) 2012-2015  Hercules Dev Team
-//= Copyright (C)  Streusel
-//= Copyright (C)  Kisuka
-//= Copyright (C)  Gepard
-//= Copyright (C)  Playtester
-//= Copyright (C)  $ephiroth
-//=
-//= Hercules is free software: you can redistribute it and/or modify
-//= it under the terms of the GNU General Public License as published by
-//= the Free Software Foundation, either version 3 of the License, or
-//= (at your option) any later version.
-//=
-//= This program is distributed in the hope that it will be useful,
-//= but WITHOUT ANY WARRANTY; without even the implied warranty of
-//= MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//= GNU General Public License for more details.
-//=
-//= You should have received a copy of the GNU General Public License
-//= along with this program.  If not, see <http://www.gnu.org/licenses/>.
+//  ___________________________________________________________________           
+// /                                                                   \
+// |            _           _   _   _                                  |
+// |           | |__  _ __ / \ | |_| |__   ___ _ __   __ _             |
+// |           | '_ \| '__/ _ \| __| '_ \ / _ \ '_ \ / _` |            |
+// |           | |_) | | / ___ \ |_| | | |  __/ | | | (_| |            |
+// |           |_.__/|_|/_/   \_\__|_| |_|\___|_| |_|\__,_|            |
+// |                                                                   |
+// |                        brAthena  Script                           |
+// |                        www.brathena.org                           |
+// |-------------------------------------------------------------------|
+// |                                                                   |
+// | Copyright (c) brAthena Dev Team                                   |
+// | Copyright (c) Hercules Dev Team                                   |
+// | Copyright (c) Athena Dev Teams                                    |
+// |                                                                   |
+// |-------------------------------------------------------------------|
+// | Licenciado sob a licenca GNU GPL                                  | 
+// | Para mais informações leia o arquivo LICENSE na raíz do emulador  |
+// \___________________________________________________________________/
+//
+// Copyright (C)  Streusel
+// Copyright (C)  Kisuka
+// Copyright (C)  Gepard
+// Copyright (C)  Playtester
+// Copyright (C)  $ephiroth
+//
 //=========================================================================
 //= Veins Fields Monster Spawn Script (Renewal)
 //================= Description ===========================================
@@ -42,42 +39,42 @@ ve_fild01,0,0,0,0	monster	Stapo	1784,20,5000,0,0
 ve_fild01,0,0,0,0	monster	Drosera	1781,20,5000,0,0
 ve_fild01,0,0,0,0	monster	Muscipular	1780,20,5000,0,0
 ve_fild01,0,0,0,0	boss_monster	Atroce	1785,1,10800000,600000,0
-ve_fild01,0,0,0,0	monster	Red Plant	1078,10,10000,0,1
-ve_fild01,0,0,0,0	monster	Yellow Plant	1081,10,10000,0,1
-ve_fild01,270,80,20,7	monster	Blue Plant	1079,4,840000,0,1
-ve_fild01,270,80,20,7	monster	Shining Plant	1083,1,960000,0,1
+ve_fild01,0,0,0,0	monster	Planta Vermelha	1078,10,10000,0,1
+ve_fild01,0,0,0,0	monster	Planta Amarela	1081,10,10000,0,1
+ve_fild01,270,80,20,7	monster	Planta Azul	1079,4,840000,0,1
+ve_fild01,270,80,20,7	monster	Planta Brilhante	1083,1,960000,0,1
 
 //== ve_fild02 - Veins Field ===============================
 ve_fild02,0,0,0,0	monster	Drosera	1781,130,5000,0,0
 ve_fild02,0,0,0,0	monster	Muscipular	1780,20,5000,0,0
 ve_fild02,0,0,0,0	monster	Galion	1783,10,5000,0,0
 ve_fild02,120,55,50,50	boss_monster	Atroce	1785,1,21600000,600000,0
-ve_fild02,0,0,0,0	monster	Red Plant	1078,10,10000,0,1
-ve_fild02,0,0,0,0	monster	Yellow Plant	1081,10,10000,0,1
+ve_fild02,0,0,0,0	monster	Planta Vermelha	1078,10,10000,0,1
+ve_fild02,0,0,0,0	monster	Planta Amarela	1081,10,10000,0,1
 
 //== ve_fild03 - Veins Field ===============================
 ve_fild03,0,0,0,0	monster	Magmaring	1836,130,5000,0,0
 ve_fild03,0,0,0,0	monster	Muscipular	1780,35,5000,0,0
 ve_fild03,0,0,0,0	monster	Drosera	1781,35,5000,0,0
-ve_fild03,200,212,114,60	monster	Red Plant	1078,10,10000,0,1
-ve_fild03,0,0,0,0	monster	Yellow Plant	1081,10,10000,0,1
+ve_fild03,200,212,114,60	monster	Planta Vermelha	1078,10,10000,0,1
+ve_fild03,0,0,0,0	monster	Planta Amarela	1081,10,10000,0,1
 
 //== ve_fild04 - Veins Field ===============================
 ve_fild04,0,0,0,0	monster	Muscipular	1780,100,5000,0,0
 ve_fild04,0,0,0,0	monster	Drosera	1781,50,5000,0,0
 ve_fild04,0,0,0,0	monster	Galion	1783,20,5000,0,0
-ve_fild04,0,0,0,0	monster	Yellow Plant	1081,10,10000,0,1
-ve_fild04,288,273,4,4	monster	Blue Plant	1079,3,660000,0,1
+ve_fild04,0,0,0,0	monster	Planta Amarela	1081,10,10000,0,1
+ve_fild04,288,273,4,4	monster	Planta Azul	1079,3,660000,0,1
 
 //== ve_fild05 - Disabled on Renewal =======================
-//ve_fild05,152,139,15,17	monster	White Plant	1082,5,1800000,0,1
-//ve_fild05,152,139,5,5	monster	Shining Plant	1083,1,2400000,0,1
+//ve_fild05,152,139,15,17	monster	Planta Branca	1082,5,1800000,0,1
+//ve_fild05,152,139,5,5	monster	Planta Brilhante	1083,1,2400000,0,1
 
 //== ve_fild06 - Veins Field - No spawns on Renewal ========
-//ve_fild06,0,0,0,0	monster	Shining Plant	1083,1,1020000,0,1
+//ve_fild06,0,0,0,0	monster	Planta Brilhante	1083,1,1020000,0,1
 
 //== ve_fild07 - Veins Field ===============================
 ve_fild07,0,0,0,0	monster	Stapo	1784,100,5000,0,0
 ve_fild07,0,0,0,0	monster	Drosera	1781,50,5000,0,0
 ve_fild07,0,0,0,0	monster	Muscipular	1780,30,5000,0,0
-ve_fild07,0,0,0,0	monster	White Plant	1082,10,600000,0,1
+ve_fild07,0,0,0,0	monster	Planta Branca	1082,10,600000,0,1

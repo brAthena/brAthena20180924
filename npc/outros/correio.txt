@@ -1,4 +1,24 @@
-//===== Hercules Script ======================================
+//  ___________________________________________________________________           
+// /                                                                   \
+// |            _           _   _   _                                  |
+// |           | |__  _ __ / \ | |_| |__   ___ _ __   __ _             |
+// |           | '_ \| '__/ _ \| __| '_ \ / _ \ '_ \ / _` |            |
+// |           | |_) | | / ___ \ |_| | | |  __/ | | | (_| |            |
+// |           |_.__/|_|/_/   \_\__|_| |_|\___|_| |_|\__,_|            |
+// |                                                                   |
+// |                        brAthena  Script                           |
+// |                        www.brathena.org                           |
+// |-------------------------------------------------------------------|
+// |                                                                   |
+// | Copyright (c) brAthena Dev Team                                   |
+// | Copyright (c) Hercules Dev Team                                   |
+// | Copyright (c) Athena Dev Teams                                    |
+// |                                                                   |
+// |-------------------------------------------------------------------|
+// | Licenciado sob a licenca GNU GPL                                  | 
+// | Para mais informações leia o arquivo LICENSE na raíz do emulador  |
+// \___________________________________________________________________/
+//
 //= Mail Boxes
 //===== By: ==================================================
 //= L0ne_W0lf
@@ -18,120 +38,121 @@
 //= 1.6 Duplicates now spawn from floating NPCs. [L0ne_W0lf]
 //= 1.7 Updated Script from the Official. [Elias]
 //= 1.8 Optimized a bit. [Daegaladh]
+//= 1.9 Tradução por [HD Scripts]
 //============================================================
 
 // Floating mailbox npc that all NPCs duplicate from.
 //============================================================
--	script	Mailbox#dummy::MailBox	-1,{
-	mes "[Mailbox]";
-	mes "To use the mailbox service,";
-	mes "you are required to pay 130 zeny.";
-	mes "Would you like to use the service?";
+-	script	Caixa de Correio#dummy::Caixa de Correio	-1,{
+	mes "[Caixa de Correio]";
+	mes "Para usar o sistema de correio,";
+	mes "você precisa pagar 130 zenys.";
+	mes "Gostaria de usar o serviço agora?";
 	next;
-	switch(select("Yes.:No.")) {
+	switch(select("Sim.:Não.")) {
 	case 1:
-		mes "[Mailbox]";
+		mes "[Caixa de Correio]";
 		if (Zeny < 130) {
-			mes "I am sorry, but you do not have enough money.";
-			mes "To use the mailbox service,";
-			mes "you are required to pay 130 zeny.";
+			mes "Me desculpe, mas você não tem essa quantia.";
+			mes "Para usar o sistema de correio,";
+			mes "você precisa pagar 130 zenys.";
 			close;
 		}
-		mes "Thank you, please come again.";
+		mes "Obrigado, volte sempre!";
 		Zeny -= 130;
 		close2;
 		openmail;
 		end;
 	case 2:
-		mes "[Mailbox]";
-		mes "Thank you, please come again.";
+		mes "[Caixa de Correio]";
+		mes "Obrigado, volte sempre!";
 		close;
 	}
 }
 
 // Prontera
 //============================================================
-prontera,146,86,0	duplicate(MailBox)	Mailbox#prt	2_POSTBOX
-prontera,275,213,0	duplicate(MailBox)	Mailbox#2prt	2_POSTBOX
-prontera,34,212,0	duplicate(MailBox)	Mailbox#3prt	2_POSTBOX
+prontera,146,86,0	duplicate(Caixa de Correio)	Caixa de Correio#prt	2_POSTBOX
+prontera,275,213,0	duplicate(Caixa de Correio)	Caixa de Correio#2prt	2_POSTBOX
+prontera,34,212,0	duplicate(Caixa de Correio)	Caixa de Correio#3prt	2_POSTBOX
 
 // Izlude
 //============================================================
-izlude,136,94,0	duplicate(MailBox)	Mailbox#iz	2_POSTBOX
+izlude,136,94,0	duplicate(Caixa de Correio)	Caixa de Correio#iz	2_POSTBOX
 
 // Morroc
 //============================================================
-moc_ruins,72,166,0	duplicate(MailBox)	Mailbox#1moc	2_POSTBOX
-moc_ruins,156,52,0	duplicate(MailBox)	Mailbox#2moc	2_POSTBOX
+moc_ruins,72,166,0	duplicate(Caixa de Correio)	Caixa de Correio#1moc	2_POSTBOX
+moc_ruins,156,52,0	duplicate(Caixa de Correio)	Caixa de Correio#2moc	2_POSTBOX
 
 // Geffen
 //============================================================
-geffen,115,67,0	duplicate(MailBox)	Mailbox#gef	2_POSTBOX
-geffen,199,125,0	duplicate(MailBox)	Mailbox#2gef	2_POSTBOX
+geffen,115,67,0	duplicate(Caixa de Correio)	Caixa de Correio#gef	2_POSTBOX
+geffen,199,125,0	duplicate(Caixa de Correio)	Caixa de Correio#2gef	2_POSTBOX
 
 // Payon
 //============================================================
-payon,191,104,0	duplicate(MailBox)	Mailbox#pay	2_POSTBOX
-payon,171,226,0	duplicate(MailBox)	Mailbox#2pay	2_POSTBOX
-pay_arche,55,127,0	duplicate(MailBox)	Mailbox#3pay	2_POSTBOX
+payon,191,104,0	duplicate(Caixa de Correio)	Caixa de Correio#pay	2_POSTBOX
+payon,171,226,0	duplicate(Caixa de Correio)	Caixa de Correio#2pay	2_POSTBOX
+pay_arche,55,127,0	duplicate(Caixa de Correio)	Caixa de Correio#3pay	2_POSTBOX
 
 // Alberta
 //============================================================
-alberta,90,60,0	duplicate(MailBox)	Mailbox#alb	2_POSTBOX
-alberta,30,240,0	duplicate(MailBox)	Mailbox#2alb	2_POSTBOX
+alberta,90,60,0	duplicate(Caixa de Correio)	Caixa de Correio#alb	2_POSTBOX
+alberta,30,240,0	duplicate(Caixa de Correio)	Caixa de Correio#2alb	2_POSTBOX
 
 // Al De Baran
 //============================================================
-aldebaran,135,122,0	duplicate(MailBox)	Mailbox#alde	2_POSTBOX
+aldebaran,135,122,0	duplicate(Caixa de Correio)	Caixa de Correio#alde	2_POSTBOX
 
 // Juno
 //============================================================
-yuno,148,187,0	duplicate(MailBox)	Mailbox#yuno	2_POSTBOX
-yuno,332,108,0	duplicate(MailBox)	Mailbox#2yuno	2_POSTBOX
+yuno,148,187,0	duplicate(Caixa de Correio)	Caixa de Correio#yuno	2_POSTBOX
+yuno,332,108,0	duplicate(Caixa de Correio)	Caixa de Correio#2yuno	2_POSTBOX
 
 // Lightalzen
 //============================================================
-lighthalzen,164,85,0	duplicate(MailBox)	Mailbox#lht	2_POSTBOX
-lighthalzen,196,320,0	duplicate(MailBox)	Mailbox#2lht	2_POSTBOX
+lighthalzen,164,85,0	duplicate(Caixa de Correio)	Caixa de Correio#lht	2_POSTBOX
+lighthalzen,196,320,0	duplicate(Caixa de Correio)	Caixa de Correio#2lht	2_POSTBOX
 
 // Einbroch and Einbech
 //============================================================
-einbroch,231,215,0	duplicate(MailBox)	Mailbox#ein	2_POSTBOX
-einbroch,77,202,0	duplicate(MailBox)	Mailbox#2ein	2_POSTBOX
-einbech,182,124,0	duplicate(MailBox)	Mailbox#3ein	2_POSTBOX
+einbroch,231,215,0	duplicate(Caixa de Correio)	Caixa de Correio#ein	2_POSTBOX
+einbroch,77,202,0	duplicate(Caixa de Correio)	Caixa de Correio#2ein	2_POSTBOX
+einbech,182,124,0	duplicate(Caixa de Correio)	Caixa de Correio#3ein	2_POSTBOX
 
 // Comodo
 //============================================================
-comodo,200,150,0	duplicate(MailBox)	Mailbox#cmd	2_POSTBOX
+comodo,200,150,0	duplicate(Caixa de Correio)	Caixa de Correio#cmd	2_POSTBOX
 
 // Umbala
 //============================================================
-umbala,104,155,0	duplicate(MailBox)	Mailbox#um	2_POSTBOX
+umbala,104,155,0	duplicate(Caixa de Correio)	Caixa de Correio#um	2_POSTBOX
 
 // Amatsu
 //============================================================
-amatsu,102,146,0	duplicate(MailBox)	Mailbox#ama	2_POSTBOX
+amatsu,102,146,0	duplicate(Caixa de Correio)	Caixa de Correio#ama	2_POSTBOX
 
 // Gonryun
 //============================================================
-gonryun,152,117,0	duplicate(MailBox)	Mailbox#gon	2_POSTBOX
+gonryun,152,117,0	duplicate(Caixa de Correio)	Caixa de Correio#gon	2_POSTBOX
 
 // Ayothaya
 //============================================================
-ayothaya,205,169,0	duplicate(MailBox)	Mailbox#ayo	2_POSTBOX
+ayothaya,205,169,0	duplicate(Caixa de Correio)	Caixa de Correio#ayo	2_POSTBOX
 
 // Louyang
 //============================================================
-louyang,204,100,0	duplicate(MailBox)	Mailbox#lou	2_POSTBOX
+louyang,204,100,0	duplicate(Caixa de Correio)	Caixa de Correio#lou	2_POSTBOX
 
 // Hugel
 //============================================================
-hugel,86,168,0	duplicate(MailBox)	Mailbox#hu	HIDDEN_NPC
+hugel,86,168,0	duplicate(Caixa de Correio)	Caixa de Correio#hu	HIDDEN_NPC
 
 // Rachel
 //============================================================
-rachel,122,146,0	duplicate(MailBox)	Post Box#ra	2_POSTBOX
+rachel,122,146,0	duplicate(Caixa de Correio)	Caixa de Correio#ra	2_POSTBOX
 
 // Veins
 //============================================================
-veins,218,123,0	duplicate(MailBox)	Post Box#ve	2_POSTBOX
+veins,218,123,0	duplicate(Caixa de Correio)	Caixa de Correio#ve	2_POSTBOX

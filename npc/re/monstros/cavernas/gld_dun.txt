@@ -1,3 +1,24 @@
+//  ___________________________________________________________________           
+// /                                                                   \
+// |            _           _   _   _                                  |
+// |           | |__  _ __ / \ | |_| |__   ___ _ __   __ _             |
+// |           | '_ \| '__/ _ \| __| '_ \ / _ \ '_ \ / _` |            |
+// |           | |_) | | / ___ \ |_| | | |  __/ | | | (_| |            |
+// |           |_.__/|_|/_/   \_\__|_| |_|\___|_| |_|\__,_|            |
+// |                                                                   |
+// |                        brAthena  Script                           |
+// |                        www.brathena.org                           |
+// |-------------------------------------------------------------------|
+// |                                                                   |
+// | Copyright (c) brAthena Dev Team                                   |
+// | Copyright (c) Hercules Dev Team                                   |
+// | Copyright (c) Athena Dev Teams                                    |
+// |                                                                   |
+// |-------------------------------------------------------------------|
+// | Licenciado sob a licenca GNU GPL                                  | 
+// | Para mais informações leia o arquivo LICENSE na raíz do emulador  |
+// \___________________________________________________________________/
+//
 //===== Hercules Script ======================================
 //= Guild Dungeons Monster Spawn Script
 //===== By: ==================================================
@@ -12,39 +33,39 @@
 //==================================================
 // gld_dun01 - Baldur Guild Dungeon
 //==================================================
-gld_dun01,0,0,0,0	monster	Skeleton General	SKELETON_GENERAL,10,0,0,0
+gld_dun01,0,0,0,0	monster	Esqueleto General	SKELETON_GENERAL,10,0,0,0
 gld_dun01,0,0,0,0	monster	Am Mut	AM_MUT,20,0,0,0
-gld_dun01,0,0,0,0	monster	Cat o' Nine Tails	CAT_O_NINE_TAIL,3,1200000,0,0
+gld_dun01,0,0,0,0	monster	Gato de Nove Caudas	CAT_O_NINE_TAIL,3,1200000,0,0
 gld_dun01,0,0,0,0	monster	Gajomart	GAJOMART,10,0,0,0
 gld_dun01,0,0,0,0	boss_monster	Eddga	EDDGA,1,28800000,600000,1
-gld_dun01,0,0,0,0	monster	Vagabond Wolf	VAGABOND_WOLF,1,14400000,7200000,1
+gld_dun01,0,0,0,0	monster	Lobo Errante	VAGABOND_WOLF,1,14400000,7200000,1
 
 //==================================================
 // gld_dun02 - Luina Guild Dungeon
 //==================================================
-gld_dun02,0,0,0,0	monster	Owl Baron	OWL_BARON,3,0,0,0
-gld_dun02,0,0,0,0	monster	Giant Spider	GIANT_SPIDER,10,240000,120000,0
-gld_dun02,0,0,0,0	monster	Ancient Worm	ANCIENT_WORM,5,120000,60000,0
-gld_dun02,0,0,0,0	monster	Killer Mantis	KILLER_MANTIS,5,120000,60000,0
-gld_dun02,0,0,0,0	monster	Giant Hornet	GIANT_HONET,10,120000,60000,0
+gld_dun02,0,0,0,0	monster	Barão Coruja	OWL_BARON,3,0,0,0
+gld_dun02,0,0,0,0	monster	Aranha Gigante	GIANT_SPIDER,10,240000,120000,0
+gld_dun02,0,0,0,0	monster	Verme Ancião	ANCIENT_WORM,5,120000,60000,0
+gld_dun02,0,0,0,0	monster	Mantis Assassino	KILLER_MANTIS,5,120000,60000,0
+gld_dun02,0,0,0,0	monster	Zangão Gigante	GIANT_HONET,10,120000,60000,0
 gld_dun02,0,0,0,0	boss_monster	Doppelganger	DOPPELGANGER,1,28800000,600000,1
 
 //==================================================
 // gld_dun03 - Valkyrie Guild Dungeon
 //==================================================
-gld_dun03,0,0,0,0	monster	Maya Purple	MAYA_PUPLE,3,1200000,600000,0
-gld_dun03,0,0,0,0	monster	Caterpillar	CATERPILLAR,20,0,0,0
+gld_dun03,0,0,0,0	monster	Maya Macho	MAYA_PUPLE,3,1200000,600000,0
+gld_dun03,0,0,0,0	monster	Lagarta	CATERPILLAR,20,0,0,0
 gld_dun03,0,0,0,0	monster	Gullinbursti	GULLINBURSTI,10,0,0,0
-gld_dun03,0,0,0,0	monster	Creamy Fear	CREMY_FEAR,20,0,0,0
+gld_dun03,0,0,0,0	monster	Creamy Ameaçador	CREMY_FEAR,20,0,0,0
 gld_dun03,0,0,0,0	monster	Leib Olmai	LEIB_OLMAI,20,0,0,0
 gld_dun03,0,0,0,0	boss_monster	Maya	MAYA,1,28800000,600000,1
 
 //==================================================
 // gld_dun04 - Britoniah Guild Dungeon
 //==================================================
-gld_dun04,0,0,0,0	monster	Wraith Dead	WRAITH_DEAD,20,0,0,0
-gld_dun04,0,0,0,0	monster	Mini Demon	MINI_DEMON,20,0,0,0
-gld_dun04,0,0,0,0	monster	Zombie Master	ZOMBIE_MASTER,20,0,0,0
-gld_dun04,0,0,0,0	monster	Dark Illusion	DARK_ILLUSION,1,1200000,0,0
-gld_dun04,0,0,0,0	boss_monster	Dark Lord	DARK_LORD,1,28800000,600000,1
+gld_dun04,0,0,0,0	monster	Aparição 	WRAITH_DEAD,20,0,0,0
+gld_dun04,0,0,0,0	monster	Diabinho	MINI_DEMON,20,0,0,0
+gld_dun04,0,0,0,0	monster	Zumbi Mestre	ZOMBIE_MASTER,20,0,0,0
+gld_dun04,0,0,0,0	monster	Ilusão das Trevas	DARK_ILLUSION,1,1200000,0,0
+gld_dun04,0,0,0,0	boss_monster	Senhor das Trevas	DARK_LORD,1,28800000,600000,1
 gld_dun04,0,0,0,0	monster	Ghostring	GHOSTRING,1,14400000,7200000,1
