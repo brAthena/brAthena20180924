@@ -91,16 +91,16 @@ function	script	F_AuctionWarper	{
 
 // Sign posts
 //============================================================
--	script	Mural de Informações#Leilão	-1,{
+-	script	Mural de Informações#dum::AuctionSign	-1,{
 	mes "[Informativo]";
 	mes "Guia de Teleporte do Leilão";
 	close;
 }
 
-moc_ruins,76,176,6	duplicate(Mural de Informações#Leilão)	Guia do Leilão#moc	2_BULLETIN_BOARD
-prontera,216,120,4	duplicate(Mural de Informações#Leilão)	Guia do Leilão#prt	2_BULLETIN_BOARD
-yuno,131,116,0	duplicate(Mural de Informações#Leilão)	Guia do Leilão#yuno	2_BULLETIN_BOARD
-lighthalzen,207,169,6	duplicate(Mural de Informações#Leilão)	Guia do Leilão#lhz	2_BULLETIN_BOARD
+moc_ruins,76,176,6	duplicate(AuctionSign)	Mural de Informações#moc	2_BULLETIN_BOARD
+prontera,216,120,4	duplicate(AuctionSign)	Mural de Informações#prt	2_BULLETIN_BOARD
+yuno,131,116,0	duplicate(AuctionSign)	Mural de Informações#yuno	2_BULLETIN_BOARD
+lighthalzen,207,169,6	duplicate(AuctionSign)	Mural de Informações#lhz	2_BULLETIN_BOARD
 
 // Warps
 //============================================================
@@ -111,7 +111,7 @@ auction_02,43,17,0	warp	auction_enterance_lhz	1,1,lighthalzen,209,169
 
 // NPCs Casas de Leilão
 //============================================================
--	script	Corretor#dum::CorretorLeilão	-1,{
+-	script	Corretor#dum::Corretor	-1,{
 	mes "[Corretor]";
 	mes "Bem vindo a sala de leilão.";
 	mes "Você gostaria de ver as ofertas?";
@@ -140,17 +140,17 @@ auction_02,43,17,0	warp	auction_enterance_lhz	1,1,lighthalzen,209,169
 	close;
 }
 
-auction_01,182,68,6	duplicate(Corretor#dum)	Corretor#moc1	4W_M_02
-auction_01,182,75,0	duplicate(Corretor#dum)	Corretor#moc2	4W_M_03
-auction_01,177,75,2	duplicate(Corretor#dum)	Corretor#moc3	4W_M_02
-auction_01,177,68,4	duplicate(Corretor#dum)	Corretor#moc4	4W_M_03
-auction_01,21,74,4	duplicate(Corretor#dum)	Corretor#prt1	4_F_KAFRA1
-auction_01,27,78,4	duplicate(Corretor#dum)	Corretor#prt2	4_F_KAFRA2
-auction_01,16,78,4	duplicate(Corretor#dum)	Corretor#prt3	4_F_KAFRA3
-auction_02,158,47,6	duplicate(Corretor#dum)	Corretor#yuno1	4_F_01
-auction_02,145,47,2	duplicate(Corretor#dum)	Corretor#yuno2	4_F_01
-auction_02,151,54,0	duplicate(Corretor#dum)	Corretor#yuno3	4_F_01
-auction_02,152,41,4	duplicate(Corretor#dum)	Corretor#yuno4	4_F_01
-auction_02,57,46,2	duplicate(Corretor#dum)	Corretor#lhz1	4_M_ZONDAMAN
-auction_02,31,46,6	duplicate(Corretor#dum)	Corretor#lhz2	4_M_ZONDAMAN
-auction_02,43,65,4	duplicate(Corretor#dum)	Corretor#lhz3	4_M_ZONDAOYAJI
+auction_01,182,68,6	duplicate(Corretor)	Corretor#moc1	4W_M_02
+auction_01,182,75,0	duplicate(Corretor)	Corretor#moc2	4W_M_03
+auction_01,177,75,2	duplicate(Corretor)	Corretor#moc3	4W_M_02
+auction_01,177,68,4	duplicate(Corretor)	Corretor#moc4	4W_M_03
+auction_01,21,74,4	duplicate(Corretor)	Corretor#prt1	4_F_KAFRA1
+auction_01,27,78,4	duplicate(Corretor)	Corretor#prt2	4_F_KAFRA2
+auction_01,16,78,4	duplicate(Corretor)	Corretor#prt3	4_F_KAFRA3
+auction_02,158,47,6	duplicate(Corretor)	Corretor#yuno1	4_F_01
+auction_02,145,47,2	duplicate(Corretor)	Corretor#yuno2	4_F_01
+auction_02,151,54,0	duplicate(Corretor)	Corretor#yuno3	4_F_01
+auction_02,152,41,4	duplicate(Corretor)	Corretor#yuno4	4_F_01
+auction_02,57,46,2	duplicate(Corretor)	Corretor#lhz1	4_M_ZONDAMAN
+auction_02,31,46,6	duplicate(Corretor)	Corretor#lhz2	4_M_ZONDAMAN
+auction_02,43,65,4	duplicate(Corretor)	Corretor#lhz3	4_M_ZONDAOYAJI
