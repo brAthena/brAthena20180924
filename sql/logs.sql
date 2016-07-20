@@ -210,7 +210,7 @@ CREATE TABLE IF NOT EXISTS `itemproduce_log` (
   `ItemName` varchar(50) NOT NULL DEFAULT '',
   `ItemSerial` bigint(20) unsigned NOT NULL DEFAULT '0',
   `Amount` INT(11) NOT NULL DEFAULT '0',
-  `Type_` enum('Fail Refine','Craft Requirement','Crafting Fail','Crafting Sucess','Cooking','Arrow Create','Ele.Analysis','Sucess Refine','Downgrade') NOT NULL DEFAULT 'Craft Requirement'
+  `Type_` enum('Falha ao refinar','Item para refinar','Item para criar','Falha ao criar','Sucesso ao criar','Cozinhar','Flecha criada','Ele.Analysis','Sucesso ao refinar','Downgrade') NOT NULL DEFAULT 'Item para criar'
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --

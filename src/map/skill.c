@@ -15290,12 +15290,12 @@ void skill_weaponrefine (struct map_session_data *sd, int idx)
 				per += 100;
 			else
 				per += 5 * ((signed int)sd->status.job_level - 50);
-			logs->produce(sd,&sd->status.inventory[i],-1,"Craft Requirement");
+			logs->produce(sd,&sd->status.inventory[i],-1,"Item para refinar");
 			pc->delitem(sd, i, 1, 0, DELITEM_NORMAL); // FIXME: is this the correct reason flag?
 			if (per > rnd() % 1000) {
 				int ep = 0;
 				item->refine++;
-				logs->produce(sd, item, 1, "Sucess Refine");
+				logs->produce(sd, item, 1, "Sucesso ao refinar");
 				if(item->equip) {
 					ep = item->equip;
 					pc->unequipitem(sd, idx, PCUNEQUIPITEM_RECALC|PCUNEQUIPITEM_FORCE);
@@ -15325,6 +15325,7 @@ void skill_weaponrefine (struct map_session_data *sd, int idx)
 				}
 			} else {
 				item->refine = 0;
+				logs->produce(sd, item, -1, "Falha ao refinar");				
 				if(item->equip)
 					pc->unequipitem(sd, idx, PCUNEQUIPITEM_RECALC|PCUNEQUIPITEM_FORCE);
 				clif->refine(sd->fd,1,idx,item->refine);
@@ -17071,13 +17072,13 @@ int skill_produce_mix(struct map_session_data *sd, uint16 skill_id, int nameid, 
 		if (j == INDEX_NOT_FOUND)
 			continue;
 		if( slot[i]==ITEMID_STAR_CRUMB ) {
-			logs->produce(sd,&sd->status.inventory[j],-1,"Craft Requirement");
+			logs->produce(sd,&sd->status.inventory[j],-1,"Item para criar");
 			pc->delitem(sd, j, 1, 1, DELITEM_NORMAL); // FIXME: is this the correct reason flag?
 			sc++;
 		}
 		if( slot[i] >= ITEMID_FLAME_HEART && slot[i] <= ITEMID_GREAT_NATURE && ele == 0 ) {
 			static const int ele_table[4]={3,1,4,2};
-			logs->produce(sd,&sd->status.inventory[j],-1,"Craft Requirement");
+			logs->produce(sd,&sd->status.inventory[j],-1,"Item para criar");
 			pc->delitem(sd, j, 1, 1, DELITEM_NORMAL); // FIXME: is this the correct reason flag?
 			ele=ele_table[slot[i]-994];
 		}
@@ -17124,7 +17125,7 @@ int skill_produce_mix(struct map_session_data *sd, uint16 skill_id, int nameid, 
 			if (j != INDEX_NOT_FOUND) {
 				y = sd->status.inventory[j].amount;
 				if(y>x)y=x;
-				logs->produce(sd,&sd->status.inventory[j],-y,"Craft Requirement");
+				logs->produce(sd,&sd->status.inventory[j],-y,"Item para criar");
 				pc->delitem(sd, j, y, 0, DELITEM_NORMAL); // FIXME: is this the correct reason flag?
 			} else
 				ShowError("skill_produce_mix: material item error\n");
@@ -17556,7 +17557,7 @@ int skill_produce_mix(struct map_session_data *sd, uint16 skill_id, int nameid, 
 				clif->additem(sd,0,0,flag);
 				map->addflooritem(&sd->bl, &tmp_item, tmp_item.amount, sd->bl.m, sd->bl.x, sd->bl.y, 0, 0, 0, 0);
 			}
-			else logs->produce(sd,&tmp_item,tmp_item.amount,"Crafting Sucess");
+			else logs->produce(sd,&tmp_item,tmp_item.amount,"Sucesso ao criar");
 			
 			if( skill_id == GN_MIX_COOKING || skill_id == GN_MAKEBOMB || skill_id ==  GN_S_PHARMACY )
 				clif->msgtable_skill(sd, skill_id, MSG_SKILL_SUCCESS);
@@ -17569,7 +17570,7 @@ int skill_produce_mix(struct map_session_data *sd, uint16 skill_id, int nameid, 
 		memset(&tmp_item,0,sizeof(tmp_item));
 		tmp_item.nameid=nameid;
 		
-		logs->produce(sd,&tmp_item,-1,"Crafting Fail"); //Craft Failure Log
+		logs->produce(sd,&tmp_item,-1,"Falha ao criar");
 	}	
 	
 	if(equip){
@@ -17621,7 +17622,7 @@ int skill_produce_mix(struct map_session_data *sd, uint16 skill_id, int nameid, 
 						clif->additem(sd,0,0,flag);
 						map->addflooritem(&sd->bl, &tmp_item, tmp_item.amount, sd->bl.m, sd->bl.x, sd->bl.y, 0, 0, 0, 0);
 					}
-					else logs->produce(sd,&tmp_item,tmp_item.amount,"Cooking");
+					else logs->produce(sd,&tmp_item,tmp_item.amount,"Cozinhar");
 					
 					clif->msgtable_skill(sd, skill_id, MSG_SKILL_FAILURE);
 				}
@@ -17662,7 +17663,7 @@ int skill_arrow_create (struct map_session_data *sd, int nameid)
 	if(index < 0 || (j = pc->search_inventory(sd,nameid)) == INDEX_NOT_FOUND)
 		return 1;
 	
-	logs->produce(sd,&sd->status.inventory[j],1,"Arrow Create");
+	logs->produce(sd,&sd->status.inventory[j],1,"Flecha criada");
 	pc->delitem(sd, j, 1, 0, DELITEM_NORMAL); // FIXME: is this the correct reason flag?
 	for(i=0;i<MAX_ARROW_RESOURCE;i++) {
 		memset(&tmp_item,0,sizeof(tmp_item));
@@ -17681,7 +17682,7 @@ int skill_arrow_create (struct map_session_data *sd, int nameid)
 			clif->additem(sd,0,0,flag);
 			map->addflooritem(&sd->bl, &tmp_item, tmp_item.amount, sd->bl.m, sd->bl.x, sd->bl.y, 0, 0, 0, 0);
 		}
-		else 	logs->produce(sd,&tmp_item,tmp_item.amount,"Arrow Create");
+		else 	logs->produce(sd,&tmp_item,tmp_item.amount,"Flecha criada");
 	}
 
 	return 0;

@@ -1,0 +1,1 @@
+ALTER TABLE `itemproduce_log` CHANGE `Type_` `Type_` ENUM('Falha ao refinar','Item para refinar','Item para criar','Falha ao criar','Sucesso ao criar','Cozinhar','Flecha criada','Ele.Analysis','Sucesso ao refinar','Downgrade') CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL DEFAULT 'Item para criar';
