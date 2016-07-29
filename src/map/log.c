@@ -8,14 +8,14 @@
 *                            www.brathena.org                                *
 ******************************************************************************
 * src/map/log.c                                                              *
-* Funções referentes aos logs do emulador                                    *
+* FunÃ§Ãµes referentes aos logs do emulador                                    *
 ******************************************************************************
 * Copyright (c) brAthena Dev Team                                            *
 * Copyright (c) Hercules Dev Team                                            *
 * Copyright (c) Athena Dev Teams                                             *
 *                                                                            *
-* Licenciado sob a licença GNU GPL                                           *
-* Para mais informações leia o arquivo LICENSE na raíz do emulador           *
+* Licenciado sob a licenÃ§a GNU GPL                                           *
+* Para mais informaÃ§Ãµes leia o arquivo LICENSE na raÃ­z do emulador           *
 *****************************************************************************/
 
 #define BRATHENA_CORE
@@ -40,7 +40,7 @@
 struct log_interface log_s;
 struct log_interface *logs;
 
-// Verifica se o log para certo item está ativo
+// Verifica se o log para certo item estÃ¡ ativo
 bool should_log_item(int nameid, int amount, int refine, struct item_data *id) {
 
 	if( id == NULL )
@@ -63,7 +63,7 @@ bool should_log_item(int nameid, int amount, int refine, struct item_data *id) {
 	return false;
 }
 
-// Verifica se o log de chat está ativo
+// Verifica se o log de chat estÃ¡ ativo
 bool should_log_chat(e_log_chat_type type) {
 	
 	if	( logs->config.log_chat2[5] && (map->agit_flag || map->agit2_flag) )
@@ -176,9 +176,9 @@ void log_trade(int zeny, struct map_session_data *sd1, struct map_session_data *
 			(`Date`,`Mapname`,`P1_CharID`,`P1_Name`,`P1_PosX`,`P1_PosY`,`P1_IP`,`P2_CharID`,`P2_Name`,`P2_PosX`,`P2_PosY`,`P2_IP`,`Zeny`,`ItemID`,`ItemCount`,`ItemName`,`ItemSerial`,\
 			`ItemSlot1`,`ItemSlot2`,`ItemSlot3`,`ItemSlot4`,`ItemRefiningLevel`) \
 			VALUES (NOW(),'%s','%d',?,'%d','%d','%s','%d',?,'%d','%d','%s','%d','%d','%d',?,'%"PRIu64"','%d','%d','%d','%d','%d')",
-			logs->config.table_name[16], mapindex_id2name(sd1->mapindex), sd1->status.char_id, strlib->jstrescape(sd1->status.name), sd1->bl.x, sd1->bl.y, sd1->status.last_ip,
-			sd2->status.char_id, strlib->jstrescape(sd2->status.name), sd2->bl.x, sd2->bl.y, sd1->status.last_ip,
-			zeny, (itm) ? itm->nameid : 0, amount, (itm) ? idata->jname : "", (itm) ? itm->unique_id : 0,
+			logs->config.table_name[16], mapindex_id2name(sd1->mapindex), sd1->status.char_id, sd1->bl.x, sd1->bl.y, sd1->status.last_ip,
+			sd2->status.char_id, sd2->bl.x, sd2->bl.y, sd1->status.last_ip,
+			zeny, (itm) ? itm->nameid : 0, amount, (itm) ? itm->unique_id : 0,
 			(itm) ? itm->card[0] : 0, (itm) ? itm->card[1] : 0, (itm) ? itm->card[2] : 0, (itm) ? itm->card[3] : 0, (itm) ? itm->refine : 0)
 			|| SQL_SUCCESS != SQL->StmtBindParam(stmt, 0, SQLDT_STRING, sd1->status.name, strnlen(sd1->status.name, NAME_LENGTH))
 			|| SQL_SUCCESS != SQL->StmtBindParam(stmt, 1, SQLDT_STRING, sd2->status.name, strnlen(sd2->status.name, NAME_LENGTH))
@@ -310,7 +310,7 @@ void log_pickdrop(struct map_session_data *sd, struct mob_data *md, struct item 
 	}
 }
 
-// Log de Consumíveis [GreenStage]
+// Log de ConsumÃ­veis [GreenStage]
 void log_consume(struct map_session_data *sd, struct item *itm, int amount, char *type) {
 	nullpo_retv(itm);
 	nullpo_retv(sd);
@@ -344,7 +344,7 @@ void log_consume(struct map_session_data *sd, struct item *itm, int amount, char
 	}
 }
 
-// Log de produção [GreenStage]
+// Log de produÃ§Ã£o [GreenStage]
 void log_produce(struct map_session_data *sd, struct item *itm, int amount, char *type) {
 	nullpo_retv(sd);
 
@@ -377,7 +377,7 @@ void log_produce(struct map_session_data *sd, struct item *itm, int amount, char
 	}
 }
 
-// Log de Armazém [GreenStage]
+// Log de ArmazÃ©m [GreenStage]
 void log_storage(struct map_session_data *sd, struct item *itm, int amount, char type) {
 	nullpo_retv(sd);
 	nullpo_retv(itm);
@@ -411,7 +411,7 @@ void log_storage(struct map_session_data *sd, struct item *itm, int amount, char
 	}
 }
 
-// Log de Armazém para Clãs [GreenStage]
+// Log de ArmazÃ©m para ClÃ£s [GreenStage]
 void log_gstorage(struct map_session_data *sd, struct item *itm, int amount, char type) {
 	nullpo_retv(sd);
 	nullpo_retv(itm);
@@ -656,26 +656,26 @@ void log_sql_init(void) {
 
 // Finaliza a database de Log
 void log_sql_final(void) {
-	ShowStatus("Fechando a conexão com a database de Log....\n");
+	ShowStatus("Fechando a conex?o com a database de Log....\n");
 	SQL->Free(logs->mysql_handle);
 	logs->mysql_handle = NULL;
 }
 
-// Leitura das opções em conf/logs.conf [Shiraz]
+// Leitura das opÃ§Ãµes em conf/logs.conf [Shiraz]
 // http://www.hyperrealm.com/libconfig/libconfig_manual.html#The-C-API
 void log_config_read(void) {
 	config_setting_t *logs_perm, *items_perm, *chat_log, *tables;
 	config_t config;
 	int val;
 
-	// Leitura do arquivo de configuração
+	// Leitura do arquivo de configuraÃ§Ã£o
 	if (libconfig->read_file(&config, "conf/logs.conf"))
 		return;
 
-	// Reseta valores da memória
+	// Reseta valores da memÃ³ria
 	memset(&logs->config, 0, sizeof(logs->config));
 
-	// Inicializa a leitura das opções conforme libconfig
+	// Inicializa a leitura das opÃ§Ãµes conforme libconfig
     if (libconfig->lookup_bool(&config, "enable_logs", &val))
 		logs->enable_logs = val;
 
@@ -767,7 +767,7 @@ void log_config_read(void) {
 	for (val = 0; val < config_setting_length(tables); val++)
 		safestrncpy(logs->config.table_name[val], libconfig->setting_get_string_elem(tables, val), ARRAYLENGTH(logs->config.table_name));
 
-	// Remove da memória
+	// Remove da memÃ³ria
 	libconfig->destroy(&config);
 }
 
