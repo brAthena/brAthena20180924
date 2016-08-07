@@ -1,0 +1,1 @@
+INSERT INTO `const_db` (`Const`, `Val`, `Type`) VALUES ('EQI_AMMO', '21', '0');
