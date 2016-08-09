@@ -1,0 +1,1 @@
+UPDATE `item_db` SET `equip_locations` = '256' WHERE `id` = 18574;

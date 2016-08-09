@@ -656,7 +656,7 @@ void log_sql_init(void) {
 
 // Finaliza a database de Log
 void log_sql_final(void) {
-	ShowStatus("Fechando a conex?o com a database de Log....\n");
+	ShowStatus("Fechando a conexão com a database de Log....\n");
 	SQL->Free(logs->mysql_handle);
 	logs->mysql_handle = NULL;
 }
@@ -675,92 +675,94 @@ void log_config_read(void) {
 	// Reseta valores da memória
 	memset(&logs->config, 0, sizeof(logs->config));
 
-	// Inicializa a leitura das opções conforme libconfig
-    if (libconfig->lookup_bool(&config, "enable_logs", &val))
-		logs->enable_logs = val;
+	// Verifica se o sistema de LOGS esta ativo.
+    libconfig->lookup_bool(&config, "enable_logs", &val);
+	if (val)
+	{
+		// Inicializa a leitura das opções conforme libconfig
+		logs_perm = libconfig->lookup(&config, "logs_perm");
+		if (logs_perm != NULL) {
+			if (libconfig->setting_lookup_bool(logs_perm, "log_cards", &val))
+				logs->config.log_cards = val;
+			if (libconfig->setting_lookup_bool(logs_perm, "log_buyingstore", &val))
+				logs->config.log_buyingstore = val;
+			if (libconfig->setting_lookup_bool(logs_perm, "log_vending", &val))
+				logs->config.log_vending = val;
+			if (libconfig->setting_lookup_bool(logs_perm, "log_consume", &val))
+				logs->config.log_consume = val;
+			if (libconfig->setting_lookup_bool(logs_perm, "log_mob_pick_drop", &val))
+				logs->config.log_mob_pick_drop = val;
+			if (libconfig->setting_lookup_bool(logs_perm, "log_pc_pick_drop", &val))
+				logs->config.log_pc_pick_drop = val;
+			if (libconfig->setting_lookup_bool(logs_perm, "log_npc_buy_sell", &val))
+				logs->config.log_npc_buy_sell = val;
+			if (libconfig->setting_lookup_bool(logs_perm, "log_storage", &val))
+				logs->config.log_storage = val;
+			if (libconfig->setting_lookup_bool(logs_perm, "log_gstorage", &val))
+				logs->config.log_gstorage = val;
+			if (libconfig->setting_lookup_bool(logs_perm, "log_get_remove_item", &val))
+				logs->config.log_get_remove_item = val;
+			if (libconfig->setting_lookup_bool(logs_perm, "log_mail", &val))
+				logs->config.log_mail = val;
+			if (libconfig->setting_lookup_bool(logs_perm, "log_trade", &val))
+				logs->config.log_trade = val;
+			if (libconfig->setting_lookup_bool(logs_perm, "log_produce", &val))
+				logs->config.log_produce = val;
+			if (libconfig->setting_lookup_bool(logs_perm, "log_branch", &val))
+				logs->config.branch = val;
+			if (libconfig->setting_lookup_int(logs_perm, "log_zeny", &val))
+				logs->config.zeny = val;
+			if (libconfig->setting_lookup_bool(logs_perm, "log_mvpdrop", &val))
+				logs->config.mvpdrop = val;
+			if (libconfig->setting_lookup_bool(logs_perm, "log_commands", &val))
+				logs->config.commands = val;
+			if (libconfig->setting_lookup_bool(logs_perm, "log_npc", &val))
+				logs->config.npc = val;
+			if (libconfig->setting_lookup_bool(logs_perm, "log_buycash", &val))
+				logs->config.buycash = val;
+		}
 
-    logs_perm = libconfig->lookup(&config, "logs_perm");
-	if (logs_perm != NULL) {
-		if (libconfig->setting_lookup_bool(logs_perm, "log_cards", &val))
-			logs->config.log_cards = val;
-		if (libconfig->setting_lookup_bool(logs_perm, "log_buyingstore", &val))
-			logs->config.log_buyingstore = val;
-		if (libconfig->setting_lookup_bool(logs_perm, "log_vending", &val))
-			logs->config.log_vending = val;
-		if (libconfig->setting_lookup_bool(logs_perm, "log_consume", &val))
-			logs->config.log_consume = val;
-		if (libconfig->setting_lookup_bool(logs_perm, "log_mob_pick_drop", &val))
-			logs->config.log_mob_pick_drop = val;
-		if (libconfig->setting_lookup_bool(logs_perm, "log_pc_pick_drop", &val))
-			logs->config.log_pc_pick_drop = val;
-		if (libconfig->setting_lookup_bool(logs_perm, "log_npc_buy_sell", &val))
-			logs->config.log_npc_buy_sell = val;
-		if (libconfig->setting_lookup_bool(logs_perm, "log_storage", &val))
-			logs->config.log_storage = val;
-		if (libconfig->setting_lookup_bool(logs_perm, "log_gstorage", &val))
-			logs->config.log_gstorage = val;
-		if (libconfig->setting_lookup_bool(logs_perm, "log_get_remove_item", &val))
-			logs->config.log_get_remove_item = val;
-		if (libconfig->setting_lookup_bool(logs_perm, "log_mail", &val))
-			logs->config.log_mail = val;
-		if (libconfig->setting_lookup_bool(logs_perm, "log_trade", &val))
-			logs->config.log_trade = val;
-		if (libconfig->setting_lookup_bool(logs_perm, "log_produce", &val))
-			logs->config.log_produce = val;
-		if (libconfig->setting_lookup_bool(logs_perm, "log_branch", &val))
-			logs->config.branch = val;
-		if (libconfig->setting_lookup_int(logs_perm, "log_zeny", &val))
-			logs->config.zeny = val;
-		if (libconfig->setting_lookup_bool(logs_perm, "log_mvpdrop", &val))
-			logs->config.mvpdrop = val;
-		if (libconfig->setting_lookup_bool(logs_perm, "log_commands", &val))
-			logs->config.commands = val;
-		if (libconfig->setting_lookup_bool(logs_perm, "log_npc", &val))
-			logs->config.npc = val;
-		if (libconfig->setting_lookup_bool(logs_perm, "log_buycash", &val))
-			logs->config.buycash = val;
-	}
+		items_perm = libconfig->lookup(&config, "items_perm");
+		if (items_perm != NULL) {
+			if (libconfig->setting_lookup_bool(items_perm, "log_type_item_heal", &val))
+				logs->config.item_type[0] = val;
+			if (libconfig->setting_lookup_bool(items_perm, "log_type_item_etc", &val))
+				logs->config.item_type[1] = val;
+			if (libconfig->setting_lookup_bool(items_perm, "log_type_item_usable", &val))
+				logs->config.item_type[2] = val;
+			if (libconfig->setting_lookup_bool(items_perm, "log_type_item_weapon", &val))
+				logs->config.item_type[3] = val;
+			if (libconfig->setting_lookup_bool(items_perm, "log_type_item_armor", &val))
+				logs->config.item_type[4] = val;
+			if (libconfig->setting_lookup_bool(items_perm, "log_type_item_cards", &val))
+				logs->config.item_type[5] = val;
+			if (libconfig->setting_lookup_bool(items_perm, "log_type_item_pet", &val))
+				logs->config.item_type[6] = val;
+			if (libconfig->setting_lookup_int(items_perm, "log_type_item_price", &val))
+				logs->config.item_type2[0] = val;
+			if (libconfig->setting_lookup_int(items_perm, "log_type_item_amount", &val))
+				logs->config.item_type2[1] = val;
+			if (libconfig->setting_lookup_int(items_perm, "log_type_item_refine", &val))
+				logs->config.item_type2[2] = val;
+			if (libconfig->setting_lookup_int(items_perm, "log_type_item_rare", &val))
+				logs->config.item_type2[3] = val;
+		}
 
-    items_perm = libconfig->lookup(&config, "items_perm");
-	if (items_perm != NULL) {
-		if (libconfig->setting_lookup_bool(items_perm, "log_type_item_heal", &val))
-			logs->config.item_type[0] = val;
-		if (libconfig->setting_lookup_bool(items_perm, "log_type_item_etc", &val))
-			logs->config.item_type[1] = val;
-		if (libconfig->setting_lookup_bool(items_perm, "log_type_item_usable", &val))
-			logs->config.item_type[2] = val;
-		if (libconfig->setting_lookup_bool(items_perm, "log_type_item_weapon", &val))
-			logs->config.item_type[3] = val;
-		if (libconfig->setting_lookup_bool(items_perm, "log_type_item_armor", &val))
-			logs->config.item_type[4] = val;
-		if (libconfig->setting_lookup_bool(items_perm, "log_type_item_cards", &val))
-			logs->config.item_type[5] = val;
-		if (libconfig->setting_lookup_bool(items_perm, "log_type_item_pet", &val))
-			logs->config.item_type[6] = val;
-		if (libconfig->setting_lookup_int(items_perm, "log_type_item_price", &val))
-			logs->config.item_type2[0] = val;
-		if (libconfig->setting_lookup_int(items_perm, "log_type_item_amount", &val))
-			logs->config.item_type2[1] = val;
-		if (libconfig->setting_lookup_int(items_perm, "log_type_item_refine", &val))
-			logs->config.item_type2[2] = val;
-		if (libconfig->setting_lookup_int(items_perm, "log_type_item_rare", &val))
-			logs->config.item_type2[3] = val;
-	}
-
-    chat_log = libconfig->lookup(&config, "log_chat");
-	if (chat_log != NULL) {
-		if (libconfig->setting_lookup_bool(chat_log, "log_chat_global", &val))
-			logs->config.log_chat2[0] = val;
-		if (libconfig->setting_lookup_bool(chat_log, "log_chat_pm", &val))
-			logs->config.log_chat2[1] = val;
-		if (libconfig->setting_lookup_bool(chat_log, "log_chat_party", &val))
-			logs->config.log_chat2[2] = val;
-		if (libconfig->setting_lookup_bool(chat_log, "log_chat_guild", &val))
-			logs->config.log_chat2[3] = val;
-		if (libconfig->setting_lookup_bool(chat_log, "log_chat_main", &val))
-			logs->config.log_chat2[4] = val;
-		if (libconfig->setting_lookup_bool(chat_log, "log_chat_in_woe", &val))
-			logs->config.log_chat2[5] = val;
+		chat_log = libconfig->lookup(&config, "log_chat");
+		if (chat_log != NULL) {
+			if (libconfig->setting_lookup_bool(chat_log, "log_chat_global", &val))
+				logs->config.log_chat2[0] = val;
+			if (libconfig->setting_lookup_bool(chat_log, "log_chat_pm", &val))
+				logs->config.log_chat2[1] = val;
+			if (libconfig->setting_lookup_bool(chat_log, "log_chat_party", &val))
+				logs->config.log_chat2[2] = val;
+			if (libconfig->setting_lookup_bool(chat_log, "log_chat_guild", &val))
+				logs->config.log_chat2[3] = val;
+			if (libconfig->setting_lookup_bool(chat_log, "log_chat_main", &val))
+				logs->config.log_chat2[4] = val;
+			if (libconfig->setting_lookup_bool(chat_log, "log_chat_in_woe", &val))
+				logs->config.log_chat2[5] = val;
+		}
 	}
 
 	tables = libconfig->lookup(&config, "log_tables");
