@@ -12678,6 +12678,15 @@ void clif_parse_OpenVending(int fd, struct map_session_data* sd) {
 		return;
 	}
 
+	// Este teste já é realizado em skill.c, mas somente quando a skill é executada,
+	// Caso o player executasse a skill longe do NPC, andasse para o npc e confirmasse a loja
+	//  ia abrir e funcionar corretamente a loja. [CarlosHenrq, 2016-08-17]
+	if(npc->isnear(&sd->bl))
+	{
+		clif->skill_fail(sd,1,USESKILL_FAIL_THERE_ARE_NPC_AROUND,0);
+		return;
+	}
+
 	if( message[0] == '\0' ) // invalid input
 		return;
 
