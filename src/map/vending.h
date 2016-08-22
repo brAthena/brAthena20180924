@@ -20,6 +20,7 @@
 #ifndef MAP_VENDING_H
 #define MAP_VENDING_H
 
+#include "map/map.h" // struct block_list, CHATROOM_TITLE_SIZE
 #include "common/cbasetypes.h"
 #include "common/db.h"
 
