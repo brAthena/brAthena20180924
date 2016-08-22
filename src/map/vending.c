@@ -410,7 +410,7 @@ int vending_count_map(int16 m)
 
 	int vendingCount = 0;
 	map->foreachinmap(vending->count_sub, m, BL_PC, &vendingCount);
-	return (vendingCount > 0);
+	return vendingCount;
 }
 
 /**
@@ -428,7 +428,7 @@ int vending_count_area(int16 m, int16 x0, int16 y0, int16 x1, int16 y1)
 {
 	int vendingCount = 0;
 	map->foreachinarea(vending->count_sub, m, x0, y0, x1, y1, BL_PC, &vendingCount);
-	return (vendingCount > 0);
+	return vendingCount;
 }
 
 /**
@@ -444,7 +444,22 @@ int vending_count_cell(int16 m, int16 x, int16 y)
 {
 	int vendingCount = 0;
 	map->foreachincell(vending->count_sub, m, x, y, BL_PC, &vendingCount);
-	return (vendingCount > 0);
+	return vendingCount;
+}
+
+/**
+ * Conta quantos chats existem dentro do range informado.
+ *
+ * @param struct block_list* bl Centro para contagem.
+ * @param int range
+ *
+ * @return Quantidade de chats.
+ */
+int vending_count_range(struct block_list* bl, int range)
+{
+	int vendingCount = 0;
+	map->foreachinrange(vending->count_sub, bl, range, BL_PC, &vendingCount);
+	return vendingCount;
 }
 
 /**
@@ -486,5 +501,6 @@ void vending_defaults(void) {
 	vending->count_map = vending_count_map;
 	vending->count_area = vending_count_area;
 	vending->count_cell = vending_count_cell;
+	vending->count_range = vending_count_range;
 	vending->cell_has_taken = vending_cell_has_taken;
 }

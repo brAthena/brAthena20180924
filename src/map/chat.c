@@ -502,7 +502,7 @@ int chat_count_map(int16 m)
 {
 	int chatCount = 0;
 	map->foreachinmap(chat->count_sub, m, BL_PC, &chatCount);
-	return (chatCount > 0);
+	return chatCount;
 }
 
 /**
@@ -520,23 +520,38 @@ int chat_count_area(int16 m, int16 x0, int16 y0, int16 x1, int16 y1)
 {
 	int chatCount = 0;
 	map->foreachinarea(chat->count_sub, m, x0, y0, x1, y1, BL_PC, &chatCount);
-	return (chatCount > 0);
+	return chatCount;
 }
 
 /**
- * Retorna quantas vendas existem dentro das celulas informadas. [CarlosHenrq]
+ * Retorna quantas chats existem dentro das celulas informadas. [CarlosHenrq]
  *
  * @param int16 m
  * @param int16 x
  * @param int16 y
  *
- * @return int Quantidade de vendas dentro da celula.
+ * @return int Quantidade de chats dentro da celula.
  */
 int chat_count_cell(int16 m, int16 x, int16 y)
 {
 	int chatCount = 0;
 	map->foreachincell(chat->count_sub, m, x, y, BL_PC, &chatCount);
-	return (chatCount > 0);
+	return chatCount;
+}
+
+/**
+ * Conta quantos chats existem dentro do range informado.
+ *
+ * @param struct block_list* bl Centro para contagem.
+ * @param int range
+ *
+ * @return Quantidade de chats.
+ */
+int chat_count_range(struct block_list* bl, int range)
+{
+	int chatCount = 0;
+	map->foreachinrange(chat->count_sub, bl, range, BL_PC, &chatCount);
+	return chatCount;
 }
 
 /**
@@ -579,5 +594,6 @@ void chat_defaults(void) {
 	chat->count_map = chat_count_map;
 	chat->count_area = chat_count_area;
 	chat->count_cell = chat_count_cell;
+	chat->count_range = chat_count_range;
 	chat->cell_has_taken = chat_cell_has_taken;
 }

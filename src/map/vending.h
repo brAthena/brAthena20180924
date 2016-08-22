@@ -51,6 +51,7 @@ struct vending_interface {
 	int (*count_map) (int16 m);
 	int (*count_area) (int16 m, int16 x0, int16 y0, int16 x1, int16 y1);
 	int (*count_cell) (int16 m, int16 x, int16 y);
+	int (*count_range) (struct block_list* bl, int range);
 
 	// Verifica se a celula já possui venda em aberto.
 	bool (*cell_has_taken) (struct map_session_data* sd);
