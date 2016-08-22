@@ -68,6 +68,15 @@ struct chat_interface {
 	bool (*npc_kick_all) (struct chat_data* cd);
 	bool (*trigger_event) (struct chat_data *cd);
 	struct chat_data* (*create) (struct block_list* bl, const char* title, const char* pass, int limit, bool pub, int trigger, const char* ev, int zeny, int minLvl, int maxLvl);
+
+	// Testes para contagem de chat [CarlosHenrq]
+	int (*count_sub) (struct block_list *bl,va_list ap);
+	int (*count_map) (int16 m);
+	int (*count_area) (int16 m, int16 x0, int16 y0, int16 x1, int16 y1);
+	int (*count_cell) (int16 m, int16 x, int16 y);
+
+	// Verifica se a celula já possui chat em aberto.
+	bool (*cell_has_taken) (struct map_session_data* sd);
 };
 
 struct chat_interface *chat;

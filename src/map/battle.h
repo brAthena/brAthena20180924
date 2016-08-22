@@ -546,6 +546,8 @@ struct Battle_Config {
 	/** brAthena **/
 	// Configuração para a habilidade de revestimento total dos criadores. [CarlosHenrq]
 	int creator_fullprotect;
+	// Configuração para bloquear jogadores de abrir chat/vendas na mesma celula. [CarlosHenrq]
+	int vending_chat_block_same_cell;
 	int get_refine; // Block Refine - [Orce]
 	
 	// Configuração para habilidades de remover armas. [Sir Will]

@@ -7216,6 +7216,8 @@ static const struct battle_data {
 	 **/
 	// Configuração para a habilidade de revestimento dos criadores e alquimistas. [CarlosHenrq]
 	{ "creator.fullprotect",				&battle_config.creator_fullprotect,				0,		0,		2,				},
+	// Configuração para bloquear jogadores de abrir chat/vendas na mesma celula. [CarlosHenrq]
+	{ "vending_chat_block_same_cell",		&battle_config.vending_chat_block_same_cell,    0,      0,      1,				},
 	// Block Refine - [Orce]
 	{ "get_refine",                         &battle_config.get_refine,                      0,      1,      100,            },
 	// Configuração para habilidades de remover armas. [Sir Will]

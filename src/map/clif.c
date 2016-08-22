@@ -10634,6 +10634,14 @@ void clif_parse_CreateChatRoom(int fd, struct map_session_data* sd)
 	if( len <= 0 )
 		return; // invalid input
 
+	// Verifica se já existe uma loja/chat em aberto. Caso esteja, não permite que seja
+	//  aberto uma segunda loja/chat sobre a outra.
+	if(battle_config.vending_chat_block_same_cell && (vending->cell_has_taken(sd) || chat->cell_has_taken(sd)))
+	{
+		clif->message(sd->fd, msg_sd(sd, 537));
+		return;
+	}
+
 	safestrncpy(s_password, password, CHATROOM_PASS_SIZE);
 	safestrncpy(s_title, title, min(len+1,CHATROOM_TITLE_SIZE)); //NOTE: assumes that safestrncpy will not access the len+1'th byte
 
@@ -12684,6 +12692,14 @@ void clif_parse_OpenVending(int fd, struct map_session_data* sd) {
 	if(npc->isnear(&sd->bl))
 	{
 		clif->skill_fail(sd,1,USESKILL_FAIL_THERE_ARE_NPC_AROUND,0);
+		return;
+	}
+
+	// Verifica se já existe uma loja/chat em aberto. Caso esteja, não permite que seja
+	//  aberto uma segunda loja/chat sobre a outra.
+	if(battle_config.vending_chat_block_same_cell && (vending->cell_has_taken(sd) || chat->cell_has_taken(sd)))
+	{
+		clif->message(sd->fd, msg_sd(sd, 537));
 		return;
 	}
 

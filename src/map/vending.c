@@ -377,6 +377,88 @@ bool vending_searchall(struct map_session_data* sd, const struct s_search_store_
 
 	return true;
 }
+
+
+/**
+ * Conta a quantidade de vendas enviadas pelas funções de procura de mapa. [CarlosHenrq]
+ *
+ * @param struct block_list*
+ * @param va_list ap
+ *
+ * @return int
+ */
+int vending_count_sub(struct block_list *bl, va_list ap)
+{
+	struct map_session_data* sd = BL_UCAST(BL_PC, bl);
+	int* vendingCount = (int*)va_arg(ap, int *);
+
+	if(sd != NULL && sd->state.vending)
+		(*vendingCount)++;
+
+	return 0;
+}
+
+/**
+ * Retorna quantas vendas existem no mapa informado. [CarlosHenrq]
+ *
+ * @param int16 m indice do mapa.
+ *
+ * @return int Quantidade de vendas no mapa.
+ */
+int vending_count_map(int16 m)
+{
+
+	int vendingCount = 0;
+	map->foreachinmap(vending->count_sub, m, BL_PC, &vendingCount);
+	return (vendingCount > 0);
+}
+
+/**
+ * Retorna quantas vendas existem na área informada. [CarlosHenrq]
+ *
+ * @param int16 m indice do mapa.
+ * @param int16 x0
+ * @param int16 y0
+ * @parma int16 x1
+ * @param int16 x2
+ *
+ * @return int Quantidade de vendas dentro da área.
+ */
+int vending_count_area(int16 m, int16 x0, int16 y0, int16 x1, int16 y1)
+{
+	int vendingCount = 0;
+	map->foreachinarea(vending->count_sub, m, x0, y0, x1, y1, BL_PC, &vendingCount);
+	return (vendingCount > 0);
+}
+
+/**
+ * Retorna quantas vendas existem dentro das celulas informadas. [CarlosHenrq]
+ *
+ * @param int16 m
+ * @param int16 x
+ * @param int16 y
+ *
+ * @return int Quantidade de vendas dentro da celula.
+ */
+int vending_count_cell(int16 m, int16 x, int16 y)
+{
+	int vendingCount = 0;
+	map->foreachincell(vending->count_sub, m, x, y, BL_PC, &vendingCount);
+	return (vendingCount > 0);
+}
+
+/**
+ * Verifica se a celula que o jogador irá tentar criar uma venda já possui um jogador com venda em aberto.
+ *
+ * @param struct map_session_data* sd
+ * 
+ * @return boolean
+ */
+bool vending_cell_has_taken(struct map_session_data* sd)
+{
+	return (vending->count_cell(sd->bl.m, sd->bl.x, sd->bl.y) > 0);
+}
+
 void final(void) {
 	db_destroy(vending->db);
 }
@@ -398,4 +480,11 @@ void vending_defaults(void) {
 	vending->purchase = vending_purchasereq;
 	vending->search = vending_search;
 	vending->searchall = vending_searchall;
+
+	// Testes para contagem de vendas [CarlosHenrq]
+	vending->count_sub = vending_count_sub;
+	vending->count_map = vending_count_map;
+	vending->count_area = vending_count_area;
+	vending->count_cell = vending_count_cell;
+	vending->cell_has_taken = vending_cell_has_taken;
 }
