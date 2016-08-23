@@ -7218,6 +7218,9 @@ static const struct battle_data {
 	{ "creator.fullprotect",				&battle_config.creator_fullprotect,				0,		0,		2,				},
 	// Configuração para bloquear jogadores de abrir chat/vendas na mesma celula. [CarlosHenrq]
 	{ "vending_chat_block_same_cell",		&battle_config.vending_chat_block_same_cell,    0,      0,      1,				},
+	// Configuração para bloquear jogadores de abrir chat/loja próximos uns aos outros. [CarlosHenrq]
+	{ "vending_chat_block_range_check",		&battle_config.vending_chat_block_range_check,  0,      0,     10,				},
+	{ "vending_chat_block_range_count",		&battle_config.vending_chat_block_range_count,  5,      0,     30,				},
 	// Block Refine - [Orce]
 	{ "get_refine",                         &battle_config.get_refine,                      0,      1,      100,            },
 	// Configuração para habilidades de remover armas. [Sir Will]

@@ -10642,6 +10642,13 @@ void clif_parse_CreateChatRoom(int fd, struct map_session_data* sd)
 		return;
 	}
 
+	// Configuração para bloquear jogadores de abrir chat/loja próximos uns aos outros. [CarlosHenrq]
+	if(pc->too_many_vending_chat_near(sd))
+	{
+		clif->message(sd->fd, msg_sd(sd, 536));
+		return;
+	}
+
 	safestrncpy(s_password, password, CHATROOM_PASS_SIZE);
 	safestrncpy(s_title, title, min(len+1,CHATROOM_TITLE_SIZE)); //NOTE: assumes that safestrncpy will not access the len+1'th byte
 
@@ -12700,6 +12707,13 @@ void clif_parse_OpenVending(int fd, struct map_session_data* sd) {
 	if(battle_config.vending_chat_block_same_cell && (vending->cell_has_taken(sd) || chat->cell_has_taken(sd)))
 	{
 		clif->message(sd->fd, msg_sd(sd, 537));
+		return;
+	}
+
+	// Configuração para bloquear jogadores de abrir chat/loja próximos uns aos outros. [CarlosHenrq]
+	if(pc->too_many_vending_chat_near(sd))
+	{
+		clif->message(sd->fd, msg_sd(sd, 536));
 		return;
 	}
 

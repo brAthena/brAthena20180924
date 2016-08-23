@@ -548,6 +548,11 @@ struct Battle_Config {
 	int creator_fullprotect;
 	// Configuração para bloquear jogadores de abrir chat/vendas na mesma celula. [CarlosHenrq]
 	int vending_chat_block_same_cell;
+
+	// Configuração para bloquear jogadores de abrir chat/loja próximos uns aos outros. [CarlosHenrq]
+	int vending_chat_block_range_check;
+	int vending_chat_block_range_count;
+
 	int get_refine; // Block Refine - [Orce]
 	
 	// Configuração para habilidades de remover armas. [Sir Will]
