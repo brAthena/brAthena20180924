@@ -15,8 +15,11 @@
 // | Copyright (c) Athena Dev Teams                                    |
 // |                                                                   |
 // |-------------------------------------------------------------------|
-// | Licenciado sob a licenca GNU GPL                                  | 
+// | Licenciado sob a licenca GNU GPL                                  |
 // | Para mais informações leia o arquivo LICENSE na raíz do emulador  |
+// |-------------------------------------------------------------------|
+// | Anotações:                                                        |
+// | - Tradução [Jeeffrey e OrceBR]                                    |
 // \___________________________________________________________________/
 //
 // Copyright (C)  Kisuka
