@@ -550,8 +550,8 @@ struct Battle_Config {
 	int vending_chat_block_same_cell;
 
 	// Configuração para bloquear jogadores de abrir chat/loja próximos uns aos outros. [CarlosHenrq]
-	int vending_chat_block_range_check;
-	int vending_chat_block_range_count;
+	int vending_chat_block_range_check_cells;
+	int vending_chat_block_range_count_players;
 
 	int get_refine; // Block Refine - [Orce]
 	

@@ -11624,9 +11624,9 @@ int pc_have_magnifier(struct map_session_data *sd)
 int pc_vending_chat_count_near(struct map_session_data* sd)
 {
 	// Retorna o somatório somente se a configuração estiver ativa.
-	if(battle_config.vending_chat_block_range_check > 0 && battle_config.vending_chat_block_range_count > 0)
-		return (vending->count_range(&sd->bl, battle_config.vending_chat_block_range_check)
-						+ chat->count_range(&sd->bl, battle_config.vending_chat_block_range_check));
+	if(battle_config.vending_chat_block_range_check_cells > 0 && battle_config.vending_chat_block_range_count_players > 0)
+		return (vending->count_range(&sd->bl, battle_config.vending_chat_block_range_check_cells)
+						+ chat->count_range(&sd->bl, battle_config.vending_chat_block_range_check_cells));
 
 	return 0;
 }
@@ -11641,8 +11641,8 @@ int pc_vending_chat_count_near(struct map_session_data* sd)
 bool pc_too_many_vending_chat_near(struct map_session_data* sd)
 {
 	// Se a configuração tiver ativa, realiza os testes de contagem de venda.
-	if(battle_config.vending_chat_block_range_check > 0 && battle_config.vending_chat_block_range_count > 0)
-		return (pc->vending_chat_count_near(sd) >= battle_config.vending_chat_block_range_count);
+	if(battle_config.vending_chat_block_range_check_cells > 0 && battle_config.vending_chat_block_range_count_players > 0)
+		return (pc->vending_chat_count_near(sd) >= battle_config.vending_chat_block_range_count_players);
 
 	return false;
 }
