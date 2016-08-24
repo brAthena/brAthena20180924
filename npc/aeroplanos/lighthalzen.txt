@@ -19,15 +19,15 @@
 //   | Changelog:                                             |
 //   | 1.0 Cabeçalho brAthena [Axl]                           |
 //   |--------------------------------------------------------|
-//   | - Anotações                                            |
+//   | - Revisado: [Jeeffrey]                                 |
 //   \________________________________________________________/
 
-lhz_airport,143,43,5	script	Equipe do Aeroporto#lhz_air1a::lhz_airport1	4_F_01,{
-	mes "[Equipe do Aeroporto]";
+lhz_airport,143,43,5	script	Assistente do Aeroplano#lhz_air1a::lhz_airport1	4_F_01,{
+	mes "[Assistente do Aeroplano]";
 	mes "Bem-vindo ao Aeroporto de Lighthalzen, onde oferecemos constantes voos para as cidades de Einbroch, Juno e Hugel.";
 	next;
 	if (select("Embarcar no Dirigível:Cancelar.") == 1) {
-		mes "[Equipe do Aeroporto]";
+		mes "[Assistente do Aeroplano]";
 		mes "A taxa de embarque do Dirigível é 1,200 zeny, mas se você possuir um Bilhete para Aeroplano, a taxa não será cobrada.";
 		mes "Você deseja embarcar no Dirigível?";
 		next;
@@ -42,20 +42,20 @@ lhz_airport,143,43,5	script	Equipe do Aeroporto#lhz_air1a::lhz_airport1	4_F_01,{
 				warp "lhz_airport",148,51;
 				end;
 			}
-			mes "[Equipe do Aeroporto]";
+			mes "[Assistente do Aeroplano]";
 			mes "Me desculpe, mas você não possui um Bilhete para Aeroplano e você não possui a quantidade de zenys suficientes para embarcar.";
 			mes "Lembre, a taxa de embarque é 1,200 zeny.";
 			close;
 		}
 	}
-	mes "[Equipe do Aeroporto]";
+	mes "[Assistente do Aeroplano]";
 	mes "Obrigado e por favor volte novamente.";
 	mes "Tenha um bom dia~";
 	close;
 }
 
-lhz_airport,158,43,5	duplicate(lhz_airport1)	Equipe do Aeroporto#lhz_air1b	4_F_01
-lhz_airport,126,43,5	duplicate(lhz_airport1)	Equipe do Aeroporto#lhz_air1c	4_F_01
+lhz_airport,158,43,5	duplicate(lhz_airport1)	Assistente do Aeroplano#lhz_air1b	4_F_01
+lhz_airport,126,43,5	duplicate(lhz_airport1)	Assistente do Aeroplano#lhz_air1c	4_F_01
 
 lhz_airport,143,49,3	script	Equipe de Recepção#lhz_air2a::lhz_airport2	4_F_01,{
 	mes "[Equipe de Recepção]";

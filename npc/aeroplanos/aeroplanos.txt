@@ -19,7 +19,7 @@
 //   | Changelog:                                             |
 //   | 1.0 Cabeçalho brAthena [Axl]                           |
 //   |--------------------------------------------------------|
-//   | - Anotações                                            |
+//   | - Revisado [Jeeffrey]                                  |
 //   \________________________________________________________/
 
 airplane,243,73,0	script	#AeroplanoPortal-1	WARPNPC,1,1,{
@@ -65,12 +65,12 @@ OnTimer60000:
 	mapannounce "airplane","Bem-vindo a Einbroch. Tenha uma boa viagem.",bc_map,"0x00ff00";
 	end;
 OnTimer70000:
-	mapannounce "airplane","Atualmente nós estamos em Einbroch. O Dirigível irá decolar em instantes.",bc_map,"0x00ff00";
+	mapannounce "airplane","Atualmente nós estamos em Einbroch. O Aeroplano irá decolar em instantes.",bc_map,"0x00ff00";
 	end;
 OnTimer80000:
 	donpcevent "#AeroplanoPortal-1::OnHide";
 	donpcevent "#AeroplanoPortal-2::OnHide";
-	mapannounce "airplane","O Dirigível está decolando agora. Seu próximo destino é Lighthalzen.",bc_map,"0x70dbdb";
+	mapannounce "airplane","O Aeroplano está decolando agora. Seu próximo destino é Lighthalzen.",bc_map,"0x70dbdb";
 	end;
 OnTimer100000:
 	mapannounce "airplane","Nós estamos partindo para Lighthalzen.",bc_map,"0x70dbdb";
@@ -85,12 +85,12 @@ OnTimer140000:
 	mapannounce "airplane","Bem-vindo a Lighthalzen. Tenha uma boa viagem.",bc_map,"0x70dbdb";
 	end;
 OnTimer150000:
-	mapannounce "airplane","Atualmente nós estamos em Lighthalzen. O Dirigível irá decolar em instantes.",bc_map,"0x70dbdb";
+	mapannounce "airplane","Atualmente nós estamos em Lighthalzen. O Aeroplano irá decolar em instantes.",bc_map,"0x70dbdb";
 	end;
 OnTimer160000:
 	donpcevent "#AeroplanoPortal-1::OnHide";
 	donpcevent "#AeroplanoPortal-2::OnHide";
-	mapannounce "airplane","O Dirigível está decolando agora. Seu próximo destino é Einbroch.",bc_map,"0x00ff00";
+	mapannounce "airplane","O Aeroplano está decolando agora. Seu próximo destino é Einbroch.",bc_map,"0x00ff00";
 	end;
 OnTimer180000:
 	mapannounce "airplane","Nós estamos partindo para Einbroch.",bc_map,"0x00ff00";
@@ -105,12 +105,12 @@ OnTimer220000:
 	mapannounce "airplane","Bem-vindo a Einbroch. Tenha uma boa viagem.",bc_map,"0x00ff00";
 	end;
 OnTimer230000:
-	mapannounce "airplane","Atualmente nós estamos em Einbroch. O Dirigível irá decolar em instantes.",bc_map,"0x00ff00";
+	mapannounce "airplane","Atualmente nós estamos em Einbroch. O Aeroplano irá decolar em instantes.",bc_map,"0x00ff00";
 	end;
 OnTimer240000:
 	donpcevent "#AeroplanoPortal-1::OnHide";
 	donpcevent "#AeroplanoPortal-2::OnHide";
-	mapannounce "airplane","O Dirigível está decolando agora. Seu próximo destino é Juno.",bc_map,"0xff8200";
+	mapannounce "airplane","O Aeroplano está decolando agora. Seu próximo destino é Juno.",bc_map,"0xff8200";
 	end;
 OnTimer260000:
 	mapannounce "airplane","Nós estamos partindo para Juno.",bc_map,"0xff8200";
@@ -125,12 +125,12 @@ OnTimer300000:
 	mapannounce "airplane","Bem-vindo a Juno. Tenha uma boa viagem.",bc_map,"0xff8200";
 	end;
 OnTimer310000:
-	mapannounce "airplane","Atualmente nós estamos em Juno. O Dirigível irá decolar em instantes.",bc_map,"0xff8200";
+	mapannounce "airplane","Atualmente nós estamos em Juno. O Aeroplano irá decolar em instantes.",bc_map,"0xff8200";
 	end;
 OnTimer320000:
 	donpcevent "#AeroplanoPortal-1::OnHide";
 	donpcevent "#AeroplanoPortal-2::OnHide";
-	mapannounce "airplane","O Dirigível está decolando agora. Seu próximo destino é Hugel.",bc_map,"0xca4bf3";
+	mapannounce "airplane","O Aeroplano está decolando agora. Seu próximo destino é Hugel.",bc_map,"0xca4bf3";
 	end;
 OnTimer340000:
 	mapannounce "airplane","Nós estamos partindo para Hugel.",bc_map,"0xca4bf3";
@@ -145,12 +145,12 @@ OnTimer380000:
 	mapannounce "airplane","Bem-vindo a Hugel. Tenha uma boa viagem.",bc_map,"0xca4bf3";
 	end;
 OnTimer390000:
-	mapannounce "airplane","Atualmente nós estamos em Hugel. O Dirigível irá decolar em instantes.",bc_map,"0xca4bf3";
+	mapannounce "airplane","Atualmente nós estamos em Hugel. O Aeroplano irá decolar em instantes.",bc_map,"0xca4bf3";
 	end;
 OnTimer400000:
 	donpcevent "#AeroplanoPortal-1::OnHide";
 	donpcevent "#AeroplanoPortal-2::OnHide";
-	mapannounce "airplane","O Dirigível está decolando agora. Seu próximo destino é Juno.",bc_map,"0xff8200";
+	mapannounce "airplane","O Aeroplano está decolando agora. Seu próximo destino é Juno.",bc_map,"0xff8200";
 	end;
 OnTimer420000:
 	mapannounce "airplane","Nós estamos partindo para Juno.",bc_map,"0xff8200";
@@ -165,12 +165,12 @@ OnTimer460000:
 	mapannounce "airplane","Bem-vindo a Juno. Tenha uma boa viagem.",bc_map,"0xff8200";
 	end;
 OnTimer470000:
-	mapannounce "airplane","Atualmente nós estamos em Juno. O Dirigível irá decolar em instantes.",bc_map,"0xff8200";
+	mapannounce "airplane","Atualmente nós estamos em Juno. O Aeroplano irá decolar em instantes.",bc_map,"0xff8200";
 	end;
 OnTimer480000:
 	donpcevent "#AeroplanoPortal-1::OnHide";
 	donpcevent "#AeroplanoPortal-2::OnHide";
-	mapannounce "airplane","O Dirigível está decolando agora. Seu próximo destino é Einbroch.",bc_map,"0x00ff00";
+	mapannounce "airplane","O Aeroplano está decolando agora. Seu próximo destino é Einbroch.",bc_map,"0x00ff00";
 	stopnpctimer;
 	initnpctimer;
 }
@@ -182,11 +182,11 @@ airplane,247,64,5	duplicate(ExitAirplane)	Saída#airplane1b	4_BOARD3
 airplane,240,40,1	duplicate(ExitAirplane)	Saída#airplane2a	4_BOARD3
 airplane,247,40,1	duplicate(ExitAirplane)	Saída#airplane2b	4_BOARD3
 
-airplane,100,69,3	script	Tripulação do Dirigível#ein-1	4_M_EIN_SOLDIER,{
-	mes "[Tripulação do Dirigível]";
+airplane,100,69,3	script	Tripulação do Aeroplano#ein-1	4_M_EIN_SOLDIER,{
+	mes "[Tripulação do Aeroplano]";
 	mes "Se já pousamos no";
 	mes "seu destino e você";
-	mes "gostaria de sair do Dirigível,";
+	mes "gostaria de sair do Aeroplano,";
 	mes "por favor use as";
 	mes "escadas a frente. Obrigado";
 	mes "por sua ajuda.";
@@ -236,7 +236,7 @@ airplane,71,91,7	script	Homem de Umbala#ein_p	4_M_UMSOLDIER,{
 		next;
 		emotion e_pif;
 		mes "[Chrmlim]";
-		mes "Tenho ajudado a equipe do Dirigível auxiliando seus Tripulantes que têm medo de altura os levanto para pular de bungee jumping em Umbala.";
+		mes "Tenho ajudado a equipe do Aeroplano auxiliando seus Tripulantes que têm medo de altura os levanto para pular de bungee jumping em Umbala.";
 		mes "Legal, em?";
 		next;
 		mes "[Chrmlim]";
@@ -262,15 +262,15 @@ airplane,71,91,7	script	Homem de Umbala#ein_p	4_M_UMSOLDIER,{
 	close;
 }
 
-airplane,250,58,2	script	Equipe do Dirigível#airplane	1_F_02,{
+airplane,250,58,2	script	Equipe do Aeroplano#airplane	1_F_02,{
 	// Adição da Quest Hugel
 	if (hg_ma1 == 3) {
-		mes "[Equipe do Dirigível]";
-		mes "Bem-vind"+(Sex?"o":"a")+" ao Dirigível.";
+		mes "[Assistente do Aeroplano]";
+		mes "Bem-vind"+(Sex?"o":"a")+" ao Aeroplano.";
 		mes "Como posso ajudá-lo?";
 		next;
 		select("Você tem um passageiro chamado Thierry?");
-		mes "[Equipe do Dirigível]";
+		mes "[Assistente do Aeroplano]";
 		mes "Me desculpe, mas eu não conheço nenhum dos passageiros pelo nome.";
 		close;
 	}
@@ -315,7 +315,7 @@ airplane,80,71,2	script	Zerta#01airplane	4_M_BUDDHIST,{
 
 airplane,65,63,4	script	Maelin#01airplane	4_F_06,{
 	mes "[Maelin]";
-	mes "Hum, o Dirigível vai até Lutie, não é?";
+	mes "Hum, o Aeroplano vai até Lutie, não é?";
 	mes "Eu tenho esperado durante um longo tempo, mas até agora não tenho tido notícias de Lutie.";
 	close;
 }
@@ -342,7 +342,7 @@ airplane,221,158,2	script	Piloto#airplane	4_M_EIN_SOLDIER,{
 		next;
 		select("Você conhece um passageiro chamado Thierry?");
 		mes "[Piloto]";
-		mes "Este uniforme é realmente bonito, mas não gosto de usá-lo enquanto estou no Dirigível.";
+		mes "Este uniforme é realmente bonito, mas não gosto de usá-lo enquanto estou no Aeroplano.";
 		next;
 		mes "[Piloto]";
 		mes "...";
@@ -388,12 +388,12 @@ airplane,221,158,2	script	Piloto#airplane	4_M_EIN_SOLDIER,{
 	default:
 		mes "[Piloto]";
 		mes "Você sabe, toda essa coisa de pilotagem no ar, é algo bastante recente, você sabe não é?";
-		mes "Sim, temos um Dirigível voando a uma incrível velocidade.";
+		mes "Sim, temos um Aeroplano voando a uma incrível velocidade.";
 		next;
 		emotion e_omg;
 		mes "[Piloto]";
 		mes "Ainda assim, há sempre algo sério, realmente acontecendo.";
-		mes "Quer dizer, estavamos treinando enquanto o Dirigível estava sendo inventado.";
+		mes "Quer dizer, estavamos treinando enquanto o Aeroplano estava sendo inventado.";
 		mes "Não é uma loucura?!";
 		close;
 	}
@@ -504,7 +504,7 @@ airplane,50,66,5	script	Vendedor de Maçãs#airplane	4_M_04,{
 		mes "Eu estava morrendo de fome e estava prestes a comer aquela Maçã...";
 		next;
 		mes "[Vendedor de Maçãs]";
-		mes "Mas de repente, Kain, meu antigo amigo desde os tempos de mineração, me pediu para ajudá-lo aqui no Dirigível.";
+		mes "Mas de repente, Kain, meu antigo amigo desde os tempos de mineração, me pediu para ajudá-lo aqui no Aeroplano.";
 		mes "Então eu aceitei, e foi lá que encontrei pessoas jogando um Jogo de Dados.";
 		next;
 		mes "[Vendedor de Maçãs]";
@@ -514,7 +514,7 @@ airplane,50,66,5	script	Vendedor de Maçãs#airplane	4_M_04,{
 		next;
 		mes "[Vendedor de Maçãs]";
 		mes "Duas tornaram-se quatro e antes que eu percebesse, eu já tinha feito uma banca de Maçãs!";
-		mes "Ganhei tantas maçãs, e eu acabei começando meu próprio negócio aqui no Dirigível.";
+		mes "Ganhei tantas maçãs, e eu acabei começando meu próprio negócio aqui no Aeroplano.";
 		mes "Estranho, não acha?";
 		next;
 		mes "[Vendedor de Maçãs]";
@@ -583,12 +583,12 @@ OnTimer60000:
 	mapannounce "airplane_01","Bem-vindo a Izlude. Tenha uma boa viagem.",bc_map,"0x00ff00";
 	end;
 OnTimer70000:
-	mapannounce "airplane_01","Atualmente nós estamos em Izlude. O Dirigível irá decolar em instantes.",bc_map,"0x00ff00";
+	mapannounce "airplane_01","Atualmente nós estamos em Izlude. O Aeroplano irá decolar em instantes.",bc_map,"0x00ff00";
 	end;
 OnTimer80000:
 	donpcevent "#AeroplanoPortal-3::OnHide";
 	donpcevent "#AeroplanoPortal-4::OnHide";
-	mapannounce "airplane_01","O Dirigível está decolando agora. Seu próximo destino é Juno.",bc_map,"0x70dbdb";
+	mapannounce "airplane_01","O Aeroplano está decolando agora. Seu próximo destino é Juno.",bc_map,"0x70dbdb";
 	end;
 OnTimer105000:
 	mapannounce "airplane_01","Nós estamos partindo para Juno.",bc_map,"0x70dbdb";
@@ -603,12 +603,12 @@ OnTimer140000:
 	mapannounce "airplane_01","Bem-vindo a Juno. Tenha uma boa viagem.",bc_map,"0x70dbdb";
 	end;
 OnTimer150000:
-	mapannounce "airplane_01","Atualmente nós estamos em Juno. O Dirigível irá decolar em instantes.",bc_map,"0x70dbdb";
+	mapannounce "airplane_01","Atualmente nós estamos em Juno. O Aeroplano irá decolar em instantes.",bc_map,"0x70dbdb";
 	end;
 OnTimer160000:
 	donpcevent "#AeroplanoPortal-3::OnHide";
 	donpcevent "#AeroplanoPortal-4::OnHide";
-	mapannounce "airplane_01","O Dirigível está decolando agora. Seu próximo destino é Rachel.",bc_map,"0xFF8200";
+	mapannounce "airplane_01","O Aeroplano está decolando agora. Seu próximo destino é Rachel.",bc_map,"0xFF8200";
 	end;
 OnTimer185000:
 	mapannounce "airplane_01","Nós estamos partindo para Rachel.",bc_map,"0xFF8200";
@@ -628,7 +628,7 @@ OnTimer230000:
 OnTimer240000:
 	donpcevent "#AeroplanoPortal-3::OnHide";
 	donpcevent "#AeroplanoPortal-4::OnHide";
-	mapannounce "airplane_01","O Dirigível está decolando agora. Seu próximo destino é Izlude.",bc_map,"0x00ff00";
+	mapannounce "airplane_01","O Aeroplano está decolando agora. Seu próximo destino é Izlude.",bc_map,"0x00ff00";
 	stopnpctimer;
 	++.moninv;
 	if (.moninv == 7) {
@@ -649,7 +649,7 @@ airplane_01,247,64,5	duplicate(ExitAirplane01)	Saída#airplane_011b	4_BOARD3
 airplane_01,240,40,1	duplicate(ExitAirplane01)	Saída#airplane_012a	4_BOARD3
 airplane_01,247,40,1	duplicate(ExitAirplane01)	Saída#airplane_012b	4_BOARD3
 
-airplane_01,250,58,2	script	Equipe do Dirigível#airplane01	1_F_02,{
+airplane_01,250,58,2	script	Equipe do Aeroplano#airplane01	1_F_02,{
 	mes "[Assistente do Aeroplano]";
 	mes "Bem-vind"+(Sex?"o":"a")+" ao Aeroplano.";
 	mes "Como posso lhe ajudar??";

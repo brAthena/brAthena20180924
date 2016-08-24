@@ -19,16 +19,16 @@
 //   | Changelog:                                             |
 //   | 1.0 Cabeçalho brAthena [Axl]                           |
 //   |--------------------------------------------------------|
-//   | - Anotações                                            |
+//   | - Revisado: [Jeeffrey]                                 |
 //   \________________________________________________________/
 
-y_airport,143,43,5	script	Equipe do Aeroporto#y_air1a::y_airport1	4_F_01,{
-	mes "[Equipe do Aeroporto]";
+y_airport,143,43,5	script	Assitente do Aeroplano#y_air1a::y_airport1	4_F_01,{
+	mes "[Assistente do Aeroplano]";
 	mes "Bem-vindo ao Aeroporto de Juno onde oferecemos voos domésticos para Einbroch, Lighthalzen e Hugel, e internacionais para Izlude e Rachel.";
 	mes "Gostaria de usar algum serviço?";
 	next;
 	if (select("Embarcar no Dirigível.:Cancelar.") == 1) {
-		mes "[Equipe do Aeroporto]";
+		mes "[Assistente do Aeroplano]";
 		mes "A taxa de embarque do Dirigível é 1,200 zeny, mas se você possuir um Bilhete para Aeroplano, a taxa não será cobrada.";
 		mes "Você deseja embarcar?";
 		next;
@@ -43,20 +43,20 @@ y_airport,143,43,5	script	Equipe do Aeroporto#y_air1a::y_airport1	4_F_01,{
 				warp "y_airport",148,51;
 				end;
 			}
-			mes "[Equipe do Aeroporto]";
+			mes "[Assistente do Aeroplano]";
 			mes "Me desculpe, mas você não possui um Bilhete para Aeroplano e você não possui a quantidade de zenys suficientes para embarcar.";
 			mes "Lembre, a taxa de embarque é 1,200 zeny.";
 			close;
 		}
 	}
-	mes "[Equipe do Aeroporto]";
+	mes "[Assistente do Aeroplano]";
 	mes "Obrigado e por favor volte novamente.";
 	mes "Tenha um bom dia.";
 	close;
 }
 
-y_airport,158,43,5	duplicate(y_airport1)	Equipe do Aeroporto#y_air1b	4_F_01
-y_airport,126,43,5	duplicate(y_airport1)	Equipe do Aeroporto#y_air1c	4_F_01
+y_airport,158,43,5	duplicate(y_airport1)	Assistente do Aeroplano#y_air1b	4_F_01
+y_airport,126,43,5	duplicate(y_airport1)	Assistente do Aeroplano#y_air1c	4_F_01
 
 y_airport,143,49,3	script	Equipe de Recepção#y_air2a::y_airport2	4_F_01,{
 	mes "[Equipe de Recepção]";
@@ -113,23 +113,23 @@ y_airport,140,63,5	script	Voos Internacionais	4_F_02,{
 	close;
 }
 
-yuno,14,262,5	script	Equipe do Aeroporto#yuno01	4_F_02,{
-	mes "[Equipe do Aeroporto]";
+yuno,14,262,5	script	Assistente do Aeroplano#yuno01	4_F_02,{
+	mes "[Assistente do Aeroplano]";
 	mes "Bem-vindo ao Aeroporto de Juno.";
 	mes "Utilize este porta para embarcar no Dirigível que voa até Izlude dentro do Reino de Rune-Midgard, e para Rachel na República de Arunafeltz.";
 	next;
-	mes "[Equipe do Aeroporto]";
+	mes "[Assistente do Aeroplano]";
 	mes "Caso contrário, se seu destino pretendido é Juno, por favor, desça as escadas e peça a Equipe de Recepção para levar você até o terminal.";
 	mes "Te agradeço, e tenha uma boa viagem.";
 	close;
 }
 
-yuno,88,263,3	script	Equipe do Aeroporto#yuno02	4_F_02,{
-	mes "[Equipe do Aeroporto]";
+yuno,88,263,3	script	Assistente do Aeroplano#yuno02	4_F_02,{
+	mes "[Assistente do Aeroplano]";
 	mes "Bem-vindo ao Aeroporto de Juno.";
 	mes "Utilize este porta para embarcar no Dirigível que vai até Einbroch, Lighthalzen e Hugel na República de Schwartzwald.";
 	next;
-	mes "[Equipe do Aeroporto]";
+	mes "[Assistente do Aeroplano]";
 	mes "Caso contrário, se seu destino pretendido é Juno, por favor, desça as escadas e pergunte a Equipe de Recepção para levar você até o terminal.";
 	mes "Te agradeço, e tenha uma boa viagem.";
 	close;

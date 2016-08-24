@@ -19,15 +19,15 @@
 //   | Changelog:                                             |
 //   | 1.0 Cabeçalho brAthena [Axl]                           |
 //   |--------------------------------------------------------|
-//   | - Anotações                                            |
+//   | - Revisado: [Jeeffrey]                                 |
 //   \________________________________________________________/
 
-airport,143,43,5	script	Equipe do Aeroporto#airport1a::airport1	4_F_01,{
-	mes "[Equipe do Aeroporto]";
+airport,143,43,5	script	Assistente do Aeroplano#airport1a::airport1	4_F_01,{
+	mes "[Assistente do Aeroplano]";
 	mes "Bem-vindo ao Aeroporto de Einbroch, onde oferecemos constantes voos para as cidades de Juno, Lighthalzen e Hugel.";
 	next;
 	if (select("Embarcar no Dirigível:Cancelar") == 1) {
-		mes "[Equipe do Aeroporto]";
+		mes "[Assistente do Aeroplano]";
 		mes "A taxa de embarque do Dirigível é 1,200 zeny, mas se você possuir um Bilhete para Aeroplano, a taxa não será cobrada.";
 		mes "Você deseja embarcar no Dirigível?";
 		next;
@@ -42,19 +42,19 @@ airport,143,43,5	script	Equipe do Aeroporto#airport1a::airport1	4_F_01,{
 				warp "airport",148,51;
 				end;
 			}
-			mes "[Equipe do Aeroporto]";
+			mes "[Assistente do Aeroplano]";
 			mes "Me desculpe, mas você não possui um Bilhete para Aeroplano e você não possui a quantidade de zenys suficientes para embarcar.";
 			mes "Lembre, a taxa de embarque é 1,200 zeny.";
 			close;
 		}
 	}
-	mes "[Equipe do Aeroporto]";
+	mes "[Assistente do Aeroplano]";
 	mes "Obrigado e tenha um bom dia.";
 	close;
 }
 
-airport,158,43,5	duplicate(airport1)	Equipe do Aeroporto#airport1b	4_F_01
-airport,126,43,5	duplicate(airport1)	Equipe do Aeroporto#airport1c	4_F_01
+airport,158,43,5	duplicate(airport1)	Assistente do Aeroplano#airport1b	4_F_01
+airport,126,43,5	duplicate(airport1)	Assistente do Aeroplano#airport1c	4_F_01
 
 airport,143,49,3	script	Equipe de Recepção#airport2a::airport2	4_F_01,{
 	mes "[Equipe de Recepção]";
@@ -81,12 +81,12 @@ airport,143,49,3	script	Equipe de Recepção#airport2a::airport2	4_F_01,{
 airport,126,51,3	duplicate(airport2)	Equipe de Recepção#airport2b	4_F_01
 airport,158,50,3	duplicate(airport2)	Equipe de Recepção#airport2c	4_F_01
 
-einbroch,94,267,3	script	Equipe do Aeroporto#ein01	4_F_02,{
-	mes "[Equipe do Aeroporto]";
+einbroch,94,267,3	script	Assistente do Aeroplano#ein01	4_F_02,{
+	mes "[Assistente do Aeroplano]";
 	mes "Bem-vindo ao Aeroporto de Einbroch.";
 	mes "Por favor utilize esta porta para embarcar no dirigível que irá partir até Juno, Lighthalzen e Hugel na República de Schwarzwald.";
 	next;
-	mes "[Equipe do Aeroporto]";
+	mes "[Assistente do Aeroplano]";
 	mes "Caso contrário, se é Einbroch seu destino pretendido, por favor, desça as escadas e perça a Equipe de Recepção para levar você até o terminal.";
 	mes "Te agradeço, e tenha uma boa viagem.";
 	close;
