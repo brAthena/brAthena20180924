@@ -19,17 +19,18 @@
 //   | Changelog:                                             |
 //   | 1.0 Cabeçalho brAthena [Axl]                           |
 //   |--------------------------------------------------------|
-//   | - Anotações                                            |
+//   | - Revisado: [Jeeffrey]                                 |
 //   \________________________________________________________/
 
 -	script	::Airship_Staff_izlude	-1,{
-	mes "[Equipe do Aeroporto]";
-	mes "Bem-vindo! Gostaria de embarcar no vôo que parte para Juno e Rachel?";
+	mes "[Assistente do Aeroplano]";
+	mes "Bem-vindo!!";
+	mes "Você gostaria de embarcar no Aeroplano, ele vai para Juno e Rachel.";
 	next;
-	if (select("Embarcar no Dirigível para Juno/Rachel.:Cancelar.") == 1) {
-		mes "[Equipe do Aeroporto]";
-		mes "A taxa de embarque do Dirigível é 1,200 zeny, mas se você possuir um Bilhete para Aeroplano, a taxa não será cobrada.";
-		mes "Você deseja embarcar no Dirigível?";
+	if (select("Embarcar.:Cancelar.") == 1) {
+		mes "[Assistente do Aeroplano]";
+		mes "A passagem custa 1.200 zeny.";
+		mes "Deseja comprar uma?";
 		next;
 		if (select("Sim:Não") == 1) {
 			if (countitem(7311) > 0) {
@@ -42,13 +43,14 @@
 				warp "airplane_01",244,58;
 				end;
 			}
-			mes "[Equipe do Aeroporto]";
+			mes "[Assistente do Aeroplano]";
 			mes "Me desculpe, mas você não possui um Bilhete para Aeroplano e você não possui a quantidade de zenys suficientes para embarcar.";
 			mes "Lembre, a taxa de embarque é 1,200 zeny.";
 			close;
 		}
 	}
-	mes "[Equipe do Aeroporto]";
-	mes "Obrigado e tenha um bom dia.";
+	mes "[Assistente do Aeroplano]";
+	mes "Muito obrigada!";
+	mes "Volte sempre.";
 	close;
 }

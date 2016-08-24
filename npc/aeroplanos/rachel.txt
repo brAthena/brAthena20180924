@@ -19,7 +19,7 @@
 //   | Changelog:                                             |
 //   | 1.0 Cabeçalho brAthena [Axl]                           |
 //   |--------------------------------------------------------|
-//   | - Anotações                                            |
+//   | - Revisado: [Jeeffrey]                                 |
 //   \________________________________________________________/
 
 ra_fild12,295,208,0	script	toairplane#rachel	WARPNPC,1,1,{
