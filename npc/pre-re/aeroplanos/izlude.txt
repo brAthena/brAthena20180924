@@ -1,11 +1,26 @@
-//===== Hercules Script ======================================
-//= Izlude Airport NPCs
-//===== By: ==================================================
-//= rAthena Dev Team
-//===== Description: =========================================
-//= Izlude Airport NPCs
-//===== Additional Comments: =================================
-//= Official NPCs.
-//============================================================
+//  ___________________________________________________________________           
+// /                                                                   \
+// |            _           _   _   _                                  |
+// |           | |__  _ __ / \ | |_| |__   ___ _ __   __ _             |
+// |           | '_ \| '__/ _ \| __| '_ \ / _ \ '_ \ / _` |            |
+// |           | |_) | | / ___ \ |_| | | |  __/ | | | (_| |            |
+// |           |_.__/|_|/_/   \_\__|_| |_|\___|_| |_|\__,_|            |
+// |                                                                   |
+// |                        brAthena  Script                           |
+// |                        www.brathena.org                           |
+// |-------------------------------------------------------------------|
+// |                                                                   |
+// | Copyright (c) brAthena Dev Team                                   |
+// | Copyright (c) Hercules Dev Team                                   |
+// | Copyright (c) Athena Dev Teams                                    |
+// |                                                                   |
+// |-------------------------------------------------------------------|
+// | Licenciado sob a licenca GNU GPL                                  |
+// | Para mais informações leia o arquivo LICENSE na raíz do emulador  |
+// |-------------------------------------------------------------------|
+// | Anotações:                                                        |
+// | - Tradução [Jeeffrey]                                             |
+// \___________________________________________________________________/
+//
 
-izlude,206,55,3	duplicate(Airship_Staff_izlude)	Airship Staff#izlude	4_F_01
+izlude,206,55,3	duplicate(Airship_Staff_izlude)	Assistente do Aeroplano#izlude	4_F_01

@@ -1,19 +1,30 @@
-//===== Hercules Script ======================================
-//= Izlude Airport NPCs
-//===== By: ==================================================
-//= Hercules Dev Team
-//===== Current Version: =====================================
-//= 1.1
-//===== Description: =========================================
-//= [Official Conversion]
-//= Izlude Airport NPCs
-//===== Additional Comments: =================================
-//= 1.0 Updated to match the new Izlude Map. [Masao]
-//= 1.1 Added Izlude duplicates. [Euphy]
-//============================================================
+//  ___________________________________________________________________           
+// /                                                                   \
+// |            _           _   _   _                                  |
+// |           | |__  _ __ / \ | |_| |__   ___ _ __   __ _             |
+// |           | '_ \| '__/ _ \| __| '_ \ / _ \ '_ \ / _` |            |
+// |           | |_) | | / ___ \ |_| | | |  __/ | | | (_| |            |
+// |           |_.__/|_|/_/   \_\__|_| |_|\___|_| |_|\__,_|            |
+// |                                                                   |
+// |                        brAthena  Script                           |
+// |                        www.brathena.org                           |
+// |-------------------------------------------------------------------|
+// |                                                                   |
+// | Copyright (c) brAthena Dev Team                                   |
+// | Copyright (c) Hercules Dev Team                                   |
+// | Copyright (c) Athena Dev Teams                                    |
+// |                                                                   |
+// |-------------------------------------------------------------------|
+// | Licenciado sob a licenca GNU GPL                                  |
+// | Para mais informações leia o arquivo LICENSE na raíz do emulador  |
+// |-------------------------------------------------------------------|
+// | Anotações:                                                        |
+// | - Tradução [Jeeffrey]                                             |
+// \___________________________________________________________________/
+//
 
-izlude,202,75,3	duplicate(Airship_Staff_izlude)	Airship Staff#izlude	4_F_01
-izlude_a,202,75,3	duplicate(Airship_Staff_izlude)	Airship Staff#izlude_a	4_F_01
-izlude_b,202,75,3	duplicate(Airship_Staff_izlude)	Airship Staff#izlude_b	4_F_01
-izlude_c,202,75,3	duplicate(Airship_Staff_izlude)	Airship Staff#izlude_c	4_F_01
-izlude_d,202,75,3	duplicate(Airship_Staff_izlude)	Airship Staff#izlude_d	4_F_01
+izlude,202,75,3	duplicate(Airship_Staff_izlude)	Assistente do Aeroplano#izlude	4_F_01
+izlude_a,202,75,3	duplicate(Airship_Staff_izlude)	Assistente do Aeroplano#izlude_a	4_F_01
+izlude_b,202,75,3	duplicate(Airship_Staff_izlude)	Assistente do Aeroplano#izlude_b	4_F_01
+izlude_c,202,75,3	duplicate(Airship_Staff_izlude)	Assistente do Aeroplano#izlude_c	4_F_01
+izlude_d,202,75,3	duplicate(Airship_Staff_izlude)	Assistente do Aeroplano#izlude_d	4_F_01
