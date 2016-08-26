@@ -1,11 +1,14 @@
 //===== Hercules Script ======================================
-//= Warper
+//= Teletransportadora
 //===== By: ==================================================
 //= Euphy
+//===== Compatível Com: ==========================================
+//= BRathena -- Tradução por: Julinhobrow
+// atualizada para versão 1.4b com lhz_dun04
 //===== Current Version: =====================================
-//= 1.4
+//= 1.4b
 //===== Description: =========================================
-//= A complete - but very condensed - warper script.
+//= A complete - but very condensed - Teletransportadora script.
 //= Some coordinates written by Tekno-Kanix and ToastOfDoom.
 //===== Additional Comments: =================================
 //= 1.0 Initial script.
@@ -14,26 +17,28 @@
 //= 1.3 Added Renewal checks and Instances menu.
 //=     Aligned coordinates with @go.
 //= 1.4 Added new Guild Dungeons.
+//= 1.4a Slight edits.
+//= 1.4b Added Wolfchev's Laboratory warp.
 //============================================================
 
--	script	Warper	-1,{
+-	script	Teletransportadora	FAKE_NPC,{
 function Go; function Disp; function Pick; function Restrict;
 
 // --------------------------------------------------
 //	Main Menu:
 // --------------------------------------------------
 
-menu	"Last Warp ^777777["+lastwarp$+"]^000000",-,
-		" ~ Towns",Towns,
-		" ~ Fields",Fields,
-		" ~ Dungeons",Dungeons,
-		" ~ Guild Castles",Castles,
-		" ~ Guild Dungeons",Guild_Dungeons,
-		" ~ Instances",Instances,
-		" ~ Special Areas",Special;
+menu	"Ultimo Teletransporte ^777777["+lastwarp$+"]^000000",-,
+		" ~ Cidades",Towns,
+		" ~ Campos",Fields,
+		" ~ Cavernas",Dungeons,
+		" ~ Castelos de Clãs",Castles,
+		" ~ Cavernas de Clãs",Guild_Dungeons,
+		" ~ Instâncias",Instances,
+		" ~ Areas Especiais",Special;
 
 	if (lastwarp$ == "")
-		message strcharinfo(0),"You haven't warped anywhere yet.";
+		message strcharinfo(0),"Você ainda não teletransportou.";
 	else
 		warp lastwarp$,lastwarpx,lastwarpy;
 	end;
@@ -90,7 +95,7 @@ function Pick {
 		.@map$ = getarg(0)+((.@i<10)?"0":"")+.@i;
 	}
 	if (.@warp_block & (1<<.@select)) {
-		message strcharinfo(0),"This map is not enabled in "+(RENEWAL?"":"Pre-")+"Renewal.";
+		message strcharinfo(0),"Este mapa não está ativo em "+(RENEWAL?"":"Pre-")+"Renewal.";
 		end;
 	}
 	.@x = @c[.@i*2];
@@ -105,7 +110,7 @@ function Restrict {
 			for (.@i = 1; .@i < getargcount(); .@i++)
 				@warp_block = @warp_block | (1<<getarg(.@i));
 		} else {
-			message strcharinfo(0),"This map is not enabled in "+(RENEWAL?"":"Pre-")+"Renewal.";
+			message strcharinfo(0),"Este mapa não está ativo em "+(RENEWAL?"":"Pre-")+"Renewal.";
 			end;
 		}
 	}
@@ -119,9 +124,9 @@ menu	"Prontera",T1, "Alberta",T2, "Aldebaran",T3, "Amatsu",T4, "Ayothaya",T5,
 		"Brasilis",T6, "Comodo",T7, "Dewata",T8, "Eclage",T9, "Einbech",T10,
 		"Einbroch",T11, "El Dicastes",T12, "Geffen",T13, "Gonryun",T14, "Hugel",T15,
 		"Izlude",T16, "Jawaii",T17, "Lighthalzen",T18, "Louyang",T19, "Lutie",T20,
-		"Malangdo",T21, "Malaya",T22, "Manuk",T23, "Midgarts Expedition Camp",T24,
-		"Mora",T25, "Morroc",T26, "Moscovia",T27, "Nameless Island",T28,
-		"Niflheim",T29, "Payon",T30, "Rachel",T31, "Splendide",T32, "Thor Camp",T33,
+		"Malangdo",T21, "Malaya",T22, "Manuk",T23, "Acampamento da Expedição da Aliança",T24,
+		"Mora",T25, "Morroc",T26, "Moscovia",T27, "Ilha Esquecida",T28,
+		"Niflheim",T29, "Payon",T30, "Rachel",T31, "Splendide",T32, "Acampamento do Vulcão de Thor",T33,
 		"Umbala",T34, "Veins",T35, "Yuno",T36;
 
 T1: Go("prontera",155,183);
@@ -171,16 +176,16 @@ T36: Go("yuno",157,51);
 // --------------------------------------------------
 	Fields:
 // --------------------------------------------------
-menu	"Amatsu Fields",F1, "Ayothaya Fields",F2, "Bifrost Fields", F3,
-		"Brasilis Fields",F4, "Comodo Fields",F5, "Dewata Fields",F6,
-		"Eclage Fields",F7, "Einbroch Fields",F8, "El Dicastes Fields",F9,
-		"Geffen Fields",F10, "Gonryun Fields",F11, "Hugel Fields",F12,
-		"Lighthalzen Fields",F13, "Louyang Field",F14, "Lutie Field",F15,
-		"Malaya Fields",F16, "Manuk Fields",F17, "Mjolnir Fields",F18,
-		"Moscovia Fields",F19, "Niflheim Fields",F20, "Payon Forests",F21,
-		"Prontera Fields",F22, "Rachel Fields",F23, "Sograt Deserts",F24,
-		"Splendide Fields",F25, "Umbala Fields",F26, "Veins Fields",F27,
-		"Yuno Fields",F28;
+menu	"Campos de Amatsu",F1, "Campos de Ayothaya",F2, "Campos de Bifrost", F3,
+		"Campos de Brasilis",F4, "Campos de Comodo",F5, "Campos de Dewata",F6,
+		"Campos de Eclage",F7, "Campos de Einbroch",F8, "Campos de El Dicastes",F9,
+		"Campos de Geffen",F10, "Campos de Gonryun",F11, "Campos de Hugel",F12,
+		"Campos de Lighthalzen",F13, "Campo de Louyang",F14, "Campo de Lutie",F15,
+		"Campos de Malaya",F16, "Campos de Manuk",F17, "Campos de Mjolnir",F18,
+		"Campos de Moscovia",F19, "Campos de Niflheim",F20, "Florestas de Payon",F21,
+		"Campos de Prontera",F22, "Campos de Rachel",F23, "Desertos de Sograt",F24,
+		"Campos de Splendide",F25, "Campos de Umbala",F26, "Campos de Veins",F27,
+		"Campos de Yuno",F28;
 
 F1: setarray @c[2],190,197;
 	Disp("Amatsu Field",1,1); Pick("ama_fild");
@@ -257,18 +262,18 @@ F28: Restrict("Pre-RE",5,10);
 // --------------------------------------------------
 	Dungeons:
 // --------------------------------------------------
-menu	"Abyss Lakes",D1, "Amatsu Dungeon",D2, "Anthell",D3,
-		"Ayothaya Dungeon",D4, "Beach Dungeon",D5, "Bifrost Tower",D41,
-		"Bio Labs",D6, "Brasilis Dungeon",D7, "Byalan Dungeon",D8, "Clock Tower",D9,
-		"Coal Mines",D10, "Culvert",D11, "Cursed Abbey",D12, "Dewata Dungeon",D13,
-		"Einbroch Dungeon",D14, "Gefenia",D15, "Geffen Dungeon",D16,
-		"Glast Heim",D17, "Gonryun Dungeon",D18, "Hidden Dungeon",D19,
-		"Ice Dungeon",D20, "Juperos",D21, "Kiel Dungeon",D22, "Louyang Dungeon",D23,
-		"Magma Dungeon",D24, "Malangdo Dungeon",D25, "Moscovia Dungeon",D26,
-		"Nidhogg's Dungeon",D27, "Odin Temple",D28, "Orc Dungeon",D29,
-		"Payon Dungeon",D30, "Pyramids",D31, "Rachel Sanctuary",D32,
-		"Scaraba Hole",D33, "Sphinx",D34, "Sunken Ship",D35, "Thanatos Tower",D36,
-		"Thor Volcano",D37, "Toy Factory",D38, "Turtle Dungeon",D39, "Umbala Dungeon",D40;
+menu	"Lago do Abismo",D1, "Caverna de Amatsu",D2, "Formigueiro Infernal",D3,
+		"Caverna de Ayothaya",D4, "Caverna da Praia",D5, "Torre Bifrost",D41,
+		"Bio Laboratórios",D6, "Caverna de Brasilis",D7, "Caverna de Byalan",D8, "Torre do Relógio",D9,
+		"Minas Abandonadas de Mjolnir",D10, "Esgosto de Prontera",D11, "Monastério",D12, "Caverna de Dewata",D13,
+		"Caverna de Einbroch",D14, "Gefenia",D15, "Caverna de Geffen",D16,
+		"Glast Heim",D17, "Caverna de Gonryun",D18, "Labirinto da Floresta",D19,
+		"Caverna de Gelo",D20, "Juperos",D21, "Fabrica de Rôbos",D22, "Caverna de Louyang",D23,
+		"Calabouço de Magma",D24, "Caverna de Malangdo",D25, "Caverna de Moscovia",D26,
+		"Caverna de Nidhogg's",D27, "Templo de Odin",D28, "Caverna dos Orcs",D29,
+		"Caverna de Payon",D30, "Pirâmide",D31, "Santuário de Rachel",D32,
+		"Túnel Kamidal",D33, "Esfinge",D34, "Navio Fantasma",D35, "Torre do Thanatos",D36,
+		"Vulcão de Thor",D37, "Fábrica de Brinquedos",D38, "Ilha da Tartaruga",D39, "Caverna de Umbala",D40;
 
 D1: setarray @c[2],261,272,275,270,116,27;
 	Disp("Abyss Lakes",1,3); Pick("abyss_");
@@ -370,8 +375,8 @@ D41: Restrict("RE");
 // --------------------------------------------------
 	Castles:
 // --------------------------------------------------
-menu	"Aldebaran Castles",C1, "Geffen Castles",C2, "Payon Castles",C3,
-		"Prontera Castles",C4, "Arunafeltz Castles",C5, "Schwaltzvalt Castles",C6;
+menu	"Castelos de Aldebaran",C1, "Castelos de Geffen",C2, "Castelos de Payon",C3,
+		"Castelos de Prontera",C4, "Castelos de Arunafeltz",C5, "Castelos de Schwaltzvalt",C6;
 
 C1: setarray @c[2],48,83,95,249,142,85,239,242,264,90;
 	Disp("Neuschwanstein:Hohenschwangau:Nuenberg:Wuerzburg:Rothenburg");
@@ -420,10 +425,10 @@ G6: Go("schg_dun01",200,124);
 // --------------------------------------------------
 	Instances:
 // --------------------------------------------------
-menu	"Bakonawa Lake",I1, "Bangungot Hospital 2F",I2, "Buwaya Cave",I3,
-		"Endless Tower",I4, "Hazy Forest",I5, "Malangdo Culvert",I6, "Nidhoggur's Nest",I7,
-		"Octopus Cave",I8, "Old Glast Heim",I9, "Orc's Memory",I10, "Sealed Shrine",I11,
-		"Wolfchev's Laboratory",I12;
+menu	"Lago Bakonawa",I1, "Hospital Bangungot 2F",I2, "Caverna Buwaya",I3,
+		"Endless Tower",I4, "Floresta Hazy",I5, "Esgosto de Malangdo",I6, "Nidhoggur's Nest",I7,
+		"Caverna Octopus",I8, "Old Glast Heim",I9, "Memorial Orc's",I10, "Sealed Shrine",I11,
+		"Laboratório Wolfchev's",I12;
 
 I1: Restrict("RE");
 	Go("ma_scene01",172,175);
@@ -449,8 +454,8 @@ I12: Restrict("RE");
 // --------------------------------------------------
 	Special:
 // --------------------------------------------------
-menu	"Auction Hall",S1, "Battlegrounds",S2, "Casino",S3, "Eden Group Headquarters",S4,
-		"Gonryun Arena",S5, "Izlude Arena",S6, "Monster Race Arena",S7, "Turbo Track",S8;
+menu	"Hall de Audições",S1, "Area das Campais",S2, "Casino",S3, "Quartel do Grupo Eden",S4,
+		"Gonryun Arena",S5, "Izlude Arena",S6, "Arena da Corrida de Monstros",S7, "Turbo Track",S8;
 
 S1: Go("auction_01",22,68);
 S2: Go("bat_room",154,150);
@@ -466,51 +471,51 @@ S8: Go("turbo_room",99,114);
 // --------------------------------------------------
 //	Duplicates:
 // --------------------------------------------------
-alb2trea,57,70,6	duplicate(Warper)	Warper#tre	4_F_VALKYRIE
-alberta,28,240,4	duplicate(Warper)	Warper#alb	4_F_VALKYRIE
-aldebaran,145,118,4	duplicate(Warper)	Warper#alde	4_F_VALKYRIE
-amatsu,203,87,4	duplicate(Warper)	Warper#ama	4_F_VALKYRIE
-ayothaya,209,169,6	duplicate(Warper)	Warper#ayo	4_F_VALKYRIE
-comodo,194,158,4	duplicate(Warper)	Warper#com	4_F_VALKYRIE
-einbech,59,38,6	duplicate(Warper)	Warper#einbe	4_F_VALKYRIE
-einbroch,69,202,4	duplicate(Warper)	Warper#einbr	4_F_VALKYRIE
-gef_fild10,71,339,4	duplicate(Warper)	Warper#orc	4_F_VALKYRIE
-geffen,124,72,4	duplicate(Warper)	Warper#gef	4_F_VALKYRIE
-glast_01,372,308,4	duplicate(Warper)	Warper#glh	4_F_VALKYRIE
-gonryun,162,122,4	duplicate(Warper)	Warper#gon	4_F_VALKYRIE
-hugel,101,151,4	duplicate(Warper)	Warper#hug	4_F_VALKYRIE
-izlu2dun,110,92,4	duplicate(Warper)	Warper#izd	4_F_VALKYRIE
-izlude,134,150,4	duplicate(Warper)	Warper#izl	4_F_VALKYRIE	//Pre-RE: (132,120)
-jawaii,253,138,4	duplicate(Warper)	Warper#jaw	4_F_VALKYRIE
-lighthalzen,162,102,4	duplicate(Warper)	Warper#lhz	4_F_VALKYRIE
-louyang,208,103,6	duplicate(Warper)	Warper#lou	4_F_VALKYRIE
-manuk,274,146,6	duplicate(Warper)	Warper#man	4_F_VALKYRIE
-mid_camp,216,288,4	duplicate(Warper)	Warper#mid	4_F_VALKYRIE
-mjolnir_02,85,364,4	duplicate(Warper)	Warper#mjo	4_F_VALKYRIE
-moc_ruins,64,164,4	duplicate(Warper)	Warper#moc	4_F_VALKYRIE
-morocc,159,97,4	duplicate(Warper)	Warper#mor	4_F_VALKYRIE
-moscovia,229,191,4	duplicate(Warper)	Warper#mos	4_F_VALKYRIE
-nameless_n,259,213,4	duplicate(Warper)	Warper#nam	4_F_VALKYRIE
-niflheim,205,179,4	duplicate(Warper)	Warper#nif	4_F_VALKYRIE
-pay_arche,42,134,4	duplicate(Warper)	Warper#arc	4_F_VALKYRIE
-payon,182,108,4	duplicate(Warper)	Warper#pay	4_F_VALKYRIE
-prontera,159,192,4	duplicate(Warper)	Warper#prt	4_F_VALKYRIE
-prt_fild05,279,223,6	duplicate(Warper)	Warper#cul	4_F_VALKYRIE
-rachel,135,116,4	duplicate(Warper)	Warper#rac	4_F_VALKYRIE
-splendide,205,153,4	duplicate(Warper)	Warper#spl	4_F_VALKYRIE
-thor_camp,249,76,4	duplicate(Warper)	Warper#thor	4_F_VALKYRIE
-umbala,106,150,3	duplicate(Warper)	Warper#umb	4_F_VALKYRIE
-veins,214,123,4	duplicate(Warper)	Warper#ve	4_F_VALKYRIE
-xmas,150,136,6	duplicate(Warper)	Warper#xmas	4_F_VALKYRIE
-yuno,162,47,4	duplicate(Warper)	Warper#yuno	4_F_VALKYRIE
+alb2trea,57,70,6	duplicate(Teletransportadora)	Teletransportadora#tre	4_F_VALKYRIE
+alberta,28,240,4	duplicate(Teletransportadora)	Teletransportadora#alb	4_F_VALKYRIE
+aldebaran,145,118,4	duplicate(Teletransportadora)	Teletransportadora#alde	4_F_VALKYRIE
+amatsu,203,87,4	duplicate(Teletransportadora)	Teletransportadora#ama	4_F_VALKYRIE
+ayothaya,209,169,6	duplicate(Teletransportadora)	Teletransportadora#ayo	4_F_VALKYRIE
+comodo,194,158,4	duplicate(Teletransportadora)	Teletransportadora#com	4_F_VALKYRIE
+einbech,59,38,6	duplicate(Teletransportadora)	Teletransportadora#einbe	4_F_VALKYRIE
+einbroch,69,202,4	duplicate(Teletransportadora)	Teletransportadora#einbr	4_F_VALKYRIE
+gef_fild10,71,339,4	duplicate(Teletransportadora)	Teletransportadora#orc	4_F_VALKYRIE
+geffen,124,72,4	duplicate(Teletransportadora)	Teletransportadora#gef	4_F_VALKYRIE
+glast_01,372,308,4	duplicate(Teletransportadora)	Teletransportadora#glh	4_F_VALKYRIE
+gonryun,162,122,4	duplicate(Teletransportadora)	Teletransportadora#gon	4_F_VALKYRIE
+hugel,101,151,4	duplicate(Teletransportadora)	Teletransportadora#hug	4_F_VALKYRIE
+izlu2dun,110,92,4	duplicate(Teletransportadora)	Teletransportadora#izd	4_F_VALKYRIE
+izlude,134,150,4	duplicate(Teletransportadora)	Teletransportadora#izl	4_F_VALKYRIE	//Pre-RE: (132,120)
+jawaii,253,138,4	duplicate(Teletransportadora)	Teletransportadora#jaw	4_F_VALKYRIE
+lighthalzen,162,102,4	duplicate(Teletransportadora)	Teletransportadora#lhz	4_F_VALKYRIE
+louyang,208,103,6	duplicate(Teletransportadora)	Teletransportadora#lou	4_F_VALKYRIE
+manuk,274,146,6	duplicate(Teletransportadora)	Teletransportadora#man	4_F_VALKYRIE
+mid_camp,216,288,4	duplicate(Teletransportadora)	Teletransportadora#mid	4_F_VALKYRIE
+mjolnir_02,85,364,4	duplicate(Teletransportadora)	Teletransportadora#mjo	4_F_VALKYRIE
+moc_ruins,64,164,4	duplicate(Teletransportadora)	Teletransportadora#moc	4_F_VALKYRIE
+morocc,159,97,4	duplicate(Teletransportadora)	Teletransportadora#mor	4_F_VALKYRIE
+moscovia,229,191,4	duplicate(Teletransportadora)	Teletransportadora#mos	4_F_VALKYRIE
+nameless_n,259,213,4	duplicate(Teletransportadora)	Teletransportadora#nam	4_F_VALKYRIE
+niflheim,205,179,4	duplicate(Teletransportadora)	Teletransportadora#nif	4_F_VALKYRIE
+pay_arche,42,134,4	duplicate(Teletransportadora)	Teletransportadora#arc	4_F_VALKYRIE
+payon,182,108,4	duplicate(Teletransportadora)	Teletransportadora#pay	4_F_VALKYRIE
+prontera,159,192,4	duplicate(Teletransportadora)	Teletransportadora#prt	4_F_VALKYRIE
+prt_fild05,279,223,6	duplicate(Teletransportadora)	Teletransportadora#cul	4_F_VALKYRIE
+rachel,135,116,4	duplicate(Teletransportadora)	Teletransportadora#rac	4_F_VALKYRIE
+splendide,205,153,4	duplicate(Teletransportadora)	Teletransportadora#spl	4_F_VALKYRIE
+thor_camp,249,76,4	duplicate(Teletransportadora)	Teletransportadora#thor	4_F_VALKYRIE
+umbala,106,150,3	duplicate(Teletransportadora)	Teletransportadora#umb	4_F_VALKYRIE
+veins,214,123,4	duplicate(Teletransportadora)	Teletransportadora#ve	4_F_VALKYRIE
+xmas,150,136,6	duplicate(Teletransportadora)	Teletransportadora#xmas	4_F_VALKYRIE
+yuno,162,47,4	duplicate(Teletransportadora)	Teletransportadora#yuno	4_F_VALKYRIE
 
 // --------------------------------------------------
 //	Duplicates (Renewal):
 // --------------------------------------------------
-brasilis,201,222,4	duplicate(Warper)	Warper#bra	4_F_VALKYRIE
-dewata,204,186,6	duplicate(Warper)	Warper#dew	4_F_VALKYRIE
-dicastes01,194,194,6	duplicate(Warper)	Warper#dic	4_F_VALKYRIE
-ecl_in01,51,60,4	duplicate(Warper)	Warper#ecl	4_F_VALKYRIE
-malangdo,134,117,6	duplicate(Warper)	Warper#mal	4_F_VALKYRIE
-malaya,231,204,4	duplicate(Warper)	Warper#ma	4_F_VALKYRIE
-mora,57,152,4	duplicate(Warper)	Warper#mora	4_F_VALKYRIE
+brasilis,201,222,4	duplicate(Teletransportadora)	Teletransportadora#bra	4_F_VALKYRIE
+dewata,204,186,6	duplicate(Teletransportadora)	Teletransportadora#dew	4_F_VALKYRIE
+dicastes01,194,194,6	duplicate(Teletransportadora)	Teletransportadora#dic	4_F_VALKYRIE
+ecl_in01,51,60,4	duplicate(Teletransportadora)	Teletransportadora#ecl	4_F_VALKYRIE
+malangdo,134,117,6	duplicate(Teletransportadora)	Teletransportadora#mal	4_F_VALKYRIE
+malaya,231,204,4	duplicate(Teletransportadora)	Teletransportadora#ma	4_F_VALKYRIE
+mora,57,152,4	duplicate(Teletransportadora)	Teletransportadora#mora	4_F_VALKYRIE

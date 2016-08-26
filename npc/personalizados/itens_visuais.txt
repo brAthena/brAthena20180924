@@ -43,7 +43,7 @@
 				set .@Menu$, .@Menu$ + ":";
 			}
 			set .@Part, .@Position[ select(.@Menu$) ];
-			set .@id, getequipid(.@Part);
+			set .@ID, getequipid(.@Part);
 			set .@ref, getequiprefinerycnt(.@Part);
 			if( !getequipisequiped(.@Part) )
 			{
@@ -84,11 +84,11 @@
 				emotion e_hmm;
 				close;
 				}
-			if (!countitem(.@id)) { 
+			if (!countitem(.@ID)) { 
 				mes "[Arlequim]";
-				mes "Onde está seu "+getitemname(@id)+"...?";
+				mes "Onde está seu "+getitemname(@ID)+"...?";
 				npctalk "Peraí, você está tentando me enganar?!";
-				logmes "Trapaceiro: tentou converter um item sem estar usando: "+getitemname(@id);
+				logmes "Trapaceiro: tentou converter um item sem estar usando: "+getitemname(@ID);
 				emotion e_wah;
 				close;
 			}

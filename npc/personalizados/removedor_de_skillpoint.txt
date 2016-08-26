@@ -1,0 +1,23 @@
+//===== Compatível Com: ==========================================
+//= BRathena -- Tradução e Correção por: Julinhobrow
+//= Adaptado do Rathena old
+//= Criado pelo Soulblaker
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+prontera,162,193,3	script	Removedor de SkillPoints	4W_M_01,{
+
+mes "[^FF0000Removedor de Pontos de Habilidade^000000]";
+mes "***********************************";
+mes "Você tem "+SkillPoint+" pontos de skill no momento";
+next;
+mes "[^FF0000Removedor de Pontos de Habilidade^000000]";
+mes "***********************************";
+mes "Deseja remover seus skill point?";
+if(select("Não:Sim") == 1) close;
+next;
+mes "[^FF0000Removedor de Pontos de Habilidade^000000]";
+mes "***********************************";
+set SkillPoint, 0;
+mes "Pontos resetados!";
+close;
+}
