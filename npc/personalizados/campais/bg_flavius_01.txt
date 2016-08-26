@@ -79,7 +79,7 @@ OnReadyCheck:
 	// Build and Warp Teams
 	donpcevent "Fl1R_Guillaume::OnEnterBG";
 	donpcevent "Fl1R_Croix::OnEnterBG";
-	announce "Battleground -- Flavius [80-99] has started!",0,0x006400;
+	announce "Battleground -- Flavius [80-99] começou!",0,0x006400;
 	initnpctimer;
 	// Start Match!!
 
@@ -113,7 +113,7 @@ OnRoundStart:
 	bg_monster $@FlaviusBG1_id2,"bat_b01",61,140,"Croix Guardian",1950,"Flavius_BG1::OnCroGuardian";
 	set .Croix_Guardian, 2;
 	// Announces
-	mapannounce "bat_b01","The Battle of Flavius [ " + .Match + " ] Round has begun!!",1,0x006400;
+	mapannounce "bat_b01","The Battle of Flavius [ " + .Match + " ] Round começou!!",1,0x006400;
 	end;
 
 OnRoundStop:
@@ -133,7 +133,7 @@ OnGuiGuardian:
 	{
 		setcell "bat_b01",327,151,329,149,cell_walkable,0;
 		setcell "bat_b01",327,151,329,149,cell_basilica,0;
-		mapannounce "bat_b01","The Guillaume Crystal is vulnerable to attack!",1,0x0000FF;
+		mapannounce "bat_b01","O Cristal de Guillaume está vulneravél para o ataque!",1,0x0000FF;
 	}
 	end;
 
@@ -142,7 +142,7 @@ OnCroGuardian:
 	{
 		setcell "bat_b01",62,149,60,151,cell_walkable,0;
 		setcell "bat_b01",62,149,60,151,cell_basilica,0;
-		mapannounce "bat_b01","The Croix Crystal is vulnerable to attack!",1,0xFF0000;
+		mapannounce "bat_b01","O Cristal de Croix está vulneravél para o ataque!",1,0xFF0000;
 	}
 	end;
 
@@ -152,13 +152,13 @@ OnGuillaumeBreak:
 	if( set(.Croix_Score, .Croix_Score + 1) < 2 )
 	{
 		bg_updatescore "bat_b01",.Guillaume_Score,.Croix_Score;
-		mapannounce "bat_b01","The Guillaume Crystal has been destroyed!",1,0x0000FF;
+		mapannounce "bat_b01","O Cristal de Guillaume foi destruído!",1,0x0000FF;
 		donpcevent "Flavius_BG1::OnRoundStart";
 	}
 	else
 	{
 		bg_updatescore "bat_b01",.Guillaume_Score,.Croix_Score;
-		mapannounce "bat_b01","The Croix army has won the Battle of Flavius!",1,0xFF0000;
+		mapannounce "bat_b01","O exército de Croix ganhou a batalha de Flavius!",1,0xFF0000;
 		set $@FlaviusBG1_Victory, 2;
 		donpcevent "Flavius_BG1::OnMatchEnd";
 	}
@@ -170,39 +170,39 @@ OnCroixBreak:
 	if( set(.Guillaume_Score, .Guillaume_Score + 1) < 2 )
 	{
 		bg_updatescore "bat_b01",.Guillaume_Score,.Croix_Score;
-		mapannounce "bat_b01","The Croix Crystal has been destroyed!",1,0xFF0000;
+		mapannounce "bat_b01","O Cristal de Croix's foi destruído!",1,0xFF0000;
 		donpcevent "Flavius_BG1::OnRoundStart";
 	}
 	else
 	{
 		bg_updatescore "bat_b01",.Guillaume_Score,.Croix_Score;
-		mapannounce "bat_b01","The Guillaume army has won the Battle of Flavius!",1,0x0000FF;
+		mapannounce "bat_b01","O exército de Guillaume ganhou a batalha de Flavius!",1,0x0000FF;
 		set $@FlaviusBG1_Victory, 1;
 		donpcevent "Flavius_BG1::OnMatchEnd";
 	}
 	end;
 
 OnTimer2400000:
-	mapannounce "bat_b01","Battle of Flavius will ends in 5 minutes",1,0x006400;
+	mapannounce "bat_b01","Batalha de Flavius vai encerrar em 5 minutos",1,0x006400;
 	end;
 OnTimer2640000:
-	mapannounce "bat_b01","Battle of Flavius will ends in 1 minute",1,0x006400;
+	mapannounce "bat_b01","Batalha de Flavius vai encerrar em 1 minuto",1,0x006400;
 	end;
 
 OnTimer2700000:
 	if( .Croix_Score > .Guillaume_Score )
 	{
-		mapannounce "bat_b01","The Croix army has won the Battle of Flavius!",1,0xFF0000;
+		mapannounce "bat_b01","O exército de Croix ganhou a batalha de Flavius!",1,0xFF0000;
 		set $@FlaviusBG1_Victory, 2;
 	}
 	else if( .Croix_Score < .Guillaume_Score )
 	{
-		mapannounce "bat_b01","The Guillaume army has won the Battle of Flavius!",1,0x0000FF;
+		mapannounce "bat_b01","O exército de Guillaume ganhou a batalha de Flavius!",1,0x0000FF;
 		set $@FlaviusBG1_Victory, 1;
 	}
 	else
 	{
-		mapannounce "bat_b01","The Battle of Flavius is over. The time is out, this is a Tie",1,0x006400;
+		mapannounce "bat_b01","A Batalha de Flavius encerrada. Tempo acabou, isto é uma Tristeza!",1,0x006400;
 		set $@FlaviusBG1_Victory, 3;
 	}
 
@@ -219,17 +219,17 @@ OnMatchEnd:
 	bg_warp $@FlaviusBG1_id1,"bat_b01",390,10;
 	bg_warp $@FlaviusBG1_id2,"bat_b01",10,290;
 	sleep 3000;
-	mapannounce "bat_b01","Battle of Flavius will close in 1 minute!",1,0x006400;
+	mapannounce "bat_b01","Batalha de Flavius irá fechar em 1 minuto!",1,0x006400;
 	initnpctimer;
 	end;
 
 OnTimer30000:
 	if( $@FlaviusBG1 == 2 )
-		mapannounce "bat_b01","Battle of Flavius will close in 30 seconds!",1,0x006400;
+		mapannounce "bat_b01","Batalha de Flavius irá fechar em 30 segundos!",1,0x006400;
 	end;
 OnTimer50000:
 	if( $@FlaviusBG1 == 2 )
-		mapannounce "bat_b01","Battle of Flavius will close in 10 seconds!",1,0x006400;
+		mapannounce "bat_b01","Batalha de Flavius irá fechar em 10 segundos!",1,0x006400;
 	end;
 
 OnTimer60000:
@@ -274,16 +274,16 @@ bat_b01,390,13,5	script	Guillaume Vintenar#fl1	4_M_KY_HEAD,{
 		if( $@FlaviusBG1_Victory == Bat_Team )
 		{ // Victory
 			mes "[Swandery]";
-			mes "Blessed Guillaume!!";
-			mes "Let's enjoy our glorious victory!";
-			mes "" + strcharinfo(0) + ", its a sign reflecting victory";
+			mes "Bendito Guillaume!";
+			mes "vamos desfrutar de nossa gloriosa vitória!";
+			mes ""+strcharinfo(0)+", este é um sinal que reflete a vitória.";
 			close2;
 			set .@reward, 9;
 		} else {
 			mes "[Swandery]";
-			mes "You lost, but you're dedicated to this battle.";
-			mes "This is a reward for your great dedication by Guillaume Marollo!";
-			mes "Just take this defeat a lesson, and later you would definitely learn.";
+			mes "Você perdeu, mas você foi dedicado nesta batalha.";
+			mes "Esta é uma recompensa pela sua grande dedicação por Guillaume Marollo!";
+			mes "Use esta derrota como uma lição, pra que na próxima vez você ganhe.";
 			close2;
 			set .@reward, 3;
 		}
@@ -303,16 +303,16 @@ bat_b01,10,293,5	script	Croix Vintenar#fl1	4_M_CRU_HEAD,{
 		if( $@FlaviusBG1_Victory == Bat_Team )
 		{ // Victory
 			mes "[Swandery]";
-			mes "Blessed Croax!!";
-			mes "Let's enjoy our glorious victory!";
-			mes "" + strcharinfo(0) + ", its a sign reflecting victory";
+			mes "Bendito Croix!";
+			mes "vamos desfrutar de nossa gloriosa vitória!";
+			mes ""+strcharinfo(0)+", este é um sinal que reflete a vitória.";
 			close2;
 			set .@reward, 9;
 		} else {
 			mes "[Swandery]";
-			mes "Oh, " + strcharinfo(0) + ". Don't be sad.";
-			mes "Even though we didn't win, we did our best.";
-			mes "This is a Royal gift from Croix, and please don't forget this battle. We can win the next.";
+			mes "Oh, "+strcharinfo(0)+". Não fique triste.";
+			mes "Embora não ganharmos, fizemos o nosso melhor.";
+			mes "Este é um presente da Realeza de Croix, e por favor não se esqueça desta batalha. Vamos ganhar o próximo.";
 			close2;
 			set .@reward, 3;
 		}
@@ -330,17 +330,19 @@ bat_b01,10,293,5	script	Croix Vintenar#fl1	4_M_CRU_HEAD,{
 // *********************************************************************
 
 bat_b01,390,13,5	script	Therapist in battle#fl12	4_F_SISTER,{
-	mes "[Therapist in battle]";
-	mes "Just close your eyes, and take a deep breathe.";
-	mes "You can be free from pain.";
+	mes "[Terapeuta de Batalha]";
+	mes "Apenas feche seus olhos,";
+	mes "e respirar fundo.";
+	mes "Você pode se livrar da dor.";
 	specialeffect2 312;
 	close;
 }
 
 bat_b01,10,293,5	script	Therapist in battle#fl11	4_F_SISTER,{
-	mes "[Therapist in battle]";
-	mes "Just close your eyes, and take a deep breathe.";
-	mes "You can be free from pain.";
+	mes "[Terapeuta de Batalha]";
+	mes "Apenas feche seus olhos,";
+	mes "e respirar fundo.";
+	mes "Você pode se livrar da dor.";
 	specialeffect2 312;
 	close;
 }
