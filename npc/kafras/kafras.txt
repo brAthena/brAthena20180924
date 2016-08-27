@@ -22,29 +22,6 @@
 // | - Traduzido por [Jeeffrey]                                        |
 // \___________________________________________________________________/
 //
-//===== Hercules Script ======================================
-//= Kafras (Cities/Dungeons/Fields)
-//===== By: ==================================================
-//= Joseph
-//===== Current Version: =====================================
-//= 1.1b
-//===== Description: =========================================
-//= Argument settings for callfunc "F_Kafra":
-//=  arg(0): 0 - Default Kafra message
-//=          1 - Niflhiem Kafra message
-//=          2 - Guild Kafra message
-//=  arg(1): 1 - Disable teleport menu
-//=  arg(2): 1 - Disable info menu
-//=  arg(3): Cost of Storage service
-//=  arg(4): Cost of Rent a Pushcart service
-//===== Additional Comments: =================================
-//= 0.x Previous Authors:
-//=     - L0ne_W0lf, kobra_k88, Samuray22, Evera, Lupus
-//= 1.0 Merged and cleaned up Kafras. [Joseph]
-//= 1.1 Added Izlude RE coordinates. [Euphy]
-//= 1.1a Fixed Pre-RE Call and some leftovers. [Lemongrass]
-//= 1.1b Enabled saving in Izlude duplicates (RE). [Euphy]
-//============================================================
 // Aldebaran
 //============================================================
 aldeba_in,96,181,4	script	Serviço Kafra	4_F_KAFRA5,{
