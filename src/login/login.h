@@ -111,6 +111,13 @@ struct Login_Config {
 	unsigned int dynamic_pass_failure_ban_interval; ///< how far to scan the loginlog for password failures
 	unsigned int dynamic_pass_failure_ban_limit;    ///< number of failures needed to trigger the ipban
 	unsigned int dynamic_pass_failure_ban_duration; ///< duration of the ipban
+
+	bool macban;									///< Realiza bloqueio por mac_address [CarlosHenrq]
+	bool macban_dynamic_pass_failure_ban;
+	unsigned int macban_dynamic_pass_failure_ban_interval;
+	unsigned int macban_dynamic_pass_failure_ban_limit;
+	unsigned int macban_dynamic_pass_failure_ban_duration;
+
 	bool use_dnsbl;                                 ///< dns blacklist blocking ?
 	char dnsbl_servs[1024];                         ///< comma-separated list of dnsbl servers
 

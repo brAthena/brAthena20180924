@@ -24,6 +24,7 @@
 
 #include "login/account.h"
 #include "login/ipban.h"
+#include "login/macban.h"
 #include "login/loginlog.h"
 #include "common/cbasetypes.h"
 #include "common/conf.h"
@@ -1364,6 +1365,10 @@ void login_auth_failed(struct login_session_data* sd, int result)
 	if (result == 1 && login->config->dynamic_pass_failure_ban && !sockt->trusted_ip_check(ip))
 		ipban_log(ip); // log failed password attempt
 
+	// Banimento por mac_address [CarlosHenrq]
+	if (result == 1)
+		macban->log(sockt->session[fd]->mac_address);
+
 #if PACKETVER >= 20120000 /* not sure when this started */
 	WFIFOHEAD(fd,26);
 	WFIFOW(fd,0) = 0x83e;
@@ -1624,6 +1629,16 @@ int login_parse_login(int fd)
 			return 0;
 		}
 
+		// Banimento por mac_address [CarlosHenrq]
+		if(login->config->macban && macban->check(sockt->session[fd]->mac_address))
+		{
+			ShowStatus("Conexao recusada: MAC nao esta autorizado (ip: %s, mac: %s).\n", ip, sockt->session[sd->fd]->mac_address);
+			login_log(ipl, "unknown", -3, "mac banned", sockt->session[fd]->mac_address);
+			login->login_error(fd, 3); // 3 = Rejected from Server
+			sockt->eof(fd);
+			return 0;
+		}
+
 		// create a session for this new connection
 		CREATE(sockt->session[fd]->session_data, struct login_session_data, 1);
 		sd = (struct login_session_data*)sockt->session[fd]->session_data;
@@ -1725,6 +1740,14 @@ void login_config_set_defaults(void)
 	login->config->dynamic_pass_failure_ban_interval = 5;
 	login->config->dynamic_pass_failure_ban_limit = 7;
 	login->config->dynamic_pass_failure_ban_duration = 5;
+
+	// Banimento por mac_address [CarlosHenrq]
+	login->config->macban = true;
+	login->config->macban_dynamic_pass_failure_ban = true;
+	login->config->macban_dynamic_pass_failure_ban_interval = 5;
+	login->config->macban_dynamic_pass_failure_ban_limit = 7;
+	login->config->macban_dynamic_pass_failure_ban_duration = 5;
+
 	login->config->use_dnsbl = false;
 	safestrncpy(login->config->dnsbl_servs, "", sizeof(login->config->dnsbl_servs));
 
@@ -1846,6 +1869,8 @@ int login_config_read(const char *cfgName)
 				db->set_property(db, w1, w2);
 			ipban_config_read(w1, w2);
 			loginlog_config_read(w1, w2);
+			// Banimento por mac_address [CarlosHenrq]
+			macban->config_read(w1, w2);
 		}
 	}
 	fclose(fp);
@@ -1875,6 +1900,7 @@ int do_final(void) {
 		loginlog_final();
 
 	ipban_final();
+	macban->final();
 
 	if( account_engine[0].db )
 	{// destroy account engine
@@ -2000,6 +2026,8 @@ int do_init(int argc, char** argv)
 
 	// initialize static and dynamic ipban system
 	ipban_init();
+	// Banimento por mac_address [CarlosHenrq]
+	macban_do_init();
 
 	// Online user database init
 	login->online_db = idb_alloc(DB_OPT_RELEASE_DATA);
