@@ -22,25 +22,14 @@
 
 #ifdef BRATHENA_CORE
 
-struct macban_interface
-{
-
-    void (*init) (void);
-    void (*final) (void);
-
-    bool (*config_read) (const char*, const char*);
-
-    bool (*check) (const char*);
-    void (*log) (const char*);
-    void (*ban) (const char*, int);
-    void (*unban) (const char*);
-    void (*block) (const char*);
-
-};
-
-void macban_do_init(void);
-
-struct macban_interface* macban;
+void macban_init(void);
+void macban_final(void);
+bool macban_config_read(const char*, const char*);
+bool macban_check(const char*);
+void macban_log(const char*);
+void macban_ban(const char*, int);
+void macban_unban(const char*);
+void macban_block(const char*);
 
 #endif // BRATHENA_CORE
 

@@ -49,9 +49,6 @@ static Sql* sql_handle = NULL;
 static int cleanup_timer_id = INVALID_TIMER;
 static bool macban_inited = false;
 
-struct macban_interface macban_s;
-
-
 /**
  * Método para inicializar conexão com banco de dados e configurações iniciais.
  */
@@ -132,28 +129,5 @@ void macban_unban(const char* mac_address)
  */
 void macban_block(const char* mac_address)
 {
-	macban->ban(mac_address, -1);
-}
-
-/**
- * Iniciliza os ponteiros de funções para banimento por mac_address
- */
-void macban_do_init(void)
-{
-	macban = &macban_s;
-
-	// Funções de inicialização do macban.
-	macban->init 			= macban_init;
-	macban->final 			= macban_final;
-	macban->config_read 	= macban_config_read;
-	macban->check 			= macban_check;
-	macban->log 			= macban_log;
-	macban->ban 			= macban_ban;
-	macban->unban 			= macban_unban;
-	macban->block 			= macban_block;
-
-	// Inicializa macban
-	macban->init();
-
-	return;
+	macban_ban(mac_address, -1);
 }

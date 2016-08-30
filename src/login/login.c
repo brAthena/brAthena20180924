@@ -1365,9 +1365,9 @@ void login_auth_failed(struct login_session_data* sd, int result)
 	if (result == 1 && login->config->dynamic_pass_failure_ban && !sockt->trusted_ip_check(ip))
 		ipban_log(ip); // log failed password attempt
 
-	// Banimento por mac_address [CarlosHenrq]
+	// // Banimento por mac_address [CarlosHenrq]
 	if (result == 1)
-		macban->log(sockt->session[fd]->mac_address);
+		macban_log(sockt->session[fd]->mac_address);
 
 #if PACKETVER >= 20120000 /* not sure when this started */
 	WFIFOHEAD(fd,26);
@@ -1630,7 +1630,7 @@ int login_parse_login(int fd)
 		}
 
 		// Banimento por mac_address [CarlosHenrq]
-		if(login->config->macban && macban->check(sockt->session[fd]->mac_address))
+		if(login->config->macban && macban_check(sockt->session[fd]->mac_address))
 		{
 			ShowStatus("Conexao recusada: MAC nao esta autorizado (ip: %s, mac: %s).\n", ip, sockt->session[sd->fd]->mac_address);
 			login_log(ipl, "unknown", -3, "mac banned", sockt->session[fd]->mac_address);
@@ -1870,7 +1870,7 @@ int login_config_read(const char *cfgName)
 			ipban_config_read(w1, w2);
 			loginlog_config_read(w1, w2);
 			// Banimento por mac_address [CarlosHenrq]
-			macban->config_read(w1, w2);
+			macban_config_read(w1, w2);
 		}
 	}
 	fclose(fp);
@@ -1900,7 +1900,7 @@ int do_final(void) {
 		loginlog_final();
 
 	ipban_final();
-	macban->final();
+	macban_final();
 
 	if( account_engine[0].db )
 	{// destroy account engine
@@ -2027,7 +2027,7 @@ int do_init(int argc, char** argv)
 	// initialize static and dynamic ipban system
 	ipban_init();
 	// Banimento por mac_address [CarlosHenrq]
-	macban_do_init();
+	macban_init();
 
 	// Online user database init
 	login->online_db = idb_alloc(DB_OPT_RELEASE_DATA);
