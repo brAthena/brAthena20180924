@@ -1855,6 +1855,8 @@ int login_config_read(const char *cfgName)
 				db->set_property(db, w1, w2);
 			ipban_config_read(w1, w2);
 			loginlog_config_read(w1, w2);
+			// Realiza configuração de leitura das informações relacionadas ao mac_address
+			mac->config_read(w1, w2);
 		}
 	}
 	fclose(fp);
@@ -1876,6 +1878,9 @@ int do_final(void) {
 		hn = hn->next;
 		aFree(tmp);
 	}
+
+	// Encerra estrutura de mac_address [CarlosHenrq]
+	mac->final();
 
 	// [CarlosHenrq] Enviando mac_address no pacote entre os servidores.
 	login_log(0, "Servidor de login", 100, "Fechando...", "");
@@ -1988,6 +1993,9 @@ int do_init(int argc, char** argv)
 	}
 
 	login_defaults();
+
+	// Inicializa configurações relacionadas ao mac_address [CarlosHenrq]
+	mac_doinit();
 
 	// read login-server configuration
 	login->config_set_defaults();

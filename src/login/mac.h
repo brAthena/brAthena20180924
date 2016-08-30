@@ -18,11 +18,25 @@
 #ifndef LOGIN_MAC_H
 #define LOGIN_MAC_H
 
+#include "common/db.h"
 #include "common/cbasetypes.h"
 
 #ifdef BRATHENA_CORE
 
+struct mac_interface
+{
+    // Database para todos os mac_address online
+    DBMap* onlinedb;
 
+    // Funções de inicialização dos dados para mac-address
+    void (*init) ();
+    void (*final) ();
+    bool (*config_read) (const char* key, const char* value);
+};
+
+struct mac_interface* mac;
+
+void mac_doinit();
 
 #endif // BRATHENA_CORE
 
