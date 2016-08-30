@@ -7,30 +7,46 @@
 *                                                                            *
 *                            www.brathena.org                                *
 ******************************************************************************
-* src/login/macban.h                                                          *
+* src/login/mac.c                                                         *
 ******************************************************************************
 * Copyright (c) brAthena Dev Team                                            *
 *                                                                            *
 * Licenciado sob a licenca GNU GPL                                           *
-* Para mais informações leia o arquivo LICENSE na raíz do emulador           *
+* Para mais informaï¿½ï¿½es leia o arquivo LICENSE na raï¿½z do emulador           *
 *****************************************************************************/
 
-#ifndef LOGIN_MACBAN_H
-#define LOGIN_MACBAN_H
+#define BRATHENA_CORE
+
+#include "mac.h"
 
 #include "common/cbasetypes.h"
+#include "common/nullpo.h"
+#include "common/sql.h"
+#include "common/strlib.h"
+#include "common/timer.h"
 
-#ifdef BRATHENA_CORE
+#include <stdlib.h>
 
-void macban_init(void);
-void macban_final(void);
-bool macban_config_read(const char*, const char*);
-bool macban_check(const char*);
-void macban_log(const char*);
-void macban_ban(const char*, int);
-void macban_unban(const char*);
-void macban_block(const char*);
+// global sql settings
+static char   global_db_hostname[32] = "127.0.0.1";
+static uint16 global_db_port = 3306;
+static char   global_db_username[32] = "ragnarok";
+static char   global_db_password[100] = "ragnarok";
+static char   global_db_database[32] = "ragnarok";
+static char   global_codepage[32] = "";
+// local sql settings
+static char   macban_db_hostname[32] = "";
+static uint16 macban_db_port = 0;
+static char   macban_db_username[32] = "";
+static char   macban_db_password[100] = "";
+static char   macban_db_database[32] = "";
+static char   macban_codepage[32] = "";
+static char   macban_table_list[32] = "macban_list";
+static char   macban_table_log[32] = "macban_log";
 
-#endif // BRATHENA_CORE
+// globals
+static Sql* sql_handle = NULL;
+static int cleanup_timer_id = INVALID_TIMER;
+static bool mac_inited = false;
 
-#endif /* LOGIN_MACBAN_H */
+
