@@ -20,7 +20,7 @@
 // |-------------------------------------------------------------------|
 // | Anotações:                                                        |
 // | - Versões anteriores: Evera, Silent, Lupus, L0ne_W0lf e Euphy     |
-// | - Traduçao [Jeeffrey]                                             |
+// | - Traduçao e Revisado por: [Jeeffrey]                             |
 // |                                                                   |
 // | Descrição: NPCs de Eventos da Corporação vs Kafra Cavernas,       | 
 // | Serviço de Teleporte e sistema de votação.                        |
@@ -529,7 +529,7 @@ function	script	F_VoteKafra	{
 						mes "Desculpe, você não tem";
 						mes "dinheiro suficiente para pagar";
 						mes "a taxa de 4000 zenys, necessária";
-						mes "para o teleporte para a Toy Factory.";
+						mes "para o teleporte para a Fábrica de Brinquedos.";
 						mes "Cheque seus fundos e volte novamente.";
 					}
 					break;
@@ -554,7 +554,7 @@ function	script	F_VoteKafra	{
 						mes "Desculpe, você não tem";
 						mes "dinheiro suficiente para pagar";
 						mes "a taxa de 4000 zenys, necessária";
-						mes "para o teleporte para a Toy Factory.";
+						mes "para o teleporte para a Fábrica de Brinquedos.";
 						mes "Cheque seus fundos e volte novamente.";
 					}
 					break;
@@ -582,7 +582,7 @@ function	script	F_VoteKafra	{
 				}
 			}
 			else {
-				switch(select("Fábrica de Brinquedos, Nível 2 -> 4,000 z:Torre do Relógio, Nível 3 -> 4,000 z:Lava Dungeon, Nível 2 -> 4,000 z:Cancelar")) {
+				switch(select("Fábrica de Brinquedos, Nível 2 -> 4,000 z:Torre do Relógio, Nível 3 -> 4,000 z:Caverna de Magma, Nível 2 -> 4,000 z:Cancelar")) {
 				case 1:
 					if (Zeny >= 4000) {
 						Zeny -= 4000;
@@ -595,7 +595,7 @@ function	script	F_VoteKafra	{
 						mes "Desculpe, você não tem";
 						mes "dinheiro suficiente para pagar";
 						mes "a taxa de 4000 zenys, necessária";
-						mes "para o teleporte para a Toy Factory.";
+						mes "para o teleporte para a Fábrica de Brinquedos.";
 						mes "Cheque seus fundos e volte novamente.";
 					}
 					break;
@@ -627,7 +627,7 @@ function	script	F_VoteKafra	{
 						mes "Desculpe, você não tem";
 						mes "dinheiro suficiente para pagar";
 						mes "a taxa de 4000 zenys, nexessária";
-						mes "para o teleporte para a Lava Dungeon.";
+						mes "para o teleporte para a Caverna de Magma.";
 						mes "Cheque seus fundos e volte novamente.";
 					}
 					break;
