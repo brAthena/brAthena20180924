@@ -18,6 +18,7 @@
 #ifndef LOGIN_MAC_H
 #define LOGIN_MAC_H
 
+#include "login.h"
 #include "common/db.h"
 #include "common/cbasetypes.h"
 
@@ -32,6 +33,18 @@ struct mac_interface
     void (*init) ();
     void (*final) ();
     bool (*config_read) (const char* key, const char* value);
+
+    bool (*is_online) (const char* mac_address);
+    int (*is_online_sub) (DBKey key, DBData *data, va_list args);
+
+    void (*add_online) (int account_id, const char* mac_address);
+    void (*del_online) (int account_id);
+};
+
+struct mac_node
+{
+    int account_id;
+    char mac_address[MAC_LENGTH];
 };
 
 struct mac_interface* mac;

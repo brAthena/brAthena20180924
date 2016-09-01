@@ -73,7 +73,7 @@ static DBData login_create_online_user(DBKey key, va_list args)
 	return DB->ptr2data(p);
 }
 
-struct online_login_data* login_add_online_user(int char_server, int account_id)
+struct online_login_data* login_add_online_user(int char_server, int account_id, const char* mac_address)
 {
 	struct online_login_data* p;
 	p = idb_ensure(login->online_db, account_id, login->create_online_user);
@@ -83,6 +83,7 @@ struct online_login_data* login_add_online_user(int char_server, int account_id)
 		timer->delete(p->waiting_disconnect, login->waiting_disconnect_timer);
 		p->waiting_disconnect = INVALID_TIMER;
 	}
+	mac->add_online(account_id, mac_address);
 	return p;
 }
 
@@ -96,6 +97,7 @@ void login_remove_online_user(int account_id)
 		timer->delete(p->waiting_disconnect, login->waiting_disconnect_timer);
 
 	idb_remove(login->online_db, account_id);
+	mac->del_online(account_id);
 }
 
 static int login_waiting_disconnect_timer(int tid, int64 tick, int id, intptr_t data) {
@@ -645,7 +647,7 @@ void login_fromchar_parse_unban(int fd, int id, const char *const ip)
 
 void login_fromchar_parse_account_online(int fd, int id)
 {
-	login->add_online_user(id, RFIFOL(fd,2));
+	login->add_online_user(id, RFIFOL(fd,2), sockt->session[fd]->mac_address);
 	RFIFOSKIP(fd,6);
 }
 
@@ -1259,6 +1261,18 @@ void login_auth_ok(struct login_session_data* sd)
 		}
 	}
 
+	/*
+
+	// Se a configuração para bloquear dual mac estiver ligada, então
+	// Verifica se aquele mac_address está online. (Chegou aqui por está logando outra conta) [CarlosHenrq]
+	if(login->config->mac_block_dual && mac->is_online(sockt->session[fd]->mac_address))
+	{
+		login->connection_problem(fd, 8); // 08 = Server still recognizes your last login
+		return;
+	}
+
+	*/
+
 	// [CarlosHenrq] Enviando mac_address no pacote entre os servidores.
 	login_log(ip, sd->userid, 100, "Conectado com sucesso", sockt->session[fd]->mac_address);
 	ShowStatus("Conexao do usuario '%s' aceita.\n", sd->userid);
@@ -1315,7 +1329,7 @@ void login_auth_ok(struct login_session_data* sd)
 		struct online_login_data* data;
 
 		// mark client as 'online'
-		data = login->add_online_user(-1, sd->account_id);
+		data = login->add_online_user(-1, sd->account_id, node->mac_address);
 
 		// schedule deletion of this node
 		data->waiting_disconnect = timer->add(timer->gettick()+AUTH_TIMEOUT, login->waiting_disconnect_timer, sd->account_id, 0);
@@ -1728,11 +1742,7 @@ void login_config_set_defaults(void)
 	login->config->dynamic_pass_failure_ban_duration = 5;
 
 	// Banimento por mac_address [CarlosHenrq]
-	login->config->macban = true;
-	login->config->macban_dynamic_pass_failure_ban = true;
-	login->config->macban_dynamic_pass_failure_ban_interval = 5;
-	login->config->macban_dynamic_pass_failure_ban_limit = 7;
-	login->config->macban_dynamic_pass_failure_ban_duration = 5;
+	login->config->mac_block_dual = false;
 
 	login->config->use_dnsbl = false;
 	safestrncpy(login->config->dnsbl_servs, "", sizeof(login->config->dnsbl_servs));

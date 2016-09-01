@@ -26,6 +26,9 @@
 #include "common/strlib.h"
 #include "common/timer.h"
 #include "common/db.h"
+#include "common/utils.h"
+#include "common/showmsg.h"
+#include "common/memmgr.h"
 
 #include <stdlib.h>
 
@@ -49,9 +52,76 @@
 // // globals
 // static Sql* sql_handle = NULL;
 // static int cleanup_timer_id = INVALID_TIMER;
-// static bool mac_inited = false;
+static bool mac_inited = false;
 
 struct mac_interface mac_s;
+
+/**
+ * Procura um mac_address na lista online.
+ */
+int mac_is_online_sub(DBKey key, DBData *data, va_list args)
+{
+    const char* mac_address = (const char*) va_arg(args, const char*);
+    struct mac_node* node = DB->data2ptr(data);
+
+    if(!strcmp(mac_address, node->mac_address))
+        return 1;
+
+    return 0;
+}
+
+/**
+ * Verifica se um mac_address está online na lista.
+ *
+ * @param mac_address
+ */
+bool mac_is_online(const char* mac_address)
+{
+    if(strlen(mac_address) == 0)
+        return false;
+
+    return (mac->onlinedb->foreach(mac->onlinedb, mac->is_online_sub, mac_address) == 1);
+}
+
+/**
+ * Adiciona o mac_address a lista de onlines.
+ *
+ * @param account_id
+ * @param mac_address
+ */
+void mac_add_online(int account_id, const char* mac_address)
+{
+    struct mac_node* node;
+
+    if(strlen(mac_address) == 0)
+        return;
+
+    if(mac->is_online(mac_address))
+        ShowWarning("O MAC \"%s\" já está online.\n", mac_address);
+
+    ShowInfo("Adicionando (%d, %s) a lista online...\n", account_id, mac_address);
+
+    CREATE(node, struct mac_node, 1);
+    node->account_id = account_id;
+    safestrncpy(node->mac_address, mac_address, MAC_LENGTH);
+
+    idb_put(mac->onlinedb, account_id, node);
+    return;
+}
+
+/**
+ * Deleta a conta online e remove o registro do mac_address
+ */
+void mac_del_online(int account_id)
+{
+    if(!idb_exists(mac->onlinedb, account_id))
+        return;
+
+    ShowInfo("Removendo (%d) da lista online...\n", account_id);
+
+    idb_remove(mac->onlinedb, account_id);
+    return;
+}
 
 /**
  * Inicializa comunicação com o banco de dados.
@@ -59,8 +129,7 @@ struct mac_interface mac_s;
 void mac_init(void)
 {
     // Inicializa o banco de dados para os endereços mac-online.
-    mac->onlinedb = stridb_alloc(DB_OPT_RELEASE_DATA, MAC_LENGTH);
-
+    mac->onlinedb = idb_alloc(DB_OPT_RELEASE_DATA);
     return;
 }
 
@@ -69,10 +138,8 @@ void mac_init(void)
  */
 void mac_final(void)
 {
-
     // Destroi as informações dos macs logados.
     mac->onlinedb->destroy(mac->onlinedb, NULL);
-
     return;
 }
 
@@ -86,6 +153,25 @@ void mac_final(void)
  */
 bool mac_config_read(const char* key, const char* value)
 {
+    const char* signature;
+
+    nullpo_ret(key);
+    nullpo_ret(value);
+    if(mac_inited)
+        return false;
+
+    signature = "mac.";
+    if( strncmpi(key, signature, strlen(signature)) == 0 )
+    {
+        key += strlen(signature);
+        if(strcmpi(key, "block_dual") == 0)
+            login->config->mac_block_dual = (bool)config_switch(value);
+        else
+            return false;
+
+        return true;
+    }
+
     return false;
 }
 
@@ -99,6 +185,10 @@ void mac_doinit(void)
     mac->config_read    = mac_config_read;
 
     // Funções de verificação de dados do MAC.
+    mac->is_online      = mac_is_online;
+    mac->is_online_sub  = mac_is_online_sub;
+    mac->add_online     = mac_add_online;
+    mac->del_online     = mac_del_online;
 
     // Funções de verificação de dados de MAC Banidos.
 
