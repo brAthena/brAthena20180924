@@ -182,8 +182,8 @@ void mac_init(void)
     mac->ban_list_load();
 
     // Atualiza informações de macs banidos a cada 10s.
-    timer->add_func_list(mac->ban_cleanup, "mac_ban_cleanup");
-    cleanup_timer_id = timer->add_interval(timer->gettick() + 1000, mac->ban_cleanup, 0, 0, 10000);
+    timer->add_func_list(mac->unban_cleanup, "mac_unban_cleanup");
+    cleanup_timer_id = timer->add_interval(timer->gettick() + 1000, mac->unban_cleanup, 0, 0, 10000);
 
     return;
 }
@@ -255,20 +255,106 @@ bool mac_ban_check(const char* mac_address)
 }
 
 /**
- * Remove o ban do mac_address por id.
+ * Adiciona um mac_address a lista de banidos.
+ *
+ * @param mac_address
+ * @param reason
+ * @param minutes
  */
-void mac_ban_remove(int id)
+void mac_ban(const char* mac_address, const char* reason, int minutes)
 {
+    char* data = NULL;
+    int id = -1;
+    int64 ban_tick, unban_tick = -1;
+    struct mac_ban_node* node;
+
+    if(!login->config->mac_ban_enable)
+        return;
+
+    ban_tick = timer->gettick();
+    if(minutes > 0)
+        unban_tick = ban_tick + ((minutes*60)*1000);
+
+    // Insere o registro de banido no banco de dados.
+    if(SQL_ERROR == SQL->Query(sql_handle, "INSERT INTO `%s` VALUES "
+                                            "(NULL, '%s', %ld, %ld, '%s', true);",
+                                            mac_address,
+                                            ban_tick,
+                                            unban_tick,
+                                            reason))
+    {
+        Sql_ShowDebug(sql_handle);
+        return;
+    }
+
+    // Query para obter o código do banimento inserido no banco de dados.
+    if(SQL_ERROR == SQL->Query(sql_handle, "SELECT LAST_INSERT_ID();"))
+    {
+        Sql_ShowDebug(sql_handle);
+        return;
+    }
+
+    // ???? Nenhum registro a ser lido @w@
+    if(SQL_ERROR == SQL->NextRow(sql_handle))
+        return;
+
+    // Informa que o ban aplicado foi permanente
+    if(unban_tick == -1)
+        ShowInfo("O MAC '"CL_WHITE"%s"CL_RESET"' foi banido permanentemente.\n", mac_address);
+    else
+        ShowInfo("O MAC '"CL_WHITE"%s"CL_RESET"' foi banido por '"CL_WHITE"%d"CL_RESET"' minuto(s).\n",
+            mac_address, minutes);
+
+    // leitura do id e insere na lista do banco online.
+    SQL->GetData(sql_handle, 0, &data, NULL); id = atoi(data);
+    SQL->FreeResult(sql_handle);
+
+    CREATE(node, struct mac_ban_node, 1);
+    node->id = id;
+    safestrncpy(node->mac_address, mac_address, MAC_LENGTH);
+    node->ban_tick = ban_tick;
+    node->unban_tick = unban_tick;
+    safestrncpy(node->reason, reason, sizeof(node->reason));
+    node->banned = true;
+
+    idb_put(mac->banneddb, node->id, node);
+    return;
+}
+
+/**
+ * Adiciona o mac_address aos bans permanentes.
+ */
+void mac_ban_permanent(const char* mac_address, const char* reason)
+{
+    mac->ban(mac_address, reason, -1);
+    return;
+}
+
+/**
+ * Remove o ban do mac_address por id.
+ *
+ * @param id
+ */
+void mac_unban(int id)
+{
+    struct mac_ban_node* node = NULL;
+
     if(!login->config->mac_ban_enable)
         return;
 
     // Se o id existir no banco em memória, então
     //  remove da memória e marca o banco de dados
     if(idb_exists(mac->banneddb, id))
+    {
+        node = (struct mac_ban_node*) idb_get(mac->banneddb, id);
         idb_remove(mac->banneddb, id);
+    }
 
     if(SQL_ERROR == SQL->Query(sql_handle, "UPDATE `%s` SET banned = false WHERE `id` = %d", mac_table_list, id))
         Sql_ShowDebug(sql_handle);
+
+    if(node != NULL)
+        ShowInfo("O MAC '"CL_WHITE"%s"CL_RESET"' foi removido da lista de banidos.\n", node->mac_address);
 
     return;
 }
@@ -284,7 +370,7 @@ void mac_final(void)
     if(login->config->mac_ban_enable)
     {
         mac->banneddb->destroy(mac->banneddb, NULL);
-        timer->delete(cleanup_timer_id, mac->ban_cleanup);
+        timer->delete(cleanup_timer_id, mac->unban_cleanup);
         cleanup_timer_id = INVALID_TIMER;
 
         SQL->Free(sql_handle);
@@ -383,11 +469,38 @@ bool mac_config_read(const char* key, const char* value)
 /**
  * Timer para limpar as contas banidas do banco de dados e da memória.
  */
-int mac_ban_cleanup(int tid, int64 tick, int id, intptr_t data)
+int mac_unban_cleanup(int tid, int64 tick, int id, intptr_t data)
 {
     // Ban por mac não habilitado.
     if(!login->config->mac_ban_enable)
         return 0;
+
+    // Varre todas as entradas de mac_address banidos
+    //  procurando alguma para remover do ban.
+    mac->banneddb->foreach(mac->banneddb, mac->unban_cleanup_sub);
+    return 0;
+}
+
+/**
+ * Método para encontrar os registros de mac_banidos
+ *  e libera-los se for o caso.
+ */
+int mac_unban_cleanup_sub(DBKey key, DBData *data, va_list args)
+{
+    // Transforma o node ponteiro dos dados em node
+    struct mac_ban_node* node = DB->data2ptr(data);
+
+    // ?? Nada no ponteiro, nunca se sabe o que se pode encontrar @w@
+    if(node == NULL)
+        return 0;
+
+    // Caso o mac tenha sido marcado como desbanido mas ainda consta na lista...
+    if(node->banned == false
+        // Caso o tempo do ban tenha expirado...
+    || (node->unban_tick > 0 && DIFF_TICK(node->unban_tick, timer->gettick()) >= 0))
+    {
+        mac->unban(node->id);        
+    }
 
     return 0;
 }
@@ -408,11 +521,14 @@ void mac_doinit(void)
     mac->del_online     = mac_del_online;
 
     // Funções de verificação de dados de MAC Banidos.
-    mac->ban_list_load  = mac_ban_list_load;
-    mac->ban_check      = mac_ban_check;
-    mac->ban_check_sub  = mac_ban_check_sub;
-    mac->ban_remove     = mac_ban_remove;
-    mac->ban_cleanup    = mac_ban_cleanup;
+    mac->ban_list_load      = mac_ban_list_load;
+    mac->ban_check          = mac_ban_check;
+    mac->ban_check_sub      = mac_ban_check_sub;
+    mac->ban                = mac_ban;
+    mac->ban_permanent      = mac_ban_permanent;
+    mac->unban              = mac_unban;
+    mac->unban_cleanup      = mac_unban_cleanup;
+    mac->unban_cleanup_sub  = mac_unban_cleanup_sub;
 
     return;
 }

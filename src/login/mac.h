@@ -44,9 +44,12 @@ struct mac_interface
     // Funções para tratar de banimentos de mac_address
     void (*ban_list_load) ();
     bool (*ban_check) (const char* mac_address);
-    void (*ban_remove) (int id);
+    void (*ban) (const char* mac_address, const char* reason, int minutes);
+    void (*ban_permanent) (const char* mac_address, const char* reason);
+    void (*unban) (int id);
     int (*ban_check_sub) (DBKey key, DBData *data, va_list args);
-    int (*ban_cleanup) (int tid, int64 tick, int id, intptr_t data);
+    int (*unban_cleanup) (int tid, int64 tick, int id, intptr_t data);
+    int (*unban_cleanup_sub) (DBKey key, DBData *data, va_list args);
 };
 
 struct mac_node
