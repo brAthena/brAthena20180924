@@ -114,6 +114,8 @@ struct Login_Config {
 
 	// Bloqueia dual login por mac_address.
 	bool mac_block_dual;
+	// Informa se o bloqueio por mac_address estará habilitado.
+	bool mac_ban_enable;
 
 	bool use_dnsbl;                                 ///< dns blacklist blocking ?
 	char dnsbl_servs[1024];                         ///< comma-separated list of dnsbl servers

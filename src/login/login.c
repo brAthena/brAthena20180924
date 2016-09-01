@@ -1740,6 +1740,7 @@ void login_config_set_defaults(void)
 
 	// Banimento por mac_address [CarlosHenrq]
 	login->config->mac_block_dual = false;
+	login->config->mac_ban_enable = false;
 
 	login->config->use_dnsbl = false;
 	safestrncpy(login->config->dnsbl_servs, "", sizeof(login->config->dnsbl_servs));
@@ -2024,6 +2025,9 @@ int do_init(int argc, char** argv)
 
 	// initialize static and dynamic ipban system
 	ipban_init();
+
+    // Inicializa os dados e informações de banidos e tratamentos de mac_address
+    mac->init();
 
 	// Online user database init
 	login->online_db = idb_alloc(DB_OPT_RELEASE_DATA);
