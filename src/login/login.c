@@ -1261,17 +1261,14 @@ void login_auth_ok(struct login_session_data* sd)
 		}
 	}
 
-	/*
-
 	// Se a configuração para bloquear dual mac estiver ligada, então
 	// Verifica se aquele mac_address está online. (Chegou aqui por está logando outra conta) [CarlosHenrq]
 	if(login->config->mac_block_dual && mac->is_online(sockt->session[fd]->mac_address))
 	{
+		ShowWarning("O MAC \"%s\" esta online - Rejeitando.\n");
 		login->connection_problem(fd, 8); // 08 = Server still recognizes your last login
 		return;
 	}
-
-	*/
 
 	// [CarlosHenrq] Enviando mac_address no pacote entre os servidores.
 	login_log(ip, sd->userid, 100, "Conectado com sucesso", sockt->session[fd]->mac_address);
