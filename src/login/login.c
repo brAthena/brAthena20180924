@@ -1265,7 +1265,7 @@ void login_auth_ok(struct login_session_data* sd)
 	// Verifica se aquele mac_address está online. (Chegou aqui por está logando outra conta) [CarlosHenrq]
 	if(login->config->mac_block_dual && mac->is_online(sockt->session[fd]->mac_address))
 	{
-		ShowWarning("O MAC \"%s\" esta online - Rejeitando.\n");
+		ShowWarning("O MAC '"CL_WHITE"%s"CL_RESET"' esta online - Rejeitando.\n", sockt->session[fd]->mac_address);
 		login->connection_problem(fd, 8); // 08 = Server still recognizes your last login
 		return;
 	}
