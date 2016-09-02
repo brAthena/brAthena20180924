@@ -1113,6 +1113,25 @@ int login_mmo_auth(struct login_session_data* sd, bool isServer) {
 		return 6; // 6 = Your are Prohibited to log in until %s
 	}
 
+	if(login->config->mac_ban_enable
+		&& mac->ban_check(sockt->session[sd->fd]->mac_address))
+	{
+		int64 unban_time = mac->ban_end(sockt->session[sd->fd]->mac_address);
+
+		if(unban_time > 0)
+		{
+			char tmpstr[24];
+			timestamp2string(tmpstr, sizeof(tmpstr), unban_time, login->config->date_format);
+			ShowNotice("Conexao recusada - (conta: %s, senha: %s, banido por mac ate %s, mac: %s)\n", sd->userid, sd->passwd, tmpstr, sockt->session[sd->fd]->mac_address);
+			return 6; // 6 = Your are Prohibited to log in until %s
+		}
+		else
+		{
+			ShowNotice("Conexao recusada - (conta: %s, senha: %s, banido por mac eternamente, mac: %s)\n", sd->userid, sd->passwd, sockt->session[sd->fd]->mac_address);
+			return 11;
+		}
+	}
+
 	if( acc.state != 0 ) {
 		ShowNotice("Conexao recusada (conta: %s, senha: %s, estado: %d, ip: %s)\n", sd->userid, sd->passwd, acc.state, ip);
 		return acc.state - 1;
@@ -1384,7 +1403,13 @@ void login_auth_failed(struct login_session_data* sd, int result)
 		memset(WFIFOP(fd,6), '\0', 20);
 	else { // 6 = Your are Prohibited to log in until %s
 		struct mmo_account acc;
-		time_t unban_time = ( accounts->load_str(accounts, &acc, sd->userid) ) ? acc.unban_time : 0;
+		time_t unban_time;
+
+		if(login->config->mac_ban_enable && mac->ban_check(sockt->session[fd]->mac_address))
+			unban_time = mac->ban_end(sockt->session[fd]->mac_address);
+		else
+			unban_time = ( accounts->load_str(accounts, &acc, sd->userid) ) ? acc.unban_time : 0;
+
 		timestamp2string((char*)WFIFOP(fd,6), 20, unban_time, login->config->date_format);
 	}
 	WFIFOSET(fd,26);
@@ -1396,7 +1421,12 @@ void login_auth_failed(struct login_session_data* sd, int result)
 		memset(WFIFOP(fd,3), '\0', 20);
 	else { // 6 = Your are Prohibited to log in until %s
 		struct mmo_account acc;
-		time_t unban_time = ( accounts->load_str(accounts, &acc, sd->userid) ) ? acc.unban_time : 0;
+		time_t unban_time;
+
+		if(login->config->mac_ban_enable && mac->ban_check(sockt->session[fd]->mac_address))
+			unban_time = mac->ban_end(sockt->session[fd]->mac_address);
+		else
+			unban_time = ( accounts->load_str(accounts, &acc, sd->userid) ) ? acc.unban_time : 0;
 		timestamp2string((char*)WFIFOP(fd,3), 20, unban_time, login->config->date_format);
 	}
 	WFIFOSET(fd,23);
