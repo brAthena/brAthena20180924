@@ -278,6 +278,7 @@ void mac_ban(const char* mac_address, const char* reason, int minutes)
     // Insere o registro de banido no banco de dados.
     if(SQL_ERROR == SQL->Query(sql_handle, "INSERT INTO `%s` VALUES "
                                             "(NULL, '%s', %ld, %ld, '%s', true);",
+                                            mac_table_list,
                                             mac_address,
                                             ban_tick,
                                             unban_tick,
