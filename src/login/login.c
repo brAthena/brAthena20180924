@@ -1634,6 +1634,116 @@ void login_parse_request_connection(int fd, struct login_session_data* sd, const
 	}
 }
 
+// Funções para tratamento dos pacotes recebidos pelo char-server
+//  Solicitando ban de mac_address
+/*
+ 
+Pacote para banir mac_address recebido de char-server
+
+0x27f0 <- Recebe (mac_address, minutes) = len(24)
+0x27f2 -> Envia (mac_address, response) = len(24)
+			-> 0 (Negado ou impossível de fazer, configuração desabilitada)
+			-> 1 (Banido)
+			-> 2 (Desbanido)
+ */
+void login_fromchar_parse_ban_mac(int fd)
+{
+	char mac_address[MAC_LENGTH];
+	int minutes, response = 0;
+
+	// Realiza a leitura do pacote.
+	safestrncpy(mac_address, (char*)RFIFOP(fd,2), MAC_LENGTH);
+	minutes = RFIFOL(fd, 20);
+	RFIFOSKIP(fd,24);
+
+	if(login->config->mac_ban_enable)
+	{
+		ShowNotice("Recebido pedido para banir o MAC '"CL_WHITE"%s"CL_RESET"'.\n", mac_address);
+
+		// Envia pedido de ban
+		mac->ban(mac_address, "Solicitacao via char-server.", minutes, true);
+		response = mac->ban_check(mac_address);
+
+		// MacAddress está na lista de banidos agora.
+		if(response)
+			ShowStatus("MAC '"CL_WHITE"%s"CL_RESET"' foi banido com sucesso.\n", mac_address);
+		else
+			ShowError("Ocorreu um erro na tentativa de banir o MAC '"CL_WHITE"%s"CL_RESET"'.\n", mac_address);
+
+	}
+	else
+	{
+		ShowWarning("Banimento de MAC '"CL_WHITE"%s"CL_RESET"' negado. Habilite configuracao.\n", mac_address);
+	}
+
+	// Responde o pacote recebido para o char-server
+	WFIFOHEAD(fd, 24);
+	WFIFOW(fd,0) = 0x27f2;
+	memcpy(WFIFOP(fd,2), mac_address, MAC_LENGTH);
+	WFIFOL(fd, 20) = response;
+	WFIFOSET(fd, 24);
+
+	return;
+}
+
+/*
+
+Pacote para desbanir mac_address recebido de char-server
+
+0x27f1 <- Recebe (mac_address) = len(20)
+0x27f2 -> Envia (mac_address, response) = len(24)
+			-> 0 (Negado ou impossível de fazer, configuração desabilitada)
+			-> 1 (Banido)
+			-> 2 (Desbanido)
+
+*/
+void login_fromchar_parse_unban_mac(int fd)
+{
+	char mac_address[MAC_LENGTH];
+	int response = 0;
+
+	// Realiza a leitura do pacote.
+	safestrncpy(mac_address, (char*)RFIFOP(fd,2), MAC_LENGTH);
+	RFIFOSKIP(fd, 20);
+
+	if(login->config->mac_ban_enable)
+	{
+		ShowNotice("Recebido pedido para desbanir o MAC '"CL_WHITE"%s"CL_RESET"'.\n", mac_address);
+
+		// Verifica se o mac_address está banido no banco de dados.
+		if(!mac->ban_check(mac_address))
+		{
+			mac->unban_mac(mac_address);
+			// Verifica se ainda está banido o mac_address, se estiver,
+			//  responde com 0
+			response = mac->ban_check(mac_address) ? 0 : 2;
+
+			if(response == 2)
+				ShowStatus("O MAC '"CL_WHITE"%s"CL_RESET"' foi desbanido com sucesso.\n", mac_address);
+			else
+				ShowError("Nao foi possivel desbanir o MAC '"CL_WHITE"%s"CL_RESET"'.\n", mac_address);
+		}
+		else
+		{
+			ShowStatus("Pedido de desbanir o MAC '"CL_WHITE"%s"CL_RESET"' negado. MAC nao esta banido.\n", mac_address);
+		}
+
+	}
+	else
+	{
+		ShowWarning("Remocao de ban do MAC '"CL_WHITE"%s"CL_RESET"' negado. Habilite configuracao.\n", mac_address);
+	}
+
+	// Responde o pacote recebido para o char-server
+	WFIFOHEAD(fd, 24);
+	WFIFOW(fd,0) = 0x27f2;
+	memcpy(WFIFOP(fd,2), mac_address, MAC_LENGTH);
+	WFIFOL(fd, 20) = response;
+	WFIFOSET(fd, 24);
+
+	return;
+}
+
 //----------------------------------------------------------------------------------------
 // Default packet parsing (normal players or char-server connection requests)
 //----------------------------------------------------------------------------------------
@@ -1732,6 +1842,25 @@ int login_parse_login(int fd)
 			login->parse_request_connection(fd, sd, ip, ipl);
 		}
 		return 0; // processing will continue elsewhere
+
+
+			/* Pacotes para banimento de mac_address [CarlosHenrq] */
+
+			// 0x27f0, <mac_id : string>, <minutes : int> = len(24)
+			case 0x27f0:
+				if(RFIFOREST(fd) < 24)
+					return 0;
+
+				login->fromchar_parse_ban_mac(fd);
+				break;
+
+			// 0x27f1, <mac_id : string> = len(20)
+			case 0x27f1:
+				if(RFIFOREST(fd) < 20)
+					return 0;
+
+				login->fromchar_parse_unban_mac(fd);
+				break;
 
 		default:
 			ShowNotice("Um erro finalizou a conexao (ip: %s): Pacote desconhecido 0x%x\n", ip, command);
@@ -2165,6 +2294,9 @@ void login_defaults(void) {
 	login->kick = login_kick;
 	login->login_error = login_login_error;
 	login->send_coding_key = login_send_coding_key;
+
+	login->fromchar_parse_ban_mac 		= login_fromchar_parse_ban_mac;
+	login->fromchar_parse_unban_mac 	= login_fromchar_parse_unban_mac;
 
 	login->config_set_defaults = login_config_set_defaults;
 	login->config_read = login_config_read;

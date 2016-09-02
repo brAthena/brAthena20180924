@@ -45,9 +45,10 @@ struct mac_interface
     void (*ban_list_load) ();
     bool (*ban_check) (const char* mac_address);
     int64 (*ban_end) (const char* mac_address);
-    void (*ban) (const char* mac_address, const char* reason, int minutes);
+    void (*ban) (const char* mac_address, const char* reason, int minutes, bool save);
     void (*ban_permanent) (const char* mac_address, const char* reason);
     void (*unban) (int id);
+    void (*unban_mac) (const char* mac_address);
     int (*ban_check_sub) (DBKey key, DBData *data, va_list args);
     int (*unban_cleanup) (int tid, int64 tick, int id, intptr_t data);
     int (*unban_cleanup_sub) (DBKey key, DBData *data, va_list args);

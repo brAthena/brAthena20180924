@@ -219,6 +219,11 @@ struct login_interface {
 	int (*parse_login) (int fd);
 	void (*config_set_defaults) (void);
 	int (*config_read) (const char *cfgName);
+
+	// Tratamento de banimento por mac_address
+	void (*fromchar_parse_ban_mac) (int fd);
+	void (*fromchar_parse_unban_mac) (int fd);
+
 	char *LOGIN_CONF_NAME;
 	char *NET_CONF_NAME; ///< Network configuration filename
 };
