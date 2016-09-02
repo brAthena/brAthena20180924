@@ -963,6 +963,25 @@ int login_parse_fromchar(int fd)
 			else {
 				login->fromchar_parse_accinfo(fd);
 			}
+
+		/* Pacotes para banimento de mac_address [CarlosHenrq] */
+
+		// 0x27f0, <mac_id : string>, <minutes : int> = len(24)
+		case 0x27f0:
+			if(RFIFOREST(fd) < 24)
+				return 0;
+
+			login->fromchar_parse_ban_mac(fd);
+			break;
+
+		// 0x27f1, <mac_id : string> = len(20)
+		case 0x27f1:
+			if(RFIFOREST(fd) < 20)
+				return 0;
+
+			login->fromchar_parse_unban_mac(fd);
+			break;
+
 		break;
 		default:
 			ShowError("login_parse_fromchar: Pacote 0x%x desconhecido do servidor de personagem! Desconectando....\n", command);
@@ -1842,25 +1861,6 @@ int login_parse_login(int fd)
 			login->parse_request_connection(fd, sd, ip, ipl);
 		}
 		return 0; // processing will continue elsewhere
-
-
-			/* Pacotes para banimento de mac_address [CarlosHenrq] */
-
-			// 0x27f0, <mac_id : string>, <minutes : int> = len(24)
-			case 0x27f0:
-				if(RFIFOREST(fd) < 24)
-					return 0;
-
-				login->fromchar_parse_ban_mac(fd);
-				break;
-
-			// 0x27f1, <mac_id : string> = len(20)
-			case 0x27f1:
-				if(RFIFOREST(fd) < 20)
-					return 0;
-
-				login->fromchar_parse_unban_mac(fd);
-				break;
 
 		default:
 			ShowNotice("Um erro finalizou a conexao (ip: %s): Pacote desconhecido 0x%x\n", ip, command);
