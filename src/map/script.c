@@ -20818,6 +20818,32 @@ BUILDIN(_) {
 	return true;
 }
 
+/*==========================================
+ * Proteção de Conta - [Orce brAthena]
+ *------------------------------------------*/
+BUILDIN(block)
+{
+	struct map_session_data *sd = script->rid2sd(st);
+	int value = script_getnum(st,2);
+	
+	if (sd == NULL)
+		return true;
+
+	sd->state.protection_acc = (value)?1:0;
+	return true;
+}
+
+BUILDIN(blockcheck)
+{
+	struct map_session_data *sd = script->rid2sd(st);
+	
+	if (sd == NULL)
+		return true;
+
+	script_pushint(st,sd->state.protection_acc);
+	return true;
+}
+
 // declarations that were supposed to be exported from npc_chat.c
 BUILDIN(defpattern);
 BUILDIN(activatepset);
@@ -21517,6 +21543,9 @@ void script_parse_builtin(void) {
  		BUILDIN_DEF(closedressroom,"?"),
 		
 		BUILDIN_DEF(_,"s"),
+
+		BUILDIN_DEF(block,"i"), // Proteção de Conta
+		BUILDIN_DEF(blockcheck,""), //Proteção de Conta
 	};
 	int i, len = ARRAYLENGTH(BUILDIN);
 	RECREATE(script->buildin, char *, script->buildin_count + len); // Pre-alloc to speed up

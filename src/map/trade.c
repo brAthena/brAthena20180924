@@ -55,11 +55,21 @@ void trade_traderequest(struct map_session_data *sd, struct map_session_data *ta
 		return; //Can't trade in notrade mapflag maps.
 	}
 
+	if( sd->state.protection_acc ) {
+		clif->message(sd->fd,msg_sd(sd,3005));
+		return;
+	}
+	
 	if (target_sd == NULL || sd == target_sd) {
 		clif->tradestart(sd, 1); // character does not exist
 		return;
 	}
 
+	if( target_sd->state.protection_acc ) {
+		clif->message(sd->fd,msg_sd(sd,3005));
+		return;
+	}
+	
 	if (target_sd->npc_id) {
 		//Trade fails if you are using an NPC.
 		clif->tradestart(sd, 2);

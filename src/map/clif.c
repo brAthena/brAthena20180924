@@ -10555,6 +10555,11 @@ void clif_parse_NpcBuyListSend(int fd, struct map_session_data* sd)
 
 	if( sd->state.trading || !sd->npc_shopid || pc_has_permission(sd,PC_PERM_DISABLE_STORE) )
 		result = 1;
+	else if( sd->state.protection_acc )
+	{
+		clif->message(sd->fd,msg_sd(sd,3005));
+		result = 1;
+	}	
 	else
 		result = npc->buylist(sd,n,item_list);
 
@@ -10592,6 +10597,11 @@ void clif_parse_NpcSellListSend(int fd,struct map_session_data *sd)
 
 	if (sd->state.trading || !sd->npc_shopid)
 		fail = 1;
+	else if( sd->state.protection_acc )
+	{
+		clif->message(sd->fd,msg_sd(sd,3005));
+		fail = 1;
+	}	
 	else
 		fail = npc->selllist(sd,n,item_list);
 
@@ -12717,6 +12727,11 @@ void clif_parse_OpenVending(int fd, struct map_session_data* sd) {
 		return;
 	}
 
+	if( sd->state.protection_acc )
+	{
+		clif->message(sd->fd,msg_sd(sd,3005));
+		return;
+	}
 	if( message[0] == '\0' ) // invalid input
 		return;
 
@@ -15136,6 +15151,12 @@ void clif_parse_Auction_setitem(int fd, struct map_session_data *sd)
 		return;
 	}
 
+	if( sd->state.protection_acc )
+	{
+		clif->auction_setitem(sd->fd, idx, true);
+		clif->message(sd->fd,msg_sd(sd,3005));
+		return;
+	}
 	if( !pc_can_give_items(sd) || sd->status.inventory[idx].expire_time ||
 			!sd->status.inventory[idx].identify ||
 				!itemdb_canauction(&sd->status.inventory[idx],pc_get_group_level(sd)) || // Quest Item or something else
@@ -15470,6 +15491,11 @@ void clif_parse_cashshop_buy(int fd, struct map_session_data *sd)
 
 	if( sd->state.trading || !sd->npc_shopid || pc_has_permission(sd,PC_PERM_DISABLE_STORE) )
 		fail = 1;
+	else if( sd->state.protection_acc )
+	{
+		clif->message(sd->fd,msg_sd(sd,3005));
+		fail = 1;
+	}	
 	else {
 #if PACKETVER < 20101116
 		short nameid = RFIFOW(fd,2);

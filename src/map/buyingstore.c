@@ -62,6 +62,12 @@ bool buyingstore_setup(struct map_session_data* sd, unsigned char slots)
 		return false;
 	}
 
+	if( sd->state.protection_acc )
+	{
+		clif->message(sd->fd,msg_sd(sd,3005));
+		return false;
+	}
+	
 	if (map->getcell(sd->bl.m, &sd->bl, sd->bl.x, sd->bl.y, CELL_CHKNOVENDING)) {
 		// custom: no vending cells
 		clif->message(sd->fd, msg_sd(sd,204)); // "You can't open a shop on this cell."

@@ -1529,6 +1529,9 @@ int pc_reg_received(struct map_session_data *sd)
 	if( npc->motd ) /* [Ind/Hercules] */
 		script->run(npc->motd->u.scr.script, 0, sd->bl.id, npc->fake_nd->bl.id);
 
+	if( pc_readaccountreg(sd,script->add_str("#BLOCKPASS")) > 0 )
+		sd->state.protection_acc = 1;
+		
 	return 1;
 }
 
@@ -4718,6 +4721,12 @@ int pc_dropitem(struct map_session_data *sd,int n,int amount)
 		return 0; //Can't drop items in nodrop mapflag maps.
 	}
 
+	if( sd->state.protection_acc )
+	{
+		clif->message(sd->fd,msg_sd(sd,3005));
+		return 0;
+	}
+	
 	if( !pc->candrop(sd,&sd->status.inventory[n]) )
 	{
 		clif->message (sd->fd, msg_sd(sd,263));
@@ -5166,6 +5175,12 @@ int pc_cart_additem(struct map_session_data *sd,struct item *item_data,int amoun
 	}	
 	data = itemdb->search(item_data->nameid);
 
+	if( sd->state.protection_acc )
+	{
+		clif->message(sd->fd,msg_sd(sd,3005));
+		return 1;
+	}
+	
 	if( data->stack.cart && amount > data->stack.amount )
 	{// item stack limitation
 		return 1;

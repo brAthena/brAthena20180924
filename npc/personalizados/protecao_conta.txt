@@ -1,0 +1,218 @@
+//  ___________________________________________________________________
+// /                                                                   \
+// |            _           _   _   _                                  |
+// |           | |__  _ __ / \ | |_| |__   ___ _ __   __ _             |
+// |           | '_ \| '__/ _ \| __| '_ \ / _ \ '_ \ / _` |            |
+// |           | |_) | | / ___ \ |_| | | |  __/ | | | (_| |            |
+// |           |_.__/|_|/_/   \_\__|_| |_|\___|_| |_|\__,_|            |
+// |                                                                   |
+// |                        brAthena  Script                           |
+// |                        www.brathena.org                           |
+// |-------------------------------------------------------------------|
+// |                                                                   |
+// | Copyright (c) brAthena Dev Team                                   |
+// |                                                                   |
+// |-------------------------------------------------------------------|
+// | Licenciado sob a licenca GNU GPL                                  |
+// | Para mais informações leia o arquivo LICENSE na raíz do emulador  |
+// |-------------------------------------------------------------------|
+// | Autor:                                                            |
+// |		- Orce                                                     |
+// | Revisão:                                                          |
+// |		- Aly                                                      |
+// |                                                                   |
+// | Descrição: NPC que gerencia o sistema de proteção de conta.       | 
+// |                                                                   |
+// \___________________________________________________________________/
+//
+-	script	ProtectionAcc	-1,{
+	
+	OnInit:
+		///////////////////////////////////////////////////////////////////////////////
+		// Configure abaixo o nome do comando para bloquear negociações
+		// Altere a palavra 'segurança' para o comando desejado
+		///////////////////////////////////////////////////////////////////////////////
+		setd ".comando$", "segurança";
+		
+		///////////////////////////////////////////////////////////////////////////////
+		// Configure abaixo o level do GM que terá acesso as senhas das contas.
+		///////////////////////////////////////////////////////////////////////////////
+		set .gmacess,99;
+		
+		///////////////////////////////////////////////////////////////////////////////
+		// Não mexa a partir daqui a menos que saiba o que está fazendo
+		///////////////////////////////////////////////////////////////////////////////
+		bindatcmd .comando$, "ProtectionAcc::OnProtecAcc";
+		end;	
+		
+	OnPCLoginEvent:	
+		///////////////////////////////////////////////////////////////////////////////
+		// Informa se o sistema de PROTEÇÃO de conta esta ativo
+		///////////////////////////////////////////////////////////////////////////////
+		dispbottom "[PROTEÇÃO DE CONTA]";
+		if(#BLOCKPASS){
+			dispbottom "Sistema de Segurança Habilitado: Use @"+.comando$+" para mais informações.";
+		} else {
+			dispbottom "Sistema de Segurança Desabilitado: Use @"+.comando$+" para mais informações.";
+		}
+		end;
+		
+OnProtecAcc:	
+	mes "^FF6600.:: Proteção de Conta ::.^000000";
+	mes " ";
+	if(#BLOCKPASS){
+		mes "» Proteção: ^2E8B57Habilitada^000000";
+		if(blockcheck()){
+			mes "» Negociações: ^2E8B57Bloqueada^000000";
+		} else {
+			mes "» Negociações: ^FF0000Liberada^000000";
+		}
+			set .@menu$,select( (blockcheck() ? "» ^FF0000Liberar^000000 Negociações":"» ^2E8B57Bloquear^000000 Negociações")+":» Trocar Senha::» ^FF0000Remover Senha^000000:» Informações:» Sair:"+(getgroupid()>=.gmacess ? "» ^FF0000[ADM]^000000 Recuperar Senha":""));
+	} else {
+		mes "^FF0000Conta Desprotegida^000000";
+		mes " ";
+		mes "Gostaria de ^2E8B57Ativar^000000 e definir uma senha para ^2E8B57proteger^000000 sua conta?";			
+		set .@menu$,select("» Sim::» Não::"+(getgroupid()>=.gmacess ? "» ^FF0000[ADM]^000000 Recuperar Senha":""))+2;
+	}
+		switch (.@menu$)
+		{
+			next;
+			case 1:
+					if(blockcheck())
+					{
+						mes "^FF6600.:: Proteção de Conta ::.^000000";
+						mes " ";
+						mes "Digite a senha para ^FF0000Liberar^000000 a negociação de itens.";
+						
+						input .@senha;
+						if( #BLOCKPASS != .@senha ){ 
+							mes " "; 
+							mes "^FF0000Ø Senha incorreta!! Ø^000000"; 
+							close; 
+						}
+						
+						mes " ";
+						mes "Negociações de itens: ^FF0000Liberada^000000.";
+						message strcharinfo(0), "Negociações de itens: Liberada.";
+						
+						block 0;
+						
+					} else {
+						mes "^FF6600.:: Proteção de Conta ::.^000000";
+						mes " ";
+						mes "Negociações de itens: ^2E8B57Bloqueada^000000.";
+						message strcharinfo(0), "Negociações de itens: Bloqueada.";
+						block 1;
+					}
+					close;
+					
+			case 2:
+					mes "^FF6600.:: Proteção de Conta ::..^000000";
+					mes "Por favor, informe sua senha de PROTEÇÃO atual:";
+					mes " ";
+					mes "Informe apenas números.";
+					input .@senha;							
+					if( #BLOCKPASS != .@senha ) { mes "Ø Senha incorreta!! Ø"; close; }
+					next;
+					
+			case 3:
+					mes "^FF6600.:: Proteção de Conta ::..^000000";
+					mes "Por favor, informe sua senha de PROTEÇÃO:";
+					mes "^333399-> Informe apenas números^000000";
+					mes "OBS: A senha pode conter no máximo 5 dígitos e no mínimo 1.";
+					input .@senha;							
+					if( .@senha < 1 || .@senha > 99999 ) { mes "      Ø Senha inválida! Ø"; close; }
+					next;
+					
+					mes "^FF6600.:: Proteção de Conta ::..^000000";
+					mes "Por favor, confirme sua senha de PROTEÇÃO:";
+					mes " ";
+					mes "^333399-> Informe apenas números^000000";
+					input .@Rsenha;
+					next;
+    
+					mes "^FF6600.:: Proteção de Conta ::..^000000";
+					if( .@senha != .@Rsenha )
+					{
+						mes "A senha e a senha de confirmação são diferentes.";
+						mes " ";
+						mes "Ø Por favor, repita o procedimento";
+						close;
+					}
+    
+					mes "ƒ Sua senha para o Sistema de Proteção de Conta foi salva! ƒ";
+					mes " ";
+					mes "ƒ Use @"+.comando$+" para configurar o sistema! ƒ";
+					set #BLOCKPASS, .@senha;
+					close;
+			
+			case 4:
+					mes "^FF6600.:: Proteção de Conta ::..^000000";
+					mes "^FF0000[ATENÇÃO]^000000";
+					mes "Removendo a senha você estará desativando o sistema de Proteção de Conta.";
+					mes "Desenha continuar?";
+					if(select("» ^2E8B57NÃO^000000:» Sim (^FF0000REMOVER/DESATIVAR Proteção^000000)")==1)close;
+					next;
+					
+					mes "^FF6600.:: Proteção de Conta ::..^000000";
+					mes "Por favor, informe sua senha de PROTEÇÃO atual:";
+					mes " ";
+					mes "Informe apenas números.";
+					input .@senha;
+					if( #BLOCKPASS != .@senha ) { mes "Senha incorreta!!."; close; }
+					next;
+					
+					mes "^FF6600.:: Proteção de Conta ::..^000000";
+					mes "Sistema de Proteção de Conta DESATIVADO e senha removida com sucesso.";
+					mes "Use @"+.comando$+" caso deseje ativar o sistema novamente.";
+					set #BLOCKPASS, 0;
+					block 0;
+					close;
+					
+			case 5:
+					mes "^FF6600.:: Proteção de Conta ::.^000000";
+					mes "Este sistema impedirá que seus itens sejam jogados no chão, vendidos ou negociados sem sua permissão.";
+					next;
+					
+					mes "^FF6600.:: Proteção de Conta ::.^000000";
+					mes "Depois de ativado, assim que você sair de conta (deslogar) e tornar a logar, as negociações serão bloqueadas e liberadas somente após digitar a senha de segurança.";
+					next;
+					
+					mes "^FF6600.:: Proteção de Conta ::.^000000";
+					mes "!!! ^993300[ATENÇÃO]^000000 !!!";
+					mes "Para sua Segurança é altamente recomendado que o Sistema de Proteção de conta seja ativado.";
+					close;			
+			case 6:
+					mes "^FF6600.:: Proteção de Conta ::..^000000";
+					mes "Use @"+.comando$+" caso deseje configurar o sistema de Proteção de Conta.";
+					close;
+			
+			case 7:
+					function getpass;
+
+					mes "^FF6600.:: Proteção de Conta ::..^000000";
+					mes " ";
+					mes "Por favor, informe o ID da conta na qual deseja reaver a senha:";
+					mes " ";
+					input .@acc;				
+					set .@ResultPass, getpass("SelectPass",.@acc);
+					if(!.@ResultPass){
+						next;
+						mes "^FF6600.:: Proteção de Conta ::..^000000";
+						mes " ";
+						mes "Esta conta não existe ou o sistema de Proteção não esta ativado nesta conta.";
+					} else { mes "Senha da conta: "+.@ResultPass; }
+					close;
+		}
+		
+	function	getpass	{
+
+		if( getarg(0) == "SelectPass" )
+		{
+			query_sql "SElECT `value` FROM `acc_reg_num_db` WHERE `key`='#BLOCKPASS' AND `account_id`='"+ getarg(1) +"'", .@pass;
+			return (.@pass);
+		}
+		else return 0;
+	}
+
+}

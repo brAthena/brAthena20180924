@@ -6400,6 +6400,12 @@ ACMD(adjgroup)
 ACMD(trade) {
 	struct map_session_data *pl_sd = NULL;
 
+	if( sd->state.protection_acc )
+	{
+		clif->message(fd, msg_fd(fd,3005));
+		return false;
+	}
+	
 	if (!*message) {
 		clif->message(fd, msg_fd(fd,1230)); // Please enter a player name (usage: @trade <char name>).
 		return false;

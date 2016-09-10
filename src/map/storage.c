@@ -333,6 +333,12 @@ int storage_storagegettocart(struct map_session_data* sd, int index, int amount)
 		clif->message(sd->fd,msg_sd(sd,3004));
 		return 0;
 	}
+
+	if( sd->state.protection_acc )
+	{
+		clif->message(sd->fd,msg_sd(sd,3005));
+		return 0;
+	}
 	
 	if( amount < 1 || amount > sd->status.storage.items[index].amount )
 		return 0;
@@ -482,6 +488,12 @@ int guild_storage_additem(struct map_session_data* sd, struct guild_storage* sto
 		return 1;
 	}
 
+	if( sd->state.protection_acc )
+	{
+		clif->message(sd->fd,msg_sd(sd,3005));
+		return 1;
+	}
+	
 	if(itemdb->isstackable2(data)){ //Stackable
 		for(i=0;i<MAX_GUILD_STORAGE;i++){
 			if(compare_item(&stor->items[i], item_data)) {
