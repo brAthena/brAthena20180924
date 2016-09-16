@@ -15414,8 +15414,8 @@ void clif_cashshop_show(struct map_session_data *sd, struct npc_data *nd) {
 
 		npc->trader_count_funds(nd, sd);
 
-		currency[0] = npc->trader_funds[0];
-		currency[1] = npc->trader_funds[1];
+		currency[0] = sd->trader.price;
+		currency[1] = sd->trader.points;
 	} else {
 		shop = nd->u.shop.shop_item;
 		shop_size = nd->u.shop.count;
@@ -15461,8 +15461,8 @@ void clif_cashshop_ack(struct map_session_data* sd, int error) {
 	fd = sd->fd;
 	if( (nd = map->id2nd(sd->npc_shopid)) && nd->subtype == SCRIPT ) {
 		npc->trader_count_funds(nd,sd);
-		currency[0] = npc->trader_funds[0];
-		currency[1] = npc->trader_funds[1];
+		currency[0] = sd->trader.price;
+		currency[1] = sd->trader.points;
 	} else {
 		currency[0] = sd->cashPoints;
 		currency[1] = sd->kafraPoints;

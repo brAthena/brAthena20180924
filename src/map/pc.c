@@ -1372,6 +1372,10 @@ bool pc_authok(struct map_session_data *sd, int login_id2, time_t expiration_tim
 	sd->sc_display = NULL;
 	sd->sc_display_count = 0;
 
+	// [CarlosHenrq] Segurança para NPCs do tipo trader#NTS_CUSTOM
+	sd->trader.ok = false;
+	sd->trader.price = sd->trader.points = 0;
+
 	// Request all registries (auth is considered completed whence they arrive)
 	intif->request_registry(sd,7);
 	return true;

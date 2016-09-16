@@ -19961,15 +19961,25 @@ BUILDIN(setcurrency)
 {
 	int val1 = script_getnum(st,2),
 	val2 = script_hasdata(st, 3) ? script_getnum(st,3) : 0;
-	struct npc_data *nd = map->id2nd(st->oid);
+	struct map_session_data* sd = script->rid2sd(st);
 
-	if (!nd) {
-		ShowWarning("buildin_setcurrency: trying to run without a proper NPC!\n");
+	if(!sd)
+	{
+		ShowWarning("buildin_setcurrency: tentando executar sem um jogador vinculado!\n");
 		return false;
 	}
 
-	npc->trader_funds[0] = val1;
-	npc->trader_funds[1] = val2;
+	sd->trader.price 	= val1;
+	sd->trader.points 	= val2;
+	// struct npc_data *nd = map->id2nd(st->oid);
+
+	// if (!nd) {
+	// 	ShowWarning("buildin_setcurrency: trying to run without a proper NPC!\n");
+	// 	return false;
+	// }
+
+	// npc->trader_funds[0] = val1;
+	// npc->trader_funds[1] = val2;
 
 	return true;
 }
@@ -20022,14 +20032,24 @@ BUILDIN(tradertype) {
  * signs the transaction can proceed
  **/
 BUILDIN(purchaseok) {
-	struct npc_data *nd;
+	struct map_session_data* sd = script->rid2sd(st);
 
-	if( !(nd = map->id2nd(st->oid)) || !nd->u.scr.shop ) {
-		ShowWarning("buildin_purchaseok: trying to run without a proper NPC!\n");
+	if(!sd)
+	{
+		ShowWarning("buildin_purchaseok: tentando executar sem jogador vinculado!\n");
 		return false;
 	}
 
-	npc->trader_ok = true;
+	sd->trader.ok = true;
+
+	// struct npc_data *nd;
+
+	// if( !(nd = map->id2nd(st->oid)) || !nd->u.scr.shop ) {
+	// 	ShowWarning("buildin_purchaseok: trying to run without a proper NPC!\n");
+	// 	return false;
+	// }
+
+	// npc->trader_ok = true;
 
 	return true;
 }

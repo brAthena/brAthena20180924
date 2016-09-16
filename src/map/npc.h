@@ -178,9 +178,6 @@ struct npc_interface {
 	struct npc_data *fake_nd;
 	struct npc_src_list *src_files;
 	struct unit_data base_ud;
-	/* npc trader global data, for ease of transition between the script, cleared on every usage */
-	bool trader_ok;
-	int trader_funds[2];
 	/* */
 	int (*init) (bool minimal);
 	int (*final) (void);

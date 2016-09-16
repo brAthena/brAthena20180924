@@ -588,6 +588,13 @@ END_ZEROED_BLOCK;
 
 	// [CarlosHenrq] Enviando mac_address no pacote entre os servidores.
 	char mac_address[MAC_LENGTH];
+
+	// [CarlosHenrq] Isso aqui podia causar muita confusão mais pra frente
+	struct
+	{
+		bool ok;
+		int price, points;
+	} trader;
 };
 
 #define EQP_WEAPON EQP_HAND_R
