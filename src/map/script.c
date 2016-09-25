@@ -13843,14 +13843,16 @@ BUILDIN(getmercinfo)
 	return true;
 }
 
-/*==========================================
- * Shows wether your inventory(and equips) contain
- * selected card or not.
+/*====================================================================
+ * Verifica se existe certa carta equipada em algum item do iventario
  * checkequipedcard(4001);
- *------------------------------------------*/
+ * [Update Orce - brAthena]
+ * Verifica se existe certa carta equipada em algum item do carrinho
+ * checkequipedcard(4001);
+ *------------------------------------------------------------------*/
 BUILDIN(checkequipedcard)
 {
-	int n,i,c=0;
+	int n,i,c,j,m=0;
 	struct map_session_data *sd = script->rid2sd(st);
 
 	if (sd == NULL)
@@ -13871,6 +13873,20 @@ BUILDIN(checkequipedcard)
 		}
 	}
 
+	// Verifica se tem carta equipada no carrinho - [Orce - brAthena]
+		for(j=0;j<MAX_CART;j++){
+			if(sd->status.cart[j].nameid > 0 && sd->status.cart[j].amount && pc_iscarton(sd)){
+				if (itemdb_isspecial(sd->status.cart[j].card[0]))
+					continue;
+				for(m=0; m < sd->status.cart[j].amount; m++){
+					if(sd->status.cart[j].card[m]==c){
+						script_pushint(st,1);
+						return true;
+					}
+				}
+			}
+		}
+	
 	script_pushint(st,0);
 	return true;
 }
