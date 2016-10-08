@@ -816,6 +816,8 @@ struct clif_interface {
 	void (*produce_effect) (struct map_session_data* sd,int flag,int nameid);
 	void (*devotion) (struct block_list *src, struct map_session_data *tsd);
 	void (*spiritball) (struct block_list *bl);
+	int (*hom_spiritball) (struct homun_data *hd);
+	int (*hom_skillupdateinfo) (struct map_session_data *sd,int skillid,int type,int range);	
 	void (*spiritball_single) (int fd, struct map_session_data *sd);
 	void (*bladestop) (struct block_list *src, int dst_id, int active);
 	void (*mvp_effect) (struct map_session_data *sd);

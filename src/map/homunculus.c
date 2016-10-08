@@ -106,38 +106,42 @@ enum homun_type homunculus_class2type(int class_) {
 
 void homunculus_addspiritball(struct homun_data *hd, int max) {
 	nullpo_retv(hd);
+	
+	if ( max > MAX_HOMUN_SPHERES )
+		max = MAX_HOMUN_SPHERES;
+	
+	if (hd->hom_spiritball < 0)
+		hd->hom_spiritball = 0;
 
-	if (max > MAX_SKILL_LEVEL)
-		max = MAX_SKILL_LEVEL;
-	if (hd->homunculus.spiritball < 0)
-		hd->homunculus.spiritball = 0;
-
-	if (hd->homunculus.spiritball && hd->homunculus.spiritball >= max) {
-		hd->homunculus.spiritball = max;
+	if (hd->hom_spiritball > max) {
+		hd->hom_spiritball = max;
 	}
 	else
-		hd->homunculus.spiritball++;
+		hd->hom_spiritball++;
 
-	clif->spiritball(&hd->bl);
+	clif->hom_spiritball(hd);
 }
 
 void homunculus_delspiritball(struct homun_data *hd, int count, int type) {
 	nullpo_retv(hd);
 
-	if (hd->homunculus.spiritball <= 0) {
-		hd->homunculus.spiritball = 0;
+	if (hd->hom_spiritball <= 0) {
+		hd->hom_spiritball = 0;
 		return;
 	}
 	if (count <= 0)
 		return;
-	if (count > MAX_SKILL_LEVEL)
-		count = MAX_SKILL_LEVEL;
-	if (count > hd->homunculus.spiritball)
-		count = hd->homunculus.spiritball;
+	
+	if (count > hd->hom_spiritball)
+		count = hd->hom_spiritball;
 
-	hd->homunculus.spiritball -= count;
+	hd->hom_spiritball -= count;
+	
+	if ( count > MAX_HOMUN_SPHERES )
+		count = MAX_HOMUN_SPHERES;
+	
 	if (!type)
-		clif->spiritball(&hd->bl);
+		clif->hom_spiritball(hd);
 }
 
 void homunculus_damaged(struct homun_data *hd) {
@@ -154,6 +158,7 @@ int homunculus_dead(struct homun_data *hd) {
 
 	//Delete timers when dead.
 	homun->hunger_timer_delete(hd);
+	homun->delspiritball(hd,hd->hom_spiritball,1);
 	hd->homunculus.hp = 0;
 
 	if (!sd) //unit remove map will invoke unit free
@@ -828,6 +833,10 @@ void homunculus_init_timers(struct homun_data * hd) {
 	if (hd->hungry_timer == INVALID_TIMER)
 		hd->hungry_timer = timer->add(timer->gettick()+hd->homunculusDB->hungryDelay,homun->hunger_timer,hd->master->bl.id,0);
 	hd->regen.state.block = 0; //Restore HP/SP block.
+	
+	// Eleanor starts off in fighter style.
+	if ( homunculus_checkskill(hd,MH_STYLE_CHANGE) > 0 )
+		sc_start(&hd->src,&hd->bl,SC_STYLE_CHANGE,100,FIGHTER_STYLE,-1);	
 }
 
 bool homunculus_call(struct map_session_data *sd) {
