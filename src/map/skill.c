@@ -10015,6 +10015,9 @@ int skill_castend_nodamage_id(struct block_list *src, struct block_list *bl, uin
 			{// Fighter <---> Grappler style switch.
 				if ( hd->sc.data[SC_STYLE_CHANGE] )
 				{
+					char output[128];
+					sprintf(output, msg_sd(sd,378),(hd->sc.data[SC_STYLE_CHANGE]->val1 == FIGHTER_STYLE ? "Luta":"Garra"));
+					clif->messagecolor_self(hd->master->fd, COLOR_RED, output);
 					if ( hd->sc.data[SC_STYLE_CHANGE]->val1 == FIGHTER_STYLE )
 					{// Change from fighter to grappler style.
 						status_change_end(bl,type,INVALID_TIMER);
@@ -10025,9 +10028,6 @@ int skill_castend_nodamage_id(struct block_list *src, struct block_list *bl, uin
 						status_change_end(bl,type,INVALID_TIMER);
 						sc_start(src,bl,type,100,FIGHTER_STYLE,-1);
 					}
-					char output[128];
-					sprintf(output, msg_sd(sd,378),(hd->sc.data[SC_STYLE_CHANGE]->val1 == FIGHTER_STYLE ? "Luta":"Garra"));
-					clif->messagecolor_self(hd->master->fd, COLOR_RED, output);
 				}
 				else// If for some reason no style is active, start in fighter style.
 					sc_start(src,bl,type,100,FIGHTER_STYLE,-1);
