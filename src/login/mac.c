@@ -53,7 +53,7 @@ static char   mac_table_log[32] = "macban_log";
 static Sql* sql_handle = NULL;
 static int cleanup_timer_id = INVALID_TIMER;
 static bool mac_inited = false;
-static int mac_ban_id = 0;
+// static int mac_ban_id = 0;
 
 struct mac_interface mac_s;
 
@@ -303,7 +303,7 @@ void mac_ban(const char* mac_address, const char* reason, int minutes, bool save
     int64 ban_tick, unban_tick = 0;
     struct mac_ban_node* node = NULL;
     int id = -1;
-    char* data = NULL;
+    // char* data = NULL;
 
     if(!login->config->mac_ban_enable)
         return;

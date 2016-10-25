@@ -10827,9 +10827,10 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 			switch( bl->type ){
 				case BL_HOM:
 				{
-					struct homun_data *hd = BL_CAST(BL_HOM, bl);
-						if( hd )
-							hd->homunculus.hunger = max(1, hd->homunculus.hunger - 50);
+					// Desnecessária redeclaração de variavél! Já declarada pouco mais acima! [CarlosHenrq]
+					// struct homun_data *hd = BL_CAST(BL_HOM, bl);
+					if( hd )
+						hd->homunculus.hunger = max(1, hd->homunculus.hunger - 50);
 				}
 					break;
 				case BL_PC:

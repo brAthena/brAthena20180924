@@ -4845,7 +4845,9 @@ struct Damage battle_calc_weapon_attack(struct block_list *src,struct block_list
 				break;
 			case HFLI_SBR44: //[orn]
 				if (src->type == BL_HOM) {
-					const struct homun_data *hd = BL_UCCAST(BL_HOM, src);
+					//const struct homun_data *hd = BL_UCCAST(BL_HOM, src);
+					// Desnecessário redeclaração de variavel. Mesma já declarada mais acima.
+					hd = BL_UCAST(BL_HOM, src);
 					wd.damage = hd->homunculus.intimacy;
 					break;
 				}
@@ -6196,11 +6198,17 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 		battle->delay_damage(tick, wd.amotion, src, target, wd.flag, 0, 0, damage, wd.dmg_lv, wd.dmotion, true);
 	if( tsc ) {
 		if( tsc->data[SC_DEVOTION] ) {
-			struct status_change_entry *sce = tsc->data[SC_DEVOTION];
-			struct block_list *d_bl = map->id2bl(sce->val1);
-			struct mercenary_data *d_md = BL_CAST(BL_MER, d_bl);
-			struct map_session_data *d_sd = BL_CAST(BL_PC, d_bl);
+			struct block_list *d_bl = NULL;
+			struct mercenary_data *d_md = NULL; 
+			struct map_session_data *d_sd = NULL;
 
+			// Desnecessário redeclarar as variaveis. [CarlosHenrq]
+			sce = tsc->data[SC_DEVOTION];
+
+			d_bl = map->id2bl(sce->val1);
+			d_md = BL_CAST(BL_MER, d_bl);
+			d_sd = BL_CAST(BL_PC, d_bl);
+			
 			if (d_bl != NULL
 			 && ((d_bl->type == BL_MER && d_md->master != NULL && d_md->master->bl.id == target->id)
 			  || (d_bl->type == BL_PC && d_sd->devotion[sce->val2] == target->id)
@@ -6334,7 +6342,8 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 		 && status->check_skilluse(target, src, TF_POISON, 0)
 		) {
 			//Poison React
-			struct status_change_entry *sce = tsc->data[SC_POISONREACT];
+			// Redeclaração de variaveis desnecessária [CarlosHenrq]
+			sce = tsc->data[SC_POISONREACT];
 			if (sstatus->def_ele == ELE_POISON) {
 				sce->val2 = 0;
 				skill->attack(BF_WEAPON,target,target,src,AS_POISONREACT,sce->val1,tick,0);
