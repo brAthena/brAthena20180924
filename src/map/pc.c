@@ -1422,6 +1422,7 @@ int pc_set_hate_mob(struct map_session_data *sd, int pos, struct block_list *bl)
 int pc_reg_received(struct map_session_data *sd)
 {
 	int i, idx = 0;
+	const char* last_ip = NULL;
 
 	sd->vars_ok = true;
 
@@ -1535,6 +1536,15 @@ int pc_reg_received(struct map_session_data *sd)
 
 	if( pc_readaccountreg(sd,script->add_str("#BLOCKPASS")) > 0 )
 		sd->state.protection_acc = 1;
+
+	// Carrega o "last_ip" para o jogador com as informações para geração de log, visto que
+	// O Jogador pode ter colocado eu autotrade e isso vai dificultar se lá pegar pelo ip da sessão. [CarlosHenrq, 2016-10-27]
+	if(sd->fd && sockt->session[sd->fd])
+	{
+		last_ip = sockt->ip2str(sockt->session[sd->fd]->client_addr, NULL);
+		safestrncpy(sd->status.last_ip, last_ip, 16); // O Tamanho disso está em: mmo.h [CarlosHenrq, 2016-10-27]
+	}
+	
 		
 	return 1;
 }

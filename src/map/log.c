@@ -88,7 +88,11 @@ void log_branch(struct map_session_data *sd) {
 
 		if (SQL_SUCCESS != SQL->StmtPrepare(stmt, LOG_QUERY " INTO `%s`\
 			(`branch_date`,`account_id`,`char_id`,`char_name`,`map`) VALUES (NOW(),'%d','%d',?,'%s')", logs->config.table_name[1], sd->status.account_id, sd->status.char_id, mapindex_id2name(sd->mapindex))
-			|| SQL_SUCCESS != SQL->StmtBindParam(stmt, 0, SQLDT_STRING, sd->status.userid, safestrnlen(sd->status.userid, NAME_LENGTH))
+			|| SQL_SUCCESS != SQL->StmtBindParam(stmt, 0, SQLDT_STRING, sd->status.name, safestrnlen(sd->status.name, NAME_LENGTH))
+			// O Campo referênciado é para `char_name` e não userid, divergência de informações.
+			// Das duas uma. 1. Campo do banco incorreto. 2. Variavel incorreta.
+			// -> Acredito que o mais correto é o campo do banco de dados, mas deixar comentado caso isso volte algum dia. [CarlosHenrq, 2016-10-27]
+			// || SQL_SUCCESS != SQL->StmtBindParam(stmt, 0, SQLDT_STRING, sd->status.userid, safestrnlen(sd->status.userid, NAME_LENGTH))
 			|| SQL_SUCCESS != SQL->StmtExecute(stmt)
 		) {
 			SqlStmt_ShowDebug(stmt);
@@ -111,15 +115,33 @@ void log_cash_buy_sql(struct map_session_data *sd, char *type, char *npc_name, s
 		if ((i_data = itemdb->exists(itm->nameid)) == NULL)
 			return;
 
-		if (SQL_SUCCESS != SQL->StmtPrepare(stmt, LOG_QUERY " INTO `%s` (`Date`,`Mapname`,`AccountID`,`AccountName`,`CharacterID`,`CharacterIPaddr`,`Type`,`PosX`,`PosY`,`NpcName`,\
+		// O Campo account_id já deve fazer o serviço de vincular a conta do jogador ao login-server
+		// Qual a necessidade de informar o userid aqui, no map-server, visto que o campo deve ser único na tabela de login? Double-check? -.-
+		// [CarlosHenrq, 2016-10-27]
+		// if (SQL_SUCCESS != SQL->StmtPrepare(stmt, LOG_QUERY " INTO `%s` (`Date`,`Mapname`,`AccountID`,`AccountName`,`CharacterID`,`CharacterIPaddr`,`Type`,`PosX`,`PosY`,`NpcName`,\
+			// `ItemID`,`ItemName`,`ItemCount`,`ItemSerial`,`ItemSlot1`,`ItemSlot2`,`ItemSlot3`,`ItemSlot4`,`ItemRefiningLevel`,`Cash_Price`,`Cash_View`,`Cash_Before`,`Cash_After`)\
+			// VALUES (NOW(),'%s','%d','%d','%s','%s','%d','%d',?,'%d',?,'%d','%"PRIu64"','%d','%d','%d','%d','%d','%d','%d','%d','%d')",
+			// logs->config.table_name[4], mapindex_id2name(sd->mapindex), sd->status.account_id, sd->status.char_id, sd->status.last_ip, type, sd->bl.x, sd->bl.y,
+			// itm->nameid, amount, itm->unique_id, itm->card[0], itm->card[1], itm->card[2], itm->card[3], itm->refine,
+			// price, tcost, sd->cashPoints + tcost, sd->cashPoints)
+			// || SQL_SUCCESS != SQL->StmtBindParam(stmt, 0, SQLDT_STRING, sd->status.userid, safestrnlen(sd->status.userid, NAME_LENGTH))
+			// || SQL_SUCCESS != SQL->StmtBindParam(stmt, 1, SQLDT_STRING, npc_name, safestrnlen(npc_name, NPC_NAME_LENGTH))
+			// || SQL_SUCCESS != SQL->StmtBindParam(stmt, 2, SQLDT_STRING, i_data->name, safestrnlen(i_data->name, ITEM_NAME_LENGTH))
+			// || SQL_SUCCESS != SQL->StmtExecute(stmt)
+		// ) {
+			// SqlStmt_ShowDebug(stmt);
+			// SQL->StmtFree(stmt);
+			// return;
+		// }
+
+		if (SQL_SUCCESS != SQL->StmtPrepare(stmt, LOG_QUERY " INTO `%s` (`Date`,`Mapname`,`AccountID`,`CharacterID`,`CharacterIPaddr`,`Type`,`PosX`,`PosY`,`NpcName`,\
 			`ItemID`,`ItemName`,`ItemCount`,`ItemSerial`,`ItemSlot1`,`ItemSlot2`,`ItemSlot3`,`ItemSlot4`,`ItemRefiningLevel`,`Cash_Price`,`Cash_View`,`Cash_Before`,`Cash_After`)\
-			VALUES (NOW(),'%s','%d',?,'%d','%s','%s','%d','%d',?,'%d',?,'%d','%"PRIu64"','%d','%d','%d','%d','%d','%d','%d','%d','%d')",
+			VALUES (NOW(),'%s','%d','%d','%s','%s','%d','%d',?,'%d',?,'%d','%"PRIu64"','%d','%d','%d','%d','%d','%d','%d','%d','%d')",
 			logs->config.table_name[4], mapindex_id2name(sd->mapindex), sd->status.account_id, sd->status.char_id, sd->status.last_ip, type, sd->bl.x, sd->bl.y,
 			itm->nameid, amount, itm->unique_id, itm->card[0], itm->card[1], itm->card[2], itm->card[3], itm->refine,
 			price, tcost, sd->cashPoints + tcost, sd->cashPoints)
-			|| SQL_SUCCESS != SQL->StmtBindParam(stmt, 0, SQLDT_STRING, sd->status.userid, safestrnlen(sd->status.userid, NAME_LENGTH))
-			|| SQL_SUCCESS != SQL->StmtBindParam(stmt, 1, SQLDT_STRING, npc_name, safestrnlen(npc_name, NPC_NAME_LENGTH))
-			|| SQL_SUCCESS != SQL->StmtBindParam(stmt, 2, SQLDT_STRING, i_data->name, safestrnlen(i_data->name, ITEM_NAME_LENGTH))
+			|| SQL_SUCCESS != SQL->StmtBindParam(stmt, 0, SQLDT_STRING, npc_name, safestrnlen(npc_name, NPC_NAME_LENGTH))
+			|| SQL_SUCCESS != SQL->StmtBindParam(stmt, 1, SQLDT_STRING, i_data->name, safestrnlen(i_data->name, ITEM_NAME_LENGTH))
 			|| SQL_SUCCESS != SQL->StmtExecute(stmt)
 		) {
 			SqlStmt_ShowDebug(stmt);

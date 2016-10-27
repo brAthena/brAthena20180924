@@ -551,7 +551,10 @@ struct mmo_charstatus {
 	short head_top,head_mid,head_bottom;
 	short robe;
 
-	char name[NAME_LENGTH], userid[NAME_LENGTH], last_ip[16];
+	// Porque o servidores de mapa e personagem devem saber o userid sendo que
+	// Todas as validações realizadas são através do account_id? [CarlosHenrq, 2016-10-27]
+	// char name[NAME_LENGTH], userid[NAME_LENGTH], last_ip[16];
+	char name[NAME_LENGTH], last_ip[16];
 	unsigned int base_level,job_level;
 	short str,agi,vit,int_,dex,luk;
 	unsigned char slot,sex;
