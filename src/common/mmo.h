@@ -126,14 +126,21 @@
 #define MAX_BANK_ZENY INT_MAX
 
 // Nível Max. Global (Base)
-#define MAX_LEVEL 175
+// [CarlosHenrq, 2016-10-27] 175 somente quando em execução no modo renewal.
+#ifdef RENEWAL
+	#define MAX_LEVEL 175
+#else
+	#define MAX_LEVEL 99
+#endif
 
 // Tabela de Nível Máximo por Classes
 enum _max_level_ {
 /// Nível Max. de Base - Suporta até nível de base 1000
 	BASE_MAX_1LV	= 99,	// Classes Normais e Classes Baby.
 	BASE_MAX_2LV	= 99,	// Classes Transcedentais.
+#ifdef RENEWAL
 	BASE_MAX_3LV	= 175,	// Terceira Classe Normal, Terceira Classe Bebê.
+#endif
 	BASE_MAX_4LV	= 160,	// Super Aprendiz Expandido e Kagerou/Oboro.
 /// Nível Max. de Classe - Suporta até nível de classe 255
 	JOB_MAX_1LV		= 10,	// Aprendiz & Bebê Aprendiz.
@@ -142,7 +149,9 @@ enum _max_level_ {
 	JOB_MAX_4LV		= 10,	// Aprendiz Transcedental.
 	JOB_MAX_5LV		= 50,	// Primeira Classe Transcedental.
 	JOB_MAX_6LV		= 70,	// Segunda Classe Transcedental.
+#ifdef RENEWAL
 	JOB_MAX_7LV		= 60,	// Terceira Classe, Terceira Classe Bebê.
+#endif
 	JOB_MAX_8LV		= 50,	// Super Aprendiz Expandido e Kagerou/Oboro.
 	JOB_MAX_9LV		= 70,	// Ninja/Gunslinger.
 	JOB_MAX_10LV	= 50,	// Taekwon.

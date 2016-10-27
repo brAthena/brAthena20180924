@@ -11042,46 +11042,74 @@ bool pc_readdb_levelpenalty(char* fields[], int columns, int current) {
 // Bypass para exp_db [Shiraz]
 // Retorna o level correspondente ao identificador.
 // enum _max_level_ (mmo.h)
-int GetLevel(int Class, int Type)
-{	
-	// Nível de Base
-	if (Type == 0 && ((Class >= 0 && Class <= 25) || (Class >= 4023 && Class <= 4052)))
-		return BASE_MAX_1LV;
-	if (Type == 0 && (Class >= 4001 && Class <= 4022))
-		return BASE_MAX_2LV;
-	if (Type == 0 && ((Class >= 4054 && Class <= 4087) || (Class >= 4096 && Class <= 4112)))
-		return BASE_MAX_3LV;
-	if (Type == 0 && ((Class >= 4190 && Class <= 4191) || (Class == 4211 || Class == 4215)))
-		return BASE_MAX_4LV;
-	// Nível de Classe
-	if (Type == 1 && (Class == 0 || Class == 4023))
-		return JOB_MAX_1LV;
-	if (Type == 1 && ((Class >= 1 && Class <= 6) || (Class >= 4024 && Class <= 4029) || (Class == 4046 || Class == 4050)))
-		return JOB_MAX_2LV;
-	if (Type == 1 && ((Class >= 7 && Class <= 21) || (Class >= 4030 && Class <= 4052)))
-		return JOB_MAX_3LV;
-	if (Type == 1 && Class == 4001)
-		return JOB_MAX_4LV;
-	if (Type == 1 && (Class >= 4002 && Class <= 4007))
-		return JOB_MAX_5LV;
-	if (Type == 1 && (Class >= 4008 && Class <= 4022))
-		return JOB_MAX_6LV;
-	if (Type == 1 && ((Class >= 4054 && Class <= 4087) || (Class >= 4096 && Class <= 4112)))
-		return JOB_MAX_7LV;
-	if (Type == 1 && ((Class >= 4190 && Class <= 4191) || (Class >= 4211 && Class <= 4212) || (Class == 4215)))
-		return JOB_MAX_8LV;
-	if (Type == 1 && (Class >= 24 && Class <= 25))
-		return JOB_MAX_9LV;
-	if (Type == 1 && Class == 4046)
-		return JOB_MAX_10LV;
-	if (Type == 1 && (Class >= 4047 && Class <= 4048))
-		return JOB_MAX_11LV;
-	if (Type == 1 && Class == 4049)
-		return JOB_MAX_12LV;
-	if (Type == 1 && (Class == 23 || Class == 4045))
-		return JOB_MAX_13LV;
+/**
+ * Função para retornar o nível máximo de acordo com a classe do personagem.
+ *
+ * @param job Classe do personagem.
+ * @param type Tipo de solicitação. (0: Nível base, 1: Nível classe)
+ *
+ * @return O Nível máximo para a classe solicitada.
+ *
+ * -> Primeira versão estava sem as constantes de classe, não se sabia quais deviam ser testadas.
+ * -> Alterado o nome de 'GetLevel' para -> 'pc_get_maxlevel'
+ * -> Adicionado todas as constantes das classes para trabalhar em cima.
+ *
+ * ---- Feita inicialmente pelo Shiraz
+ * ---- Refatorado por CarlosHenrq em 2016-10-27
+ *      ---> Ainda não está bom, pois o lv máximo depende de src e não de arquivos de configuração do emulador e sim da src.
+ */
+static int pc_get_maxlevel(int job, int type)
+{
+	// 0: Nível base
+	if(type == 0)
+	{
+		if((job >= JOB_NOVICE && job <= JOB_NINJA) || (job >= JOB_BABY && job <= JOB_SUPER_BABY))
+			return BASE_MAX_1LV;
+		else if(job >= JOB_NOVICE_HIGH && job <= JOB_PALADIN2)
+			return BASE_MAX_2LV;
+#ifdef RENEWAL
+		else if((job >= JOB_RUNE_KNIGHT && job <= JOB_MECHANIC_T2) || (job >= JOB_BABY_RUNE && job <= JOB_BABY_MECHANIC2))
+			return BASE_MAX_3LV;
+#endif
+		else if((job >= JOB_SUPER_NOVICE_E && job <= JOB_SUPER_BABY_E) || (job == JOB_KAGEROU || job == JOB_REBELLION))
+			return BASE_MAX_4LV;
+	}
+	// 1: Nível classe
+	else if(type == 1)
+	{
+		if(job == JOB_NOVICE || job == JOB_BABY)
+			return JOB_MAX_1LV;
+		else if((job >= JOB_SWORDMAN && job <= JOB_THIEF)
+				|| (job >= JOB_BABY_SWORDMAN && job <= JOB_BABY_THIEF)
+				|| (job == JOB_TAEKWON || job == JOB_GANGSI))
+			return JOB_MAX_2LV;
+		else if((job >= JOB_KNIGHT && job <= JOB_CRUSADER2) || (job >= JOB_BABY_KNIGHT && job <= JOB_BABY_CRUSADER2))
+			return JOB_MAX_3LV;
+		else if(job == JOB_NOVICE_HIGH)
+			return JOB_MAX_4LV;
+		else if(job >= JOB_SWORDMAN_HIGH && job <= JOB_THIEF_HIGH)
+			return JOB_MAX_5LV;
+		else if(job >= JOB_LORD_KNIGHT && job <= JOB_PALADIN2)
+			return JOB_MAX_6LV;
+#ifdef RENEWAL
+		else if((job >= JOB_RUNE_KNIGHT && job <= JOB_MECHANIC_T2) || (job >= JOB_BABY_RUNE && job <= JOB_BABY_MECHANIC2))
+			return JOB_MAX_7LV;
+#endif
+		else if(job == JOB_SUPER_NOVICE_E || job == JOB_SUPER_BABY_E || job == JOB_KAGEROU || job == JOB_OBORO || job == JOB_REBELLION)
+			return JOB_MAX_8LV;
+		else if(job == JOB_GUNSLINGER || job == JOB_NINJA)
+			return JOB_MAX_9LV;
+		else if(job == JOB_TAEKWON)
+			return JOB_MAX_10LV;
+		else if(job == JOB_STAR_GLADIATOR || job == JOB_STAR_GLADIATOR2)
+			return JOB_MAX_11LV;
+		else if(job == JOB_SOUL_LINKER)
+			return JOB_MAX_12LV;
+		else if(job == JOB_SUPER_NOVICE || job == JOB_SUPER_BABY)
+			return JOB_MAX_13LV;
+	}
 
-	ShowError("Nivel maximo indefinido para a classe %d\n", Class);
+	ShowError("Nivel maximo indefinido para a classe %d\n", job);
 	return 0;
 }
 
@@ -11122,7 +11150,7 @@ int pc_readdb(void) {
 			ShowError("pc_readdb: Tipo invalido %d (deve ser 0 para base e 1 para classe).\n", type);
 			continue;
 		}
-		maxlv = GetLevel(job_id, type);
+		maxlv = pc_get_maxlevel(job_id, type);
 		if (maxlv > MAX_LEVEL) {
 			ShowWarning("pc_readdb: Nivel maximo %u para classe %d excedeu o limite do servidor (%u).\n ", maxlv, job_id, MAX_LEVEL);
 			maxlv = MAX_LEVEL;
