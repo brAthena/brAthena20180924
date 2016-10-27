@@ -7262,6 +7262,28 @@ static const struct battle_data {
 	{ "get_refine",                         &battle_config.get_refine,                      0,      1,      100,            },
 	// Configuração para habilidades de remover armas. [Sir Will]
 	{ "strip_weapon",                       &battle_config.strip_weapon,                    0,      0,      1,              },
+	// Configurações dos níveis máximos para base e classe. [CarlosHenrq]
+	{ "max_baselv_normal",					&battle_config.max_baselv_normal,				99,		0,		MAX_LEVEL,		},
+	{ "max_baselv_trans",					&battle_config.max_baselv_trans,				99,		0,		MAX_LEVEL,		},
+#ifdef RENEWAL
+	{ "max_baselv_third",					&battle_config.max_baselv_third,				175,	0,		MAX_LEVEL,		},
+#endif
+	{ "max_baselv_sne_ko",					&battle_config.max_baselv_sne_ko,				160,	0,		MAX_LEVEL,		},
+	{ "max_joblv_novice",					&battle_config.max_joblv_novice,				 10,	0,		255,			},
+	{ "max_joblv_first",					&battle_config.max_joblv_first,				 	 50,	0,		255,			},
+	{ "max_joblv_second",					&battle_config.max_joblv_second,				 50,	0,		255,			},
+	{ "max_joblv_novice_t",					&battle_config.max_joblv_novice_t,				 10,	0,		255,			},
+	{ "max_joblv_first_t",					&battle_config.max_joblv_first_t,			 	 50,	0,		255,			},
+	{ "max_joblv_second_t",					&battle_config.max_joblv_second_t,				 70,	0,		255,			},
+#ifdef RENEWAL
+	{ "max_joblv_third",					&battle_config.max_joblv_third,					 60,	0,		255,			},
+#endif
+	{ "max_joblv_sne_ko",					&battle_config.max_joblv_sne_ko,				 50,	0,		255,			},
+	{ "max_joblv_guns_ninja",				&battle_config.max_joblv_guns_ninja,			 70,	0,		255,			},
+	{ "max_joblv_taekwon",					&battle_config.max_joblv_taekwon,				 50,	0,		255,			},
+	{ "max_joblv_taekwon_master",			&battle_config.max_joblv_taekwon_master,		 50,	0,		255,			},
+	{ "max_joblv_soullinker",				&battle_config.max_joblv_soullinker,		 	 50,	0,		255,			},
+	{ "max_joblv_sn_snb",					&battle_config.max_joblv_sn_snb,		 	 	 99,	0,		255,			},
 };
 #ifndef STATS_OPT_OUT
 /**

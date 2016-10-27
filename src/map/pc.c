@@ -11064,49 +11064,49 @@ static int pc_get_maxlevel(int job, int type)
 	if(type == 0)
 	{
 		if((job >= JOB_NOVICE && job <= JOB_NINJA) || (job >= JOB_BABY && job <= JOB_SUPER_BABY))
-			return BASE_MAX_1LV;
+			return battle_config.max_baselv_normal;
 		else if(job >= JOB_NOVICE_HIGH && job <= JOB_PALADIN2)
-			return BASE_MAX_2LV;
+			return battle_config.max_baselv_trans;
 #ifdef RENEWAL
 		else if((job >= JOB_RUNE_KNIGHT && job <= JOB_MECHANIC_T2) || (job >= JOB_BABY_RUNE && job <= JOB_BABY_MECHANIC2))
-			return BASE_MAX_3LV;
+			return battle_config.max_baselv_third;
 #endif
 		else if((job >= JOB_SUPER_NOVICE_E && job <= JOB_SUPER_BABY_E) || (job == JOB_KAGEROU || job == JOB_REBELLION))
-			return BASE_MAX_4LV;
+			return battle_config.max_baselv_sne_ko;
 	}
 	// 1: Nível classe
 	else if(type == 1)
 	{
 		if(job == JOB_NOVICE || job == JOB_BABY)
-			return JOB_MAX_1LV;
+			return battle_config.max_joblv_novice;
 		else if((job >= JOB_SWORDMAN && job <= JOB_THIEF)
 				|| (job >= JOB_BABY_SWORDMAN && job <= JOB_BABY_THIEF)
 				|| (job == JOB_TAEKWON || job == JOB_GANGSI))
-			return JOB_MAX_2LV;
+			return battle_config.max_joblv_first;
 		else if((job >= JOB_KNIGHT && job <= JOB_CRUSADER2) || (job >= JOB_BABY_KNIGHT && job <= JOB_BABY_CRUSADER2))
-			return JOB_MAX_3LV;
+			return battle_config.max_joblv_second;
 		else if(job == JOB_NOVICE_HIGH)
-			return JOB_MAX_4LV;
+			return battle_config.max_joblv_novice_t;
 		else if(job >= JOB_SWORDMAN_HIGH && job <= JOB_THIEF_HIGH)
-			return JOB_MAX_5LV;
+			return battle_config.max_joblv_first_t;
 		else if(job >= JOB_LORD_KNIGHT && job <= JOB_PALADIN2)
-			return JOB_MAX_6LV;
+			return battle_config.max_joblv_second_t;
 #ifdef RENEWAL
 		else if((job >= JOB_RUNE_KNIGHT && job <= JOB_MECHANIC_T2) || (job >= JOB_BABY_RUNE && job <= JOB_BABY_MECHANIC2))
-			return JOB_MAX_7LV;
+			return battle_config.max_joblv_third;
 #endif
 		else if(job == JOB_SUPER_NOVICE_E || job == JOB_SUPER_BABY_E || job == JOB_KAGEROU || job == JOB_OBORO || job == JOB_REBELLION)
-			return JOB_MAX_8LV;
+			return battle_config.max_joblv_sne_ko;
 		else if(job == JOB_GUNSLINGER || job == JOB_NINJA)
-			return JOB_MAX_9LV;
+			return battle_config.max_joblv_guns_ninja;
 		else if(job == JOB_TAEKWON)
-			return JOB_MAX_10LV;
+			return battle_config.max_joblv_taekwon;
 		else if(job == JOB_STAR_GLADIATOR || job == JOB_STAR_GLADIATOR2)
-			return JOB_MAX_11LV;
+			return battle_config.max_joblv_taekwon_master;
 		else if(job == JOB_SOUL_LINKER)
-			return JOB_MAX_12LV;
+			return battle_config.max_joblv_soullinker;
 		else if(job == JOB_SUPER_NOVICE || job == JOB_SUPER_BABY)
-			return JOB_MAX_13LV;
+			return battle_config.max_joblv_sn_snb;
 	}
 
 	ShowError("Nivel maximo indefinido para a classe %d\n", job);
