@@ -561,9 +561,7 @@ struct Battle_Config {
 	// Configurações dos níveis máximos para base e classe. [CarlosHenrq]
 	int max_baselv_normal;
 	int max_baselv_trans;
-#ifdef RENEWAL
 	int max_baselv_third;
-#endif
 	int max_baselv_sne_ko;
 	int max_joblv_novice;
 	int max_joblv_first;
@@ -571,9 +569,7 @@ struct Battle_Config {
 	int max_joblv_novice_t;
 	int max_joblv_first_t;
 	int max_joblv_second_t;
-#ifdef RENEWAL
 	int max_joblv_third;
-#endif
 	int max_joblv_sne_ko;
 	int max_joblv_guns_ninja;
 	int max_joblv_taekwon;

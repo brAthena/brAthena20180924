@@ -11067,10 +11067,8 @@ static int pc_get_maxlevel(int job, int type)
 			return battle_config.max_baselv_normal;
 		else if(job >= JOB_NOVICE_HIGH && job <= JOB_PALADIN2)
 			return battle_config.max_baselv_trans;
-#ifdef RENEWAL
 		else if((job >= JOB_RUNE_KNIGHT && job <= JOB_MECHANIC_T2) || (job >= JOB_BABY_RUNE && job <= JOB_BABY_MECHANIC2))
 			return battle_config.max_baselv_third;
-#endif
 		else if((job >= JOB_SUPER_NOVICE_E && job <= JOB_SUPER_BABY_E) || (job == JOB_KAGEROU || job == JOB_REBELLION))
 			return battle_config.max_baselv_sne_ko;
 	}
@@ -11091,10 +11089,8 @@ static int pc_get_maxlevel(int job, int type)
 			return battle_config.max_joblv_first_t;
 		else if(job >= JOB_LORD_KNIGHT && job <= JOB_PALADIN2)
 			return battle_config.max_joblv_second_t;
-#ifdef RENEWAL
 		else if((job >= JOB_RUNE_KNIGHT && job <= JOB_MECHANIC_T2) || (job >= JOB_BABY_RUNE && job <= JOB_BABY_MECHANIC2))
 			return battle_config.max_joblv_third;
-#endif
 		else if(job == JOB_SUPER_NOVICE_E || job == JOB_SUPER_BABY_E || job == JOB_KAGEROU || job == JOB_OBORO || job == JOB_REBELLION)
 			return battle_config.max_joblv_sne_ko;
 		else if(job == JOB_GUNSLINGER || job == JOB_NINJA)
