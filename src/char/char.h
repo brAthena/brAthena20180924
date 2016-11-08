@@ -48,6 +48,9 @@ struct char_session_data {
 	uint32 pincode_change;
 	char new_name[NAME_LENGTH];
 	char birthdate[10+1];  // YYYY-MM-DD
+	// Informa se, as configurações estiverem habilitadas claro, para usar o pincode apenas para
+	// Caso este campo seja informado. [CarlosHenrq]
+	int pincode_lastpass;
 };
 
 struct online_char_data {

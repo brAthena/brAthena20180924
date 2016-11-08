@@ -373,17 +373,21 @@ void login_fromchar_parse_request_change_email(int fd, int id, const char *const
 
 void login_fromchar_account(int fd, int account_id, struct mmo_account *acc)
 {
-	WFIFOHEAD(fd,72);
+	WFIFOHEAD(fd,76);
 	WFIFOW(fd,0) = 0x2717;
 	WFIFOL(fd,2) = account_id;
 	if (acc)
 	{
 		time_t expiration_time = 0;
+		time_t pincode_lastpass = (time(NULL) - acc->last_password_change);
 		char email[40] = "";
 		int group_id = 0;
 		uint8 char_slots = 0;
 		char birthdate[10+1] = "";
 		char pincode[4+1] = "\0\0\0\0";
+
+		pincode_lastpass -= (pincode_lastpass%86400);
+		pincode_lastpass /= 86400;
 
 		safestrncpy(email, acc->email, sizeof(email));
 		expiration_time = acc->expiration_time;
@@ -401,6 +405,7 @@ void login_fromchar_account(int fd, int account_id, struct mmo_account *acc)
 		safestrncpy((char*)WFIFOP(fd,52), birthdate, 10+1);
 		safestrncpy((char*)WFIFOP(fd,63), pincode, 4+1 );
 		WFIFOL(fd,68) = acc->pincode_change;
+		WFIFOL(fd,72) = (uint32)pincode_lastpass;
 	}
 	else
 	{
@@ -411,8 +416,9 @@ void login_fromchar_account(int fd, int account_id, struct mmo_account *acc)
 		safestrncpy((char*)WFIFOP(fd,52), "", 10+1);
 		safestrncpy((char*)WFIFOP(fd,63), "\0\0\0\0", 4+1 );
 		WFIFOL(fd,68) = 0;
+		WFIFOL(fd,72) = 0;
 	}
-	WFIFOSET(fd,72);
+	WFIFOSET(fd,76);
 }
 
 void login_fromchar_parse_account_data(int fd, int id, const char *const ip)
@@ -997,7 +1003,7 @@ int login_parse_fromchar(int fd)
 //-------------------------------------
 // Make new account
 //-------------------------------------
-int login_mmo_auth_new(const char* userid, const char* pass, const char sex, const char* last_ip) {
+int login_mmo_auth_new(const char* userid, const char* pass, const char sex, const char* mac_address, const char* last_ip) {
 	static int num_regs = 0; // registration counter
 	static int64 new_reg_tick = 0;
 	int64 tick = timer->gettick();
@@ -1040,6 +1046,8 @@ int login_mmo_auth_new(const char* userid, const char* pass, const char sex, con
 	safestrncpy(acc.pincode, "\0", sizeof(acc.pincode));
 	acc.pincode_change = 0;
 	acc.char_slots = 0;
+	safestrncpy(acc.mac_address, mac_address, MAC_LENGTH);
+	acc.last_password_change = time(NULL);
 
 	if( !accounts->create(accounts, &acc) )
 		return 0;
@@ -1104,7 +1112,7 @@ int login_mmo_auth(struct login_session_data* sd, bool isServer) {
 			len -= 2;
 			sd->userid[len] = '\0';
 
-			result = login->mmo_auth_new(sd->userid, sd->passwd, TOUPPER(sd->userid[len+1]), ip);
+			result = login->mmo_auth_new(sd->userid, sd->passwd, TOUPPER(sd->userid[len+1]), sockt->session[sd->fd]->mac_address, ip);
 			if( result != -1 )
 				return result;// Failed to make account. [Skotlex].
 		}

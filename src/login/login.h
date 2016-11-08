@@ -164,7 +164,7 @@ struct login_interface {
 	struct AccountDB* accounts;
 
 	int (*mmo_auth) (struct login_session_data* sd, bool isServer);
-	int (*mmo_auth_new) (const char* userid, const char* pass, const char sex, const char* last_ip);
+	int (*mmo_auth_new) (const char* userid, const char* pass, const char sex, const char* mac_address, const char* last_ip);
 	int (*waiting_disconnect_timer) (int tid, int64 tick, int id, intptr_t data);
 	DBData (*create_online_user) (DBKey key, va_list args);
 	struct online_login_data* (*add_online_user) (int char_server, int account_id, const char* mac_address);

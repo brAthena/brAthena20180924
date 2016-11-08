@@ -2403,6 +2403,7 @@ void char_parse_fromlogin_account_data(int fd)
 		safestrncpy(sd->birthdate, (const char*)RFIFOP(fd,52), sizeof(sd->birthdate));
 		safestrncpy(sd->pincode, (const char*)RFIFOP(fd,63), sizeof(sd->pincode));
 		sd->pincode_change = RFIFOL(fd,68);
+		sd->pincode_lastpass = RFIFOL(fd, 72);
 		// continued from chr->auth_ok...
 		if( (max_connect_user == 0 && sd->group_id != gm_allow_group) ||
 			( max_connect_user > 0 && chr->count_users() >= max_connect_user && sd->group_id != gm_allow_group ) ) {
@@ -2424,7 +2425,7 @@ void char_parse_fromlogin_account_data(int fd)
 	#endif
 		}
 	}
-	RFIFOSKIP(fd,72);
+	RFIFOSKIP(fd,76);
 }
 
 void char_parse_fromlogin_login_pong(int fd)
@@ -2680,7 +2681,7 @@ int char_parse_fromlogin(int fd) {
 
 			case 0x2717: // account data
 			{
-				if (RFIFOREST(fd) < 72)
+				if (RFIFOREST(fd) < 76)
 					return 0;
 				chr->parse_fromlogin_account_data(fd);
 			}

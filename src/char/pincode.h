@@ -39,6 +39,7 @@ enum PincodeResponseCode {
 struct pincode_interface {
 	/* vars */
 	int enabled;
+	int enabled_lastpass; // Verificação para saber se o pincode somente será utilizado quando a senha expirar. Número de dias aqui. [CarlosHenrq]
 	int changetime;
 	int maxtry;
 	int charselect;

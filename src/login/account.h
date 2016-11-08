@@ -52,6 +52,7 @@ struct mmo_account
 	char last_ip[16];           // save of last IP of connection
 	char birthdate[10+1];       // assigned birth date (format: YYYY-MM-DD, default: 1970-01-01)
 	char mac_address[18];       // Checagem mac_address [Megasantos/brAthena]
+	time_t last_password_change; // (timestamp): última alteração de senha da conta.
 };
 
 
