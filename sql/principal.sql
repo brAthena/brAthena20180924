@@ -605,7 +605,8 @@ CREATE TABLE IF NOT EXISTS `login` (
 INSERT IGNORE INTO `login` (`account_id`, `userid`, `user_pass`, `sex`, `email`) VALUES ('1', 's1', 'p1', 'S','brathena@brathena.org');
 
 DELIMITER ;;
-DROP TRIGGER IF EXISTS `login_insert`;
+
+DROP TRIGGER IF EXISTS `login_insert`;;
 CREATE TRIGGER `login_insert` BEFORE INSERT ON `login`
 FOR EACH ROW
 BEGIN
@@ -616,7 +617,7 @@ BEGIN
 
 END;;
 
-DROP TRIGGER IF EXISTS `login_update`;
+DROP TRIGGER IF EXISTS `login_update`;;
 CREATE TRIGGER `login_update` BEFORE UPDATE ON `login`
 FOR EACH ROW
 BEGIN

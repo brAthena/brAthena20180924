@@ -4,7 +4,8 @@ ALTER TABLE `login`
 UPDATE `login` SET `last_password_change` = UNIX_TIMESTAMP();
 
 DELIMITER ;;
-DROP TRIGGER IF EXISTS `login_insert`;
+
+DROP TRIGGER IF EXISTS `login_insert`;;
 CREATE TRIGGER `login_insert` BEFORE INSERT ON `login`
 FOR EACH ROW
 BEGIN
@@ -15,7 +16,7 @@ BEGIN
 
 END;;
 
-DROP TRIGGER IF EXISTS `login_update`;
+DROP TRIGGER IF EXISTS `login_update`;;
 CREATE TRIGGER `login_update` BEFORE UPDATE ON `login`
 FOR EACH ROW
 BEGIN
