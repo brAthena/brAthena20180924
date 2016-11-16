@@ -483,12 +483,7 @@ bool chat_npckickall(struct chat_data* cd)
 int chat_count_sub(struct block_list *bl, va_list ap)
 {
 	struct map_session_data* sd = BL_UCAST(BL_PC, bl);
-	int* chatCount = (int*)va_arg(ap, int *);
-
-	if(sd != NULL && sd->chatID)
-		(*chatCount)++;
-
-	return 0;
+	return (sd != NULL && sd->chatID);
 }
 
 /**
@@ -500,9 +495,7 @@ int chat_count_sub(struct block_list *bl, va_list ap)
  */
 int chat_count_map(int16 m)
 {
-	int chatCount = 0;
-	map->foreachinmap(chat->count_sub, m, BL_PC, &chatCount);
-	return chatCount;
+	return map->foreachinmap(chat->count_sub, m, BL_PC);
 }
 
 /**
@@ -518,9 +511,7 @@ int chat_count_map(int16 m)
  */
 int chat_count_area(int16 m, int16 x0, int16 y0, int16 x1, int16 y1)
 {
-	int chatCount = 0;
-	map->foreachinarea(chat->count_sub, m, x0, y0, x1, y1, BL_PC, &chatCount);
-	return chatCount;
+	return map->foreachinarea(chat->count_sub, m, x0, y0, x1, y1, BL_PC);
 }
 
 /**
@@ -534,9 +525,7 @@ int chat_count_area(int16 m, int16 x0, int16 y0, int16 x1, int16 y1)
  */
 int chat_count_cell(int16 m, int16 x, int16 y)
 {
-	int chatCount = 0;
-	map->foreachincell(chat->count_sub, m, x, y, BL_PC, &chatCount);
-	return chatCount;
+	return map->foreachincell(chat->count_sub, m, x, y, BL_PC);
 }
 
 /**
@@ -549,9 +538,7 @@ int chat_count_cell(int16 m, int16 x, int16 y)
  */
 int chat_count_range(struct block_list* bl, int range)
 {
-	int chatCount = 0;
-	map->foreachinrange(chat->count_sub, bl, range, BL_PC, &chatCount);
-	return chatCount;
+	return map->foreachinrange(chat->count_sub, bl, range, BL_PC);
 }
 
 /**

@@ -126,30 +126,12 @@
 #define MAX_BANK_ZENY INT_MAX
 
 // Nível Max. Global (Base)
-#define MAX_LEVEL 175
-
-// Tabela de Nível Máximo por Classes
-enum _max_level_ {
-/// Nível Max. de Base - Suporta até nível de base 1000
-	BASE_MAX_1LV	= 99,	// Classes Normais e Classes Baby.
-	BASE_MAX_2LV	= 99,	// Classes Transcedentais.
-	BASE_MAX_3LV	= 175,	// Terceira Classe Normal, Terceira Classe Bebê.
-	BASE_MAX_4LV	= 160,	// Super Aprendiz Expandido e Kagerou/Oboro.
-/// Nível Max. de Classe - Suporta até nível de classe 255
-	JOB_MAX_1LV		= 10,	// Aprendiz & Bebê Aprendiz.
-	JOB_MAX_2LV		= 50,	// Primeira Classe & Primeira Classe Bebê.
-	JOB_MAX_3LV		= 50,	// Segunda Classe & Segunda Classe Bebê.
-	JOB_MAX_4LV		= 10,	// Aprendiz Transcedental.
-	JOB_MAX_5LV		= 50,	// Primeira Classe Transcedental.
-	JOB_MAX_6LV		= 70,	// Segunda Classe Transcedental.
-	JOB_MAX_7LV		= 60,	// Terceira Classe, Terceira Classe Bebê.
-	JOB_MAX_8LV		= 50,	// Super Aprendiz Expandido e Kagerou/Oboro.
-	JOB_MAX_9LV		= 70,	// Ninja/Gunslinger.
-	JOB_MAX_10LV	= 50,	// Taekwon.
-	JOB_MAX_11LV	= 50,	// Mestre Taekwon.
-	JOB_MAX_12LV	= 50,	// Espiritualista.
-	JOB_MAX_13LV	= 99,	// Super Aprendiz & Bebê Super Aprendiz.
-};
+// [CarlosHenrq, 2016-10-27] 175 somente quando em execução no modo renewal.
+#ifdef RENEWAL
+	#define MAX_LEVEL 175
+#else
+	#define MAX_LEVEL 99
+#endif
 
 #define MAX_FAME 1000000000
 #define MAX_CART 100
@@ -551,7 +533,10 @@ struct mmo_charstatus {
 	short head_top,head_mid,head_bottom;
 	short robe;
 
-	char name[NAME_LENGTH], userid[NAME_LENGTH], last_ip[16];
+	// Porque o servidores de mapa e personagem devem saber o userid sendo que
+	// Todas as validações realizadas são através do account_id? [CarlosHenrq, 2016-10-27]
+	// char name[NAME_LENGTH], userid[NAME_LENGTH], last_ip[16];
+	char name[NAME_LENGTH], last_ip[16];
 	unsigned int base_level,job_level;
 	short str,agi,vit,int_,dex,luk;
 	unsigned char slot,sex;

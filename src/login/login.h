@@ -111,6 +111,12 @@ struct Login_Config {
 	unsigned int dynamic_pass_failure_ban_interval; ///< how far to scan the loginlog for password failures
 	unsigned int dynamic_pass_failure_ban_limit;    ///< number of failures needed to trigger the ipban
 	unsigned int dynamic_pass_failure_ban_duration; ///< duration of the ipban
+
+	// Bloqueia dual login por mac_address.
+	bool mac_block_dual;
+	// Informa se o bloqueio por mac_address estará habilitado.
+	bool mac_ban_enable;
+
 	bool use_dnsbl;                                 ///< dns blacklist blocking ?
 	char dnsbl_servs[1024];                         ///< comma-separated list of dnsbl servers
 
@@ -158,10 +164,10 @@ struct login_interface {
 	struct AccountDB* accounts;
 
 	int (*mmo_auth) (struct login_session_data* sd, bool isServer);
-	int (*mmo_auth_new) (const char* userid, const char* pass, const char sex, const char* last_ip);
+	int (*mmo_auth_new) (const char* userid, const char* pass, const char sex, const char* mac_address, const char* last_ip);
 	int (*waiting_disconnect_timer) (int tid, int64 tick, int id, intptr_t data);
 	DBData (*create_online_user) (DBKey key, va_list args);
-	struct online_login_data* (*add_online_user) (int char_server, int account_id);
+	struct online_login_data* (*add_online_user) (int char_server, int account_id, const char* mac_address);
 	void (*remove_online_user) (int account_id);
 	int (*online_db_setoffline) (DBKey key, DBData *data, va_list ap);
 	int (*online_data_cleanup_sub) (DBKey key, DBData *data, va_list ap);
@@ -213,6 +219,11 @@ struct login_interface {
 	int (*parse_login) (int fd);
 	void (*config_set_defaults) (void);
 	int (*config_read) (const char *cfgName);
+
+	// Tratamento de banimento por mac_address
+	void (*fromchar_parse_ban_mac) (int fd);
+	void (*fromchar_parse_unban_mac) (int fd);
+
 	char *LOGIN_CONF_NAME;
 	char *NET_CONF_NAME; ///< Network configuration filename
 };

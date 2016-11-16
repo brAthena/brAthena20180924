@@ -1140,7 +1140,7 @@ int char_mmo_chars_fromsql(struct char_session_data* sd, uint8* buf)
 }
 
 //=====================================================================================================
-int char_mmo_char_fromsql(int char_id, struct mmo_charstatus* p, bool load_everything)
+int char_mmo_char_fromsql(int fd, int char_id, struct mmo_charstatus* p, bool load_everything)
 {
 	int i,j;
 	char t_msg[128] = "";
@@ -1459,20 +1459,22 @@ int char_mmo_char_fromsql(int char_id, struct mmo_charstatus* p, bool load_every
 	if( SQL_SUCCESS == SQL->StmtNextRow(stmt) )
 		strcat(t_msg, " accdata");
 
-	// user_id, last_ip
-	if (SQL_ERROR == SQL->StmtPrepare(stmt, "SELECT `userid`,`last_ip` FROM `login` WHERE `account_id`=? LIMIT 1")
-	 || SQL_ERROR == SQL->StmtBindParam(stmt, 0, SQLDT_INT, &account_id, 0)
-	 || SQL_ERROR == SQL->StmtExecute(stmt)
-	 || SQL_ERROR == SQL->StmtBindColumn(stmt, 0, SQLDT_STRING, &p->userid, sizeof(p->userid), NULL, NULL)
-	 || SQL_ERROR == SQL->StmtBindColumn(stmt, 1, SQLDT_STRING, &p->last_ip, sizeof(p->last_ip), NULL, NULL)
-	) {
-		SqlStmt_ShowDebug(stmt);
-	}
+	// Porque o servidores de mapa e personagem devem saber o userid sendo que
+	// Todas as validações realizadas são através do account_id? [CarlosHenrq, 2016-10-27]
+	// // user_id, last_ip
+	// if (SQL_ERROR == SQL->StmtPrepare(stmt, "SELECT `userid`,`last_ip` FROM `login` WHERE `account_id`=? LIMIT 1")
+	 // || SQL_ERROR == SQL->StmtBindParam(stmt, 0, SQLDT_INT, &account_id, 0)
+	 // || SQL_ERROR == SQL->StmtExecute(stmt)
+	 // || SQL_ERROR == SQL->StmtBindColumn(stmt, 0, SQLDT_STRING, &p->userid, sizeof(p->userid), NULL, NULL)
+	 // || SQL_ERROR == SQL->StmtBindColumn(stmt, 1, SQLDT_STRING, &p->last_ip, sizeof(p->last_ip), NULL, NULL)
+	// ) {
+		// SqlStmt_ShowDebug(stmt);
+	// }
 
-	if (SQL_SUCCESS != SQL->StmtNextRow(stmt)) {
-		ShowError("char.c: ocorreu um erro, char_id: %d!\n", char_id);
-		SQL->StmtFree(stmt);
-	}
+	// if (SQL_SUCCESS != SQL->StmtNextRow(stmt)) {
+		// ShowError("char.c: ocorreu um erro, char_id: %d!\n", char_id);
+		// SQL->StmtFree(stmt);
+	// }
 
 	if (save_log) ShowInfo("Personagem carregado (%d - %s): %s\n", char_id, p->name, t_msg); //ok. all data load successfully!
 	SQL->StmtFree(stmt);
@@ -1515,7 +1517,7 @@ bool char_char_slotchange(struct char_session_data *sd, int fd, unsigned short f
 	if( from >= MAX_CHARS || to >= MAX_CHARS || ( sd->char_slots && to > sd->char_slots ) || sd->found_char[from] <= 0 )
 		return false;
 
-	if( !chr->mmo_char_fromsql(sd->found_char[from], &char_dat, false) ) // Only the short data is needed.
+	if( !chr->mmo_char_fromsql(fd, sd->found_char[from], &char_dat, false) ) // Only the short data is needed.
 		return false;
 
 	if( char_dat.slotchange == 0 )
@@ -1569,7 +1571,7 @@ int char_rename_char_sql(struct char_session_data *sd, int char_id)
 	if( sd->new_name[0] == 0 ) // Not ready for rename
 		return 2;
 
-	if( !chr->mmo_char_fromsql(char_id, &char_dat, false) ) // Only the short data is needed.
+	if( !chr->mmo_char_fromsql(-1, char_id, &char_dat, false) ) // Only the short data is needed.
 		return 2;
 
 	if (sd->account_id != char_dat.account_id) // Try rename not own char
@@ -2401,6 +2403,7 @@ void char_parse_fromlogin_account_data(int fd)
 		safestrncpy(sd->birthdate, (const char*)RFIFOP(fd,52), sizeof(sd->birthdate));
 		safestrncpy(sd->pincode, (const char*)RFIFOP(fd,63), sizeof(sd->pincode));
 		sd->pincode_change = RFIFOL(fd,68);
+		sd->pincode_lastpass = RFIFOL(fd, 72);
 		// continued from chr->auth_ok...
 		if( (max_connect_user == 0 && sd->group_id != gm_allow_group) ||
 			( max_connect_user > 0 && chr->count_users() >= max_connect_user && sd->group_id != gm_allow_group ) ) {
@@ -2422,7 +2425,7 @@ void char_parse_fromlogin_account_data(int fd)
 	#endif
 		}
 	}
-	RFIFOSKIP(fd,72);
+	RFIFOSKIP(fd,76);
 }
 
 void char_parse_fromlogin_login_pong(int fd)
@@ -2678,7 +2681,7 @@ int char_parse_fromlogin(int fd) {
 
 			case 0x2717: // account data
 			{
-				if (RFIFOREST(fd) < 72)
+				if (RFIFOREST(fd) < 76)
 					return 0;
 				chr->parse_fromlogin_account_data(fd);
 			}
@@ -3331,7 +3334,7 @@ void char_parse_frommap_change_map_server(int fd)
 	if (char_data == NULL) {
 		//Really shouldn't happen.
 		struct mmo_charstatus char_dat;
-		chr->mmo_char_fromsql(RFIFOL(fd,14), &char_dat, true);
+		chr->mmo_char_fromsql(fd, RFIFOL(fd,14), &char_dat, true);
 		char_data = (struct mmo_charstatus*)uidb_get(chr->char_db_,RFIFOL(fd,14));
 	}
 
@@ -3820,7 +3823,7 @@ void char_parse_frommap_auth_request(int fd, int id)
 	cd = (struct mmo_charstatus*)uidb_get(chr->char_db_,char_id);
 
 	if( cd == NULL ) { //Really shouldn't happen.
-		chr->mmo_char_fromsql(char_id, &char_dat, true);
+		chr->mmo_char_fromsql(fd, char_id, &char_dat, true);
 		cd = (struct mmo_charstatus*)uidb_get(chr->char_db_,char_id);
 	}
 
@@ -4640,7 +4643,7 @@ void char_parse_char_select(int fd, struct char_session_data* sd, uint32 ipl)
 
 	/* set char as online prior to loading its data so 3rd party applications will realize the sql data is not reliable */
 	chr->set_char_online(-2,char_id,sd->account_id);
-	if( !chr->mmo_char_fromsql(char_id, &char_dat, true) ) { /* failed? set it back offline */
+	if( !chr->mmo_char_fromsql(fd, char_id, &char_dat, true) ) { /* failed? set it back offline */
 		chr->set_char_offline(char_id, sd->account_id);
 		/* failed to load something. REJECT! */
 		chr->auth_error(fd, 0); // rejected from server
@@ -4771,7 +4774,7 @@ void char_parse_char_create_new_char(int fd, struct char_session_data* sd)
 	} else {
 		// retrieve data
 		struct mmo_charstatus char_dat;
-		chr->mmo_char_fromsql(result, &char_dat, false); //Only the short data is needed.
+		chr->mmo_char_fromsql(fd, result, &char_dat, false); //Only the short data is needed.
 		chr->creation_ok(fd, &char_dat);
 
 		// add new entry to the chars list

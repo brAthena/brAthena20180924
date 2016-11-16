@@ -541,6 +541,38 @@ CREATE TABLE IF NOT EXISTS `ipbanlist` (
 ) ENGINE=MyISAM;
 
 --
+-- Estrutura da tabela `macban_list`
+--
+
+CREATE TABLE IF NOT EXISTS `macban_list` (
+
+  `id` INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `mac_address` VARCHAR(18) NOT NULL,
+  `ban_tick` INT(11) UNSIGNED NOT NULL DEFAULT 0,
+  `unban_tick` INT(11) UNSIGNED NOT NULL DEFAULT 0,
+  `reason` VARCHAR(255) NOT NULL DEFAULT '',
+  `banned` BOOLEAN NOT NULL DEFAULT true,
+
+  INDEX (`mac_address`, `unban_tick`, `banned`)
+
+) ENGINE=MyISAM;
+
+-- 
+-- Estrutura da tabela `macban_log`
+-- 
+CREATE TABLE IF NOT EXISTS `macban_log` (
+
+  `id` INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `mac_address` VARCHAR(18) NOT NULL,
+  `log_date` DATETIME NOT NULL DEFAULT '1970-01-01 00:00:00',
+  `log_type` TINYINT(1) NOT NULL DEFAULT 0,
+  `log_reason` VARCHAR(255) NOT NULL DEFAULT '',
+
+  INDEX (`mac_address`, `log_date`)
+
+) ENGINE=MyISAM;
+
+--
 -- Estrutura da tabela `login`
 --
 
@@ -562,6 +594,7 @@ CREATE TABLE IF NOT EXISTS `login` (
   `character_slots` TINYINT(3) UNSIGNED NOT NULL DEFAULT '0',
   `pincode` VARCHAR(4) NOT NULL DEFAULT '',
   `pincode_change` INT(11) UNSIGNED NOT NULL DEFAULT '0',
+  `last_password_change` INT(11) UNSIGNED NOT NULL DEFAULT '0',
   PRIMARY KEY (`account_id`),
   KEY `name` (`userid`)
 ) ENGINE=MyISAM AUTO_INCREMENT=2000000; 
@@ -570,6 +603,32 @@ CREATE TABLE IF NOT EXISTS `login` (
 -- inserted into the table called login which is above
 
 INSERT IGNORE INTO `login` (`account_id`, `userid`, `user_pass`, `sex`, `email`) VALUES ('1', 's1', 'p1', 'S','brathena@brathena.org');
+
+DELIMITER ;;
+
+DROP TRIGGER IF EXISTS `login_insert`;;
+CREATE TRIGGER `login_insert` BEFORE INSERT ON `login`
+FOR EACH ROW
+BEGIN
+
+  IF NEW.sex <> 'S' AND NEW.last_password_change = 0 THEN
+    SET NEW.last_password_change = UNIX_TIMESTAMP();
+  END IF;
+
+END;;
+
+DROP TRIGGER IF EXISTS `login_update`;;
+CREATE TRIGGER `login_update` BEFORE UPDATE ON `login`
+FOR EACH ROW
+BEGIN
+
+  IF OLD.sex <> 'S' AND MD5(OLD.user_pass) <> MD5(NEW.user_pass) THEN
+    SET NEW.last_password_change = UNIX_TIMESTAMP();
+  END IF;
+
+END;;
+
+DELIMITER ;
 
 --
 -- Estrutura da tabela `mapreg`

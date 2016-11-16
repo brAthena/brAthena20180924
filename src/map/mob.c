@@ -2480,6 +2480,9 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type) {
 		unsigned int mexp;
 		double exp;
 
+		// Define os indices como 0 do vetor de logs. (Removendo os warnings apenas)
+		memset(log_mvp, 0, sizeof(log_mvp));
+		
 		//mapflag: noexp check [Lorky]
 		if (map->list[m].flag.nobaseexp || type&2)
 			exp =1;

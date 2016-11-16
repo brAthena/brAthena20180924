@@ -48,6 +48,9 @@ struct char_session_data {
 	uint32 pincode_change;
 	char new_name[NAME_LENGTH];
 	char birthdate[10+1];  // YYYY-MM-DD
+	// Informa se, as configurações estiverem habilitadas claro, para usar o pincode apenas para
+	// Caso este campo seja informado. [CarlosHenrq]
+	int pincode_lastpass;
 };
 
 struct online_char_data {
@@ -134,7 +137,7 @@ struct char_interface {
 	int (*inventory_to_sql) (const struct item items[], int max, int id);
 	int (*mmo_gender) (const struct char_session_data *sd, const struct mmo_charstatus *p, char sex);
 	int (*mmo_chars_fromsql) (struct char_session_data* sd, uint8* buf);
-	int (*mmo_char_fromsql) (int char_id, struct mmo_charstatus* p, bool load_everything);
+	int (*mmo_char_fromsql) (int fd, int char_id, struct mmo_charstatus* p, bool load_everything);
 	int (*mmo_char_sql_init) (void);
 	bool (*char_slotchange) (struct char_session_data *sd, int fd, unsigned short from, unsigned short to);
 	int (*rename_char_sql) (struct char_session_data *sd, int char_id);

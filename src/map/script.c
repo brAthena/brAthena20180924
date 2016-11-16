@@ -13843,14 +13843,16 @@ BUILDIN(getmercinfo)
 	return true;
 }
 
-/*==========================================
- * Shows wether your inventory(and equips) contain
- * selected card or not.
+/*====================================================================
+ * Verifica se existe certa carta equipada em algum item do iventario
  * checkequipedcard(4001);
- *------------------------------------------*/
+ * [Update Orce - brAthena]
+ * Verifica se existe certa carta equipada em algum item do carrinho
+ * checkequipedcard(4001);
+ *------------------------------------------------------------------*/
 BUILDIN(checkequipedcard)
 {
-	int n,i,c=0;
+	int n,i,c,j,m=0;
 	struct map_session_data *sd = script->rid2sd(st);
 
 	if (sd == NULL)
@@ -13871,6 +13873,20 @@ BUILDIN(checkequipedcard)
 		}
 	}
 
+	// Verifica se tem carta equipada no carrinho - [Orce - brAthena]
+		for(j=0;j<MAX_CART;j++){
+			if(sd->status.cart[j].nameid > 0 && sd->status.cart[j].amount && pc_iscarton(sd)){
+				if (itemdb_isspecial(sd->status.cart[j].card[0]))
+					continue;
+				for(m=0; m < sd->status.cart[j].amount; m++){
+					if(sd->status.cart[j].card[m]==c){
+						script_pushint(st,1);
+						return true;
+					}
+				}
+			}
+		}
+	
 	script_pushint(st,0);
 	return true;
 }
@@ -19961,15 +19977,25 @@ BUILDIN(setcurrency)
 {
 	int val1 = script_getnum(st,2),
 	val2 = script_hasdata(st, 3) ? script_getnum(st,3) : 0;
-	struct npc_data *nd = map->id2nd(st->oid);
+	struct map_session_data* sd = script->rid2sd(st);
 
-	if (!nd) {
-		ShowWarning("buildin_setcurrency: trying to run without a proper NPC!\n");
+	if(!sd)
+	{
+		ShowWarning("buildin_setcurrency: tentando executar sem um jogador vinculado!\n");
 		return false;
 	}
 
-	npc->trader_funds[0] = val1;
-	npc->trader_funds[1] = val2;
+	sd->trader.price 	= val1;
+	sd->trader.points 	= val2;
+	// struct npc_data *nd = map->id2nd(st->oid);
+
+	// if (!nd) {
+	// 	ShowWarning("buildin_setcurrency: trying to run without a proper NPC!\n");
+	// 	return false;
+	// }
+
+	// npc->trader_funds[0] = val1;
+	// npc->trader_funds[1] = val2;
 
 	return true;
 }
@@ -20022,14 +20048,24 @@ BUILDIN(tradertype) {
  * signs the transaction can proceed
  **/
 BUILDIN(purchaseok) {
-	struct npc_data *nd;
+	struct map_session_data* sd = script->rid2sd(st);
 
-	if( !(nd = map->id2nd(st->oid)) || !nd->u.scr.shop ) {
-		ShowWarning("buildin_purchaseok: trying to run without a proper NPC!\n");
+	if(!sd)
+	{
+		ShowWarning("buildin_purchaseok: tentando executar sem jogador vinculado!\n");
 		return false;
 	}
 
-	npc->trader_ok = true;
+	sd->trader.ok = true;
+
+	// struct npc_data *nd;
+
+	// if( !(nd = map->id2nd(st->oid)) || !nd->u.scr.shop ) {
+	// 	ShowWarning("buildin_purchaseok: trying to run without a proper NPC!\n");
+	// 	return false;
+	// }
+
+	// npc->trader_ok = true;
 
 	return true;
 }
@@ -20818,6 +20854,32 @@ BUILDIN(_) {
 	return true;
 }
 
+/*==========================================
+ * Proteção de Conta - [Orce brAthena]
+ *------------------------------------------*/
+BUILDIN(block)
+{
+	struct map_session_data *sd = script->rid2sd(st);
+	int value = script_getnum(st,2);
+	
+	if (sd == NULL)
+		return true;
+
+	sd->state.protection_acc = (value)?1:0;
+	return true;
+}
+
+BUILDIN(blockcheck)
+{
+	struct map_session_data *sd = script->rid2sd(st);
+	
+	if (sd == NULL)
+		return true;
+
+	script_pushint(st,sd->state.protection_acc);
+	return true;
+}
+
 // declarations that were supposed to be exported from npc_chat.c
 BUILDIN(defpattern);
 BUILDIN(activatepset);
@@ -21517,6 +21579,9 @@ void script_parse_builtin(void) {
  		BUILDIN_DEF(closedressroom,"?"),
 		
 		BUILDIN_DEF(_,"s"),
+
+		BUILDIN_DEF(block,"i"), // Proteção de Conta
+		BUILDIN_DEF(blockcheck,""), //Proteção de Conta
 	};
 	int i, len = ARRAYLENGTH(BUILDIN);
 	RECREATE(script->buildin, char *, script->buildin_count + len); // Pre-alloc to speed up

@@ -2652,9 +2652,20 @@ int battle_calc_skillratio(int attack_type, struct block_list *src, struct block
 				case MH_LAVA_SLIDE:
 					skillratio += -100 + 70 * skill_lv;
 					break;
+				case MH_SONIC_CRAW:
+					skillratio = (40 * skill_lv) * status->get_lv(src) / 150;
+					break;
+				case MH_SILVERVEIN_RUSH:
+					skillratio = (150 * skill_lv) * status->get_lv(src) / 100;
+					break;
+				case MH_MIDNIGHT_FRENZY:
+					skillratio = (300 * skill_lv) * status->get_lv(src) / 150;
+					break;
 				case MH_TINDER_BREAKER:
+					skillratio = (100 * skill_lv + 3 * st->str) * status->get_lv(src) / 120;
+					break;
 				case MH_MAGMA_FLOW:
-					skillratio += -100 + 100 * skill_lv;
+					skillratio = (100 * skill_lv + 3 * status->get_lv(src)) * status->get_lv(src) / 120;
 					break;
 				default:
 					battle->calc_skillratio_weapon_unknown(&attack_type, src, target, &skill_id, &skill_lv, &skillratio, &flag);
@@ -2717,6 +2728,7 @@ void battle_calc_skillratio_weapon_unknown(int *attack_type, struct block_list *
  *------------------------------------------*/
 int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Damage *d,int64 damage,uint16 skill_id,uint16 skill_lv) {
 	struct map_session_data *sd = NULL;
+	struct homun_data *hd = NULL;
 	struct status_change *sc, *tsc;
 	struct status_change_entry *sce;
 	int div_, flag;
@@ -2747,7 +2759,9 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 
 		if(!damage) return 0;
 	}
-
+	else if ( bl->type == BL_HOM )
+		hd=(struct homun_data *)bl;
+	
 	sc = status->get_sc(bl);
 	tsc = status->get_sc(src);
 
@@ -3090,10 +3104,6 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 		if(sc->data[SC_PAIN_KILLER]){
 			damage -= damage * sc->data[SC_PAIN_KILLER]->val3 / 100;
 		}
-		if((sce=sc->data[SC_MAGMA_FLOW]) && (rnd()%100 <= sce->val2) ){
-			skill->castend_damage_id(bl,src,MH_MAGMA_FLOW,sce->val1,timer->gettick(),0);
-		}
-
 		if( sc->data[SC_DARKCROW] && (flag&(BF_SHORT|BF_MAGIC)) == BF_SHORT )
 			damage += damage * sc->data[SC_DARKCROW]->val2 / 100;
 
@@ -3170,14 +3180,13 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 			&& rnd()%100 < sce->val2 && sc->fv_counter <= sce->val3 )
 				clif->millenniumshield(bl, sc->fv_counter++);
 
-		if (sc->data[SC_STYLE_CHANGE] && rnd()%2) {
-			struct homun_data *hd = BL_CAST(BL_HOM,bl);
-			if (hd) homun->addspiritball(hd, 10); //add a sphere
-		}
-
 		if( sc->data[SC__DEADLYINFECT] && flag&BF_SHORT && damage > 0 && rnd()%100 < 30 + 10 * sc->data[SC__DEADLYINFECT]->val1 && !is_boss(src) )
 			status->change_spread(bl, src); // Deadly infect attacked side
 
+		// Aqui 02
+		if ( hd && (sce = sc->data[SC_STYLE_CHANGE]) && sce->val1 == GRAPPLER_STYLE && rand()%100 < sce->val2 )
+			homun->addspiritball(hd,MAX_HOMUN_SPHERES);
+		
 		if (sd && damage > 0 && (sce = sc->data[SC_GENTLETOUCH_ENERGYGAIN]) != NULL) {
 			if ( rnd() % 100 < sce->val2 )
 				pc->addspiritball(sd, skill->get_time(MO_CALLSPIRITS, 1), pc->getmaxspiritball(sd, 0));
@@ -3202,10 +3211,6 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 			status->change_spread(src, bl);
 		if (tsc->data[SC_SHIELDSPELL_REF] && tsc->data[SC_SHIELDSPELL_REF]->val1 == 1 && damage > 0)
 			skill->break_equip(bl,EQP_ARMOR,10000,BCT_ENEMY );
-		if (tsc->data[SC_STYLE_CHANGE] && rnd()%2) {
-			struct homun_data *hd = BL_CAST(BL_HOM,bl);
-			if (hd) homun->addspiritball(hd, 10);
-		}
 		if (src->type == BL_PC && damage > 0 && (sce = tsc->data[SC_GENTLETOUCH_ENERGYGAIN]) != NULL) {
 			struct map_session_data *tsd = BL_UCAST(BL_PC, src);
 			if (tsd != NULL && rnd() % 100 < sce->val2)
@@ -4234,6 +4239,7 @@ struct Damage battle_calc_weapon_attack(struct block_list *src,struct block_list
 	bool n_ele = false; // non-elemental
 
 	struct map_session_data *sd, *tsd;
+	struct homun_data *hd;
 	struct Damage wd;
 	struct status_change *sc = status->get_sc(src);
 	struct status_change *tsc = status->get_sc(target);
@@ -4303,6 +4309,7 @@ struct Damage battle_calc_weapon_attack(struct block_list *src,struct block_list
 
 	sd = BL_CAST(BL_PC, src);
 	tsd = BL_CAST(BL_PC, target);
+	hd = BL_CAST(BL_HOM, src);
 
 	if(sd)
 		wd.blewcount += battle->blewcount_bonus(sd, skill_id);
@@ -4375,7 +4382,23 @@ struct Damage battle_calc_weapon_attack(struct block_list *src,struct block_list
 				if( sc && sc->data[SC_BANDING] && sc->data[SC_BANDING]->val2 > 3 )
 					wd.div_ = sc->data[SC_BANDING]->val2;
 				break;
+				
+			case MH_SONIC_CRAW:
+				if (hd)
+					wd.div_ = hd->hom_spiritball_old;
+				else
+					wd.div_ = 10;
+				break;
 
+			case RL_R_TRIP: //Knock's back target out of skill range
+				wd.blewcount -= distance_bl(src, target);
+				break;
+
+			case EL_STONE_RAIN:
+				if(!(wd.flag==1))
+					wd.div_ = 1;
+				break;
+				
 			case MO_INVESTIGATE:
 				flag.pdef = flag.pdef2 = 2;
 				break;
@@ -4822,7 +4845,9 @@ struct Damage battle_calc_weapon_attack(struct block_list *src,struct block_list
 				break;
 			case HFLI_SBR44: //[orn]
 				if (src->type == BL_HOM) {
-					const struct homun_data *hd = BL_UCCAST(BL_HOM, src);
+					//const struct homun_data *hd = BL_UCCAST(BL_HOM, src);
+					// Desnecessário redeclaração de variavel. Mesma já declarada mais acima.
+					hd = BL_UCAST(BL_HOM, src);
 					wd.damage = hd->homunculus.intimacy;
 					break;
 				}
@@ -5129,11 +5154,6 @@ struct Damage battle_calc_weapon_attack(struct block_list *src,struct block_list
 				}
 			}
 #endif
-			if(sc->data[SC_STYLE_CHANGE]){
-				struct homun_data *hd = BL_CAST(BL_HOM, src);
-				if (hd != NULL)
-					ATK_ADD(hd->homunculus.spiritball * 3);
-			}
 		}
 
 		switch (skill_id) {
@@ -5471,7 +5491,11 @@ struct Damage battle_calc_weapon_attack(struct block_list *src,struct block_list
 			flag.lh = 1;
 		}
 	}
-
+	else if (hd)
+	{// Homunculus Spirit Sphere's ATK Bonus
+		ATK_ADD(wd.div_*hd->hom_spiritball*3);
+	}
+	
 	if(!flag.rh && wd.damage)
 		wd.damage=0;
 
@@ -5969,8 +5993,10 @@ int battle_damage_area(struct block_list *bl, va_list ap) {
 // FIXME: flag is undocumented
 enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* target, int64 tick, int flag) {
 	struct map_session_data *sd = NULL, *tsd = NULL;
+	struct homun_data *hd = NULL;
 	struct status_data *sstatus, *tstatus;
 	struct status_change *sc, *tsc;
+	struct status_change_entry *sce;
 	int64 damage;
 	int skillv;
 	struct Damage wd;
@@ -5983,6 +6009,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 
 	sd = BL_CAST(BL_PC, src);
 	tsd = BL_CAST(BL_PC, target);
+	hd = BL_CAST(BL_HOM, src);
 
 	sstatus = status->get_status_data(src);
 	tstatus = status->get_status_data(target);
@@ -6109,6 +6136,9 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 		if( tsc && tsc->data[SC_MTF_MLEATKED] && rnd()%100 < 20 )
 			clif->skill_nodamage(target, target, SM_ENDURE, 5,
 				sc_start(target,target, SC_ENDURE, 100, 5, skill->get_time(SM_ENDURE, 5)));
+		// Aqui 01
+		if ( hd && (sce = sc->data[SC_STYLE_CHANGE]) && sce->val1 == FIGHTER_STYLE && rand()%100 < sce->val2 )
+			homun->addspiritball(hd,MAX_HOMUN_SPHERES);				
 	}
 
 	if(tsc && tsc->data[SC_KAAHI] && tsc->data[SC_KAAHI]->val4 == INVALID_TIMER && tstatus->hp < tstatus->max_hp)
@@ -6168,11 +6198,17 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 		battle->delay_damage(tick, wd.amotion, src, target, wd.flag, 0, 0, damage, wd.dmg_lv, wd.dmotion, true);
 	if( tsc ) {
 		if( tsc->data[SC_DEVOTION] ) {
-			struct status_change_entry *sce = tsc->data[SC_DEVOTION];
-			struct block_list *d_bl = map->id2bl(sce->val1);
-			struct mercenary_data *d_md = BL_CAST(BL_MER, d_bl);
-			struct map_session_data *d_sd = BL_CAST(BL_PC, d_bl);
+			struct block_list *d_bl = NULL;
+			struct mercenary_data *d_md = NULL; 
+			struct map_session_data *d_sd = NULL;
 
+			// Desnecessário redeclarar as variaveis. [CarlosHenrq]
+			sce = tsc->data[SC_DEVOTION];
+
+			d_bl = map->id2bl(sce->val1);
+			d_md = BL_CAST(BL_MER, d_bl);
+			d_sd = BL_CAST(BL_PC, d_bl);
+			
 			if (d_bl != NULL
 			 && ((d_bl->type == BL_MER && d_md->master != NULL && d_md->master->bl.id == target->id)
 			  || (d_bl->type == BL_PC && d_sd->devotion[sce->val2] == target->id)
@@ -6306,7 +6342,8 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 		 && status->check_skilluse(target, src, TF_POISON, 0)
 		) {
 			//Poison React
-			struct status_change_entry *sce = tsc->data[SC_POISONREACT];
+			// Redeclaração de variaveis desnecessária [CarlosHenrq]
+			sce = tsc->data[SC_POISONREACT];
 			if (sstatus->def_ele == ELE_POISON) {
 				sce->val2 = 0;
 				skill->attack(BF_WEAPON,target,target,src,AS_POISONREACT,sce->val1,tick,0);
@@ -7225,6 +7262,24 @@ static const struct battle_data {
 	{ "get_refine",                         &battle_config.get_refine,                      0,      1,      100,            },
 	// Configuração para habilidades de remover armas. [Sir Will]
 	{ "strip_weapon",                       &battle_config.strip_weapon,                    0,      0,      1,              },
+	// Configurações dos níveis máximos para base e classe. [CarlosHenrq]
+	{ "max_baselv_normal",					&battle_config.max_baselv_normal,				99,		0,		MAX_LEVEL,		},
+	{ "max_baselv_trans",					&battle_config.max_baselv_trans,				99,		0,		MAX_LEVEL,		},
+	{ "max_baselv_third",					&battle_config.max_baselv_third,				175,	0,		MAX_LEVEL,		},
+	{ "max_baselv_sne_ko",					&battle_config.max_baselv_sne_ko,				160,	0,		MAX_LEVEL,		},
+	{ "max_joblv_novice",					&battle_config.max_joblv_novice,				 10,	0,		255,			},
+	{ "max_joblv_first",					&battle_config.max_joblv_first,				 	 50,	0,		255,			},
+	{ "max_joblv_second",					&battle_config.max_joblv_second,				 50,	0,		255,			},
+	{ "max_joblv_novice_t",					&battle_config.max_joblv_novice_t,				 10,	0,		255,			},
+	{ "max_joblv_first_t",					&battle_config.max_joblv_first_t,			 	 50,	0,		255,			},
+	{ "max_joblv_second_t",					&battle_config.max_joblv_second_t,				 70,	0,		255,			},
+	{ "max_joblv_third",					&battle_config.max_joblv_third,					 60,	0,		255,			},
+	{ "max_joblv_sne_ko",					&battle_config.max_joblv_sne_ko,				 50,	0,		255,			},
+	{ "max_joblv_guns_ninja",				&battle_config.max_joblv_guns_ninja,			 70,	0,		255,			},
+	{ "max_joblv_taekwon",					&battle_config.max_joblv_taekwon,				 50,	0,		255,			},
+	{ "max_joblv_taekwon_master",			&battle_config.max_joblv_taekwon_master,		 50,	0,		255,			},
+	{ "max_joblv_soullinker",				&battle_config.max_joblv_soullinker,		 	 50,	0,		255,			},
+	{ "max_joblv_sn_snb",					&battle_config.max_joblv_sn_snb,		 	 	 99,	0,		255,			},
 };
 #ifndef STATS_OPT_OUT
 /**

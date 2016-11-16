@@ -1297,6 +1297,11 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 				target = battle->get_master(src);
 				if (!target) return 0;
 				target_id = target->id;
+				break;
+			case MH_SONIC_CRAW:
+				if (sc && sc->data[SC_MIDNIGHT_FRENZY_POSTDELAY])
+					target_id = sc->data[SC_MIDNIGHT_FRENZY_POSTDELAY]->val2;
+				break;				
 	}
 
 	if( !target ) // choose default target

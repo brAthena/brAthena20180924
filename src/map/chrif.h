@@ -163,6 +163,11 @@ struct chrif_interface {
 	int (*parse) (int fd);
 	void (*save_scdata_single) (int account_id, int char_id, short type, struct status_change_entry *sce);
 	void (*del_scdata_single) (int account_id, int char_id, short type);
+
+	// Métodos para solicitar ban e unban de mac_address ao char e login-server. [CarlosHenrq]
+	void (*ask_mac_ban) (const char* mac, int minute);
+	void (*ask_mac_unban) (const char* mac);
+	void (*ask_mac_response) (int fd);
 };
 
 struct chrif_interface *chrif;

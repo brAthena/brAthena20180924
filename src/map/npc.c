@@ -1658,12 +1658,12 @@ void npc_trader_count_funds(struct npc_data *nd, struct map_session_data *sd) {
 	char evname[EVENT_NAME_LENGTH];
 	struct event_data *ev = NULL;
 
-	npc->trader_funds[0] = npc->trader_funds[1] = 0;/* clear */
+	sd->trader.price = sd->trader.points = 0; /* clear */
 
 	switch( nd->u.scr.shop->type ) {
 		case NST_CASH:
-			npc->trader_funds[0] = sd->cashPoints;
-			npc->trader_funds[1] = sd->kafraPoints;
+			sd->trader.price 	= sd->cashPoints;
+			sd->trader.points 	= sd->kafraPoints;
 			return;
 		case NST_CUSTOM:
 			break;
@@ -1695,7 +1695,7 @@ bool npc_trader_pay(struct npc_data *nd, struct map_session_data *sd, int price,
 	char evname[EVENT_NAME_LENGTH];
 	struct event_data *ev = NULL;
 
-	npc->trader_ok = false;/* clear */
+	sd->trader.ok = false; /* clear */
 
 	snprintf(evname, EVENT_NAME_LENGTH, "%s::OnPayFunds",nd->exname);
 	if ( (ev = strdb_get(npc->ev_db, evname)) ) {
@@ -1705,7 +1705,7 @@ bool npc_trader_pay(struct npc_data *nd, struct map_session_data *sd, int price,
 	} else
 		ShowError("npc_trader_pay: '%s' evento '%s' nao encontrado, falha na operacao\n",nd->exname,evname);
 
-	return npc->trader_ok;/* run script will deal with it */
+	return sd->trader.ok;/* run script will deal with it */
 }
 /*==========================================
  * Cash Shop Buy
@@ -4929,9 +4929,6 @@ void npc_defaults(void) {
 	npc->timer_event_ers = NULL;
 	npc->fake_nd = NULL;
 	npc->src_files = NULL;
-	/* */
-	npc->trader_ok = false;
-	npc->trader_funds[0] = npc->trader_funds[1] = 0;
 	/* */
 	npc->init = do_init_npc;
 	npc->final = do_final_npc;

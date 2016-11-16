@@ -41,7 +41,11 @@ void pincode_handle (int fd, struct char_session_data* sd) {
 
 	nullpo_retv(sd);
 	character = (struct online_char_data*)idb_get(chr->online_char_db, sd->account_id);
-	if( character && character->pincode_enable > pincode->charselect ){
+	if( character && character->pincode_enable > pincode->charselect
+		// Caso esteja habilitada a configuração de verificação dos dias que a senha
+		// Não tenha sido alterada, verifica o pincode do jogador, caso esteja ativa e dentro do prazo
+		// Não verifica o pincode e deixa tudo ok. [CarlosHenrq]
+		&& (pincode->enabled_lastpass == 0 || (pincode->enabled_lastpass > 0 && pincode->enabled_lastpass < sd->pincode_lastpass))){
 		character->pincode_enable = pincode->charselect * 2;
 	}else{
 		pincode->sendstate( fd, sd, PINCODE_OK );
@@ -199,6 +203,11 @@ bool pincode_config_read(char *w1, char *w2) {
 			}
 		} else if ( strcmpi(w1, "pincode_charselect") == 0 ) {
 			pincode->charselect = atoi(w2);
+		}
+		// Verifica se irá utilizar o número de dias para verificar o pincode. [CarlosHenrq]
+		else if(!strcmpi(w1, "pincode_lastpass"))
+		{
+			pincode->enabled_lastpass = atoi(w2);
 		} else {
 			return false;
 		}

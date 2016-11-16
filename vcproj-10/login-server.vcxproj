@@ -146,6 +146,7 @@
     <ClInclude Include="..\src\login\ipban.h" />
     <ClInclude Include="..\src\login\login.h" />
     <ClInclude Include="..\src\login\loginlog.h" />
+    <ClInclude Include="..\src\login\mac.h" />
     <ClInclude Include="..\src\common\cbasetypes.h" />
     <ClInclude Include="..\src\common\core.h" />
     <ClInclude Include="..\src\common\console.h" />
@@ -178,6 +179,7 @@
     <ClCompile Include="..\src\login\ipban_sql.c" />
     <ClCompile Include="..\src\login\login.c" />
     <ClCompile Include="..\src\login\loginlog_sql.c" />
+    <ClCompile Include="..\src\login\mac.c" />
     <ClCompile Include="..\src\common\core.c" />
     <ClCompile Include="..\src\common\console.c" />
     <ClCompile Include="..\src\common\db.c" />

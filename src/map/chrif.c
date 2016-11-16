@@ -1616,6 +1616,51 @@ void chrif_del_scdata_single(int account_id, int char_id, short type)
 }
 
 /**
+ * Envia o pacote de ban do mac_address para solicitar o char-server banir o mac_address [CarlosHenrq]
+ */
+void chrif_ask_mac_ban(const char* mac_address, int minute)
+{
+	if(!chrif->isconnected())
+	{
+		ShowError("Falha ao pedir banimento do MAC '%s'\n",mac_address);
+		return;
+	}
+
+	// Envia o pacote ao char-server pedindo para banir o mac-address
+	WFIFOHEAD(chrif->fd, 24);
+	WFIFOW(chrif->fd,0)		= 0x27f0;
+	memcpy(WFIFOP(chrif->fd,2), mac_address, MAC_LENGTH);
+	WFIFOL(chrif->fd, 20)   = minute;
+	WFIFOSET(chrif->fd, 24);
+}
+
+/**
+ * Envia o pacote de unban do mac_address para solicitar ao char-server desbanir o mac_address [CarlosHenrq]
+ */
+void chrif_ask_mac_unban(const char* mac_address)
+{
+	if(!chrif->isconnected())
+	{
+		ShowError("Falha ao pedir desbanimento do MAC '%s'\n",mac_address);
+		return;
+	}
+
+	// Envia o pacote ao char-server pedindo para banir o mac-address
+	WFIFOHEAD(chrif->fd, 20);
+	WFIFOW(chrif->fd,0)		= 0x27f1;
+	memcpy(WFIFOP(chrif->fd,2), mac_address, MAC_LENGTH);
+	WFIFOSET(chrif->fd, 20);
+}
+
+/**
+ * Recebe o pacote de retorno de status para banir o mac_address [CarlosHenrq]
+ */
+void chrif_ask_mac_response(int fd)
+{
+	// @Todo: Resposta sobre o ban de mac_address
+}
+
+/**
  * @see DBApply
  */
 int auth_db_final(DBKey key, DBData *data, va_list ap) {
@@ -1791,4 +1836,9 @@ void chrif_defaults(void) {
 	chrif->parse = chrif_parse;
 	chrif->save_scdata_single = chrif_save_scdata_single;
 	chrif->del_scdata_single = chrif_del_scdata_single;
+
+	// Métodos para solicitar ban e unban de mac_address ao char e login-server. [CarlosHenrq]
+	chrif->ask_mac_ban = chrif_ask_mac_ban;
+	chrif->ask_mac_unban = chrif_ask_mac_unban;
+	chrif->ask_mac_response = chrif_ask_mac_response;
 }

@@ -219,6 +219,7 @@ struct map_session_data {
 		unsigned int standalone : 1;/* [Ind/Hercules <3] */
 		unsigned int loggingout : 1;
 		unsigned int warp_clean : 1;
+		unsigned int protection_acc : 1; // Proteção de Conta - [Orce brAthena]
 	} state;
 	struct {
 		unsigned char no_weapon_damage, no_magic_damage, no_misc_damage;
@@ -587,6 +588,13 @@ END_ZEROED_BLOCK;
 
 	// [CarlosHenrq] Enviando mac_address no pacote entre os servidores.
 	char mac_address[MAC_LENGTH];
+
+	// [CarlosHenrq] Isso aqui podia causar muita confusão mais pra frente
+	struct
+	{
+		bool ok;
+		int price, points;
+	} trader;
 };
 
 #define EQP_WEAPON EQP_HAND_R

@@ -390,12 +390,7 @@ bool vending_searchall(struct map_session_data* sd, const struct s_search_store_
 int vending_count_sub(struct block_list *bl, va_list ap)
 {
 	struct map_session_data* sd = BL_UCAST(BL_PC, bl);
-	int* vendingCount = (int*)va_arg(ap, int *);
-
-	if(sd != NULL && sd->state.vending)
-		(*vendingCount)++;
-
-	return 0;
+	return (sd != NULL && sd->state.vending);
 }
 
 /**
@@ -407,10 +402,7 @@ int vending_count_sub(struct block_list *bl, va_list ap)
  */
 int vending_count_map(int16 m)
 {
-
-	int vendingCount = 0;
-	map->foreachinmap(vending->count_sub, m, BL_PC, &vendingCount);
-	return vendingCount;
+	return map->foreachinmap(vending->count_sub, m, BL_PC);
 }
 
 /**
@@ -426,9 +418,7 @@ int vending_count_map(int16 m)
  */
 int vending_count_area(int16 m, int16 x0, int16 y0, int16 x1, int16 y1)
 {
-	int vendingCount = 0;
-	map->foreachinarea(vending->count_sub, m, x0, y0, x1, y1, BL_PC, &vendingCount);
-	return vendingCount;
+	return map->foreachinarea(vending->count_sub, m, x0, y0, x1, y1, BL_PC);
 }
 
 /**
@@ -442,9 +432,7 @@ int vending_count_area(int16 m, int16 x0, int16 y0, int16 x1, int16 y1)
  */
 int vending_count_cell(int16 m, int16 x, int16 y)
 {
-	int vendingCount = 0;
-	map->foreachincell(vending->count_sub, m, x, y, BL_PC, &vendingCount);
-	return vendingCount;
+	return map->foreachincell(vending->count_sub, m, x, y, BL_PC);
 }
 
 /**
@@ -457,9 +445,7 @@ int vending_count_cell(int16 m, int16 x, int16 y)
  */
 int vending_count_range(struct block_list* bl, int range)
 {
-	int vendingCount = 0;
-	map->foreachinrange(vending->count_sub, bl, range, BL_PC, &vendingCount);
-	return vendingCount;
+	return map->foreachinrange(vending->count_sub, bl, range, BL_PC);
 }
 
 /**

@@ -24,6 +24,7 @@
 
 #include "login/account.h"
 #include "login/ipban.h"
+#include "login/mac.h"
 #include "login/loginlog.h"
 #include "common/cbasetypes.h"
 #include "common/conf.h"
@@ -72,7 +73,7 @@ static DBData login_create_online_user(DBKey key, va_list args)
 	return DB->ptr2data(p);
 }
 
-struct online_login_data* login_add_online_user(int char_server, int account_id)
+struct online_login_data* login_add_online_user(int char_server, int account_id, const char* mac_address)
 {
 	struct online_login_data* p;
 	p = idb_ensure(login->online_db, account_id, login->create_online_user);
@@ -82,6 +83,7 @@ struct online_login_data* login_add_online_user(int char_server, int account_id)
 		timer->delete(p->waiting_disconnect, login->waiting_disconnect_timer);
 		p->waiting_disconnect = INVALID_TIMER;
 	}
+	mac->add_online(account_id, mac_address);
 	return p;
 }
 
@@ -95,6 +97,7 @@ void login_remove_online_user(int account_id)
 		timer->delete(p->waiting_disconnect, login->waiting_disconnect_timer);
 
 	idb_remove(login->online_db, account_id);
+	mac->del_online(account_id);
 }
 
 static int login_waiting_disconnect_timer(int tid, int64 tick, int id, intptr_t data) {
@@ -370,17 +373,21 @@ void login_fromchar_parse_request_change_email(int fd, int id, const char *const
 
 void login_fromchar_account(int fd, int account_id, struct mmo_account *acc)
 {
-	WFIFOHEAD(fd,72);
+	WFIFOHEAD(fd,76);
 	WFIFOW(fd,0) = 0x2717;
 	WFIFOL(fd,2) = account_id;
 	if (acc)
 	{
 		time_t expiration_time = 0;
+		time_t pincode_lastpass = (time(NULL) - acc->last_password_change);
 		char email[40] = "";
 		int group_id = 0;
 		uint8 char_slots = 0;
 		char birthdate[10+1] = "";
 		char pincode[4+1] = "\0\0\0\0";
+
+		pincode_lastpass -= (pincode_lastpass%86400);
+		pincode_lastpass /= 86400;
 
 		safestrncpy(email, acc->email, sizeof(email));
 		expiration_time = acc->expiration_time;
@@ -398,6 +405,7 @@ void login_fromchar_account(int fd, int account_id, struct mmo_account *acc)
 		safestrncpy((char*)WFIFOP(fd,52), birthdate, 10+1);
 		safestrncpy((char*)WFIFOP(fd,63), pincode, 4+1 );
 		WFIFOL(fd,68) = acc->pincode_change;
+		WFIFOL(fd,72) = (uint32)pincode_lastpass;
 	}
 	else
 	{
@@ -408,8 +416,9 @@ void login_fromchar_account(int fd, int account_id, struct mmo_account *acc)
 		safestrncpy((char*)WFIFOP(fd,52), "", 10+1);
 		safestrncpy((char*)WFIFOP(fd,63), "\0\0\0\0", 4+1 );
 		WFIFOL(fd,68) = 0;
+		WFIFOL(fd,72) = 0;
 	}
-	WFIFOSET(fd,72);
+	WFIFOSET(fd,76);
 }
 
 void login_fromchar_parse_account_data(int fd, int id, const char *const ip)
@@ -644,7 +653,7 @@ void login_fromchar_parse_unban(int fd, int id, const char *const ip)
 
 void login_fromchar_parse_account_online(int fd, int id)
 {
-	login->add_online_user(id, RFIFOL(fd,2));
+	login->add_online_user(id, RFIFOL(fd,2), sockt->session[fd]->mac_address);
 	RFIFOSKIP(fd,6);
 }
 
@@ -960,6 +969,25 @@ int login_parse_fromchar(int fd)
 			else {
 				login->fromchar_parse_accinfo(fd);
 			}
+
+		/* Pacotes para banimento de mac_address [CarlosHenrq] */
+
+		// 0x27f0, <mac_id : string>, <minutes : int> = len(24)
+		case 0x27f0:
+			if(RFIFOREST(fd) < 24)
+				return 0;
+
+			login->fromchar_parse_ban_mac(fd);
+			break;
+
+		// 0x27f1, <mac_id : string> = len(20)
+		case 0x27f1:
+			if(RFIFOREST(fd) < 20)
+				return 0;
+
+			login->fromchar_parse_unban_mac(fd);
+			break;
+
 		break;
 		default:
 			ShowError("login_parse_fromchar: Pacote 0x%x desconhecido do servidor de personagem! Desconectando....\n", command);
@@ -975,7 +1003,7 @@ int login_parse_fromchar(int fd)
 //-------------------------------------
 // Make new account
 //-------------------------------------
-int login_mmo_auth_new(const char* userid, const char* pass, const char sex, const char* last_ip) {
+int login_mmo_auth_new(const char* userid, const char* pass, const char sex, const char* mac_address, const char* last_ip) {
 	static int num_regs = 0; // registration counter
 	static int64 new_reg_tick = 0;
 	int64 tick = timer->gettick();
@@ -1018,6 +1046,8 @@ int login_mmo_auth_new(const char* userid, const char* pass, const char sex, con
 	safestrncpy(acc.pincode, "\0", sizeof(acc.pincode));
 	acc.pincode_change = 0;
 	acc.char_slots = 0;
+	safestrncpy(acc.mac_address, mac_address, MAC_LENGTH);
+	acc.last_password_change = time(NULL);
 
 	if( !accounts->create(accounts, &acc) )
 		return 0;
@@ -1082,7 +1112,7 @@ int login_mmo_auth(struct login_session_data* sd, bool isServer) {
 			len -= 2;
 			sd->userid[len] = '\0';
 
-			result = login->mmo_auth_new(sd->userid, sd->passwd, TOUPPER(sd->userid[len+1]), ip);
+			result = login->mmo_auth_new(sd->userid, sd->passwd, TOUPPER(sd->userid[len+1]), sockt->session[sd->fd]->mac_address, ip);
 			if( result != -1 )
 				return result;// Failed to make account. [Skotlex].
 		}
@@ -1108,6 +1138,25 @@ int login_mmo_auth(struct login_session_data* sd, bool isServer) {
 		timestamp2string(tmpstr, sizeof(tmpstr), acc.unban_time, login->config->date_format);
 		ShowNotice("Conexao recusada (conta: %s, senha: %s, banido ate %s, ip: %s)\n", sd->userid, sd->passwd, tmpstr, ip);
 		return 6; // 6 = Your are Prohibited to log in until %s
+	}
+
+	if(login->config->mac_ban_enable
+		&& mac->ban_check(sockt->session[sd->fd]->mac_address))
+	{
+		int64 unban_time = mac->ban_end(sockt->session[sd->fd]->mac_address);
+
+		if(unban_time > 0)
+		{
+			char tmpstr[24];
+			timestamp2string(tmpstr, sizeof(tmpstr), unban_time, login->config->date_format);
+			ShowNotice("Conexao recusada - (conta: %s, senha: %s, banido por mac ate %s, mac: %s)\n", sd->userid, sd->passwd, tmpstr, sockt->session[sd->fd]->mac_address);
+			return 6; // 6 = Your are Prohibited to log in until %s
+		}
+		else
+		{
+			ShowNotice("Conexao recusada - (conta: %s, senha: %s, banido por mac eternamente, mac: %s)\n", sd->userid, sd->passwd, sockt->session[sd->fd]->mac_address);
+			return 11;
+		}
 	}
 
 	if( acc.state != 0 ) {
@@ -1258,6 +1307,15 @@ void login_auth_ok(struct login_session_data* sd)
 		}
 	}
 
+	// Se a configuração para bloquear dual mac estiver ligada, então
+	// Verifica se aquele mac_address está online. (Chegou aqui por está logando outra conta) [CarlosHenrq]
+	if(login->config->mac_block_dual && mac->is_online(sockt->session[fd]->mac_address))
+	{
+		ShowWarning("O MAC '"CL_WHITE"%s"CL_RESET"' esta online - Rejeitando.\n", sockt->session[fd]->mac_address);
+		login->connection_problem(fd, 8); // 08 = Server still recognizes your last login
+		return;
+	}
+
 	// [CarlosHenrq] Enviando mac_address no pacote entre os servidores.
 	login_log(ip, sd->userid, 100, "Conectado com sucesso", sockt->session[fd]->mac_address);
 	ShowStatus("Conexao do usuario '%s' aceita.\n", sd->userid);
@@ -1314,7 +1372,7 @@ void login_auth_ok(struct login_session_data* sd)
 		struct online_login_data* data;
 
 		// mark client as 'online'
-		data = login->add_online_user(-1, sd->account_id);
+		data = login->add_online_user(-1, sd->account_id, node->mac_address);
 
 		// schedule deletion of this node
 		data->waiting_disconnect = timer->add(timer->gettick()+AUTH_TIMEOUT, login->waiting_disconnect_timer, sd->account_id, 0);
@@ -1372,7 +1430,13 @@ void login_auth_failed(struct login_session_data* sd, int result)
 		memset(WFIFOP(fd,6), '\0', 20);
 	else { // 6 = Your are Prohibited to log in until %s
 		struct mmo_account acc;
-		time_t unban_time = ( accounts->load_str(accounts, &acc, sd->userid) ) ? acc.unban_time : 0;
+		time_t unban_time;
+
+		if(login->config->mac_ban_enable && mac->ban_check(sockt->session[fd]->mac_address))
+			unban_time = mac->ban_end(sockt->session[fd]->mac_address);
+		else
+			unban_time = ( accounts->load_str(accounts, &acc, sd->userid) ) ? acc.unban_time : 0;
+
 		timestamp2string((char*)WFIFOP(fd,6), 20, unban_time, login->config->date_format);
 	}
 	WFIFOSET(fd,26);
@@ -1384,7 +1448,12 @@ void login_auth_failed(struct login_session_data* sd, int result)
 		memset(WFIFOP(fd,3), '\0', 20);
 	else { // 6 = Your are Prohibited to log in until %s
 		struct mmo_account acc;
-		time_t unban_time = ( accounts->load_str(accounts, &acc, sd->userid) ) ? acc.unban_time : 0;
+		time_t unban_time;
+
+		if(login->config->mac_ban_enable && mac->ban_check(sockt->session[fd]->mac_address))
+			unban_time = mac->ban_end(sockt->session[fd]->mac_address);
+		else
+			unban_time = ( accounts->load_str(accounts, &acc, sd->userid) ) ? acc.unban_time : 0;
 		timestamp2string((char*)WFIFOP(fd,3), 20, unban_time, login->config->date_format);
 	}
 	WFIFOSET(fd,23);
@@ -1592,6 +1661,116 @@ void login_parse_request_connection(int fd, struct login_session_data* sd, const
 	}
 }
 
+// Funções para tratamento dos pacotes recebidos pelo char-server
+//  Solicitando ban de mac_address
+/*
+ 
+Pacote para banir mac_address recebido de char-server
+
+0x27f0 <- Recebe (mac_address, minutes) = len(24)
+0x27f2 -> Envia (mac_address, response) = len(24)
+			-> 0 (Negado ou impossível de fazer, configuração desabilitada)
+			-> 1 (Banido)
+			-> 2 (Desbanido)
+ */
+void login_fromchar_parse_ban_mac(int fd)
+{
+	char mac_address[MAC_LENGTH];
+	int minutes, response = 0;
+
+	// Realiza a leitura do pacote.
+	safestrncpy(mac_address, (char*)RFIFOP(fd,2), MAC_LENGTH);
+	minutes = RFIFOL(fd, 20);
+	RFIFOSKIP(fd,24);
+
+	if(login->config->mac_ban_enable)
+	{
+		ShowNotice("Recebido pedido para banir o MAC '"CL_WHITE"%s"CL_RESET"'.\n", mac_address);
+
+		// Envia pedido de ban
+		mac->ban(mac_address, "Solicitacao via char-server.", minutes, true);
+		response = mac->ban_check(mac_address);
+
+		// MacAddress está na lista de banidos agora.
+		if(response)
+			ShowStatus("MAC '"CL_WHITE"%s"CL_RESET"' foi banido com sucesso.\n", mac_address);
+		else
+			ShowError("Ocorreu um erro na tentativa de banir o MAC '"CL_WHITE"%s"CL_RESET"'.\n", mac_address);
+
+	}
+	else
+	{
+		ShowWarning("Banimento de MAC '"CL_WHITE"%s"CL_RESET"' negado. Habilite configuracao.\n", mac_address);
+	}
+
+	// Responde o pacote recebido para o char-server
+	WFIFOHEAD(fd, 24);
+	WFIFOW(fd,0) = 0x27f2;
+	memcpy(WFIFOP(fd,2), mac_address, MAC_LENGTH);
+	WFIFOL(fd, 20) = response;
+	WFIFOSET(fd, 24);
+
+	return;
+}
+
+/*
+
+Pacote para desbanir mac_address recebido de char-server
+
+0x27f1 <- Recebe (mac_address) = len(20)
+0x27f2 -> Envia (mac_address, response) = len(24)
+			-> 0 (Negado ou impossível de fazer, configuração desabilitada)
+			-> 1 (Banido)
+			-> 2 (Desbanido)
+
+*/
+void login_fromchar_parse_unban_mac(int fd)
+{
+	char mac_address[MAC_LENGTH];
+	int response = 0;
+
+	// Realiza a leitura do pacote.
+	safestrncpy(mac_address, (char*)RFIFOP(fd,2), MAC_LENGTH);
+	RFIFOSKIP(fd, 20);
+
+	if(login->config->mac_ban_enable)
+	{
+		ShowNotice("Recebido pedido para desbanir o MAC '"CL_WHITE"%s"CL_RESET"'.\n", mac_address);
+
+		// Verifica se o mac_address está banido no banco de dados.
+		if(!mac->ban_check(mac_address))
+		{
+			mac->unban_mac(mac_address);
+			// Verifica se ainda está banido o mac_address, se estiver,
+			//  responde com 0
+			response = mac->ban_check(mac_address) ? 0 : 2;
+
+			if(response == 2)
+				ShowStatus("O MAC '"CL_WHITE"%s"CL_RESET"' foi desbanido com sucesso.\n", mac_address);
+			else
+				ShowError("Nao foi possivel desbanir o MAC '"CL_WHITE"%s"CL_RESET"'.\n", mac_address);
+		}
+		else
+		{
+			ShowStatus("Pedido de desbanir o MAC '"CL_WHITE"%s"CL_RESET"' negado. MAC nao esta banido.\n", mac_address);
+		}
+
+	}
+	else
+	{
+		ShowWarning("Remocao de ban do MAC '"CL_WHITE"%s"CL_RESET"' negado. Habilite configuracao.\n", mac_address);
+	}
+
+	// Responde o pacote recebido para o char-server
+	WFIFOHEAD(fd, 24);
+	WFIFOW(fd,0) = 0x27f2;
+	memcpy(WFIFOP(fd,2), mac_address, MAC_LENGTH);
+	WFIFOL(fd, 20) = response;
+	WFIFOSET(fd, 24);
+
+	return;
+}
+
 //----------------------------------------------------------------------------------------
 // Default packet parsing (normal players or char-server connection requests)
 //----------------------------------------------------------------------------------------
@@ -1725,6 +1904,11 @@ void login_config_set_defaults(void)
 	login->config->dynamic_pass_failure_ban_interval = 5;
 	login->config->dynamic_pass_failure_ban_limit = 7;
 	login->config->dynamic_pass_failure_ban_duration = 5;
+
+	// Banimento por mac_address [CarlosHenrq]
+	login->config->mac_block_dual = false;
+	login->config->mac_ban_enable = false;
+
 	login->config->use_dnsbl = false;
 	safestrncpy(login->config->dnsbl_servs, "", sizeof(login->config->dnsbl_servs));
 
@@ -1846,6 +2030,8 @@ int login_config_read(const char *cfgName)
 				db->set_property(db, w1, w2);
 			ipban_config_read(w1, w2);
 			loginlog_config_read(w1, w2);
+			// Realiza configuração de leitura das informações relacionadas ao mac_address
+			mac->config_read(w1, w2);
 		}
 	}
 	fclose(fp);
@@ -1867,6 +2053,9 @@ int do_final(void) {
 		hn = hn->next;
 		aFree(tmp);
 	}
+
+	// Encerra estrutura de mac_address [CarlosHenrq]
+	mac->final();
 
 	// [CarlosHenrq] Enviando mac_address no pacote entre os servidores.
 	login_log(0, "Servidor de login", 100, "Fechando...", "");
@@ -1980,6 +2169,9 @@ int do_init(int argc, char** argv)
 
 	login_defaults();
 
+	// Inicializa configurações relacionadas ao mac_address [CarlosHenrq]
+	mac_doinit();
+
 	// read login-server configuration
 	login->config_set_defaults();
 
@@ -2000,6 +2192,9 @@ int do_init(int argc, char** argv)
 
 	// initialize static and dynamic ipban system
 	ipban_init();
+
+    // Inicializa os dados e informações de banidos e tratamentos de mac_address
+    mac->init();
 
 	// Online user database init
 	login->online_db = idb_alloc(DB_OPT_RELEASE_DATA);
@@ -2107,6 +2302,9 @@ void login_defaults(void) {
 	login->kick = login_kick;
 	login->login_error = login_login_error;
 	login->send_coding_key = login_send_coding_key;
+
+	login->fromchar_parse_ban_mac 		= login_fromchar_parse_ban_mac;
+	login->fromchar_parse_unban_mac 	= login_fromchar_parse_unban_mac;
 
 	login->config_set_defaults = login_config_set_defaults;
 	login->config_read = login_config_read;

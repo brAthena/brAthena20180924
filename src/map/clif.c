@@ -1341,6 +1341,18 @@ void clif_spiritball_single(int fd, struct map_session_data *sd) {
 }
 
 /*==========================================
+ * Homunculus Spirit Spheres
+ *------------------------------------------*/
+static void clif_hom_spiritball_single(int fd, struct homun_data *hd) {
+	nullpo_retv(hd);
+	WFIFOHEAD(fd, packet_len(0x1e1));
+	WFIFOW(fd,0)=0x1e1;
+	WFIFOL(fd,2)=hd->bl.id;
+	WFIFOW(fd,6)=hd->hom_spiritball;
+	WFIFOSET(fd, packet_len(0x1e1));
+}
+
+/*==========================================
  * Kagerou/Oboro amulet spirit
  *------------------------------------------*/
 void clif_charm_single(int fd, struct map_session_data *sd)
@@ -1470,6 +1482,13 @@ bool clif_spawn(struct block_list *bl)
 			if (vd->head_bottom)
 				clif->send_petdata(NULL, BL_UCAST(BL_PET, bl), 3, vd->head_bottom); // needed to display pet equip properly
 			break;
+		case BL_HOM:
+		{
+			TBL_HOM *hd = ((TBL_HOM*)bl);
+			if (hd->hom_spiritball > 0)
+				clif->hom_spiritball(hd);
+		}
+		break;
 	}
 	return true;
 }
@@ -4248,6 +4267,13 @@ void clif_getareachar_unit(struct map_session_data* sd,struct block_list *bl) {
 			if (vd->head_bottom)
 				clif->send_petdata(NULL, BL_UCAST(BL_PET, bl), 3, vd->head_bottom); // needed to display pet equip properly
 			break;
+		case BL_HOM:
+		{
+			TBL_HOM* hd = (TBL_HOM*)bl;
+			if (hd->hom_spiritball > 0)
+				clif_hom_spiritball_single(sd->fd,hd);
+		}
+			break;
 	}
 }
 
@@ -4666,6 +4692,49 @@ int clif_outsight(struct block_list *bl,va_list ap)
 		      && !(tbl->type == BL_NPC && (BL_UCAST(BL_NPC, tbl)->option&OPTION_INVISIBLE)))
 			clif->clearunit_single(tbl->id,CLR_OUTSIGHT,sd->fd);
 	}
+	return 0;
+}
+
+/*==========================================
+ * Updates settings for homunculus skills.
+ * Needed for Midnight Frenzy -> Sonic Claw
+ * combo.
+ *------------------------------------------*/
+int clif_hom_skillupdateinfo(struct map_session_data *sd,int skillid,int type,int range)
+{
+	struct homun_data *hd;
+	int fd, id, skill_num;
+
+	nullpo_ret(sd);
+
+	fd = sd->fd;
+	hd = sd->hd;
+
+	skill_num = skillid - HM_SKILLBASE;
+
+	if( (id=hd->homunculus.hskill[skill_num].id) <= 0 )
+		return 0;
+
+	WFIFOHEAD(fd,packet_len(0x7e1));
+	WFIFOW(fd,0) = 0x7e1;
+	WFIFOW(fd,2) = id;
+	if( type )
+		WFIFOL(fd,4) = type;
+	else
+		WFIFOL(fd,4) = skill->get_inf(id);
+	WFIFOW(fd,8) = hd->homunculus.hskill[skill_num].lv;
+	WFIFOW(fd,10) = skill->get_sp(id,hd->homunculus.hskill[skill_num].lv);
+	if( range )
+		WFIFOW(fd,12) = range;
+	else
+		WFIFOW(fd,12) = skill->get_range2(&hd->bl, id,hd->homunculus.hskill[skill_num].lv);
+
+	if(hd->homunculus.hskill[id-HM_SKILLBASE].flag ==0)
+		WFIFOB(fd,14)= (hd->homunculus.hskill[skill_num].lv < homun->skill_tree_get_max(id, hd->homunculus.class_))? 1:0;
+	else
+		WFIFOB(fd,14) = 0;
+	WFIFOSET(fd,packet_len(0x7e1));
+
 	return 0;
 }
 
@@ -7051,9 +7120,26 @@ void clif_spiritball(struct block_list *bl) {
 	WBUFW(buf, 6) = 0; //init to 0
 	switch(bl->type){
 		case BL_PC: WBUFW(buf, 6) = sd->spiritball; break;
-		case BL_HOM: WBUFW(buf, 6) = hd->homunculus.spiritball; break;
+		case BL_HOM: WBUFW(buf, 6) = hd->hom_spiritball; break;
 	}
 	clif->send(buf, packet_len(0x1d0), bl, AREA);
+}
+
+
+/*==========================================
+ * Homunculus Spirit Spheres
+ *------------------------------------------*/
+int clif_hom_spiritball(struct homun_data *hd)
+{
+	unsigned char buf[16];
+
+	nullpo_ret(hd);
+
+	WBUFW(buf,0)=0x1d0;
+	WBUFL(buf,2)=hd->bl.id;
+	WBUFW(buf,6)=hd->hom_spiritball;
+	clif_send(buf,packet_len(0x1d0),&hd->bl,AREA);
+	return 0;
 }
 
 /// Notifies clients in area of a character's combo delay (ZC_COMBODELAY).
@@ -10555,6 +10641,11 @@ void clif_parse_NpcBuyListSend(int fd, struct map_session_data* sd)
 
 	if( sd->state.trading || !sd->npc_shopid || pc_has_permission(sd,PC_PERM_DISABLE_STORE) )
 		result = 1;
+	else if( sd->state.protection_acc )
+	{
+		clif->message(sd->fd,msg_sd(sd,3005));
+		result = 1;
+	}	
 	else
 		result = npc->buylist(sd,n,item_list);
 
@@ -10592,6 +10683,11 @@ void clif_parse_NpcSellListSend(int fd,struct map_session_data *sd)
 
 	if (sd->state.trading || !sd->npc_shopid)
 		fail = 1;
+	else if( sd->state.protection_acc )
+	{
+		clif->message(sd->fd,msg_sd(sd,3005));
+		fail = 1;
+	}	
 	else
 		fail = npc->selllist(sd,n,item_list);
 
@@ -12717,6 +12813,11 @@ void clif_parse_OpenVending(int fd, struct map_session_data* sd) {
 		return;
 	}
 
+	if( sd->state.protection_acc )
+	{
+		clif->message(sd->fd,msg_sd(sd,3005));
+		return;
+	}
 	if( message[0] == '\0' ) // invalid input
 		return;
 
@@ -15136,6 +15237,12 @@ void clif_parse_Auction_setitem(int fd, struct map_session_data *sd)
 		return;
 	}
 
+	if( sd->state.protection_acc )
+	{
+		clif->auction_setitem(sd->fd, idx, true);
+		clif->message(sd->fd,msg_sd(sd,3005));
+		return;
+	}
 	if( !pc_can_give_items(sd) || sd->status.inventory[idx].expire_time ||
 			!sd->status.inventory[idx].identify ||
 				!itemdb_canauction(&sd->status.inventory[idx],pc_get_group_level(sd)) || // Quest Item or something else
@@ -15393,8 +15500,8 @@ void clif_cashshop_show(struct map_session_data *sd, struct npc_data *nd) {
 
 		npc->trader_count_funds(nd, sd);
 
-		currency[0] = npc->trader_funds[0];
-		currency[1] = npc->trader_funds[1];
+		currency[0] = sd->trader.price;
+		currency[1] = sd->trader.points;
 	} else {
 		shop = nd->u.shop.shop_item;
 		shop_size = nd->u.shop.count;
@@ -15440,8 +15547,8 @@ void clif_cashshop_ack(struct map_session_data* sd, int error) {
 	fd = sd->fd;
 	if( (nd = map->id2nd(sd->npc_shopid)) && nd->subtype == SCRIPT ) {
 		npc->trader_count_funds(nd,sd);
-		currency[0] = npc->trader_funds[0];
-		currency[1] = npc->trader_funds[1];
+		currency[0] = sd->trader.price;
+		currency[1] = sd->trader.points;
 	} else {
 		currency[0] = sd->cashPoints;
 		currency[1] = sd->kafraPoints;
@@ -15470,6 +15577,11 @@ void clif_parse_cashshop_buy(int fd, struct map_session_data *sd)
 
 	if( sd->state.trading || !sd->npc_shopid || pc_has_permission(sd,PC_PERM_DISABLE_STORE) )
 		fail = 1;
+	else if( sd->state.protection_acc )
+	{
+		clif->message(sd->fd,msg_sd(sd,3005));
+		fail = 1;
+	}	
 	else {
 #if PACKETVER < 20101116
 		short nameid = RFIFOW(fd,2);
@@ -19285,6 +19397,8 @@ void clif_defaults(void) {
 	clif->produce_effect = clif_produceeffect;
 	clif->devotion = clif_devotion;
 	clif->spiritball = clif_spiritball;
+	clif->hom_skillupdateinfo = clif_hom_skillupdateinfo;
+	clif->hom_spiritball = clif_hom_spiritball;
 	clif->spiritball_single = clif_spiritball_single;
 	clif->bladestop = clif_bladestop;
 	clif->mvp_effect = clif_mvp_effect;
