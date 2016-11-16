@@ -14,78 +14,78 @@
 
 // Entrance NPCs
 //============================================================
-prontera,132,125,4	script	Bossnia Staff#1	4_M_PHILMAN,{
+prontera,132,125,4	script	Equipe Bossnia#1	4_M_PHILMAN,{
 	mes "[Riss]";
-	mes "Hello?";
-	mes "I found some beautiful places";
-	mes "while I travelled all over the world.";
-	mes "I am an adventurer.";
+	mes "Olá?";
+	mes "Eu encontrei lugares lindos";
+	mes "enquanto viajava pelo mundo.";
+	mes "Eu sou um aventureiro.";
 	mes "Haha~";
 	next;
 	mes "[Riss]";
-	mes "What? My name is...";
-	mes "'Bossnia Staff'?? No no...";
-	mes "Well, my name is not so important.";
-	mes "Sometimes you should be generous.";
-	mes "No time for considering that kind of small stuff";
-	mes "when you have to concentrate on more important things.";
+	mes "O quê? Meu nome é...";
+	mes "'Equipe Bossnia'?? Não não...";
+	mes "Bem, meu nome não é tão importante.";
+	mes "Você deve ser generoso as vezes.";
+	mes "Sem tempo parar considerar aquelas coisas pequenas";
+	mes "quando você tem que se concentrar em coisas mais importantes.";
 	next;
 	mes "[Riss]";
-	mes "Hum... anyway I want to say... something..";
-	mes "While I was travelling through some places,";
-	mes "I found a really fearful place.";
+	mes "Hum... de qualquer forma, quero dizer algo...";
+	mes "Enquanto eu viajava por alguns lugares,";
+	mes "eu encontrei um muito assustador.";
 	next;
 	mes "[Riss]";
-	mes "Most of the time when you come to a place,";
-	mes "there is one strong and fearful monster.";
-	mes "Isn't it?";
+	mes "Quase sempre que você chega em algum lugar,";
+	mes "existe um monstro mais forte e assustador que os demais.";
+	mes "Não é?";
 	next;
 	mes "[Riss]";
-	mes "But... but... in there...";
-	mes "There are lots of fearful and strong monsters in there...";
-	mes "That was really frightful.";
+	mes "Mas... lá...";
+	mes "Todos os monstros são fortíssimos e assustadores...";
+	mes "É um lugar realmente horripilante.";
 	next;
 	mes "[Riss]";
-	mes "If I had reacted a bit later... a few seconds...";
-	mes "I might have been killed.";
+	mes "Se eu demorasse um pouco mais para reagir... apenas alguns segundos...";
+	mes "Eu acabaria sendo morto.";
 	next;
 	mes "[Riss]";
-	mes "What?";
-	mes "You want to go in there?";
-	mes "Oh~ Boy~ you didn't get me.";
-	mes "In there.......";
+	mes "O quê?";
+	mes "Você quer ir lá?";
+	mes "Aaah cara~ você não me entendeu.";
+	mes "Nesse lugar.......";
 	next;
 	mes "[Riss]";
-	mes "Uh... you already know?";
-	mes "Although you know the place, you want to go in...";
-	mes "Good, I will send you there.";
-	mes "But after you went there, don't hold";
-	mes "a grudge against me. Also it costs 5,000 zeny.";
+	mes "Err... Você sabia?";
+	mes "Mesmo sabendo o que tem lá, você quer ingressar...";
+	mes "Bem, eu até posso te mandar pra lá.";
+	mes "Mas depois de chegar lá, não guarde";
+	mes "mágoas de mim. Isso vai lhe custar 5,000 zeny.";
 	next;
 	if (Zeny > 4999) {
 		mes "[Riss]";
-		mes "Would you really like to take the challenge?";
-		mes "Ok, just choose the course.";
+		mes "Você realmente quer aceitar o desafio??";
+		mes "Ok, apenas escolha seu caminho.";
 		next;
-		.@i = select("First","Second","Third","Fourth");
+		.@i = select("Primeiro","Segundo","Terceiro","Quarto");
 		mes "[Riss]";
-		mes "Take care, boy~";
-		mes "Don't hold a grudge against me.";
+		mes "Se cuida, cara~";
+		mes "Não se magoe comigo.";
 		close2;
 		Zeny -= 5000;
 		warp "bossnia_0"+.@i,rand(202,204),rand(202,204);
 		end;
 	}
 	mes "[Riss]";
-	mes "You don't have enough money...";
-	mes "Come back when you have at least 5,000 zeny.";
+	mes "Você não tem zeny suficiente...";
+	mes "Volte quando possuir ao menos 5,000 zeny.";
 	close;
 }
-geffen,124,169,4	duplicate(Bossnia Staff#1)	Bossnia Staff#2	4_M_PHILMAN
-payon,165,150,4	duplicate(Bossnia Staff#1)	Bossnia Staff#3	4_M_PHILMAN
-morocc,142,100,4	duplicate(Bossnia Staff#1)	Bossnia Staff#4	4_M_PHILMAN
-lighthalzen,203,140,4	duplicate(Bossnia Staff#1)	Bossnia Staff#5	4_M_PHILMAN
-rachel,132,144,4	duplicate(Bossnia Staff#1)	Bossnia Staff#6	4_M_PHILMAN
+geffen,124,169,4	duplicate(Equipe Bossnia#1)	Equipe Bossnia#2	4_M_PHILMAN
+payon,165,150,4	duplicate(Equipe Bossnia#1)	Equipe Bossnia#3	4_M_PHILMAN
+morocc,142,100,4	duplicate(Equipe Bossnia#1)	Equipe Bossnia#4	4_M_PHILMAN
+lighthalzen,203,140,4	duplicate(Equipe Bossnia#1)	Equipe Bossnia#5	4_M_PHILMAN
+rachel,132,144,4	duplicate(Equipe Bossnia#1)	Equipe Bossnia#6	4_M_PHILMAN
 
 // Warp Portals
 //============================================================

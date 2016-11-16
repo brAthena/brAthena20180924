@@ -2,46 +2,49 @@
 //= Feast Day Of Ramadan Idul Fitri Event
 //===== By: ==================================================
 //= $ephiroth
-//===== Current Version: =====================================
-//= 1.1
-//===== Description: =========================================
+//===== Versão Atual: ======================================== 
+//= 1.1c
+//===== Compatível com: ===================================== 
+//= BRathena
+//===== Descrição: =========================================== 
 //= Info : Official idRO
 //= 2006/10/16: 1.0 Release and fully working. [$ephiroth]
 //= 1.1 Replaced effect numerics with constants. [Samuray22]
 //============================================================
-
 prontera,146,92,3	script	Cellerb	1_M_MERCHANT,{
-	mes "[Staff Idul Fitri]";
+
+	mes "[Equipe Idul Fitri]";
 	if((gettime(MONTH)==OCTOBER && (gettime(DAYOFMONTH)==24 || gettime(DAYOFMONTH)==25))==0) {
-		mes "Congratulation! Celebrate Feast Day Of Ramadan Idul Fitri 1427 H.";
+		mes "Parabéns! Festejamos o dia do Ramadan Idul Fitri 1427 H.";
 		specialeffect EF_SANDMAN;
 		close;
 	}
-	mes "Haii......^FF8800"+strcharinfo(0)+"^000000!!";
-	mes "First day of Idul Fitri has arrived.";
-	mes "Congratulation celebrate him.";
-	mes "There is event special today.";
+	mes "Yupii......^FF8800"+strcharinfo(0)+"^000000!!";
+	mes "Primeiro dia do Idulfitri chegou.";
+	mes "Vamos celebrar-lo.";
+	mes "Vamos ter um evento especial hoje.";
 	next;
-	mes "[Staff Idul Fitri]";
-	mes "Event today.....^009500Idul Fitri Quest!^000000";
+	mes "[Equipe Idul Fitri]";
+	mes "Evento de hoje .....^009500Missão do Idul Fitri!^000000";
 	next;
-	mes "[Staff Idul Fitri]";
-	mes "If you interest to follow this event, I will cook it to you.";
+	mes "[Equipe Idul Fitri]";
+	mes "Se está interessado em acompanhar este evento, eu vou cozinha-lo para você.";
 	next;
-	switch(select("Allright. I like that!!","Next time.... Thanks.")){
+
+	switch(select("Entendido. Eu gosto disso!!","Depois.... Obrigado.")){
 	case 1:
-		mes "[Staff Idul Fitri]";
-		mes "I have something that might interest you.";
-		mes "I need all of the following items:";
-		mes "^D5A500Ketupat Sayur Ingredient :^000000";
-		mes "^00B6FF~5 Ketupat, 5 Carrot~,^000000";
-		mes "^CC6633~5 Sweet Potato, 10 Meat~,^000000";
-		mes "^000088~2 Green Herb, 5 Stem~.^000000";
+		mes "[Equipe Idul Fitri]";
+		mes "Eu tenho algo que possa lhe interessar.";
+		mes "Eu vou precisar de todos os itens a seguir:";
+		mes "^D5A500Ketupat Sayur Ingredientes :^000000";
+		mes "^00B6FF~5 Ketupat, 5 Cenouras~,^000000";
+		mes "^CC6633~5 Batatas Doces, 10 Carnes~,^000000";
+		mes "^000088~2 Ervas Verdes, 5 Troncos~.^000000";
 		next;
-		mes "[Staff Idul Fitri]";
-		if ( (countitem(552)<5 || countitem(515)<5 ||countitem(516)<5 || countitem(517)<10 || countitem(511)<2 || countitem(905)<5) ) {
-			mes "You don't have enough items.";
-			mes "Come back when you have them all.";
+		mes "[Equipe Idul Fitri]";
+		if ( (countitem(552)<5 || countitem(515)<5 ||countitem(516)<5 || countitem(517)<10 || countitem(511)<2 || countitem(905)<5) ) { 
+			mes "Você não tem os itens que lhe pedi.";
+			mes "Volte quando tiver todos os itens.";
 			close;
 		}
 		delitem 552,5;
@@ -50,21 +53,22 @@ prontera,146,92,3	script	Cellerb	1_M_MERCHANT,{
 		delitem 517,10;
 		delitem 511,2;
 		delitem 905,5;
-		mes "I see you already have all the items you need.";
-		mes "Just a moment, please!!";
+		mes "Vejo que está com todos os itens....";
+		mes "Aguarde um momento, por favor!!";
 		next;
 		mes "^009500-Plupping snapping bubbling~^000000";
 		mes "^009500-Clinking clingking~^000000";
 		mes "^009500-Clang clang~^000000";
 		getitem 583,1;
 		next;
-		mes "[Staff Idul Fitri]";
-		mes "We appreciate your participation in this special event.";
+		mes "[Equipe Idul Fitri]";
+		mes "Agradecemos a sua participação neste evento especial.";
 		emotion e_thx;
 		close;
-	case 2:
-		mes "[Staff Idul Fitri]";
-		mes "Oh well, maybe you will participate in tommorow's quest.";
+
+	case 2:	
+		mes "[Equipe Idul Fitri]";
+		mes "Oh bem, talvez você participe do evento amanhã.";
 		emotion e_hmm;
 		close;
 	}
