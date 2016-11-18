@@ -55,8 +55,8 @@ L_Start_Undead:
 	enablenpc "Madre Mathana";
 //Chama os monstros para a cidade
 	set $@UNEASY_MOB, 65;
-	monster "prontera",0,0,"Zombie",1015,30,"Uneasy_Check::OnZombieDead";
-//No cemitériio
+	areamonster "prontera",0,0,0,0,"Zombie",1015,30,"Uneasy_Check::OnZombieDead";
+//in the Cemetery
 	monster "prontera",268,349,"Zombie",1015,30,"Uneasy_Check::OnZombieDead";
 	monster "prontera",269,350,"Ghoul",1036,5,"Uneasy_Check::OnZombieDead";
 //Anúncio
@@ -106,7 +106,7 @@ L_Undead_Walk:
 	if (Sex==0) mapannounce "prontera","[Madre Mathana]: Em nome de Odin declaro a Bela "+$UNEASY_H$+" como a salvadora de prontera!",0;
 	mes "[Madre Mathana]";
 	mes "Em nome de Odin, eu te abençôo e te presenteio com este modesto Presente de Mareusis.";
-	additem 505,1;
+	getitem 505,1;
 	set JobExp,JobExp+100;
 	set BaseExp,BaseExp+50;
 	close;
@@ -125,6 +125,6 @@ M_DONT_HAVE:
 	mes "[Madre Mathana]";
 	mes "Ainda precisamos de " + $UNEASY_BL + " mais garrafas...  Porque você não vai procurar mais garrafas com outras pessoas?.";
 	mes "O velho cemiterio está saindo de controle...";
-	mes "POr favor, em nome de Odin, ajudem a cidade de Prontera.";
+	mes "Por favor, em nome de Odin, ajudem a cidade de Prontera.";
 	close;
 }
