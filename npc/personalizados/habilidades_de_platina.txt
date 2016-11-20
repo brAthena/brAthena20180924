@@ -2,6 +2,8 @@
 //= Platinum Skills
 //===== By: ==================================================
 //= Keichii, DarkChild
+//===== Compatível Com: ======================================
+//= BRathena -- Tradução por: Julinhobrow
 //===== Current Version: =====================================
 //= 2.8
 //===== Description: =========================================
@@ -18,14 +20,14 @@
 //= 2.8 Clustered conditionals replaced with switch to include all Upper types. [Euphy]
 //============================================================
 
-prontera,128,200,6	script	Platinum Skill NPC	4_F_MAID,{
-	mes "[Platinum Skill NPC]";
-	mes "I can give you the special skills available to your job.";
-	mes "Would you like these skills now?";
+prontera,128,200,6	script	Habilidades de Platina	4_F_MAID,{
+	mes "[Skill de Platina]";
+	mes "Eu posso dar a você skills especiais para sua classe.";
+	mes "Gostária de obter as skills agora?";
 	next;
-	if (select("Yes Please:No") == 2) {
-		mes "[Platinum Skill NPC]";
-		mes "Have a nice day... >.>";
+	if (select("Sim Por Favor:Não Preciso disso") == 2) {
+		mes "[Habilidades de Platina]";
+		mes "Tenha um bom dia... >.>";
 		close;
 	}
 	skill 142,1,0;
@@ -55,7 +57,7 @@ prontera,128,200,6	script	Platinum Skill NPC	4_F_MAID,{
 		case 20: skill 1011,1,0; break;
 		default: break;
 	}
-	mes "[Platinum Skill NPC]";
-	mes "There you go!";
+	mes "[Habilidades de Platina]";
+	mes "Aqui estão.";
 	close;
 }
