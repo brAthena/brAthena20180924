@@ -545,6 +545,7 @@ int skillnotok (uint16 skill_id, struct map_session_data *sd)
 				clif->skill_fail(sd,skill_id,USESKILL_FAIL_THERE_ARE_NPC_AROUND,0);
 				return 1;
 			}
+			FALLTHROUGH
 		case MC_IDENTIFY:
 			return 0; // always allowed
 		case WZ_ICEWALL:
