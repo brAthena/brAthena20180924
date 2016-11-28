@@ -2,13 +2,13 @@
 //= X-mas Event
 //===== By: ==================================================
 //= rAthena Dev Team
-//===== Current Version: =====================================
+//===== Versão Atual: ========================================
 //= 1.4
 //===== Description: =========================================
-//= Beat up Antonios and grab his socks.  Get at least 3 and
-//= give them to Santa Claus Claus in exchange for a present.
+//= Espanque Antonios e pegue a sua meias. Obtenha pelo menos 3
+//= e dê-lhes de Papai Noel Claus em troca de um presente.
 //= Includes X-mas mobs.
-//= This npc will disable, the current Santa Claus npc.
+//= This npc will disable, the current Papai Noel npc.
 //===== Additional Comments: =================================
 //= Fixed the spawns [shadowlady]
 //= 1.1 Added Xmas Jakk, fixed 2 exploits, fixed reward Box ID [Lupus]
@@ -20,91 +20,91 @@
 //= 1.4 Added a fix to make Lutie & Bard quests passable during this event [Lupus]
 //============================================================
 
-xmas_in,100,96,4	script	Santa Claus::Santa2	4_M_SANTA,{
-	mes "[Santa Claus]";
+xmas_in,100,96,4	script	Papai Noel::Santa2	4_M_SANTA,{
+	mes "[Papai Noel]";
 	if(xmas_npc==0) xmas_npc = 1; // For Lutie & Bard quest
 	if(#event_xmas > 0 && #event_xmas < 30 ) goto L_Start;
-	mes "Merry Christmas!";
+	mes "Feliz Natal!";
 	if(Class==0 || #event_xmas>=30 ) close; //anti exploit protection
-	mes "I have a gift for you! Ho Ho Ho!";
+	mes "Eu tenho um presente para você! Ho Ho Ho!";
 	getitem rand(664,667),1; //gives one of 4 gift boxes
 	++#event_xmas;
 	close;
 
 L_Start:
-	mes "I'm having a bit of a problem...";
-	mes "Do you care to listen?";
+	mes "Eu estou tendo me mordido com um problema...";
+	mes "Você gostaria de escutar?";
 	next;
-	switch (select("Listen to Santa Claus.","Give Santa Claus proof.","Cancel.")) {
+	switch (select("Escutar Papai Noel.","Dar provas ao Papai Noel.","Cancel.")) {
 	case 1: // Listen
-		mes "[Santa Claus]";
-		mes "My problem is this.";
-		mes "There seems to be a man out there";
-		mes "that is impersonating me and spreading";
-		mes "terror throughout the land.";
+		mes "[Papai Noel]";
+		mes "Meu problema é este.";
+		mes "Parece que há algo lá fora";
+		mes "que está representando a mim e";
+		mes "espalhando o terror por toda a terra.";
 		next;
-		mes "[Santa Claus]";
-		mes "Like the Grinch of legend, he's taking";
-		mes "all the childrens' toys and keeping them";
-		mes "for himself.";
+		mes "[Papai Noel]";
+		mes "Parece a lenda do Grinch, eles estão pegando";
+		mes "todos os brinquedos das crianças e mantendo";
+		mes "para si mesmo.";
 		next;
-		mes "[Santa Claus]";
-		mes "I'm too busy here creating my batch of ";
-		mes "toys for next year, so I can't go";
-		mes "out and find him myself.";
-		mes "So I would like you to go out and";
-		mes "Destroy this man for me.";
+		mes "[Papai Noel]";
+		mes "Eu estou ocupado fazendo os ";
+		mes "brinquedos do próximo ano, então não posso";
+		mes "sair atrás deles.";
+		mes "Eu gostaria que você vá e";
+		mes "destrua estes Noel pra mim.";
 		next;
-		mes "[Santa Claus]";
-		mes "He has in his posession one of my";
-		mes "magic sacks, however, so he will";
-		mes "escape into it to another place each";
-		mes "time you attack him.";
+		mes "[Papai Noel]";
+		mes "Eles estão em posse do meu";
+		mes "saco mágico, no entanto, eles podem";
+		mes "tentar escapar para outro lugar";
+		mes "quando você tentar atacar.";
 		next;
-		mes "[Santa Claus]";
-		mes "However,";
-		mes "In his haste, he tends to drop things.";
-		mes "If by chance he drops one of his Stockings";
-		mes "With Holes that he uses to steal the";
-		mes "poor childrens' toys, pick it up.";
+		mes "[Papai Noel]";
+		mes "Porém,";
+		mes "na pressa, eles tendem a deixar cair coisas.";
+		mes "Se por acaso dele cair uma de suas Meias com Furos";
+		mes "que ele usa para roubar os pobres brinquedos";
+		mes "de crianças, pegue-os.";
 		next;
-		mes "[Santa Claus]";
-		mes "If you collect 3 of these, I will give";
-		mes "you a prototype mystery box that";
-		mes "I've been keeping around the";
-		mes "lab. It spits out random presents";
-		mes "and saves me a ton of work.";
+		mes "[Papai Noel]";
+		mes "Se você coletar 3 destes, vou dar-lhe";
+		mes "yum protótipo de caixa de mistériosa que";
+		mes "tenho mantido pelo laboratório.";
+		mes "Ela solta presentes aleatórios";
+		mes "e me salva de toneladas de trabalho.";
 		close;
 	case 2: // Give proof
-		mes "[Santa Claus]";
+		mes "[Papai Noel]";
 		if(countitem(7034) < 3) goto L_NotEnuf;
 		delitem 7034,3;
-		mes "Seems you've been doing a";
-		mes "good job of taking down those";
-		mes "fake Santas. Keep it up!";
+		mes "Parece que vem fazendo";
+		mes "um bom trabalho com estes";
+		mes "falsos Noel. Continue assim!";
 		next;
 		getitem 644,1; //Gift Box Prototype
 		++#event_xmas;
-		mes "[Santa Claus]";
-		mes "There's your reward.";
-		mes "If you get 3 more, I'll give you another.";
-		mes "Hope you get a good item.";
+		mes "[Papai Noel]";
+		mes "Aqui está sua recompensa.";
+		mes "Se você pegar mais 3, Eu dou a você outro.";
+		mes "Espero que ganhe um bom item.";
 		close;
 	
 		L_NotEnuf:
-			mes "You don't have enough socks as proof.";
-			mes "Go take down those evil Santas";
-			mes "and get more for me and I'll reward you.";
+			mes "Você não tem o suficiente meias como prova.";
+			mes "Vá toma-las dos Noel Malvado";
+			mes "e pegue mais delas para mim eu irei recompensa-ló.";
 			close;
 	default: // Cancel
-		mes "[Santa Claus]";
-		mes "I see. Well, at the very least";
-		mes "we shall meet again on Christmas morning.";
+		mes "[Papai Noel]";
+		mes "Posso ver. Bem, pelo menos";
+		mes "vamos reunir novamente nas manhãs de Natal.";
 		close;
 	}
 
 OnInit:
-	disablenpc "Santa Claus";
+	disablenpc "Papai Noel";
 	end;
 }
 
