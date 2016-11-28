@@ -16,21 +16,21 @@
 //      Baby Novice job change. [Haru]
 //============================================================
 
-prontera,153,193,6	script	Job Master	2_F_MAGICMASTER,{
+prontera,153,193,6	script	Mestra das Classes	2_F_MAGICMASTER,{
 	function Job_Menu; function A_An;
 
-	mes "[Job Master]";
+	mes "[Mestra das Classes]";
 	if (Class > Job_Soul_Linker) {
-		mes "No more jobs are available.";
+		mes "Não há mais classes disponíveis.";
 		close;
 	}
 	if (checkfalcon() || checkcart() || checkmount() || hascashmount()) {
-		mes "Please remove your "+((checkfalcon())?"falcon":"")+((checkcart())?"cart":"")+((checkmount() || hascashmount())?"mount":"")
-		    +" before proceeding.";
+		mes "Por favor remova "+((checkfalcon())?"o seu falcão":"")+((checkcart())?"o seu carrinho":"")+((checkmount() || hascashmount())?"a sua montaria":"")
+		    +" antes de continuar.";
 		close;
 	}
 	if (.skill_point_check && SkillPoint > 0) {
-		mes "Please use all your skill points before proceeding.";
+		mes "Por favor use todos os seus pontos de habilidade antes de continuar.";
 		close;
 	}
 
@@ -40,32 +40,32 @@ prontera,153,193,6	script	Job Master	2_F_MAGICMASTER,{
 		if (BaseLevel < .rebirth_blevel || JobLevel < .rebirth_jlevel) {
 			.@blvl = .rebirth_blevel - BaseLevel;
 			.@jlvl = .rebirth_jlevel - JobLevel;
-			mes "You need "
-			    + (BaseLevel < .rebirth_blevel ? ((.rebirth_blevel - BaseLevel) +" more base levels "+ (JobLevel < .rebirth_jlevel ? "and " : "")) : "")
-			    + (JobLevel < .rebirth_jlevel ? (.rebirth_jlevel - JobLevel) +" more job levels " : "")
-			    + "to continue.";
+			mes "Você precisa de mais "
+			    + (BaseLevel < .rebirth_blevel ? ((.rebirth_blevel - BaseLevel) +" níveis de base "+ (JobLevel < .rebirth_jlevel ? "e " : "")) : "")
+			    + (JobLevel < .rebirth_jlevel ? (.rebirth_jlevel - JobLevel) +" níveis de classe " : "")
+			    + "para continuar.";
 			close;
 		}
 		if (Class > Job_Crusader2) {
-			mes "Switch to third class?";
+			mes "Trocar para terceira classe?";
 			next;
 			Job_Menu(roclass(.@eac|EAJL_THIRD));
 			close;
 		}
 		while (true) {
-			mes "Select an option.";
+			mes "Selecione uma opção.";
 			next;
-			.@choice = select(" ~ ^0055FFRebirth^000000:"+(.third_classes ? " ~ ^FF0000Third Class^000000" : "")+": ~ ^777777Cancel^000000");
+			.@choice = select(" ~ ^0055FFRenascer^000000:"+(.third_classes ? " ~ ^FF0000Terceira Classe^000000" : "")+": ~ ^777777Cancelar^000000");
 			if (.@choice == 3)
 				close;
-			mes "[Job Master]";
-			mes "Are you sure?";
+			mes "[Mestra das Classes]";
+			mes "Você tem certeza?";
 			next;
 			if (.@choice == 1)
 				Job_Menu(Job_Novice_High);
 			else
 				Job_Menu(roclass(.@eac|EAJL_THIRD));
-			mes "[Job Master]";
+			mes "[Mestra das Classes]";
 		}
 	}
 	.@job1 = roclass(.@eac|EAJL_2_1);
@@ -79,27 +79,27 @@ prontera,153,193,6	script	Job Master	2_F_MAGICMASTER,{
 	}
 	if (.@newclass && .third_classes) {
 		if (BaseLevel < .rebirth_blevel || JobLevel < .@required_jlevel) {
-			mes "You need "
-			    + (BaseLevel < .rebirth_blevel ? ((.rebirth_blevel - BaseLevel) +" more base levels "+ (JobLevel < .@required_jlevel ? "and " : "")) : "")
-			    + (JobLevel < .@required_jlevel ? (.@required_jlevel - JobLevel) +" more job levels " : "")
-			    + "to continue.";
+			mes "Você precisa de mais "
+			    + (BaseLevel < .rebirth_blevel ? ((.rebirth_blevel - BaseLevel) +" níveis de base "+ (JobLevel < .@required_jlevel ? "e " : "")) : "")
+			    + (JobLevel < .@required_jlevel ? (.@required_jlevel - JobLevel) +" níveis de classe " : "")
+			    + "para continuar.";
 			close;
 		}
-		mes "Switch to "+jobname(.@newclass)+"?";
+		mes "Trocar para "+jobname(.@newclass)+"?";
 		next;
 		Job_Menu(.@newclass);
 		close;
 	}
 	if (.@eac&EAJL_2)
 		if (.@eac&(EAJL_UPPER|EAJL_BABY) || roclass(.@eac|EAJL_UPPER) == -1) {
-			mes "No more jobs are available.";
+			mes "Não há mais classes disponíveis.";
 			close;
 		}
 	if ((.@eac&EAJ_BASEMASK) == EAJ_NOVICE) {
 		if (JobLevel < .jobchange_first) {
-			mes "A job level of "+.jobchange_first+" is required to change into the 1st Class.";
+			mes "É necessário ter um nível de classe igual ou maior que "+.jobchange_first+" para mudar para a 1ª Classe.";
 		} else if (Class == Job_Novice_High && .linear_jobchange && lastJob) {
-			mes "Switch classes now?";
+			mes "Trocar de classe agora?";
 			next;
 			Job_Menu(roclass((eaclass(lastJob)&EAJ_BASEMASK)|EAJL_UPPER));
 		} else if (Class == Job_Novice) {
@@ -111,16 +111,16 @@ prontera,153,193,6	script	Job Master	2_F_MAGICMASTER,{
 			Job_Menu(Job_Baby_Swordman, Job_Baby_Mage, Job_Baby_Archer, Job_Baby_Acolyte, Job_Baby_Merchant, Job_Baby_Thief,
 			         Job_Super_Baby);
 		} else {
-			mes "An error has occurred.";
+			mes "Um erro aconteceu.";
 		}
 		close;
 	}
 	if (roclass(.@eac|EAJL_2_1) == -1 || roclass(.@eac|EAJL_2_2) == -1) {
-		mes "No more jobs are available.";
+		mes "Não há mais classes disponíveis.";
 	} else if (!(.@eac&EAJL_2) && JobLevel < .jobchange_second) {
-		mes "A job level of "+.jobchange_second+" is required to change into the 2nd Class.";
+		mes "É necessário ter um nível de classe igual ou maior a "+.jobchange_second+" para mudar para a 2ª Classe.";
 	} else if (.linear_jobchange && lastJob && (.@eac&EAJL_UPPER)) {
-		mes "Switch classes now?";
+		mes "Trocar de classe agora?";
 		next;
 		Job_Menu(lastJob+Job_Novice_High);
 	} else {
@@ -131,7 +131,7 @@ prontera,153,193,6	script	Job Master	2_F_MAGICMASTER,{
 function Job_Menu {
 	while (true) {
 		if (getargcount() > 1) {
-			mes "Select a job.";
+			mes "Selecione uma classe.";
 			.@menu$ = "";
 			for (.@i = 0; .@i < getargcount(); ++.@i)
 				.@menu$ += " ~ "+jobname(getarg(.@i))+":";
@@ -140,21 +140,21 @@ function Job_Menu {
 			.@newjob = getarg(select(.@menu$)-1, 0);
 			if (!.@newjob) close;
 			if ((.@newjob == Job_SuperNovice || .@newjob == Job_Super_Baby) && BaseLevel < .supernovice_level) {
-				mes "[Job Master]";
-				mes "A base level of "+.supernovice_level+" is required to turn into a "+jobname(.@newjob)+".";
+				mes "[Mestra das Classes]";
+				mes "É necessário ter um nível de base igual ou maior a "+.supernovice_level+" para virar um "+jobname(.@newjob)+".";
 				close;
 			}
-			mes "[Job Master]";
-			mes "Are you sure?";
+			mes "[Mestra das Classes]";
+			mes "Você tem certeza?";
 			next;
 		} else {
 			.@newjob = getarg(0);
 		}
-		if (select(" ~ Change into ^0055FF"+jobname(.@newjob)+"^000000 class: ~ ^777777"+(getargcount() > 1 ? "Go back" : "Cancel")+"^000000") == 1) {
-			mes "[Job Master]";
-			mes "You are now "+A_An(jobname(.@newjob))+"!";
+		if (select(" ~ Mudar para a classe ^0055FF"+jobname(.@newjob)+"^000000: ~ ^777777"+(getargcount() > 1 ? "Voltar" : "Cancelar")+"^000000") == 1) {
+			mes "[Mestra das Classes]";
+			mes "Você agora é um "+A_An(jobname(.@newjob))+"!";
 			if (.@newjob == Job_Novice_High && .linear_jobchange)
-				lastJob = Class; // Note: This is incompatible with the Valkyrie rebirth script.
+				lastJob = Class; // Nota: Isso é incompatível com o script de renascimento da Valquíria
 			jobchange .@newjob;
 			if (.@newjob == Job_Novice_High)
 				resetlvl(1);
@@ -170,7 +170,7 @@ function Job_Menu {
 		}
 		if (getargcount() == 1)
 			return;
-		mes "[Job Master]";
+		mes "[Mestra das Classes]";
 	}
 	end;
 }
@@ -249,14 +249,14 @@ Get_Platinum:
 	return;
 
 OnInit:
-	.rebirth_blevel = 99;    // Minimum base level to reborn OR change to third class
-	.rebirth_jlevel = 50;    // Minimum base job level to reborn OR change to third class
-	.jobchange_first = 10;   // Minimum job level to turn into 1st class
-	.jobchange_second = 40;  // Minimum job level to turn into 2nd class
-	.third_classes = 1;      // Enable third classes/Extended Classes? (1: yes / 0: no)
-	.supernovice_level = 45; // Minimum base level to turn into Super Novice
-	.linear_jobchange = 1;   // Enforce linear class changes? (1: yes / 0: no)
-	.skill_point_check = 1;  // Force player to use up all skill points? (1: yes / 0: no)
-	.platinum = 1;           // Get platinum skills automatically? (1: yes / 0: no)
+	.rebirth_blevel = 99;    // Nível de base mínimo para renascer OU mudar para terceira classe
+	.rebirth_jlevel = 50;    // Nível de classe mínimo para renascer OU mudar para terceira classe
+	.jobchange_first = 10;   // Nível de classe mínimo para mudar para 1ª classe
+	.jobchange_second = 40;  // Nível de classe mínimo para mudar para 2ª classe
+	.third_classes = 1;      // Permitir terceiras classes/classes expandidas? (1: sim / 0: não)
+	.supernovice_level = 45; // Nível de base mínimo para virar um Super Aprendiz
+	.linear_jobchange = 1;   // Forçar a troca linear de classes? (1: sim / 0: não)
+	.skill_point_check = 1;  // Forçar o jogador usar todos os pontos de habilidade? (1: sim / 0: não)
+	.platinum = 1;           // Obter habilidades de platina automaticamente? (1: sim / 0: não)
 	end;
 }
