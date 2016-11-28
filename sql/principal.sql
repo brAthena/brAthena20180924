@@ -837,10 +837,10 @@ CREATE TABLE IF NOT EXISTS `sql_updates` (
   PRIMARY KEY (`timestamp`)
 ) ENGINE=MyISAM;
 
-INSERT IGNORE INTO `sql_updates` (`timestamp`) VALUES (1443394980); -- 2015-09-27--23-03.sql
-INSERT IGNORE INTO `sql_updates` (`timestamp`) VALUES (1440688342); -- 2015-08-27--20-42.sql
-INSERT IGNORE INTO `sql_updates` (`timestamp`) VALUES (1445742780); -- 2015-10-25--03-13.sql
-INSERT IGNORE INTO `sql_updates` (`timestamp`) VALUES (1459870423); -- 2016-04-05--15-33.sql
+INSERT IGNORE INTO `sql_updates` (`timestamp`) VALUES (1443394980);
+INSERT IGNORE INTO `sql_updates` (`timestamp`) VALUES (1440688342);
+INSERT IGNORE INTO `sql_updates` (`timestamp`) VALUES (1445742780);
+INSERT IGNORE INTO `sql_updates` (`timestamp`) VALUES (1459870423);
 
 --
 -- Estrutura da tabela `storage`
