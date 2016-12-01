@@ -1851,6 +1851,7 @@ int map_quit(struct map_session_data *sd) {
 					case SC_GDSKILL_REGENERATION:
 						if( !sd->sc.data[i]->val4 )
 							break;
+						FALLTHROUGH
 					default:
 						status_change_end(&sd->bl, (sc_type)i, INVALID_TIMER);
 				}

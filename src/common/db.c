@@ -2340,6 +2340,7 @@ DBOptions db_fix_options(DBType type, DBOptions options)
 
 		default:
 			ShowError("db_fix_options: Tipo de banco de dados desconhecido %u com opcoes %x\n", type, options);
+			FALLTHROUGH
 		case DB_STRING:
 		case DB_ISTRING: // String databases, no fix required
 			return options;

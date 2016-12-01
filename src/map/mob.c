@@ -1067,6 +1067,7 @@ int mob_ai_sub_hard_activesearch(struct block_list *bl,va_list ap)
 		case BL_PC:
 			if (BL_UCCAST(BL_PC, bl)->state.gangsterparadise && !(status_get_mode(&md->bl)&MD_BOSS))
 				return 0; //Gangster paradise protection.
+			FALLTHROUGH
 		default:
 			if (battle_config.hom_setting&0x4 &&
 				(*target) && (*target)->type == BL_HOM && bl->type != BL_HOM)
@@ -1284,6 +1285,7 @@ int mob_unlocktarget(struct mob_data *md, int64 tick) {
 			break;
 		//Because it is not unset when the mob finishes walking.
 		md->state.skillstate = MSS_IDLE;
+		FALLTHROUGH
 	case MSS_IDLE:
 		// Idle skill.
 		if (!(++md->ud.walk_count%IDLE_SKILL_INTERVAL) && mob->skill_use(md, tick, -1))
@@ -3218,6 +3220,7 @@ int mobskill_use(struct mob_data *md, int64 tick, int event) {
 						bl = map->id2bl(md->master_id);
 					if (bl) //Otherwise, fall through.
 						break;
+					FALLTHROUGH
 				case MST_FRIEND:
 					bl = fbl?fbl:(fmd?&fmd->bl:&md->bl);
 					break;
@@ -3260,6 +3263,7 @@ int mobskill_use(struct mob_data *md, int64 tick, int event) {
 						bl = map->id2bl(md->master_id);
 					if (bl) //Otherwise, fall through.
 						break;
+					FALLTHROUGH
 				case MST_FRIEND:
 					if (fbl) {
 						bl = fbl;
@@ -3268,6 +3272,7 @@ int mobskill_use(struct mob_data *md, int64 tick, int event) {
 						bl = &fmd->bl;
 						break;
 					} // else fall through
+					FALLTHROUGH
 				default:
 					bl = &md->bl;
 					break;

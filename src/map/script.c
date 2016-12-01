@@ -8732,6 +8732,7 @@ BUILDIN(bonus) {
 				break;
 			}
 			// else fall through
+			FALLTHROUGH
 		default:
 			val1 = script_getnum(st,3);
 			break;

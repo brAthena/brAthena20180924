@@ -295,6 +295,12 @@ typedef uintptr_t uintptr;
 #define analyzer_noreturn
 #endif
 
+// fallthrough attribute only enabled on gcc >= 7.0
+#if defined(__GNUC__) && (GCC_VERSION >= 70000)
+#define FALLTHROUGH __attribute__ ((fallthrough));
+#else // ! defined(__GNUC__) && (GCC_VERSION >= 70000)
+#define FALLTHROUGH
+#endif // ! defined(__GNUC__) && (GCC_VERSION >= 70000)
 
 // boolean types for C
 #if !defined(_MSC_VER) || _MSC_VER >= 1800
