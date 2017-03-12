@@ -75,7 +75,15 @@
 
 /* [Ind/Hercules] */
 #define RFIFO2PTR(fd) (void*)(sockt->session[fd]->rdata + sockt->session[fd]->rdata_pos)
+#define RP2PTR(fd) RFIFO2PTR(fd)
 
+/* [Hemagx/Hercules] */
+  #define WFIFO2PTR(fd) ((void *)(sockt->session[fd]->wdata + sockt->session[fd]->wdata_size))
+  #define WP2PTR(fd) WFIFO2PTR(fd)
+  
+/* [Dastgir/RagEmu] */
+#define RFIFOP_WC(fd,pos) ((void *)(sockt->session[fd]->rdata + sockt->session[fd]->rdata_pos + (pos)))
+ 
 // buffer I/O macros
 #define RBUFP(p,pos) (((uint8*)(p)) + (pos))
 #define RBUFB(p,pos) (*(uint8*)RBUFP((p),(pos)))

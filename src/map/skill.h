@@ -50,14 +50,15 @@ struct status_change_entry;
 #define MAX_SKILL_ABRA_DB         210
 #define MAX_SKILL_IMPROVISE_DB    30
 #define MAX_SKILL_LEVEL           10
-#define MAX_SKILL_UNIT_LAYOUT     45
-#define MAX_SQUARE_LAYOUT         5 // 11*11 Placement of a maximum unit
+#define MAX_SQUARE_LAYOUT         7	// 15*15 unit placement maximum
+#define MAX_SKILL_UNIT_LAYOUT     (47+MAX_SQUARE_LAYOUT)	// 47 special ones + the square ones
 #define MAX_SKILL_UNIT_COUNT      ((MAX_SQUARE_LAYOUT*2+1)*(MAX_SQUARE_LAYOUT*2+1))
 #define MAX_SKILLTIMERSKILL       15
 #define MAX_SKILLUNITGROUP        25
 #define MAX_SKILL_ITEM_REQUIRE    10
 #define MAX_SKILLUNITGROUPTICKSET 25
 #define MAX_SKILL_NAME_LENGTH     30
+#define MAX_SKILL_CRIMSON_MARKER  3
 
 // (Epoque:) To-do: replace this macro with some sort of skill tree check (rather than hard-coded skill names)
 #define skill_ischangesex(id) ( \
@@ -141,6 +142,7 @@ enum {
 	UF_SONG             = 0x0400, // Song
 	UF_DUALMODE         = 0x0800, // Spells should trigger both ontimer and onplace/onout/onleft effects.
 	UF_RANGEDSINGLEUNIT = 0x2000, // Hack for ranged layout, only display center
+	UF_REM_FIRERAIN     = 0x08000,	// removed by Fire Rain
 };
 
 //Returns the cast type of the skill: ground cast, castend damage, castend no damage
@@ -178,6 +180,7 @@ enum {
 	ST_FIGHTER,
 	ST_GRAPPLER,
 	ST_PECO,
+	ST_QD_SHOT_READY,
 };
 
 enum e_skill {
@@ -1378,6 +1381,47 @@ enum e_skill {
 	ALL_FULL_THROTTLE,
 	NC_MAGMA_ERUPTION_DOTDAMAGE,
 
+	/** Summoner */
+	SU_BASIC_SKILL = 5018,
+	SU_BITE,
+	SU_HIDE,
+	SU_SCRATCH,
+	SU_STOOP,
+	SU_LOPE,
+	SU_SPRITEMABLE,
+	SU_POWEROFLAND,
+	SU_SV_STEMSPEAR,
+	SU_CN_POWDERING,
+	SU_CN_METEOR,
+	SU_SV_ROOTTWIST,
+	SU_SV_ROOTTWIST_ATK,
+	SU_POWEROFLIFE,
+	SU_SCAROFTAROU,
+	SU_PICKYPECK,
+	SU_PICKYPECK_DOUBLE_ATK,
+	SU_ARCLOUSEDASH,
+	SU_LUNATICCARROTBEAT,
+	SU_POWEROFSEA,
+	SU_TUNABELLY,
+	SU_TUNAPARTY,
+	SU_BUNCHOFSHRIMP,
+	SU_FRESHSHRIMP,
+	SU_CN_METEOR2,
+	SU_LUNATICCARROTBEAT2,
+	SU_SOULATTACK,
+	SU_POWEROFFLOCK,
+	SU_SVG_SPIRIT,
+	SU_HISS,
+	SU_NYANGGRASS,
+	SU_GROOMING,
+	SU_PURRING,
+	SU_SHRIMPARTY,
+	SU_SPIRITOFLIFE,
+	SU_MEOWMEOW,
+	SU_SPIRITOFLAND,
+	SU_CHATTERING,
+	SU_SPIRITOFSEA,
+
 	HLIF_HEAL = 8001,
 	HLIF_AVOID,
 	HLIF_BRAIN,
@@ -1646,6 +1690,9 @@ enum {
 	UNT_GLITTERING_GREED,
 	UNT_B_TRAP,
 	UNT_FIRE_RAIN,
+	
+	UNT_CATNIPPOWDER,
+ 	UNT_SV_ROOTTWIST,
 
 	/**
 	 * Guild Auras
@@ -1874,6 +1921,7 @@ struct skill_interface {
 	int firewall_unit_pos;
 	int icewall_unit_pos;
 	int earthstrain_unit_pos;
+	int firerain_unit_pos;
 	int area_temp[8];
 	int unit_temp[20];  // temporary storage for tracking skill unit skill ids as players move in/out of them
 	int unit_group_newid;
@@ -1893,6 +1941,8 @@ struct skill_interface {
 	int (*get_sp) ( uint16 skill_id, uint16 skill_lv );
 	int (*get_state) (uint16 skill_id);
 	int (*get_spiritball) (uint16 skill_id, uint16 skill_lv);
+	int (*get_itemid) ( uint16 skill_id, int idx );
+	int (*get_itemqty) ( uint16 skill_id, int idx );
 	int (*get_zeny) ( uint16 skill_id, uint16 skill_lv );
 	int (*get_num) ( uint16 skill_id, uint16 skill_lv );
 	int (*get_cast) ( uint16 skill_id, uint16 skill_lv );
@@ -1997,6 +2047,7 @@ struct skill_interface {
 	void (*toggle_magicpower) (struct block_list *bl, uint16 skill_id);
 	int (*magic_reflect) (struct block_list* src, struct block_list* bl, int type);
 	int (*onskillusage) (struct map_session_data *sd, struct block_list *bl, uint16 skill_id, int64 tick);
+	int (*bind_trap) (struct block_list *bl, va_list ap);
 	int (*cell_overlap) (struct block_list *bl, va_list ap);
 	int (*timerskill) (int tid, int64 tick, int id, intptr_t data);
 	int (*trap_splash) (struct block_list *bl, va_list ap);

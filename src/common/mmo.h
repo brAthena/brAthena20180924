@@ -63,7 +63,7 @@
 // 20120307 - 2012-03-07aRagexeRE+ - 0x970
 
 #ifndef PACKETVER
-	#define PACKETVER 20150513
+	#define PACKETVER 20151029
 #endif // PACKETVER
 
 //Uncomment the following line if your client is ragexeRE instead of ragexe (required because of conflicting packets in ragexe vs ragexeRE).
@@ -135,7 +135,7 @@
 
 #define MAX_FAME 1000000000
 #define MAX_CART 100
-#define MAX_SKILL 1478
+#define MAX_SKILL 1510
 #define MAX_SKILL_ID 10015   // [Ind/Hercules] max used skill ID
 // Update this max as necessary. 86 is the value needed for Expanded Super Novice.
 #define MAX_SKILL_TREE 86
@@ -939,9 +939,16 @@ enum {
 	JOB_KAGEROU = 4211,
 	JOB_OBORO,
 	JOB_REBELLION = 4215,
+	JOB_SUMMONER = 4218,
 
 	JOB_MAX,
 };
+
+//Classe inicial para cada raça
+ enum {
+  	RACE_HUMAN = 0,
+	RACE_DORAM = 4218
+  };
 
 //Total number of classes (for data storage)
 #define CLASS_COUNT (JOB_MAX - JOB_NOVICE_HIGH + JOB_MAX_BASIC)

@@ -585,6 +585,9 @@ END_ZEROED_BLOCK;
 	// temporary debugging of bug #3504
 	const char* delunit_prevfile;
 	int delunit_prevline;
+	
+	int c_marker[MAX_SKILL_CRIMSON_MARKER];
+	bool flicker;
 
 	// [CarlosHenrq] Enviando mac_address no pacote entre os servidores.
 	char mac_address[MAC_LENGTH];
@@ -642,7 +645,7 @@ END_ZEROED_BLOCK;
 #define pc_is50overweight(sd) ( (sd)->weight*100 >= (sd)->max_weight*battle->bc->natural_heal_weight_rate )
 #define pc_is90overweight(sd) ( (sd)->weight*10 >= (sd)->max_weight*9 )
 #define pc_maxparameter(sd)   ( \
-	( ((sd)->class_&MAPID_UPPERMASK) == MAPID_KAGEROUOBORO \
+		((sd)->class_&MAPID_BASEMASK) == MAPID_SUMMONER ? battle_config.max_summoner_parameter : ( ((sd)->class_&MAPID_UPPERMASK) == MAPID_KAGEROUOBORO \
 	 || ((sd)->class_&MAPID_UPPERMASK) == MAPID_REBELLION \
 	 || ((sd)->class_&MAPID_THIRDMASK) == MAPID_SUPER_NOVICE_E \
 	) ? battle->bc->max_extended_parameter : ((sd)->class_&JOBL_THIRD) ? \
@@ -660,6 +663,9 @@ END_ZEROED_BLOCK;
 #define pc_ismadogear(sd) ( (sd)->sc.option&OPTION_MADOGEAR )
 /// Rune Knight Dragon
 #define pc_isridingdragon(sd) ( (sd)->sc.option&OPTION_DRAGON )
+
+/// Basic Skills
+#define pc_basicskillcheck(sd,level) ( pc->checkskill((sd), NV_BASIC) >= (level) || pc->checkskill((sd), SU_BASIC_SKILL) )
 
 #define pc_stop_walking(sd, type) (unit->stop_walking(&(sd)->bl, (type)))
 #define pc_stop_attack(sd)        (unit->stop_attack(&(sd)->bl))
@@ -1097,6 +1103,8 @@ END_ZEROED_BLOCK; /* End */
 	void (*update_idle_time) (struct map_session_data* sd, enum e_battle_config_idletime type);
 
 	int (*have_magnifier) (struct map_session_data *sd);
+	bool(*process_chat_message) (struct map_session_data *sd, const char *message);
+	void(*check_supernovice_call) (struct map_session_data *sd, const char *message);
 
 	// Configuração para bloquear jogadores de abrir chat/loja próximos uns aos outros. [CarlosHenrq]
 	int (*vending_chat_count_near) (struct map_session_data* sd);

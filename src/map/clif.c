@@ -2213,6 +2213,18 @@ void clif_viewpoint(struct map_session_data *sd, int npc_id, int type, int x, in
 	WFIFOSET(fd,packet_len(0x144));
 }
 
+void clif_crimson_marker(struct map_session_data *sd, struct block_list *bl, bool remove) {
+	unsigned char buf[11];
+
+	nullpo_retv(sd);
+
+	WBUFW(buf, 0) = 0x09C1;
+	WBUFL(buf, 2) = bl->id;
+	WBUFW(buf, 6) = (remove ? -1 : bl->x);
+	WBUFW(buf, 8) = (remove ? -1 : bl->y);
+	clif->send(buf, packet_len(0x09C1), &sd->bl, SELF);
+}
+
 /// Displays an illustration image.
 /// 0145 <image name>.16B <type>.B (ZC_SHOW_IMAGE)
 /// 01b3 <image name>.64B <type>.B (ZC_SHOW_IMAGE2)
@@ -5889,7 +5901,7 @@ void clif_wis_message(int fd, const char *nick, const char *mes, size_t mes_len)
 	WFIFOW(fd,0) = 0x97;
 	WFIFOW(fd,2) = mes_len + NAME_LENGTH + 4;
 	safestrncpy((char*)WFIFOP(fd,4), nick, NAME_LENGTH);
-	safestrncpy((char*)WFIFOP(fd,28), mes, mes_len);
+	safestrncpy((char*)WFIFOP(fd,28), mes, mes_len + 1);
 	WFIFOSET(fd,WFIFOW(fd,2));
 #else
 	ssd = map->nick2sd(nick);
@@ -5899,7 +5911,7 @@ void clif_wis_message(int fd, const char *nick, const char *mes, size_t mes_len)
 	WFIFOW(fd,2) = mes_len + NAME_LENGTH + 8;
 	safestrncpy((char*)WFIFOP(fd,4), nick, NAME_LENGTH);
 	WFIFOL(fd,28) = (ssd && pc_get_group_level(ssd) == 99) ? 1 : 0; // isAdmin; if nonzero, also displays text above char
-	safestrncpy((char*)WFIFOP(fd,32), mes, mes_len);
+	safestrncpy((char*)WFIFOP(fd,32), mes, mes_len + 1);
 	WFIFOSET(fd,WFIFOW(fd,2));
 #endif
 }
@@ -8978,104 +8990,133 @@ void clif_msgtable_skill(struct map_session_data* sd, uint16 skill_id, int msg_i
 	WFIFOSET(fd, packet_len(0x7e6));
 }
 
-/// Validates one global/guild/party/whisper message packet and tries to recognize its components.
-/// Returns true if the packet was parsed successfully.
-/// Formats: 0 - <packet id>.w <packet len>.w (<name> : <message>).?B 00
-///          1 - <packet id>.w <packet len>.w <name>.24B <message>.?B 00
-bool clif_process_message(struct map_session_data *sd, int format, char **name_, size_t *namelen_, char **message_, size_t *messagelen_) {
-	char *text, *name, *message;
-	unsigned int packetlen, textlen;
-	size_t namelen, messagelen;
-	int fd = sd->fd;
+/**
+ * Validates and processes a global/guild/party message packet.
+ *
+ * @param[in]  sd         The source character.
+ * @param[in]  packet     The packet data.
+ * @param[out] out_buf    The output buffer (must be a valid buffer), that will
+ *                        be filled with "Name : Message".
+ * @param[in]  out_buflen The size of out_buf (including the NUL terminator).
+ * @return a pointer to the "Message" part of out_buf.
+ * @retval NULL if the validation failed, the messages was a command or the
+ *              character can't send chat messages. out_buf shan't be used.
+ */
+const char *clif_process_chat_message(struct map_session_data *sd, const struct packet_chat_message *packet, char *out_buf, int out_buflen)
+{
+	const char *srcname = NULL, *srcmessage = NULL, *message = NULL;
+	int textlen = 0, namelen = 0, messagelen = 0;
 
-	nullpo_retr(false, sd);
-	nullpo_retr(false, name_);
-	nullpo_retr(false, namelen_);
-	nullpo_retr(false, message_);
-	nullpo_retr(false, messagelen_);
+	nullpo_ret(sd);
+	nullpo_ret(packet);
+	nullpo_ret(out_buf);
 
-	*name_ = NULL;
-	*namelen_ = 0;
-	*message_ = NULL;
-	*messagelen_ = 0;
-
-	packetlen = RFIFOW(fd,2);
-	// basic structure checks
-	if (packetlen < 4 + 1) {
+	if (packet->packet_len < 4 + 1) {
 		// 4-byte header and at least an empty string is expected
-		ShowWarning("clif_process_message: Received malformed packet from player '%s' (no message data)!\n", sd->status.name);
-		return false;
+		ShowWarning("clif_process_chat_message: Received malformed packet from player '%s' (no message data)!\n", sd->status.name);
+		return NULL;
 	}
 
-	text = (char*)RFIFOP(fd,4);
-	textlen = packetlen - 4;
+#if PACKETVER >= 20151001
+	// Packet doesn't include a NUL terminator
+	textlen = packet->packet_len - 4;
+#else // PACKETVER < 20151001
+	// Packet includes a NUL terminator
+	textlen = packet->packet_len - 4 - 1;
+#endif // PACKETVER > 20151001
 
-	// process <name> part of the packet
-	if( format == 0 )
-	{// name and message are separated by ' : '
-		// validate name
-		name = text;
-		namelen = strnlen(sd->status.name, NAME_LENGTH-1); // name length (w/o zero byte)
-
-		if( strncmp(name, sd->status.name, namelen) || // the text must start with the speaker's name
-			name[namelen] != ' ' || name[namelen+1] != ':' || name[namelen+2] != ' ' ) // followed by ' : '
-		{
-			//Hacked message, or infamous "client desynchronize" issue where they pick one char while loading another.
-			ShowWarning("clif_process_message: Player '%s' sent a message using an incorrect name! Forcing a relog...\n", sd->status.name);
-			sockt->eof(fd); // Just kick them out to correct it.
-			return false;
-		}
-
-		message = name + namelen + 3;
-		messagelen = textlen - namelen - 3; // this should be the message length (w/ zero byte included)
-	}
-	else
-	{// name has fixed width
-		if( textlen < NAME_LENGTH + 1 )
-		{
-			ShowWarning("clif_process_message: Received malformed packet from player '%s' (packet length is incorrect)!\n", sd->status.name);
-			return false;
-		}
-
-		// validate name
-		name = text;
-		namelen = strnlen(name, NAME_LENGTH-1); // name length (w/o zero byte)
-
-		if (name[namelen] != '\0') {
-			// only restriction is that the name must be zero-terminated
-			ShowWarning("clif_process_message: Player '%s' sent an unterminated name!\n", sd->status.name);
-			return false;
-		}
-
-		message = name + NAME_LENGTH;
-		messagelen = textlen - NAME_LENGTH; // this should be the message length (w/ zero byte included)
+	// name and message are separated by ' : '
+	srcname = packet->message;
+	namelen = (int)strnlen(sd->status.name, NAME_LENGTH-1); // name length (w/o zero byte)
+ 
+	if (strncmp(srcname, sd->status.name, namelen) != 0 // the text must start with the speaker's name
+	 || srcname[namelen] != ' ' || srcname[namelen+1] != ':' || srcname[namelen+2] != ' ' // followed by ' : '
+	 ) {
+		//Hacked message, or infamous "client desynchronize" issue where they pick one char while loading another.
+		ShowWarning("clif_process_chat_message: Player '%s' sent a message using an incorrect name! Forcing a relog...\n", sd->status.name);
+		sockt->eof(sd->fd); // Just kick them out to correct it.
+		return NULL;
 	}
 
-	if (messagelen != strnlen(message, messagelen)+1) {
-		// the declared length must match real length
-		ShowWarning("clif_process_message: Received malformed packet from player '%s' (length is incorrect)!\n", sd->status.name);
-		return false;
-	}
-	// verify <message> part of the packet
-	if (message[messagelen-1] != '\0') {
-		// message must be zero-terminated
-		ShowWarning("clif_process_message: Player '%s' sent an unterminated message string!\n", sd->status.name);
-		return false;
-	}
-	if (messagelen > CHAT_SIZE_MAX-1) {
+	srcmessage = packet->message + namelen + 3; // <name> " : " <message>
+	messagelen = textlen - namelen - 3;
+	if (messagelen >= CHAT_SIZE_MAX || textlen >= out_buflen) {
 		// messages mustn't be too long
 		// Normally you can only enter CHATBOX_SIZE-1 letters into the chat box, but Frost Joke / Dazzler's text can be longer.
 		// Also, the physical size of strings that use multibyte encoding can go multiple times over the chatbox capacity.
 		// Neither the official client nor server place any restriction on the length of the data in the packet,
 		// but we'll only allow reasonably long strings here. This also makes sure that they fit into the `chatlog` table.
-		ShowWarning("clif_process_message: Player '%s' sent a message too long ('%.*s')!\n", sd->status.name, CHAT_SIZE_MAX-1, message);
+		ShowWarning("clif_process_chat_message: Player '%s' sent a message too long ('%.*s')!\n", sd->status.name, CHATBOX_SIZE-1, srcmessage);
+		return NULL;
+	
+	}
+	safestrncpy(out_buf, packet->message, textlen+1); // [!] packet->message is not necessarily NUL terminated
+ 	message = out_buf + namelen + 3;
+
+	if (!pc->process_chat_message(sd, message))
+		return NULL;
+	return message;
+	}
+/**
+ * Validates and processes a whisper message packet.
+ *
+ * @param[in]  sd             The source character.
+ * @param[in]  packet         The packet data.
+ * @param[out] out_name       The parsed target name buffer (must be a valid
+ *                            buffer of size NAME_LENGTH).
+ * @param[out] out_message    The output message buffer (must be a valid buffer).
+ * @param[in]  out_messagelen The size of out_message.
+ * @retval true  if the validation succeeded and the message is a chat message.
+ * @retval false if the validation failed, the messages was a command or the
+ *              character can't send chat messages. out_name and out_message
+ *              shan't be used.
+ */
+bool clif_process_whisper_message(struct map_session_data *sd, const struct packet_whisper_message *packet, char *out_name, char *out_message, int out_messagelen)
+{
+	int namelen = 0, messagelen = 0;
+
+	nullpo_retr(false, sd);
+	nullpo_retr(false, packet);
+	nullpo_retr(false, out_name);
+	nullpo_retr(false, out_message);
+
+	if (packet->packet_len < NAME_LENGTH + 4 + 1) {
+		// 4-byte header and at least an empty string is expected
+		ShowWarning("clif_process_whisper_message: Received malformed packet from player '%s' (packet length is incorrect)!\n", sd->status.name);
 		return false;
 	}
 
-	*name_ = name;
-	*namelen_ = namelen;
-	*message_ = message;
-	*messagelen_ = messagelen;
+	// validate name
+	namelen = (int)strnlen(packet->name, NAME_LENGTH-1); // name length (w/o zero byte)
+	if (packet->name[namelen] != '\0') {
+		// only restriction is that the name must be zero-terminated
+		ShowWarning("clif_process_whisper_message: Player '%s' sent an unterminated name!\n", sd->status.name);
+		return false;
+	}
+
+#if PACKETVER >= 20151001
+	// Packet doesn't include a NUL terminator
+	messagelen = packet->packet_len - NAME_LENGTH - 4;
+#else // PACKETVER < 20151001
+	// Packet includes a NUL terminator
+	messagelen = packet->packet_len - NAME_LENGTH - 4 - 1;
+#endif // PACKETVER > 20151001
+
+	if (messagelen >= CHAT_SIZE_MAX || messagelen >= out_messagelen) {
+		// messages mustn't be too long
+		// Normally you can only enter CHATBOX_SIZE-1 letters into the chat box, but Frost Joke / Dazzler's text can be longer.
+		// Also, the physical size of strings that use multibyte encoding can go multiple times over the chatbox capacity.
+		// Neither the official client nor server place any restriction on the length of the data in the packet,
+		// but we'll only allow reasonably long strings here. This also makes sure that they fit into the `chatlog` table.
+		ShowWarning("clif_process_whisper_message: Player '%s' sent a message too long ('%.*s')!\n", sd->status.name, CHAT_SIZE_MAX-1, packet->message);
+		return false;
+	}
+
+	safestrncpy(out_name, packet->name, namelen+1); // [!] packet->name is not NUL terminated
+	safestrncpy(out_message, packet->message, messagelen+1); // [!] packet->message is not necessarily NUL terminated
+
+	if (!pc->process_chat_message(sd, out_message))
+		return false;
 	return true;
 }
 
@@ -9760,7 +9801,7 @@ void clif_parse_QuitGame(int fd, struct map_session_data *sd) __attribute__((non
 void clif_parse_QuitGame(int fd, struct map_session_data *sd)
 {
 	/* Rovert's prevent logout option fixed [Valaris] */
-	if( !sd->sc.data[SC_CLOAKING] && !sd->sc.data[SC_HIDING] && !sd->sc.data[SC_CHASEWALK] && !sd->sc.data[SC_CLOAKINGEXCEED] && !sd->sc.data[SC__INVISIBILITY] &&
+		if( !sd->sc.data[SC_CLOAKING] && !sd->sc.data[SC_HIDING] && !sd->sc.data[SC_CHASEWALK] && !sd->sc.data[SC_CLOAKINGEXCEED] && !sd->sc.data[SC__INVISIBILITY] && !sd->sc.data[SC_SUHIDE] &&
 		(!battle_config.prevent_logout || DIFF_TICK(timer->gettick(), sd->canlog_tick) > battle_config.prevent_logout) )
 	{
 		sockt->eof(fd);
@@ -9819,143 +9860,109 @@ int clif_undisguise_timer(int tid, int64 tick, int id, intptr_t data) {
 	return 0;
 }
 
-void clif_parse_GlobalMessage(int fd, struct map_session_data* sd) __attribute__((nonnull (2)));
-/// Validates and processes global messages
-/// 008c <packet len>.W <text>.?B (<name> : <message>) 00 (CZ_REQUEST_CHAT)
-/// There are various variants of this packet.
-void clif_parse_GlobalMessage(int fd, struct map_session_data* sd)
+/**
+ * Validates and processed global messages.
+ *
+ * There are various variants of this packet.
+ *
+ * @code
+ * 008c <packet len>.W <text>.?B (<name> : <message>) 00 (CZ_REQUEST_CHAT)
+ * @endcode
+ *
+ * @param fd The incoming file descriptor.
+ * @param sd The related character.
+ */
+void clif_parse_GlobalMessage(int fd, struct map_session_data *sd) __attribute__((nonnull (2)));
+void clif_parse_GlobalMessage(int fd, struct map_session_data *sd)
 {
-	const char* text = (char*)RFIFOP(fd,4);
-	size_t textlen = RFIFOW(fd,2) - 4;
+	const struct packet_chat_message *packet = NULL;
+	char full_message[CHAT_SIZE_MAX + NAME_LENGTH + 3 + 1];
+	const char *message = NULL;
+	bool is_fakename = false;
+	int outlen = 0;
 
-	char *name, *message, *fakename = NULL;
-	size_t namelen, messagelen;
+	packet = RP2PTR(fd);
+	message = clif->process_chat_message(sd, packet, full_message, sizeof full_message);
 
-	bool is_fake;
-
-	// validate packet and retrieve name and message
-	if( !clif->process_message(sd, 0, &name, &namelen, &message, &messagelen) )
+ 	if (message == NULL)
 		return;
 
-	if( atcommand->exec(fd, sd, message, true)  )
-		return;
+	pc->check_supernovice_call(sd, message);
 
-	if( !pc->can_talk(sd) )
-		return;
-
-	if( battle_config.min_chat_delay ) { //[Skotlex]
-		if (DIFF_TICK(sd->cantalk_tick, timer->gettick()) > 0)
-			return;
-		sd->cantalk_tick = timer->gettick() + battle_config.min_chat_delay;
+	if (sd->gcbind != NULL) {
+ 		channel->send(sd->gcbind, sd, message);
 	}
 
-	if( (sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE ) {
-		unsigned int next = pc->nextbaseexp(sd);
-		if( next == 0 ) next = pc->thisbaseexp(sd);
-		if( next ) { // 0%, 10%, 20%, ...
-			int percent = (int)( ( (float)sd->status.base_exp/(float)next )*1000. );
-			if( (battle_config.snovice_call_type || percent) && ( percent%100 ) == 0 ) {// 10.0%, 20.0%, ..., 90.0%
-				switch (sd->state.snovice_call_flag) {
-					case 0:
-						if( strstr(message, msg_txt(1479)) ) // "Dear angel, can you hear my voice?"
-							sd->state.snovice_call_flag = 1;
-						break;
-					case 1: {
-						char buf[256];
-						snprintf(buf, 256, msg_txt(1480), sd->status.name);
-						if( strstr(message, buf) ) // "I am %s Super Novice~"
-							sd->state.snovice_call_flag = 2;
-					}
-						break;
-					case 2:
-						if( strstr(message, msg_txt(1481)) ) // "Help me out~ Please~ T_T"
-							sd->state.snovice_call_flag = 3;
-						break;
-					case 3:
-						sc_start(NULL,&sd->bl, status->skill2sc(MO_EXPLOSIONSPIRITS), 100, 17, skill->get_time(MO_EXPLOSIONSPIRITS, 5)); //Lv17-> +50 critical (noted by Poki) [Skotlex]
-						clif->skill_nodamage(&sd->bl, &sd->bl, MO_EXPLOSIONSPIRITS, 5, 1);  // prayer always shows successful Lv5 cast and disregards noskill restrictions
-						sd->state.snovice_call_flag = 0;
-						break;
-				}
-			}
-		}
+	if (sd->fakename[0] != '\0') {
+		is_fakename = true;
+		outlen = (int)strlen(sd->fakename) + (int)strlen(message) + 3 + 1;
+	} else {
+		outlen = (int)strlen(full_message) + 1;
 	}
-
-	pc->update_idle_time(sd, BCIDLE_CHAT);
-
-	if( sd->gcbind ) {
-		channel->send(sd->gcbind,sd,message);
-		return;
-	} else if ( sd->fontcolor && !sd->chatID ) {
-		char mout[200];
-		unsigned char mylen = 1;
+	if (sd->fontcolor != 0 && sd->chatID == 0) {
 		uint32 color = 0;
 
-		if( sd->disguise == -1 ) {
+		if (sd->disguise == -1) {
 			sd->fontcolor_tid = timer->add(timer->gettick()+5000, clif->undisguise_timer, sd->bl.id, 0);
 			pc->disguise(sd,sd->status.class_);
-			if( pc_isdead(sd) )
+			if (pc_isdead(sd))
 				clif->clearunit_single(-sd->bl.id, CLR_DEAD, sd->fd);
-			if( unit->is_walking(&sd->bl) )
+			if(unit->is_walking(&sd->bl))
 				clif->move(&sd->ud);
-		} else if ( sd->disguise == sd->status.class_ && sd->fontcolor_tid != INVALID_TIMER ) {
+		} else if (sd->disguise == sd->status.class_ && sd->fontcolor_tid != INVALID_TIMER) {
 			const struct TimerData *td;
-			if( (td = timer->get(sd->fontcolor_tid)) ) {
+			if ((td = timer->get(sd->fontcolor_tid)) != NULL)
 				timer->settick(sd->fontcolor_tid, td->tick+5000);
 			}
-		}
-
-		mylen += snprintf(mout, 200, "%s : %s",sd->fakename[0]?sd->fakename:sd->status.name,message);
-
+		
+		
 		color = channel->config->colors[sd->fontcolor - 1];
-		WFIFOHEAD(fd,mylen + 12);
+		WFIFOHEAD(fd, outlen + 12);
 		WFIFOW(fd,0) = 0x2C1;
-		WFIFOW(fd,2) = mylen + 12;
+		WFIFOW(fd,2) = outlen + 12;
 		WFIFOL(fd,4) = sd->bl.id;
 		WFIFOL(fd,8) = RGB2BGR(color);
-		safestrncpy((char*)WFIFOP(fd,12), mout, mylen);
+		if (is_fakename)
+ 			safesnprintf((char*)WFIFOP (fd, 12), outlen, "%s : %s", sd->fakename, message);
+ 		else
+ 			safestrncpy((char*)WFIFOP(fd, 12), full_message, outlen);
 		clif->send(WFIFOP(fd,0), WFIFOW(fd,2), &sd->bl, AREA_WOS);
 		WFIFOL(fd,4) = -sd->bl.id;
-		WFIFOSET(fd, mylen + 12);
+		WFIFOSET(fd, outlen + 12);
 		return;
 	}
 
-	/**
-	 * Fake Name Design by FatalEror (bug report #9)
-	 **/
-	if( ( is_fake = ( sd->fakename[0] ) ) ) {
-		fakename = (char*) aMalloc(strlen(sd->fakename)+messagelen+3);
-		strcpy(fakename, sd->fakename);
-		strcat(fakename, " : ");
-		strcat(fakename, message);
-		textlen = strlen(fakename) + 1;
+	{
+		// send message to others
+		void *buf = aMalloc(8 + outlen);
+		WBUFW(buf, 0) = 0x8d;
+		WBUFW(buf, 2) = 8 + outlen;
+		WBUFL(buf, 4) = sd->bl.id;
+		if (is_fakename)
+			safesnprintf((char*)WBUFP(buf, 8), outlen, "%s : %s", sd->fakename, message);
+		else
+		safestrncpy((char*)WBUFP(buf, 8), full_message, outlen);
+		//FIXME: chat has range of 9 only
+		clif->send(buf, WBUFW(buf, 2), &sd->bl, sd->chatID ? CHAT_WOS : AREA_CHAT_WOC);
+		aFree(buf);
 	}
-	// send message to others (using the send buffer for temp. storage)
-	WFIFOHEAD(fd, 8 + textlen);
-	WFIFOW(fd,0) = 0x8d;
-	WFIFOW(fd,2) = 8 + textlen;
-	WFIFOL(fd,4) = sd->bl.id;
-	safestrncpy((char*)WFIFOP(fd,8), is_fake ? fakename : text, textlen);
-	//FIXME: chat has range of 9 only
-	clif->send(WFIFOP(fd,0), WFIFOW(fd,2), &sd->bl, sd->chatID ? CHAT_WOS : AREA_CHAT_WOC);
+	
 
 	// send back message to the speaker
-	if( is_fake ) {
-		WFIFOW(fd,0) = 0x8e;
-		WFIFOW(fd,2) = textlen + 4;
-		safestrncpy((char*)WFIFOP(fd,4), fakename, textlen);
-		aFree(fakename);
-	} else {
-		memcpy(WFIFOP(fd,0), RFIFOP(fd,0), RFIFOW(fd,2));
-		WFIFOW(fd,0) = 0x8e;
-	}
+	WFIFOHEAD(fd, 4 + outlen);
+	WFIFOW(fd, 0) = 0x8e;
+	WFIFOW(fd, 2) = 4 + outlen;
+	if (is_fakename)
+		safesnprintf((char*)WFIFOP(fd, 4), outlen, "%s : %s", sd->fakename, message);
+	else
+		safestrncpy((char*)WFIFOP(fd, 4), full_message, outlen);
 	WFIFOSET(fd, WFIFOW(fd,2));
 
 	// Chat logging type 'O' / Global Chat
 	logs->chat(LOG_CHAT_GLOBAL, 0, sd->status.char_id, sd->status.account_id, mapindex_id2name(sd->mapindex), sd->bl.x, sd->bl.y, NULL, message);
 
 	// trigger listening npcs
-	map->foreachinrange(npc_chat->sub, &sd->bl, AREA_SIZE, BL_NPC, text, textlen, &sd->bl);
+	map->foreachinrange(npc_chat->sub, &sd->bl, AREA_SIZE, BL_NPC, full_message, strlen(full_message), &sd->bl);
 }
 
 void clif_parse_MapMove(int fd, struct map_session_data *sd) __attribute__((nonnull (2)));
@@ -10032,7 +10039,7 @@ void clif_parse_Emotion(int fd, struct map_session_data *sd)
 {
 	int emoticon = RFIFOB(fd,packet_db[RFIFOW(fd,0)].pos[0]);
 
-	if (battle_config.basic_skill_check == 0 || pc->checkskill(sd, NV_BASIC) >= 2) {
+	if (battle_config.basic_skill_check == 0 || pc_basicskillcheck(sd, 2) ) {
 		if (emoticon == E_MUTE) {// prevent use of the mute emote [Valaris]
 			clif->skill_fail(sd, 1, USESKILL_FAIL_LEVEL, 1);
 			return;
@@ -10092,7 +10099,8 @@ void clif_parse_ActionRequest_sub(struct map_session_data *sd, int action_type, 
 			sd->sc.data[SC_TRICKDEAD] ||
 			(sd->sc.data[SC_AUTOCOUNTER] && action_type != 0x07) ||
 			 sd->sc.data[SC_BLADESTOP] ||
-			 sd->sc.data[SC_DEEP_SLEEP] )
+			 sd->sc.data[SC_DEEP_SLEEP] ||
+			 sd->sc.data[SC_SUHIDE] )
 			 )
 		return;
 
@@ -10132,7 +10140,7 @@ void clif_parse_ActionRequest_sub(struct map_session_data *sd, int action_type, 
 		}
 		break;
 		case 0x02: // sitdown
-			if (battle_config.basic_skill_check && pc->checkskill(sd, NV_BASIC) < 3) {
+			if (battle_config.basic_skill_check && !pc_basicskillcheck(sd, 3) ) {
 				clif->skill_fail(sd, 1, USESKILL_FAIL_LEVEL, 2);
 				break;
 			}
@@ -10217,7 +10225,7 @@ void clif_parse_Restart(int fd, struct map_session_data *sd) {
 		case 0x01:
 			/* Rovert's Prevent logout option - Fixed [Valaris] */
 			if (!sd->sc.data[SC_CLOAKING] && !sd->sc.data[SC_HIDING] && !sd->sc.data[SC_CHASEWALK]
-			 && !sd->sc.data[SC_CLOAKINGEXCEED] && !sd->sc.data[SC__INVISIBILITY]
+			&& !sd->sc.data[SC_CLOAKINGEXCEED] && !sd->sc.data[SC__INVISIBILITY] && !sd->sc.data[SC_SUHIDE]
 			 && (!battle_config.prevent_logout || DIFF_TICK(timer->gettick(), sd->canlog_tick) > battle_config.prevent_logout)
 			) {
 				//Send to char-server for character selection.
@@ -10229,36 +10237,27 @@ void clif_parse_Restart(int fd, struct map_session_data *sd) {
 	}
 }
 
-void clif_parse_WisMessage(int fd, struct map_session_data* sd) __attribute__((nonnull (2)));
-/// Validates and processes whispered messages (CZ_WHISPER).
-/// 0096 <packet len>.W <nick>.24B <message>.?B
-void clif_parse_WisMessage(int fd, struct map_session_data* sd)
-{
+/**
+ * Validates and processes whispered messages (CZ_WHISPER).
+ *
+ * @code
+ * 0096 <packet len>.W <nick>.24B <message>.?B
+ * @endcode
+ *
+ * @param fd The incoming file descriptor.
+ * @param sd The related character.
+ */
+void clif_parse_WisMessage(int fd, struct map_session_data *sd) __attribute__((nonnull (2)));
+void clif_parse_WisMessage(int fd, struct map_session_data* sd){
+
 	struct map_session_data* dstsd;
 	int i;
 
-	char *target, *message;
-	size_t namelen, messagelen;
+	char target[NAME_LENGTH], message[CHAT_SIZE_MAX + 1];
+ 	const struct packet_whisper_message *packet = RP2PTR(fd);
 
-	// validate packet and retrieve name and message
-	if( !clif->process_message(sd, 1, &target, &namelen, &message, &messagelen) )
+	if (!clif->process_whisper_message(sd, packet, target, message, sizeof message))
 		return;
-
-	if ( atcommand->exec(fd, sd, message, true) )
-		return;
-
-	// Statuses that prevent the player from whispering
-	if( !pc->can_talk(sd) )
-		return;
-
-	if (battle_config.min_chat_delay) { //[Skotlex]
-		if (DIFF_TICK(sd->cantalk_tick, timer->gettick()) > 0) {
-			return;
-		}
-		sd->cantalk_tick = timer->gettick() + battle_config.min_chat_delay;
-	}
-
-	pc->update_idle_time(sd, BCIDLE_CHAT);
 
 	// Chat logging type 'W' / Whisper
 	logs->chat(LOG_CHAT_WHISPER, 0, sd->status.char_id, sd->status.account_id, mapindex_id2name(sd->mapindex), sd->bl.x, sd->bl.y, target, message);
@@ -10267,7 +10266,7 @@ void clif_parse_WisMessage(int fd, struct map_session_data* sd)
 	//   Lordalfa - Paperboy - To whisper NPC commands       //
 	//-------------------------------------------------------//
 	if (target[0] && (strncasecmp(target,"NPC:",4) == 0) && (strlen(target) > 4)) {
-		char* str = target+4; //Skip the NPC: string part.
+		const char *str = target+4; //Skip the NPC: string part.
 		struct npc_data *nd;
 		if ((nd = npc->name2id(str))) {
 			char split_data[NUM_WHISPER_VAR][CHAT_SIZE_MAX];
@@ -10302,7 +10301,7 @@ void clif_parse_WisMessage(int fd, struct map_session_data* sd)
 			return;
 		}
 	} else if( target[0] == '#' ) {
-		char *chname = target;
+		const char *chname = target;
 		struct channel_data *chan = channel->search(chname, sd);
 
 		if (chan) {
@@ -10329,7 +10328,7 @@ void clif_parse_WisMessage(int fd, struct map_session_data* sd)
 		// if there are 'Test' player on an other map-server and 'test' player on this map-server,
 		// and if we ask for 'Test', we must not contact 'test' player
 		// so, we send information to inter-server, which is the only one which decide (and copy correct name).
-		intif->wis_message(sd, target, message, messagelen);
+		intif->wis_message(sd, target, message, (int)strlen(message));
 		return;
 	}
 
@@ -10346,7 +10345,7 @@ void clif_parse_WisMessage(int fd, struct map_session_data* sd)
 	if( dstsd->state.autotrade ) {
 		char output[256];
 		sprintf(output, "%s is in autotrade mode and cannot receive whispered messages.", dstsd->status.name);
-		clif->wis_message(fd, map->wisp_server_name, output, strlen(output) + 1);
+		clif->wis_message(fd, map->wisp_server_name, output, (int)strlen(output));
 		return;
 	}
 
@@ -10363,7 +10362,7 @@ void clif_parse_WisMessage(int fd, struct map_session_data* sd)
 	clif->wis_end(fd, 0); // 0: success to send wisper
 
 	// Normal message
-	clif->wis_message(dstsd->fd, sd->status.name, message, messagelen);
+	clif->wis_message(dstsd->fd, sd->status.name, message, (int)strlen(message));
 }
 
 void clif_parse_Broadcast(int fd, struct map_session_data* sd) __attribute__((nonnull (2)));
@@ -10407,6 +10406,7 @@ void clif_parse_TakeItem(int fd, struct map_session_data *sd)
 				 sd->sc.data[SC_TRICKDEAD] ||
 				 sd->sc.data[SC_BLADESTOP] ||
 				 sd->sc.data[SC_CLOAKINGEXCEED] ||
+				 sd->sc.data[SC_SUHIDE] ||
 				 pc_ismuted(&sd->sc, MANNER_NOITEM)
 			) )
 			break;
@@ -10645,7 +10645,7 @@ void clif_parse_NpcBuyListSend(int fd, struct map_session_data* sd)
 	{
 		clif->message(sd->fd,msg_sd(sd,3005));
 		result = 1;
-	}	
+	}
 	else
 		result = npc->buylist(sd,n,item_list);
 
@@ -10687,7 +10687,7 @@ void clif_parse_NpcSellListSend(int fd,struct map_session_data *sd)
 	{
 		clif->message(sd->fd,msg_sd(sd,3005));
 		fail = 1;
-	}	
+	}
 	else
 		fail = npc->selllist(sd,n,item_list);
 
@@ -10714,7 +10714,7 @@ void clif_parse_CreateChatRoom(int fd, struct map_session_data* sd)
 
 	if (pc_ismuted(&sd->sc, MANNER_NOROOM))
 		return;
-	if(battle_config.basic_skill_check && pc->checkskill(sd,NV_BASIC) < 4) {
+	if(battle_config.basic_skill_check && !pc_basicskillcheck(sd, 4) ) {
 		clif->skill_fail(sd,1,USESKILL_FAIL_LEVEL,3);
 		return;
 	}
@@ -10846,7 +10846,7 @@ void clif_parse_TradeRequest(int fd,struct map_session_data *sd) {
 		return;
 	}
 
-	if( battle_config.basic_skill_check && pc->checkskill(sd,NV_BASIC) < 1) {
+	if( battle_config.basic_skill_check && !pc_basicskillcheck(sd, 1) ) {
 		clif->skill_fail(sd,1,USESKILL_FAIL_LEVEL,0);
 		return;
 	}
@@ -11566,6 +11566,10 @@ void clif_parse_NpcStringInput(int fd, struct map_session_data* sd)
 	if( message_len <= 0 )
 		return; // invalid input
 
+	#if PACKETVER >= 20151001
+		message_len++;
+ 	#endif	
+
 	safestrncpy(sd->npc_str, message, min(message_len,CHATBOX_SIZE));
 	npc->scriptcont(sd, npcid, false);
 }
@@ -11902,7 +11906,7 @@ void clif_parse_CreateParty(int fd, struct map_session_data *sd) {
 		clif->message(fd, msg_fd(fd,227));
 		return;
 	}
-	if( battle_config.basic_skill_check && pc->checkskill(sd,NV_BASIC) < 7 ) {
+	if( battle_config.basic_skill_check && !pc_basicskillcheck(sd, 7) ) {
 		clif->skill_fail(sd,1,USESKILL_FAIL_LEVEL,4);
 		return;
 	}
@@ -11922,7 +11926,7 @@ void clif_parse_CreateParty2(int fd, struct map_session_data *sd) {
 		clif->message(fd, msg_fd(fd,227));
 		return;
 	}
-	if( battle_config.basic_skill_check && pc->checkskill(sd,NV_BASIC) < 7 ) {
+	if( battle_config.basic_skill_check && !pc_basicskillcheck(sd, 7) ) {
 		clif->skill_fail(sd,1,USESKILL_FAIL_LEVEL,4);
 		return;
 	}
@@ -12048,36 +12052,25 @@ void clif_parse_PartyChangeOption(int fd, struct map_session_data *sd)
 #endif
 }
 
-void clif_parse_PartyMessage(int fd, struct map_session_data* sd) __attribute__((nonnull (2)));
-/// Validates and processes party messages (CZ_REQUEST_CHAT_PARTY).
-/// 0108 <packet len>.W <text>.?B (<name> : <message>) 00
-void clif_parse_PartyMessage(int fd, struct map_session_data* sd)
+/**
+ * Validates and processes party messages (CZ_REQUEST_CHAT_PARTY).
+ *
+ * @code
+ * 0108 <packet len>.W <text>.?B (<name> : <message>) 00
+ * @endcode
+ *
+ * @param fd The incoming file descriptor.
+ * @param sd The related character.
+ */
+void clif_parse_PartyMessage(int fd, struct map_session_data *sd) __attribute__((nonnull (2)));
+void clif_parse_PartyMessage(int fd, struct map_session_data *sd)
 {
-	const char* text = (char*)RFIFOP(fd,4);
-	int textlen = RFIFOW(fd,2) - 4;
+	const struct packet_chat_message *packet = RP2PTR(fd);
+ 	char message[CHAT_SIZE_MAX + NAME_LENGTH + 3 + 1];
 
-	char *name, *message;
-	size_t namelen, messagelen;
-
-	// validate packet and retrieve name and message
-	if( !clif->process_message(sd, 0, &name, &namelen, &message, &messagelen) )
+	if (clif->process_chat_message(sd, packet, message, sizeof message) == NULL)
 		return;
-
-	if( atcommand->exec(fd, sd, message, true)  )
-		return;
-
-	if( !pc->can_talk(sd) )
-		return;
-
-	if (battle_config.min_chat_delay) {
-		if (DIFF_TICK(sd->cantalk_tick, timer->gettick()) > 0)
-			return;
-		sd->cantalk_tick = timer->gettick() + battle_config.min_chat_delay;
-	}
-
-	pc->update_idle_time(sd, BCIDLE_CHAT);
-
-	party->send_message(sd, text, textlen);
+	party->send_message(sd, message);
 }
 
 void clif_parse_PartyChangeLeader(int fd, struct map_session_data* sd) __attribute__((nonnull (2)));
@@ -13181,39 +13174,28 @@ void clif_parse_GuildExpulsion(int fd,struct map_session_data *sd) {
 	guild->expulsion(sd,RFIFOL(fd,2),RFIFOL(fd,6),RFIFOL(fd,10),(char*)RFIFOP(fd,14));
 }
 
-void clif_parse_GuildMessage(int fd, struct map_session_data* sd) __attribute__((nonnull (2)));
-/// Validates and processes guild messages (CZ_GUILD_CHAT).
-/// 017e <packet len>.W <text>.?B (<name> : <message>) 00
-void clif_parse_GuildMessage(int fd, struct map_session_data* sd)
+/**
+ * Validates and processes guild messages (CZ_GUILD_CHAT).
+ *
+ * @code
+ * 017e <packet len>.W <text>.?B (<name> : <message>) 00
+ * @endcode
+ *
+ * @param fd The incoming file descriptor.
+ * @param sd The related character.
+ */
+void clif_parse_GuildMessage(int fd, struct map_session_data *sd) __attribute__((nonnull (2)));
+void clif_parse_GuildMessage(int fd, struct map_session_data *sd)
 {
-	const char* text = (char*)RFIFOP(fd,4);
-	int textlen = RFIFOW(fd,2) - 4;
+	const struct packet_chat_message *packet = RP2PTR(fd);
+ 	char message[CHAT_SIZE_MAX + NAME_LENGTH + 3 + 1];
 
-	char *name, *message;
-	size_t namelen, messagelen;
-
-	// validate packet and retrieve name and message
-	if( !clif->process_message(sd, 0, &name, &namelen, &message, &messagelen) )
+	if (clif->process_chat_message(sd, packet, message, sizeof message) == NULL)
 		return;
-
-	if( atcommand->exec(fd, sd, message, true) )
-		return;
-
-	if( !pc->can_talk(sd) )
-		return;
-
-	if (battle_config.min_chat_delay) {
-		if (DIFF_TICK(sd->cantalk_tick, timer->gettick()) > 0)
-			return;
-		sd->cantalk_tick = timer->gettick() + battle_config.min_chat_delay;
-	}
-
-	pc->update_idle_time(sd, BCIDLE_CHAT);
-
-	if( sd->bg_id )
-		bg->send_message(sd, text, textlen);
+	if (sd->bg_id)
+ 		bg->send_message(sd, message);
 	else
-		guild->send_message(sd, text, textlen);
+		guild->send_message(sd, message);
 }
 
 void clif_parse_GuildRequestAlliance(int fd, struct map_session_data *sd) __attribute__((nonnull (2)));
@@ -15582,7 +15564,7 @@ void clif_parse_cashshop_buy(int fd, struct map_session_data *sd)
 	{
 		clif->message(sd->fd,msg_sd(sd,3005));
 		fail = 1;
-	}	
+	}
 	else {
 #if PACKETVER < 20101116
 		short nameid = RFIFOW(fd,2);
@@ -16268,58 +16250,52 @@ void clif_bg_xy_remove(struct map_session_data *sd)
 
 /// Notifies clients of a battleground message (ZC_BATTLEFIELD_CHAT).
 /// 02dc <packet len>.W <account id>.L <name>.24B <message>.?B
-void clif_bg_message(struct battleground_data *bgd, int src_id, const char *name, const char *mes, size_t len)
+void clif_bg_message(struct battleground_data *bgd, int src_id, const char *name, const char *mes)
 {
 	struct map_session_data *sd;
 	unsigned char *buf;
+	int len;
 
 	nullpo_retv(bgd);
 	nullpo_retv(name);
 	nullpo_retv(mes);
-	if( !bgd->count || (sd = bg->getavailablesd(bgd)) == NULL )
+
+	if (!bgd->count || (sd = bg->getavailablesd(bgd)) == NULL)
 		return;
 
+	len = (int)strlen(mes);
+	Assert_retv(len <= INT16_MAX - NAME_LENGTH - 8);
 	buf = (unsigned char*)aMalloc((len + NAME_LENGTH + 8)*sizeof(unsigned char));
 
-	WBUFW(buf,0) = 0x2dc;
-	WBUFW(buf,2) = len + NAME_LENGTH + 8;
-	WBUFL(buf,4) = src_id;
-	memcpy(WBUFP(buf,8), name, NAME_LENGTH);
-	memcpy(WBUFP(buf,32), mes, len);
-	clif->send(buf,WBUFW(buf,2), &sd->bl, BG);
+	WBUFW(buf, 0) = 0x2dc;
+	WBUFW(buf, 2) = len + NAME_LENGTH + 8;
+	WBUFL(buf, 4) = src_id;
+	memcpy(WBUFP(buf, 8), name, NAME_LENGTH);
+	memcpy(WBUFP(buf, 32), mes, len); // [!] no NUL terminator
+	clif->send(buf, WBUFW(buf, 2), &sd->bl, BG);
 
 	aFree(buf);
 }
 
-void clif_parse_BattleChat(int fd, struct map_session_data* sd) __attribute__((nonnull (2)));
-/// Validates and processes battlechat messages [pakpil] (CZ_BATTLEFIELD_CHAT).
-/// 0x2db <packet len>.W <text>.?B (<name> : <message>) 00
-void clif_parse_BattleChat(int fd, struct map_session_data* sd)
+/**
+ * Validates and processes battlechat messages [pakpil] (CZ_BATTLEFIELD_CHAT).
+ *
+ * @code
+ * 0x2db <packet len>.W <text>.?B (<name> : <message>) 00
+ * @endcode
+ *
+ * @param fd The incoming file descriptor.
+ * @param sd The related character.
+ */
+void clif_parse_BattleChat(int fd, struct map_session_data *sd) __attribute__((nonnull (2)));
+void clif_parse_BattleChat(int fd, struct map_session_data *sd)
 {
-	const char* text = (char*)RFIFOP(fd,4);
-	int textlen = RFIFOW(fd,2) - 4;
+	const struct packet_chat_message *packet = RP2PTR(fd);
+ 	char message[CHAT_SIZE_MAX + NAME_LENGTH + 3 + 1];
 
-	char *name, *message;
-	size_t namelen, messagelen;
-
-	if( !clif->process_message(sd, 0, &name, &namelen, &message, &messagelen) )
+	if (clif->process_chat_message(sd, packet, message, sizeof message) == NULL)
 		return;
-
-	if( atcommand->exec(fd, sd, message, true) )
-		return;
-
-	if( !pc->can_talk(sd) )
-		return;
-
-	if( battle_config.min_chat_delay ) {
-		if( DIFF_TICK(sd->cantalk_tick, timer->gettick()) > 0 )
-			return;
-		sd->cantalk_tick = timer->gettick() + battle_config.min_chat_delay;
-	}
-
-	pc->update_idle_time(sd, BCIDLE_CHAT);
-
-	bg->send_message(sd, text, textlen);
+	bg->send_message(sd, message);
 }
 
 /// Notifies client of a battleground score change (ZC_BATTLEFIELD_NOTIFY_POINT).
@@ -19289,6 +19265,7 @@ void clif_defaults(void) {
 	clif->scriptclear = clif_scriptclear;
 	/* client-user-interface-related */
 	clif->viewpoint = clif_viewpoint;
+	clif->crimson_marker = clif_crimson_marker;
 	clif->damage = clif_damage;
 	clif->sitting = clif_sitting;
 	clif->standing = clif_standing;
@@ -19444,7 +19421,8 @@ void clif_defaults(void) {
 	clif->message = clif_displaymessage;
 	clif->messageln = clif_displaymessage2;
 	clif->messages = clif_displaymessage_sprintf;
-	clif->process_message = clif_process_message;
+	clif->process_chat_message = clif_process_chat_message;
+ 	clif->process_whisper_message = clif_process_whisper_message;
 	clif->wisexin = clif_wisexin;
 	clif->wisall = clif_wisall;
 	clif->PMIgnoreList = clif_PMIgnoreList;

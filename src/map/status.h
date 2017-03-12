@@ -749,6 +749,31 @@ typedef enum sc_type {
 	SC_LJOSALFAR,
 	SC_MERMAID_LONGING,
 
+	//Summoner
+	SC_SUHIDE = 642,
+	SC_SU_STOOP,
+	SC_SPRITEMABLE,
+	SC_CATNIPPOWDER,
+	SC_SV_ROOTTWIST,
+	SC_BITESCAR,
+	SC_ARCLOUSEDASH,
+	SC_TUNAPARTY,
+	SC_SHRIMP,
+	SC_FRESHSHRIMP,
+	
+	/**
+	 * Rebellion [Cydh]
+	 **/
+	SC_HEAT_BARREL = 652,
+	SC_HEAT_BARREL_AFTER,
+	SC_P_ALTER,
+	SC_E_CHAIN,
+	SC_C_MARKER,
+	SC_ANTI_M_BLAST,
+	SC_B_TRAP,
+	SC_H_MINE,
+	SC_QD_SHOT_READY,
+	
 	/* buffspecial [Megasantos/brAthena} */
 	SC_STEAMPACK = 800,
 	SC_ATKER_ASPD,
@@ -827,7 +852,7 @@ typedef enum sc_type {
 	SC_PYROCLASTIC,
 	SC_VOLCANIC_ASH,
 	SC_STYLE_CHANGE,
-	SC_SONIC_CLAW_POSTDELAY, // 660
+	SC_SONIC_CLAW_POSTDELAY,
 	SC_SILVERVEIN_RUSH_POSTDELAY,
 	SC_TINDER_BREAKER,
 	SC_TINDER_BREAKER_POSTDELAY,
@@ -839,31 +864,8 @@ typedef enum sc_type {
 	SC_ERASER_CUTTER,
 	SC_MIDNIGHT_FRENZY_POSTDELAY,
 
-	// Rebellion
-	SC_HEAT_BARREL,
-	SC_HEAT_BARREL_AFTER,
-	SC_P_ALTER,
-	SC_E_CHAIN,
-	SC_C_MARKER,
-	SC_ANTI_M_BLAST,
-	SC_B_TRAP,
-	SC_H_MINE,
-	SC_QD_SHOT_READY, // 650
-	
-	//Summoner
-	SC_SUHIDE, // 670
-	SC_SU_STOOP,
-	SC_SPRITEMABLE,
-	SC_CATNIPPOWDER,
-	SC_SV_ROOTTWIST,
-	SC_BITESCAR,
-	SC_ARCLOUSEDASH,
-	SC_TUNAPARTY,
-	SC_SHRIMP,
-	SC_FRESHSHRIMP,
-
 	// Elemental Mode
-	SC_EL_PASSIVE, // 680
+	SC_EL_PASSIVE,
 	SC_EL_DEFENSIVE,
 	SC_EL_OFFENSIVE,
 	SC_EL_WAIT,
@@ -1785,10 +1787,10 @@ enum si_type {
 	//SI_HEALTHSTATE_HEAVYPOISON               = 890,
 	//SI_HEALTHSTATE_FEAR                      = 891,
 	//SI_CHERRY_BLOSSOM_CAKE                   = 892,
-	//SI_SU_STOOP                              = 893,
-	//SI_CATNIPPOWDER                          = 894,
+	SI_SU_STOOP                              = 893,
+	SI_CATNIPPOWDER                          = 894,
 	SI_BLOSSOM_FLUTTERING                    = 895,
-	//SI_SV_ROOTTWIST                        = 896,
+	SI_SV_ROOTTWIST                        = 896,
 	//SI_ATTACK_PROPERTY_NOTHING               = 897,
 	//SI_ATTACK_PROPERTY_WATER                 = 898,
 	//SI_ATTACK_PROPERTY_GROUND                = 899,
@@ -1810,11 +1812,11 @@ enum si_type {
 	//SI_RESIST_PROPERTY_DARKNESS              = 914,
 	//SI_RESIST_PROPERTY_TELEKINESIS           = 915,
 	//SI_RESIST_PROPERTY_UNDEAD                = 916,
-	//SI_BITESCAR                            = 917,
-	//SI_ARCLOUSEDASH                        = 918,
-	//SI_TUNAPARTY                           = 919,
-	//SI_SHRIMP                              = 920,
-	//SI_FRESHSHRIMP                         = 921,
+	SI_BITESCAR                            = 917,
+	SI_ARCLOUSEDASH                        = 918,
+	SI_TUNAPARTY                           = 919,
+	SI_SHRIMP                              = 920,
+	SI_FRESHSHRIMP                         = 921,
 	//SI_PERIOD_RECEIVEITEM                    = 922,
 	//SI_PERIOD_PLUSEXP                        = 923,
 	//SI_PERIOD_PLUSJOBEXP                     = 924,
@@ -1826,11 +1828,11 @@ enum si_type {
 	//SI_HELM_ISIA                             = 930,
 	//SI_HELM_ASIR                             = 931,
 	//SI_HELM_URJ                              = 932,
-	//SI_SUHIDE                                = 933,
+	SI_SUHIDE                                = 933,
 	//SI_                                    = 934,
 	//SI_DORAM_BUF_01                          = 935,
 	//SI_DORAM_BUF_02                          = 936,
-	//SI_SPRITEMABLE                         = 937,
+	SI_SPRITEMABLE                         = 937,
 
 	SI_MAX,
 };

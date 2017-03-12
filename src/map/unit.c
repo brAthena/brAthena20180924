@@ -1099,6 +1099,7 @@ int unit_can_move(struct block_list *bl) {
 		    ||  sc->data[SC_VACUUM_EXTREME]
 		    || (sc->data[SC_FEAR] && sc->data[SC_FEAR]->val2 > 0)
 			|| sc->data[SC_NETHERWORLD]
+			|| sc->data[SC_SUHIDE]
 		    || (sc->data[SC_SPIDERWEB] && sc->data[SC_SPIDERWEB]->val1)
 		    || (sc->data[SC_CLOAKING] && sc->data[SC_CLOAKING]->val1 < 3 && !(sc->data[SC_CLOAKING]->val4&1)) //Need wall at level 1-2
 		    || (
@@ -1226,9 +1227,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 	if (sc && sc->data[SC_COMBOATTACK]
 	&& skill->is_combo(skill_id)
 	&& (sc->data[SC_COMBOATTACK]->val1 == skill_id
-		|| ( sd?skill->check_condition_castbegin(sd,skill_id,skill_lv):0 )
-		)
-	) {
+		|| ( sd?skill->check_condition_castbegin(sd,skill_id,skill_lv):0 ))) {
 		if (sc->data[SC_COMBOATTACK]->val2)
 			target_id = sc->data[SC_COMBOATTACK]->val2;
 		else if( skill->get_inf(skill_id) != 1 ) // Only non-targetable skills should use auto target
@@ -1239,8 +1238,8 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 		temp = 1;
 	} else if ( target_id == src->id &&
 		skill->get_inf(skill_id)&INF_SELF_SKILL &&
-		skill->get_inf2(skill_id)&INF2_NO_TARGET_SELF )
-	{
+		(skill->get_inf2(skill_id)&INF2_NO_TARGET_SELF ||
+		(skill_id == RL_QD_SHOT && sc && sc->data[SC_QD_SHOT_READY])) ) {
 		target_id = ud->target; //Auto-select target. [Skotlex]
 		temp = 1;
 	}
@@ -1301,7 +1300,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 			case MH_SONIC_CRAW:
 				if (sc && sc->data[SC_MIDNIGHT_FRENZY_POSTDELAY])
 					target_id = sc->data[SC_MIDNIGHT_FRENZY_POSTDELAY]->val2;
-				break;				
+				break;	
 	}
 
 	if( !target ) // choose default target
@@ -1373,6 +1372,19 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 			case MG_COLDBOLT:
 				sd->skill_id_old = skill_id;
 				sd->skill_lv_old = skill_lv;
+				break;
+			case RL_C_MARKER: {
+					uint8 i = 0;
+
+					ARR_FIND(0, MAX_SKILL_CRIMSON_MARKER, i, sd->c_marker[i] == target_id);
+					if (i == MAX_SKILL_CRIMSON_MARKER) {
+						ARR_FIND(0, MAX_SKILL_CRIMSON_MARKER, i, sd->c_marker[i] == 0);
+						if (i == MAX_SKILL_CRIMSON_MARKER) { // No free slots, skill Fail
+							clif->skill_fail(sd, skill_id, USESKILL_FAIL_LEVEL, 0);
+							return 0;
+						}
+					}
+				}
 				break;
 		}
 	}
@@ -1514,7 +1526,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 		}
 	break;
 	case GD_EMERGENCYCALL: //Emergency Call double cast when the user has learned Leap [Daegaladh]
-		if( sd && pc->checkskill(sd,TK_HIGHJUMP) )
+		if( sd && (pc->checkskill(sd,TK_HIGHJUMP) || pc->checkskill(sd,SU_LOPE) >= 3) )
 			casttime *= 2;
 		break;
 	case RA_WUGDASH:
@@ -2100,6 +2112,9 @@ int unit_attack_timer_sub(struct block_list* src, int tid, int64 tick) {
 	)
 		return 0; // can't attack under these conditions
 
+	if (sd && &sd->sc && sd->sc.count && sd->sc.data[SC_HEAT_BARREL_AFTER])
+		return 0;
+	
 	if (src->m != target->m) {
 		if (src->type == BL_MOB && mob->warpchase(BL_UCAST(BL_MOB, src), target))
 			return 1; // Follow up.
@@ -2404,6 +2419,8 @@ int unit_remove_map(struct block_list *bl, clr_type clrtype, const char* file, i
 		status_change_end(bl, SC_VACUUM_EXTREME, INVALID_TIMER);
 		status_change_end(bl, SC_CURSEDCIRCLE_ATKER, INVALID_TIMER); //callme before warp
 		status_change_end(bl, SC_NETHERWORLD, INVALID_TIMER);
+		status_change_end(bl, SC_SUHIDE, INVALID_TIMER);
+ 		status_change_end(bl, SC_SV_ROOTTWIST, INVALID_TIMER);
 	}
 
 	if (bl->type&(BL_CHAR|BL_PET)) {

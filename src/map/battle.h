@@ -482,6 +482,7 @@ struct Battle_Config {
 	int max_third_parameter;
 	int max_baby_third_parameter;
 	int max_extended_parameter;
+	int max_summoner_parameter;
 	int atcommand_max_stat_bypass;
 	int max_third_aspd;
 	int vcast_stat_scale;
@@ -542,6 +543,8 @@ struct Battle_Config {
 
 	// Costume System [Mhalicot/Rebel/Zephyrus]
 	int reserved_costume_id;
+	
+	int dispel_song; //Can songs be dispelled?
 
 	/** brAthena **/
 	// Configuração para a habilidade de revestimento total dos criadores. [CarlosHenrq]

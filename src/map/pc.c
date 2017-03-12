@@ -1656,6 +1656,7 @@ int pc_calc_skilltree(struct map_session_data *sd)
 				case WL_SUMMON_ATK_GROUND:
 				case LG_OVERBRAND_BRANDISH:
 				case LG_OVERBRAND_PLUSATK:
+				case RL_R_TRIP_PLUSATK:
 					continue;
 				default:
 					break;
@@ -5056,6 +5057,8 @@ int pc_useitem(struct map_session_data *sd,int n) {
 		sd->sc.data[SC_DEEP_SLEEP] ||
 		sd->sc.data[SC_SATURDAY_NIGHT_FEVER] ||
 		sd->sc.data[SC_COLD] ||
+		sd->sc.data[SC_SUHIDE] ||
+		sd->sc.data[SC_HEAT_BARREL_AFTER] ||
 		pc_ismuted(&sd->sc, MANNER_NOITEM)
 	    ))
 		return 0;
@@ -5972,6 +5975,7 @@ int pc_jobid2mapid(unsigned short b_class)
 		case JOB_XMAS:                  return MAPID_XMAS;
 		case JOB_SUMMER:                return MAPID_SUMMER;
 		case JOB_GANGSI:                return MAPID_GANGSI;
+		case JOB_SUMMONER:              return MAPID_SUMMONER;
 	//2-1 Jobs
 		case JOB_SUPER_NOVICE:          return MAPID_SUPER_NOVICE;
 		case JOB_KNIGHT:                return MAPID_KNIGHT;
@@ -6114,6 +6118,7 @@ int pc_mapid2jobid(unsigned short class_, int sex)
 		case MAPID_XMAS:                  return JOB_XMAS;
 		case MAPID_SUMMER:                return JOB_SUMMER;
 		case MAPID_GANGSI:                return JOB_GANGSI;
+		case MAPID_SUMMONER:              return JOB_SUMMONER;
 	//2-1 Jobs
 		case MAPID_SUPER_NOVICE:          return JOB_SUPER_NOVICE;
 		case MAPID_KNIGHT:                return JOB_KNIGHT;
@@ -6453,6 +6458,9 @@ const char* job_name(int class_)
 	case JOB_REBELLION:
 		return msg_txt(655);
 
+	case JOB_SUMMONER:
+ 		return msg_txt(669);
+
 	default:
 		return msg_txt(620); // "Unknown Job"
 	}
@@ -6578,6 +6586,7 @@ int pc_check_job_name(const char *name) {
 		{ "Kagerou", JOB_KAGEROU },
 		{ "Oboro", JOB_OBORO },
 		{ "Rebellion", JOB_REBELLION },
+		{ "Summoner", JOB_SUMMONER },
 	};
 
 	len = ARRAYLENGTH(names);
@@ -7445,6 +7454,9 @@ int pc_resetskill(struct map_session_data* sd, int flag)
 
 		if( homun_alive(sd->hd) && pc->checkskill(sd, AM_CALLHOMUN) )
 			homun->vaporize(sd, HOM_ST_REST);
+
+ 		if ((sd->sc.data[SC_SPRITEMABLE] && pc->checkskill(sd, SU_SPRITEMABLE)))
+			status_change_end(&sd->bl, SC_SPRITEMABLE, INVALID_TIMER);
 	}
 
 	for( i = 1; i < MAX_SKILL; i++ ) {
@@ -7470,6 +7482,8 @@ int pc_resetskill(struct map_session_data* sd, int flag)
 
 		// do not reset basic skill
 		if( skill_id == NV_BASIC && (sd->class_&(MAPID_BASEMASK|JOBL_2)) != MAPID_NOVICE )
+			continue;
+		if (skill_id == SU_BASIC_SKILL && (sd->class_&MAPID_BASEMASK) != MAPID_SUMMONER)
 			continue;
 
 		if( sd->status.skill[i].flag == SKILL_FLAG_PERM_GRANTED )
@@ -8439,6 +8453,8 @@ int pc_itemheal(struct map_session_data *sd,int itemid, int hp,int sp)
 		if( sd->sc.data[SC_EXTREMITYFIST2] )
 			sp = 0;
 #endif
+		if (sd->sc.data[SC_BITESCAR])
+			hp = 0;
 	}
 
 	return status->heal(&sd->bl, hp, sp, 1);
@@ -8665,6 +8681,9 @@ int pc_jobchange(struct map_session_data *sd,int job, int upper)
 
 	if(homun_alive(sd->hd) && !pc->checkskill(sd, AM_CALLHOMUN))
 		homun->vaporize(sd, HOM_ST_REST);
+	
+	if ((sd->sc.data[SC_SPRITEMABLE] && pc->checkskill(sd, SU_SPRITEMABLE)))
+		status_change_end(&sd->bl, SC_SPRITEMABLE, INVALID_TIMER);
 
 	if(sd->status.manner < 0)
 		clif->changestatus(sd,SP_MANNER,sd->status.manner);
@@ -9945,15 +9964,21 @@ int pc_unequipitem(struct map_session_data *sd,int n,int flag)
 
 	clif->unequipitemack(sd,n,pos,UIA_SUCCESS);
 
+	status_change_end(&sd->bl,SC_HEAT_BARREL,INVALID_TIMER);
 	if((pos & EQP_ARMS) &&
-		sd->weapontype1 == 0 && sd->weapontype2 == 0 && (!sd->sc.data[SC_TK_SEVENWIND] || sd->sc.data[SC_ASPERSIO])) //Check for seven wind (but not level seven!)
+		sd->weapontype1 == 0 && sd->weapontype2 == 0 && (!sd->sc.data[SC_TK_SEVENWIND] || sd->sc.data[SC_ASPERSIO])) { //Check for seven wind (but not level seven!)
 		skill->enchant_elemental_end(&sd->bl,-1);
+		status_change_end(&sd->bl, SC_P_ALTER, INVALID_TIMER);
+	}
 
 	if(pos & EQP_ARMOR) {
 		// On Armor Change...
 		status_change_end(&sd->bl, SC_BENEDICTIO, INVALID_TIMER);
 		status_change_end(&sd->bl, SC_ARMOR_RESIST, INVALID_TIMER);
 	}
+	
+	if (sd->inventory_data[n]->type == IT_AMMO)
+		status_change_end(&sd->bl, SC_P_ALTER, INVALID_TIMER);
 
 	if( sd->state.autobonus&pos )
 		sd->state.autobonus &= ~sd->status.inventory[n].equip; //Check for activated autobonus [Inkfish]
@@ -11079,7 +11104,7 @@ static int pc_get_maxlevel(int job, int type)
 			return battle_config.max_joblv_novice;
 		else if((job >= JOB_SWORDMAN && job <= JOB_THIEF)
 				|| (job >= JOB_BABY_SWORDMAN && job <= JOB_BABY_THIEF)
-				|| (job == JOB_TAEKWON || job == JOB_GANGSI))
+				|| job == JOB_GANGSI)
 			return battle_config.max_joblv_first;
 		else if((job >= JOB_KNIGHT && job <= JOB_CRUSADER2) || (job >= JOB_BABY_KNIGHT && job <= JOB_BABY_CRUSADER2))
 			return battle_config.max_joblv_second;
@@ -11416,6 +11441,23 @@ void pc_expire_check(struct map_session_data *sd) {
 	sd->expiration_tid = timer->add(timer->gettick() + (int64)(sd->expiration_time - time(NULL))*1000, pc->expiration_timer, sd->bl.id, 0);
 }
 /**
+* Clear Crimson Marker data from caster
+* @param sd: Player
+**/
+void pc_crimson_marker_clear(struct map_session_data *sd) {
+	uint8 i;
+
+	if (!sd)
+		return;
+
+	for (i = 0; i < MAX_SKILL_CRIMSON_MARKER; i++) {
+		struct block_list *bl = NULL;
+		if (sd->c_marker[i] && (bl = map->id2bl(sd->c_marker[i])))
+			status_change_end(bl,SC_C_MARKER,INVALID_TIMER);
+		sd->c_marker[i] = 0;
+	}
+}
+/**
  * Loads autotraders
  ***/
 void pc_autotrade_load(void)
@@ -11651,7 +11693,7 @@ bool pc_db_checkid(unsigned int class_)
 		|| (class_ >= JOB_BABY_RUNE      && class_ <= JOB_BABY_MECHANIC2 )
 		|| (class_ >= JOB_SUPER_NOVICE_E && class_ <= JOB_SUPER_BABY_E   )
 		|| (class_ >= JOB_KAGEROU        && class_ <= JOB_OBORO          )
-		|| (class_ >= JOB_REBELLION      && class_ <  JOB_MAX            );
+		|| (class_ == JOB_REBELLION      || class_ ==  JOB_SUMMONER      );
 }
 
 /**
@@ -11668,6 +11710,90 @@ int pc_have_magnifier(struct map_session_data *sd)
 	return n;
 }
 
+/**
+* Verifies a chat message, searching for atcommands, checking if the sender
+* character can chat, and updating the idle timer.
+*
+* @param sd      The sender character.
+* @param message The message text.
+* @return Whether the message is a valid chat message.
+*/
+bool pc_process_chat_message(struct map_session_data *sd, const char *message)
+{
+	nullpo_retr(false, sd);
+	if (atcommand->exec(sd->fd, sd, message, true)) {
+		return false;
+	}
+
+	if (!pc->can_talk(sd)) {
+		return false;
+	}
+
+	if (battle_config.min_chat_delay != 0) {
+		if (DIFF_TICK(sd->cantalk_tick, timer->gettick()) > 0) {
+			return false;
+		}
+		sd->cantalk_tick = timer->gettick() + battle_config.min_chat_delay;
+	}
+
+	pc->update_idle_time(sd, BCIDLE_CHAT);
+
+	return true;
+}
+
+/**
+* Checks a chat message, scanning for the Super Novice prayer sequence.
+*
+* If a match is found, the angel is invoked or the counter is incremented as
+* appropriate.
+*
+* @param sd      The sender character.
+* @param message The message text.
+*/
+void pc_check_supernovice_call(struct map_session_data *sd, const char *message)
+{
+	unsigned int next = pc->nextbaseexp(sd);
+	int percent = 0;
+
+	nullpo_retv(sd);
+	nullpo_retv(message);
+	if ((sd->class_ & MAPID_UPPERMASK) != MAPID_SUPER_NOVICE)
+		return;
+	if (next == 0)
+		next = pc->thisbaseexp(sd);
+	if (next == 0)
+		return;
+
+	// 0%, 10%, 20%, ...
+	percent = (int)(((float)sd->status.base_exp / (float)next)*1000.);
+	if ((battle_config.snovice_call_type != 0 || percent != 0) && (percent % 100) == 0) {
+		// 10.0%, 20.0%, ..., 90.0%
+		switch (sd->state.snovice_call_flag) {
+		case 0:
+			if (strstr(message, msg_txt(1479))) // "Dear angel, can you hear my voice?"
+				sd->state.snovice_call_flag = 1;
+			break;
+		case 1:
+		{
+			char buf[256];
+			snprintf(buf, 256, msg_txt(1480), sd->status.name);
+			if (strstr(message, buf)) // "I am %s Super Novice~"
+				sd->state.snovice_call_flag = 2;
+		}
+		break;
+		case 2:
+			if (strstr(message, msg_txt(1481))) // "Help me out~ Please~ T_T"
+				sd->state.snovice_call_flag = 3;
+			break;
+		case 3:
+			sc_start(NULL, &sd->bl, status->skill2sc(MO_EXPLOSIONSPIRITS), 100, 17, skill->get_time(MO_EXPLOSIONSPIRITS, 5)); //Lv17-> +50 critical (noted by Poki) [Skotlex]
+			clif->skill_nodamage(&sd->bl, &sd->bl, MO_EXPLOSIONSPIRITS, 5, 1);  // prayer always shows successful Lv5 cast and disregards noskill restrictions
+			sd->state.snovice_call_flag = 0;
+			break;
+		}
+	}
+}
+ 
 /**
  * Conta quantas lojas/chat existem ao redor do jogador.
  *
@@ -12055,6 +12181,8 @@ void pc_defaults(void) {
 	pc->expire_check = pc_expire_check;
 	pc->db_checkid = pc_db_checkid;
 	pc->validate_levels = pc_validate_levels;
+	pc->check_supernovice_call = pc_check_supernovice_call;
+	pc->process_chat_message = pc_process_chat_message;
 
 	/**
 	 * Autotrade persistency [Ind/Hercules <3]
