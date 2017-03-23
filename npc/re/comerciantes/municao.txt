@@ -11,12 +11,12 @@
 //= 1.1 Added Izlude duplicates. [Euphy]
 //============================================================
 
-que_ng,187,149,3	duplicate(mdk)	Magazine Dealer Kenny#ng	4_M_01
-izlude,74,104,3	duplicate(mdk)	Magazine Dealer Kenny#iz	4_M_01
-izlude_a,74,104,3	duplicate(mdk)	Magazine Dealer Kenny#a	4_M_01
-izlude_b,74,104,3	duplicate(mdk)	Magazine Dealer Kenny#b	4_M_01
-izlude_c,74,104,3	duplicate(mdk)	Magazine Dealer Kenny#c	4_M_01
-izlude_d,74,104,3	duplicate(mdk)	Magazine Dealer Kenny#d	4_M_01
+que_ng,187,149,3	duplicate(mdk)	Vendedor de Carregadores#ng	4_M_01
+izlude,74,104,3	duplicate(mdk)	Vendedor de Carregadores#iz	4_M_01
+izlude_a,74,104,3	duplicate(mdk)	Vendedor de Carregadores#a	4_M_01
+izlude_b,74,104,3	duplicate(mdk)	Vendedor de Carregadores#b	4_M_01
+izlude_c,74,104,3	duplicate(mdk)	Vendedor de Carregadores#c	4_M_01
+izlude_d,74,104,3	duplicate(mdk)	Vendedor de Carregadores#d	4_M_01
 
 //===== Hercules Script ======================================
 //= Bullet Dealers
@@ -31,10 +31,9 @@ izlude_d,74,104,3	duplicate(mdk)	Magazine Dealer Kenny#d	4_M_01
 //= 1.1 Added Izlude duplicates. [Euphy]
 //============================================================
 
-que_ng,187,156,3	duplicate(bdt)	Bullet Dealer Tony#ng	4_M_04
-izlude,77,104,3	duplicate(bdt)	Bullet Dealer Tony#iz	4_M_04	//Official: (74,106) -> in the water
-izlude_a,77,104,3	duplicate(bdt)	Bullet Dealer Tony#a	4_M_04
-izlude_b,77,104,3	duplicate(bdt)	Bullet Dealer Tony#b	4_M_04
-izlude_c,77,104,3	duplicate(bdt)	Bullet Dealer Tony#c	4_M_04
-izlude_d,77,104,3	duplicate(bdt)	Bullet Dealer Tony#d	4_M_04
-
+que_ng,187,156,3	duplicate(bdt)	Vendedor de Munição#ng	4_M_04
+izlude,77,104,3	duplicate(bdt)	Vendedor de Munição#iz	4_M_04	//Official: (74,106) -> in the water
+izlude_a,77,104,3	duplicate(bdt)	Vendedor de Munição#a	4_M_04
+izlude_b,77,104,3	duplicate(bdt)	Vendedor de Munição#b	4_M_04
+izlude_c,77,104,3	duplicate(bdt)	Vendedor de Munição#c	4_M_04
+izlude_d,77,104,3	duplicate(bdt)	Vendedor de Munição#d	4_M_04

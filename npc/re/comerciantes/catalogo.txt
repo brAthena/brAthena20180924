@@ -13,94 +13,94 @@
 //= 1.1 Updated dialogue. [Euphy]
 //============================================================
 
-moc_para01,22,16,5	script	Catalog Magician#catal01	4_M_BIBI,{
+moc_para01,22,16,5	script	Catalogador Mágico#catal01	4_M_BIBI,{
 	if (!checkweight(1301,3)) {
-		mes "- You have too many items. Please make space. -";
+		mes "- Você possui muitos itens. Por favor, abra espaço no inventório primeiro. -";
 		close;
 	}
 	.@ticket_cost = 200;
-	mes "[Catalog Magician]";
-	mes "Look... the Magic Academy";
-	mes "in Geffen is now directly";
-	mes "selling the brand new";
-	mes "^007777Universal Catalog Silver^000000!";
+	mes "[Catalogador Mágico]";
+	mes "Olha só... A Guilda dos Magos em Geffen";
+	mes "está comercializando diretamente";
+	mes "o novo item,";
+	mes "^007777Catálogo de Vendas Prata^000000!";
 	next;
-	mes "He is looking at the words";
-	mes "written on his hand.";
-	mes "He seems too busy";
-	mes "to look at you.";
+	mes "Ele está olhando para as palavras";
+	mes "escritas em sua própria mão.";
+	mes "Parece estar muito ocupado";
+	mes "para olhar para você.";
 	next;
-	mes "[Catalog Magician]";
-	mes "A brand new catalog";
-	mes "has just come out!";
-	mes "You can check";
-	mes "what items you can trade";
-	mes "and what items are on sale";
-	mes "from the vendor.";
+	mes "[Catalogador Mágico]";
+	mes "Esse novo item";
+	mes "foi lançado recentemente!";
+	mes "Você pode verificar";
+	mes "quais os itens que você poderá comercializar";
+	mes "e quais itens estão à venda";
+	mes "pelas lojas montadas na cidade em que estiver";
 	next;
-	mes "[Catalog Magician]";
-	mes "The ^007777Universal Catalog Silver^000000";
-	mes "costs only 200z!";
-	mes "You can buy up to 50 pieces at once!";
+	mes "[Catalogador Mágico]";
+	mes "O ^007777Catálogo de Vendas Prata^000000";
+	mes "Custa apenas 200z cada!";
+	mes "Você pode comprar apenas 50 de cada vez!";
 	next;
-	switch(select("Buy a ^007777Universal Catalog Silver^000000:I don't need it!:You don't look like a vendor!")) {
+	switch(select("Comprar ^007777Catálogo de Vendas Prata^000000:Eu não preciso disso!:Você não é vendedor... é?")) {
 	case 1:
-		mes "[Catalog Magician]";
-		mes "You... want all 50 pieces?";
-		mes "Or how many do you need?";
+		mes "[Catalogador Mágico]";
+		mes "Você... Quer comprar os 50?";
+		mes "Quantos... Quantos gostaria de comprar?";
 		next;
 		while (1) {
 			input .@input;
-			mes "[Catalog Magician]";
+			mes "[Catalogador Mágico]";
 			if (.@input == 0) {
-				mes "The trade has been stopped!";
-				mes "I don't know what to do next...";
-				mes "What should I do?";
+				mes "A negociação não será concluída, mas...";
+				mes "Eu não sei o que fazer...";
+				mes "O que eu deveria fazer agora?";
 				emotion e_swt2,1;
 				close;
 			} else if (.@input < 1 || .@input > 50) {
-				mes "It should be less than 50 pieces.";
+				mes "Você deve comprar até 50 itens por vez.";
 				next;
 			} else
 				break;
 		}
 		.@sell = .@ticket_cost * .@input;
-		mes "The total number of catalog(s) that you're trying to purchase is " + .@input + " pieces.";
-		mes "It costs " + .@sell + " z.";
+		mes "O número total de catálogo(s) que está comprando é de " + .@input + " itens.";
+		mes "e vai sair por apenas " + .@sell + " zenys.";
 		if (Zeny < .@sell) {
-			mes "It seems you don't have enough money.";
-			mes "You can sell your equipment";
-			mes "to make more money... if you want.";
+			mes "Parece que não possui dinheiro suficiente.";
+			mes "Você pode vender seus equipamentos";
+			mes "para fazer mais dinheiro... o que acha?";
 			close;
 		}
-		mes "Ok, here you go.";
+		mes "Ok, vamos lá.";
 		Zeny -= .@sell;
-		getitem 12580,.@input; //Vending_Search_Scroll
+		getitem 12580,.@input; //Catálogo_de_Vendas_Prata
 		close;
 	case 2:
-		mes "[Catalog Magician]";
-		mes "Argh... you really need this";
-		mes "item... Do you want me to";
-		mes "explain again? I don't know";
-		mes "what to do next...";
-		mes "What should I do?";
+		mes "[Catalogador Mágico]";
+		mes "Argh... você realmente precisará";
+		mes "desses itens... Você quer que eu lhe explique novamente?";
+		mes "Eu não sei o que devo fazer agora...";
+		mes "O que eu devo fazer?";
+		mes "O que eu devo fazer?";
 		emotion e_swt2,1;
 		close;
 	case 3:
-		mes "[Catalog Magician]";
-		mes "My real job is a magician.";
-		mes "I was going to ask the merchant";
-		mes "guild to sell them, but they were";
-		mes "trying use them as an appendix";
-		mes "into broom sales. That's why";
-		mes "I'm selling these by myself.";
+		mes "[Catalogador Mágico]";
+		mes "Realmente minha classe é 'Mago'.";
+		mes "Eu fui aprender algumas técnicas de comércio na";
+		mes "Guilda dos Mercadores para poder";
+		mes "vender esse novo item.";
+		mes "É por isso que estou vendendo por conta própria";
+		mes "esses catálogos mágicos.";
 		next;
-		mes "[Catalog Magician]";
-		mes "There are many adventurers";
-		mes "here who come and go.";
-		mes "I'm pretty sure that I can sell to all of them soon.";
-		mes "Don't you think so?";
-		mes "So... let's start!! Buy more of them, please! PLEASE...!";
+		mes "[Catalogador Mágico]";
+		mes "Existem muitos aventureiros aqui";
+		mes "que sempre vem e vão.";
+		mes "Tenho certeza que venderei todos esses itens em breve.";
+		mes "Você não acha? Então, vamos vender !";
+		mes "Quer comprar mais alguns? Por favor?!... POR FAVORRR?!";
 		close;
 	}
 }
