@@ -24,202 +24,202 @@
 //= 2.2 Added warg checks. [Euphy]
 //============================================================
 
-// PecoPeco Breeder (for Knights)-------------------------------------------
-prontera,55,350,5	script	Peco Peco Breeder#knt	8W_SOLDIER,{
-	if(Upper==0) .@price = 2500; //Normal Peco - default price
-	if(Upper==1) .@price = 2500; //Armored Peco
-	if(Upper==2) .@price = 2500; //Baby Peco
+// Criador de Peco-Pecos (para Cavaleiros)------------------------------------
+prontera,55,350,5	script	Criador de Peco-Pecos#knt	8W_SOLDIER,{
+	if(Upper==0) .@price = 2500; //Peco Normal - preço padrão
+	if(Upper==1) .@price = 2500; //Peco Blindado
+	if(Upper==2) .@price = 2500; //Peco Bebê
 
-	mes "[Peco Peco Breeder]";
+	mes "[Criador de Peco-Pecos]";
 	if (BaseJob == Job_Knight && Class < Job_Rune_Knight) {
-		mes "Welcome.";
-		mes "Honorable Knight,";
-		mes "would you like to rent";
-		mes "a Peco Peco? The rental";
-		mes "fee is "+.@price+" zeny.";
+		mes "Seja bem vindo.";
+		mes "Honrado Cavaleiro,";
+		mes "Você gostaria de alugar";
+		mes "um Peco Peco? A taxa";
+		mes "do aluguel é de "+.@price+" zenys.";
 		next;
-		switch(select("Rent Peco Peco:Cancel")) {
+		switch(select("Alugar Peco Peco:Cancelar")) {
 		case 1:
 			if (Zeny < .@price) {
-				mes "[Peco Peco Breeder]";
-				mes "You do not";
-				mes "have enough zeny.";
-				mes "Are you...";
-				mes "bankrupt?";
+				mes "[Criador de Peco-Pecos]";
+				mes "Você não";
+				mes "possui zenys suficientes.";
+				mes "Você está...";
+				mes "quebrado por acaso?";
 				close;
 			}
 			else if(getskilllv(KN_RIDING) == 0) {
-				mes "[Peco Peco Breeder]";
-				mes "I'm sorry, but you're";
-				mes "not eligible for this";
-				mes "service. Please go learn";
-				mes "the Peco Peco Ride skill first.";
+				mes "[Criador de Peco-Pecos]";
+				mes "Sinto muito, mas você não";
+				mes "pode utilizar esse serviço";
+				mes "no momento. Por favor, aprenda";
+				mes "a habilidade Montaria primeiro.";
 				close;
 			}
 			else if(checkmount()) {
-				mes "[Peco Peco Breeder]";
-				mes "You're already";
-				mes "mounted on a";
+				mes "[Criador de Peco-Pecos]";
+				mes "Você já está";
+				mes "montado em um";
 				mes "Peco Peco.";
 				close;
 			} else if(hascashmount()) {
-				mes "[Peco Peco Breeder]";
-				mes "Please remove your cash mount.";
+				mes "[Criador de Peco-Pecos]";
+				mes "Por favor, remova a sua montaria atual primeiro.";
 				close;
 			}
 			Zeny -= .@price;
 			setmount(MOUNT_PECO);
 			close;
 		case 2:
-			mes "[Peco Peco Breeder]";
-			mes "I see.";
-			mes "Well then,";
-			mes "have a good day.";
+			mes "[Criador de Peco-Pecos]";
+			mes "Entendo.";
+			mes "Bem então,";
+			mes "tenha um bom dia.";
 			close;
 		}
 	} else {
-		mes "I'm sorry, but these";
-		mes "Peco Pecos are only";
-		mes "available for Knights";
-		mes "and Lord Knights.";
+		mes "Sinto muito, mas esses";
+		mes "Peco Pecos estão somente";
+		mes "Disponíveis para cavaleiros";
+		mes "e Lordes.";
 		close;
 	}
 }
 
-// Grand PecoPeco Breeder (for Crusaders)-------------------------------------------
-prontera,232,318,3	script	Peco Peco Breeder#cru	8W_SOLDIER,{
-	if(Upper==0) .@price = 3500; //Normal Peco - default price
-	if(Upper==1) .@price = 3500; //Armored Peco
-	if(Upper==2) .@price = 3500; //Baby Peco
+// Grande Criador de Peco-Pecos (para Templários)------------------------------
+prontera,232,318,3	script	Criador de Peco-Pecos#cru	8W_SOLDIER,{
+	if(Upper==0) .@price = 3500; //Peco Normal - preço padrão
+	if(Upper==1) .@price = 3500; //Peco Blindado
+	if(Upper==2) .@price = 3500; //Peco Bebê
 
-	mes "[PecoPeco Breeder]";
+	mes "[Criador de Peco-Pecos]";
 	if (BaseJob == Job_Crusader && Class < Job_Rune_Knight) {
-		if(Upper != 1 ) mes "Welcome, Crusader.";
-		else mes "Welcome, Paladin.";
-		mes "We have a special";
-		mes "Peco Peco prepared";
-		mes "for you. To rent one";
-		mes "will cost "+.@price+" zeny.";
+		if(Upper != 1 ) mes "Bem vindo, Templário.";
+		else mes "Bem vindo, Paladino.";
+		mes "Eu tenho um";
+		mes "Peco Peco especial preparado";
+		mes "para você. Alugue um aqui";
+		mes "por "+.@price+" zenys.";
 		next;
-		switch(select("Rent a PecoPeco:Quit")) {
+		switch(select("Alugar Peco Peco:Sair")) {
 		case 1:
 			if (Zeny < .@price) {
-				mes "[Peco Peco Breeder]";
-				mes "You do not";
-				mes "have enough zeny.";
-				mes "If you would like";
-				mes "a Peco Peco please";
-				mes "bring "+.@price+" zeny...";
+				mes "[Criador de Peco-Pecos]";
+				mes "Você não";
+				mes "possui zenys suficientes.";
+				mes "Caso queira alugar um";
+				mes "Peco Peco por favor";
+				mes "tenha em mãos "+.@price+" zenys...";
 				close;
 			}
 			else if(getskilllv(KN_RIDING) == 0) {
-				mes "[Peco Peco Breeder]";
-				mes "You must first learn";
-				mes "to ride a PecoPeco before";
-				mes "I can rent one to you.";
+				mes "[Criador de Peco-Pecos]";
+				mes "Primeiro você precisa";
+				mes "aprender a habilidade Montaria";
+				mes "caso você queira alugar um de meus pecos.";
 				close;
 			}
 			else if(checkmount()) {
-				mes "[Peco Peco Breeder]";
-				mes "You are already";
-				mes "mounted on a Peco Peco.";
+				mes "[Criador de Peco-Pecos]";
+				mes "Você já está";
+				mes "montado em um Peco Peco.";
 				close;
 			} else if(hascashmount()) {
-				mes "[Peco Peco Breeder]";
-				mes "Please remove your cash mount.";
+				mes "[Criador de Peco-Pecos]";
+				mes "Por favor, remova a sua montaria atual antes de alugar outra.";
 				close;
 			}
 			Zeny -= .@price;
 			setmount(MOUNT_PECO);
 			close;
 		case 2:
-			mes "[PecoPeco Breeder]";
-			mes "See you around.";
+			mes "[Criador de Peco-Pecos]";
+			mes "Te vejo por ai.";
 			close;
 		}
 	} else {
-		mes "What can I do for you?";
-		mes "Please be aware that";
-		mes "this Peco Peco rental";
-		mes "service is strictly for";
-		mes "Crusaders and Paladins.";
+		mes "O que posso fazer por você?";
+		mes "Tenha em mente que";
+		mes "Este serviço de aluguel";
+		mes "de peco pecos é restrito a";
+		mes "Templários e Paladinos.";
 		close;
 	}
 }
 
-// Falcon Master--------------------------------------------------------------
-hu_in01,381,304,5	script	Falcon Breeder#hnt	8W_SOLDIER,{
-	if(Upper==0) .@price = 2500; //Normal Falcon - default price
-	if(Upper==1) .@price = 2500; //Scarf Falcon
-	if(Upper==2) .@price = 2500; //Baby Falcon
+// Criador de Falcões--------------------------------------------------------------
+hu_in01,381,304,5	script	Criador de Falcões#hnt	8W_SOLDIER,{
+	if(Upper==0) .@price = 2500; //Falcão Normal - preço padrão
+	if(Upper==1) .@price = 2500; //Falcão de Cachicol
+	if(Upper==2) .@price = 2500; //Falcão Bebê
 
-	mes "[Falcon Breeder]";
+	mes "[Criador de Falcões]";
 	if (BaseJob == Job_Hunter) {
 		if (checkoption(Option_Wug) || checkoption(Option_Wugrider)) {
-			mes "Um...";
-			mes "You can't rent a Falcon";
-			mes "until you dismiss your warg first!";
+			mes "Hm...";
+			mes "Você não pode alugar um falcão";
+			mes "até que você remova primeiro o seu Lobo!";
 			close;
 		}
-		mes "Do you need a Falcon?";
-		mes "You can rent your own";
-		mes "trusty bird of prey for a";
-		mes "fee of just "+.@price+" zeny~";
+		mes "Você precisa de um Falcão?";
+		mes "Eu posso te alugar o seu próprio";
+		mes "confiável Pássaro de Rapina";
+		mes "por apenas "+.@price+" zenys~";
 		next;
-		switch(select("Rent Falcon:Cancel")) {
+		switch(select("Alugar Falcão:Cancelar")) {
 		case 1:
 			if (checkoption(Option_Wug) || checkoption(Option_Wugrider)) {
-				mes "[Falcon Breeder]";
-				mes "Um...";
-				mes "You can't rent a Falcon";
-				mes "until you dismiss your warg first!";
+				mes "[Criador de Falcões]";
+				mes "Hm...";
+				mes "Você não pode alugar um falcão";
+				mes "até que você remova primeiro o seu Lobo!";
 				close;
 			}
 			if (Zeny < .@price) {
-				mes "[Falcon Breeder]";
-				mes "What is this?";
-				mes "You don't have";
-				mes "enough zeny?!";
-				mes "You better start";
-				mes "hunting money";
-				mes "instead of monsters~";
+				mes "[Criador de Falcões]";
+				mes "O que é isso?";
+				mes "Você não tem";
+				mes "zenys suficientes?!";
+				mes "É melhor você começar";
+				mes "a caçar dinheiro";
+				mes "em vez de monstros~";
 				close;
 			}
 			else if(getskilllv("HT_FALCON") == 0) {
-				mes "[Falcon Breeder]";
-				mes "Gosh~";
-				mes "Go learn how to";
-				mes "manage a Falcon";
-				mes "first! I can't rent one";
-				mes "to you if you can't";
-				mes "handle it, you know.";
+				mes "[Criador de Falcões]";
+				mes "Poxa~";
+				mes "Eu não posso te alugar";
+				mes "um falcão no momento pois";
+				mes "você não possui a Habilidade";
+				mes "Adestrar Falcão aprendida";
+				mes "no momento. Lide com isso.";
 				close;
 			}
 			else if(checkfalcon()) {
-				mes "[Falcon Breeder]";
-				mes "Um...";
-				mes "You already have";
-				mes "a Falcon. It's right";
-				mes "there, can't you see it?";
+				mes "[Criador de Falcões]";
+				mes "Hm...";
+				mes "Você já possui";
+				mes "um Falcão. Tem certeza";
+				mes "de que não está ficando cego?";
 				close;
 			}
 			Zeny -= .@price;
 			setfalcon;
 			close;
 		case 2:
-			mes "[Falcon Breeder]";
-			mes "W-wait, where're";
-			mes "you goin'? These";
-			mes "Falcons are top notch,";
-			mes "I guarantee it! C'mon, yo~";
+			mes "[Criador de Falcões]";
+			mes "Es-Espero, onde pensa";
+			mes "que você vai? Estes";
+			mes "Falcões são do mais alto nível,";
+			mes "Eu garanto! Vamos lá alugue um~";
 			close;
 		}
 	} else {
-		mes "Young fool!";
-		mes "Falcons can only";
-		mes "be used by Hunters";
-		mes "and Snipers, capish?";
-		mes "...Heh heh, jealous?";
+		mes "Jovem tolo!";
+		mes "Falcões só podem";
+		mes "serem usados por Caçadores";
+		mes "e Atiradores de Elite, capish?";
+		mes "...Heh heh, está com inveja não é?";
 		close;
 	}
 }
