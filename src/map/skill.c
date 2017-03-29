@@ -911,6 +911,10 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 		case WZ_VERMILION:
 			sc_start(src,bl,SC_BLIND,4*skill_lv,skill_lv,skill->get_time2(skill_id,skill_lv));
 			break;
+			
+		case WZ_HEAVENDRIVE:
+ 			status_change_end(bl, SC_SV_ROOTTWIST, INVALID_TIMER);
+ 			break;
 
 		case HT_FREEZINGTRAP:
 		case MA_FREEZINGTRAP:
@@ -12799,10 +12803,6 @@ int skill_unit_onplace_timer(struct skill_unit *src, struct block_list *bl, int6
 					map->freeblock_unlock();
 				}
 				break;
-
-				case WZ_HEAVENDRIVE:
- 					status_change_end(bl, SC_SV_ROOTTWIST, INVALID_TIMER);
- 					break;
 			
 		/**
 		 * The storm gust counter was dropped in renewal
