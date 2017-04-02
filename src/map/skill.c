@@ -16540,7 +16540,7 @@ static int skill_bind_trap(struct block_list *bl, va_list ap) {
 	map->foreachinrange(skill->trap_splash, bl, su->range, BL_CHAR, bl,su->group->tick);
 	clif->changetraplook(bl, UNT_USED_TRAPS);
 	su->group->unit_id = UNT_USED_TRAPS;
-	su->group->limit = DIFF_TICK(timer->gettick(), su->group->tick) + 500;
+	su->group->limit = DIFF_TICK32(timer->gettick(), su->group->tick) + 500;
 	return 1;
 }
 
