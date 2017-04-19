@@ -45,7 +45,6 @@
 //= 1.1a Fixed Pre-RE Call and some leftovers. [Lemongrass]
 //= 1.1b Enabled saving in Izlude duplicates (RE). [Euphy]
 //============================================================
-
 // Aldebaran
 //============================================================
 aldeba_in,96,181,4	script	Serviço Kafra	4_F_KAFRA5,{
