@@ -1953,6 +1953,7 @@ int pc_updateweightstatus(struct map_session_data *sd)
 }
 
 int pc_disguise(struct map_session_data *sd, int class_) {
+	nullpo_ret(sd);
 	if (class_ == -1 && sd->disguise == -1)
 		return 0;
 	if (class_ >= 0 && sd->disguise == class_)
@@ -1964,9 +1965,9 @@ int pc_disguise(struct map_session_data *sd, int class_) {
 	}
 
 	if (sd->bl.prev != NULL) {
-		if( class_ == -1 && sd->disguise == sd->status.class_ ) {
+		if (class_ == -1 && sd->disguise == sd->status.class_) {
 			clif->clearunit_single(-sd->bl.id,CLR_OUTSIGHT,sd->fd);
-		} else if ( class_ != sd->status.class_ ) {
+		} else if (class_ != sd->status.class_) {
 			pc_stop_walking(sd, STOPWALKING_FLAG_NONE);
 			clif->clearunit_area(&sd->bl, CLR_OUTSIGHT);
 		}
@@ -1975,14 +1976,15 @@ int pc_disguise(struct map_session_data *sd, int class_) {
 	if (class_ == -1) {
 		sd->disguise = -1;
 		class_ = sd->status.class_;
-	} else
+	} else {
 		sd->disguise = class_;
+	}
 
 	status->set_viewdata(&sd->bl, class_);
 	clif->changeoption(&sd->bl);
 	// We need to update the client so it knows that a costume is being used
 	if( sd->sc.option&OPTION_COSTUME ) {
-		clif->changelook(&sd->bl,LOOK_BASE,sd->vd.class_);
+		clif->changelook(&sd->bl, LOOK_BASE, sd->vd.class_);
 		clif->changelook(&sd->bl,LOOK_WEAPON,0);
 		clif->changelook(&sd->bl,LOOK_SHIELD,0);
 		clif->changelook(&sd->bl,LOOK_CLOTHES_COLOR,sd->vd.cloth_color);

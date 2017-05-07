@@ -1067,10 +1067,14 @@ void clif_set_unit_idle(struct block_list* bl, struct map_session_data *tsd, enu
 
 	clif->send(&p,sizeof(p),tsd?&tsd->bl:bl,target);
 
-	if( disguised(bl) ) {
+	if (disguised(bl)) {
 #if PACKETVER >= 20091103
 		p.objecttype = pc->db_checkid(status->get_viewdata(bl)->class_) ? 0x0 : 0x5; //PC_TYPE : NPC_MOB_TYPE
+#if PACKETVER >= 20131223
+		p.AID = -bl->id;
+#else
 		p.GID = -bl->id;
+#endif
 #else
 		p.GID = -bl->id;
 #endif
@@ -1204,13 +1208,17 @@ void clif_spawn_unit(struct block_list* bl, enum send_target target) {
 #if PACKETVER >= 20150513
 	p.body = vd->body_style;
 #endif
-	if( disguised(bl) ) {
+	if (disguised(bl)) {
 		nullpo_retv(sd);
-		if( sd->status.class_ != sd->disguise )
+		if (sd->status.class_ != sd->disguise)
 			clif->send(&p,sizeof(p),bl,target);
 #if PACKETVER >= 20091103
 		p.objecttype = pc->db_checkid(status->get_viewdata(bl)->class_) ? 0x0 : 0x5; //PC_TYPE : NPC_MOB_TYPE
+#if PACKETVER >= 20131223
+		p.AID = -bl->id;
+#else
 		p.GID = -bl->id;
+#endif
 #else
 		p.GID = -bl->id;
 #endif
@@ -1298,10 +1306,14 @@ void clif_set_unit_walking(struct block_list* bl, struct map_session_data *tsd, 
 
 	clif->send(&p,sizeof(p),tsd?&tsd->bl:bl,target);
 
-	if( disguised(bl) ) {
+	if (disguised(bl)) {
 #if PACKETVER >= 20091103
 		p.objecttype = pc->db_checkid(status->get_viewdata(bl)->class_) ? 0x0 : 0x5; //PC_TYPE : NPC_MOB_TYPE
+#if PACKETVER >= 20131223
+		p.AID = -bl->id;
+#else
 		p.GID = -bl->id;
+#endif
 #else
 		p.GID = -bl->id;
 #endif
@@ -3237,7 +3249,7 @@ void clif_changelook(struct block_list *bl,int type,int val)
 	}
 
 	// prevent leaking the presence of GM-hidden objects
-	if( sc && sc->option&OPTION_INVISIBLE && !disguised(bl) )
+	if (sc && sc->option&OPTION_INVISIBLE && !disguised(bl))
 		target = SELF;
 #if PACKETVER < 4
 	clif->sendlook(bl, bl->id, type, val, 0, target);
@@ -3248,11 +3260,12 @@ void clif_changelook(struct block_list *bl,int type,int val)
 		val = vd->weapon;
 		val2 = vd->shield;
 	}
-	if( disguised(bl) ) {
+	if (disguised(bl)) {
 		clif->sendlook(bl, bl->id, type, val, val2, AREA_WOS);
 		clif->sendlook(bl, -bl->id, type, val, val2, SELF);
-	} else
+	} else {
 		clif->sendlook(bl, bl->id, type, val, val2, target);
+	}
 #endif
 }
 
