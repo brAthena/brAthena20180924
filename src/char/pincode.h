@@ -43,6 +43,7 @@ struct pincode_interface {
 	int changetime;
 	int maxtry;
 	int charselect;
+	int grouplevel;
 	unsigned int multiplier;
 	unsigned int baseSeed;
 	/* handler */

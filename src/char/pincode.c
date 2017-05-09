@@ -56,10 +56,28 @@ void pincode_handle (int fd, struct char_session_data* sd) {
 		if( pincode->changetime && time(NULL) > (sd->pincode_change+pincode->changetime) ){ // User hasn't changed his PIN code for a long time
 			pincode->sendstate( fd, sd, PINCODE_EXPIRED );
 		} else { // Ask user for his PIN code
-			pincode->sendstate( fd, sd, PINCODE_ASK );
+			if(pincode->grouplevel){
+				if(sd->group_id >= pincode->grouplevel){
+					pincode->sendstate( fd, sd, PINCODE_ASK );
+				} else {
+					pincode->sendstate( fd, sd, PINCODE_OK );
+					return;
+				}
+			} else {
+				pincode->sendstate( fd, sd, PINCODE_ASK );
+			}
 		}
-	} else // No PIN code has been set yet
-		pincode->sendstate( fd, sd, PINCODE_NOTSET );
+	} else {// No PIN code has been set yet
+		if(pincode->modelevel >= 1 ){
+			if(sd->group_id >= pincode->grouplevel){
+				pincode->sendstate( fd, sd, PINCODE_NOTSET );
+			} else {
+				pincode->sendstate( fd, sd, PINCODE_OK );
+				return;
+			}
+		} else
+			pincode->sendstate( fd, sd, PINCODE_NOTSET );
+	}
 
 	if( character )
 		character->pincode_enable = -1;
@@ -208,6 +226,8 @@ bool pincode_config_read(char *w1, char *w2) {
 		else if(!strcmpi(w1, "pincode_lastpass"))
 		{
 			pincode->enabled_lastpass = atoi(w2);
+		} else if ( strcmpi(w1, "pincode_grouplevel") == 0 )  {
+			pincode->grouplevel = atoi(w2);
 		} else {
 			return false;
 		}
@@ -226,6 +246,7 @@ void pincode_defaults(void) {
 	pincode->charselect = 0;
 	pincode->multiplier = 0x3498;
 	pincode->baseSeed = 0x881234;
+	pincode->grouplevel = 0;
 
 	pincode->handle = pincode_handle;
 	pincode->decrypt = pincode_decrypt;
