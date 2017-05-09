@@ -68,7 +68,7 @@ void pincode_handle (int fd, struct char_session_data* sd) {
 			}
 		}
 	} else {// No PIN code has been set yet
-		if(pincode->modelevel >= 1 ){
+		if(pincode->grouplevel){
 			if(sd->group_id >= pincode->grouplevel){
 				pincode->sendstate( fd, sd, PINCODE_NOTSET );
 			} else {
