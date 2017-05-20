@@ -2018,7 +2018,7 @@ void clif_scriptmes(struct map_session_data *sd, int npcid, const char *mes){
 	WFIFOW(fd,0) = 0xb4;
 	WFIFOW(fd,2) = slen;
 	WFIFOL(fd,4) = npcid;
-	memcpy(WFIFOP(fd,8), mes, slen-8);
+	memcpy((char*)WFIFOP(fd,8), mes, slen-8);
 	WFIFOSET(fd,WFIFOW(fd,2));
 }
 
@@ -2139,7 +2139,7 @@ void clif_scriptmenu(struct map_session_data* sd, int npcid, const char* mes) {
 	WFIFOW(fd,0) = 0xb7;
 	WFIFOW(fd,2) = slen;
 	WFIFOL(fd,4) = npcid;
-	memcpy(WFIFOP(fd,8), mes, slen-8);
+	memcpy((char*)WFIFOP(fd,8), mes, slen-8);
 	WFIFOSET(fd,WFIFOW(fd,2));
 }
 
@@ -3694,7 +3694,7 @@ void clif_dispchat(struct chat_data* cd, int fd)
 	WBUFW(buf,12) = cd->limit;
 	WBUFW(buf,14) = (cd->owner->type == BL_NPC) ? cd->users+1 : cd->users;
 	WBUFB(buf,16) = type;
-	memcpy(WBUFP(buf,17), cd->title, len); // not zero-terminated
+	memcpy((char*)WBUFP(buf,17), cd->title, len); // not zero-terminated
 
 	if( fd ) {
 		WFIFOHEAD(fd,WBUFW(buf,2));
@@ -3734,7 +3734,7 @@ void clif_changechatstatus(struct chat_data* cd)
 	WBUFW(buf,12) = cd->limit;
 	WBUFW(buf,14) = (cd->owner->type == BL_NPC) ? cd->users+1 : cd->users;
 	WBUFB(buf,16) = type;
-	memcpy(WBUFP(buf,17), cd->title, len); // not zero-terminated
+	memcpy((char*)WBUFP(buf,17), cd->title, len); // not zero-terminated
 
 	clif->send(buf,WBUFW(buf,2),cd->owner,CHAT);
 }
@@ -5717,7 +5717,7 @@ void clif_GlobalMessage(struct block_list* bl, const char* message) {
 	int len;
 	nullpo_retv(bl);
 
-	if (message == NULL)
+	if(!message)
 		return;
 
 	len = (int)strlen(message)+1;
@@ -5730,8 +5730,8 @@ void clif_GlobalMessage(struct block_list* bl, const char* message) {
 	WBUFW(buf,0) = 0x8d;
 	WBUFW(buf,2) = len+8;
 	WBUFL(buf,4) = bl->id;
-	safestrncpy(WBUFP(buf,8),message,len);
-	clif->send(buf,WBUFW(buf,2),bl,ALL_CLIENT);
+	safestrncpy((char*)WBUFP(buf,8),message,len);
+	clif->send((unsigned char *) buf,WBUFW(buf,2),bl,ALL_CLIENT);
 }
 
 /// Send broadcast message with font formatting (ZC_BROADCAST2).
@@ -5742,7 +5742,7 @@ void clif_broadcast2(struct block_list* bl, const char* mes, int len, unsigned i
 
 	nullpo_retv(mes);
 
-	buf = aMalloc((16 + len)*sizeof(unsigned char));
+	buf = (unsigned char*)aMalloc((16 + len)*sizeof(unsigned char));
 	WBUFW(buf,0)  = 0x1c3;
 	WBUFW(buf,2)  = len + 16;
 	WBUFL(buf,4)  = fontColor;
@@ -5922,8 +5922,8 @@ void clif_wis_message(int fd, const char *nick, const char *mes, int mes_len)
 	WFIFOHEAD(fd, mes_len + NAME_LENGTH + 5);
 	WFIFOW(fd,0) = 0x97;
 	WFIFOW(fd,2) = mes_len + NAME_LENGTH + 5;
-	safestrncpy(WFIFOP(fd,4), nick, NAME_LENGTH);
-	safestrncpy(WFIFOP(fd,28), mes, mes_len + 1);
+	safestrncpy((char*)WFIFOP(fd,4), nick, NAME_LENGTH);
+	safestrncpy((char*)WFIFOP(fd,28), mes, mes_len + 1);
 	WFIFOSET(fd,WFIFOW(fd,2));
 #else
 	ssd = map->nick2sd(nick);
@@ -5931,9 +5931,9 @@ void clif_wis_message(int fd, const char *nick, const char *mes, int mes_len)
 	WFIFOHEAD(fd, mes_len + NAME_LENGTH + 9);
 	WFIFOW(fd,0) = 0x97;
 	WFIFOW(fd,2) = mes_len + NAME_LENGTH + 9;
-	safestrncpy(WFIFOP(fd,4), nick, NAME_LENGTH);
+	safestrncpy((char*)WFIFOP(fd,4), nick, NAME_LENGTH);
 	WFIFOL(fd,28) = (ssd && pc_get_group_level(ssd) == 99) ? 1 : 0; // isAdmin; if nonzero, also displays text above char
-	safestrncpy(WFIFOP(fd,32), mes, mes_len + 1);
+	safestrncpy((char*)WFIFOP(fd,32), mes, mes_len + 1);
 	WFIFOSET(fd,WFIFOW(fd,2));
 #endif
 }
@@ -6754,7 +6754,7 @@ void clif_party_message(struct party_data* p, int account_id, const char* mes, i
 		WBUFW(buf,0) = 0x109;
 		WBUFW(buf,2) = len+9;
 		WBUFL(buf,4) = account_id;
-		safestrncpy(WBUFP(buf,8), mes, len+1);
+		safestrncpy((char*)WBUFP(buf,8), mes, len+1);
 		clif->send(buf, len+9, &sd->bl, PARTY);
 	}
 }
@@ -8102,7 +8102,7 @@ void clif_disp_message(struct block_list *src, const char *mes, enum send_target
 
 	WBUFW(buf, 0) = 0x17f;
 	WBUFW(buf, 2) = len + 5;
-	safestrncpy(WBUFP(buf,4), mes, len+1);
+	safestrncpy((char*)WBUFP(buf,4), mes, len+1);
 	clif->send(buf, WBUFW(buf,2), src, target);
 }
 
@@ -8386,7 +8386,7 @@ void clif_messagecolor(struct block_list* bl, uint32 color, const char *msg)
 	msg_len = (int)strlen(msg) + 1;
 
 	if (msg_len > (int)sizeof(buf)-12) {
-		ShowWarning("clif_messagecolor: Mensagem muito longa '%s' (len=%"PRIuS").\n", msg, msg_len);
+		ShowWarning("clif_messagecolor: Mensagem muito longa '%s' (len=%d).\n", msg, msg_len);
 		msg_len = (int)sizeof(buf)-12;
 	}
 	
@@ -8724,14 +8724,14 @@ void clif_disp_overhead(struct block_list *bl, const char *mes)
 	WBUFW(buf,0) = 0x8d;
 	WBUFW(buf,2) = mes_len + 8; // len of message + 8 (command+len+id)
 	WBUFL(buf,4) = bl->id;
-	safestrncpy(WBUFP(buf,8), mes, mes_len);
+	safestrncpy((char*)WBUFP(buf,8), mes, mes_len);
 	clif->send(buf, WBUFW(buf,2), bl, AREA_CHAT_WOC);
 
 	// send back message to the speaker
 	if (bl->type == BL_PC) {
 		WBUFW(buf,0) = 0x8e;
 		WBUFW(buf, 2) = mes_len + 4;
-		safestrncpy(WBUFP(buf,4), mes, mes_len);
+		safestrncpy((char*)WBUFP(buf,4), mes, mes_len);
 		clif->send(buf, WBUFW(buf,2), bl, SELF);
 	}
 }
@@ -14859,8 +14859,8 @@ void clif_Mail_read(struct map_session_data *sd, int mail_id)
 		WFIFOW(fd,0) = 0x242;
 		WFIFOW(fd,2) = len;
 		WFIFOL(fd,4) = msg->id;
-		safestrncpy(WFIFOP(fd,8), msg->title, MAIL_TITLE_LENGTH + 1);
-		safestrncpy(WFIFOP(fd,48), msg->send_name, NAME_LENGTH + 1);
+		safestrncpy((char*)WFIFOP(fd,8), msg->title, MAIL_TITLE_LENGTH + 1);
+		safestrncpy((char*)WFIFOP(fd,48), msg->send_name, NAME_LENGTH + 1);
 		WFIFOL(fd,72) = 0;
 		WFIFOL(fd,76) = msg->zeny;
 
@@ -14878,8 +14878,8 @@ void clif_Mail_read(struct map_session_data *sd, int mail_id)
 		} else // no item, set all to zero
 			memset(WFIFOP(fd,80), 0x00, 19);
 
-		WFIFOB(fd,99) = (uint8)msg_len;
-		safestrncpy(WFIFOP(fd,100), msg->body, msg_len + 1);
+		WFIFOB(fd,99) = (unsigned char)msg_len;
+		safestrncpy((char*)WFIFOP(fd,100), msg->body, msg_len + 1);
 		WFIFOSET(fd,len);
 
 		if (msg->status == MAIL_UNREAD) {
@@ -17859,8 +17859,8 @@ void clif_ShowScript(struct block_list* bl, const char* message) {
 	WBUFW(buf,0) = 0x8b3;
 	WBUFW(buf,2) = len+8;
 	WBUFL(buf,4) = bl->id;
-	safestrncpy(WBUFP(buf,8),message,len);
-	clif->send(buf,WBUFW(buf,2),bl,ALL_CLIENT);
+	safestrncpy((char *) WBUFP(buf,8),message,len);
+	clif->send((unsigned char *) buf,WBUFW(buf,2),bl,ALL_CLIENT);
 }
 
 void clif_status_change_end(struct block_list *bl, int tid, enum send_target target, int type) {

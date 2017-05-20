@@ -1030,7 +1030,7 @@ void mapif_parse_WisToGM(int fd)
 
 	mes_len =  RFIFOW(fd,2) - 33;
 	Assert_retv(mes_len > 0 && mes_len < 32000);
-	message = (mes_len >= 255 ? aMalloc(mes_len) : mbuf);
+	message = (char *) (mes_len >= 255 ? (char *) aMalloc(mes_len) : mbuf);
 
 	permission = RFIFOL(fd,28);
 	safestrncpy(Wisp_name, (char*)RFIFOP(fd,4), NAME_LENGTH);
