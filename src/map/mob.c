@@ -399,7 +399,7 @@ bool mob_ksprotected(struct block_list *src, struct block_list *target) {
 		if( DIFF_TICK(sd->ks_floodprotect_tick, tick) <= 0 )
 		{
 			sprintf(output, "[Aviso de KS!! - Dono : %s]", pl_sd->status.name);
-			clif_disp_onlyself(sd, output, strlen(output));
+			clif_disp_onlyself(sd, output);
 
 			sd->ks_floodprotect_tick = tick + 2000;
 		}
@@ -407,8 +407,8 @@ bool mob_ksprotected(struct block_list *src, struct block_list *target) {
 		// Message to Owner
 		if( DIFF_TICK(pl_sd->ks_floodprotect_tick, tick) <= 0 )
 		{
-			sprintf(output, "[Aten��o!! %s est� tentando fazer KS em voc�!]", sd->status.name);
-			clif_disp_onlyself(pl_sd, output, strlen(output));
+			sprintf(output, "[Atenção!! %s está tentando fazer KS em você!]", sd->status.name);
+			clif_disp_onlyself(pl_sd, output);
 
 			pl_sd->ks_floodprotect_tick = tick + 2000;
 		}
@@ -2391,7 +2391,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type) {
 				char message[128];
 				sprintf (message, msg_txt(541), mvp_sd->status.name, md->name, it->jname, (float)drop_rate/100);
 				//MSG: "'%s' won %s's %s (chance: %0.02f%%)"
-				intif->broadcast(message, strlen(message)+1, BC_DEFAULT);
+				intif->broadcast(message, (int)strlen(message)+1, BC_DEFAULT);
 			}
 
 			/* heres the thing we got the feature set up however we're still discussing how to best define the ids,
@@ -2544,7 +2544,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type) {
 					char message[128];
 					sprintf (message, msg_txt(541), mvp_sd->status.name, md->name, data->jname, temp/100.);
 					//MSG: "'%s' won %s's %s (chance: %0.02f%%)"
-					intif->broadcast(message, strlen(message)+1, BC_DEFAULT);
+					intif->broadcast(message, (int)strlen(message)+1, BC_DEFAULT);
 				}
 
 				if((temp = pc->additem(mvp_sd,&item,1)) != 0) {

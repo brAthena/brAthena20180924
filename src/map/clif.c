@@ -2002,21 +2002,23 @@ void clif_selllist(struct map_session_data *sd)
 /// - set npcid of dialog window (0 by default)
 /// - if set to clear on next mes, clear contents
 /// - append this text
-void clif_scriptmes(struct map_session_data *sd, int npcid, const char *mes) {
-	int fd = sd->fd;
-	size_t slen;
+void clif_scriptmes(struct map_session_data *sd, int npcid, const char *mes){
+	int fd, slen;
 
 	nullpo_retv(sd);
 	nullpo_retv(mes);
-	slen = strlen(mes) + 9;
+
+	fd = sd->fd;
+	slen = (int)strlen(mes) + 9;
+	Assert_retv(slen <= INT16_MAX);
 
 	sd->state.dialog = 1;
 
 	WFIFOHEAD(fd, slen);
-	WFIFOW(fd,0)=0xb4;
-	WFIFOW(fd,2)=slen;
-	WFIFOL(fd,4)=npcid;
-	memcpy((char*)WFIFOP(fd,8), mes, slen-8);
+	WFIFOW(fd,0) = 0xb4;
+	WFIFOW(fd,2) = slen;
+	WFIFOL(fd,4) = npcid;
+	memcpy(WFIFOP(fd,8), mes, slen-8);
 	WFIFOSET(fd,WFIFOW(fd,2));
 }
 
@@ -2118,24 +2120,26 @@ void clif_sendfakenpc(struct map_session_data *sd, int npcid) {
 ///    Which suggests their have intertwined behavior. (probably the mouse targeting)
 /// TODO investigate behavior of other windows [FlavioJS]
 void clif_scriptmenu(struct map_session_data* sd, int npcid, const char* mes) {
-	int fd;
-	size_t slen;
+	int fd, slen;
 	struct block_list *bl = NULL;
 
 	nullpo_retv(sd);
 	nullpo_retv(mes);
+
 	fd = sd->fd;
-	slen = strlen(mes) + 9;
+	slen = (int)strlen(mes) + 9;
+	Assert_retv(slen <= INT16_MAX);
+
 	if (!sd->state.using_fake_npc && (npcid == npc->fake_nd->bl.id || ((bl = map->id2bl(npcid)) != NULL && (bl->m!=sd->bl.m ||
 						bl->x<sd->bl.x-AREA_SIZE-1 || bl->x>sd->bl.x+AREA_SIZE+1 ||
 						bl->y<sd->bl.y-AREA_SIZE-1 || bl->y>sd->bl.y+AREA_SIZE+1))))
 		clif->sendfakenpc(sd, npcid);
 
 	WFIFOHEAD(fd, slen);
-	WFIFOW(fd,0)=0xb7;
-	WFIFOW(fd,2)=slen;
-	WFIFOL(fd,4)=npcid;
-	memcpy((char*)WFIFOP(fd,8), mes, slen-8);
+	WFIFOW(fd,0) = 0xb7;
+	WFIFOW(fd,2) = slen;
+	WFIFOL(fd,4) = npcid;
+	memcpy(WFIFOP(fd,8), mes, slen-8);
 	WFIFOSET(fd,WFIFOW(fd,2));
 }
 
@@ -3672,22 +3676,25 @@ void clif_dispchat(struct chat_data* cd, int fd)
 {
 	unsigned char buf[128];
 	uint8 type;
+	int len;
 
-	if( cd == NULL || cd->owner == NULL )
+	if (cd == NULL || cd->owner == NULL)
 		return;
 
 	type = (cd->owner->type == BL_PC ) ? (cd->pub) ? 1 : 0
 	     : (cd->owner->type == BL_NPC) ? (cd->limit) ? 2 : 3
 	     : 1;
+	len = (int)strlen(cd->title);
+	Assert_retv(len <= INT16_MAX - 17);
 
 	WBUFW(buf, 0) = 0xd7;
-	WBUFW(buf, 2) = 17 + strlen(cd->title);
+	WBUFW(buf, 2) = 17 + len;
 	WBUFL(buf, 4) = cd->owner->id;
 	WBUFL(buf, 8) = cd->bl.id;
 	WBUFW(buf,12) = cd->limit;
 	WBUFW(buf,14) = (cd->owner->type == BL_NPC) ? cd->users+1 : cd->users;
 	WBUFB(buf,16) = type;
-	memcpy((char*)WBUFP(buf,17), cd->title, strlen(cd->title)); // not zero-terminated
+	memcpy(WBUFP(buf,17), cd->title, len); // not zero-terminated
 
 	if( fd ) {
 		WFIFOHEAD(fd,WBUFW(buf,2));
@@ -3709,6 +3716,7 @@ void clif_changechatstatus(struct chat_data* cd)
 {
 	unsigned char buf[128];
 	uint8 type;
+	int len;
 
 	if( cd == NULL || cd->usersd[0] == NULL )
 		return;
@@ -3716,15 +3724,17 @@ void clif_changechatstatus(struct chat_data* cd)
 	type = (cd->owner->type == BL_PC ) ? (cd->pub) ? 1 : 0
 	     : (cd->owner->type == BL_NPC) ? (cd->limit) ? 2 : 3
 	     : 1;
+	len = (int)strlen(cd->title);
+	Assert_retv(len <= INT16_MAX - 17);
 
 	WBUFW(buf, 0) = 0xdf;
-	WBUFW(buf, 2) = 17 + strlen(cd->title);
+	WBUFW(buf, 2) = 17 + len;
 	WBUFL(buf, 4) = cd->owner->id;
 	WBUFL(buf, 8) = cd->bl.id;
 	WBUFW(buf,12) = cd->limit;
 	WBUFW(buf,14) = (cd->owner->type == BL_NPC) ? cd->users+1 : cd->users;
 	WBUFB(buf,16) = type;
-	memcpy((char*)WBUFP(buf,17), cd->title, strlen(cd->title)); // not zero-terminated
+	memcpy(WBUFP(buf,17), cd->title, len); // not zero-terminated
 
 	clif->send(buf,WBUFW(buf,2),cd->owner,CHAT);
 }
@@ -5597,9 +5607,9 @@ void clif_displaymessage(const int fd, const char* mes) {
 		/** so we redirect to ZC_NPC_CHAT **/
 		clif->messagecolor_self(fd, COLOR_DEFAULT, mes);
 	#else
-		size_t len;
+		int len = (int)strnlen(mes, 255);
 
-		if ( ( len = strnlen(mes, 255) ) > 0 ) { // don't send a void message (it's not displaying on the client chat). @help can send void line.
+		if ( len > 0 ) { // don't send a void message (it's not displaying on the client chat). @help can send void line.
 			WFIFOHEAD(fd, 5 + len);
 			WFIFOW(fd,0) = 0x8e;
 			WFIFOW(fd,2) = 5 + len; // 4 + len + NULL terminate
@@ -5624,7 +5634,7 @@ void clif_displaymessage2(const int fd, const char* mes) {
 		line = strtok(message, "\n");
 		while(line != NULL) {
 			// Limit message to 255+1 characters (otherwise it causes a buffer overflow in the client)
-			size_t len = strnlen(line, 255);
+			int len = (int)strnlen(line, 255);
 
 			if (len > 0) { // don't send a void message (it's not displaying on the client chat). @help can send void line.
 				if( map->cpsd_active && fd == 0 ) {
@@ -5678,7 +5688,7 @@ void clif_displaymessage_sprintf(const int fd, const char *mes, ...) {
 }
 /// Send broadcast message in yellow or blue without font formatting (ZC_BROADCAST).
 /// 009a <packet len>.W <message>.?B
-void clif_broadcast(struct block_list *bl, const char *mes, size_t len, int type, enum send_target target)
+void clif_broadcast(struct block_list *bl, const char *mes, int len, int type, enum send_target target)
 {
 	int lp = (type&BC_COLOR_MASK) ? 4 : 0;
 	unsigned char *buf = NULL;
@@ -5704,36 +5714,35 @@ void clif_broadcast(struct block_list *bl, const char *mes, size_t len, int type
  *------------------------------------------*/
 void clif_GlobalMessage(struct block_list* bl, const char* message) {
 	char buf[256];
-	size_t len;
+	int len;
 	nullpo_retv(bl);
 
-	if(!message)
+	if (message == NULL)
 		return;
 
-	len = strlen(message)+1;
+	len = (int)strlen(message)+1;
 
-	if (len > sizeof(buf)-8) {
-		ShowWarning("clif_GlobalMessage: Truncating too long message '%s' (len=%"PRIuS").\n", message, len);
-		len = sizeof(buf)-8;
+	if (len > (int)sizeof(buf)-8) {
+		ShowWarning("clif_GlobalMessage: Truncating too long message '%s' (len=%d).\n", message, len);
+		len = (int)sizeof(buf)-8;
 	}
 
-	WBUFW(buf,0)=0x8d;
-	WBUFW(buf,2)=len+8;
-	WBUFL(buf,4)=bl->id;
-	safestrncpy((char *) WBUFP(buf,8),message,len);
-	clif->send((unsigned char *) buf,WBUFW(buf,2),bl,ALL_CLIENT);
-
+	WBUFW(buf,0) = 0x8d;
+	WBUFW(buf,2) = len+8;
+	WBUFL(buf,4) = bl->id;
+	safestrncpy(WBUFP(buf,8),message,len);
+	clif->send(buf,WBUFW(buf,2),bl,ALL_CLIENT);
 }
 
 /// Send broadcast message with font formatting (ZC_BROADCAST2).
 /// 01c3 <packet len>.W <fontColor>.L <fontType>.W <fontSize>.W <fontAlign>.W <fontY>.W <message>.?B
-void clif_broadcast2(struct block_list* bl, const char* mes, size_t len, unsigned int fontColor, short fontType, short fontSize, short fontAlign, short fontY, enum send_target target)
+void clif_broadcast2(struct block_list* bl, const char* mes, int len, unsigned int fontColor, short fontType, short fontSize, short fontAlign, short fontY, enum send_target target)
 {
 	unsigned char *buf;
 
 	nullpo_retv(mes);
 
-	buf = (unsigned char*)aMalloc((16 + len)*sizeof(unsigned char));
+	buf = aMalloc((16 + len)*sizeof(unsigned char));
 	WBUFW(buf,0)  = 0x1c3;
 	WBUFW(buf,2)  = len + 16;
 	WBUFL(buf,4)  = fontColor;
@@ -5901,7 +5910,7 @@ void clif_upgrademessage(int fd, int result, int item_id)
 /// Whisper is transmitted to the destination player (ZC_WHISPER).
 /// 0097 <packet len>.W <nick>.24B <message>.?B
 /// 0097 <packet len>.W <nick>.24B <isAdmin>.L <message>.?B (PACKETVER >= 20091104)
-void clif_wis_message(int fd, const char *nick, const char *mes, size_t mes_len)
+void clif_wis_message(int fd, const char *nick, const char *mes, int mes_len)
 {
 #if PACKETVER >= 20091104
 	struct map_session_data *ssd = NULL;
@@ -5910,21 +5919,21 @@ void clif_wis_message(int fd, const char *nick, const char *mes, size_t mes_len)
 	nullpo_retv(mes);
 
 #if PACKETVER < 20091104
-	WFIFOHEAD(fd, mes_len + NAME_LENGTH + 4);
+	WFIFOHEAD(fd, mes_len + NAME_LENGTH + 5);
 	WFIFOW(fd,0) = 0x97;
-	WFIFOW(fd,2) = mes_len + NAME_LENGTH + 4;
-	safestrncpy((char*)WFIFOP(fd,4), nick, NAME_LENGTH);
-	safestrncpy((char*)WFIFOP(fd,28), mes, mes_len + 1);
+	WFIFOW(fd,2) = mes_len + NAME_LENGTH + 5;
+	safestrncpy(WFIFOP(fd,4), nick, NAME_LENGTH);
+	safestrncpy(WFIFOP(fd,28), mes, mes_len + 1);
 	WFIFOSET(fd,WFIFOW(fd,2));
 #else
 	ssd = map->nick2sd(nick);
 
-	WFIFOHEAD(fd, mes_len + NAME_LENGTH + 8);
+	WFIFOHEAD(fd, mes_len + NAME_LENGTH + 9);
 	WFIFOW(fd,0) = 0x97;
-	WFIFOW(fd,2) = mes_len + NAME_LENGTH + 8;
-	safestrncpy((char*)WFIFOP(fd,4), nick, NAME_LENGTH);
+	WFIFOW(fd,2) = mes_len + NAME_LENGTH + 9;
+	safestrncpy(WFIFOP(fd,4), nick, NAME_LENGTH);
 	WFIFOL(fd,28) = (ssd && pc_get_group_level(ssd) == 99) ? 1 : 0; // isAdmin; if nonzero, also displays text above char
-	safestrncpy((char*)WFIFOP(fd,32), mes, mes_len + 1);
+	safestrncpy(WFIFOP(fd,32), mes, mes_len + 1);
 	WFIFOSET(fd,WFIFOW(fd,2));
 #endif
 }
@@ -6729,22 +6738,24 @@ void clif_party_message(struct party_data* p, int account_id, const char* mes, i
 	nullpo_retv(p);
 	nullpo_retv(mes);
 
-	for(i=0; i < MAX_PARTY && !p->data[i].sd;i++);
-	if(i < MAX_PARTY){
-		unsigned char buf[1024];
+	ARR_FIND(0, MAX_PARTY, i, p->data[i].sd != NULL);
 
-		if (len > sizeof(buf)-8) {
-			ShowWarning("clif_party_message: Truncated message '%s' (len=%d, max=%"PRIuS", party_id=%d).\n",
-			            mes, len, sizeof(buf)-8, p->party.party_id);
-			len = sizeof(buf)-8;
+	if (i < MAX_PARTY) {
+		unsigned char buf[1024];
+		int maxlen = (int)sizeof(buf) - 9;
+
+		if (len > maxlen) {
+			ShowWarning("clif_party_message: Truncated message '%s' (len=%d, max=%d, party_id=%d).\n",
+			            mes, len, maxlen, p->party.party_id);
+			len = maxlen;
 		}
 
 		sd = p->data[i].sd;
-		WBUFW(buf,0)=0x109;
-		WBUFW(buf,2)=len+8;
-		WBUFL(buf,4)=account_id;
-		safestrncpy((char *)WBUFP(buf,8), mes, len);
-		clif->send(buf,len+8,&sd->bl,PARTY);
+		WBUFW(buf,0) = 0x109;
+		WBUFW(buf,2) = len+9;
+		WBUFL(buf,4) = account_id;
+		safestrncpy(WBUFP(buf,8), mes, len+1);
+		clif->send(buf, len+9, &sd->bl, PARTY);
 	}
 }
 
@@ -8073,24 +8084,25 @@ void clif_marriage_proposal(int fd, struct map_session_data *sd, struct map_sess
 /*==========================================
  * Displays a message using the guild-chat colors to the specified targets. [Skotlex]
  *------------------------------------------*/
-void clif_disp_message(struct block_list* src, const char* mes, size_t len, enum send_target target)
-{
+void clif_disp_message(struct block_list *src, const char *mes, enum send_target target){
 	unsigned char buf[256];
+	int len;
 
+	nullpo_retv(mes);
+	nullpo_retv(src);
+
+	len = (int)strlen(mes);
 	if (len == 0)
 		return;
 
-	nullpo_retv(src);
-	nullpo_retv(mes);
-
-	if (len > sizeof(buf)-5) {
-		ShowWarning("clif_disp_message: Truncated message '%s' (len=%"PRIuS", max=%"PRIuS", aid=%d).\n", mes, len, sizeof(buf)-5, src->id);
-		len = sizeof(buf)-5;
+	if (len > (int)sizeof(buf)-5) {
+		ShowWarning("clif_disp_message: Truncated message '%s' (len=%d, max=%"PRIuS", aid=%d).\n", mes, len, sizeof(buf)-5, src->id);
+		len = (int)sizeof(buf)-5;
 	}
 
 	WBUFW(buf, 0) = 0x17f;
 	WBUFW(buf, 2) = len + 5;
-	safestrncpy((char*)WBUFP(buf,4), mes, len+1);
+	safestrncpy(WBUFP(buf,4), mes, len+1);
 	clif->send(buf, WBUFW(buf,2), src, target);
 }
 
@@ -8339,10 +8351,11 @@ void clif_specialeffect_value(struct block_list* bl, int effect_id, int num, sen
  */
 void clif_messagecolor_self(int fd, uint32 color, const char *msg)
 {
-	size_t msg_len;
+	int msg_len;
 
 	nullpo_retv(msg);
-	msg_len = strlen(msg) + 1;
+	msg_len = (int)strlen(msg) + 1;
+	Assert_retv(msg_len <= INT16_MAX - 12);
 
 	WFIFOHEAD(fd,msg_len + 12);
 	WFIFOW(fd,0) = 0x2C1;
@@ -8364,17 +8377,19 @@ void clif_messagecolor_self(int fd, uint32 color, const char *msg)
  */
 void clif_messagecolor(struct block_list* bl, uint32 color, const char *msg)
 {
-	size_t msg_len = strlen(msg) + 1;
+	int msg_len;
 	uint8 buf[256];
 
 	nullpo_retv(bl);
 	nullpo_retv(msg);
 
-	if (msg_len > sizeof(buf)-12) {
-		ShowWarning("clif_messagecolor: Mensagem muito longa '%s' (len=%"PRIuS").\n", msg, msg_len);
-		msg_len = sizeof(buf)-12;
-	}
+	msg_len = (int)strlen(msg) + 1;
 
+	if (msg_len > (int)sizeof(buf)-12) {
+		ShowWarning("clif_messagecolor: Mensagem muito longa '%s' (len=%"PRIuS").\n", msg, msg_len);
+		msg_len = (int)sizeof(buf)-12;
+	}
+	
 	WBUFW(buf,0) = 0x2C1;
 	WBUFW(buf,2) = msg_len + 12;
 	WBUFL(buf,4) = bl->id;
@@ -8692,34 +8707,33 @@ void clif_slide(struct block_list *bl, int x, int y)
 
 /// Public chat message (ZC_NOTIFY_CHAT). lordalfa/Skotlex - used by @me as well
 /// 008d <packet len>.W <id>.L <message>.?B
-void clif_disp_overhead(struct block_list *bl, const char* mes)
+void clif_disp_overhead(struct block_list *bl, const char *mes)
 {
 	unsigned char buf[256]; //This should be more than sufficient, the theoretical max is CHAT_SIZE + 8 (pads and extra inserted crap)
-	size_t len_mes;
+	int mes_len;
 
 	nullpo_retv(bl);
 	nullpo_retv(mes);
-	len_mes = strlen(mes)+1; //Account for \0
+	mes_len = (int)strlen(mes)+1; //Account for \0
 
-	if (len_mes > sizeof(buf)-8) {
-		ShowError("clif_disp_overhead: Message too long (length %"PRIuS")\n", len_mes);
-		len_mes = sizeof(buf)-8; //Trunk it to avoid problems.
+	if (mes_len > (int)sizeof(buf)-8) {
+		ShowError("clif_disp_overhead: Message too long (length %d)\n", mes_len);
+		mes_len = sizeof(buf)-8; //Trunk it to avoid problems.
 	}
 	// send message to others
 	WBUFW(buf,0) = 0x8d;
-	WBUFW(buf,2) = len_mes + 8; // len of message + 8 (command+len+id)
+	WBUFW(buf,2) = mes_len + 8; // len of message + 8 (command+len+id)
 	WBUFL(buf,4) = bl->id;
-	safestrncpy((char*)WBUFP(buf,8), mes, len_mes);
+	safestrncpy(WBUFP(buf,8), mes, mes_len);
 	clif->send(buf, WBUFW(buf,2), bl, AREA_CHAT_WOC);
 
 	// send back message to the speaker
-	if( bl->type == BL_PC ) {
+	if (bl->type == BL_PC) {
 		WBUFW(buf,0) = 0x8e;
-		WBUFW(buf, 2) = len_mes + 4;
-		safestrncpy((char*)WBUFP(buf,4), mes, len_mes);
+		WBUFW(buf, 2) = mes_len + 4;
+		safestrncpy(WBUFP(buf,4), mes, mes_len);
 		clif->send(buf, WBUFW(buf,2), bl, SELF);
 	}
-
 }
 
 /*==========================
@@ -9135,16 +9149,17 @@ bool clif_process_whisper_message(struct map_session_data *sd, const struct pack
 
 void clif_channel_msg(struct channel_data *chan, struct map_session_data *sd, char *msg)
 {
-	DBIterator *iter;
+	struct DBIterator *iter;
 	struct map_session_data *user;
-	unsigned short msg_len;
+	int msg_len;
 	uint32 color;
 
 	nullpo_retv(chan);
 	nullpo_retv(sd);
 	nullpo_retv(msg);
 	iter = db_iterator(chan->users);
-	msg_len = strlen(msg) + 1;
+	msg_len = (int)strlen(msg) + 1;
+	Assert_retv(msg_len <= INT16_MAX - 12);
 	color = channel->config->colors[chan->color];
 
 	WFIFOHEAD(sd->fd,msg_len + 12);
@@ -9169,16 +9184,17 @@ void clif_channel_msg(struct channel_data *chan, struct map_session_data *sd, ch
 
 void clif_channel_msg2(struct channel_data *chan, char *msg)
 {
-	DBIterator *iter;
+	struct DBIterator *iter;
 	struct map_session_data *user;
 	unsigned char buf[210];
-	unsigned short msg_len;
+	int msg_len;
 	uint32 color;
 
 	nullpo_retv(chan);
 	nullpo_retv(msg);
 	iter = db_iterator(chan->users);
-	msg_len = strlen(msg) + 1;
+	msg_len = (int)strlen(msg) + 1;
+	Assert_retv(msg_len <= INT16_MAX - 12);
 	color = channel->config->colors[chan->color];
 
 	WBUFW(buf,0) = 0x2C1;
@@ -9544,7 +9560,7 @@ void clif_parse_LoadEndAck(int fd, struct map_session_data *sd) {
 		if( map->list[sd->bl.m].flag.allowks && !map_flag_ks(sd->bl.m) ) {
 			char output[128];
 			sprintf(output, "[ Kill Steal Protection Disabled. KS is allowed in this map ]");
-			clif->broadcast(&sd->bl, output, strlen(output) + 1, BC_BLUE, SELF);
+			clif->broadcast(&sd->bl, output, (int)strlen(output) + 1, BC_BLUE, SELF);
 		}
 
 		map->iwall_get(sd); // Updates Walls Info on this Map to Client
@@ -10836,10 +10852,10 @@ void clif_noask_sub(struct map_session_data *src, struct map_session_data *targe
 	nullpo_retv(src);
 	// Your request has been rejected by autoreject option.
 	msg = msg_sd(src,392);
-	clif_disp_onlyself(src, msg, strlen(msg));
+	clif_disp_onlyself(src, msg);
 	//Notice that a request was rejected.
 	snprintf(output, 256, msg_sd(target,393+type), src->status.name, 256);
-	clif_disp_onlyself(target, output, strlen(output));
+	clif_disp_onlyself(target, output);
 }
 
 void clif_parse_TradeRequest(int fd,struct map_session_data *sd) __attribute__((nonnull (2)));
@@ -14787,7 +14803,7 @@ void clif_Mail_refreshinbox(struct map_session_data *sd)
 	if( md->full ) {// TODO: is this official?
 		char output[100];
 		sprintf(output, "Inbox is full (Max %d). Delete some mails.", MAIL_MAX_INBOX);
-		clif_disp_onlyself(sd, output, strlen(output));
+		clif_disp_onlyself(sd, output);
 	}
 }
 
@@ -14825,11 +14841,16 @@ void clif_Mail_read(struct map_session_data *sd, int mail_id)
 		struct mail_message *msg = &sd->mail.inbox.msg[i];
 		struct item *item = &msg->item;
 		struct item_data *data;
-		size_t msg_len = strlen(msg->body), len;
+		int msg_len = (int)strlen(msg->body), len;
 
-		if( msg_len == 0 ) {
+		if (msg_len == 0) {
 			strcpy(msg->body, "(no message)");
-			msg_len = strlen(msg->body);
+			msg_len = (int)strlen(msg->body);
+		}
+
+		if (msg_len > UINT8_MAX) {
+			Assert_report(msg_len > UINT8_MAX);
+			msg_len = UINT8_MAX;
 		}
 
 		len = 101 + msg_len;
@@ -14838,8 +14859,8 @@ void clif_Mail_read(struct map_session_data *sd, int mail_id)
 		WFIFOW(fd,0) = 0x242;
 		WFIFOW(fd,2) = len;
 		WFIFOL(fd,4) = msg->id;
-		safestrncpy((char*)WFIFOP(fd,8), msg->title, MAIL_TITLE_LENGTH + 1);
-		safestrncpy((char*)WFIFOP(fd,48), msg->send_name, NAME_LENGTH + 1);
+		safestrncpy(WFIFOP(fd,8), msg->title, MAIL_TITLE_LENGTH + 1);
+		safestrncpy(WFIFOP(fd,48), msg->send_name, NAME_LENGTH + 1);
 		WFIFOL(fd,72) = 0;
 		WFIFOL(fd,76) = msg->zeny;
 
@@ -14857,8 +14878,8 @@ void clif_Mail_read(struct map_session_data *sd, int mail_id)
 		} else // no item, set all to zero
 			memset(WFIFOP(fd,80), 0x00, 19);
 
-		WFIFOB(fd,99) = (unsigned char)msg_len;
-		safestrncpy((char*)WFIFOP(fd,100), msg->body, msg_len + 1);
+		WFIFOB(fd,99) = (uint8)msg_len;
+		safestrncpy(WFIFOP(fd,100), msg->body, msg_len + 1);
 		WFIFOSET(fd,len);
 
 		if (msg->status == MAIL_UNREAD) {
@@ -17822,24 +17843,24 @@ void clif_partytickack(struct map_session_data* sd, bool flag) {
 
 void clif_ShowScript(struct block_list* bl, const char* message) {
 	char buf[256];
-	size_t len;
+	int len;
 	nullpo_retv(bl);
 
-	if(!message)
+	if (message == NULL)
 		return;
 
-	len = strlen(message)+1;
+	len = (int)strlen(message)+1;
 
-	if (len > sizeof(buf)-8) {
-		ShowWarning("clif_ShowScript: Truncating too long message '%s' (len=%"PRIuS").\n", message, len);
-		len = sizeof(buf)-8;
+	if (len > (int)sizeof(buf)-8) {
+		ShowWarning("clif_ShowScript: Truncating too long message '%s' (len=%d).\n", message, len);
+		len = (int)sizeof(buf)-8;
 	}
 
-	WBUFW(buf,0)=0x8b3;
-	WBUFW(buf,2)=len+8;
-	WBUFL(buf,4)=bl->id;
-	safestrncpy((char *) WBUFP(buf,8),message,len);
-	clif->send((unsigned char *) buf,WBUFW(buf,2),bl,ALL_CLIENT);
+	WBUFW(buf,0) = 0x8b3;
+	WBUFW(buf,2) = len+8;
+	WBUFL(buf,4) = bl->id;
+	safestrncpy(WBUFP(buf,8),message,len);
+	clif->send(buf,WBUFW(buf,2),bl,ALL_CLIENT);
 }
 
 void clif_status_change_end(struct block_list *bl, int tid, enum send_target target, int type) {
@@ -17931,7 +17952,6 @@ void clif_parse_bgqueue_checkstate(int fd, struct map_session_data *sd) __attrib
 void clif_parse_bgqueue_checkstate(int fd, struct map_session_data *sd) {
 	struct packet_bgqueue_checkstate *p = P2PTR(fd);
 
-	nullpo_retv(sd);
 	if ( sd->bg_queue.arena && sd->bg_queue.type ) {
 		clif->bgqueue_update_info(sd,sd->bg_queue.arena->id,bg->id2pos(sd->bg_queue.arena->queue_id,sd->status.account_id));
 	} else
@@ -18177,7 +18197,7 @@ void clif_show_modifiers (struct map_session_data *sd) {
 
 		snprintf(output,128,"Base EXP : %d%% | Base Drop: %d%% | Base Death Penalty: %d%%",
 				sd->status.mod_exp,sd->status.mod_drop,sd->status.mod_death);
-		clif->broadcast2(&sd->bl,output, strlen(output) + 1, 0xffbc90, 0x190, 12, 0, 0, SELF);
+		clif->broadcast2(&sd->bl, output, (int)strlen(output) + 1, 0xffbc90, 0x190, 12, 0, 0, SELF);
 	}
 
 }

@@ -5660,9 +5660,9 @@ unsigned short status_calc_speed(struct block_list *bl, struct status_change *sc
 		{
 			int val = 0;
 
-			if( sd && sc->data[SC_HIDING] && pc->checkskill(sd,RG_TUNNELDRIVE) > 0 )
+			if( sd && sc->data[SC_HIDING] && pc->checkskill(sd,RG_TUNNELDRIVE) > 0 ) {
 				val = 120 - 6 * pc->checkskill(sd,RG_TUNNELDRIVE);
-			else
+			} else {
 				if( sd && sc->data[SC_CHASEWALK] && sc->data[SC_CHASEWALK]->val3 < 0 )
 					val = sc->data[SC_CHASEWALK]->val3;
 				else
@@ -5723,8 +5723,8 @@ unsigned short status_calc_speed(struct block_list *bl, struct status_change *sc
 					if (sc->data[SC_STOMACHACHE])
 						val = max(val, sc->data[SC_STOMACHACHE]->val2);
 						
-					if( sc->data[SC_MARSHOFABYSS] ) // It stacks to other statuses so always put this at the end.
-						val = max( 50, val + 10 * sc->data[SC_MARSHOFABYSS]->val1 );
+					if (sc->data[SC_MARSHOFABYSS]) // It stacks to other statuses so always put this at the end.
+						val = max(50, val + 10 * sc->data[SC_MARSHOFABYSS]->val1);
 
 					if (sc->data[SC_MOVHASTE_POTION]) { // Doesn't affect the movement speed by Quagmire, Decrease Agi, Slow Grace [Frost]
 						if (sc->data[SC_DEC_AGI] || sc->data[SC_QUAGMIRE] || sc->data[SC_DONTFORGETME])
@@ -5732,15 +5732,15 @@ unsigned short status_calc_speed(struct block_list *bl, struct status_change *sc
 					}
 					if (sc->data[SC_CATNIPPOWDER])
  						val = max(val, sc->data[SC_CATNIPPOWDER]->val3);
-					
+
 					if( sc->data[SC_B_TRAP] )
 						val = max( val, sc->data[SC_B_TRAP]->val3 );
 		
 					if( sd && sd->bonus.speed_rate + sd->bonus.speed_add_rate > 0 ) // permanent item-based speedup
 						val = max( val, sd->bonus.speed_rate + sd->bonus.speed_add_rate );
 				}
-
-				speed_rate += val;
+			}
+			speed_rate += val;
 		}
 
 		//GetMoveHasteValue1()
@@ -7597,8 +7597,9 @@ int status_change_start(struct block_list *src, struct block_list *bl, enum sc_t
 			if (tick == 1) return 1; //Minimal duration: Only strip without causing the SC
 			break;
 		case SC_NOEQUIPSHIELD:
-			if( val2 == 1 ) val2 = 0; //GX effect. Do not take shield off..
-			else
+			if (val2 == 1) {
+				val2 = 0; //GX effect. Do not take shield off..
+			} else {
 				if (sd && !(flag&SCFLAG_LOADED)) {
 					int i;
 					if(sd->bonus.unstripable_equip&EQP_SHIELD)
@@ -7608,8 +7609,10 @@ int status_change_start(struct block_list *src, struct block_list *bl, enum sc_t
 						return 0;
 					pc->unequipitem(sd, i, PCUNEQUIPITEM_RECALC|PCUNEQUIPITEM_FORCE);
 				}
-				if (tick == 1) return 1; //Minimal duration: Only strip without causing the SC
-				break;
+			}
+			if (tick == 1)
+				return 1; //Minimal duration: Only strip without causing the SC
+			break;
 		case SC_NOEQUIPARMOR:
 			if (sd && !(flag&SCFLAG_LOADED)) {
 				int i;
