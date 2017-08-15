@@ -24,6 +24,7 @@
 #include "common/conf.h"
 #include "common/cbasetypes.h"
 #include "common/mmo.h" // NEW_CARTS
+#include "config/brathena.h"
 
 struct block_list;
 struct elemental_data;

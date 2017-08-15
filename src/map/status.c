@@ -1399,7 +1399,7 @@ int status_damage(struct block_list *src,struct block_list *target,int64 in_hp, 
 		if( sc ) {
 			struct status_change_entry *sce;
 
-#ifdef DEVOTION_REFLECT_DAMAGE
+#if DEVOTION_REFLECT_DAMAGE
 			if (src && (sce = sc->data[SC_DEVOTION]) != NULL) {
 				struct block_list *d_bl = map->id2bl(sce->val1);
 				struct mercenary_data *d_md = BL_CAST(BL_MER, d_bl);

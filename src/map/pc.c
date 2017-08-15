@@ -21,6 +21,7 @@
 #define BRATHENA_CORE
 
 #include "config/core.h" // DBPATH, GP_BOUND_ITEMS, MAX_SPIRITBALL, RENEWAL, RENEWAL_ASPD, RENEWAL_CAST, RENEWAL_DROP, RENEWAL_EXP, SECURE_NPCTIMEOUT
+#include "config/brathena.h" // DBPATH, GP_BOUND_ITEMS, MAX_SPIRITBALL, RENEWAL, RENEWAL_ASPD, RENEWAL_CAST, RENEWAL_DROP, RENEWAL_EXP, SECURE_NPCTIMEOUT
 #include "pc.h"
 
 #include "map/atcommand.h" // get_atcommand_level()
@@ -1376,6 +1377,11 @@ bool pc_authok(struct map_session_data *sd, int login_id2, time_t expiration_tim
 	sd->trader.ok = false;
 	sd->trader.price = sd->trader.points = 0;
 
+	/* [Shiraz] */
+	if(enable_system_vip)
+		sd->vip_timer = timer->add(timer->gettick()+DELAY_IN(1), pc->check_time_vip, sd->bl.id, 0);
+
+	
 	// Request all registries (auth is considered completed whence they arrive)
 	intif->request_registry(sd,7);
 	return true;
@@ -5467,6 +5473,8 @@ int pc_steal_item(struct map_session_data *sd,struct block_list *bl, uint16 skil
 	tmp_item.nameid = itemid;
 	tmp_item.amount = 1;
 	tmp_item.identify = itemdb->isidentified2(data);
+	if(mob_drop_identified)
+		tmp_item.identify = 1;	
 	flag = pc->additem(sd,&tmp_item,1);
 
 	//TODO: Should we disable stealing when the item you stole couldn't be added to your inventory? Perhaps players will figure out a way to exploit this behaviour otherwise?
@@ -5541,7 +5549,7 @@ int pc_setpos(struct map_session_data* sd, unsigned short map_index, int x, int 
 		return 1;
 	}
 
-	if( pc_isdead(sd) ) { //Revive dead people before warping them
+	if( pc_isdead(sd) && !warp_no_ress) { //Revive dead people before warping them
 		pc->setstand(sd);
 		pc->setrestartvalue(sd,1);
 	}
@@ -10252,6 +10260,87 @@ int pc_calc_pvprank_timer(int tid, int64 tick, int id, intptr_t data) {
 	return 0;
 }
 
+/*======================================================
+ * Verificação para remoção do vip. [Shiraz / brAthena]
+ *-----------------------------------------------------*/
+int check_time_vip(int tid, int64 tick, int id, intptr_t data)
+{
+	struct map_session_data *sd = (struct map_session_data *)map->id2sd(id);
+
+	if(!sd || sd->bl.type != BL_PC || !pc_isvip(sd))
+		return 1;
+	
+	sd->vip_timer = INVALID_TIMER;
+	
+	if(pc_readaccountreg(sd,script->add_str("#official_time_vip")) < (int)time(NULL)) {
+		clif->messagecolor_self(sd->fd, COLOR_WHITE, "Seu tempo vip expirou.");
+		
+	// Remove o VIP.
+	if(SQL_ERROR == SQL->Query(map->mysql_handle, "UPDATE `login` SET `group_id`=%d WHERE `account_id`='%d'", 0, sd->status.account_id))
+		Sql_ShowDebug(map->mysql_handle);
+	}
+	pc->set_group(sd, 0);
+	
+	sd->vip_timer = timer->add(timer->gettick()+DELAY_IN(1),pc->check_time_vip,sd->bl.id,0);	
+	return 0;
+}
+
+/*======================================================
+ * Adiciona tempo vip. [Shiraz / brAthena]
+ *-----------------------------------------------------*/
+int add_time_vip(struct map_session_data *sd, int type[4])
+{
+	int now = pc_readaccountreg(sd,script->add_str("#official_time_vip"));
+	int val = 0;
+	
+	val += type[0] * 86400;
+	val += type[1] * 3600;
+	val += type[2] * 60;
+	val += type[3];
+	
+	if((val > INT_MAX)) {
+		ShowInfo("add_time_vip: Overflow detectado. Conta ID: %d", sd->status.account_id);
+		return -1;
+	}
+	
+	if(now > (int)time(NULL))
+		pc_setaccountreg(sd, script->add_str("#official_time_vip"), now+val);
+	else
+		pc_setaccountreg(sd, script->add_str("#official_time_vip"), (int)time(NULL)+val);
+	
+	sd->vip_timer = timer->add(timer->gettick()+DELAY_IN(1),pc->check_time_vip,sd->bl.id,0);
+	
+	// Salva e atualiza as informações de um vip.
+	if(SQL_ERROR == SQL->Query(map->mysql_handle, "UPDATE `login` SET `group_id`=%d WHERE `account_id`='%d'", level_vip, sd->status.account_id))
+		Sql_ShowDebug(map->mysql_handle);
+
+	pc->set_group(sd, level_vip);
+	pc->show_time_vip(sd);
+	
+	return 0;
+}
+
+/*======================================================
+ * Exibe tempo vip. [Shiraz / brAthena]
+ *-----------------------------------------------------*/
+void show_time_vip(struct map_session_data *sd)
+{
+	int time_s[4], val;
+	char buf[256];
+	
+	val = (unsigned int)(pc_readaccountreg(sd,script->add_str("#official_time_vip")) - (int)time(NULL));
+	
+	time_s[0] = val / 86400;
+	time_s[1] = val % 86400 / 3600;
+	time_s[2] = val % 3600 / 60;
+	time_s[3] = val % 60;
+	
+	if(time_s[0] >= 0 && time_s[1] >= 0 && time_s[2] >= 0 && time_s[3] >= 0) {
+		snprintf(buf, sizeof(buf), "Restam: %d dia(s), %d hora(s), %d minuto(s) e %d segundo(s)", time_s[0], time_s[1], time_s[2], time_s[3]);
+		clif->messagecolor_self(sd->fd,COLOR_WHITE, buf);
+	}
+}
+
 /*==========================================
  * Checking if sd is married
  * Return:
@@ -11068,7 +11157,7 @@ bool pc_readdb_levelpenalty(char* fields[], int columns, int current) {
 
 // Bypass para exp_db [Shiraz]
 // Retorna o level correspondente ao identificador.
-// enum _max_level_ (mmo.h)
+// enum _max_level_ (brathena.h)
 /**
  * Função para retornar o nível máximo de acordo com a classe do personagem.
  *
@@ -11091,45 +11180,45 @@ static int pc_get_maxlevel(int job, int type)
 	if(type == 0)
 	{
 		if((job >= JOB_NOVICE && job <= JOB_NINJA) || (job >= JOB_BABY && job <= JOB_SUPER_BABY))
-			return battle_config.max_baselv_normal;
+			return max_baselv_normal;
 		else if(job >= JOB_NOVICE_HIGH && job <= JOB_PALADIN2)
-			return battle_config.max_baselv_trans;
+			return max_baselv_trans;
 		else if((job >= JOB_RUNE_KNIGHT && job <= JOB_MECHANIC_T2) || (job >= JOB_BABY_RUNE && job <= JOB_BABY_MECHANIC2))
-			return battle_config.max_baselv_third;
+			return max_baselv_third;
 		else if((job >= JOB_SUPER_NOVICE_E && job <= JOB_SUPER_BABY_E) || (job == JOB_KAGEROU || job == JOB_REBELLION))
-			return battle_config.max_baselv_sne_ko;
+			return max_baselv_sne_ko;
 	}
 	// 1: Nível classe
 	else if(type == 1)
 	{
 		if(job == JOB_NOVICE || job == JOB_BABY)
-			return battle_config.max_joblv_novice;
+			return max_joblv_novice;
 		else if((job >= JOB_SWORDMAN && job <= JOB_THIEF)
 				|| (job >= JOB_BABY_SWORDMAN && job <= JOB_BABY_THIEF)
 				|| job == JOB_GANGSI)
-			return battle_config.max_joblv_first;
+			return max_joblv_first;
 		else if((job >= JOB_KNIGHT && job <= JOB_CRUSADER2) || (job >= JOB_BABY_KNIGHT && job <= JOB_BABY_CRUSADER2))
-			return battle_config.max_joblv_second;
+			return max_joblv_second;
 		else if(job == JOB_NOVICE_HIGH)
-			return battle_config.max_joblv_novice_t;
+			return max_joblv_novice_t;
 		else if(job >= JOB_SWORDMAN_HIGH && job <= JOB_THIEF_HIGH)
-			return battle_config.max_joblv_first_t;
+			return max_joblv_first_t;
 		else if(job >= JOB_LORD_KNIGHT && job <= JOB_PALADIN2)
-			return battle_config.max_joblv_second_t;
+			return max_joblv_second_t;
 		else if((job >= JOB_RUNE_KNIGHT && job <= JOB_MECHANIC_T2) || (job >= JOB_BABY_RUNE && job <= JOB_BABY_MECHANIC2))
-			return battle_config.max_joblv_third;
+			return max_joblv_third;
 		else if(job == JOB_SUPER_NOVICE_E || job == JOB_SUPER_BABY_E || job == JOB_KAGEROU || job == JOB_OBORO || job == JOB_REBELLION)
-			return battle_config.max_joblv_sne_ko;
+			return max_joblv_sne_ko;
 		else if(job == JOB_GUNSLINGER || job == JOB_NINJA)
-			return battle_config.max_joblv_guns_ninja;
+			return max_joblv_guns_ninja;
 		else if(job == JOB_TAEKWON)
-			return battle_config.max_joblv_taekwon;
+			return max_joblv_taekwon;
 		else if(job == JOB_STAR_GLADIATOR || job == JOB_STAR_GLADIATOR2)
-			return battle_config.max_joblv_taekwon_master;
+			return max_joblv_taekwon_master;
 		else if(job == JOB_SOUL_LINKER)
-			return battle_config.max_joblv_soullinker;
+			return max_joblv_soullinker;
 		else if(job == JOB_SUPER_NOVICE || job == JOB_SUPER_BABY)
-			return battle_config.max_joblv_sn_snb;
+			return max_joblv_sn_snb;
 	}
 
 	ShowError("Nivel maximo indefinido para a classe %d\n", job);
@@ -12203,4 +12292,8 @@ void pc_defaults(void) {
 	// Configuração para bloquear jogadores de abrir chat/loja próximos uns aos outros. [CarlosHenrq]
 	pc->vending_chat_count_near = pc_vending_chat_count_near;
 	pc->too_many_vending_chat_near = pc_too_many_vending_chat_near;
+	
+	pc->check_time_vip = check_time_vip;
+	pc->add_time_vip = add_time_vip;
+	pc->show_time_vip = show_time_vip;
 }

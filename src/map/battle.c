@@ -7119,8 +7119,7 @@ static const struct battle_data {
 	{ "max_aspd",                           &battle_config.max_aspd,                        190,    100,    199,            },
 	{ "max_third_aspd",                     &battle_config.max_third_aspd,                  193,    100,    199,            },
 	{ "max_walk_speed",                     &battle_config.max_walk_speed,                  300,    100,    100*DEFAULT_WALK_SPEED, },
-	{ "max_lv",                             &battle_config.max_lv,                          99,     0,      MAX_LEVEL,      },
-	{ "aura_lv",                            &battle_config.aura_lv,                         99,     0,      INT_MAX,        },
+	{ "aura_lv",                            &battle_config.aura_lv,                         MAX_LEVEL,     0,    MAX_LEVEL, },
 	{ "max_hp",                             &battle_config.max_hp,                          1000000, 100,   21474836,       },
 	{ "max_sp",                             &battle_config.max_sp,                          1000000, 100,   21474836,       },
 	{ "max_cart_weight",                    &battle_config.max_cart_weight,                 8000,   100,    1000000,        },
@@ -7360,8 +7359,6 @@ static const struct battle_data {
 	{ "min_npc_vendchat_distance",          &battle_config.min_npc_vendchat_distance,       3,      0,      100             },
 	{ "vendchat_near_hiddennpc",            &battle_config.vendchat_near_hiddennpc,         0,      0,      1               },
 	{ "atcommand_mobinfo_type",             &battle_config.atcommand_mobinfo_type,          0,      0,      1               },
-	{ "homunculus_max_level",               &battle_config.hom_max_level,                   99,     0,      MAX_LEVEL,      },
-	{ "homunculus_S_max_level",             &battle_config.hom_S_max_level,                 150,    0,      MAX_LEVEL,      },
 	{ "mob_size_influence",                 &battle_config.mob_size_influence,              0,      0,      1,              },
 	{ "bowling_bash_area",                  &battle_config.bowling_bash_area,               0,      0,      20,             },
 	/**
@@ -7415,24 +7412,6 @@ static const struct battle_data {
 	{ "get_refine",                         &battle_config.get_refine,                      0,      1,      100,            },
 	// Configuração para habilidades de remover armas. [Sir Will]
 	{ "strip_weapon",                       &battle_config.strip_weapon,                    0,      0,      1,              },
-	// Configurações dos níveis máximos para base e classe. [CarlosHenrq]
-	{ "max_baselv_normal",					&battle_config.max_baselv_normal,				99,		0,		MAX_LEVEL,		},
-	{ "max_baselv_trans",					&battle_config.max_baselv_trans,				99,		0,		MAX_LEVEL,		},
-	{ "max_baselv_third",					&battle_config.max_baselv_third,				175,	0,		MAX_LEVEL,		},
-	{ "max_baselv_sne_ko",					&battle_config.max_baselv_sne_ko,				160,	0,		MAX_LEVEL,		},
-	{ "max_joblv_novice",					&battle_config.max_joblv_novice,				 10,	0,		255,			},
-	{ "max_joblv_first",					&battle_config.max_joblv_first,				 	 50,	0,		255,			},
-	{ "max_joblv_second",					&battle_config.max_joblv_second,				 50,	0,		255,			},
-	{ "max_joblv_novice_t",					&battle_config.max_joblv_novice_t,				 10,	0,		255,			},
-	{ "max_joblv_first_t",					&battle_config.max_joblv_first_t,			 	 50,	0,		255,			},
-	{ "max_joblv_second_t",					&battle_config.max_joblv_second_t,				 70,	0,		255,			},
-	{ "max_joblv_third",					&battle_config.max_joblv_third,					 60,	0,		255,			},
-	{ "max_joblv_sne_ko",					&battle_config.max_joblv_sne_ko,				 50,	0,		255,			},
-	{ "max_joblv_guns_ninja",				&battle_config.max_joblv_guns_ninja,			 70,	0,		255,			},
-	{ "max_joblv_taekwon",					&battle_config.max_joblv_taekwon,				 50,	0,		255,			},
-	{ "max_joblv_taekwon_master",			&battle_config.max_joblv_taekwon_master,		 50,	0,		255,			},
-	{ "max_joblv_soullinker",				&battle_config.max_joblv_soullinker,		 	 50,	0,		255,			},
-	{ "max_joblv_sn_snb",					&battle_config.max_joblv_sn_snb,		 	 	 99,	0,		255,			},
 };
 #ifndef STATS_OPT_OUT
 /**

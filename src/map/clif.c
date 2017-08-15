@@ -904,12 +904,12 @@ void clif_get_weapon_view(struct map_session_data* sd, unsigned short *rhand, un
 
 //To make the assignation of the level based on limits clearer/easier. [Skotlex]
 static int clif_setlevel_sub(int lv) {
-	if( lv < battle_config.max_lv ) {
+	if( lv < MAX_LEVEL ) {
 		;
 	} else if( lv < battle_config.aura_lv ) {
-		lv = battle_config.max_lv - 1;
+		lv = MAX_LEVEL - 1;
 	} else {
-		lv = battle_config.max_lv;
+		lv = MAX_LEVEL;
 	}
 
 	return lv;
@@ -1566,11 +1566,11 @@ void clif_hominfo(struct map_session_data *sd, struct homun_data *hd, int flag) 
 	switch( htype ) {
 		case HT_REG:
 		case HT_EVO:
-			if( hd->homunculus.level >= battle_config.hom_max_level )
+			if( hd->homunculus.level >= hom_max_level )
 				WBUFL(buf,63)=0;
 			break;
 		case HT_S:
-			if( hd->homunculus.level >= battle_config.hom_S_max_level )
+			if( hd->homunculus.level >= hom_S_max_level )
 				WBUFL(buf,63)=0;
 			break;
 	}

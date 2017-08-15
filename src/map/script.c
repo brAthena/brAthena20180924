@@ -19824,6 +19824,37 @@ BUILDIN(instance_set_respawn) {
 	}
 	return true;
 }
+/*======================================================
+ * Adiciona tempo vip. [Shiraz / brAthena]
+ * ex: add_time_vip(dias, horas, minutos, segundos);
+ *-----------------------------------------------------*/
+BUILDIN(add_time_vip) {
+	int time_s[4], i;
+	TBL_PC *sd;
+	
+	if(!(sd = script->rid2sd(st)))
+		return false;
+		
+	for(i = 0; i < 4; i++)
+		time_s[i] = script_getnum(st,2+i);
+		
+	pc->add_time_vip(sd, time_s);
+	return true;
+}
+
+/*======================================================
+ * Exibe tempo vip. [Shiraz / brAthena]
+ * ex: show_time_vip();
+ *-----------------------------------------------------*/
+BUILDIN(show_time_vip) {
+	TBL_PC *sd;
+	
+	if(!(sd = script->rid2sd(st)))
+		return false;
+
+	pc->show_time_vip(sd);
+	return true;
+}
 /**
  * @call openshop({NPC Name});
  *
@@ -21597,6 +21628,8 @@ void script_parse_builtin(void) {
 
 		BUILDIN_DEF(block,"i"), // Proteção de Conta
 		BUILDIN_DEF(blockcheck,""), //Proteção de Conta
+		BUILDIN_DEF(add_time_vip,"iiii"),	// [Shiraz]
+		BUILDIN_DEF(show_time_vip,"?"),		// [Shiraz]		
 	};
 	int i, len = ARRAYLENGTH(BUILDIN);
 	RECREATE(script->buildin, char *, script->buildin_count + len); // Pre-alloc to speed up

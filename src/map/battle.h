@@ -254,7 +254,7 @@ struct Battle_Config {
 	int max_walk_speed; //Maximum walking speed after buffs [Skotlex]
 	int max_hp;
 	int max_sp;
-	int max_lv, aura_lv;
+	int aura_lv;
 	int max_parameter, max_baby_parameter;
 	int max_cart_weight;
 	int skill_log;
@@ -471,8 +471,6 @@ struct Battle_Config {
 	int mail_show_status;
 	int client_limit_unit_lv;
 	int client_emblem_max_blank_percent;
-	int hom_max_level;
-	int hom_S_max_level;
 
 	// [BattleGround Settings]
 	int bg_update_interval;
@@ -560,25 +558,6 @@ struct Battle_Config {
 	
 	// Configuração para habilidades de remover armas. [Sir Will]
 	int strip_weapon;
-
-	// Configurações dos níveis máximos para base e classe. [CarlosHenrq]
-	int max_baselv_normal;
-	int max_baselv_trans;
-	int max_baselv_third;
-	int max_baselv_sne_ko;
-	int max_joblv_novice;
-	int max_joblv_first;
-	int max_joblv_second;
-	int max_joblv_novice_t;
-	int max_joblv_first_t;
-	int max_joblv_second_t;
-	int max_joblv_third;
-	int max_joblv_sne_ko;
-	int max_joblv_guns_ninja;
-	int max_joblv_taekwon;
-	int max_joblv_taekwon_master;
-	int max_joblv_soullinker;
-	int max_joblv_sn_snb;
 };
 
 /* criteria for battle_config.idletime_critera */
