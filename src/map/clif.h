@@ -1347,6 +1347,8 @@ struct clif_interface {
 	void(*pSelectCart) (int fd, struct map_session_data *sd);
 	
 	void (*dressing_room) (struct map_session_data *sd, int flag);
+	/* brAtehna */
+	void (*personal_information) (struct map_session_data *sd);
 };
 
 struct clif_interface *clif;

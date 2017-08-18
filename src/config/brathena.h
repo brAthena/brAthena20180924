@@ -67,6 +67,15 @@ enum _max_level_ {
 // Permitir que alianças sejam estabelecidas durante o período de Guerras? ( 1=Não Permitido  0=Permitido )
 #define alliance_in_woe 0
 
+// Com essa função, assim que se conectar ao seu servidor,
+// você receberá uma mensagem com os valores referentes às taxas de Experiência,
+// Drop e Penalidade de Morte do servidor, vigentes naquele momento.
+#define show_message_exp 1
+
+///|----------------------|
+///| Sistema Vip Oficial  |
+///|----------------------|
+
 // Ativar sistema vip ? ( 1=habilitado  0=desabilitado )
 // Padrão dos Servidores oficiais: 1
 // NOTA: Desative caso use outro sistema vip.
@@ -74,5 +83,14 @@ enum _max_level_ {
 
 // Level para jogadores vip.
 #define level_vip 1
+
+// Taxa de exp extra. (base e classe)
+// 100 = 1x de exp
+#define extra_exp_vip_base 100
+#define extra_exp_vip_job 100
+
+// Redução da penalidade de morte.
+#define penalty_exp_vip_base 100
+#define penalty_exp_vip_job 100
 
 #endif // CONFIG_BRATHENA_H

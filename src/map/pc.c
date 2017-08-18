@@ -1354,6 +1354,9 @@ bool pc_authok(struct map_session_data *sd, int login_id2, time_t expiration_tim
 		clif->changemap(sd,sd->bl.m,sd->bl.x,sd->bl.y);
 	}
 
+	if(show_message_exp)
+		clif->personal_information(sd);
+	
 	/**
 	 * Check if player have any cool downs on
 	 **/
@@ -5548,7 +5551,7 @@ int pc_setpos(struct map_session_data* sd, unsigned short map_index, int x, int 
 		return 1;
 	}
 
-	if( pc_isdead(sd) && !warp_no_ress) { //Revive dead people before warping them
+	if( pc_isdead(sd) && warp_no_ress) { //Revive dead people before warping them
 		pc->setstand(sd);
 		pc->setrestartvalue(sd,1);
 	}
@@ -6771,7 +6774,7 @@ int pc_checkjoblevelup(struct map_session_data *sd)
  * Alters EXP based on self bonuses that do not get shared with the party
  **/
 void pc_calcexp(struct map_session_data *sd, unsigned int *base_exp, unsigned int *job_exp, struct block_list *src) {
-	int bonus = 0;
+	int bonus = 0, vip_exp_base = 0, vip_exp_job = 0;
 	struct status_data *st = status->get_status_data(src);
 
 	if (sd->expaddrace[st->race])
@@ -6787,6 +6790,11 @@ void pc_calcexp(struct map_session_data *sd, unsigned int *base_exp, unsigned in
 	if (sd->sc.data[SC_OVERLAPEXPUP])
 		bonus += sd->sc.data[SC_OVERLAPEXPUP]->val1;
 
+	if(enable_system_vip && src && src->type == BL_MOB && pc_isvip(sd)) {
+			vip_exp_base = extra_exp_vip_base;
+			vip_exp_job = extra_exp_vip_job;
+	}
+	
 	*base_exp = (unsigned int) cap_value(*base_exp + (double)*base_exp * bonus/100., 1, UINT_MAX);
 
 	if (sd->sc.data[SC_CASH_PLUSONLYJOBEXP])
@@ -7894,6 +7902,10 @@ int pc_dead(struct map_session_data *sd,struct block_list *src) {
 	   && !sd->sc.data[SC_BABY] && !sd->sc.data[SC_CASH_DEATHPENALTY]
 	   ) {
 		unsigned int base_penalty = 0;
+		if(enable_system_vip && pc_isvip(sd)) {
+			battle_config.death_penalty_base -= penalty_exp_vip_base;
+			battle_config.death_penalty_base  -= penalty_exp_vip_job;
+		}
 		if (battle_config.death_penalty_base > 0) {
 			switch (battle_config.death_penalty_type) {
 				case 1:

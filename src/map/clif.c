@@ -21,6 +21,7 @@
 #define BRATHENA_CORE
 
 #include "config/core.h" // ANTI_MAYAP_CHEAT, RENEWAL, SECURE_NPCTIMEOUT
+#include "config/brathena.h"
 #include "clif.h"
 
 #include "map/atcommand.h"
@@ -11668,7 +11669,61 @@ void clif_dressing_room(struct map_session_data *sd, int flag) {
   	WFIFOSET(fd, packet_len(0xa02));
  #endif
   }
-  
+
+/// Mensagem do Sistema Indicação de Exp e VIP Oficial - brAthena [Megasantos/Shiraz]
+/// Agradecimentos a Revok pelo pacote de client abaixo de 2013.
+/// 0x8cb <packet len>.W <exp>.W <death>.W <drop>.W (ZC_PERSONAL_INFOMATION)
+/// 0x97b <packet len>.W <exp>.L <death>.L <drop>.L (ZC_PERSONAL_INFOMATION2)
+void clif_personal_information(struct map_session_data *sd)
+{
+#if PACKETVER >= 20120410
+	int packet;
+	nullpo_retv(sd);
+
+#if PACKETVER < 20130320
+	packet = 0x8cb;
+#else
+	packet = 0x97b;
+#endif
+
+	sd->fd = (int)sd->fd;
+
+#if PACKETVER < 20130320
+	WFIFOHEAD(sd->fd,17);
+#else
+	WFIFOHEAD(sd->fd,29);
+#endif
+	WFIFOW(sd->fd,0)  = packet;
+#if PACKETVER < 20130320
+	WFIFOW(sd->fd,2)  = 17;
+#else
+	WFIFOW(sd->fd,2)  = 29;
+#endif
+	WFIFOW(sd->fd,4)  = battle_config.base_exp_rate;
+#if PACKETVER < 20130320
+	WFIFOW(sd->fd,6)  = battle_config.death_penalty_base;
+	WFIFOW(sd->fd,8)  = 100;
+	WFIFOB(sd->fd,10) = 0;
+	WFIFOW(sd->fd,11) = extra_exp_vip_base;
+	WFIFOW(sd->fd,13) = penalty_exp_vip_base;
+	WFIFOW(sd->fd,15) = 100;
+#else
+	WFIFOW(sd->fd,8)  = battle_config.death_penalty_base;
+	WFIFOW(sd->fd,12) = 100;
+	WFIFOB(sd->fd,13) = 0;
+	WFIFOW(sd->fd,17) = extra_exp_vip_base;
+	WFIFOW(sd->fd,21) = penalty_exp_vip_base;
+	WFIFOW(sd->fd,25) = 100;
+
+#endif
+#if PACKETVER < 20130320
+	WFIFOSET(sd->fd,17);
+#else
+	WFIFOSET(sd->fd,29);
+#endif
+#endif
+}
+
 void clif_parse_SelectArrow(int fd,struct map_session_data *sd) __attribute__((nonnull (2)));
 /// Answer to arrow crafting item selection dialog (CZ_REQ_MAKINGARROW).
 /// 01ae <name id>.W
@@ -19694,6 +19749,8 @@ void clif_defaults(void) {
 	clif->selectcart = clif_selectcart;
 	
 	clif->dressing_room = clif_dressing_room;
+	/* brAthena */
+	clif->personal_information = clif_personal_information;
 
 	/*------------------------
 	 *- Parse Incoming Packet
