@@ -684,9 +684,6 @@ END_ZEROED_BLOCK;
 // Verifica se o jogador é vip.
 #define pc_isvip(sd) ((sd->group_id==level_vip))
 
-// Delay para verificação do vip em tempo real. Padrão a cada 1 minuto.
-#define DELAY_IN(x) (x * 60000)
-
 // clientside display macros (values to the left/right of the "+")
 #ifdef RENEWAL
 	#define pc_leftside_atk(sd) ((sd)->battle_status.batk)

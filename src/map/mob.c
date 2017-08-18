@@ -2539,7 +2539,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type) {
 				item.nameid=mdrop_id[i];
 				item.identify= itemdb->isidentified2(data);
 				if(mob_drop_identified)
-					item.identify = 1;				
+					item.identify = 1;
 				clif->mvp_item(mvp_sd,item.nameid);
 				log_mvp[0] = item.nameid;
 

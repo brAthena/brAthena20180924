@@ -21,7 +21,7 @@
 #define BRATHENA_CORE
 
 #include "config/core.h" // DBPATH, GP_BOUND_ITEMS, MAX_SPIRITBALL, RENEWAL, RENEWAL_ASPD, RENEWAL_CAST, RENEWAL_DROP, RENEWAL_EXP, SECURE_NPCTIMEOUT
-#include "config/brathena.h" // DBPATH, GP_BOUND_ITEMS, MAX_SPIRITBALL, RENEWAL, RENEWAL_ASPD, RENEWAL_CAST, RENEWAL_DROP, RENEWAL_EXP, SECURE_NPCTIMEOUT
+#include "config/brathena.h"
 #include "pc.h"
 
 #include "map/atcommand.h" // get_atcommand_level()
@@ -1379,9 +1379,8 @@ bool pc_authok(struct map_session_data *sd, int login_id2, time_t expiration_tim
 
 	/* [Shiraz] */
 	if(enable_system_vip)
-		sd->vip_timer = timer->add(timer->gettick()+DELAY_IN(1), pc->check_time_vip, sd->bl.id, 0);
+		sd->vip_timer = timer->add(timer->gettick()+1000, pc->check_time_vip, sd->bl.id, 0);
 
-	
 	// Request all registries (auth is considered completed whence they arrive)
 	intif->request_registry(sd,7);
 	return true;
@@ -10275,13 +10274,14 @@ int check_time_vip(int tid, int64 tick, int id, intptr_t data)
 	if(pc_readaccountreg(sd,script->add_str("#official_time_vip")) < (int)time(NULL)) {
 		clif->messagecolor_self(sd->fd, COLOR_WHITE, "Seu tempo vip expirou.");
 		
+	pc->set_group(sd, 0);
+	
 	// Remove o VIP.
 	if(SQL_ERROR == SQL->Query(map->mysql_handle, "UPDATE `login` SET `group_id`=%d WHERE `account_id`='%d'", 0, sd->status.account_id))
 		Sql_ShowDebug(map->mysql_handle);
 	}
-	pc->set_group(sd, 0);
 	
-	sd->vip_timer = timer->add(timer->gettick()+DELAY_IN(1),pc->check_time_vip,sd->bl.id,0);	
+	sd->vip_timer = timer->add(timer->gettick()+1000,pc->check_time_vip,sd->bl.id,0);	
 	return 0;
 }
 
@@ -10308,13 +10308,14 @@ int add_time_vip(struct map_session_data *sd, int type[4])
 	else
 		pc_setaccountreg(sd, script->add_str("#official_time_vip"), (int)time(NULL)+val);
 	
-	sd->vip_timer = timer->add(timer->gettick()+DELAY_IN(1),pc->check_time_vip,sd->bl.id,0);
+	sd->vip_timer = timer->add(timer->gettick()+1000,pc->check_time_vip,sd->bl.id,0);
+	
+	pc->set_group(sd, level_vip);
 	
 	// Salva e atualiza as informações de um vip.
 	if(SQL_ERROR == SQL->Query(map->mysql_handle, "UPDATE `login` SET `group_id`=%d WHERE `account_id`='%d'", level_vip, sd->status.account_id))
 		Sql_ShowDebug(map->mysql_handle);
-
-	pc->set_group(sd, level_vip);
+	
 	pc->show_time_vip(sd);
 	
 	return 0;
@@ -10339,6 +10340,7 @@ void show_time_vip(struct map_session_data *sd)
 		snprintf(buf, sizeof(buf), "Restam: %d dia(s), %d hora(s), %d minuto(s) e %d segundo(s)", time_s[0], time_s[1], time_s[2], time_s[3]);
 		clif->messagecolor_self(sd->fd,COLOR_WHITE, buf);
 	}
+	return;
 }
 
 /*==========================================
