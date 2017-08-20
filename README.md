@@ -18,7 +18,7 @@
 
 ### Você pode encontrar :
   -  Profissionais iniciantes e experientes 
-  - Configuração de arquivos modificados de diferentes maneiras
+  - Configurações de arquivos modificados de diferentes maneiras
   - Conteúdos exclusivos criado para a comunidade
   - Assuntos e debates construtivos para o crescimento tecnologico
 
@@ -28,15 +28,15 @@ Conheça outros projetos que o brathena apoia:
 
 | Projeto | Repositório |
 | ------ | ------ |
-| brACP | [https://github.com/carloshenrq/brACP] [PlDb] |
-| Client-Side | [https://github.com/brAthena/Client-Side] [PlGh] |
-| FluxCP | [https://github.com/brAthena/FluxCP] [PlGd] |
-| Ferramentas | [https://github.com/brAthena/Ferramentas] [PlOd] |
-| WebService | [https://github.com/brAthena/brAwebService] [PlMe] |
-| Hexeds | [https://github.com/brAthena/Hexeds] [PlGa] |
+| brACP | [https://github.com/carloshenrq/brACP]  |
+| Client-Side | [https://github.com/brAthena/Client-Side]  |
+| FluxCP | [https://github.com/brAthena/FluxCP]  |
+| Ferramentas | [https://github.com/brAthena/Ferramentas]  |
+| WebService | [https://github.com/brAthena/brAwebService]  |
+| Hexeds | [https://github.com/brAthena/Hexeds]  |
 
 ### Desenvolvimento 
-Deseja contribuir? Ótimo
+Deseja contribuir? Ótimo,
 Temos bastante trabalho pela frente e, sua ajuda será de grande valor na comunidade!
 
 > Desenvolvedor C/C++
@@ -76,31 +76,10 @@ Temos bastante trabalho pela frente e, sua ajuda será de grande valor na comuni
 >Inglês (Intermediário - Avançado).
 >Não aceitaremos quem não sabe o básico e pretende usar o Google Translator por inteiro.
 
-License
+Licença
 ----
 
 brAthena/brAthena is licensed under the
 GNU General Public License v3.0
 
 
-
-   [dill]: <https://github.com/joemccann/dillinger>
-   [git-repo-url]: <https://github.com/joemccann/dillinger.git>
-   [john gruber]: <http://daringfireball.net>
-   [df1]: <http://daringfireball.net/projects/markdown/>
-   [markdown-it]: <https://github.com/markdown-it/markdown-it>
-   [Ace Editor]: <http://ace.ajax.org>
-   [node.js]: <http://nodejs.org>
-   [Twitter Bootstrap]: <http://twitter.github.com/bootstrap/>
-   [jQuery]: <http://jquery.com>
-   [@tjholowaychuk]: <http://twitter.com/tjholowaychuk>
-   [express]: <http://expressjs.com>
-   [AngularJS]: <http://angularjs.org>
-   [Gulp]: <http://gulpjs.com>
-
-   [PlDb]: <https://github.com/joemccann/dillinger/tree/master/plugins/dropbox/README.md>
-   [PlGh]: <https://github.com/joemccann/dillinger/tree/master/plugins/github/README.md>
-   [PlGd]: <https://github.com/joemccann/dillinger/tree/master/plugins/googledrive/README.md>
-   [PlOd]: <https://github.com/joemccann/dillinger/tree/master/plugins/onedrive/README.md>
-   [PlMe]: <https://github.com/joemccann/dillinger/tree/master/plugins/medium/README.md>
-   [PlGa]: <https://github.com/RahulHP/dillinger/blob/master/plugins/googleanalytics/README.md>
