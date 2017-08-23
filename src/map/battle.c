@@ -7412,6 +7412,8 @@ static const struct battle_data {
 	{ "get_refine",                         &battle_config.get_refine,                      0,      1,      100,            },
 	// Configuração para habilidades de remover armas. [Sir Will]
 	{ "strip_weapon",                       &battle_config.strip_weapon,                    0,      0,      1,              },
+	// Configuração para impedir drop de itens dentro de mapas com o flag 'town'. [CarlosHenrq]
+	{ "nodrop_in_town",						&battle_config.nodrop_in_town,    				0,      0,      1,				},
 };
 #ifndef STATS_OPT_OUT
 /**

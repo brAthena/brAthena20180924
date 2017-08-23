@@ -558,6 +558,9 @@ struct Battle_Config {
 	
 	// Configuração para habilidades de remover armas. [Sir Will]
 	int strip_weapon;
+
+	// Configuração para impedir drop de itens dentro de mapas com o flag 'town'. [CarlosHenrq]
+	int nodrop_in_town;
 };
 
 /* criteria for battle_config.idletime_critera */
