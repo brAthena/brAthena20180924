@@ -21,6 +21,7 @@
 #define BRATHENA_CORE
 
 #include "config/core.h" // DBPATH
+#include "config/brathena.h"
 #include "homunculus.h"
 
 #include "map/atcommand.h"
@@ -345,11 +346,11 @@ bool homunculus_levelup(struct homun_data *hd) {
 	switch( htype ) {
 		case HT_REG:
 		case HT_EVO:
-			if( hd->homunculus.level >= battle_config.hom_max_level )
+			if( hd->homunculus.level >= hom_max_level )
 				return false;
 			break;
 		case HT_S:
-			if( hd->homunculus.level >= battle_config.hom_S_max_level )
+			if( hd->homunculus.level >= hom_S_max_level )
 				return false;
 			break;
 	}
@@ -400,7 +401,7 @@ bool homunculus_levelup(struct homun_data *hd) {
 			growth_max_hp, growth_max_sp,
 			growth_str/10.0, growth_agi/10.0, growth_vit/10.0,
 			growth_int/10.0, growth_dex/10.0, growth_luk/10.0);
-		clif_disp_onlyself(hd->master,output,strlen(output));
+		clif_disp_onlyself(hd->master,output);
 	}
 	return true;
 }
@@ -530,11 +531,11 @@ int homunculus_gainexp(struct homun_data *hd,unsigned int exp) {
 	switch( htype ) {
 		case HT_REG:
 		case HT_EVO:
-			if( hd->homunculus.level >= battle_config.hom_max_level )
+			if( hd->homunculus.level >= hom_max_level )
 				return 0;
 			break;
 		case HT_S:
-			if( hd->homunculus.level >= battle_config.hom_S_max_level )
+			if( hd->homunculus.level >= hom_S_max_level )
 				return 0;
 			break;
 	}
@@ -919,11 +920,11 @@ bool homunculus_recv_data(int account_id, struct s_homunculus *sh, int flag) {
 		switch( htype ) {
 			case HT_REG:
 			case HT_EVO:
-				if( hd->homunculus.level > battle_config.hom_max_level )
+				if( hd->homunculus.level > hom_max_level )
 					homun->shuffle(hd);
 				break;
 			case HT_S:
-				if( hd->homunculus.level > battle_config.hom_S_max_level )
+				if( hd->homunculus.level > hom_S_max_level )
 					homun->shuffle(hd);
 				break;
 		}
@@ -1277,23 +1278,28 @@ void homunculus_exp_db_read(void) {
 #define HLIMIT 0xFFFFFFFF
 	int HomunLoop = 0;
 	char *row;
-
+	int max_l_h = (hom_max_level > hom_S_max_level) ? hom_max_level:hom_S_max_level;
+	
 	memset(homun->dbs->exptable, 0, sizeof(homun->dbs->exptable));
 
 	if(SQL_ERROR == SQL->Query(map->brAmysql_handle, "SELECT * FROM `%s`", get_database_name(31)))
 		Sql_ShowDebug(map->brAmysql_handle);
 
-	while(SQL_SUCCESS == SQL->NextRow(map->brAmysql_handle) && HomunLoop < MAX_LEVEL) {
+	while(SQL_SUCCESS == SQL->NextRow(map->brAmysql_handle) && HomunLoop < max_l_h) {
 		SQL->GetData(map->brAmysql_handle, 0, &row, NULL);
 		homun->dbs->exptable[HomunLoop] = atoi(row);
 
 		if(homun->dbs->exptable[HomunLoop++] >= HLIMIT)
 			break;
 
-		if(homun->dbs->exptable[MAX_LEVEL - 1]) {
-			ShowWarning("homunculus_exp_db_read: Nivel maximo atingido em exp_homun_db [%d]. Linhas restantes nao foram lidas.\n ", MAX_LEVEL);
-			homun->dbs->exptable[MAX_LEVEL - 1] = 0;
+		/*
+		Acho que pode ser retirado. Isso informa que existem mais linhas na tabela exp_db do que o max_level dos homunculos
+		se o contrario acontecer não é informado.
+		if(homun->dbs->exptable[max_l_h - 1]) {
+			ShowWarning("homunculus_exp_db_read: Nivel maximo atingido em exp_homun_db [%d]. Linhas restantes nao foram lidas.\n ", max_l_h);
+			homun->dbs->exptable[max_l_h - 1] = 0;
 		}
+		*/
 	}
 
 	ShowSQL("Leitura de '"CL_WHITE"%d"CL_RESET"' entradas na tabela '"CL_WHITE"%s"CL_RESET"'.\n", HomunLoop, get_database_name(31));

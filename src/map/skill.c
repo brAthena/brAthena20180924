@@ -3694,6 +3694,8 @@ int skill_timerskill(int tid, int64 tick, int id, intptr_t data) {
 					}
 					FALLTHROUGH
 				}
+					skill->attack(skl->type,src,src,target,skl->skill_id,skl->skill_lv,tick,skl->flag);
+					break;				
 				case RL_SLUGSHOT:
 					if (target->type == BL_PC)
 						sc_start(src, target, SC_SITDOWN_FORCE, 100, skl->skill_lv, skill_get_time(skl->skill_id, skl->skill_lv));

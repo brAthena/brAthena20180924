@@ -1086,9 +1086,9 @@ ACMD(kami)
 
 		sscanf(message, "%199[^\n]", atcmd_output);
 		if (stristr(info->command, "l") != NULL)
-			clif->broadcast(&sd->bl, atcmd_output, strlen(atcmd_output) + 1, BC_DEFAULT, ALL_SAMEMAP);
+			clif->broadcast(&sd->bl, atcmd_output, (int)strlen(atcmd_output) + 1, BC_DEFAULT, ALL_SAMEMAP);
 		else
-			intif->broadcast(atcmd_output, strlen(atcmd_output) + 1, (*(info->command + 4) == 'b' || *(info->command + 4) == 'B') ? BC_BLUE : BC_YELLOW);
+			intif->broadcast(atcmd_output, (int)strlen(atcmd_output) + 1, (*(info->command + 4) == 'b' || *(info->command + 4) == 'B') ? BC_BLUE : BC_YELLOW);
 	} else {
 		if(!*message || (sscanf(message, "%10u %199[^\n]", &color, atcmd_output) < 2)) {
 			clif->message(fd, msg_fd(fd,981)); // Please enter color and message (usage: @kamic <color> <message>).
@@ -1099,7 +1099,7 @@ ACMD(kami)
 			clif->message(fd, msg_fd(fd,982)); // Invalid color.
 			return false;
 		}
-		intif->broadcast2(atcmd_output, strlen(atcmd_output) + 1, color, 0x190, 12, 0, 0);
+		intif->broadcast2(atcmd_output, (int)strlen(atcmd_output) + 1, color, 0x190, 12, 0, 0);
 	}
 	return true;
 }
@@ -4933,7 +4933,7 @@ ACMD(broadcast)
 	}
 
 	safesnprintf(atcmd_output, sizeof(atcmd_output), "%s: %s", sd->status.name, message);
-	intif->broadcast(atcmd_output, strlen(atcmd_output) + 1, BC_DEFAULT);
+	intif->broadcast(atcmd_output, (int)strlen(atcmd_output) + 1, BC_DEFAULT);
 
 	return true;
 }
@@ -4952,7 +4952,7 @@ ACMD(localbroadcast)
 
 	safesnprintf(atcmd_output, sizeof(atcmd_output), "%s: %s", sd->status.name, message);
 
-	clif->broadcast(&sd->bl, atcmd_output, strlen(atcmd_output) + 1, BC_DEFAULT, ALL_SAMEMAP);
+	clif->broadcast(&sd->bl, atcmd_output, (int)strlen(atcmd_output) + 1, BC_DEFAULT, ALL_SAMEMAP);
 
 	return true;
 }
@@ -6854,14 +6854,14 @@ ACMD(homlevel) {
 	switch( htype ) {
 		case HT_REG:
 		case HT_EVO:
-			if( hd->homunculus.level >= battle_config.hom_max_level ) {
+			if( hd->homunculus.level >= hom_max_level ) {
 				snprintf(atcmd_output, sizeof(atcmd_output), msg_fd(fd,1478), hd->homunculus.level); // Homun reached its maximum level of '%d'
 				clif->message(fd, atcmd_output);
 				return true;
 			}
 			break;
 		case HT_S:
-			if( hd->homunculus.level >= battle_config.hom_S_max_level ) {
+			if( hd->homunculus.level >= hom_S_max_level ) {
 				snprintf(atcmd_output, sizeof(atcmd_output), msg_fd(fd,1478), hd->homunculus.level); // Homun reached its maximum level of '%d'
 				clif->message(fd, atcmd_output);
 				return true;
@@ -7362,11 +7362,18 @@ ACMD(mutearea) {
 ACMD(rates)
 {
 	char buf[CHAT_SIZE_MAX];
+	int base_exp_rate_vip = 0, job_exp_rate_vip = 0;
 
 	memset(buf, '\0', sizeof(buf));
+	
+	// Adição de rates VIP.
+	if(enable_system_vip && pc_isvip(sd)) {
+		base_exp_rate_vip += extra_exp_vip_base;
+		job_exp_rate_vip += extra_exp_vip_job;
+	}	
 
 	safesnprintf(buf, CHAT_SIZE_MAX, msg_fd(fd,1298), // Experience rates: Base %.2fx / Job %.2fx
-			 battle_config.base_exp_rate/100., battle_config.job_exp_rate/100.);
+			 (battle_config.base_exp_rate + base_exp_rate_vip) / 100., (battle_config.job_exp_rate + job_exp_rate_vip) / 100.);
 	clif->message(fd, buf);
 	safesnprintf(buf, CHAT_SIZE_MAX, msg_fd(fd,1299), // Normal Drop Rates: Common %.2fx / Healing %.2fx / Usable %.2fx / Equipment %.2fx / Card %.2fx
 			 battle_config.item_rate_common/100., battle_config.item_rate_heal/100., battle_config.item_rate_use/100., battle_config.item_rate_equip/100., battle_config.item_rate_card/100.);
@@ -7865,7 +7872,7 @@ ACMD(cash)
 				// If this option is set, the message is already sent by pc function
 				if( !battle_config.cashshop_show_points ){
 					sprintf(output, msg_fd(fd,505), ret, sd->cashPoints);
-					clif_disp_onlyself(sd, output, strlen(output));
+					clif_disp_onlyself(sd, output);
 					clif->message(fd, output);
 				}
 			} else
@@ -7873,7 +7880,7 @@ ACMD(cash)
 		} else {
 			if( (ret=pc->paycash(sd, -value, 0)) >= 0){
 			    sprintf(output, msg_fd(fd,410), ret, sd->cashPoints);
-				clif_disp_onlyself(sd, output, strlen(output));
+				clif_disp_onlyself(sd, output);
 				clif->message(fd, output);
 			} else
 				clif->message(fd, msg_fd(fd,41)); // Unable to decrease the number/value.
@@ -7884,7 +7891,7 @@ ACMD(cash)
 				// If this option is set, the message is already sent by pc function
 				if( !battle_config.cashshop_show_points ){
 					sprintf(output, msg_fd(fd,506), ret, sd->kafraPoints);
-					clif_disp_onlyself(sd, output, strlen(output));
+					clif_disp_onlyself(sd, output);
 					clif->message(fd, output);
 				}
 			} else
@@ -7892,7 +7899,7 @@ ACMD(cash)
 		} else {
 			if( (ret=pc->paycash(sd, -value, -value)) >= 0){
 			    sprintf(output, msg_fd(fd,411), ret, sd->kafraPoints);
-				clif_disp_onlyself(sd, output, strlen(output));
+				clif_disp_onlyself(sd, output);
 				clif->message(fd, output);
 			} else
 				clif->message(fd, msg_fd(fd,41)); // Unable to decrease the number/value.
@@ -7987,7 +7994,7 @@ ACMD(request)
 
 	safesnprintf(atcmd_output, sizeof(atcmd_output), msg_fd(fd,278), message); // (@request): %s
 	intif->wis_message_to_gm(sd->status.name, PC_PERM_RECEIVE_REQUESTS, atcmd_output);
-	clif_disp_onlyself(sd, atcmd_output, strlen(atcmd_output));
+	clif_disp_onlyself(sd, atcmd_output);
 	clif->message(sd->fd,msg_fd(fd,279)); // @request sent.
 	return true;
 }

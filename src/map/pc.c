@@ -21,6 +21,7 @@
 #define BRATHENA_CORE
 
 #include "config/core.h" // DBPATH, GP_BOUND_ITEMS, MAX_SPIRITBALL, RENEWAL, RENEWAL_ASPD, RENEWAL_CAST, RENEWAL_DROP, RENEWAL_EXP, SECURE_NPCTIMEOUT
+#include "config/brathena.h"
 #include "pc.h"
 
 #include "map/atcommand.h" // get_atcommand_level()
@@ -1353,6 +1354,9 @@ bool pc_authok(struct map_session_data *sd, int login_id2, time_t expiration_tim
 		clif->changemap(sd,sd->bl.m,sd->bl.x,sd->bl.y);
 	}
 
+	if(show_message_exp)
+		clif->personal_information(sd);
+	
 	/**
 	 * Check if player have any cool downs on
 	 **/
@@ -1375,6 +1379,10 @@ bool pc_authok(struct map_session_data *sd, int login_id2, time_t expiration_tim
 	// [CarlosHenrq] Segurança para NPCs do tipo trader#NTS_CUSTOM
 	sd->trader.ok = false;
 	sd->trader.price = sd->trader.points = 0;
+
+	/* [Shiraz] */
+	if(enable_system_vip)
+		sd->vip_timer = timer->add(timer->gettick()+1000, pc->check_time_vip, sd->bl.id, 0);
 
 	// Request all registries (auth is considered completed whence they arrive)
 	intif->request_registry(sd,7);
@@ -1953,6 +1961,7 @@ int pc_updateweightstatus(struct map_session_data *sd)
 }
 
 int pc_disguise(struct map_session_data *sd, int class_) {
+	nullpo_ret(sd);
 	if (class_ == -1 && sd->disguise == -1)
 		return 0;
 	if (class_ >= 0 && sd->disguise == class_)
@@ -1964,9 +1973,9 @@ int pc_disguise(struct map_session_data *sd, int class_) {
 	}
 
 	if (sd->bl.prev != NULL) {
-		if( class_ == -1 && sd->disguise == sd->status.class_ ) {
+		if (class_ == -1 && sd->disguise == sd->status.class_) {
 			clif->clearunit_single(-sd->bl.id,CLR_OUTSIGHT,sd->fd);
-		} else if ( class_ != sd->status.class_ ) {
+		} else if (class_ != sd->status.class_) {
 			pc_stop_walking(sd, STOPWALKING_FLAG_NONE);
 			clif->clearunit_area(&sd->bl, CLR_OUTSIGHT);
 		}
@@ -1975,14 +1984,15 @@ int pc_disguise(struct map_session_data *sd, int class_) {
 	if (class_ == -1) {
 		sd->disguise = -1;
 		class_ = sd->status.class_;
-	} else
+	} else {
 		sd->disguise = class_;
+	}
 
 	status->set_viewdata(&sd->bl, class_);
 	clif->changeoption(&sd->bl);
 	// We need to update the client so it knows that a costume is being used
 	if( sd->sc.option&OPTION_COSTUME ) {
-		clif->changelook(&sd->bl,LOOK_BASE,sd->vd.class_);
+		clif->changelook(&sd->bl, LOOK_BASE, sd->vd.class_);
 		clif->changelook(&sd->bl,LOOK_WEAPON,0);
 		clif->changelook(&sd->bl,LOOK_SHIELD,0);
 		clif->changelook(&sd->bl,LOOK_CLOTHES_COLOR,sd->vd.cloth_color);
@@ -4396,7 +4406,7 @@ int pc_payzeny(struct map_session_data *sd,int zeny, char * type, struct map_ses
 	if( zeny > 0 && sd->state.showzeny ) {
 		char output[255];
 		sprintf(output, "Removido(s) %dz.", zeny);
-		clif_disp_onlyself(sd,output,strlen(output));
+		clif_disp_onlyself(sd,output);
 	}
 
 	return 0;
@@ -4438,7 +4448,7 @@ int pc_paycash(struct map_session_data *sd, int price, int points)
 	{
 		char output[128];
 		sprintf(output, msg_sd(sd,504), points, cash, sd->kafraPoints, sd->cashPoints);
-		clif_disp_onlyself(sd, output, strlen(output));
+		clif_disp_onlyself(sd, output);
 	}
 	return cash+points;
 }
@@ -4463,7 +4473,7 @@ int pc_getcash(struct map_session_data *sd, int cash, int points)
 		if( battle_config.cashshop_show_points )
 		{
 			sprintf(output, msg_sd(sd,505), cash, sd->cashPoints);
-			clif_disp_onlyself(sd, output, strlen(output));
+			clif_disp_onlyself(sd, output);
 		}
 		return cash;
 	}
@@ -4486,7 +4496,7 @@ int pc_getcash(struct map_session_data *sd, int cash, int points)
 		if( battle_config.cashshop_show_points )
 		{
 			sprintf(output, msg_sd(sd,506), points, sd->kafraPoints);
-			clif_disp_onlyself(sd, output, strlen(output));
+			clif_disp_onlyself(sd, output);
 		}
 		return points;
 	}
@@ -4523,7 +4533,7 @@ int pc_getzeny(struct map_session_data *sd,int zeny, char * type, struct map_ses
 	if( zeny > 0 && sd->state.showzeny ) {
 		char output[255];
 		sprintf(output, "Recebeu %dz.", zeny);
-		clif_disp_onlyself(sd,output,strlen(output));
+		clif_disp_onlyself(sd,output);
 	}
 
 	return 0;
@@ -4731,7 +4741,8 @@ int pc_dropitem(struct map_session_data *sd,int n,int amount)
 		return 0;
 	}
 		
-	if( map->list[sd->bl.m].flag.nodrop ) {
+	if( map->list[sd->bl.m].flag.nodrop
+		|| battle_config.nodrop_in_town && map->list[sd->bl.m].flag.town ) { // Configuração para impedir drop de itens dentro de mapas com o flag 'town'. [CarlosHenrq]
 		clif->message (sd->fd, msg_sd(sd,271));
 		return 0; //Can't drop items in nodrop mapflag maps.
 	}
@@ -5465,6 +5476,8 @@ int pc_steal_item(struct map_session_data *sd,struct block_list *bl, uint16 skil
 	tmp_item.nameid = itemid;
 	tmp_item.amount = 1;
 	tmp_item.identify = itemdb->isidentified2(data);
+	if(mob_drop_identified)
+		tmp_item.identify = 1;	
 	flag = pc->additem(sd,&tmp_item,1);
 
 	//TODO: Should we disable stealing when the item you stole couldn't be added to your inventory? Perhaps players will figure out a way to exploit this behaviour otherwise?
@@ -5484,7 +5497,7 @@ int pc_steal_item(struct map_session_data *sd,struct block_list *bl, uint16 skil
 		char message[128];
 		sprintf (message, msg_txt(542), sd->status.name, md->db->jname, data->jname, (float)md->db->dropitem[i].p / 100);
 		//MSG: "'%s' stole %s's %s (chance: %0.02f%%)"
-		intif->broadcast(message, strlen(message)+1, BC_DEFAULT);
+		intif->broadcast(message, (int)strlen(message)+1, BC_DEFAULT);
 	}
 	return 1;
 }
@@ -5539,7 +5552,7 @@ int pc_setpos(struct map_session_data* sd, unsigned short map_index, int x, int 
 		return 1;
 	}
 
-	if( pc_isdead(sd) ) { //Revive dead people before warping them
+	if( pc_isdead(sd) && warp_no_ress) { //Revive dead people before warping them
 		pc->setstand(sd);
 		pc->setrestartvalue(sd,1);
 	}
@@ -6762,7 +6775,7 @@ int pc_checkjoblevelup(struct map_session_data *sd)
  * Alters EXP based on self bonuses that do not get shared with the party
  **/
 void pc_calcexp(struct map_session_data *sd, unsigned int *base_exp, unsigned int *job_exp, struct block_list *src) {
-	int bonus = 0;
+	int bonus = 0, vip_exp_base = 0, vip_exp_job = 0;
 	struct status_data *st = status->get_status_data(src);
 
 	if (sd->expaddrace[st->race])
@@ -6778,6 +6791,11 @@ void pc_calcexp(struct map_session_data *sd, unsigned int *base_exp, unsigned in
 	if (sd->sc.data[SC_OVERLAPEXPUP])
 		bonus += sd->sc.data[SC_OVERLAPEXPUP]->val1;
 
+	if(enable_system_vip && src && src->type == BL_MOB && pc_isvip(sd)) {
+			vip_exp_base = extra_exp_vip_base;
+			vip_exp_job = extra_exp_vip_job;
+	}
+	
 	*base_exp = (unsigned int) cap_value(*base_exp + (double)*base_exp * bonus/100., 1, UINT_MAX);
 
 	if (sd->sc.data[SC_CASH_PLUSONLYJOBEXP])
@@ -6874,8 +6892,8 @@ bool pc_gainexp(struct map_session_data *sd, struct block_list *src, unsigned in
 	if(sd->state.showexp) {
 		char output[256];
 		sprintf(output,
-			"Experi�ncia Base:%u (%.2f%%) Classe:%u (%.2f%%)",base_exp,nextbp*(float)100,job_exp,nextjp*(float)100);
-		clif_disp_onlyself(sd,output,strlen(output));
+			"Experiência Base:%u (%.2f%%) Classe:%u (%.2f%%)",base_exp,nextbp*(float)100,job_exp,nextjp*(float)100);
+		clif_disp_onlyself(sd,output);
 	}
 
 	return true;
@@ -7885,6 +7903,10 @@ int pc_dead(struct map_session_data *sd,struct block_list *src) {
 	   && !sd->sc.data[SC_BABY] && !sd->sc.data[SC_CASH_DEATHPENALTY]
 	   ) {
 		unsigned int base_penalty = 0;
+		if(enable_system_vip && pc_isvip(sd)) {
+			battle_config.death_penalty_base -= penalty_exp_vip_base;
+			battle_config.death_penalty_base  -= penalty_exp_vip_job;
+		}
 		if (battle_config.death_penalty_base > 0) {
 			switch (battle_config.death_penalty_type) {
 				case 1:
@@ -10250,6 +10272,90 @@ int pc_calc_pvprank_timer(int tid, int64 tick, int id, intptr_t data) {
 	return 0;
 }
 
+/*======================================================
+ * Verificação para remoção do vip. [Shiraz / brAthena]
+ *-----------------------------------------------------*/
+int check_time_vip(int tid, int64 tick, int id, intptr_t data)
+{
+	struct map_session_data *sd = (struct map_session_data *)map->id2sd(id);
+
+	if(!sd || sd->bl.type != BL_PC || !pc_isvip(sd))
+		return 1;
+	
+	sd->vip_timer = INVALID_TIMER;
+	
+	if(pc_readaccountreg(sd,script->add_str("#official_time_vip")) < (int)time(NULL)) {
+		clif->messagecolor_self(sd->fd, COLOR_WHITE, "Seu tempo vip expirou.");
+		
+	pc->set_group(sd, 0);
+	
+	// Remove o VIP.
+	if(SQL_ERROR == SQL->Query(map->mysql_handle, "UPDATE `login` SET `group_id`=%d WHERE `account_id`='%d'", 0, sd->status.account_id))
+		Sql_ShowDebug(map->mysql_handle);
+	}
+	
+	sd->vip_timer = timer->add(timer->gettick()+1000,pc->check_time_vip,sd->bl.id,0);	
+	return 0;
+}
+
+/*======================================================
+ * Adiciona tempo vip. [Shiraz / brAthena]
+ *-----------------------------------------------------*/
+int add_time_vip(struct map_session_data *sd, int type[4])
+{
+	int now = pc_readaccountreg(sd,script->add_str("#official_time_vip"));
+	int val = 0;
+	
+	val += type[0] * 86400;
+	val += type[1] * 3600;
+	val += type[2] * 60;
+	val += type[3];
+	
+	if((val > INT_MAX)) {
+		ShowInfo("add_time_vip: Overflow detectado. Conta ID: %d", sd->status.account_id);
+		return -1;
+	}
+	
+	if(now > (int)time(NULL))
+		pc_setaccountreg(sd, script->add_str("#official_time_vip"), now+val);
+	else
+		pc_setaccountreg(sd, script->add_str("#official_time_vip"), (int)time(NULL)+val);
+	
+	sd->vip_timer = timer->add(timer->gettick()+1000,pc->check_time_vip,sd->bl.id,0);
+	
+	pc->set_group(sd, level_vip);
+	
+	// Salva e atualiza as informações de um vip.
+	if(SQL_ERROR == SQL->Query(map->mysql_handle, "UPDATE `login` SET `group_id`=%d WHERE `account_id`='%d'", level_vip, sd->status.account_id))
+		Sql_ShowDebug(map->mysql_handle);
+	
+	pc->show_time_vip(sd);
+	
+	return 0;
+}
+
+/*======================================================
+ * Exibe tempo vip. [Shiraz / brAthena]
+ *-----------------------------------------------------*/
+void show_time_vip(struct map_session_data *sd)
+{
+	int time_s[4], val;
+	char buf[256];
+	
+	val = (unsigned int)(pc_readaccountreg(sd,script->add_str("#official_time_vip")) - (int)time(NULL));
+	
+	time_s[0] = val / 86400;
+	time_s[1] = val % 86400 / 3600;
+	time_s[2] = val % 3600 / 60;
+	time_s[3] = val % 60;
+	
+	if(time_s[0] >= 0 && time_s[1] >= 0 && time_s[2] >= 0 && time_s[3] >= 0) {
+		snprintf(buf, sizeof(buf), "Restam: %d dia(s), %d hora(s), %d minuto(s) e %d segundo(s)", time_s[0], time_s[1], time_s[2], time_s[3]);
+		clif->messagecolor_self(sd->fd,COLOR_WHITE, buf);
+	}
+	return;
+}
+
 /*==========================================
  * Checking if sd is married
  * Return:
@@ -10510,7 +10616,7 @@ int map_day_timer(int tid, int64 tick, int id, intptr_t data) {
 	map->night_flag = 0; // 0=day, 1=night [Yor]
 	map->foreachpc(pc->daynight_timer_sub);
 	safestrncpy(tmp_soutput, (data == 0) ? msg_txt(502) : msg_txt(60), sizeof(tmp_soutput)); // The day has arrived!
-	intif->broadcast(tmp_soutput, strlen(tmp_soutput) + 1, BC_DEFAULT);
+	intif->broadcast(tmp_soutput, (int)strlen(tmp_soutput) + 1, BC_DEFAULT);
 	return 0;
 }
 
@@ -10530,7 +10636,7 @@ int map_night_timer(int tid, int64 tick, int id, intptr_t data) {
 	map->night_flag = 1; // 0=day, 1=night [Yor]
 	map->foreachpc(pc->daynight_timer_sub);
 	safestrncpy(tmp_soutput, (data == 0) ? msg_txt(503) : msg_txt(59), sizeof(tmp_soutput)); // The night has fallen...
-	intif->broadcast(tmp_soutput, strlen(tmp_soutput) + 1, BC_DEFAULT);
+	intif->broadcast(tmp_soutput, (int)strlen(tmp_soutput) + 1, BC_DEFAULT);
 	return 0;
 }
 
@@ -11066,7 +11172,7 @@ bool pc_readdb_levelpenalty(char* fields[], int columns, int current) {
 
 // Bypass para exp_db [Shiraz]
 // Retorna o level correspondente ao identificador.
-// enum _max_level_ (mmo.h)
+// enum _max_level_ (brathena.h)
 /**
  * Função para retornar o nível máximo de acordo com a classe do personagem.
  *
@@ -11089,45 +11195,45 @@ static int pc_get_maxlevel(int job, int type)
 	if(type == 0)
 	{
 		if((job >= JOB_NOVICE && job <= JOB_NINJA) || (job >= JOB_BABY && job <= JOB_SUPER_BABY))
-			return battle_config.max_baselv_normal;
+			return max_baselv_normal;
 		else if(job >= JOB_NOVICE_HIGH && job <= JOB_PALADIN2)
-			return battle_config.max_baselv_trans;
+			return max_baselv_trans;
 		else if((job >= JOB_RUNE_KNIGHT && job <= JOB_MECHANIC_T2) || (job >= JOB_BABY_RUNE && job <= JOB_BABY_MECHANIC2))
-			return battle_config.max_baselv_third;
+			return max_baselv_third;
 		else if((job >= JOB_SUPER_NOVICE_E && job <= JOB_SUPER_BABY_E) || (job == JOB_KAGEROU || job == JOB_REBELLION))
-			return battle_config.max_baselv_sne_ko;
+			return max_baselv_sne_ko;
 	}
 	// 1: Nível classe
 	else if(type == 1)
 	{
 		if(job == JOB_NOVICE || job == JOB_BABY)
-			return battle_config.max_joblv_novice;
+			return max_joblv_novice;
 		else if((job >= JOB_SWORDMAN && job <= JOB_THIEF)
 				|| (job >= JOB_BABY_SWORDMAN && job <= JOB_BABY_THIEF)
 				|| job == JOB_GANGSI)
-			return battle_config.max_joblv_first;
+			return max_joblv_first;
 		else if((job >= JOB_KNIGHT && job <= JOB_CRUSADER2) || (job >= JOB_BABY_KNIGHT && job <= JOB_BABY_CRUSADER2))
-			return battle_config.max_joblv_second;
+			return max_joblv_second;
 		else if(job == JOB_NOVICE_HIGH)
-			return battle_config.max_joblv_novice_t;
+			return max_joblv_novice_t;
 		else if(job >= JOB_SWORDMAN_HIGH && job <= JOB_THIEF_HIGH)
-			return battle_config.max_joblv_first_t;
+			return max_joblv_first_t;
 		else if(job >= JOB_LORD_KNIGHT && job <= JOB_PALADIN2)
-			return battle_config.max_joblv_second_t;
+			return max_joblv_second_t;
 		else if((job >= JOB_RUNE_KNIGHT && job <= JOB_MECHANIC_T2) || (job >= JOB_BABY_RUNE && job <= JOB_BABY_MECHANIC2))
-			return battle_config.max_joblv_third;
+			return max_joblv_third;
 		else if(job == JOB_SUPER_NOVICE_E || job == JOB_SUPER_BABY_E || job == JOB_KAGEROU || job == JOB_OBORO || job == JOB_REBELLION)
-			return battle_config.max_joblv_sne_ko;
+			return max_joblv_sne_ko;
 		else if(job == JOB_GUNSLINGER || job == JOB_NINJA)
-			return battle_config.max_joblv_guns_ninja;
+			return max_joblv_guns_ninja;
 		else if(job == JOB_TAEKWON)
-			return battle_config.max_joblv_taekwon;
+			return max_joblv_taekwon;
 		else if(job == JOB_STAR_GLADIATOR || job == JOB_STAR_GLADIATOR2)
-			return battle_config.max_joblv_taekwon_master;
+			return max_joblv_taekwon_master;
 		else if(job == JOB_SOUL_LINKER)
-			return battle_config.max_joblv_soullinker;
+			return max_joblv_soullinker;
 		else if(job == JOB_SUPER_NOVICE || job == JOB_SUPER_BABY)
-			return battle_config.max_joblv_sn_snb;
+			return max_joblv_sn_snb;
 	}
 
 	ShowError("Nivel maximo indefinido para a classe %d\n", job);
@@ -11383,7 +11489,7 @@ void pc_scdata_received(struct map_session_data *sd) {
 		time_t exp_time = sd->expiration_time;
 		char tmpstr[1024];
 		strftime(tmpstr, sizeof(tmpstr) - 1, msg_sd(sd,501), localtime(&exp_time)); // "Your account time limit is: %d-%m-%Y %H:%M:%S."
-		clif->wis_message(sd->fd, map->wisp_server_name, tmpstr, strlen(tmpstr)+1);
+		clif->wis_message(sd->fd, map->wisp_server_name, tmpstr, (int)strlen(tmpstr));
 
 		pc->expire_check(sd);
 	}
@@ -12201,4 +12307,8 @@ void pc_defaults(void) {
 	// Configuração para bloquear jogadores de abrir chat/loja próximos uns aos outros. [CarlosHenrq]
 	pc->vending_chat_count_near = pc_vending_chat_count_near;
 	pc->too_many_vending_chat_near = pc_too_many_vending_chat_near;
+	
+	pc->check_time_vip = check_time_vip;
+	pc->add_time_vip = add_time_vip;
+	pc->show_time_vip = show_time_vip;
 }

@@ -970,8 +970,8 @@ int mapif_wis_message(struct WisData *wd)
 	//if (wd->len > 2047-56) wd->len = 2047-56; //Force it to fit to avoid crashes. [Skotlex]
 	if (wd->len < 0)
 		wd->len = 0;
-	if (wd->len >= sizeof(wd->msg) - 1)
-		wd->len = sizeof(wd->msg) - 1;
+	if (wd->len >= (int)sizeof(wd->msg) - 1)
+		wd->len = (int)sizeof(wd->msg) - 1;
 
 	WBUFW(buf, 0) = 0x3801;
 	WBUFW(buf, 2) = 56 +wd->len;

@@ -59,7 +59,7 @@ struct view_data;
 #define packet_len(cmd) packet_db[cmd].len
 #define P2PTR(fd) RFIFO2PTR(fd)
 #define clif_menuskill_clear(sd) ((sd)->menuskill_id = (sd)->menuskill_val = (sd)->menuskill_val2 = 0)
-#define clif_disp_onlyself(sd,mes,len) clif->disp_message( &(sd)->bl, (mes), (len), SELF )
+#define clif_disp_onlyself(sd,mes) clif->disp_message( &(sd)->bl, (mes), SELF )
 #define MAX_ROULETTE_LEVEL 7 /** client-defined value **/
 #define MAX_ROULETTE_COLUMNS 9 /** client-defined value **/
 #define RGB2BGR(c) (((c) & 0x0000FF) << 16 | ((c) & 0x00FF00) | ((c) & 0xFF0000) >> 16)
@@ -835,29 +835,29 @@ struct clif_interface {
 	void (*snap) ( struct block_list *bl, short x, short y );
 	void (*weather_check) (struct map_session_data *sd);
 	/* sound effects client-side */
-	void (*playBGM) (struct map_session_data* sd, const char* name);
-	void (*soundeffect) (struct map_session_data* sd, struct block_list* bl, const char* name, int type);
-	void (*soundeffectall) (struct block_list* bl, const char* name, int type, enum send_target coverage);
+	void (*playBGM) (struct map_session_data *sd, const char *name);
+	void (*soundeffect) (struct map_session_data *sd, struct block_list *bl, const char *name, int type);
+	void (*soundeffectall) (struct block_list *bl, const char *name, int type, enum send_target coverage);
 	/* chat/message-related */
-	void (*GlobalMessage) (struct block_list* bl, const char* message);
-	void (*createchat) (struct map_session_data* sd, int flag);
-	void (*dispchat) (struct chat_data* cd, int fd);
+	void (*GlobalMessage) (struct block_list *bl, const char *message);
+	void (*createchat) (struct map_session_data *sd, int flag);
+	void (*dispchat) (struct chat_data *cd, int fd);
 	void (*joinchatfail) (struct map_session_data *sd,int flag);
-	void (*joinchatok) (struct map_session_data *sd,struct chat_data* cd);
-	void (*addchat) (struct chat_data* cd,struct map_session_data *sd);
-	void (*changechatowner) (struct chat_data* cd, struct map_session_data* sd);
+	void (*joinchatok) (struct map_session_data *sd,struct chat_data *cd);
+	void (*addchat) (struct chat_data *cd,struct map_session_data *sd);
+	void (*changechatowner) (struct chat_data *cd, struct map_session_data *sd);
 	void (*clearchat) (struct chat_data *cd,int fd);
-	void (*leavechat) (struct chat_data* cd, struct map_session_data* sd, bool flag);
-	void (*changechatstatus) (struct chat_data* cd);
-	void (*wis_message) (int fd, const char* nick, const char* mes, size_t mes_len);
+	void (*leavechat) (struct chat_data *cd, struct map_session_data *sd, bool flag);
+	void (*changechatstatus) (struct chat_data *cd);
+	void (*wis_message) (int fd, const char *nick, const char *mes, int mes_len);
 	void (*wis_end) (int fd, int flag);
-	void (*disp_message) (struct block_list* src, const char* mes, size_t len, enum send_target target);
-	void (*broadcast) (struct block_list* bl, const char* mes, size_t len, int type, enum send_target target);
-	void (*broadcast2) (struct block_list* bl, const char* mes, size_t len, unsigned int fontColor, short fontType, short fontSize, short fontAlign, short fontY, enum send_target target);
+	void (*disp_message) (struct block_list *src, const char *mes, enum send_target target);
+	void (*broadcast) (struct block_list *bl, const char *mes, int len, int type, enum send_target target);
+	void (*broadcast2) (struct block_list *bl, const char *mes, int len, unsigned int fontColor, short fontType, short fontSize, short fontAlign, short fontY, enum send_target target);
 	void (*messagecolor_self) (int fd, uint32 color, const char *msg);
-	void (*messagecolor) (struct block_list* bl, uint32 color, const char* msg);
-	void (*disp_overhead) (struct block_list *bl, const char* mes);
-	void (*msgtable) (struct map_session_data* sd, unsigned short msg_id);
+	void (*messagecolor) (struct block_list *bl, uint32 color, const char *msg);
+	void (*disp_overhead) (struct block_list *bl, const char *mes);
+	void (*msgtable) (struct map_session_data *sd, unsigned short msg_id);
 	void (*msgtable_num) (struct map_session_data *sd, unsigned short msg_id, int value);
 	void (*msgtable_skill) (struct map_session_data *sd, uint16 skill_id, int msg_id);
 	void (*message) (const int fd, const char* mes);
@@ -868,13 +868,13 @@ struct clif_interface {
 	bool (*process_whisper_message) (struct map_session_data *sd, const struct packet_whisper_message *packet, char *out_name, char *out_message, int out_messagelen);
 	void (*wisexin) (struct map_session_data *sd,int type,int flag);
 	void (*wisall) (struct map_session_data *sd,int type,int flag);
-	void (*PMIgnoreList) (struct map_session_data* sd);
-	void (*ShowScript) (struct block_list* bl, const char* message);
+	void (*PMIgnoreList) (struct map_session_data *sd);
+	void (*ShowScript) (struct block_list *bl, const char *message);
 	/* trade handling */
-	void (*traderequest) (struct map_session_data* sd, const char* name);
-	void (*tradestart) (struct map_session_data* sd, uint8 type);
-	void (*tradeadditem) (struct map_session_data* sd, struct map_session_data* tsd, int index, int amount);
-	void (*tradeitemok) (struct map_session_data* sd, int index, int fail);
+	void (*traderequest) (struct map_session_data *sd, const char *name);
+	void (*tradestart) (struct map_session_data *sd, uint8 type);
+	void (*tradeadditem) (struct map_session_data *sd, struct map_session_data *tsd, int index, int amount);
+	void (*tradeitemok) (struct map_session_data *sd, int index, int fail);
 	void (*tradedeal_lock) (struct map_session_data* sd, int fail);
 	void (*tradecancelled) (struct map_session_data* sd);
 	void (*tradecompleted) (struct map_session_data* sd, int fail);
@@ -1347,6 +1347,8 @@ struct clif_interface {
 	void(*pSelectCart) (int fd, struct map_session_data *sd);
 	
 	void (*dressing_room) (struct map_session_data *sd, int flag);
+	/* brAtehna */
+	void (*personal_information) (struct map_session_data *sd);
 };
 
 struct clif_interface *clif;
