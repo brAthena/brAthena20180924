@@ -44,7 +44,7 @@ struct loginif_interface {
 
 	// Pacotes para tratamento de mac-address. [CarlosHenrq]
 	void (*ask_mac_ban) (const char*, int);
-	void (*mac_unban) (const char*);
+	void (*ask_mac_unban) (const char*);
 };
 
 #ifdef BRATHENA_CORE
