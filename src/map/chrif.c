@@ -1645,7 +1645,7 @@ void chrif_ask_mac_unban(const char* mac_address)
 		return;
 	}
 
-	// Envia o pacote ao char-server pedindo para banir o mac-address
+	// Envia o pacote ao char-server pedindo para desbanir o mac-address
 	WFIFOHEAD(chrif->fd, 20);
 	WFIFOW(chrif->fd,0)		= 0x27f1;
 	memcpy(WFIFOP(chrif->fd,2), mac_address, MAC_LENGTH);

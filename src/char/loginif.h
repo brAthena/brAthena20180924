@@ -41,6 +41,10 @@ struct loginif_interface {
 	void (*auth) (int fd, struct char_session_data* sd, uint32 ipl);
 	void (*send_users_count) (int users);
 	void (*connect_to_server) (void);
+
+	// Pacotes para tratamento de mac-address. [CarlosHenrq]
+	void (*ask_mac_ban) (const char*, int);
+	void (*mac_unban) (const char*);
 };
 
 #ifdef BRATHENA_CORE

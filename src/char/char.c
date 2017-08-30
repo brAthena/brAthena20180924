@@ -2665,6 +2665,16 @@ void char_parse_fromlogin_accinfo2_ok(int fd)
 	RFIFOSKIP(fd,183);
 }
 
+/**
+ * Faz o tratamento da resposta ao pedido de ban de mac-address. [CarlosHenrq]
+ *
+ * @param fd
+ */
+void char_parse_fromlogin_macresponse(int fd)
+{
+	
+}
+
 int char_parse_fromlogin(int fd) {
 	// only process data from the login-server
 	if( fd != chr->login_fd ) {
@@ -2778,6 +2788,14 @@ int char_parse_fromlogin(int fd) {
 				chr->parse_fromlogin_accinfo2_ok(fd);
 			break;
 
+			// Pacotes para tratamento de mac-address. [CarlosHenrq]
+			case 0x27f2:
+				if (RFIFOREST(fd) < 24)
+					return 0;
+				
+				chr->parse_fromlogin_macresponse(fd);
+				break;
+			
 			default:
 				ShowError("Pacote 0x%04x desconhecido. Enviado do servidor de login, desconectando.\n", command);
 				sockt->eof(fd);
@@ -3966,6 +3984,44 @@ void char_parse_frommap_scdata_delete(int fd)
 	RFIFOSKIP(fd, 12);
 }
 
+/**
+ * Envia ao login o pedido de banimento do mac-address [CarlosHenrq]
+ *
+ * @param fd
+ */
+void char_parse_frommap_macban(int fd)
+{
+	char mac_address[MAC_LENGTH];
+	int minute;
+
+	// Faz a leitura dos dados recebidos pelo packet
+	safestrncpy(mac_address, (const char*)RFIFOP(fd, 2), MAC_LENGTH);
+	minute = RFIFOL(fd, 20);
+
+	RFIFOSKIP(fd, 24);
+
+	// Solicita ao login-server o banimento do mac-address recebido.
+	loginif->ask_mac_ban(mac_address, minute);
+}
+
+/**
+ * Envia ao login o pedido de desbanimento do mac-address [CarlosHenrq]
+ *
+ * @param fd
+ */
+void char_parse_frommap_macunban(int fd)
+{
+	char mac_address[MAC_LENGTH];
+
+	// Faz a leitura dos dados recebidos pelo packet
+	safestrncpy(mac_address, (const char*)RFIFOP(fd, 2), MAC_LENGTH);
+
+	RFIFOSKIP(fd, 20);
+
+	// Solicita ao login-server o desbanimento do mac-address recebido.
+	loginif->ask_mac_unban(mac_address);
+}
+
 int char_parse_frommap(int fd)
 {
 	int id;
@@ -4175,6 +4231,16 @@ int char_parse_frommap(int fd)
 					chr->parse_frommap_scdata_delete(fd);
 				}
 				break;
+
+			// Pedidos de banimento relacionados ao mac-address de jogadores. [CarlosHenrq]
+			case 0x27f0:
+				if(RFIFOREST(fd) < 24)
+					return 0;
+				
+				chr->parse_frommap_macban(fd);
+				break;
+			// case 0x27f1:
+				// break;
 
 			default:
 			{
@@ -6269,4 +6335,9 @@ void char_defaults(void)
 	chr->sql_config_read = char_sql_config_read;
 	chr->config_dispatch = char_config_dispatch;
 	chr->config_read = char_config_read;
+
+	// Pacotes para tratamento de mac-address. [CarlosHenrq]
+	chr->parse_frommap_macban = char_parse_frommap_macban;
+	chr->parse_frommap_macunban = char_parse_frommap_macunban;
+	chr->parse_fromlogin_macresponse = char_parse_fromlogin_macresponse;
 }

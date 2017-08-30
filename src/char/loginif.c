@@ -186,6 +186,27 @@ void loginif_connect_to_server(void)
 	WFIFOSET(chr->login_fd,86);
 }
 
+/**
+ * Envia ao login o pedido de banimento do mac-address [CarlosHenrq]
+ *
+ * @param mac_address
+ * @param minute
+ */
+void loginif_ask_mac_ban(const char* mac_address, int minute)
+{
+	// @Todo: Envio dos pacotes ao servidor de login
+}
+
+/**
+ * Envia ao login o pedido de banimento do mac-address [CarlosHenrq]
+ *
+ * @param mac_address
+ */
+void loginif_ask_mac_unban(const char* mac_address)
+{
+	// @Todo: Envio dos pacotes ao servidor de login
+}
+
 void loginif_defaults(void) {
 	loginif = &loginif_s;
 
@@ -202,4 +223,8 @@ void loginif_defaults(void) {
 	loginif->auth = loginif_auth;
 	loginif->send_users_count = loginif_send_users_count;
 	loginif->connect_to_server = loginif_connect_to_server;
+
+	// Pacotes para tratamento de mac-address. [CarlosHenrq]
+	loginif->ask_mac_ban = loginif_ask_mac_ban;
+	loginif->ask_mac_unban = loginif_ask_mac_unban;
 }
