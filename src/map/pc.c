@@ -4217,6 +4217,8 @@ bool pc_can_insert_card_into(struct map_session_data* sd, int idx_card, int idx_
 		return false; // only weapons and armor are allowed
 	if (sd->status.inventory[idx_equip].identify == 0)
 		return false; // target must be identified
+	if (sd->status.inventory[idx_equip].expire_time > 0)
+		return false;	// Impede que uma carta seja equipa em um item de aluguel	
 	if (itemdb_isspecial(sd->status.inventory[idx_equip].card[0]))
 		return false; // card slots reserved for other purposes
 	if (sd->status.inventory[idx_equip].equip != 0)
