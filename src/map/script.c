@@ -18762,6 +18762,61 @@ BUILDIN(getcharmac)
 	return true;
 }
 
+/*==========================================
+ * Obtem a quantidade de monstros vivos em um mapa. [ Orce ]
+ * os paramtros podem ser:
+ *
+ * - Retorna a quantidade de monstros de todo o servidor
+ * getmobalive(<nod_id>);
+ * - Retorna a quantidade de monstros de uma mapa.
+ * getmobalive(<mob_id>,<"mapname">);
+ *------------------------------------------*/
+BUILDIN(getmobalive)
+{
+	int mob_id;
+	struct s_mapiterator *it;
+	const struct mob_data *md = NULL;
+	int number = 0;
+	int m;
+	
+	mob_id = script_getnum(st,2);
+
+	if (!mob->db_checkid(mob_id)) {
+		ShowError("buildin_getmobalive: ID %i inexistente.\n", mob_id);
+		return false;
+	}
+		
+	
+	if(script_hasdata(st,3))
+	{
+		const char *mapname = script_getstr(st,3);
+		
+		if ((m = map->mapname2mapid(mapname)) < 0) {
+			ShowError("buildin_getmobalive: Mapa %s inexistente.\n", mapname);
+			script_pushnil(st);
+			return false;
+		}
+	}
+	
+	it = mapit_geteachmob();
+	for (md = BL_UCCAST(BL_MOB, mapit->first(it)); mapit->exists(it); md = BL_UCCAST(BL_MOB, mapit->next(it))) {
+	
+	if(script_hasdata(st,3))
+	{
+		if (md->bl.m != m)
+			continue;
+	}
+		if( mob_id != -1 && md->class_ != mob_id )
+			continue;
+		
+		++number;
+	}
+	
+	script_pushint(st, number);
+	mapit->free(it);	
+	return true;
+}
+
 /**
  * getcharip(<account ID>/<character ID>/<character name>)
  **/
@@ -21728,6 +21783,7 @@ void script_parse_builtin(void) {
 		 * brAthena
 		 */
 		BUILDIN_DEF(getcharmac, "?"),
+		BUILDIN_DEF(getmobalive,"i?"),
 
 		BUILDIN_DEF(is_function,"s"),
 		BUILDIN_DEF(freeloop,"i"),
