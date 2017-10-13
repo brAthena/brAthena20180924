@@ -12515,7 +12515,7 @@ BUILDIN(successremovecards)
 				clif->additem(sd,0,0,flag);
 				map->addflooritem(&sd->bl, &item_tmp, 1, sd->bl.m, sd->bl.x, sd->bl.y, 0, 0, 0, 0);
 			}
-			else logs->card(sd, c, "Rem", &sd->status.inventory[i]);
+			else logs->card(sd, c, "Removed", &sd->status.inventory[i]);
 		}
 	}
 
@@ -12623,7 +12623,7 @@ BUILDIN(failedremovecards)
 				clif->additem(sd,0,0,flag);
 				map->addflooritem(&sd->bl, &item_tmp, 1, sd->bl.m, sd->bl.x, sd->bl.y, 0, 0, 0, 0);
 			}
-			else logs->item_getrem(1, sd, &item_tmp, 1, "C_Rem");
+			else logs->item_getrem(1, sd, &item_tmp, 1, "Removed_Fail");
 		}
 		clif->misceffect(&sd->bl,2);
 	}
