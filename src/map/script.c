@@ -18777,7 +18777,7 @@ BUILDIN(getmobalive)
 	struct s_mapiterator *it;
 	const struct mob_data *md = NULL;
 	int number = 0;
-	int m;
+	int m = 0;
 	
 	mob_id = script_getnum(st,2);
 
