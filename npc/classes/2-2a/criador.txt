@@ -8,130 +8,131 @@
 //   |                                                        |
 //   |                    brAthena Script                     |
 //   |--------------------------------------------------------|
-//   | Nome do Script:  criador.txt                           |
+//   | Nome do Script: Quest da Classe Criador                |
 //   |--------------------------------------------------------|
 //   | Criado por: eA/rA/Herc/brA Dev. Team                   |
 //   |--------------------------------------------------------|
 //   | Versões eA/rA/Herc/brA: 1.5/1.5/1.5/1.0                |
 //   |--------------------------------------------------------|
-//   | Descrição: Quest da classe Criador.                    |
+//   | Descrição: Mudança de Classe para Criador.             |
 //   |--------------------------------------------------------|
 //   | Changelog:                                             |
-//   | 1.0 Cabeçalho brAthena [Axl]                           |
+//   | 1.0 Criado Cabeçalho [Megasantos]                      |
+//   | 1.1 Tradução PT-BR [Haseo]                             |
 //   |--------------------------------------------------------|
 //   | - Anotações                                            |
 //   \________________________________________________________/
 
-valkyrie,53,50,3	script	Biochemist#Valkyrie	2_M_DYEINGER,{
+valkyrie,53,50,3	script	Criador#Valquíria	2_M_DYEINGER,{
 	if (ADVJOB == 0 && Upper != 1) {
 		if (rand(1,10) > 4) {
-			mes "[Biochemist]";
-			mes "Congratulations.";
-			mes "Honor to the warriors!";
+			mes "[Criador]";
+			mes "Parabéns.";
+			mes "Honra aos guerreiros!";
 			close;
 		}
-		mes "[Biochemist]";
-		mes "It's strange that";
-		mes "someone like me is here.";
-		mes "But even someone skilled";
-		mes "in the ways of science";
-		mes "can manage to be a hero.";
+		mes "[Criador]";
+		mes "É estranho que";
+		mes "alguém como eu esteja aqui.";
+		mes "Mas mesmo alguém hábil";
+		mes "em ciência poderia";
+		mes "torna-se um herói.";
 		next;
-		mes "[Biochemist]";
-		mes "In this instance,";
-		mes "it's not necessarily";
-		mes "the means I've used, but";
-		mes "the ends for which I've";
-		mes "fought that earned me";
-		mes "a place in Valhalla...";
+		mes "[Criador]";
+		mes "Neste exemplo,";
+		mes "não são nescessariamente";
+		mes "os meios que eu usei, mas";
+		mes "os fins pelos quais eu lutei";
+		mes "que eu ganhei um";
+		mes "lugar em Valhalla...";
 		close;
 	} else if (ADVJOB == Job_Creator && Class == Job_Merchant_High && JobLevel > 39) {
-		mes "[Biochemist]";
-		mes "Yes...";
-		mes "It's about time.";
-		mes "We need more geniuses";
-		mes "like you on Rune-Midgard.";
+		mes "[Criador]";
+		mes "Sim...";
+		mes "É sobre o tempo.";
+		mes "Nós precisamos de mais gênios";
+		mes "como você em Rune-Midgard.";
 		next;
-		mes "[Biochemist]";
-		mes "Would you like to";
-		mes "become a Biochemist?";
+		mes "[Criador]";
+		mes "Você gostaria de";
+		mes "tornar-se um Criador?";
 		next;
-		if (select("No.:Yes.") == 1) {
-			mes "[Biochemist]";
-			mes "When you're ready,";
-			mes "feel free to come back.";
-			mes "Honor to the warriors!";
+		if (select("Não.:Sim.") == 1) {
+			mes "[Criador]";
+			mes "Quando estiver pronto,";
+			mes "sinta-se livre para voltar.";
+			mes "Honra aos guerreiros!";
 			close;
 		}
 		if (SkillPoint) {
-			mes "[Biochemist]";
-			mes "It is still possible for you to learn more skills. Please use";
-			mes "all of your remaining Skill Points before returning to me.";
+			mes "[Criador]";
+			mes "Você ainda tem pontos de habilidades. Por favor,";
+			mes "use todos os seus pontos de habilidade restantes, e depois volte aqui.";
 			close;
 		}
 		jobchange Job_Creator;
 		ADVJOB = 0;
-		mes "[Biochemist]";
-		mes "Congratulations!";
-		mes "As a Biochemist,";
-		mes "I hope you use your";
-		mes "vast knowledge for the";
-		mes "right purposes.";
+		mes "[Criador]";
+		mes "Parabéns!";
+		mes "Como Criador,";
+		mes "Eu espero que você use seu";
+		mes "vasto conhecimento para";
+		mes "as finalidades certas.";
 		close;
-	} else if (Class == Job_Creator && bioeth == 13 && getskilllv("AM_BIOETHICS") == 0) {
-		mes "[Biochemist]";
-		mes "Ah, have you come to";
-		mes "retrieve the memories";
-		mes "lost to you? Yes, you";
-		mes "must be here for the";
-		mes "secrets of life that";
-		mes "were once yours...";
-		next;
-		if (select("Yes:No") == 1) {
-			mes "[Biochemist]";
-			mes "Close your eyes and";
-			mes "put your mind at rest.";
-			mes "We will return to your";
-			mes "past to recollect the";
-			mes "fragments of your lost";
-			mes "memories.";
+	} else if (Class == Job_Creator && MISC_QUEST & 64 && getskilllv("AM_BIOETHICS") == 0) {
+			mes "[Criador]";
+			mes "Ah, você veio recuperar";
+			mes "as memórias";
+			mes "que você perdeu? Sim, você";
+			mes "deve estar aqui";
+			mes "pelos segredos da vida";
+			mes "que um dia foram seus...";
 			next;
-			mes "[Biochemist]";
-			mes "When you open your eyes,";
-			mes "you will clearly remember";
-			mes "the secret of life. You will";
-			mes "also remember the weight of";
-			mes "responsibility in using these";
-			mes "secrets for the right ends...";
-			next;
+			if (select("Sim:Não") == 1) {
+				mes "[Criador]";
+				mes "Feche seus olhos e";
+				mes "Ponha sua mente em repouso.";
+				mes "Nós retornaremos ao seu";
+				mes "passado para recordar os";
+				mes "fragmentos perdidos";
+				mes "de sua memória.";
+				next;
+				mes "[Criador]";
+				mes "Quando você abrir seus olhos,";
+				mes "você recordará claramente";
+				mes "o segredo da vida. Você";
+				mes "igualmente recordará o peso";
+				mes "da responsabilidade em usar estes";
+				mes "segredos para os seus devidos fins...";
+				next;
 			skill "AM_BIOETHICS",1,0;
-			mes "[Biochemist]";
-			mes "Open your eyes...";
-			mes "Now that you have";
-			mes "remembered how to";
-			mes "create artificial life, I only";
-			mes "ask that you treat all of your";
-			mes "creations with respect.";
+				mes "[Criador]";
+				mes "Abra seus olhos…";
+				mes "Agora que você recordou";
+				mes "como criar";
+				mes "a vida artificial, eu peço";
+				mes "somente que você trate todas as suas";
+				mes "criações com respeito.";
+				close;
+			}
+			mes "[Criador]";
+			mes "Se você deseja recuperar";
+			mes "suas memórias";
+			mes "perdidas, por favor";
+			mes "volte aqui depois.";
+			mes "O segredo da criação da vida";
+			mes "não é nenhuma brincadeira...";
 			close;
 		}
-		mes "[Biochemist]";
-		mes "If you wish to";
-		mes "retrieve your lost";
-		mes "memories, please";
-		mes "come back to me.";
-		mes "The secret to creating";
-		mes "life is no trifling thing...";
+		mes "[Criador]";
+		mes "Bem-vindo";
+		mes "a Valhalla,";
+		mes "o Salão da Honra.";
+		next;
+		mes "[Criador]";
+		mes "Por favor,";
+		mes "sinta-se confortável";
+		mes "enquanto estiver aqui.";
+		mes "Honra aos guerreiros!";
 		close;
-	}
-	mes "[Biochemist]";
-	mes "Welcome";
-	mes "to Valhalla,";
-	mes "the Hall of Honor.";
-	next;
-	mes "[Biochemist]";
-	mes "Please make";
-	mes "yourself comfortable";
-	mes "while you are here.";
-	mes "Honor to the warriors!";
-	close;
 }

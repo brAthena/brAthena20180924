@@ -8,84 +8,84 @@
 //   |                                                        |
 //   |                    brAthena Script                     |
 //   |--------------------------------------------------------|
-//   | Nome do Script:  lorde.txt                             |
+//   | Nome do Script: Quest para se tornar Lorde             |
 //   |--------------------------------------------------------|
-//   | Criado por: eA/rA/Herc/brA Dev. Team                   |
+//   | Criado por: eA/rA/brA Dev. Team                        |
 //   |--------------------------------------------------------|
-//   | Versões eA/rA/Herc/brA: 1.3/1.3/1.3/1.0                |
+//   | Versões eA/rA/brA: 1.3/1.3/1.1                         |
 //   |--------------------------------------------------------|
-//   | Descrição: Quest da classe Lorde.                      |
+//   | Descrição: Mudança de Classe para Lorde.               |
 //   |--------------------------------------------------------|
 //   | Changelog:                                             |
-//   | 1.0 Cabeçalho brAthena [Axl]                           |
+//   | 1.0 Criado Cabeçalho [Megasantos]                      |
+//   | 1.1 Tradução PT-BR [Holy]                              |
 //   |--------------------------------------------------------|
 //   | - Anotações                                            |
 //   \________________________________________________________/
 
-valkyrie,44,39,5	script	Lord Knight#Valkyrie	1_M_KNIGHTMASTER,{
+valkyrie,44,39,5	script	Lorde#Valquíria	1_M_KNIGHTMASTER,{
 	if (ADVJOB == 0 || Upper != 1) {
 		.@karma_d = rand(1,10);
 		if (.@karma_d > 4) {
-			mes "[Lord Knight]";
-			mes "Congratulations.";
-			mes "Honor to the warriors!";
+			mes "[Lorde]";
+			mes "Parabéns.";
+			mes "Honra aos guerreiros!";
 			close;
 		}
-		mes "[Lord Knight]";
-		mes "We Knights have an";
-		mes "awesome responsibility...";
-		mes "To serve and protect.";
+		mes "[Lorde]";
+		mes "Nós Cavaleiros temos uma";
+		mes "enorme responsabilidade...";
+		mes "Para servir e proteger.";
 		next;
-		mes "[Lord Knight]";
-		mes "Even at the cost";
-		mes "of our own lives,";
-		mes "we must safeguard the";
-		mes "well being of our comrades.";
+		mes "[Lorde]";
+		mes "Mesmo à custa";
+		mes "de nossas próprias vidas,";
+		mes "temos de preservar o";
+		mes "bem-estar de nossos companheiros.";
 		close;
-	}
-	else if (ADVJOB == Job_Lord_Knight && Class == Job_Swordman_High && JobLevel > 39) {
-		mes "[Lord Knight]";
-		mes "Your time has come!";
-		mes "The world still needs you.";
-		mes "Please continue your life";
-		mes "as a hero with a new appearance.";
+	} else if (ADVJOB == Job_Lord_Knight && Class == Job_Swordman_High && JobLevel > 39) {
+		mes "[Lorde]";
+		mes "É chegada a hora!";
+		mes "O mundo precisa de você.";
+		mes "Por favor continue sua vída";
+		mes "de herói com uma nova aparência.";
 		next;
-		mes "[Lord Knight]";
-		mes "Would you like";
-		mes "to become a Lord Knight?";
+		mes "[Lorde]";
+		mes "Você gostaria de";
+		mes "se tornar um Lorde?";
 		next;
-		if (select("No.:Yes.") == 1) {
-			mes "[Lord Knight]";
-			mes "When you're ready,";
-			mes "feel free to come back.";
-			mes "Honor to the warriors!";
+		if (select("Não.:Sim.") == 1) {
+			mes "[Lorde]";
+			mes "Quando estiver pronto,";
+			mes "sinta-se a vontade para voltar.";
+			mes "Honre os guerreiros!";
 			close;
 		}
 		if (SkillPoint) {
-			mes "[Lord Knight]";
-			mes "It is still possible for you to learn more skills. Please use";
-			mes "all of your remaining Skill Points before returning to me.";
+			mes "[Lorde]";
+			mes "Ainda é possível que você aprenda mais habilidades. Por favor, use";
+			mes "todos os seus Pontos de Habilidades antes de voltar a falar comigo.";
 			close;
 		}
 		jobchange Job_Lord_Knight;
 		ADVJOB = 0;
-		mes "[Lord Knight]";
-		mes "Congratulations!";
-		mes "As a Lord Knight,";
-		mes "I hope that you will be";
-		mes "at the forefront of battle,";
-		mes "and lead your allies to victory!";
+		mes "[Lorde]";
+		mes "Parabéns!";
+		mes "Sendo um Lorde,";
+		mes "Eu acredito que você irá";
+		mes "ser a frente da batalha,";
+		mes "e levar seus aliados para a vitória!";
 		close;
 	}
-	mes "[Lord Knight]";
-	mes "Welcome";
-	mes "to Valhalla,";
-	mes "the Hall of Honor.";
+	mes "[Lorde]";
+	mes "Bem-vindo";
+	mes "a Valhalla,";
+	mes "o Salão de Honras.";
 	next;
-	mes "[Lord Knight]";
-	mes "Please make";
-	mes "yourself comfortable";
-	mes "while you are here.";
-	mes "Honor to the warriors!";
+	mes "[Lorde]";
+	mes "Por favor, sinta-se";
+	mes "confortável enquanto";
+	mes "você estiver aqui.";
+	mes "Honre os guerreiros.";
 	close;
 }

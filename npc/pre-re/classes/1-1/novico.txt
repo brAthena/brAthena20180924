@@ -1,183 +1,151 @@
-//===== Hercules Script ======================================
-//= Acolyte Job Quest
-//===== By: ==================================================
-//= kobra_k88; L0ne_W0lf
-//===== Current Version: =====================================
-//= 2.2
-//===== Description: =========================================
-//= [Official Conversion]
-//= Job quest for Acolyte classes
-//===== Additional Comments: =================================
-//= 1.0 Fully working.
-//= 1.1 Added function calls for Priest Quest.
-//= 1.2 Fixed Marthilda, Yosuke bugs. [Lupus]
-//= 1.2a Added instant job change for High Novice [Lupus]
-//= 1.3 Added Baby Class support [Lupus]
-//= 1.4 Optimised and moved first checker to Jfunc1-1 [massdriller]
-//= 1.5 Now saves/restores all quest skills [Lupus]
-//= 1.6 Merged back JFunc [Lupus]
-//= 1.7 Rescripted to Aegis 10.3 stadards. [L0ne_W0lf]
-//=     No longer uses function "F_ToHigh"
-//=     Proper dialog for Priest job quest is unused (for now.)
-//= 1.7a Functions now make use of proper priest quest dialog [L0ne_W0lf]
-//= 1.8 Removed an Unnecessary "set job_acolyte_q,0;" [Samuray22]
-//= 1.8a More bug fixes care of Crashy. [L0ne_W0lf]
-//= 1.9 Changed Marthilda to Mathilda. [L0ne_W0llf]
-//= 2.0 Fixed High Acolytesnot being given holy light. [L0ne_W0lf]
-//= 2.1 Added Quest Log commands. [L0ne_W0lf]
-//= 2.2 Fixed an issue with completequest by adding checkquest. [Kisuka]
-//============================================================
+//  ________________________________________________________
+// /                                                        \
+// |       _           _   _   _                            |
+// |      | |__  _ __ / \ | |_| |__   ___ _ __   __ _       |
+// |      | '_ \| '__/ _ \| __| '_ \ / _ \ '_ \ / _` |      |
+// |      | |_) | | / ___ \ |_| | | |  __/ | | | (_| |      |
+// |      |_.__/|_|/_/   \_\__|_| |_|\___|_| |_|\__,_|      |
+// |                                                        |
+// |                 brAthena Script                        |
+// |--------------------------------------------------------|
+// | Nome do Script: Quest do Noviço                        |
+// |--------------------------------------------------------|
+// | Criado por: eA/brA Dev. Team                           |
+// |--------------------------------------------------------|
+// | Versões eA/brA: 2.2/1.3                                |
+// |--------------------------------------------------------|
+// | Descrição: Mudança de Classe para Noviço               |
+// |--------------------------------------------------------|
+// | Changelog:                                             |
+// | 1.0 Script Traduzido [Protimus]                        |
+// | 1.1 Script Revisado [insidemybrain]                    |
+// | 1.2 Remoção de alguns espaços [Wolf]                   |
+// | 1.3 Otimizações no npc [Wolf]                          |
+// \________________________________________________________/
 
-prt_church,184,41,4	script	Cleric#aco	1_M_PASTOR,{
+prt_church,184,41,4	script	Necrus#aco	1_M_PASTOR,{
 	if (Upper == 1) {
 		if (ADVJOB == Job_High_Priest || ADVJOB == Job_Champion) {
+			mes "[Necrus]";
 			if (Class == Job_Novice_High) {
-				mes "[Father Mareusis]";
-				mes "Ah, I sense you have endured";
-				mes "a past life experience. You must have learned many things before entering Valhalla.";
+				mes "Depois de muito tempo, você voltou a este lugar.";
+				mes "Você deve ter ouvido, visto e experimentado muitas coisas.";
 				next;
+				mes "[Necrus]";
 				if (getskilllv("NV_BASIC") < 9) {
-					mes "[Father Mareusis]";
-					mes "Unfortunately, I don't think you're ready to become an Acolyte yet. Please finish learning all of the Basic Skills first.";
+					mes "Posso torná-lo um Noviço, mas será necessário reaprender os fundamentos.";
 					next;
-					mes "[Father Mareusis]";
-					mes "In the meantime,";
-					mes "I will wait until";
-					mes "you are ready.";
-					mes "May God be";
-					mes "with you.";
-					close;
+					mes "[Necrus]";
+					mes "Ok... Esperarei aqui por você.";
+					mes "Cuide-se.";
+				} else {
+					mes "Você volta a trilhar a estrada do clero,";
+					mes "toda a igreja de Prontera dá as boas-vindas a você";
+					next;
+					skill 143,0,0;
+					jobchange Job_Acolyte_High;
+					skill 156,1,0;
+					mes "[Necrus]";
+					mes "Mais uma vez, você pode progredir.";
+					mes "Abençôo o seu futuro com a esperança.";
 				}
-				mes "[Father Mareusis]";
-				mes "Well, I welcome you";
-				mes "back from Valhalla and";
-				mes "wish you luck on your";
-				mes "new life's journey.";
-				next;
-				skill 143,0,0;
-				jobchange Job_Acolyte_High;
-				skill 156,1,0;
-				mes "[Father Mareusis]";
-				mes "Now, venture forth and seek those who need your help. May God light your path.";
+				close;
+			} else {
+				mes "Mais uma vez, você pode progredir.";
+				mes "Abençôo o seu futuro com a esperança.";
 				close;
 			}
-			else {
-				mes "[Father Mareusis]";
-				mes "Now, venture forth to seek people who need your help. May God enlighten your way.";
-				close;
-			}
-		}
-		else {
-			mes "[Father Mareusis]";
-			mes "I sense that you have endured a past life experience. You must have learned many things before entering Valhalla.";
+		} else {
+			mes "[Necrus]";
+			mes "Você renasceu depois de muito tempo.";
+			mes "Você deve ter ouvido, visto e experimentado muitas coisas.";
 			next;
-			mes "[Father Mareusis]";
-			mes "However, I can tell that you are not suited to be an Acolyte. Please remember who you were in your past life and find your path.";
+			mes "[Necrus]";
+			mes "Entretanto, suas experiências de vida não condizem com o caminho de um Noviço.";
+			mes "Recorde-se de suas memórias e descubra qual o seu verdadeiro caminho.";
 			close;
 		}
 	}
-	mes "[Father Mareusis]";
-	mes "What is it that you seek?";
+	mes "[Necrus]";
+	mes "O que você procura na casa do Senhor?";
 	next;
-	switch(select("Father, I want to be a Acolyte.:Acolyte Requirements.:Just looking around.")) {
+	switch(select("Eu desejo me tornar um Noviço:Como me torno um noviço?:Eu vim olhar os vitrais")) {
 	case 1:
-		mes "[Father Mareusis]";
+		mes "[Necrus]";
 		if (BaseJob == Job_Acolyte) {
-			mes "Are you feeling okay today? I can tell by your attire that you are already an Acolyte. You're not joking around, are you?";
+			mes "Mas meu filho, você já é um Noviço.";
 			close;
-		}
-		else if (BaseJob != Job_Novice) {
-			mes "I'm sorry, but we can only accept Novices as applicants for the job change to Acolyte.";
+		} else if (BaseJob != Job_Novice) {
+			mes "Vejo que você já tem uma classe definida, desejo sucesso a você!";
 			close;
 		}
 		if (job_acolyte_q == 0) {
-			mes "Do you truly";
-			mes "wish to become";
-			mes "a servant of God?";
+			mes "Você deseja mesmo, de todo o seu coração, se tornar um servo do Senhor?";
 			next;
-			if (select("Yes Father, I do.:Nope, I lied.") == 1) {
-				mes "[Father Mareusis]";
-				mes "Good. I accept " + strcharinfo(0) + "'s will to become an Acolyte. You understand that you must do penance before you can become a servant of God, right?";
+			if (select("Sim.:Não, eu menti.") == 1) {
+				mes "[Necrus]";
+				mes "Muito bom. Eu aceito a vontade de "+strcharinfo(0)+" em se tornar um Noviço.";
 				next;
-				mes "[Father Mareusis]";
-				mes "Well, I will";
-				mes "give you a mission...";
+				mes "[Necrus]";
+				mes "Espero que você entenda que para se tornar um servo do Senhor, deverás realizar uma penitência.";
+				next;
 				switch(rand(3)) {
+				mes "A sua penitência é uma forma de peregrinação.";
 				default:
 					job_acolyte_q = 2;
-					mes "Please visit ^000077Father Rubalkabara^000000, a member of the Prontera Parish, and return here. He has been practicing asceticism in the ^000077Relics NorthEast of Prontera City^000000.";
+					mes "Você deve visitar o ^000077 Irmão Simão ^000000, ele se isolou com o animais perto da ^000077Abadia ao Nordeste de Prontera^000000.";
 					setquest 1001;
 					break;
 				case 1:
 					job_acolyte_q = 3;
-					mes "Please visit ^000077Mother Mathilda^000000 and then return to me. She has been practicing asceticism near ^000077Morroc Town, SouthWest of Prontera City^000000.";
+					mes "Você deve visitar a ^000077 Irmã Matilda ^000000, ela se isolou no deserto, ^000077no mapa ao Norte de Morroc^000000.";
 					setquest 1002;
 					break;
 				case 2:
 					job_acolyte_q = 4;
-					mes "Please visit ^000077Father Yosuke^000000 and return here. He has been practicing asceticism around ^000077a bridge somewhere NorthWest of Prontera^000000.";
+					mes "Você deve visitar o ^000077 Irmão Bartolomeu ^000000, ele pode ser encontrado ^000077em uma ponte à Noroeste de Prontera^000000.";
 					setquest 1003;
 					break;
 				}
 				next;
-				mes "[Father Mareusis]";
-				mes "May the grace of God light your path and guide you during your journey of penance.";
+				mes "[Necrus]";
+				mes "Que a graça do Senhor o acompanhe em sua jornada!";
 				close;
 			}
-			mes "[Father Mareusis]";
-			mes "You lied?";
-			mes "It is good that you";
-			mes "have confessed your";
-			mes "wrongdoing. Go in";
-			mes "peace, my son.";
+			mes "[Necrus]";
+			mes "Que a vontade do Senhor seja a sua segurança.";
 			close;
 		}
-		mes "Oh, you've come back. Let me check and see if you are ready to serve God. Let's see...";
+		mes "Oh, você voltou!";
 		next;
-		mes "[Father Mareusis]";
+		mes "[Necrus]";
 		if (getskilllv("NV_BASIC") < 9) {
-			mes "Good Lord! Haven't you accomplished the Basic Training yet?! It's important that you finish that!";
-			next;
-			mes "[Father Mareusis]";
-			mes "You should have trained more! Go back and make sure you reach Novice Job Level 9 and learn all of the Basic Skills!";
+			mes "Meu bom Deus! Você ainda não tem nível 9 de habilidade básicas, não é possivel servir ao Senhor assim.";
 			close;
 		}
 		if (job_acolyte_q < 5) {
-			mes "Oh? I can't find your name on the Registration List.";
+			mes "Deixe-me dizer qual será sua peregrinação.";
 			next;
 			switch(job_acolyte_q) {
 			case 2:
-				mes "[Father Mareusis]";
-				mes "Please visit ^000077Father Rubalkabara^000000, a member of the Prontera Parish, and return here.";
-				next;
-				mes "[Father Mareusis]";
-				mes "He has been practicing asceticism in the ^000077Relics at the NorthEast of Prontera City^000000.";
+				mes "[Necrus]";
+				mes "Você deve visitar o ^000077 Irmão Simão ^000000, ele se isolou com o animais perto da ^000077Abadia ao Nordeste de Prontera^000000.";
 				break;
 			case 3:
-				mes "[Father Mareusis]";
-				mes "Please Visit ^000077Mother Mathilda^000000 and return here to me.";
-				next;
-				mes "[Father Mareusis]";
-				mes "She has been practicing asceticism near ^000077Morroc Town, located SouthWest of Prontera City^000000.";
+				mes "[Necrus]";
+				mes "Você deve visitar a ^000077 Irmã Matilda ^000000, ela se isolou no deserto, ^000077no mapa ao Norte de Morroc^000000.";
 				break;
 			case 4:
-				mes "[Father Mareusis]";
-				mes "Please visit ^000077 Father Yosuke ^000000 and return here to me.";
-				next;
-				mes "[Father Mareusis]";
-				mes "He has been practicing asceticism near a ^000077bridge somewhere to the NorthWest of Prontera^000000.";
+				mes "[Necrus]";
+				mes "Você deve visitar o ^000077 Irmão Bartolomeu ^000000, ele pode ser encontrado ^000077em uma ponte à Noroeste de Prontera^000000.";
 				break;
 			}
 			next;
-			mes "[Father Mareusis]";
-			mes "May the grace of God brighten your path and guide you on your journey of penance.";
+			mes "[Necrus]";
+			mes "Complete sua penitência antes de retornar.";
 			close;
 		}
-		mes "Hmm...";
-		mes "Your name is on the list and you've proven your qualification.";
-		next;
-		mes "[Father Mareusis]";
-		mes "I am proud to say that you are now ready to become an Acolyte!";
+		mes "Você completou sua peregrinação e isso enche meu coração de alegria. Neste momento o recebo nos caminhos do Senhor e o torno um Noviço.";
 		next;
 		skill 143,0,0;
 		callfunc "Job_Change",Job_Acolyte;
@@ -191,278 +159,224 @@ prt_church,184,41,4	script	Cleric#aco	1_M_PASTOR,{
 		else {
 			completequest 1003;
 		}
-		mes "[Father Mareusis]";
-		mes "Always remember to be thankful to God, who is taking care of us all the time.";
+		mes "[Necrus]";
+		mes "Tenha sempre Deus em seu coração, seja nas horas de tranquilidade ou no calor da batalha, nunca se esqueça Dele, que nos ama tanto apesar de sermos imperfeitos.";
 		next;
-		mes "[Father Mareusis]";
-		mes "Always use your gifts to serve Him by helping others. In chaos and times of difficulty, face your hardships with unwavering faith.";
-		next;
-		mes "[Father Mareusis]";
-		mes "Lastly, I want to sincerely congratulate you on persevering through your trial of penance.";
+		mes "[Necrus]";
+		mes "Do mesmo modo que você não hesitou em sua penitência, eu espero que você nunca hesite frente às tentações do pecado.";
 		close;
 	case 2:
-		mes "[Father Mareusis]";
-		mes "Do you wish to become an Acolyte? You must fulfill two requirements.";
+		mes "[Necrus]";
+		mes "Os pré-requisitos para se tornar um Noviço são dois.";
+		mes "Por favor, ouça-os com atenção.";
 		next;
-		mes "[Father Mareusis]";
-		mes "First, you have to reach at least Novice Job Level 9 and learn all of the Basic Skills. Second, you will be given a trial of penance to overcome.";
+		mes "[Necrus]";
+		mes "Antes de tudo, você deve alcançar Nível 9 de Classe como Aprendiz.";
+		mes "Com esse nível, será possível que você realize uma peregrinação em nome do Senhor.";
 		next;
-		mes "[Father Mareusis]";
+		mes "[Necrus]";
+		mes "O seu objetivo será o seguinte:";
 		if (job_acolyte_q != 0) {
 			switch(job_acolyte_q) {
 			case 2:
-				mes "For your trial, please visit ^000077Father Rubalkabara ^000000 and then return here to me.";
-				next;
-				mes "[Father Mareusis]";
-				mes "He is practicing asceticism in the ^000077Relics at the NorthEast of Prontera City^000000.";
+				mes "[Necrus]";
+				mes "Você deve visitar o ^000077 Irmão Simão ^000000, ele se isolou com o animais perto da ^000077Abadia ao Nordeste de Prontera^000000.";
 				break;
 			case 3:
-				mes "For your trial, please visit ^000077Mother Mathilda^000000 and return here to me.";
-				next;
-				mes "[Father Mareusis]";
-				mes "She has been practicing asceticism near ^000077Morroc, located to the SouthWest of Prontera City^000000.";
+				mes "[Necrus]";
+				mes "Você deve visitar a ^000077 Irmã Matilda ^000000, ela se isolou no deserto, ^000077no mapa ao Norte de Morroc^000000..";
 				break;
 			default:
-				mes "For your trial, please visit ^000077Father Yosuke^000000 and return here to me.";
-				next;
-				mes "[Father Mareusis]";
-				mes "He has been practicing asceticism around a bridge somewhere ^000077NorthWest of Prontera^000000.";
+				mes "[Necrus]";
+				mes "Você deve visitar o ^000077 Irmão Bartolomeu ^000000, ele pode ser encontrado ^000077em uma ponte à Noroeste de Prontera^000000.";
 				break;
 			}
 			next;
-			mes "[Father Mareusis]";
-			mes "May the grace of God light your path and guide you on your journey of penance.";
-		}
-		else {
-			mes "The destination for this trial will be decided once you fill the application form.";
+			mes "[Necrus]";
+			mes "Que a graça do Senhor o acompanhe em sua jornada!";
+		} else {
+			mes "Que a vontade do Senhor seja a sua segurança.";
 		}
 		next;
-		mes "[Father Mareusis]";
-		mes "Please come back after fulfilling the two requirements I've asked of you. As long as your desire to serve God and others is sincere, you will be able to make it.";
+		mes "[Necrus]";
+		mes "Após completar estes dois requerimentos, será permitido que você se torne um servo de Deus.";
 		close;
 	case 3:
 		close;
 	}
 }
 
-prt_fild03,365,255,2	script	Ascetic#aco	4_M_ORIENT02,{
-	mes "[Father Rubalkabara]";
+prt_fild03,365,255,2	script	Irmão Simão#aco	4_M_ORIENT02,{
+	mes "[Irmão Simão]";
 	if (BaseJob == Job_Novice) {
 		if (job_acolyte_q == 6) {
-			mes "Please take care. They should know that you've met me by the time you arrive at the Prontera Sanctuary.";
+			mes "Não se preocupe, já enviei um pombo à Prontera para avisá-lo de sua visita.";
 			next;
-			mes "[Father Rubalkabara]";
-			mes "I've sent a carrier pigeon with a message. I hope it will arrive there safely...";
+			mes "[Irmão Simão]";
+			mes "Agora se preocupe apenas em como voltar em segurança para a cidade.";
 			close;
 		}
 		if (job_acolyte_q != 0) {
 			if (job_acolyte_q == 2) {
-				mes "Oh...? You must be the one who aspires to become an Acolyte. I've already received news from the Sanctuary that you might be coming.";
+				mes "Oh... Você é o jovem que deseja se tornar um Noviço, não é?";
 				next;
-				mes "[Father Rubalkabara]";
-				mes "Now, your name was " + strcharinfo(0) + ", right? Excellent, thank you for visiting me.";
+				mes "Você se chama "+strcharinfo(0)+", certo? Bem, muito obrigado por ter vindo me visitar!";
+				mes "Eu acredito que Necrus já lhe contou sobre os noviços.";
 				next;
-				mes "[Father Rubalkabara]";
-				mes "I believe you've been told much about Acolytes from Friar Mareusis. Plus, there's plenty of helpful people in the Prontera Sanctuary.";
+				mes "[Irmão Simão]";
+				mes "Eu espero que a sua Fé nunca falhe nos anos de provação que estão por vir.";
 				next;
-				mes "[Father Rubalkabara]";
-				mes "I guess there's really no need for me to teach you much. Besides, I'm sure your someone from your generation may have trouble listening to an old man like me. Hahaha~";
+				mes "[Irmão Simão]";
+				mes "Entretanto, as lições que você veio aprender aqui eram as que você já esperava.";
 				next;
-				mes "[Father Rubalkabara]";
-				mes "Still, lessons may come from the places you'd least expect. God loves to teach his children in strange ways. You'll see.";
+				mes "[Irmão Simão]";
+				mes "Eu mandarei a notícia de que você chegou até aqui para o Necrus.";
+				mes "Desejo-lhe uma jornada segura de volta à Prontera.";
 				next;
-				mes "[Father Rubalkabara]";
-				mes "Well, I'll send the message telling them that you've come to visit me. So, you may now return to the Prontera Sanctuary.";
-				next;
-				mes "[Father Rubalkabara]";
-				mes "Farewell.";
+				mes "[Irmão Simão]";
+				mes "Adeus e que o Senhor esteja contigo.";
 				close2;
 				savepoint "prt_fild03",361,255;
 				job_acolyte_q = 6;
 				end;
-			}
-			else {
-				mes "Oh...";
-				mes "Are you one of the";
-				mes "Acolyte applicants...?";
-				mes "Let's see...";
+			} else {
+				mes "Oh... Você é o jovem que deseja se tornar um Noviço, não é?";
 				next;
-				mes "[Father Rubalkabara]";
-				mes "Your name is " + strcharinfo(0) + "?";
-				mes "I don't think your name";
-				mes "is on my list. Hmmm...";
+				mes "[Irmão Simão]";
+				mes "Você se chama "+strcharinfo(0)+", certo? Hmm.. Sinto informa-lhe que seu nome não se encontra em minha lista.";
 				next;
-				mes "[Father Rubalkabara]";
-				mes "Why don't you go back to the Prontera Sanctuary and check again?";
+				mes "[Irmão Simão]";
+				mes "Recomendo que você verifique corretamente qual é a sua peregrinação.";
 				close;
 			}
-		}
-		else {
-			mes "Huh? What brings you here? This is a very dangerous place for a Novice like yourself!";
+		} else {
+			mes "O que lhe traz aqui? Este lugar tem monstros fortes demais para alguém como você.";
 			close;
 		}
 	}
 	else if (BaseJob == Job_Acolyte) callfunc "F_FatherRub";
 	else {
 		if (BaseJob == Job_Priest) {
-			mes "Greetings.";
+			mes "Saudações.";
 			next;
-			mes "[Father Rubalkabara]";
-			mes "Welcome to the Deep. Feel free to sit and contemplate God's message with me. This place is beautiful, even if danger accompanies its sense of serenity...";
+			mes "[Irmão Simão]";
+			mes "Seja bem vindo, sinta-se a vontade para sentar e contemplar a palavra do Senhor comigo.";
+			mes "Este lugar é lindo, mesmo quando o perigo nos acompanha, podemos sentir a serenidade dele...";
 			close;
-		}
-		else {
-			mes "Oh ho...";
-			mes "Have you come into the Deep here for training? Or are you just a Wanderer?";
+		} else {
+			mes "Você veio aqui para treinar? ou é somente um forasteiro?";
 			next;
-			mes "[Father Rubalkabara]";
-			mes "Whoever you are, please take care of yourself. The monsters in here are shockingly strong, contrary to their cute appearance.";
+			mes "[Irmão Simão]";
+			mes "Independente de quem você seja, tome cuidado. Os monstros aqui são incrívelmente fortes, apesar de sua aparência bonitinha.";
 			close;
 		}
 	}
 }
 
-moc_fild07,41,355,4	script	Ascetic#2aco	4_F_SISTER,{
-	mes "[Mother Mathilda]";
+moc_fild07,41,355,4	script	Irmã Matilda#2aco	4_F_SISTER,{
+	mes "[Irmã Matilda]";
 	if (BaseJob == Job_Novice) {
 		if (job_acolyte_q == 7) {
-			mes "I will send a carrier pigeon to the Prontera Sanctuary. When you return, the Priest there should already have received my message.";
-			next;
-			mes "[Mother Mathilda]";
-			mes "I will pray to God, and hope that you become an Acolyte soon.";
+			mes "Não se preocupe, já enviei um pombo à Prontera para avisá-lo de sua visita.";
+			mes "Agora se preocupe apenas em como voltar em segurança para a cidade.";
 			close;
 		}
 		if (job_acolyte_q != 0) {
 			if (job_acolyte_q == 3) {
-				mes "Ah, you must be one of the Acolyte applicants. I sincerely welcome you.";
+				mes "Oh... Você é o jovem que deseja se tornar um Noviço, não é?";
 				next;
-				mes "[Mother Mathilda]";
-				mes "What is your name? " + strcharinfo(0) + "? Let's see... Ah, you're on my list.";
-				next;
-				mes "[Mother Mathilda]";
-				mes "I will send a message to the Sanctuary confirming that you, " + strcharinfo(0) + " visited me and completed your penance.";
-				next;
-				mes "[Mother Mathilda]";
-				mes "Please return to the Prontera Sanctuary and speak to the Priest in charge.";
+				mes "[Irmã Matilda]";
+				mes "Você se chama "+strcharinfo(0)+", certo? Bem, muito obrigada por ter vindo me visitar!";
+				mes "Eu mandarei a notícia de que você chegou até aqui para o Necrus.";
+				mes "Desejo-lhe uma jornada segura de volta à Prontera.";
 				close2;
 				savepoint "moc_fild07",35,355;
 				job_acolyte_q = 7;
 				end;
-			}
-			else {
-				mes "Ah...!";
-				mes "You must be one";
-				mes "of the Acolyte applicants.";
-				mes "I sincerely welcome you.";
+			} else {
+				mes "[Irmã Matilda]";
+				mes "Oh... Você é o jovem que deseja se tornar um Noviço, não é?";
+				mes "Você se chama "+strcharinfo(0)+", certo? Hmm...";
+				mes "Sinto informa-lhe que seu nome não se encontra em minha lista.";
 				next;
-				mes "[Mother Mathilda]";
-				mes "Now, what is your name?";
-				mes "" + strcharinfo(0) + "? Let's see...";
-				next;
-				mes "[Mother Mathilda]";
-				mes "Hmm...";
-				mes "It seems your name";
-				mes "is not on my list...";
-				next;
-				mes "[Mother Mathilda]";
-				mes "Perhaps you should return to the Prontera Sanctuary and check the destination for your penance trial once again.";
+				mes "[Irmã Matilda]";
+				mes "Recomendo que você verifique corretamente qual é a sua peregrinação.";
 				close;
 			}
-		}
-		else {
-			mes "...";
+		} else {
+			mes "...........";
 			close;
 		}
 	}
 	else if (BaseJob == Job_Acolyte) callfunc "F_MotherMart";
 	else {
 		if (BaseJob == Job_Priest) {
-			mes "Hello there~";
+			mes "Olá!";
 			next;
-			mes "[Mother Mathilda]";
-			mes "How is your practice coming along? I certainly hope you're enjoying living in the grace of God.";
+			mes "[Irmã Matilda]";
+			mes "Como você vem praticado a graça do Senhor depois de tanto tempo? Eu espero que você esteja gostando de viver a graça do Senhor.";
 			close;
-		}
-		else {
-			mes "May God";
-			mes "be with you...";
+		} else {
+			mes "Que Deus";
+			mes "esteja com você...";
 			close;
 		}
 	}
 }
 
-prt_fild00,208,218,6	script	Ascetic#3aco	4W_M_02,{
-	mes "[Father Yosuke]";
+prt_fild00,208,218,6	script	Irmão Bartolomeu#3aco	4W_M_02,{
+	mes "[Irmão Bartolomeu]";
 	if (BaseJob == Job_Novice) {
 		if (job_acolyte_q == 8) {
-			mes "What?";
-			next;
-			mes "[Father Yosuke]";
-			mes "Have you any more business with me?! You don't! Go back to the Sanctuary now!";
+			mes "Eu acho melhor você começar o seu caminho de volta...";
+			mes "Ou você quer ficar aqui comigo vendo a grama crescer!?";
 			close;
 		}
 		if (job_acolyte_q != 0) {
 			if (job_acolyte_q == 4) {
-				mes "Hey.";
-				mes "Whatever you are,";
-				mes "you look like an";
-				mes "Acolyte applicant.";
-				mes "Right?";
+				mes "Ou você é um Aprendiz querendo ser Noviço ou eu sou um Caramelo!";
 				next;
-				mes "[Father Yosuke]";
-				mes "Not bad, not bad. You withstood the penance trial pretty well.";
-				mes "So what's your name?";
-				next;
-				mes "[Father Yosuke]";
-				mes "" + strcharinfo(0) + ", huh?";
-				next;
-				mes "[Father Yosuke]";
-				mes "Okay. I'll send a message to the Sanctuary that you, " + strcharinfo(0) + ", came to visit me.";
-				next;
-				mes "[Father Yosuke]";
-				mes "Now go back to the Santuary and finish becoming an Acolyte, kid.";
+				mes "[Irmão Bartolomeu]";
+	   			mes "Nada mal hein, chegou até aqui inteiro...";
+	  			mes "O seu nome é "+strcharinfo(0)+", não é?";
+	   			next;
+	   			mes "[Irmão Bartolomeu]";
+	   			mes "Então está tudo certinho, vou avisar o Necrus de que você chegou até aqui.";
+	   			mes "Agora volte para Prontera e fale com ele.";
 				close2;
 				savepoint "prt_fild00",206,230;
 				job_acolyte_q = 8;
 				end;
-			}
-			else {
-				mes "Hey.";
-				mes "You look like an Acolyte Applicant. Am I right?";
+			} else {
+				mes "Ei, você aí!";
+				mes "Ou você é um Aprendiz querendo ser Noviço ou eu sou um Caramelo!";
 				next;
-				mes "[Father Yosuke]";
-				mes "Not bad at all, you've made it all the way here from Prontera. So what's your name, kid?";
+				mes "[Irmão Bartolomeu]";
+				mes "Nada mal hein, chegou até aqui inteiro...";
+				mes "Qual o seu nome? "+strcharinfo(0)+"? Hmmm... O seu nome não está na minha lista...";
 				next;
-				mes "[Father Yosuke]";
-				mes "" + strcharinfo(0) + ", huh? Why isn't your name on my list?";
-				next;
-				mes "[Father Yosuke]";
-				mes "You probably made a mistake. Go back to the Santuary, and check with the Bishop.";
+				mes "[Irmão Bartolomeu]";
+				mes "Acho que você se confundiu, você deve visitar outra pessoa, não eu.";
+				mes "Volte para Prontera e consulte o Necrus novamente.";
 				close;
 			}
-		}
-		else {
-			mes "You...";
-			mes "Novice.";
-			mes "There something";
-			mes "you wanna tell me?";
+		} else {
+			mes "Não, eu não sou o Bicho-Papão da ponte...";
 			close;
 		}
 	}
 	else if (BaseJob == Job_Acolyte) callfunc "F_FatherYos";
 	else {
 		if (BaseJob == Job_Priest) {
-			mes "Hey...";
+			mes "Ei...";
 			next;
-			mes "[Father Yosuke]";
-			mes "If you like, come sit here with me and meditate the great truths. God's majesty is truly inspiring...";
+			mes "[Irmão Bartolomeu]";
+			mes "Se quiser, venha sentar-se e meditar grandes verdades. A grandeza de Deus é magnífica...";
 			close;
-		}
-		else {
-			mes "Do you have anything to say? Because unfortunately for you,";
-			mes "I don't any replies.";
+		} else {
+			mes "Você tem algo para me dizer? Por que infelizmente para você,";
+			mes "eu não tenho nada.";
 			close;
 		}
 	}
 }
-
