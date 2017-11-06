@@ -202,7 +202,7 @@ morocc_in,174,30,6	script	Garoto#link1	4_M_KID2,{
 						delitem 732,1; // Diamante de 3 Quilates
 						delitem 929,1; // Coração Imortal
 						delitem 748,1; // Rosa Eterna
-						set SOUL_Q,2;
+						SOUL_Q = 2;
 						changequest 6005,6006;
 						mes "[Garoto]";
 						mes "Ótimo, eu vejo que você";
@@ -319,7 +319,7 @@ morocc_in,174,30,6	script	Garoto#link1	4_M_KID2,{
 				close;
 			}
 			donpcevent "Timer#link3::OnEnable";
-			set .SoulLinkerTest,1;
+			.SoulLinkerTest = 1;
 			mes "[Maia]";
 			mes "Tudo bem, feche";
 			mes "seus olhos e relaxe.";
@@ -365,7 +365,7 @@ OnTouch:
 			mes "será capaz de invocar mais";
 			mes "Espíritos como um Espiritualista.";
 			next;
-			set SOUL_Q,3;
+			SOUL_Q = 3;
 			changequest 6006,6007;
 			mes "[Maia]";
 			mes "Nós só podemos ficar aqui";
@@ -524,8 +524,8 @@ job_soul,30,35,6	script	Espírito do Monge#link4	4_M_GRANDMONK,{
 		mes "é a única chance que tenho de";
 		mes "tornar isso possível.";
 		next;
-		set SOUL_Q,4;
-		if (checkquest(6008) == -1) {
+		SOUL_Q = 4;
+		if (!questprogress(6008)) {
 			changequest 6007,6008;
 		}
 		mes "[Espírito do Monge]";
@@ -573,8 +573,8 @@ job_soul,30,25,7	script	Espírito do Sábio#link5	4_M_SAGE_A,{
 		mes "Mas para isso, Eu preciso de";
 		mes "sua ajuda. Eu imploro,";
 		mes "deixe-me ser seu espirito aliado.";
-		set SOUL_Q,4;
-		if (checkquest(6008) == -1) {
+		SOUL_Q = 4;
+		if (!questprogress(6008)) {
 			changequest 6007,6008;
 		}
 		next;
@@ -617,8 +617,8 @@ job_soul,25,30,5	script	Espírito do Alquimista#link7	4_F_ALCHE,{
 		mes "morri. Mas eu não posso";
 		mes "ir para o outro mundo, não antes de";
 		mes "re-passar minhas tecnicas...";
-		set SOUL_Q,4;
-		if (checkquest(6008) == -1) {
+		SOUL_Q = 4;
+		if (!questprogress(6008)) {
 			changequest 6007,6008;
 		}
 		next;
