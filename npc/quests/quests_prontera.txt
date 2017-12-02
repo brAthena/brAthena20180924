@@ -56,11 +56,11 @@ prt_in,88,105,2	script	Recrutador	8W_SOLDIER,{
 		mes "[Recrutador]";
 		mes "Ah...";
 		mes "Eu vejo em seus olhos.";
-		mes "Cheio de compaix√£o e coragem.";
+		mes "Cheio de compaix„o e coragem.";
 		next;
 		mes "[Recrutador]";
-		mes "Claro que voc√™ √© um volunt√°rio para campanha de limpar os Esgotos de Prontera.";
-		mes "Voc√™ me deixaria o deformar l√°?";
+		mes "Claro que vocÍ È um volunt·rio para campanha de limpar os Esgotos de Prontera.";
+		mes "VocÍ me deixaria o deformar l·?";
 		next;
 		if (select("Leve-me para entrada dos esgotos.:Sair.") == 1) {
 			warp "prt_fild05",274,208;
@@ -70,46 +70,46 @@ prt_in,88,105,2	script	Recrutador	8W_SOLDIER,{
 	}
 	mes "[Recrutador]";
 	mes "Ah, me deixe informar algo importante.";
-	mes "A for√ßa de defesa da capital de Rune-Midgard.";
-	mes "Decidiu recrutar ajudantes devido a infesta√ß√£o nos Esgotos de Prontera.";
+	mes "A forÁa de defesa da capital de Rune-Midgard.";
+	mes "Decidiu recrutar ajudantes devido a infestaÁ„o nos Esgotos de Prontera.";
 	next;
-	switch(select("Voluntariar.:Qual a situa√ß√£o?:Sair.")) {
+	switch(select("Voluntariar.:Qual a situaÁ„o?:Sair.")) {
 	case 1:
 		callsub S_Volunteer;
 		mes "[Recrutador]";
-		mes "Voc√™ est√° pronto, her√≥i?";
+		mes "VocÍ est· pronto, herÛi?";
 		mes "Eu vou lhe enviar agora para entrada dos esgotos.";
 		next;
 		warp "prt_fild05",274,208;
 		end;
 	case 2:
 		mes "[Recrutador]";
-		mes "Voc√™ n√£o ouviu...?";
-		mes "Os Esgotos de Prontera √© infestado v√°rios tipos de monstros imundos!";
+		mes "VocÍ n„o ouviu...?";
+		mes "Os Esgotos de Prontera È infestado v·rios tipos de monstros imundos!";
 		next;
 		mes "[Recrutador]";
-		mes "Devido ao risco s√©rio de contamina√ß√£o de √°gua, e a seguran√ßa de Prontera.";
+		mes "Devido ao risco sÈrio de contaminaÁ„o de ·gua, e a seguranÁa de Prontera.";
 		mes "Foi dado um decreto real para limpar os esgotos.";
 		next;
 		mes "[Recrutador]";
-		mes "Desnecess√°rio dizer, isto causou escassezes na provis√£o de √°gua em nosso reino.";
-		mes "Realmente, √© uma crise nestes tempos escuros...";
+		mes "Desnecess·rio dizer, isto causou escassezes na provis„o de ·gua em nosso reino.";
+		mes "Realmente, È uma crise nestes tempos escuros...";
 		next;
 		mes "[Recrutador]";
-		mes "Nossa popula√ß√£o t√™m sede para √°gua...";
-		mes "Mas eles t√™m sede mais at√© mesmo...";
-		mes "De um her√≥i!";
+		mes "Nossa populaÁ„o tÍm sede para ·gua...";
+		mes "Mas eles tÍm sede mais atÈ mesmo...";
+		mes "De um herÛi!";
 		next;
 		mes "[Recrutador]";
-		mes "Voc√™ se alegrar√° √† todas crian√ßas de Rune-Midgarts, livrando-os dessa seca?!"; 
-		mes "Voc√™ faria isso por nossas crian√ßas?!";
+		mes "VocÍ se alegrar· ‡ todas crianÁas de Rune-Midgarts, livrando-os dessa seca?!"; 
+		mes "VocÍ faria isso por nossas crianÁas?!";
 		next;
 		mes "[Recrutador]";
-		mes "Guerreiros! de Rune-Midgard est√° o chamando!";
-		mes "Limpe a pestil√™ncia desta terra e expulse os monstros dos esgotos!";
-		mes "S√≥ voc√™... pode fazer a diferen√ßa.";
+		mes "Guerreiros! de Rune-Midgard est· o chamando!";
+		mes "Limpe a pestilÍncia desta terra e expulse os monstros dos esgotos!";
+		mes "SÛ vocÍ... pode fazer a diferenÁa.";
 		next;
-		if (select("Ser volunt√°rio.:Sair.") == 1) {
+		if (select("Ser volunt·rio.:Sair.") == 1) {
 			callsub S_Volunteer;
 			mes "[Recrutador]";
 			mes "Aventureiro...";
@@ -120,7 +120,7 @@ prt_in,88,105,2	script	Recrutador	8W_SOLDIER,{
 		}
 		mes "[Recrutador]";
 		mes "Hmpf. Bem.";
-		mes "O da pr√≥xima vez voc√™ tomar √°gua, lembra-se de nossas crian√ßas que est√£o morrendo de sede...";
+		mes "O da prÛxima vez vocÍ tomar ·gua, lembra-se de nossas crianÁas que est„o morrendo de sede...";
 		mes "^990000fSede^000000.";
 		close;
 
@@ -132,15 +132,15 @@ S_Volunteer:
 	MISC_QUEST |= 8;
 	mes "[Recrutador]";
 	mes "Seu regitro...";
-	mes "Agora est√° completo.";
+	mes "Agora est· completo.";
 	next;
 	mes "[Recrutador]";
 	mes "Eu gostaria de lhe agradecer por oferecer uma parte de seu tempo para nosso grande reino.";
-	mes "Aqui, leve estes suprimentos para sua batalhas contra as for√ßas de escurid√£o.";
+	mes "Aqui, leve estes suprimentos para sua batalhas contra as forÁas de escurid„o.";
 	next;
 	mes "[Recrutador]";
-	mes "3 Po√ß√µes Vermelhas, 1 Leite e 1 Po√ß√£o Laranja...";
-	mes "Que voc√™ possa ser nossa esperan√ßa.";
+	mes "3 PoÁıes Vermelhas, 1 Leite e 1 PoÁ„o Laranja...";
+	mes "Que vocÍ possa ser nossa esperanÁa.";
 	getitem 501,3; //Red_Potion
 	getitem 519,1; //Milk
 	getitem 502,1; //Orange_Potion
@@ -148,12 +148,12 @@ S_Volunteer:
 	return;
 }
 
-prt_fild05,270,212,5	script	Guardi√£o dos Esgotos	8W_SOLDIER,{
+prt_fild05,270,212,5	script	Guardi„o dos Esgotos	8W_SOLDIER,{
 	if (MISC_QUEST & 8) {
-		mes "[Guardi√£o dos Esgotos]";
-		mes "Ah, voc√™ √© um de nossos volunt√°rios.";
-		mes "Essa √© a entrada para os Esgotos de Prontera.";
-		mes "Voc√™ quer entrar agora?";
+		mes "[Guardi„o dos Esgotos]";
+		mes "Ah, vocÍ È um de nossos volunt·rios.";
+		mes "Essa È a entrada para os Esgotos de Prontera.";
+		mes "VocÍ quer entrar agora?";
 		next;
 		if (select("Quero.:Sair.") == 1) {
 			warp "prt_sewb1",131,247;
@@ -161,11 +161,11 @@ prt_fild05,270,212,5	script	Guardi√£o dos Esgotos	8W_SOLDIER,{
 		}
 		close;
 	}
-	mes "[Guardi√£o dos Esgotos]";
-	mes "Me desculpe mas somente volunt√°rios podem entrar nos esgotos.";
+	mes "[Guardi„o dos Esgotos]";
+	mes "Me desculpe mas somente volunt·rios podem entrar nos esgotos.";
 	next;
-	mes "[Guardi√£o dos Esgotos]";
-	mes "Para se tornar um dos volunt√°rios v√° at√© prontera na dire√ß√£o 11 Horas e fale com o ^000077Recrutador^000000.";
+	mes "[Guardi„o dos Esgotos]";
+	mes "Para se tornar um dos volunt·rios v· atÈ prontera na direÁ„o 11 Horas e fale com o ^000077Recrutador^000000.";
 	close;
 }
 
@@ -174,16 +174,16 @@ prt_fild05,270,212,5	script	Guardi√£o dos Esgotos	8W_SOLDIER,{
 prt_in,38,108,4	script	Professora#phhat	1_M_INNKEEPER,{
 	if ((countitem(710) > 0) && (countitem(703) > 0) && (countitem(704) > 0) && (countitem(708) > 0)) {
 		mes "[Professora]";
-		mes "Oh... Essas Flores em sua m√£o s√£o....";
+		mes "Oh... Essas Flores em sua m„o s„o....";
 		next;
-		switch(select("Flores de espet√°culo:D√™ Flores:Cancelar")) {
+		switch(select("Flores de espet·culo:DÍ Flores:Cancelar")) {
 		case 1:
 			mes "Ah... Como maravilhoso!!";
-			mes "Estes s√£o definitivamente os 4 tipos de Flores eu estava procurando..";
-			mes "A Flor de ^3355FFIlus√£o, Hinalle, Babosa, e Menta^000000. voc√™ os daria a mim?...";
+			mes "Estes s„o definitivamente os 4 tipos de Flores eu estava procurando..";
+			mes "A Flor de ^3355FFIlus„o, Hinalle, Babosa, e Menta^000000. vocÍ os daria a mim?...";
 			next;
 			mes "[Professora]";
-			mes "Se voc√™ as me trouxer eu lhe darei um item especial.....";
+			mes "Se vocÍ as me trouxer eu lhe darei um item especial.....";
 			close;
 		case 2:
 			if ((countitem(710) > 0) && (countitem(703) > 0) && (countitem(704) > 0) && (countitem(708) > 0)) {
@@ -193,12 +193,12 @@ prt_in,38,108,4	script	Professora#phhat	1_M_INNKEEPER,{
 				delitem 708,1;  //Ment
 				getitem 5012,1;	//Ph.D_Hat
 				mes "[Professora]";
-				mes "Eu realmente realmente o aprecio o que voc√™ fez para mim.";
+				mes "Eu realmente realmente o aprecio o que vocÍ fez para mim.";
 				mes "Sou muito grata";
-				mes "Eu darei meu artigo precioso a voc√™ como prometido.";
+				mes "Eu darei meu artigo precioso a vocÍ como prometido.";
 				next;
 				mes "[Professora]";
-				mes "Este √© o Chap√©u que eu usei em minha Gradua√ß√£o de minha Universidade.";
+				mes "Este È o ChapÈu que eu usei em minha GraduaÁ„o de minha Universidade.";
 				mes "Me faz lembrar de meus dias escolares felizes.";
 				mes "Por favor leve isto...";
 				close;
@@ -206,56 +206,56 @@ prt_in,38,108,4	script	Professora#phhat	1_M_INNKEEPER,{
 			else {
 				mes "[Professora]";
 				mes "...Oh, me desculpe.";
-				mes "Mas isso n√£o √© o para o qual eu estou olhando.";
-				mes "Talvez voc√™ precise estudar um pouco?";
+				mes "Mas isso n„o È o para o qual eu estou olhando.";
+				mes "Talvez vocÍ precise estudar um pouco?";
 				close;
 			}
 		}
 	}
 	else {
 		mes "[Professora]";
-		mes "Voc√™ pensa que flores s√£o belas?...";
+		mes "VocÍ pensa que flores s„o belas?...";
 		next;
 		switch(select("Talk:Quit")) {
 		case 1:
 			mes "[Professora]";
-			mes "Quando eu era jovem, eu n√£o tive nenhum amigo e estudei todo o tempo.";
+			mes "Quando eu era jovem, eu n„o tive nenhum amigo e estudei todo o tempo.";
 			next;
 			mes "[Professora]";
-			mes "√Äs vezes eu lamento aquela decis√£o....";
-			mes "Mas realmente n√£o importa agora.";
+			mes "¿s vezes eu lamento aquela decis„o....";
+			mes "Mas realmente n„o importa agora.";
 			mes "Por trabalhar duro, eu sempre era a primeira a terminar as tarefas.";
 			next;
 			mes "[Professora]";
-			mes "Eu estava por√©m muito s√≥.....";
-			mes "Derrepente as coisas ficaram dif√≠ceis e eu n√£o tive ningu√©m para conversar sobre meus sentimentos.";
+			mes "Eu estava porÈm muito sÛ.....";
+			mes "Derrepente as coisas ficaram difÌceis e eu n„o tive ninguÈm para conversar sobre meus sentimentos.";
 			next;
 			mes "[Professora]";
-			mes "Ent√£o um dia, eu achei minha melhor amiga.";
+			mes "Ent„o um dia, eu achei minha melhor amiga.";
 			next;
 			mes "[Professora]";
 			mes "Quando eu vi esta bonita flor desabrochar em um jardim abandonado....";
-			mes "Eu percebi que n√≥s eramos parecidas, eu achei minha melhor amiga.";
+			mes "Eu percebi que nÛs eramos parecidas, eu achei minha melhor amiga.";
 			next;
 			mes "[Professora]";
-			mes "Embora, a outros era h√° pouco uma flor comum....";
+			mes "Embora, a outros era h· pouco uma flor comum....";
 			mes "Para mim esta flor significou muito mais.";
-			mes "Esta flor me deu a for√ßa para continuar meus estudos.";
-			mes "Eu poderia alcan√ßar minhas metas por causa dela.";
+			mes "Esta flor me deu a forÁa para continuar meus estudos.";
+			mes "Eu poderia alcanÁar minhas metas por causa dela.";
 			next;
 			mes "[Professora]";
 			mes "Assim.. agora... eu estou tentando para reembolsar a ela.";
-			mes "Eu comecei estudando Flores, e √© minha meta para cobrir o mundo inteiro em Flores!";
+			mes "Eu comecei estudando Flores, e È minha meta para cobrir o mundo inteiro em Flores!";
 			next;
 			mes "[Professora]";
 			mes "Realizar meu trabalho..";
 			mes "Eu preciso de muito flores.";
 			mes "Infelizmente por causa de meus estudos, eu raramente posso ir fora.";
-			mes "√â realmente duro achar tantas flores quanto preciso.";
+			mes "… realmente duro achar tantas flores quanto preciso.";
 			next;
 			mes "[Professora]";
-			mes "Eu preciso de 1 ^3355FFFlor das Ilus√µes^000000 ,1 ^3355FFHinalle^000000,1 ^3355FFAloe^000000 e 1 ^3355FFMenta^000000..";
-			mes "Se voc√™ puder trazer estas flores a mim, eu estaria disposto lhe dar um artigo especial..";
+			mes "Eu preciso de 1 ^3355FFFlor das Ilusıes^000000 ,1 ^3355FFHinalle^000000,1 ^3355FFAloe^000000 e 1 ^3355FFMenta^000000..";
+			mes "Se vocÍ puder trazer estas flores a mim, eu estaria disposto lhe dar um artigo especial..";
 			close;
 		case 2:
 			mes "[Professora]";
@@ -275,7 +275,7 @@ prontera,248,212,3	script	Garoto Ocupado#prt	4_M_KID1,3,3,{
 			mes "Ah, droga...";
 			mes "O eu irei fazer?";
 			mes "Eu tenho que entregar estes livros, mas... eu...";
-			mes "Ah cara, eu n√£o posso me apavorar agora!";
+			mes "Ah cara, eu n„o posso me apavorar agora!";
 			close;
 		}
 		else if (prt_curse == 1) {
@@ -283,9 +283,9 @@ prontera,248,212,3	script	Garoto Ocupado#prt	4_M_KID1,3,3,{
 			mes "Ah, droga...";
 			mes "O eu irei fazer?";
 			mes "Eu tenho que entregar estes livros, mas... eu...";
-			mes "Ah cara, eu n√£o posso me apavorar agora!";
+			mes "Ah cara, eu n„o posso me apavorar agora!";
 			next;
-			if (select("Falar com ele:Ignor√°-lo") == 1) {
+			if (select("Falar com ele:Ignor·-lo") == 1) {
 				mes "["+strcharinfo(0)+"]";
 				mes "Diga, o que parece ser o problema?";
 				next;
@@ -294,21 +294,21 @@ prontera,248,212,3	script	Garoto Ocupado#prt	4_M_KID1,3,3,{
 				next;
 				mes "[Garoto Ocupado]";
 				if (Sex) {
-					mes "Argh! Voc√™ √© o cara desajeitado que me fez deixar";
+					mes "Argh! VocÍ È o cara desajeitado que me fez deixar";
 				}
 				else {
-					mes "Argh! Voc√™ √© aquela mulher sem postura que me fez deixar";
+					mes "Argh! VocÍ È aquela mulher sem postura que me fez deixar";
 				}
-				mes "todos os livros ca√≠rem!";
-				mes "Espere, voc√™ me ignorou antes, ent√£o porque esse interesse em agir agora?";
+				mes "todos os livros caÌrem!";
+				mes "Espere, vocÍ me ignorou antes, ent„o porque esse interesse em agir agora?";
 				emotion e_gasp;
 			}
 			else {
 				mes "[Garoto Ocupado]";
 				mes "Ok, ok...";
-				mes "Eu nunca havia pensado sobre flutuar pelo c√©u.";
-				mes "Voc√™ parece, t√£o est√°vel.";
-				mes "N√£o pense...";
+				mes "Eu nunca havia pensado sobre flutuar pelo cÈu.";
+				mes "VocÍ parece, t„o est·vel.";
+				mes "N„o pense...";
 				mes "Apenas...";
 				mes "Apenas deixe a vida te levar...";
 				close;
@@ -317,16 +317,16 @@ prontera,248,212,3	script	Garoto Ocupado#prt	4_M_KID1,3,3,{
 			select("Bem, eu, um...");
 			mes "[Garoto Ocupado]";
 			if (Sex) {
-				mes "Yeah... Um homem de verdade n√£o teria voltado aqui sem ter me ajudado.";
-				mes "Voc√™ √© um cavalheiro, n√£o sabia disso?";
+				mes "Yeah... Um homem de verdade n„o teria voltado aqui sem ter me ajudado.";
+				mes "VocÍ È um cavalheiro, n„o sabia disso?";
 			}
 			else {
-				mes "Yeah... Se voc√™ fosse uma graciosa e compreensiva dama, voc√™ j√° teria me ajudado anteriormente.";
+				mes "Yeah... Se vocÍ fosse uma graciosa e compreensiva dama, vocÍ j· teria me ajudado anteriormente.";
 				mes "Estou certo, huh?";
 			}
 			next;
-			mes "^3355FFVoc√™ instintivamente chuta uma das pilhas de livros pr√≥ximos ao garoto.";
-			mes "Voc√™ n√£o poderia ajud√°-lo, foi um reflexo natural!^000000";
+			mes "^3355FFVocÍ instintivamente chuta uma das pilhas de livros prÛximos ao garoto.";
+			mes "VocÍ n„o poderia ajud·-lo, foi um reflexo natural!^000000";
 			next;
 			specialeffect EF_HITDARK;
 			emotion e_omg;
@@ -335,11 +335,11 @@ prontera,248,212,3	script	Garoto Ocupado#prt	4_M_KID1,3,3,{
 			emotion e_omg;
 			mes "[Garoto Ocupado]";
 			mes "Ack! Estes livros...!";
-			mes "Eu demorei um temp√£o para empilhar todos eles!";
+			mes "Eu demorei um temp„o para empilhar todos eles!";
 			next;
 			mes "["+strcharinfo(0)+"]";
-			mes "Ah n√£o, que bagun√ßa!";
-			mes "Aqui, deixe-me ajud√°-lo a organiz√°-los gentilmente do fundo do meu fraterno cora√ß√£o.";
+			mes "Ah n„o, que bagunÁa!";
+			mes "Aqui, deixe-me ajud·-lo a organiz·-los gentilmente do fundo do meu fraterno coraÁ„o.";
 			emotion e_lv,1;
 			next;
 			mes "[Garoto Ocupado]";
@@ -353,7 +353,7 @@ prontera,248,212,3	script	Garoto Ocupado#prt	4_M_KID1,3,3,{
 			mes "Ah, obrigado por me ajudar com isso aqui.";
 			mes "Eu aprecio isto.";
 			next;
-			select("Todos esses livros s√£o seus?");
+			select("Todos esses livros s„o seus?");
 			mes "[Garoto Ocupado]";
 			mes "Esses?";
 			mes "Ah, eu fui enviado para entregar esses pelo meu trabalho.";
@@ -362,61 +362,61 @@ prontera,248,212,3	script	Garoto Ocupado#prt	4_M_KID1,3,3,{
 			next;
 			mes "[Garoto Ocupado]";
 			mes "Bem...";
-			mes "Eu devia entreg√°-los com facilidade, mas eu fico com medo de morrer, quando viajo pelo Aeroplano todo o caminho de Juno.";
+			mes "Eu devia entreg·-los com facilidade, mas eu fico com medo de morrer, quando viajo pelo Aeroplano todo o caminho de Juno.";
 			emotion e_dots;
 			next;
 			mes "[Garoto Ocupado]";
 			mes "Agora eu estou com problemas!";
-			mes "Eu nunca me atrasei, mas desta vez eu n√£o poderei ajudar.";
-			mes "N√£o h√° nada que eu possa fazer!";
+			mes "Eu nunca me atrasei, mas desta vez eu n„o poderei ajudar.";
+			mes "N„o h· nada que eu possa fazer!";
 			mes "Ah, eu vou perder este emprego!";
 			emotion e_sob;
 			next;
 			mes "[Garoto Ocupado]";
-			mes "Espera... Voc√™s aventureiros viajam muito, certo?";
-			mes "Se voc√™ viajar para Juno, voc√™ poderia fazer o favor de entregar estes livros para mim?";
-			mes "Eu estarei em apuros se eu n√£o entregar estes livros...";
+			mes "Espera... VocÍs aventureiros viajam muito, certo?";
+			mes "Se vocÍ viajar para Juno, vocÍ poderia fazer o favor de entregar estes livros para mim?";
+			mes "Eu estarei em apuros se eu n„o entregar estes livros...";
 			next;
 			callsub S_GetBooks;
 			mes "[Garoto Ocupado]";
 			mes "E-eu entendo.";
-			mes "N√£o √© problema seu, eu sei, mas eu estou muito desesperado...";
+			mes "N„o È problema seu, eu sei, mas eu estou muito desesperado...";
 			emotion e_sob;
 			prt_curse = 2;
 			close;
 		}
 		else if (prt_curse == 2) {
 			mes "[Garoto Ocupado]";
-			mes "Ah, Ol√° novamente.";
+			mes "Ah, Ol· novamente.";
 			mes "Desculpe, mas eu estou tentando me concentrar aqui.";
 			mes "Tentando invocar toda a minha coragem e em-embarcar no Aeroplano!";
-			mes "Argh! N√£o, n√£o posso fazer isto!";
+			mes "Argh! N„o, n„o posso fazer isto!";
 			emotion e_dots;
 			next;
 			callsub S_GetBooks;
 			mes "[Garoto Ocupado]";
-			mes "^333333*Solu√ßo...*^000000";
+			mes "^333333*SoluÁo...*^000000";
 			mes "O que eu farei?";
-			mes "Este cara est√° esperando por mim para entregar seus livros por um bom tempo agora...";
+			mes "Este cara est· esperando por mim para entregar seus livros por um bom tempo agora...";
 			emotion e_sob;
 			close;
 		}
 		else if (prt_curse == 3) {
 			mes "[Garoto Ocupado]";
 			mes "Oh, por favor entregue estes livros que eu lhe dei para o ^FF0000Sr. Karlomoff^000000.";
-			mes "Que deve estar esperando pr√≥ximo da Biblioteca de Juno.";
+			mes "Que deve estar esperando prÛximo da Biblioteca de Juno.";
 			mes "Obrigado novamente por sua ajuda!";
 			close;
 		}
 		mes "[Garoto Ocupado]";
-		mes "Argh! Ser√° que d√° pra me deixar sozinho para que eu possa trabalhar?";
+		mes "Argh! Ser· que d· pra me deixar sozinho para que eu possa trabalhar?";
 		mes "Eu tenho um trabalho importante para fazer!";
 		mes "Quando eu terminar de arrumar esses livros, eu preciso...";
 		mes "Preciso fazer alguns preparativos!";
 		close;
 	}
 	mes "[Garoto Ocupado]";
-	mes "Argh! Ser√° que d√° pra me deixar sozinho para que eu possa trabalhar?";
+	mes "Argh! Ser· que d· pra me deixar sozinho para que eu possa trabalhar?";
 	mes "Eu tenho um trabalho importante para fazer! Quando eu terminar de arrumar esses livros, eu preciso...";
 	mes "Preciso fazer alguns preparativos!";
 	close;
@@ -430,24 +430,24 @@ OnTouch:
 			next;
 			mes "[Garoto Ocupado]";
 			mes "Ei, olhe por onde anda!";
-			mes "Voc√™ n√£o pode ser mais cuidadoso?!";
+			mes "VocÍ n„o pode ser mais cuidadoso?!";
 			emotion e_ag;
 			next;
 			mes "["+strcharinfo(0)+"]";
 			mes "Oops, eu lamento muito.";
-			mes "Voc√™ est√° bem?";
+			mes "VocÍ est· bem?";
 			next;
 			mes "[Garoto Ocupado]";
-			mes "Sim, mas n√£o gra√ßas a voc√™!";
-			mes "Oh... N√£o se preocupe, eu estou bem.";
+			mes "Sim, mas n„o graÁas a vocÍ!";
+			mes "Oh... N„o se preocupe, eu estou bem.";
 			next;
-			mes "^3355FFVoc√™ percebe que o garoto deixou cair muitos livros de capa dura que provavelmente s√£o sobre ru√≠nas e suas lendas, baseado no seus t√≠tulos.";
-			mes "O garoto esquece de si pr√≥prio e come√ßa a empilhar cuidadosamente os livros.^000000";
+			mes "^3355FFVocÍ percebe que o garoto deixou cair muitos livros de capa dura que provavelmente s„o sobre ruÌnas e suas lendas, baseado no seus tÌtulos.";
+			mes "O garoto esquece de si prÛprio e comeÁa a empilhar cuidadosamente os livros.^000000";
 			next;
-			if (select("Deix√°-lo:Ajud√°-lo a empilhar os livros") == 1) {
+			if (select("Deix·-lo:Ajud·-lo a empilhar os livros") == 1) {
 				mes "[Garoto Ocupado]";
-				mes "Da pr√≥xima vez, olhe por onde anda, certo?";
-				mes "Digo, voc√™ pode quebrar algo se continuar sem cuidado!";
+				mes "Da prÛxima vez, olhe por onde anda, certo?";
+				mes "Digo, vocÍ pode quebrar algo se continuar sem cuidado!";
 				prt_curse = 1;
 				close;
 			}
@@ -456,7 +456,7 @@ OnTouch:
 			mes "Ah, obrigado por me ajudar com isso aqui.";
 			mes "Eu aprecio isto.";
 			next;
-			select("Todos esses livros s√£o seus?");
+			select("Todos esses livros s„o seus?");
 			mes "[Garoto Ocupado]";
 			mes "Esses? Ah, eu fui enviado para entregar esses pelo meu trabalho.";
 			mes "Eu preciso levar esses para Juno, para um cliente da Biblioteca de Prontera.";
@@ -464,25 +464,25 @@ OnTouch:
 			next;
 			mes "[Garoto Ocupado]";
 			mes "Bem...";
-			mes "Eu devia entreg√°-los com facilidade, mas eu fico com medo de morrer, quando viajo pelo Aeroplano todo o caminho de Juno.";
+			mes "Eu devia entreg·-los com facilidade, mas eu fico com medo de morrer, quando viajo pelo Aeroplano todo o caminho de Juno.";
 			emotion e_dots;
 			next;
 			mes "[Garoto Ocupado]";
 			mes "Agora eu estou com problemas!";
-			mes "Eu nunca me atrasei, mas desta vez eu n√£o poderei ajudar.";
-			mes "N√£o h√° nada que eu possa fazer!";
+			mes "Eu nunca me atrasei, mas desta vez eu n„o poderei ajudar.";
+			mes "N„o h· nada que eu possa fazer!";
 			mes "Ah, eu vou perder este emprego!";
 			emotion e_sob;
 			next;
 			mes "[Garoto Ocupado]";
-			mes "Espera... Voc√™s aventureiros viajam muito, certo?";
-			mes "Se voc√™ viajar para Juno, voc√™ poderia fazer o favor de entregar estes livros para mim?";
-			mes "Eu estarei em apuros se eu n√£o entregar estes livros...";
+			mes "Espera... VocÍs aventureiros viajam muito, certo?";
+			mes "Se vocÍ viajar para Juno, vocÍ poderia fazer o favor de entregar estes livros para mim?";
+			mes "Eu estarei em apuros se eu n„o entregar estes livros...";
 			next;
 			callsub S_GetBooks;
 			mes "[Garoto Ocupado]";
 			mes "E-eu entendo.";
-			mes "N√£o √© problema seu,";
+			mes "N„o È problema seu,";
 			mes "Eu sei, mas eu estou muito desesperado...";
 			emotion e_sob;
 			prt_curse = 2;
@@ -491,7 +491,7 @@ OnTouch:
 		else if (prt_curse == 3) {
 			mes "[Garoto Ocupado]";
 			mes "Oh, por favor entregue estes livros que eu lhe dei para o ^FF0000Sr. Karlomoff^000000.";
-			mes "Que deve estar esperando pr√≥ximo da Biblioteca de Juno.";
+			mes "Que deve estar esperando prÛximo da Biblioteca de Juno.";
 			mes "Obrigado novamente por sua ajuda!";
 			close;
 		}
@@ -499,14 +499,14 @@ OnTouch:
 	end;
 
 S_GetBooks:
-	if (select("Ajud√°-lo:N√£o ajud√°-lo") == 1) {
+	if (select("Ajud·-lo:N„o ajud·-lo") == 1) {
 		mes "[Garoto Ocupado]";
 		mes "Ah, muito obrigado!";
-		mes "Voc√™ n√£o entende o quanto eu tenho pavor daqueles Aeroplanos.";
-		mes "Agora, voc√™ poderia entregar estes livros para o ^FF0000Sr. Karlomoff^000000 perto da Biblioteca de Juno?";
+		mes "VocÍ n„o entende o quanto eu tenho pavor daqueles Aeroplanos.";
+		mes "Agora, vocÍ poderia entregar estes livros para o ^FF0000Sr. Karlomoff^000000 perto da Biblioteca de Juno?";
 		next;
 		mes "[Garoto Ocupado]";
-		mes "Eu sei que estes livros s√£o muito pesados, mas tenha muito cuidado com eles!";
+		mes "Eu sei que estes livros s„o muito pesados, mas tenha muito cuidado com eles!";
 		mes "Sendo assim,";
 		mes "Obrigado por fazer isto por mim.";
 		mes "Eu quase fiquei maluco com isso...";
@@ -519,8 +519,8 @@ S_GetBooks:
 S_CheckWeight:
 	if ((MaxWeight-Weight) < 2000 || checkweight(1201,1) == 0) {
 		mes "^3355FFEspere um segundo!";
-		mes "Agora, voc√™ est√° carregando muitas coisas com voc√™.";
-		mes "Por favor volte depois de usar o Servi√ßo Kafra para armazenar alguns de seus itens.^000000";
+		mes "Agora, vocÍ est· carregando muitas coisas com vocÍ.";
+		mes "Por favor volte depois de usar o ServiÁo Kafra para armazenar alguns de seus itens.^000000";
 		close;
 	}
 	return;
@@ -529,153 +529,153 @@ S_CheckWeight:
 yuno,311,195,3	script	Historiador#prt01	4_M_SAGE_A,{
 	if ((MaxWeight-Weight) < 2000 || checkweight(1201,1) == 0) {
 		mes "^3355FFEspere um segundo!";
-		mes "Agora, voc√™ est√° carregando muitas coisas com voc√™.";
-		mes "Por favor volte depois de usar o Servi√ßo Kafra para armazenar alguns de seus itens.^000000";
+		mes "Agora, vocÍ est· carregando muitas coisas com vocÍ.";
+		mes "Por favor volte depois de usar o ServiÁo Kafra para armazenar alguns de seus itens.^000000";
 		close;
 	}
 	if (prt_curse < 3) {
 		mes "[Historiador]";
 		mes "O Passado misterioso de Juno esconde grandes segredos.";
 		mes "Tenho certeza disso!";
-		mes "Me anima saber que minha pesquisa me deixar√° muito perto de finalmente desvend√°-lo!";
+		mes "Me anima saber que minha pesquisa me deixar· muito perto de finalmente desvend·-lo!";
 		next;
 		mes "[Historiador]";
-		mes "Mas eu tenho que admitir que eu ainda n√£o sei o quanto eu terei de cavar para descobrir o que eu quero.";
-		mes "√â nosso dever, como historiadores descobrir a verdade sobre o passado, mas isto n√£o ser√° f√°cil.";
+		mes "Mas eu tenho que admitir que eu ainda n„o sei o quanto eu terei de cavar para descobrir o que eu quero.";
+		mes "… nosso dever, como historiadores descobrir a verdade sobre o passado, mas isto n„o ser· f·cil.";
 		next;
 		mes "[Historiador]";
-		mes "Para entender, para ver a verdade do passado com meus pr√≥prios olhos...";
-		mes "Eu at√© venderia minha alma pela oportunidade.";
+		mes "Para entender, para ver a verdade do passado com meus prÛprios olhos...";
+		mes "Eu atÈ venderia minha alma pela oportunidade.";
 		close;
 	}
 	else if (prt_curse == 3) {
-		mes "^3355FFEnquanto voc√™ se aproximava, este historiador de repente fechou o livro que estava lendo.";
-		mes "Olhou para cima, e suspirou profundamente em uma v√£ tentativa de aliviar sua tens√£o.^000000";
+		mes "^3355FFEnquanto vocÍ se aproximava, este historiador de repente fechou o livro que estava lendo.";
+		mes "Olhou para cima, e suspirou profundamente em uma v„ tentativa de aliviar sua tens„o.^000000";
 		next;
 		mes "[Historiador]";
 		mes "GRRRRRRRRR!";
-		mes "Onde est√£o meus livros?!";
+		mes "Onde est„o meus livros?!";
 		emotion e_ag;
 		next;
-		select("Voc√™ est√° bem?");
+		select("VocÍ est· bem?");
 		mes "[Historiador]";
-		mes "Er? Oh. Desculpe por voc√™ ter visto isso.";
-		mes "S√≥ estou extremamente chateado.";
-		mes "√â o seguinte:";
-		mes "Eu estou esperando uma entrega de uns livros de pesquisa de Prontera, mas eles ainda n√£o chegaram.";
+		mes "Er? Oh. Desculpe por vocÍ ter visto isso.";
+		mes "SÛ estou extremamente chateado.";
+		mes "… o seguinte:";
+		mes "Eu estou esperando uma entrega de uns livros de pesquisa de Prontera, mas eles ainda n„o chegaram.";
 		next;
 		mes "[Historiador]";
-		mes "Na verdade, o garoto da entrega est√° muito atrasado.";
-		mes "Isso ir√° atrasar minha pesquisa consideravelmente, j√° que eu n√£o posso prosseguir sem material novo para estudar.";
+		mes "Na verdade, o garoto da entrega est· muito atrasado.";
+		mes "Isso ir· atrasar minha pesquisa consideravelmente, j· que eu n„o posso prosseguir sem material novo para estudar.";
 		next;
 		if (countitem(7431) > 0) {
-			select("Com licen√ßa, mas qual √© o seu nome?");
+			select("Com licenÁa, mas qual È o seu nome?");
 			mes "[Historiador]";
-			mes "Hm? Eu sou Karlomoff, o principal estudioso do Grupo de Pesquisa Hist√≥rica Rekenber.";
-			mes "Voc√™ precisa de algo, ou est√° procurando por algu√©m em especial?";
+			mes "Hm? Eu sou Karlomoff, o principal estudioso do Grupo de Pesquisa HistÛrica Rekenber.";
+			mes "VocÍ precisa de algo, ou est· procurando por alguÈm em especial?";
 			next;
 		}
 		else {
 			select("Oh, eu estou fazendo a entrega dos livros para ele.");
 			emotion e_what;
 			mes "[Historiador]";
-			mes "Ah, √©?";
-			mes "√ìtimo, voc√™ est√° aqui!";
-			mes "Ent√£o, onde est√£o os livros?";
+			mes "Ah, È?";
+			mes "”timo, vocÍ est· aqui!";
+			mes "Ent„o, onde est„o os livros?";
 			next;
 			mes "["+strcharinfo(0)+"]";
 			mes "Eu...";
-			mes "Eles n√£o est√£o comigo no momento.";
+			mes "Eles n„o est„o comigo no momento.";
 			next;
 			mes "[Historiador]";
-			mes "Qu√™...?";
-			mes "N√£o vai me dizer que voc√™ os perdeu!";
-			mes "Aqueles livros n√£o tinham pre√ßo!";
-			mes "Voc√™ veio at√© aqui s√≥ para me dizer isso?";
+			mes "QuÍ...?";
+			mes "N„o vai me dizer que vocÍ os perdeu!";
+			mes "Aqueles livros n„o tinham preÁo!";
+			mes "VocÍ veio atÈ aqui sÛ para me dizer isso?";
 			next;
 			mes "[Historiador]";
-			mes "Bem, eu acho que voc√™ terpa que relatar a perda dos livros e ir pegar algumas c√≥pias novas dos livros que voc√™ deveria ter entregue.";
-			mes "Agora v√° logo, eu tenho que trabalhar!";
+			mes "Bem, eu acho que vocÍ terpa que relatar a perda dos livros e ir pegar algumas cÛpias novas dos livros que vocÍ deveria ter entregue.";
+			mes "Agora v· logo, eu tenho que trabalhar!";
 			close;
 		}
 		select("Certo, eu trouxe os seus livros.");
 		mes "[Historiador]";
-		mes "O que? Mas voc√™ n√£o √© o garoto da entrega.";
-		mes "Bem, deixe-me ver os livros que voc√™ trouxe. Hm...";
-		mes "Assim como eu pensei: o Reino de Rune-Midgard tem uma grande quantidade de informa√ß√µes antigas.";
+		mes "O que? Mas vocÍ n„o È o garoto da entrega.";
+		mes "Bem, deixe-me ver os livros que vocÍ trouxe. Hm...";
+		mes "Assim como eu pensei: o Reino de Rune-Midgard tem uma grande quantidade de informaÁıes antigas.";
 		next;
 		mes "[Historiador]";
 		mes "Ah, muito obrigador por trazer estes livros.";
-		mes "No entanto, pelo seu modo de vestir, posso dizer que voc√™ √© um aventureiro.";
+		mes "No entanto, pelo seu modo de vestir, posso dizer que vocÍ È um aventureiro.";
 		mes "O que aconteceu com o garoto da entrega que deveria trazer estes livros para mim.";
 		next;
 		mes "[Historiador]";
 		mes "..........?";
 		mes "Medo de andar de Aeroplano?";
 		mes "Medo de altura?";
-		mes "Bem, isso √© perfeitamente compreensivo.";
+		mes "Bem, isso È perfeitamente compreensivo.";
 		mes "O pobre garoto deveria ter me falado sobre isso antes.";
 		next;
 		mes "[Historiador]";
-		mes "Bem, j√° se passou um tempo desde que eu tive uma visita.";
-		mes "Voc√™ gostaria de ficar para conversar um pouco?";
-		mes "Me d√™ um minuto para pegar um copo de √°gua gelada.";
+		mes "Bem, j· se passou um tempo desde que eu tive uma visita.";
+		mes "VocÍ gostaria de ficar para conversar um pouco?";
+		mes "Me dÍ um minuto para pegar um copo de ·gua gelada.";
 		prt_curse = 4;
 		delitem 7431,1; //Books
 		close;
 	}
 	else if (prt_curse == 4) {
 		mes "[Historiador]";
-		mes "Ah, esse copo de √°gua era tudo que eu precisava para me refrescar.";
+		mes "Ah, esse copo de ·gua era tudo que eu precisava para me refrescar.";
 		mes "Deixe lhe contar um pouco sobre o meu trabalho.";
 		next;
 		mes "[Historiador]";
 		mes "Eu devia ter mencionado antes.";
-		mes "Mas meu nome √© Karlomoff e eu trabalho no Grupo de Pesquisa Hist√≥rica Rekenber como seu estudioso principal.";
-		mes "Recentemente n√≥es terminamos nosso projeto na Rep√∫blica de Schwaltzvalt.";
+		mes "Mas meu nome È Karlomoff e eu trabalho no Grupo de Pesquisa HistÛrica Rekenber como seu estudioso principal.";
+		mes "Recentemente nÛes terminamos nosso projeto na Rep˙blica de Schwaltzvalt.";
 		next;
 		mes "[Historiador]";
-		mes "Agora, n√≥s estamos tentando aprender";
-		mes "mais sobre a hist√≥ria do Reino de";
+		mes "Agora, nÛs estamos tentando aprender";
+		mes "mais sobre a histÛria do Reino de";
 		mes "Rune-Midgard.";
-		mes "N√≥s acreditamos que esteja ligada a Rep√∫blica de Schwaltzvalt por que partilham do mesmo continente.";
+		mes "NÛs acreditamos que esteja ligada a Rep˙blica de Schwaltzvalt por que partilham do mesmo continente.";
 		mes "Faz sentido, certo?";
 		next;
 		mes "[Historiador]";
-		mes "Por fim, esperamos que novas informa√ß√µes da nossa pesquisa de Rune-Midgard trar√£o uma nova luz sobre a atual compreens√£o do passado Rep√∫blica Schwaltzvalt.";
+		mes "Por fim, esperamos que novas informaÁıes da nossa pesquisa de Rune-Midgard trar„o uma nova luz sobre a atual compreens„o do passado Rep˙blica Schwaltzvalt.";
 		next;
 		mes "[Historiador]";
-		mes "Incluindo eu mesmo, h√° mais ^3131FF3 membros do Grupo de Pesquisa Hist√≥rica Rekenber^000000.";
-		mes "Que est√£o estudando a hist√≥ria do Reino de Rune-Midgard.";
+		mes "Incluindo eu mesmo, h· mais ^3131FF3 membros do Grupo de Pesquisa HistÛrica Rekenber^000000.";
+		mes "Que est„o estudando a histÛria do Reino de Rune-Midgard.";
 		next;
-		select("Grupo de Pesquisa Hist√≥rica Rekenber?");
+		select("Grupo de Pesquisa HistÛrica Rekenber?");
 		mes "[Historiador]";
-		mes "Voc√™s aventureiros de Rune-";
-		mes "Midgarts podem n√£o saber, mas";
-		mes "a Corpora√ß√£o Rekenber tem";
-		mes "controle n√£o oficial sobre";
-		mes "a Rep√∫blica de Schwaltzvalt.";
-		mes "Alguns n√£o gostam disso, outros n√£o ligam.";
+		mes "VocÍs aventureiros de Rune-";
+		mes "Midgarts podem n„o saber, mas";
+		mes "a CorporaÁ„o Rekenber tem";
+		mes "controle n„o oficial sobre";
+		mes "a Rep˙blica de Schwaltzvalt.";
+		mes "Alguns n„o gostam disso, outros n„o ligam.";
 		next;
 		mes "[Historiador]";
-		mes "De qualquer modo, Rekenber tem seu pr√≥prio Grupo de Pesquisa Hist√≥rica desde a redescoberta de tecnologias antigas";
+		mes "De qualquer modo, Rekenber tem seu prÛprio Grupo de Pesquisa HistÛrica desde a redescoberta de tecnologias antigas";
 		mes "Tem sido fundamental para seu sucesso.";
-		mes "Assim t√£o longe quanto posso dizer.";
+		mes "Assim t„o longe quanto posso dizer.";
 		mes "Pessoalmente, eu gosto de buscar pelo conhecimento.";
 		next;
 		mes "[Historiador]";
-		mes "Ah, aqui est√° um fato interessante!";
-		mes "Voc√™ sabia que o t√≠tulo de nobreza de Rune-Midgarts nem sempre √© passado atrav√©s de uma mesma fam√≠lia?";
+		mes "Ah, aqui est· um fato interessante!";
+		mes "VocÍ sabia que o tÌtulo de nobreza de Rune-Midgarts nem sempre È passado atravÈs de uma mesma famÌlia?";
 		next;
 		mes "[Historiador]";
-		mes "Na verdade, existem v√°rias fam√≠lias reais que realizam uma competi√ß√£o especial para decidir qual pr√≠ncipe ser√° o pr√≥ximo rei.";
+		mes "Na verdade, existem v·rias famÌlias reais que realizam uma competiÁ„o especial para decidir qual prÌncipe ser· o prÛximo rei.";
 		mes "Fascinante...";
 		next;
-		select("V√°rias fam√≠lias reais?");
+		select("V·rias famÌlias reais?");
 		mes "[Historiador]";
 		mes "Sim, vou tentar explicar isto rapidamente.";
-		mes "H√° um total de 7 fam√≠lias reais.";
-		mes "Cada fam√≠lia √© descendente de um dos 7 guerreiros que fundaram o Reino de Rune-Midgard.";
+		mes "H· um total de 7 famÌlias reais.";
+		mes "Cada famÌlia È descendente de um dos 7 guerreiros que fundaram o Reino de Rune-Midgard.";
 		next;
 		mes "[Historiador]";
 		mes "De acordo com os registros Jormungand, a serpente da terra, apareceu e trouxe o caos para todo o continente.";
@@ -683,85 +683,85 @@ yuno,311,195,3	script	Historiador#prt01	4_M_SAGE_A,{
 		next;
 		mes "[Historiador]";
 		mes "Com o retorno da paz, os 7 guerreiros estabeleceram o Reino de Rune-Midgard.";
-		mes "Escolher√£o Tristram Gaebolg 3¬∫ como o primeiro governante do reino.";
+		mes "Escolher„o Tristram Gaebolg 3∫ como o primeiro governante do reino.";
 		next;
 		mes "[Historiador]";
-		mes "Sabendo que seus descendentes podem n√£o serem sempre merecedores de mandar no Reino.";
-		mes "Os 7 guerreiros concordaram em realizar uma competi√ß√£o entre cada gera√ß√£o de suas fam√≠lias para prevenir a corrup√ß√£o.";
+		mes "Sabendo que seus descendentes podem n„o serem sempre merecedores de mandar no Reino.";
+		mes "Os 7 guerreiros concordaram em realizar uma competiÁ„o entre cada geraÁ„o de suas famÌlias para prevenir a corrupÁ„o.";
 		next;
 		emotion e_swt2;
 		mes "[Historiador]";
-		mes "Oh... N√£o est√° muito animado com esta hist√≥ria, huh?";
-		mes "Bem, talvez se eu cantar o antigo poema sobre este mito, voc√™ dever√° entender melhor...";
+		mes "Oh... N„o est· muito animado com esta histÛria, huh?";
+		mes "Bem, talvez se eu cantar o antigo poema sobre este mito, vocÍ dever· entender melhor...";
 		next;
 		mes "[Historiador]";
 		mes "^FF0000*A grande serpente engoliu o mar.*^000000";
-		mes "^FF0000*A √°guia do arco-√≠ris engoliu a serpente.*^000000";
-		mes "^FF0000*A √°guia ent√£o construiu seu ninho.*^000000";
+		mes "^FF0000*A ·guia do arco-Ìris engoliu a serpente.*^000000";
+		mes "^FF0000*A ·guia ent„o construiu seu ninho.*^000000";
 		mes "^FF0000*Um ninho sob o mar encoberto.*^000000";
 		next;
 		mes "[Historiador]";
-		mes "^333333*Ahem*^000000 Como v√™, estou um pouco surdo.";
-		mes "Mas o ponto √© que as pessoas continuam a elogiar os 7 guerreiros gra√ßas a essa can√ß√£o.";
-		mes "N√£o √© interessante saber sobre isso?";
+		mes "^333333*Ahem*^000000 Como vÍ, estou um pouco surdo.";
+		mes "Mas o ponto È que as pessoas continuam a elogiar os 7 guerreiros graÁas a essa canÁ„o.";
+		mes "N„o È interessante saber sobre isso?";
 		prt_curse = 5;
 		close;
 	}
 	else if (prt_curse == 5) {
 		mes "[Historiador]";
-		mes "Me desculpe se eu fiquei falando demais sobre o hist√≥rico de Rune-Midgard.";
-		mes "Contudo, eu espero que voc√™ tenha achado este conto pelo menos um pouco agrad√°vel.";
+		mes "Me desculpe se eu fiquei falando demais sobre o histÛrico de Rune-Midgard.";
+		mes "Contudo, eu espero que vocÍ tenha achado este conto pelo menos um pouco agrad·vel.";
 		next;
 		mes "[Historiador]";
-		mes "Oh! Voc√™ est√° retornando ao Reindo de Rune-Midgard?";
-		mes "Se estiver, ent√£o eu tenho um favor para lhe pedir.";
-		mes "Voc√™ poderia entregar este relat√≥rio que eu escrevi para minha colega, em Morroc?";
+		mes "Oh! VocÍ est· retornando ao Reindo de Rune-Midgard?";
+		mes "Se estiver, ent„o eu tenho um favor para lhe pedir.";
+		mes "VocÍ poderia entregar este relatÛrio que eu escrevi para minha colega, em Morroc?";
 		next;
 		mes "[Historiador]";
-		mes "Seria um grande ajuda para mim, se voc√™ pudesse levar este relat√≥rio para ela.";
-		mes "Ah, o nome dela √© Rodafrian.";
-		mes "Estou certo de que voc√™ pode encontr√°-la em algum lugar na cidade do deserto.";
+		mes "Seria um grande ajuda para mim, se vocÍ pudesse levar este relatÛrio para ela.";
+		mes "Ah, o nome dela È Rodafrian.";
+		mes "Estou certo de que vocÍ pode encontr·-la em algum lugar na cidade do deserto.";
 		prt_curse = 6;
 		getitem 7342,1; //File01
 		close;
 	}
 	else if (prt_curse == 6) {
 		mes "[Historiador]";
-		mes "Por favor encontre minha colega, Rodafrian, em Morroc e entregue meu relat√≥rio para ela.";
-		mes "Voc√™ deve ser capaz de encontr√°-la buscando pelos edif√≠cios da cidade.";
+		mes "Por favor encontre minha colega, Rodafrian, em Morroc e entregue meu relatÛrio para ela.";
+		mes "VocÍ deve ser capaz de encontr·-la buscando pelos edifÌcios da cidade.";
 		next;
 		if (select("Eu irei:Posso escutar o poema novamente?") == 1) {
 			mes "[Historiador]";
 			mes "Mais uma vez, obrigado pela sua ajuda.";
-			mes "Isso ir√° agilizar o processo de minha pesquisa, especialmente porque estes livros foram entregues com atraso...";
+			mes "Isso ir· agilizar o processo de minha pesquisa, especialmente porque estes livros foram entregues com atraso...";
 		}
 		else {
 			mes "[Historiador]";
-			mes "Poema? Ah, voc√™ diz o elogio aos 7 que fundaram o Reino de Rune-Midgard?";
+			mes "Poema? Ah, vocÍ diz o elogio aos 7 que fundaram o Reino de Rune-Midgard?";
 			mes "Claro, vamos ver...";
 			next;
 			mes "[Historiador]";
 			mes "^FF0000*A grande serpente engoliu o mar.*^000000";
-			mes "^FF0000*A √°guia do arco-√≠ris engoliu a serpente.*^000000";
-			mes "^FF0000*A √°guia ent√£o construiu seu ninho.*^000000";
+			mes "^FF0000*A ·guia do arco-Ìris engoliu a serpente.*^000000";
+			mes "^FF0000*A ·guia ent„o construiu seu ninho.*^000000";
 			mes "^FF0000*Um ninho sob o mar encoberto.*^000000";
 			next;
 			mes "[Historiador]";
-			mes "Voc√™ deve estar mais interessado na hist√≥ria do que eu pensei.";
-			mes "Se voc√™ quiser, eu posso escrever uma carta ou recomenda√ß√£o para Grupo de Pesquisa Hist√≥rica Rekenber.";
+			mes "VocÍ deve estar mais interessado na histÛria do que eu pensei.";
+			mes "Se vocÍ quiser, eu posso escrever uma carta ou recomendaÁ„o para Grupo de Pesquisa HistÛrica Rekenber.";
 		}
 		close;
 	}
 	else if (prt_curse > 55) {
 		mes "[Historiador]";
-		mes "Ah, j√° se passou um tempo desde a ultima vez que vi voc√™.";
-		mes "Rodafrian veio me visitar a alguns dias atr√°s.";
-		mes "Eu pensei que ela viria aqui para me dar bronca ou amea√ßar...";
+		mes "Ah, j· se passou um tempo desde a ultima vez que vi vocÍ.";
+		mes "Rodafrian veio me visitar a alguns dias atr·s.";
+		mes "Eu pensei que ela viria aqui para me dar bronca ou ameaÁar...";
 		next;
 		mes "[Historiador]";
 		mes "Foi muito surreal.";
-		mes "Ela segurou sua raiva gra√ßas a uma incr√≠vel revela√ß√£o e finalmente me colocar no meu lugar.";
-		mes "Eu n√£o sabia que ela poderia ser t√£o competitiva!";
+		mes "Ela segurou sua raiva graÁas a uma incrÌvel revelaÁ„o e finalmente me colocar no meu lugar.";
+		mes "Eu n„o sabia que ela poderia ser t„o competitiva!";
 		close;
 	}
 	else {
@@ -775,25 +775,25 @@ yuno,311,195,3	script	Historiador#prt01	4_M_SAGE_A,{
 morocc_in,45,126,3	script	Historiadora#prt02	4_F_GON,{
 	if ((MaxWeight-Weight) < 2000 || checkweight(1201,1) == 0) {
 		mes "^3355FFEspere um segundo!";
-		mes "Agora, voc√™ est√° carregando muitas coisas com voc√™.";
-		mes "Por favor volte depois de usar o Servi√ßo Kafra para armazenar alguns de seus itens.^000000";
+		mes "Agora, vocÍ est· carregando muitas coisas com vocÍ.";
+		mes "Por favor volte depois de usar o ServiÁo Kafra para armazenar alguns de seus itens.^000000";
 		close;
 	}
 	if (prt_curse == 6) {
 		if (countitem(7342) < 0) {
-			mes "^3355FFVoc√™ parece ter perdido o Relat√≥rio de Karlomoff.";
-			mes "Voc√™ precisa entreg√°-lo para um de seus colegas neste local...";
+			mes "^3355FFVocÍ parece ter perdido o RelatÛrio de Karlomoff.";
+			mes "VocÍ precisa entreg·-lo para um de seus colegas neste local...";
 			close;
 		}
 		mes "[Historiadora Rodafrian]";
-		mes "Ah, porque este local tem que ser t√£o quente?";
-		mes "Isso n√£o pode ser bom para minha pele...";
-		mes "Aah, eu queria estar de volta em minha casa na Rep√∫blica de Schwaltzvalt.";
+		mes "Ah, porque este local tem que ser t„o quente?";
+		mes "Isso n„o pode ser bom para minha pele...";
+		mes "Aah, eu queria estar de volta em minha casa na Rep˙blica de Schwaltzvalt.";
 		emotion e_sob;
 		next;
 		mes "[Historiadora Rodafrian]";
-		mes "Ol√°.";
-		mes "Co-Com licen√ßa, posso ajud√°-lo?";
+		mes "Ol·.";
+		mes "Co-Com licenÁa, posso ajud·-lo?";
 		next;
 		select("O Sr. Karlomoff me enviou.");
 		mes "[Historiadora Rodafrian]";
@@ -801,87 +801,87 @@ morocc_in,45,126,3	script	Historiadora#prt02	4_F_GON,{
 		mes "Ele? Tudo bem...";
 		mes "O que ele enviou para mim?";
 		next;
-		mes "^3355FFVoc√™ entrega relat√≥rio de Karlomoff para Rodafrian.^000000";
+		mes "^3355FFVocÍ entrega relatÛrio de Karlomoff para Rodafrian.^000000";
 		next;
 		mes "[Historiadora Rodafrian]";
-		mes "Um relat√≥rio?";
-		mes "O que √© que ele quer me mostrar dessa vez?";
+		mes "Um relatÛrio?";
+		mes "O que È que ele quer me mostrar dessa vez?";
 		mes "^333333*Suspiro*^000000";
 		mes "Oh bem, obrigada pelo problema.";
-		mes "Eu irei olhar o relat√≥rio, apesar de n√£o esperar muito j√° que Karlomoff escreveu este relat√≥rio.";
+		mes "Eu irei olhar o relatÛrio, apesar de n„o esperar muito j· que Karlomoff escreveu este relatÛrio.";
 		next;
 		if (select("Perguntar a ela sobre a pesquisa:Parar Conversa") == 1) {
 			mes "[Historiadora Rodafrian]";
-			mes "Ah, voc√™ sabe sobre o Grupo Hist√≥rico de Pesquisa Rekenber?";
-			mes "Karlomoff j√° deve ter falado com voc√™.";
+			mes "Ah, vocÍ sabe sobre o Grupo HistÛrico de Pesquisa Rekenber?";
+			mes "Karlomoff j· deve ter falado com vocÍ.";
 			mes "Atualmente estamos pesquisando sobre o Reino de Rune-Midgard.";
 			next;
 			mes "[Historiadora Rodafrian]";
 			mes "Agora, embora eu entenda o valor de livros antigos e registros.";
 			mes "Eu acho que Karlomoff se baseia neles demais.";
-			mes "Eu prefiro a investiga√ß√£o ativa que est√° na veia de um arque√≥logo.";
+			mes "Eu prefiro a investigaÁ„o ativa que est· na veia de um arqueÛlogo.";
 			next;
 			mes "[Historiadora Rodafrian]";
 			mes "No momento, eu estou gastando tempo em Morroc para visitar a";
-			mes "Esfinge e as Pir√¢mides e ver se eu posso escavar algumas rel√≠quias.";
-			mes "Felizmente eu posso descobrir alguma nova evid√™ncia hist√≥rica por l√°.";
+			mes "Esfinge e as Pir‚mides e ver se eu posso escavar algumas relÌquias.";
+			mes "Felizmente eu posso descobrir alguma nova evidÍncia histÛrica por l·.";
 			next;
 			mes "[Historiadora Rodafrian]";
-			mes "Se voc√™ est√° interessado em aprender mais sobre a hist√≥ria de Morroc, ent√£o v√° adiante e fale com meu assistente.";
-			mes "Ele √© apaixonado por estudar a cultura e conhecimento desta cidade.";
+			mes "Se vocÍ est· interessado em aprender mais sobre a histÛria de Morroc, ent„o v· adiante e fale com meu assistente.";
+			mes "Ele È apaixonado por estudar a cultura e conhecimento desta cidade.";
 			next;
 			mes "[Historiadora Rodafrian]";
-			mes "Realmente, o povo de Morroc sabe apreciar a hist√≥ria da cidade, e passa o poema sobre os tempos antigos atrav√©s das gera√ß√µes.";
+			mes "Realmente, o povo de Morroc sabe apreciar a histÛria da cidade, e passa o poema sobre os tempos antigos atravÈs das geraÁıes.";
 			mes "Vamos ver, como era mesmo?";
 			next;
 			mes "[Historiadora Rodafrian]";
 			mes "^FF0000*A grande serpente*^000000";
 			mes "^FF0000*engoliu o mar.*^000000";
-			mes "^FF0000*A √°guia do arco-√≠ris*^000000";
+			mes "^FF0000*A ·guia do arco-Ìris*^000000";
 			mes "^FF0000*engoliu a serpente, e*^000000";
 			mes "e... e... Hm. Ah cara.";
 			next;
 			mes "[Historiadora Rodafrian]";
-			mes "Eu n√£o consigo lembrar a pr√≥xima linha!";
-			mes "Por acaso voc√™ j√° escutou este poema antes?";
+			mes "Eu n„o consigo lembrar a prÛxima linha!";
+			mes "Por acaso vocÍ j· escutou este poema antes?";
 			next;
-			switch(select("Sim, ja ouvi.:Sim, mas √© diferente.:N√£o.")) {
+			switch(select("Sim, ja ouvi.:Sim, mas È diferente.:N„o.")) {
 			case 1:
 				mes "[Historiadora Rodafrian]";
-				mes "Ah, isso √© √≥timo!";
+				mes "Ah, isso È Ûtimo!";
 				mes "Poderia me dizer qual a linha que segue essa letra?";
 				next;
 				mes "^FF0000*A grande serpente*^000000";
 				mes "^FF0000*engoliu o mar.*^000000";
-				mes "^FF0000*A √°guia do arco-√≠ris*^000000";
+				mes "^FF0000*A ·guia do arco-Ìris*^000000";
 				mes "^FF0000*engoliu a serpente.*^000000";
 				mes "......................";
 				next;
 				input .@answer$;
-				if (.@answer$ == "Ent√£o a √°guia construiu seu ninho.") {
+				if (.@answer$ == "Ent„o a ·guia construiu seu ninho.") {
 					mes "[Historiadora Rodafrian]";
-					mes "S√©rio? Faz sentido, mas estas letras s√£o diferentes das que eu escutei.";
+					mes "SÈrio? Faz sentido, mas estas letras s„o diferentes das que eu escutei.";
 					mes "Hmmmm...";
-					mes "Se voc√™ n√£o se importa, poderia me dizer o seu nome?";
+					mes "Se vocÍ n„o se importa, poderia me dizer o seu nome?";
 					callsub S_GiveName,1;
 				}
 				else {
 					mes "[Historiadora Rodafrian]";
 					mes "Huh...?";
-					mes "Isso n√£o parece nada com o que eu escutei.";
-					mes "Voc√™ tem certeza de que essa √© a letra que escutou?";
+					mes "Isso n„o parece nada com o que eu escutei.";
+					mes "VocÍ tem certeza de que essa È a letra que escutou?";
 					delitem 7342,1; //File01
 					prt_curse = 7;
 					close;
 				}
 			case 2:
 				mes "[Historiadora Rodafrian]";
-				mes "Como √©?";
-				mes "O poema √© diferente?";
+				mes "Como È?";
+				mes "O poema È diferente?";
 				mes "Hmm....";
-				mes "Ent√£o, poderia cantar a vers√£o que voc√™ sabe para mim?";
+				mes "Ent„o, poderia cantar a vers„o que vocÍ sabe para mim?";
 				next;
-				mes "^3355FFVoc√™ limpa a sua garganta e come√ßa a cantar o poema que voc√™ escutou de Karlomoff.^000000";
+				mes "^3355FFVocÍ limpa a sua garganta e comeÁa a cantar o poema que vocÍ escutou de Karlomoff.^000000";
 				next;
 				mes "["+strcharinfo(0)+"]";
 				input .@line$;
@@ -893,17 +893,17 @@ morocc_in,45,126,3	script	Historiadora#prt02	4_F_GON,{
 				else mes "* "+.@line$+"*";
 
 				input .@line$;
-				if (.@line$ == "A √°guia do arco-√≠ris engoliu a serpente.") {
+				if (.@line$ == "A ·guia do arco-Ìris engoliu a serpente.") {
 					.@total += 1;
-					mes "*A √°guia do arco-√≠ris*";
+					mes "*A ·guia do arco-Ìris*";
 					mes "*engoliu a serpente.*";
 				}
 				else mes "*"+.@line$+"*";
 
 				input .@line$;
-				if (.@line$ == "A √°guia ent√£o construiu seu ninho.") {
+				if (.@line$ == "A ·guia ent„o construiu seu ninho.") {
 					.@total += 1;
-					mes "*A √°guia ent√£o construiu seu ninho.*";
+					mes "*A ·guia ent„o construiu seu ninho.*";
 				}
 				else mes "*"+.@line$+"*";
 
@@ -916,16 +916,16 @@ morocc_in,45,126,3	script	Historiadora#prt02	4_F_GON,{
 				next;
 				if (.@total == 4) {
 					mes "[Historiadora Rodafrian]";
-					mes "S√©rio? Faz sentido, mas estas letras s√£o diferentes das que eu escutei.";
+					mes "SÈrio? Faz sentido, mas estas letras s„o diferentes das que eu escutei.";
 					mes "Hmmmm...";
-					mes "Se voc√™ n√£o se importa, poderia me dizer o seu nome?";
+					mes "Se vocÍ n„o se importa, poderia me dizer o seu nome?";
 					callsub S_GiveName,1;
 				}
 				else {
 					mes "[Historiadora Rodafrian]";
 					mes "Huh...?";
-					mes "Isso n√£o parece nada com o que eu escutei.";
-					mes "Voc√™ tem certeza de que essa √© a letra que escutou?";
+					mes "Isso n„o parece nada com o que eu escutei.";
+					mes "VocÍ tem certeza de que essa È a letra que escutou?";
 					delitem 7342,1; //File01
 					prt_curse = 7;
 					close;
@@ -935,20 +935,20 @@ morocc_in,45,126,3	script	Historiadora#prt02	4_F_GON,{
 				mes "............";
 				mes "........................";
 				mes "Pois bem.";
-				mes "Voc√™ poderia me dizer o seu verdadeiro nome, aventureiro?";
+				mes "VocÍ poderia me dizer o seu verdadeiro nome, aventureiro?";
 				callsub S_GiveName,1;
 			}
 		}
 		mes "[Historiador]";
-		mes "Embora eu ame fazer pesquisas e descobrir novas informa√ß√µes hist√≥ricas.";
-		mes "Me sinto solit√°ria algumas vezes.";
-		mes "N√£o s√£o muitas as pessoas que compartilham o meu interesse, voc√™ sabe...";
+		mes "Embora eu ame fazer pesquisas e descobrir novas informaÁıes histÛricas.";
+		mes "Me sinto solit·ria algumas vezes.";
+		mes "N„o s„o muitas as pessoas que compartilham o meu interesse, vocÍ sabe...";
 		close;
 	}
 	else if (prt_curse == 7) {
-		mes "^3355FFCom os bra√ßos cruzados, Rodafrian parece pensar profundamente.";
-		mes "Ent√£o, como se ela estivesse tomando uma decis√£o importante.";
-		mes "Ela olha diretamente em seus olhos e come√ßa a falar.^000000";
+		mes "^3355FFCom os braÁos cruzados, Rodafrian parece pensar profundamente.";
+		mes "Ent„o, como se ela estivesse tomando uma decis„o importante.";
+		mes "Ela olha diretamente em seus olhos e comeÁa a falar.^000000";
 		next;
 		mes "[Historiadora Rodafrian]";
 		mes "Aventureiro...";
@@ -957,22 +957,22 @@ morocc_in,45,126,3	script	Historiadora#prt02	4_F_GON,{
 	}
 	else if (prt_curse > 7 && prt_curse < 30) {
 		mes "[Historiadora Rodafrian]";
-		mes "Pelo que me lembro, Mondo deve estar no Monte Mjolnir, localizado na regi√£o norte do Reino de Rune-Midgard.";
-		mes "Pergunte a ele pelas letras do poema que eu n√£o consigo me lembrar...";
+		mes "Pelo que me lembro, Mondo deve estar no Monte Mjolnir, localizado na regi„o norte do Reino de Rune-Midgard.";
+		mes "Pergunte a ele pelas letras do poema que eu n„o consigo me lembrar...";
 		close;
 	}
 	else if (prt_curse == 30 || prt_curse == 55) {
 		mes "[Historiadora Rodafrian]";
-		mes "Oh, voc√™ retornou.";
-		mes "Voc√™ se encontrou com Mondo e conseguiu as letras do poema que eu estava procurando?";
+		mes "Oh, vocÍ retornou.";
+		mes "VocÍ se encontrou com Mondo e conseguiu as letras do poema que eu estava procurando?";
 		next;
 		mes "["+strcharinfo(0)+"]";
 		mes "^FF0000*A grande serpente*^000000";
 		mes "^FF0000*engoliu o mar.*^000000";
-		mes "^FF0000*A √°guia do arco-√≠ris*^000000";
+		mes "^FF0000*A ·guia do arco-Ìris*^000000";
 		mes "^FF0000*engoliu a serpente.*^000000";
-		mes "^FF0000*Ent√£o escamas de cobra cresceram*^000000";
-		mes "^FF0000*na √°guia, e ela morreu lentamente.*^000000";
+		mes "^FF0000*Ent„o escamas de cobra cresceram*^000000";
+		mes "^FF0000*na ·guia, e ela morreu lentamente.*^000000";
 		next;
 		mes "[Historiadora Rodafrian]";
 		mes "Ah, sim!";
@@ -981,12 +981,12 @@ morocc_in,45,126,3	script	Historiadora#prt02	4_F_GON,{
 		mes "Ah, de volta ao trabalho...";
 		next;
 		mes "["+strcharinfo(0)+"]";
-		mes "^333333(Como historiadora, Rodafrian talvez possa me ajudar na investiga√ß√£o sobre a maldi√ß√£o dos Gaebolgs.";
-		mes "Os sacerdotes me disseram para n√£o contar a ningu√©m, sem exce√ß√£o.";
+		mes "^333333(Como historiadora, Rodafrian talvez possa me ajudar na investigaÁ„o sobre a maldiÁ„o dos Gaebolgs.";
+		mes "Os sacerdotes me disseram para n„o contar a ninguÈm, sem exceÁ„o.";
 		mes "Eu devo correr este risco?)^000000";
 		next;
-		if (select("Dizer a ela sobre a Maldi√ß√£o de Jormungand:N√£o dizer a ela") == 1) {
-			mes "^3355FFVoc√™ explica tudo que voc√™ aprendeu para Rodafrian, escolhendo n√£o esconder nenhum segredo.^000000";
+		if (select("Dizer a ela sobre a MaldiÁ„o de Jormungand:N„o dizer a ela") == 1) {
+			mes "^3355FFVocÍ explica tudo que vocÍ aprendeu para Rodafrian, escolhendo n„o esconder nenhum segredo.^000000";
 			emotion e_ic;
 			next;
 			mes "[Historiadora Rodafrian]";
@@ -995,25 +995,25 @@ morocc_in,45,126,3	script	Historiadora#prt02	4_F_GON,{
 			next;
 			mes "[Historiadora Rodafrian]";
 			mes "Obrigada por compartilhar isso comigo.";
-			mes "Espero que voc√™ perceba como essa informa√ß√£o √© preciosa.";
-			mes "EU n√£o tinha id√©ia de que a fam√≠lia real mantinha essa esp√©cie de segredo.";
-			mes "√ìtimo para mim...";
+			mes "Espero que vocÍ perceba como essa informaÁ„o È preciosa.";
+			mes "EU n„o tinha idÈia de que a famÌlia real mantinha essa espÈcie de segredo.";
+			mes "”timo para mim...";
 			next;
 			mes "[Historiadora Rodafrian]";
-			mes "Voc√™ sabe, eu n√£o sei muito sobre veneno, mas eu sei que, pelos nossos pr√≥prios Mercen√°rios.";
-			mes "S√£o especialistas em veneno vivendo em alguma terra estranha localizada a oeste.";
+			mes "VocÍ sabe, eu n„o sei muito sobre veneno, mas eu sei que, pelos nossos prÛprios Mercen·rios.";
+			mes "S„o especialistas em veneno vivendo em alguma terra estranha localizada a oeste.";
 			next;
 			mes "[Historiadora Rodafrian]";
-			mes "Sendo assim, seu relat√≥rio sobre a fam√≠lia Gaebolg ser√° muito apreciado pelo Grupo de Pesquisa Hist√≥rica Rekenber.";
+			mes "Sendo assim, seu relatÛrio sobre a famÌlia Gaebolg ser· muito apreciado pelo Grupo de Pesquisa HistÛrica Rekenber.";
 			mes "Mas primeiro, eu preciso terminar este projeto de Morroc...";
 			next;
 			mes "[Historiadora Rodafrian]";
-			mes "De qualquer forma, mantenha esta informa√ß√£o como segredo entre eu e voc√™ por enquanto.";
-			mes "Ent√£o, quando eu revelar o segredo da Maldi√ß√£o de Gaebolg sobre a fam√≠lia real.";
-			mes "Eeu finalmente deixarei Karmoloff para tr√°s! Muahahahahaha!";
+			mes "De qualquer forma, mantenha esta informaÁ„o como segredo entre eu e vocÍ por enquanto.";
+			mes "Ent„o, quando eu revelar o segredo da MaldiÁ„o de Gaebolg sobre a famÌlia real.";
+			mes "Eeu finalmente deixarei Karmoloff para tr·s! Muahahahahaha!";
 			next;
 			mes "["+strcharinfo(0)+"]";
-			mes "^333333(Droga, ela n√£o me ajudou em nada...";
+			mes "^333333(Droga, ela n„o me ajudou em nada...";
 			mes "Tudo que eu fiz foi revelar um grande segredo a ela com o risco dela sair espalhando!";
 			mes "Ah bem, acho melhor voltar para os sacerdotes...)^000000";
 			if (prt_curse == 30)  {
@@ -1026,15 +1026,15 @@ morocc_in,45,126,3	script	Historiadora#prt02	4_F_GON,{
 			close;
 		}
 		mes "[Historiadora Rodafrian]";
-		mes "Ah, deixe-me lhe agrade√ßer mais uma vez por resolver o problema conseguindo as letras do poema para mim.";
-		mes "Eu j√° coloquei meu assistente em problemas o suficiente...";
+		mes "Ah, deixe-me lhe agradeÁer mais uma vez por resolver o problema conseguindo as letras do poema para mim.";
+		mes "Eu j· coloquei meu assistente em problemas o suficiente...";
 		next;
 		mes "[Historiadora Rodafrian]";
-		mes "Eu tamb√©m n√£o posso me esquecer de enviar o relat√≥rio de Karlomoff.";
+		mes "Eu tambÈm n„o posso me esquecer de enviar o relatÛrio de Karlomoff.";
 		mes "Eu terei que ter um debate com ele mais cedo ou mais tarde, e eu quero de verdade colocar este cara em seu lugar!";
 		next;
-		mes "^3355FFRodafrian parece muito feliz e come√ßa a ler o relat√≥rio de Karlomoff.";
-		mes "Por enquanto, √© melhor voltar ao Padre Bamph.^000000";
+		mes "^3355FFRodafrian parece muito feliz e comeÁa a ler o relatÛrio de Karlomoff.";
+		mes "Por enquanto, È melhor voltar ao Padre Bamph.^000000";
 		if (prt_curse == 30) {
 			prt_curse = 40;
 			changequest 18042,18045;
@@ -1045,8 +1045,8 @@ morocc_in,45,126,3	script	Historiadora#prt02	4_F_GON,{
 		close;
 	}
 	else if (prt_curse == 31 || prt_curse == 40) {
-		mes "^3355FFRodafrian parece muito feliz e come√ßa a ler o relat√≥rio de Karlomoff.";
-		mes "Por enquanto, √© melhor voltar ao Padre Bamph.^000000";
+		mes "^3355FFRodafrian parece muito feliz e comeÁa a ler o relatÛrio de Karlomoff.";
+		mes "Por enquanto, È melhor voltar ao Padre Bamph.^000000";
 		close;
 	}
 	else if (prt_curse == 56) {
@@ -1064,8 +1064,8 @@ morocc_in,45,126,3	script	Historiadora#prt02	4_F_GON,{
 		mes "Eu acho que colocarei ele em seu lugar.";
 		mes "Mas eu nunca poderia falar calmamente com este cara...";
 		next;
-		mes "N√£o parece que";
-		mes "Rodafrian possa lhe oferecer mais nenhuma informa√ß√£o.";
+		mes "N„o parece que";
+		mes "Rodafrian possa lhe oferecer mais nenhuma informaÁ„o.";
 		mes "Mas agora, seria melhor ir para a ^3355FFCatedral de Prontera.^000000";
 		close;
 	}
@@ -1078,19 +1078,19 @@ morocc_in,45,126,3	script	Historiadora#prt02	4_F_GON,{
 
 S_GiveName:
 	next;
-	select("Meu nome √© "+strcharinfo(0)+".");
+	select("Meu nome È "+strcharinfo(0)+".");
 	mes "[Historiadora Rodafrian]";
-	mes "Ah "+strcharinfo(0)+", √©?";
-	mes "Ser√° que eu posso lhe pedir um favor?";
-	mes "Eu realmente preciso verificar se s√£o verdadeiras as letras deste poema.";
+	mes "Ah "+strcharinfo(0)+", È?";
+	mes "Ser· que eu posso lhe pedir um favor?";
+	mes "Eu realmente preciso verificar se s„o verdadeiras as letras deste poema.";
 	mes "No entanto, eu preciso ficar aqui em Morroc para completar minha pesquisa.";
 	next;
 	mes "[Historiadora Rodafrian]";
-	mes "Voc√™ poderia encontrar meu colega Mondo e perguntar a ele sobre as letras do poema?";
-	mes "Voc√™ pode encontr√°-lo nas ru√≠nas antigas no Monte Mjolnir, a norte do Reino de Rune-Midgard.";
+	mes "VocÍ poderia encontrar meu colega Mondo e perguntar a ele sobre as letras do poema?";
+	mes "VocÍ pode encontr·-lo nas ruÌnas antigas no Monte Mjolnir, a norte do Reino de Rune-Midgard.";
 	next;
 	mes "[Historiadora Rodafrian]";
-	mes "Pe√ßo desculpas para pedir a para fazer uma coisa que parece ser coletiva.";
+	mes "PeÁo desculpas para pedir a para fazer uma coisa que parece ser coletiva.";
 	mes "Mas eu preciso muito de saber as letras do poema pelo bem de minha conversa...";
 	if (getarg(0) == 1) delitem 7342,1; //File01
 	prt_curse = 8;
@@ -1101,96 +1101,96 @@ S_GiveName:
 mjolnir_01,135,168,3	script	Historiador#prt03	4_M_SAGE_A,{
 	if ((MaxWeight-Weight) < 2000 || checkweight(1201,1) == 0) {
 		mes "^3355FFEspere um segundo!";
-		mes "Agora, voc√™ est√° carregando muitas coisas com voc√™.";
-		mes "Por favor volte depois de usar o Servi√ßo Kafra para armazenar alguns de seus itens.^000000";
+		mes "Agora, vocÍ est· carregando muitas coisas com vocÍ.";
+		mes "Por favor volte depois de usar o ServiÁo Kafra para armazenar alguns de seus itens.^000000";
 		close;
 	}
 	if (prt_curse == 8) {
 		mes "[Historiador Mondo]";
-		mes "Com licen√ßa...";
-		mes "Mas se voc√™ n√£o tem nada importante para mim, ent√£o poderia me deixar em paz?";
+		mes "Com licenÁa...";
+		mes "Mas se vocÍ n„o tem nada importante para mim, ent„o poderia me deixar em paz?";
 		mes "Eu preciso pesquisar para atender a...";
 		next;
 		mes "["+strcharinfo(0)+"]";
-		mes "Me desculpe, mas a Sra. Rodafrian me pediu para lhe perguntar pelas letras de um poema que explica a cria√ß√£o do Reino de Rune-Midgard.";
+		mes "Me desculpe, mas a Sra. Rodafrian me pediu para lhe perguntar pelas letras de um poema que explica a criaÁ„o do Reino de Rune-Midgard.";
 		mes "Poderia me dizer para passar para ela?";
 		next;
 		mes "[Historiador Mondo]";
-		mes "Rodafrian? Ah, ela deve estar falando do poema de quando √©ramos crian√ßas.";
+		mes "Rodafrian? Ah, ela deve estar falando do poema de quando Èramos crianÁas.";
 		mes "Como era mesmo?";
 		mes "Ah, agora eu me lembrei...";
 		next;
 		mes "[Historiador Mondo]";
 		mes "^FF0000*A grande serpente*^000000";
 		mes "^FF0000*engoliu o mar.*^000000";
-		mes "^FF0000*A √°guia do arco-√≠ris*^000000";
+		mes "^FF0000*A ·guia do arco-Ìris*^000000";
 		mes "^FF0000*engoliu a serpente.*^000000";
-		mes "^FF0000*Ent√£o escamas de cobra cresceram*^000000";
-		mes "^FF0000*na √°guia, e ela morreu lentamente.*^000000";
+		mes "^FF0000*Ent„o escamas de cobra cresceram*^000000";
+		mes "^FF0000*na ·guia, e ela morreu lentamente.*^000000";
 		next;
 		select("...........?");
 		mes "[Historiador Mondo]";
-		mes "Sim, eu sei: o poema √© bastante m√≥rbido, apesar do fato de que ele √© cantado como um poema feliz.";
-		mes "Algumas vezes estes pequenos poemas s√£o feitos para assustarem crian√ßas para que elas fa√ßam o bem.";
+		mes "Sim, eu sei: o poema È bastante mÛrbido, apesar do fato de que ele È cantado como um poema feliz.";
+		mes "Algumas vezes estes pequenos poemas s„o feitos para assustarem crianÁas para que elas faÁam o bem.";
 		next;
-		select("Com licen√ßa...");
+		select("Com licenÁa...");
 		mes "[Historiador Mondo]";
-		mes "Hm? Voc√™ parece confuso.";
-		mes "Voc√™ tem alguma pergunta para fazer sobre este poema?";
+		mes "Hm? VocÍ parece confuso.";
+		mes "VocÍ tem alguma pergunta para fazer sobre este poema?";
 		next;
 		mes "["+strcharinfo(0)+"]";
-		mes "Na verdade, eu ouvi uma vers√£o diferente deste poema, ent√£o eu estava me perguntando porque as letras s√£o diferentes...";
+		mes "Na verdade, eu ouvi uma vers„o diferente deste poema, ent„o eu estava me perguntando porque as letras s„o diferentes...";
 		next;
 		mes "[Historiador Mondo]";
-		mes "S√©rio?";
-		mes "Bem ent√£o, deixe-me escutar a vers√£o que voc√™ escutou, come√ßando do in√≠cio.";
+		mes "SÈrio?";
+		mes "Bem ent„o, deixe-me escutar a vers„o que vocÍ escutou, comeÁando do inÌcio.";
 		next;
 		callsub S_Song;
 	}
 	else if (prt_curse == 9) {
 		mes "[Historiador Mondo]" ;
-		mes "Ah, voc√™ poderia me dizer as letras da vers√£o do poema sobre o mito da cria√ß√£o do Reino de Rune-Midgard que voc√™ ouviu?";
+		mes "Ah, vocÍ poderia me dizer as letras da vers„o do poema sobre o mito da criaÁ„o do Reino de Rune-Midgard que vocÍ ouviu?";
 		next;
 		callsub S_Song;
 	}
 	else if (prt_curse == 10) {
 		mes "[Historiador Mondo]";
 		mes "Interessante...";
-		mes "A vers√£o que voc√™ ouviu de";
-		mes "Karlomoff √© diferente da";
-		mes "que eu sei. √â poss√≠vel";
-		mes "que essa vers√£o seja a mais";
-		mes "aut√™ntica.";
+		mes "A vers„o que vocÍ ouviu de";
+		mes "Karlomoff È diferente da";
+		mes "que eu sei. … possÌvel";
+		mes "que essa vers„o seja a mais";
+		mes "autÍntica.";
 		next;
 		mes "[Historiador Mondo]";
 		mes "Afinal, eu aprendi";
-		mes "esta vers√£o que eu sei";
+		mes "esta vers„o que eu sei";
 		mes "escutando um garoto";
-		mes "cant√°-la.";
+		mes "cant·-la.";
 		next;
 		select("Um garoto?");
 		mes "[Historiador Mondo]";
-		mes "Eh. Eu acho que esta vers√£o";
+		mes "Eh. Eu acho que esta vers„o";
 		mes "que o garoto cantou possa ter";
 		mes "se modificado quando foi passada";
-		mes "de boca a boca pelas gera√ß√µes. Se voc√™ quiser saber mais, voc√™";
+		mes "de boca a boca pelas geraÁıes. Se vocÍ quiser saber mais, vocÍ";
 		mes "provavelmente deve encontrar este garoto.";
 		next;
 		mes "[Historiador Mondo]";
-		mes "De qualquer forma, Karlomoff deve ter a vers√£o mais fiel do poema j√° que ele √© bom em aquisi√ß√µes e autentica√ß√µes de registros hist√≥ricos escritos.";
-		mes "Essa √© a sua especialidade.";
+		mes "De qualquer forma, Karlomoff deve ter a vers„o mais fiel do poema j· que ele È bom em aquisiÁıes e autenticaÁıes de registros histÛricos escritos.";
+		mes "Essa È a sua especialidade.";
 		next;
 		mes "[Historiador Mondo]";
-		mes "Ah, Se voc√™ quiser saber mais, ent√£o voc√™ deve tentar encontrar o garoto que estava cantando o poema.";
+		mes "Ah, Se vocÍ quiser saber mais, ent„o vocÍ deve tentar encontrar o garoto que estava cantando o poema.";
 		mes "Hmm, ele deve estar ^3131DDperto do rio que fica aqui^000000.";
-		mes "Felizmente n√£o ser√° dif√≠cil de encontr√°-lo.";
+		mes "Felizmente n„o ser· difÌcil de encontr·-lo.";
 		next;
 		mes "[Historiador Mondo]";
-		mes "Assim que voc√™ puder falar com o garoto, v√° e fale sobre isso para Rodafrian.";
+		mes "Assim que vocÍ puder falar com o garoto, v· e fale sobre isso para Rodafrian.";
 		mes "Ela provavelmente precisa saber logo, e eu posso falar com este pequeno garoto por minha vontade, mas...";
 		next;
 		mes "[Historiador Mondo]";
-		mes "Pois bem, eu espero que voc√™ encontre o que est√° procurando.";
+		mes "Pois bem, eu espero que vocÍ encontre o que est· procurando.";
 		mes "Boa sorte em suas viagens, aventureiro.";
 		prt_curse = 11;
 		changequest 18032,18033;
@@ -1198,8 +1198,8 @@ mjolnir_01,135,168,3	script	Historiador#prt03	4_M_SAGE_A,{
 	}
 	else {
 		mes "[Historiador Mondo]";
-		mes "Este n√£o √© um lindo lugar?";
-		mes "N√£o me admira que povos antigos escolheram viver por aqui...";
+		mes "Este n„o È um lindo lugar?";
+		mes "N„o me admira que povos antigos escolheram viver por aqui...";
 		close;
 	}
 
@@ -1215,15 +1215,15 @@ S_Song:
 	else mes "*"+.@line$+"*";
 
 	input .@line$;
-	if (.@line$ == "A √°guia do arco-√≠ris engoliu a serpente.") {
+	if (.@line$ == "A ·guia do arco-Ìris engoliu a serpente.") {
 		.@total += 1;
-		mes "*A √°guia do arco-√≠ris*";
+		mes "*A ·guia do arco-Ìris*";
 		mes "*engoliu a serpente.*";
 	}
 	else mes "*"+.@line$+"*";
 
 	input .@line$;
-	if (.@line$ == "A √°guia ent√£o construiu seu ninho.") .@total += 1;
+	if (.@line$ == "A ·guia ent„o construiu seu ninho.") .@total += 1;
 	mes "*"+.@line$+"*";
 
 	input .@line$;
@@ -1236,7 +1236,7 @@ S_Song:
 		mes "["+strcharinfo(0)+"]";
 		mes "Espera, espera...";
 		mes "Eu acho que misturei tudo!";
-		mes "(Estas n√£o s√£o as letras corretas...)";
+		mes "(Estas n„o s„o as letras corretas...)";
 		prt_curse = 9;
 	}
 	close;
@@ -1265,7 +1265,7 @@ OnTouch:
 mjolnir_01,292,288,0	script	#prt_poem03	-1,2,2,{
 OnTouch:
 	if (prt_curse == 11) {
-		mes "^FF0000*A √°guia do arco-√≠ris*^000000";
+		mes "^FF0000*A ·guia do arco-Ìris*^000000";
 		mes "^FF0000*engoliu a serpente.*^000000";
 		close;
 	}
@@ -1276,7 +1276,7 @@ mjolnir_01,302,286,0	script	#prt_poem04	-1,2,2,{
 OnTouch:
 	if (prt_curse == 11) {
 		mes "^FF0000*Depois, escamas da serpente*^000000";
-		mes "^FF0000*cresceram na √°guia...*^000000";
+		mes "^FF0000*cresceram na ·guia...*^000000";
 		close;
 	}
 	end;
@@ -1292,41 +1292,41 @@ OnTouch:
 }
 
 mjolnir_01,312,269,5	script	Dog#prt	4_DOG01,{
-	mes "[C√£o]";
+	mes "[C„o]";
 	mes "Au, Au!";
 	close;
 }
 
-mjolnir_01,313,269,5	script	Garoto Distra√≠do#prt	4_M_KID1,{
+mjolnir_01,313,269,5	script	Garoto DistraÌdo#prt	4_M_KID1,{
 	if (prt_curse == 11) {
-		mes "[Garoto Distra√≠do]";
+		mes "[Garoto DistraÌdo]";
 		mes "A grande serpente engoliu o mar.";
-		mes "A √°guia do arco-√≠ris engoliu a serpente.";
-		mes "Ent√£o escamas de cobra cresceram na √°guia, e ela morreu lentamente.";
+		mes "A ·guia do arco-Ìris engoliu a serpente.";
+		mes "Ent„o escamas de cobra cresceram na ·guia, e ela morreu lentamente.";
 		next;
 		mes "[Mulher Parecendo Exausta]";
 		mes "Pelo amor de Deus...!";
 		mes "Poderia por favor parar de cantar este poema?";
 		next;
-		mes "[Garoto Distra√≠do]";
+		mes "[Garoto DistraÌdo]";
 		mes "..................";
 		next;
 		mes "^3355FFO pequeno garoto calmamente olha para a mulher por um momento.";
-		mes "Em seguida se agacha e come√ßa a brincar com o cachorro perto dele.^000000";
+		mes "Em seguida se agacha e comeÁa a brincar com o cachorro perto dele.^000000";
 		next;
-		if (select("O que voc√™ acabou de cantar?:Ignor√°-lo") == 1) {
-			mes "[Garoto Distra√≠do]";
+		if (select("O que vocÍ acabou de cantar?:Ignor·-lo") == 1) {
+			mes "[Garoto DistraÌdo]";
 			mes "...";
 			mes "......";
 			mes ".........";
 			next;
-			mes "[Garoto Distra√≠do]";
-			mes "Au-au, voc√™ escutou este poema?";
-			mes "Mam√£e me ensinou a cantar, voc√™ sabe.";
+			mes "[Garoto DistraÌdo]";
+			mes "Au-au, vocÍ escutou este poema?";
+			mes "Mam„e me ensinou a cantar, vocÍ sabe.";
 			mes "Ela diz que foi cantado por pessoas por muito tempo.";
 			next;
 			mes "^3355FFO garoto continuou falando com o cachorro como se fosse um velho amigo.";
-			mes "Ignorando a sua presen√ßa e agindo como se voc√™ n√£o existisse.^000000";
+			mes "Ignorando a sua presenÁa e agindo como se vocÍ n„o existisse.^000000";
 			next;
 			mes "[Mulher Parecendo Exausta]";
 			mes "Kaanu...";
@@ -1336,19 +1336,19 @@ mjolnir_01,313,269,5	script	Garoto Distra√≠do#prt	4_M_KID1,{
 			mes ".........";
 			mes "..................";
 			mes "Uh oh, Au-au.";
-			mes "Mam√£e parece perturbada por algum motivo.";
+			mes "Mam„e parece perturbada por algum motivo.";
 			next;
 			mes "[Mulher Parecendo Exausta]";
-			mes "Me desculpe, meu garoto √©...";
-			mes "Olha, voc√™ quer saber mais sobre este poema?";
-			mes "Tente n√£o se preocupar com isso: √© apenas uma m√∫sica infantil.";
+			mes "Me desculpe, meu garoto È...";
+			mes "Olha, vocÍ quer saber mais sobre este poema?";
+			mes "Tente n„o se preocupar com isso: È apenas uma m˙sica infantil.";
 			next;
-			if (select("O que voc√™ faz aqui?:Posso ouvir o poema novamente?") == 1) {
+			if (select("O que vocÍ faz aqui?:Posso ouvir o poema novamente?") == 1) {
 				mes "[Mulher Parecendo Exausta]";
 				mes ".................";
 				next;
 				mes "^3355FFA mulher parece estar envergonhada.";
-				mes "√â √≥bvio que este assunto deixa ela desconfort√°vel.^000000";
+				mes "… Ûbvio que este assunto deixa ela desconfort·vel.^000000";
 				next;
 				mes "[Kaanu]";
 				mes "...";
@@ -1356,8 +1356,8 @@ mjolnir_01,313,269,5	script	Garoto Distra√≠do#prt	4_M_KID1,{
 				mes ".........";
 				next;
 				mes "[Kaanu]";
-				mes "Au-au, voc√™ sabe porque mam√£e est√° sempre triste?";
-				mes "Gostaria de saber porqu√™ minha m√£e nunca sorri...";
+				mes "Au-au, vocÍ sabe porque mam„e est· sempre triste?";
+				mes "Gostaria de saber porquÍ minha m„e nunca sorri...";
 				next;
 				mes "[Mulher Parecendo Exausta]";
 				mes "........";
@@ -1368,17 +1368,17 @@ mjolnir_01,313,269,5	script	Garoto Distra√≠do#prt	4_M_KID1,{
 			mes "..................";
 			next;
 			mes "[Mulher Parecendo Exausta]";
-			mes "Ok. Eu posso fazer essa coisa para voc√™.";
+			mes "Ok. Eu posso fazer essa coisa para vocÍ.";
 			mes "Deixe-me recitar este poema...";
 			next;
 			mes "[Mulher Parecendo Exausta]";
 			mes "A grande serpente engoliu o mar.";
-			mes "A √°guia do arco-√≠ris engoliu a serpente.";
-			mes "Ent√£o escamas de cobra cresceram na √°guia, e ela morreu lentamente.";
+			mes "A ·guia do arco-Ìris engoliu a serpente.";
+			mes "Ent„o escamas de cobra cresceram na ·guia, e ela morreu lentamente.";
 			prt_curse = 12;
 			close;
 		}
-		mes "[Garoto Distra√≠do]";
+		mes "[Garoto DistraÌdo]";
 		mes "...";
 		mes "......";
 		mes ".........";
@@ -1386,26 +1386,26 @@ mjolnir_01,313,269,5	script	Garoto Distra√≠do#prt	4_M_KID1,{
 	}
 	else if (prt_curse == 36) {
 		mes "^3355FFEste pequeno garoto parece muito desgastado e cansado da vida.";
-		mes "Um olhar muito inquietante no rosto desta crian√ßa jovem.^000000";
+		mes "Um olhar muito inquietante no rosto desta crianÁa jovem.^000000";
 		close;
 	}
 	else if (prt_curse == 45) {
-		mes "^3355FFEste garoto ainda n√£o vai falar com voc√™,";
-		mes "Mas ele reconhece a sua presen√ßa, fazendo contato com o olho e sorrindo.^000000";
+		mes "^3355FFEste garoto ainda n„o vai falar com vocÍ,";
+		mes "Mas ele reconhece a sua presenÁa, fazendo contato com o olho e sorrindo.^000000";
 		close;
 	}
 	else if (prt_curse > 54) {
-		mes "^3355FFEste garoto ainda n√£o vai falar com voc√™, mas ele te faz sentir bem-vindo lhe dando um caloroso sorriso.^000000";
+		mes "^3355FFEste garoto ainda n„o vai falar com vocÍ, mas ele te faz sentir bem-vindo lhe dando um caloroso sorriso.^000000";
 		close;
 	}
 	else {
-		mes "[Garoto Distra√≠do]";
+		mes "[Garoto DistraÌdo]";
 		mes "...";
 		mes "......";
 		mes ".........";
 		next;
-		mes "^3355FFVoc√™ acha dif√≠cil ignorar o olhar investigativo do garoto, olhos espertos direcionados a voc√™.";
-		mes "Est√° muito claro que ele n√£o confia em voc√™.^000000";
+		mes "^3355FFVocÍ acha difÌcil ignorar o olhar investigativo do garoto, olhos espertos direcionados a vocÍ.";
+		mes "Est· muito claro que ele n„o confia em vocÍ.^000000";
 		close;
 	}
 }
@@ -1413,38 +1413,38 @@ mjolnir_01,313,269,5	script	Garoto Distra√≠do#prt	4_M_KID1,{
 mjolnir_01,316,268,3	script	Mulher Exausta	4_F_CAPEGIRL,{
 	if ((MaxWeight-Weight) < 2000 || checkweight(1201,1) == 0) {
 		mes "^3355FFEspere um segundo!";
-		mes "Agora, voc√™ est√° carregando muitas coisas com voc√™.";
-		mes "Por favor volte depois de usar o Servi√ßo Kafra para armazenar alguns de seus itens.^000000";
+		mes "Agora, vocÍ est· carregando muitas coisas com vocÍ.";
+		mes "Por favor volte depois de usar o ServiÁo Kafra para armazenar alguns de seus itens.^000000";
 		close;
 	}
 	if (prt_curse == 11) {
-		mes "[Garoto Distra√≠do]";
+		mes "[Garoto DistraÌdo]";
 		mes "A grande serpente engoliu o mar.";
-		mes "A √°guia do arco-√≠ris engoliu a serpente.";
-		mes "Ent√£o escamas de cobra cresceram na √°guia, e ela morreu lentamente.";
+		mes "A ·guia do arco-Ìris engoliu a serpente.";
+		mes "Ent„o escamas de cobra cresceram na ·guia, e ela morreu lentamente.";
 		next;
 		mes "[Mulher Parecendo Exausta]";
 		mes "Pelo amor de Deus...!";
 		mes "Poderia por favor parar de cantar este poema?";
 		next;
-		mes "[Garoto Distra√≠do]";
+		mes "[Garoto DistraÌdo]";
 		mes "..................";
 		next;
 		mes "^3355FFO pequeno garoto calmamente olha para a mulher por um momento.";
-		mes "Em seguida se agacha e come√ßa a brincar com o cachorro perto dele.^000000";
+		mes "Em seguida se agacha e comeÁa a brincar com o cachorro perto dele.^000000";
 		next;
-		if (select("O que voc√™ acabou de cantar?:Ignor√°-lo") == 1) {
-			mes "[Garoto Distra√≠do]";
+		if (select("O que vocÍ acabou de cantar?:Ignor·-lo") == 1) {
+			mes "[Garoto DistraÌdo]";
 			mes "...";
 			mes "......";
 			mes ".........";
 			next;
-			mes "[Garoto Distra√≠do]";
-			mes "Au-au, voc√™ escutou este poema?";
-			mes "Mam√£e me ensinou a cantar, voc√™ sabe.";
+			mes "[Garoto DistraÌdo]";
+			mes "Au-au, vocÍ escutou este poema?";
+			mes "Mam„e me ensinou a cantar, vocÍ sabe.";
 			mes "Ela diz que foi cantado por pessoas por muito tempo.";
 			next;
-			mes "^3355FFO garoto continuou falando com o cachorro como se fosse um velho amigo, ignorando a sua presen√ßa e agindo como se voc√™ n√£o existisse.^000000";
+			mes "^3355FFO garoto continuou falando com o cachorro como se fosse um velho amigo, ignorando a sua presenÁa e agindo como se vocÍ n„o existisse.^000000";
 			next;
 			mes "[Mulher Parecendo Exausta]";
 			mes "Kaanu...";
@@ -1454,19 +1454,19 @@ mjolnir_01,316,268,3	script	Mulher Exausta	4_F_CAPEGIRL,{
 			mes ".........";
 			mes "..................";
 			mes "Uh oh, Au-au.";
-			mes "Mam√£e parece perturbada por algum motivo.";
+			mes "Mam„e parece perturbada por algum motivo.";
 			next;
 			mes "[Mulher Parecendo Exausta]";
-			mes "Me desculpe, meu garoto √©...";
-			mes "Olha, voc√™ quer saber mais sobre este poema?";
-			mes "Tente n√£o se preocupar com isso, √© apenas uma m√∫sica infantil.";
+			mes "Me desculpe, meu garoto È...";
+			mes "Olha, vocÍ quer saber mais sobre este poema?";
+			mes "Tente n„o se preocupar com isso, È apenas uma m˙sica infantil.";
 			next;
-			if (select("O que voc√™ faz aqui?:Posso ouvir o poema novamente?") == 1) {
+			if (select("O que vocÍ faz aqui?:Posso ouvir o poema novamente?") == 1) {
 				mes "[Mulher Parecendo Exausta]";
 				mes ".................";
 				next;
 				mes "^3355FFA mulher parece estar envergonhada.";
-				mes "√â √≥bvio que este assunto deixa ela desconfort√°vel.^000000";
+				mes "… Ûbvio que este assunto deixa ela desconfort·vel.^000000";
 				next;
 				mes "[Kaanu]";
 				mes "...";
@@ -1474,8 +1474,8 @@ mjolnir_01,316,268,3	script	Mulher Exausta	4_F_CAPEGIRL,{
 				mes ".........";
 				next;
 				mes "[Kaanu]";
-				mes "Au-au, voc√™ sabe porque mam√£e est√° sempre triste?";
-				mes "Gostaria de saber porqu√™ minha m√£e nunca sorri...";
+				mes "Au-au, vocÍ sabe porque mam„e est· sempre triste?";
+				mes "Gostaria de saber porquÍ minha m„e nunca sorri...";
 				next;
 				mes "[Mulher Parecendo Exausta]";
 				mes "........";
@@ -1486,13 +1486,13 @@ mjolnir_01,316,268,3	script	Mulher Exausta	4_F_CAPEGIRL,{
 			mes "..................";
 			next;
 			mes "[Mulher Parecendo Exausta]";
-			mes "Ok. Eu posso fazer essa coisa para voc√™.";
+			mes "Ok. Eu posso fazer essa coisa para vocÍ.";
 			mes "Deixe-me recitar este poema...";
 			next;
 			mes "[Mulher Parecendo Exausta]";
 			mes "A grande serpente engoliu o mar.";
-			mes "A √°guia do arco-√≠ris engoliu a serpente.";
-			mes "Ent√£o escamas de cobra cresceram na √°guia, e ela morreu lentamente.";
+			mes "A ·guia do arco-Ìris engoliu a serpente.";
+			mes "Ent„o escamas de cobra cresceram na ·guia, e ela morreu lentamente.";
 			prt_curse = 12;
 			close;
 		}
@@ -1502,8 +1502,8 @@ mjolnir_01,316,268,3	script	Mulher Exausta	4_F_CAPEGIRL,{
 	}
 	else if (prt_curse == 12) {
 		mes "[Mulher Parecendo Exausta]";
-		mes "A grande maioria das pessoas n√£o gostam de vir a esta √°rea remota.";
-		mes "O que voc√™ procura aqui para ter passado por todo esse caminho, eu me pergunto?";
+		mes "A grande maioria das pessoas n„o gostam de vir a esta ·rea remota.";
+		mes "O que vocÍ procura aqui para ter passado por todo esse caminho, eu me pergunto?";
 		next;
 		mes "["+strcharinfo(0)+"]";
 		mes "Na verdade, eu estou apenas tentando aprender a verdadeira letra do poema que este garoto estava cantando.";
@@ -1517,31 +1517,31 @@ mjolnir_01,316,268,3	script	Mulher Exausta	4_F_CAPEGIRL,{
 		next;
 		mes "[Mulher Parecendo Exausta]";
 		mes "Este poema parece tem parece feliz, mas seu significado mudou para mim desde que o acidente aconteceu...";
-		mes "Aconteceu a muito tempo atr√°s, mas eu n√£o acho que a dor ir√° se curar.";
+		mes "Aconteceu a muito tempo atr·s, mas eu n„o acho que a dor ir· se curar.";
 		next;
 		select("Acidente?");
 		mes "[Mulher Parecendo Exausta]";
 		mes "Eu... Eu lamento.";
-		mes "N√£o acho que eu possa falar sobre isso.";
+		mes "N„o acho que eu possa falar sobre isso.";
 		mes "Se eu tentar, eu irei reviver o horror.";
-		mes "Todo dia j√° √© uma luta para pagar os pecados que eu cometi.";
+		mes "Todo dia j· È uma luta para pagar os pecados que eu cometi.";
 		next;
 		mes "[Mulher Parecendo Exausta]";
-		mes "Eu sei que isto √© ego√≠sta, mas eu tenho um favor para pedir a voc√™.";
-		mes "Eu n√£o posso deixar esta √°rea, e raramente eu recebo visitantes.";
+		mes "Eu sei que isto È egoÌsta, mas eu tenho um favor para pedir a vocÍ.";
+		mes "Eu n„o posso deixar esta ·rea, e raramente eu recebo visitantes.";
 		mes "Poderia fazer a gentileza de entregar algo em Prontera para mim?";
 		next;
 		mes "[Mulher Parecendo Exausta]";
 		mes "Eu costumava viver em Prontera, e desde o acidente, o Padre Bamph tem me apoiado tanto.";
-		mes "N√£o √© o suficiente para retribuir sua bondade, mas por favor entregue estas ervas para ele por mim.";
+		mes "N„o È o suficiente para retribuir sua bondade, mas por favor entregue estas ervas para ele por mim.";
 		next;
 		mes "[Mulher Parecendo Exausta]";
-		mes "Voc√™ pode encontrar o ^3131FFPadre Bamph^000000 na ^3131FFCatedral de Prontera^000000.";
-		mes "Quando voc√™ ver ele, por favor d√™ a ele meus cumprimentos.";
-		mes "Eu gostaria de fazer eu mesma, mas por causa do que eu fiz, eu n√£o posso retornar a Prontera...";
+		mes "VocÍ pode encontrar o ^3131FFPadre Bamph^000000 na ^3131FFCatedral de Prontera^000000.";
+		mes "Quando vocÍ ver ele, por favor dÍ a ele meus cumprimentos.";
+		mes "Eu gostaria de fazer eu mesma, mas por causa do que eu fiz, eu n„o posso retornar a Prontera...";
 		next;
 		mes "["+strcharinfo(0)+"]";
-		mes "^333333Est√° certo ent√£o.";
+		mes "^333333Est· certo ent„o.";
 		mes "Eu acho que devo entregar estas ervas na Catedral de Prontera depois de falar com Rodafrian.^000000";
 		getitem 7432,1; //Leather_Pouch
 		prt_curse = 13;
@@ -1551,13 +1551,13 @@ mjolnir_01,316,268,3	script	Mulher Exausta	4_F_CAPEGIRL,{
 	else if (prt_curse > 12 && prt_curse < 16) {
 		mes "[Mulher Parecendo Exausta]";
 		mes "Padre Bamph me ajudou muito.";
-		mes "Por favor leve esta bolsa de ervas para ele na Catedral de Prontera, e d√™ a ele meus cumprimentos.";
+		mes "Por favor leve esta bolsa de ervas para ele na Catedral de Prontera, e dÍ a ele meus cumprimentos.";
 		close;
 	}
 	else if (prt_curse == 16) {
 		mes "[Bonnie Imbullea]";
-		mes "Oh, voc√™ voltou?";
-		mes "Voc√™ conseguiu entregar a bolsa de ervas que eu lhe dei para o Padre Bamph?";
+		mes "Oh, vocÍ voltou?";
+		mes "VocÍ conseguiu entregar a bolsa de ervas que eu lhe dei para o Padre Bamph?";
 		next;
 		mes "["+strcharinfo(0)+"]";
 		mes "Sim, eu entreguei.";
@@ -1566,12 +1566,12 @@ mjolnir_01,316,268,3	script	Mulher Exausta	4_F_CAPEGIRL,{
 		next;
 		mes "[Bonnie Imbullea]";
 		mes "Ah. Entendo.";
-		mes "Voc√™ deve estar pensando que sou um monstro...";
-		mes "Aquelas pobres crian√ßas est√£o mortas por minha culpa...";
+		mes "VocÍ deve estar pensando que sou um monstro...";
+		mes "Aquelas pobres crianÁas est„o mortas por minha culpa...";
 		next;
 		mes "["+strcharinfo(0)+"]";
-		mes "N-N√£o! Nada disso!";
-		mes "Eu s√≥ queria perguntar se h√° alguma conex√£o entre o poema que Kaanu estava cantando e a Maldi√ß√£o de Jormungand.";
+		mes "N-N„o! Nada disso!";
+		mes "Eu sÛ queria perguntar se h· alguma conex„o entre o poema que Kaanu estava cantando e a MaldiÁ„o de Jormungand.";
 		next;
 		mes "[Bonnie Imbullea]";
 		mes "...";
@@ -1579,82 +1579,82 @@ mjolnir_01,316,268,3	script	Mulher Exausta	4_F_CAPEGIRL,{
 		mes ".........";
 		next;
 		mes "[Bonnie Imbullea]";
-		mes "Ap√≥s o exorcismo n√£o ter funcionado, eu deveria ter sido punida com a morte.";
-		mes "Por√©m, a fam√≠lia real e a Catedral de Prontera tiveram pena de mim, e permitiram que eu vivesse neste ex√≠lio.";
+		mes "ApÛs o exorcismo n„o ter funcionado, eu deveria ter sido punida com a morte.";
+		mes "PorÈm, a famÌlia real e a Catedral de Prontera tiveram pena de mim, e permitiram que eu vivesse neste exÌlio.";
 		emotion e_dots;
 		next;
 		mes "[Bonnie Imbullea]";
-		mes "Eu comecei a cantar este poema para me manter distra√≠da, mesmo que relacionada com a Maldi√ß√£o de Jormungand.";
+		mes "Eu comecei a cantar este poema para me manter distraÌda, mesmo que relacionada com a MaldiÁ„o de Jormungand.";
 		next;
 		mes "[Bonnie Imbullea]";
-		mes "Voc√™ sabe, agora o que eu penso disso, eu lembro que ap√≥s eu ouvir que o exorcismo fracassou.";
-		mes "Uma empregada encontrou um fragmento de Gema Vermelha enquanto limpava o √°rea cerimonial secreta.";
+		mes "VocÍ sabe, agora o que eu penso disso, eu lembro que apÛs eu ouvir que o exorcismo fracassou.";
+		mes "Uma empregada encontrou um fragmento de Gema Vermelha enquanto limpava o ·rea cerimonial secreta.";
 		emotion e_gasp,1;
 		next;
 		mes "[Bonnie Imbullea]";
 		mes "Eu sempre achei que isso foi um pouco estranho.";
-		mes "Eu queria investigar isto, mas ent√£o eu fui expulsa da Catedral de Prontera depois de minha falha...";
+		mes "Eu queria investigar isto, mas ent„o eu fui expulsa da Catedral de Prontera depois de minha falha...";
 		next;
 		mes "["+strcharinfo(0)+"]";
 		mes "Um fragmento de uma Gema Vermelha?";
-		mes "Talvez... talvez seja uma evid√™ncia de sabotagem do exorcismo!";
+		mes "Talvez... talvez seja uma evidÍncia de sabotagem do exorcismo!";
 		next;
 		mes "[Bonnie Imbullea]";
-		mes "O que aconteceu foi tr√°gico, mas isso faria me sentir bem melhor se esta fosse a real verdade.";
-		mes "Mesmo que o exorcismo tenha sido sabotado, n√£o podemos voltar no tempo...";
+		mes "O que aconteceu foi tr·gico, mas isso faria me sentir bem melhor se esta fosse a real verdade.";
+		mes "Mesmo que o exorcismo tenha sido sabotado, n„o podemos voltar no tempo...";
 		next;
 		mes "["+strcharinfo(0)+"]";
 		mes "^333333Hmm...";
-		mes "Seria melhor voltar para a Catedral de Prontera e fazer com que o Padre Bamph saiba desta informa√ß√£o.^000000";
+		mes "Seria melhor voltar para a Catedral de Prontera e fazer com que o Padre Bamph saiba desta informaÁ„o.^000000";
 		prt_curse = 17;
 		changequest 18035,18036;
 		close;
 	}
 	else if (prt_curse == 17) {
 		mes "[Bonnie Imbullea]";
-		mes "√â muito dif√≠cil viver com esta culpa.";
-		mes "Eu estive treinando a ajudar pessoas, e n√£o mat√°-las!";
+		mes "… muito difÌcil viver com esta culpa.";
+		mes "Eu estive treinando a ajudar pessoas, e n„o mat·-las!";
 		next;
-		mes "^3355FFVoc√™ tenta confortar Bonnie Imbullea por um pequeno momento enquanto voc√™ n√£o retorna a Catedral de Prontera.";
+		mes "^3355FFVocÍ tenta confortar Bonnie Imbullea por um pequeno momento enquanto vocÍ n„o retorna a Catedral de Prontera.";
 		close;
 	}
 	else if (prt_curse == 35 || prt_curse == 44 || prt_curse == 54) {
-		mes "^3355FFVoc√™ diz a Bonnie Imbullea que as mortes dos pr√≠ncipes n√£o foram por sua culpa.";
+		mes "^3355FFVocÍ diz a Bonnie Imbullea que as mortes dos prÌncipes n„o foram por sua culpa.";
 		mes "Esse exorcismo provavelmente foi sabotado.";
-		mes "No entanto,voc√™ se mant√©m triste, como se usasse veneno, em si mesma.^000000";
+		mes "No entanto,vocÍ se mantÈm triste, como se usasse veneno, em si mesma.^000000";
 		next;
 		mes "[Bonnie Imbullea]";
-		mes "Isso √© verdade...?";
-		mes "Ah, eu estou t√£o feliz!";
-		mes "Eu pensei que eu teria de viver o resto da minha vida afastada com esta horr√≠vel vergonha.";
+		mes "Isso È verdade...?";
+		mes "Ah, eu estou t„o feliz!";
+		mes "Eu pensei que eu teria de viver o resto da minha vida afastada com esta horrÌvel vergonha.";
 		mes "Ah, muito obrigada pela sua ajuda!";
 		next;
 		mes "[Bonnie Imbullea]";
-		mes "Kaanu poder√° conhecer outras crian√ßas com a sua idade...";
+		mes "Kaanu poder· conhecer outras crianÁas com a sua idade...";
 		mes "Finalmente poderemos viver normalmente.";
 		mes "Que maravilhoso...";
 		next;
 		mes "[Bonnie Imbullea]";
 		mes "Mas espere...";
-		mes "Como √© que os pr√≠ncipes morreram, ent√£o?";
-		mes "N√£o havia nenhuma ferida nos corpos pelo que eu me lembre...";
+		mes "Como È que os prÌncipes morreram, ent„o?";
+		mes "N„o havia nenhuma ferida nos corpos pelo que eu me lembre...";
 		next;
 		mes "["+strcharinfo(0)+"]";
-		mes "Bem, hm, eu n√£o sei de nada disso, mas o Padre Bamph e o Padre Biscuss est√£o fazendo a investiga√ß√£o.";
-		mes "Eles est√£o dando o seu melhor para descobrir.";
+		mes "Bem, hm, eu n„o sei de nada disso, mas o Padre Bamph e o Padre Biscuss est„o fazendo a investigaÁ„o.";
+		mes "Eles est„o dando o seu melhor para descobrir.";
 		next;
 		mes "[Bonnie Imbullea]";
 		mes "Entendo.";
-		mes "Bem, eu acredito neles, eles s√£o grandes sacerdotes apesar de tudo.";
-		mes "Embora eu tenha sido perdoada pela minha falha, eu ainda tenho medo da fam√≠lia real...";
-		mes "Tudo que eu posso fazer por enquanto √© rezar.";
+		mes "Bem, eu acredito neles, eles s„o grandes sacerdotes apesar de tudo.";
+		mes "Embora eu tenha sido perdoada pela minha falha, eu ainda tenho medo da famÌlia real...";
+		mes "Tudo que eu posso fazer por enquanto È rezar.";
 		next;
 		mes "[Bonnie Imbullea]";
-		mes "De qualquer forma, eu prometo n√£o revelar o que eu sei sobre este incidente para o p√∫blico.";
-		mes "E se voc√™ vier a montanha novamente, espero que voc√™ pare para nos visitar.";
+		mes "De qualquer forma, eu prometo n„o revelar o que eu sei sobre este incidente para o p˙blico.";
+		mes "E se vocÍ vier a montanha novamente, espero que vocÍ pare para nos visitar.";
 		next;
 		mes "[Bonnie Imbullea]";
-		mes "Voc√™ n√£o tem id√©ia do quanto essas not√≠cias que voc√™ me trouxe significam para mim.";
+		mes "VocÍ n„o tem idÈia do quanto essas notÌcias que vocÍ me trouxe significam para mim.";
 		mes "Eu posso finalmente me livrar desta grande culpa...";
 		mes "Obrigada, aventureiro.";
 		if (prt_curse == 35) {
@@ -1665,7 +1665,7 @@ mjolnir_01,316,268,3	script	Mulher Exausta	4_F_CAPEGIRL,{
 			completequest 18049;
 		} else {
 			next;
-			mes "^3355FFAgpra, voc√™ pode voltar a Rodafrian, a historiadora que fica em Morroc.^000000";
+			mes "^3355FFAgpra, vocÍ pode voltar a Rodafrian, a historiadora que fica em Morroc.^000000";
 			prt_curse = 55;
 			changequest 18049,18051;
 		}
@@ -1674,20 +1674,20 @@ mjolnir_01,316,268,3	script	Mulher Exausta	4_F_CAPEGIRL,{
 	}
 	else if (prt_curse == 36) {
 		mes "[Bonnie Imbullea]";
-		mes "Pela sua gra√ßa e miseric√≥rdia, por favor lamente as pobres almas e proteja a fam√≠lia real...";
-		mes "Aben√ßoe eles com a sua luz e com sua sabedoria os guie...";
+		mes "Pela sua graÁa e misericÛrdia, por favor lamente as pobres almas e proteja a famÌlia real...";
+		mes "AbenÁoe eles com a sua luz e com sua sabedoria os guie...";
 		close;
 	}
 	else if (prt_curse == 45) {
 		mes "[Bonnie Imbullea]";
-		mes "Eu acho que n√≥s ficamos muito acostumados com a paz e serenidade do Monte Mjolnir.";
-		mes "N√£o ser√° f√°cil ir embora mesmo que possamos voltar a Prontera sempre que quisermos...";
+		mes "Eu acho que nÛs ficamos muito acostumados com a paz e serenidade do Monte Mjolnir.";
+		mes "N„o ser· f·cil ir embora mesmo que possamos voltar a Prontera sempre que quisermos...";
 		close;
 	}
 	else if (prt_curse > 54) {
 		mes "[Bonnie Imbullea]";
-		mes "Muito obrigada por voc√™ ter ajudado na investiga√ß√£o dos pr√≠ncipes.";
-		mes "Eu n√£o pensava que poderia alcan√ßar a felicidade novamente se n√£o fosse pelos seus esfor√ßos.";
+		mes "Muito obrigada por vocÍ ter ajudado na investigaÁ„o dos prÌncipes.";
+		mes "Eu n„o pensava que poderia alcanÁar a felicidade novamente se n„o fosse pelos seus esforÁos.";
 		close;
 	}
 	else {
@@ -1704,7 +1704,7 @@ prt_church,185,106,3	script	Padre Bamph	1_M_PASTOR,{
 	if (prt_curse == 13) {
 		mes "[Padre Bamph]";
 		mes "Seja Bem vindo a Catedral de Prontera.";
-		mes "Por favor relaxe, e deixe sua mente e esp√≠rito encontrarem a paz dentro destas paredes sagradas.";
+		mes "Por favor relaxe, e deixe sua mente e espÌrito encontrarem a paz dentro destas paredes sagradas.";
 		next;
 		select("Entregar a ele a bolsa de ervas.");
 		if (countitem(7432) < 1) {
@@ -1715,37 +1715,37 @@ prt_church,185,106,3	script	Padre Bamph	1_M_PASTOR,{
 		}
 		mes "[Padre Bamph]";
 		mes "Deixe-me perguntar...";
-		mes "Por que voc√™ est√° me dando esta bolsa de ervas?";
+		mes "Por que vocÍ est· me dando esta bolsa de ervas?";
 		next;
 		mes "["+strcharinfo(0)+"]";
-		mes "Bem, foi aquela mo√ßa que vive no Monte Mjolnir que me mandou te entregar estas ervas.";
+		mes "Bem, foi aquela moÁa que vive no Monte Mjolnir que me mandou te entregar estas ervas.";
 		mes "Hm, ela tem um filho chamado Kaanu?";
 		next;
 		mes "[Padre Bamph]";
-		mes "Ah, voc√™ deve ter conhecido Bonnie Imbullea.";
-		mes "J√° se passou um bom tempo desde que eu a vi pela √∫ltima vez.";
+		mes "Ah, vocÍ deve ter conhecido Bonnie Imbullea.";
+		mes "J· se passou um bom tempo desde que eu a vi pela ˙ltima vez.";
 		mes "O que ela tem feito, posso perguntar?";
 		next;
 		mes "["+strcharinfo(0)+"]";
 		mes "Oh...";
-		mes "Eu acho que ela est√° bem.";
+		mes "Eu acho que ela est· bem.";
 		mes "Mas ela parece muito...";
 		mes "Como posso dizer, atormentada...";
 		next;
 		mes "[Padre Biscuss]";
-		mes "√ìtimo! Se ela est√° feliz e relaxada ap√≥s o que ela fez, nem mesmo Deus poderia perdo√°-la!";
+		mes "”timo! Se ela est· feliz e relaxada apÛs o que ela fez, nem mesmo Deus poderia perdo·-la!";
 		mes "Ela merece viver o resto de sua vida em agonia!";
 		next;
 		mes "[Padre Bamph]";
-		mes "Padre Biscuss, como voc√™ pode dizer algo como isto?";
+		mes "Padre Biscuss, como vocÍ pode dizer algo como isto?";
 		mes "Ela fez o melhor para impedir que aquilo acontecesse!";
 		mes "Devemos lamentar o sofrimento que ela deve estar sentindo.";
-		mes "Aonde est√° a sua compaix√£o?";
+		mes "Aonde est· a sua compaix„o?";
 		next;
 		mes "[Padre Biscuss]";
-		mes "Bah! N√£o fale comigo sobre compaix√£o!";
-		mes "Em primeiro lugar, n√£o foi voc√™ quem recomendou ela para ela para executar o exorcismo?";
-		mes "Voc√™ n√£o se esqueceu disto, esqueceu?";
+		mes "Bah! N„o fale comigo sobre compaix„o!";
+		mes "Em primeiro lugar, n„o foi vocÍ quem recomendou ela para ela para executar o exorcismo?";
+		mes "VocÍ n„o se esqueceu disto, esqueceu?";
 		next;
 		mes "[Padre Bamph]";
 		mes "......";
@@ -1758,251 +1758,251 @@ prt_church,185,106,3	script	Padre Bamph	1_M_PASTOR,{
 		select("Perguntar sobre Bonnie Imbullea");
 		mes "[Padre Bamph]";
 		mes "Bem...";
-		mes "Eu n√£o...";
-		mes "Eu n√£o sei se eu deveria estar falando a voc√™ sobre este incidente...";
+		mes "Eu n„o...";
+		mes "Eu n„o sei se eu deveria estar falando a vocÍ sobre este incidente...";
 		next;
 		mes "[Padre Biscuss]";
-		mes "O que voc√™ sabe?";
+		mes "O que vocÍ sabe?";
 		mes "Se Bonnie enviou este aventureiro aqui por um favor, provavelmente isso significa que ela acredita nesta pessoa.";
 		if (Sex) {
-			mes "Al√©m disso, n√≥s precisamos de algu√©m que fa√ßa esta tarefa por n√≥s.";
-			mes "Por que n√£o ele?";
+			mes "AlÈm disso, nÛs precisamos de alguÈm que faÁa esta tarefa por nÛs.";
+			mes "Por que n„o ele?";
 		}
 		else {
-			mes "Al√©m disso, n√≥s precisamos de algu√©m que fa√ßa esta tarefa por n√≥s.";
-			mes "Por que n√£o ela?";
+			mes "AlÈm disso, nÛs precisamos de alguÈm que faÁa esta tarefa por nÛs.";
+			mes "Por que n„o ela?";
 		}
 		next;
 		mes "[Padre Bamph]";
-		mes "Suas palavras t√™m o anel da verdade, Padre Biscuss.";
-		mes "Bem ent√£o, aventureiro, me d√™ a oportunidade de lhe dizer algo muito importante.";
-		mes "Mas, voc√™ n√£o deve dizer ningu√©m...";
+		mes "Suas palavras tÍm o anel da verdade, Padre Biscuss.";
+		mes "Bem ent„o, aventureiro, me dÍ a oportunidade de lhe dizer algo muito importante.";
+		mes "Mas, vocÍ n„o deve dizer ninguÈm...";
 		prt_curse = 14;
 		delitem 7432,1; //Leather_Pouch
 		close;
 	}
 	else if (prt_curse == 14) {
 		mes "[Padre Bamph]";
-		mes "O que estou prestes a dizer para voc√™ deve ser mantido em segredo.";
-		mes "Agora, voc√™ sabe sobre Jormungand, a grande serpente que nasceu do Deus Loki e da giganta, Angrboda?";
+		mes "O que estou prestes a dizer para vocÍ deve ser mantido em segredo.";
+		mes "Agora, vocÍ sabe sobre Jormungand, a grande serpente que nasceu do Deus Loki e da giganta, Angrboda?";
 		next;
 		mes "[Padre Bamph]";
-		mes "Jormungand foi uma besta do mal, que ap√≥s milhares de anos de guerra entre os deuses e os dem√¥nios, come√ßou a atacar humanos.";
+		mes "Jormungand foi uma besta do mal, que apÛs milhares de anos de guerra entre os deuses e os demÙnios, comeÁou a atacar humanos.";
 		mes "Isso trouxe um grande caos e muito sofrimento pelo mundo todo...";
 		next;
 		mes "[Padre Bamph]";
-		mes "Finalmente, o Primeiro Tristram da fam√≠lia Gaebolg derrotou Jormungand juntamente com 6 outros guerreiros.";
-		mes "Mas somente ap√≥s Jormungand ter matado o seu amado pai.";
+		mes "Finalmente, o Primeiro Tristram da famÌlia Gaebolg derrotou Jormungand juntamente com 6 outros guerreiros.";
+		mes "Mas somente apÛs Jormungand ter matado o seu amado pai.";
 		next;
 		mes "[Padre Bamph]";
 		mes "Tristram se tornou o primeiro rei do Reino de Rune-Midgard.";
-		mes "Mas sua fam√≠lia deveria sofrer com a maldi√ß√£o que foi colocada por Jormungand ap√≥s sua derrota.";
+		mes "Mas sua famÌlia deveria sofrer com a maldiÁ„o que foi colocada por Jormungand apÛs sua derrota.";
 		next;
 		mes "[Padre Bamph]";
 		mes "Depois deste dia...";
-		mes "^FF0000Todo primeiro pr√≠ncipe da fam√≠lia Gaebolg morrer√° quando estiver na inf√¢ncia^000000.";
-		mes "Esta √© a Maldi√ß√£o de Jormungand e o segredo da fam√≠lia real.";
+		mes "^FF0000Todo primeiro prÌncipe da famÌlia Gaebolg morrer· quando estiver na inf‚ncia^000000.";
+		mes "Esta È a MaldiÁ„o de Jormungand e o segredo da famÌlia real.";
 		emotion e_omg,1;
 		next;
 		mes "["+strcharinfo(0)+"]";
 		mes "O que...?!";
-		mes "Isto √© verdade?!";
-		mes "N√£o ha nenhuma maneira de acabar com esta horr√≠vel maldi√ß√£o?!";
+		mes "Isto È verdade?!";
+		mes "N„o ha nenhuma maneira de acabar com esta horrÌvel maldiÁ„o?!";
 		next;
 		mes "[Padre Bamph]";
 		mes "Por favor abaixe o tom de sua voz.";
-		mes "Sim, √© uma pena que a fam√≠lia real tenha que sofrer com isso.";
+		mes "Sim, È uma pena que a famÌlia real tenha que sofrer com isso.";
 		mes "Mas todos os exorcismos que tentaram por todos estes anos falharam...";
 		next;
 		mes "[Padre Bamph]";
-		mes "Embora a situa√ß√£o parece ser de desespero, o Rei Tristram III tentou mais uma vez exorcizar a maldi√ß√£o.";
+		mes "Embora a situaÁ„o parece ser de desespero, o Rei Tristram III tentou mais uma vez exorcizar a maldiÁ„o.";
 		mes "Seguindo as suas ordens, os maiores sacerdotes exorcistas foram todos convocados.";
 		next;
 		mes "[Padre Bamph]";
-		mes "Uma s√©rie de testes foi realizada para selecionar o melhor sacerdote e exorcista para remover esta maldi√ß√£o.";
-		mes "No fim disto, ^3131FFBonnie Imbullea^000000 foi escolhida para liderar a cerim√¥nia de exorcismo.";
+		mes "Uma sÈrie de testes foi realizada para selecionar o melhor sacerdote e exorcista para remover esta maldiÁ„o.";
+		mes "No fim disto, ^3131FFBonnie Imbullea^000000 foi escolhida para liderar a cerimÙnia de exorcismo.";
 		next;
 		mes "["+strcharinfo(0)+"]";
-		mes "Espere, mas voc√™ mencionou algo sobre um acidente.";
+		mes "Espere, mas vocÍ mencionou algo sobre um acidente.";
 		mes "Quer dizer que ela falhou no desempenho do exorcismo?";
 		next;
 		mes "[Padre Bamph]";
 		mes "Sim, infelizmente.";
-		mes "Ap√≥s os sacerdotes e exorcistas terem sido levados a √°rea cerimonial secreta tr√™s pr√≠ncipes foram mortos ao inv√©s de apenas o primeiro.";
+		mes "ApÛs os sacerdotes e exorcistas terem sido levados a ·rea cerimonial secreta trÍs prÌncipes foram mortos ao invÈs de apenas o primeiro.";
 		next;
 		mes "[Padre Biscuss]";
-		mes "Embora todos n√≥s termos jurado manter o incidente em segredo, Bonnie Imbullea levou toda a responsabilidade pelas mortes.";
-		mes "√â por isso que ela est√° em ex√≠lio imposto pelo reino.";
+		mes "Embora todos nÛs termos jurado manter o incidente em segredo, Bonnie Imbullea levou toda a responsabilidade pelas mortes.";
+		mes "… por isso que ela est· em exÌlio imposto pelo reino.";
 		next;
 		mes "["+strcharinfo(0)+"]";
 		mes "O Que...?";
-		mes "Isso √©...";
-		mes "Isso √© loucura!";
+		mes "Isso È...";
+		mes "Isso È loucura!";
 		next;
 		mes "[Padre Biscuss]";
-		mes "Eu sei que esta √© uma longa hist√≥ria, e √© um pouco complicada.";
-		mes "Por favor ou√ßa o que n√≥s temos de falar...";
+		mes "Eu sei que esta È uma longa histÛria, e È um pouco complicada.";
+		mes "Por favor ouÁa o que nÛs temos de falar...";
 		emotion e_dots;
 		prt_curse = 15;
 		close;
 	}
 	else if (prt_curse == 15) {
 		mes "[Padre Bamph]";
-		mes "Agora, voc√™ deve saber que todos os pr√≠ncipes que foram mortos neste dia tinham marcas estranhas em seus corpos.";
-		mes "√â como se estivessem crescendo escamas de serpente.";
+		mes "Agora, vocÍ deve saber que todos os prÌncipes que foram mortos neste dia tinham marcas estranhas em seus corpos.";
+		mes "… como se estivessem crescendo escamas de serpente.";
 		emotion e_gasp,1;
 		next;
 		mes "["+strcharinfo(0)+"]";
 		mes "Espere, cresceram escamas de serpente?";
-		mes "Isso parece igual a uma das vers√µes do poema que estou investigando.";
+		mes "Isso parece igual a uma das versıes do poema que estou investigando.";
 		mes "Eu acho que foi o poema sobre a origem do Reino de Rune-Midgard.";
 		next;
 		mes "[Padre Bamph]";
 		mes "Espere, que poema?";
-		mes "Hm, eu n√£o se est√° relacionado.";
+		mes "Hm, eu n„o se est· relacionado.";
 		mes "Vamos ver agora, como era?";
-		mes "Arco-√≠ris... √Åguias...";
+		mes "Arco-Ìris... ¡guias...";
 		mes "Ah! Agora eu me lembro!";
 		next;
 		mes "[Padre Bamph]";
 		mes "A grande serpente engoliu o mar.";
-		mes "A √°guia do arco-√≠ris engoliu a serpente.";
-		mes "A √°guia ent√£o construiu seu ninho.";
+		mes "A ·guia do arco-Ìris engoliu a serpente.";
+		mes "A ·guia ent„o construiu seu ninho.";
 		mes "Um ninho sob o mar encoberto.";
 		next;
 		mes "["+strcharinfo(0)+"]";
 		mes "Hmm...";
-		mes "Bem, eu escutei uma diferente vers√£o do mesmo poema.";
-		mes "Ela √© assim...";
+		mes "Bem, eu escutei uma diferente vers„o do mesmo poema.";
+		mes "Ela È assim...";
 		next;
 		mes "["+strcharinfo(0)+"]";
 		mes "A grande serpente engoliu o mar.";
-		mes "A √°guia do arco-√≠ris engoliu a serpente.";
-		mes "Ent√£o escamas de cobra cresceram na √°guia, e ela morreu lentamente.";
+		mes "A ·guia do arco-Ìris engoliu a serpente.";
+		mes "Ent„o escamas de cobra cresceram na ·guia, e ela morreu lentamente.";
 		next;
 		mes "[Padre Bamph]";
 		mes "Ah, meu... Eu aprendi este poema quando eu era um garoto pelo meu pai.";
-		mes "No entanto, sua vers√£o parece revelar o segredo da Fam√≠lia dos Gaebolgs.";
-		mes "Por favor, me diga onde voc√™ escutou este poema?";
+		mes "No entanto, sua vers„o parece revelar o segredo da FamÌlia dos Gaebolgs.";
+		mes "Por favor, me diga onde vocÍ escutou este poema?";
 		next;
 		mes "["+strcharinfo(0)+"]";
-		mes "Bem, primeiro eu escutei esta vers√£o de um historiador, e depois eu descobri que Bonnie Imbullea sabe ele muito bem.";
-		mes "Hm, h√° algum problema?";
+		mes "Bem, primeiro eu escutei esta vers„o de um historiador, e depois eu descobri que Bonnie Imbullea sabe ele muito bem.";
+		mes "Hm, h· algum problema?";
 		next;
 		mes "[Padre Bamph]";
-		mes "Se essas letras do poema forem passadas, o segredo da maldi√ß√£o da fam√≠lia real poder√° ser revelado para o p√∫blico.";
-		mes "Voc√™ poderia por favor nos ajudar a falar com Bonnie Imbullea mas uma vez?";
+		mes "Se essas letras do poema forem passadas, o segredo da maldiÁ„o da famÌlia real poder· ser revelado para o p˙blico.";
+		mes "VocÍ poderia por favor nos ajudar a falar com Bonnie Imbullea mas uma vez?";
 		next;
 		mes "[Padre Bamph]";
-		mes "Se voc√™ puder, tente ver se voc√™ descobre alguma conex√£o entre a maldi√ß√£o e o poema.";
-		mes "Ou se ela se lembra de algo que aconteceu ap√≥s a falha do exorcismo...";
+		mes "Se vocÍ puder, tente ver se vocÍ descobre alguma conex„o entre a maldiÁ„o e o poema.";
+		mes "Ou se ela se lembra de algo que aconteceu apÛs a falha do exorcismo...";
 		prt_curse = 16;
 		changequest 18034,18035;
 		close;
 	}
 	else if (prt_curse == 16) {
 		mes "[Padre Bamph]";
-		mes "Por favor visite Bonnie Imbullea no Monte Mjolnir para ver se voc√™ descobre mais sobre o poema.";
-		mes "Ou sobre o que aconteceu ap√≥s a tentativa de exorcismo da maldi√ß√£o de Jormungand.";
+		mes "Por favor visite Bonnie Imbullea no Monte Mjolnir para ver se vocÍ descobre mais sobre o poema.";
+		mes "Ou sobre o que aconteceu apÛs a tentativa de exorcismo da maldiÁ„o de Jormungand.";
 		close;
 	}
 	else if (prt_curse == 17) {
 		mes "[Padre Bamph]";
-		mes "Ah, voc√™ falou com Bonnie Imbullea?";
-		mes "Por favor me diga se voc√™ aprendeu algo novo.";
+		mes "Ah, vocÍ falou com Bonnie Imbullea?";
+		mes "Por favor me diga se vocÍ aprendeu algo novo.";
 		next;
-		mes "^3355FFVoc√™ relata tudo que Bonnie Imbullea disse sobre a descoberta de um fragmento de Gema Vermelha na √°rea cerimonial secreta.";
+		mes "^3355FFVocÍ relata tudo que Bonnie Imbullea disse sobre a descoberta de um fragmento de Gema Vermelha na ·rea cerimonial secreta.";
 		next;
 		mes "[Padre Bamph]";
 		mes "Gema Vermelha?";
-		mes "N√£o h√° nenhuma raz√£o para isto estar em um lugar sagrado. Hmm.";
-		mes "√â melhor investigarmos a verdade, come√ßando a partir de agora.";
+		mes "N„o h· nenhuma raz„o para isto estar em um lugar sagrado. Hmm.";
+		mes "… melhor investigarmos a verdade, comeÁando a partir de agora.";
 		next;
 		mes "[Padre Bamph]";
-		mes "Venha comigo, aventureiro, para a √°rea cerimonial secreta para a fam√≠lia real.";
+		mes "Venha comigo, aventureiro, para a ·rea cerimonial secreta para a famÌlia real.";
 		mes "Apenas use o interruptor na estante perto de mim";
-		mes "Eu lhe encontro l√°.";
+		mes "Eu lhe encontro l·.";
 		prt_curse = 18;
 		changequest 18036,18037;
 		close;
 	}
 	else if (prt_curse > 17 && prt_curse < 22) {
 		mes "[Padre Bamph]";
-		mes "Venha comigo para a √°rea cerimonial secreta ent√£o poderemos investigar a possibilidade de uma sabotagem no exorcismo que";
+		mes "Venha comigo para a ·rea cerimonial secreta ent„o poderemos investigar a possibilidade de uma sabotagem no exorcismo que";
 		mes "Bonnie Imbullea realizou.";
 		next;
 		mes "[Padre Bamph]";
-		mes "H√° um interruptor escondido na estante de livros que voc√™ pode para se teleportar para l√°.";
-		mes "V√°, e eu te encontrarei no √°rea cerimonial secreta.";
+		mes "H· um interruptor escondido na estante de livros que vocÍ pode para se teleportar para l·.";
+		mes "V·, e eu te encontrarei no ·rea cerimonial secreta.";
 		close;
 	}
 	else if (prt_curse == 22) {
 		mes "[Padre Bamph]";
-		mes "Esta √© uma quest√£o de grave import√¢ncia, mas n√£o podemos alertar a fam√≠lia real ainda e causar um p√¢nico.";
-		mes "√â melhor investigar tudo primeiro e coletar provas.";
+		mes "Esta È uma quest„o de grave import‚ncia, mas n„o podemos alertar a famÌlia real ainda e causar um p‚nico.";
+		mes "… melhor investigar tudo primeiro e coletar provas.";
 		next;
 		mes "[Padre Bamph]";
-		mes "Bravo aventureiro, voc√™ poderia visitar a Guilda dos Mercen√°rios em Morroc.";
-		mes "E ver se voc√™ pode aprender alguma coisa sobre como n√≥s podemos verificar se foi usado veneno para matar os pr√≠ncipes?";
+		mes "Bravo aventureiro, vocÍ poderia visitar a Guilda dos Mercen·rios em Morroc.";
+		mes "E ver se vocÍ pode aprender alguma coisa sobre como nÛs podemos verificar se foi usado veneno para matar os prÌncipes?";
 		prt_curse = 23;
 		changequest 18039,18040;
 		close;
 	}
 	else if (prt_curse == 23) {
 		mes "[Padre Bamph]";
-		mes "Por favor veja se voc√™ pode aprender algo sobre testes para o uso de veneno de um membro da Guilda de Mercen√°rios em Morroc.";
+		mes "Por favor veja se vocÍ pode aprender algo sobre testes para o uso de veneno de um membro da Guilda de Mercen·rios em Morroc.";
 		close;
 	}
 	else if (prt_curse == 31) {
 		mes "[Padre Bamph]";
-		mes "Ah, voc√™ retornou.";
-		mes "Voc√™ conseguiu aprender algo sobre veneno na Guilda dos Mercen√°rios?";
-		mes "Eu sei que seus membros s√£o muito dif√≠ceis de se encontrar...";
+		mes "Ah, vocÍ retornou.";
+		mes "VocÍ conseguiu aprender algo sobre veneno na Guilda dos Mercen·rios?";
+		mes "Eu sei que seus membros s„o muito difÌceis de se encontrar...";
 		next;
-		mes "^3355FFVoc√™ relata todas as informa√ß√µes que voc√™ conseguiu aprender sobre veneno para o Padre Bamph.";
-		mes "Incluindo o m√©todo de teste para o uso de veneno em assassinatos. ";
+		mes "^3355FFVocÍ relata todas as informaÁıes que vocÍ conseguiu aprender sobre veneno para o Padre Bamph.";
+		mes "Incluindo o mÈtodo de teste para o uso de veneno em assassinatos. ";
 		next;
 		mes "[Padre Bamph]";
 		mes "Ah, entendo.";
-		mes "Ent√£o, voc√™ poderia trazer 1 Gema Amarela e 1 Po√ß√£o Verde para a √°rea cerimonial secreta o mais r√°pido poss√≠vel?";
-		mes "Eu irei te esperar l√° novamente.";
+		mes "Ent„o, vocÍ poderia trazer 1 Gema Amarela e 1 PoÁ„o Verde para a ·rea cerimonial secreta o mais r·pido possÌvel?";
+		mes "Eu irei te esperar l· novamente.";
 		prt_curse = 32;
 		changequest 18044,18046;
 		close;
 	}
 	else if (prt_curse == 32 || prt_curse == 33 || prt_curse == 41 || prt_curse == 42 || prt_curse == 51 || prt_curse == 52) {
 		mes "[Padre Bamph]";
-		mes "Voc√™ pode utilizar o interruptor secreto na estante para entrar na √°rea cerimonial secreta.";
-		mes "N√£o se esque√ßa de que n√≥s precisamos de ^3131FF1 Gema Amarela^000000 e ^3131FF1 Po√ß√£o Verde^000000 para testar o veneno.";
+		mes "VocÍ pode utilizar o interruptor secreto na estante para entrar na ·rea cerimonial secreta.";
+		mes "N„o se esqueÁa de que nÛs precisamos de ^3131FF1 Gema Amarela^000000 e ^3131FF1 PoÁ„o Verde^000000 para testar o veneno.";
 		close;
 	}
 	else if (prt_curse == 34) {
 		mes "[Padre Bamph]";
-		mes "Eu n√£o posso acreditar!";
-		mes "Se veneno foi usado, ent√£o o";
-		mes "segundo e o terceiro pr√≠ncipes";
-		mes "foram assassinados! Inacredit√°vel...";
-		mes "Como algu√©m pode matar crian√ßas?";
+		mes "Eu n„o posso acreditar!";
+		mes "Se veneno foi usado, ent„o o";
+		mes "segundo e o terceiro prÌncipes";
+		mes "foram assassinados! Inacredit·vel...";
+		mes "Como alguÈm pode matar crianÁas?";
 		next;
 		mes "[Padre Bamph]";
-		mes "Pelo menos, agora n√≥s sabemos";
-		mes "que a morte deles n√£o foi culpa";
+		mes "Pelo menos, agora nÛs sabemos";
+		mes "que a morte deles n„o foi culpa";
 		mes "da Bonnie Imbullea.";
 		mes "Agora eu tenho que discutir com o Padre";
 		mes "Biscuss e decidir como contar a";
-		mes "fam√≠lia real sobre isto...";
+		mes "famÌlia real sobre isto...";
 		next;
 		mes "[Padre Bamph]";
 		mes "Mais uma vez, deixe-me lembrar";
-		mes "a voc√™ que tudo que ocorreu";
+		mes "a vocÍ que tudo que ocorreu";
 		mes "aqui deve ser mantido em";
-		mes "secredo. O P√∫blico n√£o pode saber da";
-		mes "Maldi√ß√£o de Jormungand! Isto poderia trazer turbul√™ncia pol√≠tica e caos!";
+		mes "secredo. O P˙blico n„o pode saber da";
+		mes "MaldiÁ„o de Jormungand! Isto poderia trazer turbulÍncia polÌtica e caos!";
 		next;
 		mes "[Padre Bamph]";
-		mes "Ainda assim, isto n√£o quer dizer que eu n√£o possa agradecer pessoalmente por toda a sua ajuda.";
-		mes "Eu sou muito grato pelo o que voc√™ fez, aventureiro.";
-		mes "A seguran√ßa o acompanhar√° em todas as suas jornadas.";
+		mes "Ainda assim, isto n„o quer dizer que eu n„o possa agradecer pessoalmente por toda a sua ajuda.";
+		mes "Eu sou muito grato pelo o que vocÍ fez, aventureiro.";
+		mes "A seguranÁa o acompanhar· em todas as suas jornadas.";
 		prt_curse = 35;
 		changequest 18047,18050;
 		close;
@@ -2010,55 +2010,55 @@ prt_church,185,106,3	script	Padre Bamph	1_M_PASTOR,{
 	else if (prt_curse > 34 && prt_curse < 40 && !aru_monas) {
 		mes "[Padre Bamph]";
 		mes "Eu esqueci o que eu tinha para fazer.";
-		mes "Algumas vezes, at√© mesmo eu tenho d√∫vidas e acreditar que Odin nos abandonou...";
+		mes "Algumas vezes, atÈ mesmo eu tenho d˙vidas e acreditar que Odin nos abandonou...";
 		close;
 	}
 	else if (prt_curse == 40) {
 		mes "[Padre Bamph]";
-		mes "Ah, voc√™ retornou.";
-		mes "Voc√™ conseguiu aprender algo";
+		mes "Ah, vocÍ retornou.";
+		mes "VocÍ conseguiu aprender algo";
 		mes "sobre veneno na Guilda dos";
-		mes "Mercen√°rios? Eu sei que seus";
-		mes "membros s√£o muito dif√≠ceis";
+		mes "Mercen·rios? Eu sei que seus";
+		mes "membros s„o muito difÌceis";
 		mes "de se encontrar...";
 		next;
-		mes "^3355FFVoc√™ relata todas as informa√ß√µes";
-		mes "que voc√™ conseguiu aprender";
+		mes "^3355FFVocÍ relata todas as informaÁıes";
+		mes "que vocÍ conseguiu aprender";
 		mes "sobre veneno para o Padre Bamph,";
-		mes "incluindo o m√©todo de teste";
+		mes "incluindo o mÈtodo de teste";
 		mes "para o uso de veneno em assassinatos. ";
 		next;
 		mes "[Padre Bamph]";
 		mes "Ah, entendo...";
-		mes "Ent√£o, voc√™ poderia trazer 1 Gema Amarela e 1 Po√ß√£o Verde para a √°rea cerimonial secreta o mais r√°pido poss√≠vel?";
-		mes "Eu irei te esperar l√° novamente.";
+		mes "Ent„o, vocÍ poderia trazer 1 Gema Amarela e 1 PoÁ„o Verde para a ·rea cerimonial secreta o mais r·pido possÌvel?";
+		mes "Eu irei te esperar l· novamente.";
 		prt_curse = 41;
 		changequest 18045,18046;
 		close;
 	}
 	else if (prt_curse == 43 || prt_curse == 53) {
 		mes "[Padre Bamph]";
-		mes "Eu n√£o posso acreditar!";
-		mes "Se veneno foi usado, ent√£o o segundo e o terceiro pr√≠ncipes foram assassinados! Inacredit√°vel...";
-		mes "Como algu√©m pode matar crian√ßas?";
+		mes "Eu n„o posso acreditar!";
+		mes "Se veneno foi usado, ent„o o segundo e o terceiro prÌncipes foram assassinados! Inacredit·vel...";
+		mes "Como alguÈm pode matar crianÁas?";
 		next;
 		mes "[Padre Bamph]";
-		mes "Pelo menos, agora n√≥s sabemos que a morte deles n√£o foi culpa da Bonnie Imbullea.";
-		mes "Agora eu tenho que discutir com o Padre Biscuss e decidir como contar a fam√≠lia real sobre isto...";
+		mes "Pelo menos, agora nÛs sabemos que a morte deles n„o foi culpa da Bonnie Imbullea.";
+		mes "Agora eu tenho que discutir com o Padre Biscuss e decidir como contar a famÌlia real sobre isto...";
 		next;
 		mes "[Padre Bamph]";
-		mes "Ah, e voc√™ poderia por favor informar a ^3131FFBonnie Imbullea^000000 que as mortes dos pr√≠ncipes n√£o foram culpa dela?";
-		mes "Eu tenho certeza que estas novidades trariam a ela um grande al√≠vio de sua culpa...";
+		mes "Ah, e vocÍ poderia por favor informar a ^3131FFBonnie Imbullea^000000 que as mortes dos prÌncipes n„o foram culpa dela?";
+		mes "Eu tenho certeza que estas novidades trariam a ela um grande alÌvio de sua culpa...";
 		next;
 		mes "[Padre Bamph]";
-		mes "Mais uma vez, deixe-me lembrar a voc√™ que tudo que ocorreu aqui deve ser mantido em secredo.";
-		mes "O P√∫blico n√£o pode saber da Maldi√ß√£o de Jormungand!";
-		mes "Isto poderia trazer turbul√™ncia pol√≠tica e caos!";
+		mes "Mais uma vez, deixe-me lembrar a vocÍ que tudo que ocorreu aqui deve ser mantido em secredo.";
+		mes "O P˙blico n„o pode saber da MaldiÁ„o de Jormungand!";
+		mes "Isto poderia trazer turbulÍncia polÌtica e caos!";
 		next;
 		mes "[Padre Bamph]";
-		mes "Ainda assim, isto n√£o quer dizer que eu n√£o possa agradecer pessoalmente por toda a sua ajuda.";
-		mes "Sou muito grato pelo o que voc√™ fez, aventureiro.";
-		mes "A seguran√ßa o acompanhar√° em todas as suas jornadas.";
+		mes "Ainda assim, isto n„o quer dizer que eu n„o possa agradecer pessoalmente por toda a sua ajuda.";
+		mes "Sou muito grato pelo o que vocÍ fez, aventureiro.";
+		mes "A seguranÁa o acompanhar· em todas as suas jornadas.";
 		if (prt_curse == 43)
 			prt_curse = 44;
 		else
@@ -2069,24 +2069,24 @@ prt_church,185,106,3	script	Padre Bamph	1_M_PASTOR,{
 	}
 	else if (prt_curse > 43 && prt_curse < 50 && !aru_monas) {
 		mes "[Padre Bamph]";
-		mes "Voc√™ ainda n√£o falou com Bonnie Imbullea?";
-		mes "Tente n√£o se preocupar com as not√≠cias sobre o assassinato dos pr√≠ncipes.";
+		mes "VocÍ ainda n„o falou com Bonnie Imbullea?";
+		mes "Tente n„o se preocupar com as notÌcias sobre o assassinato dos prÌncipes.";
 		mes "Padre Biscuss e eu cuidaremos disto.";
 		close;
 	}
 	else if (prt_curse == 50) {
 		mes "[Padre Bamph]";
-		mes "Ah, voc√™ retornou.";
-		mes "Voc√™ conseguiu aprender algo sobre veneno na Guilda dos Mercen√°rios?";
-		mes "Eu sei que seus membros s√£o muito dif√≠ceis de se encontrar...";
+		mes "Ah, vocÍ retornou.";
+		mes "VocÍ conseguiu aprender algo sobre veneno na Guilda dos Mercen·rios?";
+		mes "Eu sei que seus membros s„o muito difÌceis de se encontrar...";
 		next;
-		mes "^3355FFVoc√™ relata todas as informa√ß√µes que voc√™ conseguiu aprender sobre veneno para o Padre Bamph.";
-		mes "Incluindo o m√©todo de teste para o uso de veneno em assassinatos. ";
+		mes "^3355FFVocÍ relata todas as informaÁıes que vocÍ conseguiu aprender sobre veneno para o Padre Bamph.";
+		mes "Incluindo o mÈtodo de teste para o uso de veneno em assassinatos. ";
 		next;
 		mes "[Padre Bamph]";
 		mes "Ah, entendo...";
-		mes "Ent√£o, voc√™ poderia trazer 1 Gema Amarela e 1 Po√ß√£o Verde para a √°rea cerimonial secreta o mais r√°pido poss√≠vel?";
-		mes "Eu irei te esperar l√° novamente.";
+		mes "Ent„o, vocÍ poderia trazer 1 Gema Amarela e 1 PoÁ„o Verde para a ·rea cerimonial secreta o mais r·pido possÌvel?";
+		mes "Eu irei te esperar l· novamente.";
 		prt_curse = 51;
 		changequest 18043,18046;
 		close;
@@ -2094,36 +2094,36 @@ prt_church,185,106,3	script	Padre Bamph	1_M_PASTOR,{
 	else if (prt_curse == 60) {
 		mes "[Padre Bamph]";
 		mes "Ah, "+strcharinfo(0)+".";
-		mes "J√° se passou um tempo, ein.";
-		mes "Voc√™ j√° falou com";
+		mes "J· se passou um tempo, ein.";
+		mes "VocÍ j· falou com";
 		mes "Bonnie? Ah, e";
-		mes "como eu posso ajud√°-lo hoje?";
+		mes "como eu posso ajud·-lo hoje?";
 		next;
-		mes "^3355FFVoc√™ diz ao Padre Bamph que ervas raras crescem na terra para oeste.";
-		mes "Embora voc√™ n√£o ter dito a ele que contou a Rodafrian sobre a maldi√ß√£o.^000000";
+		mes "^3355FFVocÍ diz ao Padre Bamph que ervas raras crescem na terra para oeste.";
+		mes "Embora vocÍ n„o ter dito a ele que contou a Rodafrian sobre a maldiÁ„o.^000000";
 		next;
 		mes "[Padre Biscuss]";
 		mes "Terra para o oeste?";
-		mes "H√° rumores de que este lugar √© povoado por fan√°ticos.";
-		mes "Padre Bamph, eu acho que eles devem ser os principais suspeitos do assassinato dos pr√≠ncipes...";
+		mes "H· rumores de que este lugar È povoado por fan·ticos.";
+		mes "Padre Bamph, eu acho que eles devem ser os principais suspeitos do assassinato dos prÌncipes...";
 		next;
 		mes "[Padre Bamph]";
-		mes "Bem, vou admitir que isto √© poss√≠vel, mas n√£o tivemos contato com ningu√©m da terra para o oeste por um bom tempo...";
-		mes "E tamb√©m √© muito cedo para fazer este tipo de suposi√ß√£o.";
+		mes "Bem, vou admitir que isto È possÌvel, mas n„o tivemos contato com ninguÈm da terra para o oeste por um bom tempo...";
+		mes "E tambÈm È muito cedo para fazer este tipo de suposiÁ„o.";
 		next;
 		select("Terra para o Oeste?");
 		mes "[Padre Bamph]";
-		mes "N√£o se sabe muito sobre a terra para o oeste.";
-		mes "N√≥s enviamos v√°rios sacerdotes para l√° para espalhar a nossa f√©";
+		mes "N„o se sabe muito sobre a terra para o oeste.";
+		mes "NÛs enviamos v·rios sacerdotes para l· para espalhar a nossa fÈ";
 		mes "No entanto, eles falharam...";
 		next;
 		mes "[Padre Bamph]";
-		mes "Pelo que eu posso dizer, quase todos l√° s√£o adeptos da religi√£o nativa do lugar.";
+		mes "Pelo que eu posso dizer, quase todos l· s„o adeptos da religi„o nativa do lugar.";
 		mes "De qualquer forma, obrigado por nos informar.";
 		mes "Cuidaremos disso daqui.";
 		next;
 		mes "[Padre Bamph]";
-		mes "Ah, para preservar os segredos da fam√≠lia real, pe√ßo que voc√™ evite entrar no √°rea cerimonial sagrada de agora em diante.";
+		mes "Ah, para preservar os segredos da famÌlia real, peÁo que vocÍ evite entrar no ·rea cerimonial sagrada de agora em diante.";
 		mes "Obrigado novamente pela a sua ajuda, "+strcharinfo(0)+".";
 		prt_curse = 61;
 		completequest 18052;
@@ -2134,77 +2134,77 @@ prt_church,185,106,3	script	Padre Bamph	1_M_PASTOR,{
 // Begin Nameless Island Access Quest Addition
 			if (aru_monas == 0) {
 				mes "[Padre Bamph]";
-				mes "Me desculpe, mas poder√≠amos conversar mais tarde?";
+				mes "Me desculpe, mas poderÌamos conversar mais tarde?";
 				mes "Eu tenho que cuidar de uma tarefa muito importante agora...";
 				close;
 			} else if (aru_monas == 1) {
 				mes "[Padre Bamph]";
-				mes "Oh, eu estive esperando por voc√™, aventureiro.";
-				mes "Lamento em dar a voc√™ este aviso, mas parece que voc√™ cresceu e est√° mais forte do que a √∫ltima vez que nos vimos.";
+				mes "Oh, eu estive esperando por vocÍ, aventureiro.";
+				mes "Lamento em dar a vocÍ este aviso, mas parece que vocÍ cresceu e est· mais forte do que a ˙ltima vez que nos vimos.";
 				next;
 				mes "[Padre Bamph]";
-				mes "A Catedral recebeu um pedido do Castelo de Prontera, mas n√≥s n√£o temos recursos para lidar com ele.";
-				mes "Eu acredito que voc√™ deve estar bem adaptado para esta tarefa se voc√™ quiser ajudar.";
+				mes "A Catedral recebeu um pedido do Castelo de Prontera, mas nÛs n„o temos recursos para lidar com ele.";
+				mes "Eu acredito que vocÍ deve estar bem adaptado para esta tarefa se vocÍ quiser ajudar.";
 				next;
 				mes "[Padre Bamph]";
-				mes "Um homem de alto padr√£o de repente desapareceu h√° algum tempo.";
-				mes "Embora o Castelo de Prontera pediu para que encontr√°ssemos ele, eu posso dizer que agora √© tarde de mais.";
+				mes "Um homem de alto padr„o de repente desapareceu h· algum tempo.";
+				mes "Embora o Castelo de Prontera pediu para que encontr·ssemos ele, eu posso dizer que agora È tarde de mais.";
 				next;
 				mes "[Padre Bamph]";
-				mes "Tudo o que sabemos √© que ele foi visto pela √∫ltima vez Comodo.";
-				mes "Por favor fale com nosso informante, ^6B8E23Larjes^000000, e ele o ajudar√° na busca pelo oficial perdido.";
+				mes "Tudo o que sabemos È que ele foi visto pela ˙ltima vez Comodo.";
+				mes "Por favor fale com nosso informante, ^6B8E23Larjes^000000, e ele o ajudar· na busca pelo oficial perdido.";
 				aru_monas = 2;
 				changequest 17000,17001;
 				close;
 			}
 			else if (aru_monas == 2 || aru_monas == 3) {
 				mes "[Padre Bamph]";
-				mes "Por favor v√° para Comodo e encontre nosso informante, ^6B8E23Larjes^000000, no Casino.";
-				mes "Ele o ajudar√° na sua busca pelo oficial que desapareceu.";
+				mes "Por favor v· para Comodo e encontre nosso informante, ^6B8E23Larjes^000000, no Casino.";
+				mes "Ele o ajudar· na sua busca pelo oficial que desapareceu.";
 				close;
 			}
 			else if (aru_monas == 4) {
 				mes "[Padre Bamph]";
-				mes "Ah, ent√£o voc√™ encontrou Larjes?";
-				mes "A sua investiga√ß√£o sobre";
+				mes "Ah, ent„o vocÍ encontrou Larjes?";
+				mes "A sua investigaÁ„o sobre";
 				mes "desaparecimento do oficial tem";
 				mes "progredido? Eu espero que";
-				mes "voc√™ encontre ele s√£o e salvo";
+				mes "vocÍ encontre ele s„o e salvo";
 				next;
 				select("Dizer a ele o que Larjes disse.");
 				mes "[Padre Bamph]";
 				mes "Entendo.";
-				mes "N√≥s detectamos algumas atividades inquietantes de Arunafeltz ultimamente.";
-				mes "Mas eu n√£o acho que eles v√£o se mexer t√£o cedo...";
-				mes "Me d√™ um momento para pensar.";
+				mes "NÛs detectamos algumas atividades inquietantes de Arunafeltz ultimamente.";
+				mes "Mas eu n„o acho que eles v„o se mexer t„o cedo...";
+				mes "Me dÍ um momento para pensar.";
 				aru_monas = 5;
 				close;
 			}
 			else if (aru_monas == 5) {
 				if (rand(1,5) == 4) {
 					mes "[Padre Bamph]";
-					mes "Bem, eu tenho que considerar todos os cen√°rios poss√≠veis.";
-					mes "Eu acho eu acho que funciona melhor voc√™ continuar sua investiga√ß√£o em nosso nome.";
-					mes "Ou seja, se voc√™ est√° disposto a faz√™-lo.";
+					mes "Bem, eu tenho que considerar todos os cen·rios possÌveis.";
+					mes "Eu acho eu acho que funciona melhor vocÍ continuar sua investigaÁ„o em nosso nome.";
+					mes "Ou seja, se vocÍ est· disposto a fazÍ-lo.";
 					next;
 					mes "[Padre Bamph]";
-					mes "N√≥s n√£o queremos provocar um conflito internacional com o envolvimento do oficial, mas tamb√©m n√£o posso for√ßar voc√™ a trabalhar para n√≥s.";
-					mes "S√≥ voc√™ pode ajudar em sua escolha.";
+					mes "NÛs n„o queremos provocar um conflito internacional com o envolvimento do oficial, mas tambÈm n„o posso forÁar vocÍ a trabalhar para nÛs.";
+					mes "SÛ vocÍ pode ajudar em sua escolha.";
 					next;
 					if (select("Deixe me pensar sobre isso.:Certamente vou ajudar.") == 1) {
 						mes "[Padre Bamph]";
-						mes "Eu espero que voc√™ decida nos ajudar.";
-						mes "A seguran√ßa da nossa na√ß√£o depende do sucesso desta investiga√ß√£o.";
-						mes "N√≥s realmente precisaremos da sua ajuda.";
+						mes "Eu espero que vocÍ decida nos ajudar.";
+						mes "A seguranÁa da nossa naÁ„o depende do sucesso desta investigaÁ„o.";
+						mes "NÛs realmente precisaremos da sua ajuda.";
 						close;
 					}
 					mes "[Padre Bamph]";
 					mes "Muito obrigado.";
-					mes "Fico feliz em ouvir que voc√™ nos ajudar√°.";
-					mes "Voc√™ deve pegar o aeroplano em Izlude para viajar a Arunafeltz, onde voc√™ poder√° continuar a sua investiga√ß√£o.";
+					mes "Fico feliz em ouvir que vocÍ nos ajudar·.";
+					mes "VocÍ deve pegar o aeroplano em Izlude para viajar a Arunafeltz, onde vocÍ poder· continuar a sua investigaÁ„o.";
 					next;
 					mes "[Padre Bamph]";
-					mes "Eu acredito que voc√™ poder√° conseguir mais informa√ß√µes se voc√™ investigar na cidade de ^9370DBRachel^000000.";
+					mes "Eu acredito que vocÍ poder· conseguir mais informaÁıes se vocÍ investigar na cidade de ^9370DBRachel^000000.";
 					mes "Por favor aceite este dinheiro para cobri a passagem do Aeroplano.";
 					mes "Obrigado, e boa sorte.";
 					aru_monas = 6;
@@ -2214,46 +2214,46 @@ prt_church,185,106,3	script	Padre Bamph	1_M_PASTOR,{
 				}
 				else {
 					mes "[Padre Bamph]";
-					mes "Hmm... Qual √© a melhor maneira para lidarmos com isso?";
-					mes "Me deixe pensar sobre as op√ß√µes.";
-					mes "Bem, n√≥s podemos--n√£o. N√£o funcionaria.";
-					mes "Isso ser√° muito dif√≠cil.";
+					mes "Hmm... Qual È a melhor maneira para lidarmos com isso?";
+					mes "Me deixe pensar sobre as opÁıes.";
+					mes "Bem, nÛs podemos--n„o. N„o funcionaria.";
+					mes "Isso ser· muito difÌcil.";
 					close;
 				}
 			}
 			else if (aru_monas == 6) {
 				// Anyone else see the irony in this?
 				mes "[Padre Bamph]";
-				mes "Voc√™ pode ter problemas em Rachel j√° que a cultura deles √© muito diferente da nossa.;";
+				mes "VocÍ pode ter problemas em Rachel j· que a cultura deles È muito diferente da nossa.;";
 				mes "O modo de fazerem as coisas, o governo...";
-				mes "Tudo est√° vinculado √† religi√£o.";
+				mes "Tudo est· vinculado ‡ religi„o.";
 				close;
 			}
 			else if (aru_monas > 6 && aru_monas < 25) {
 				mes "[Padre Bamph]";
 				mes "Muito obrigado por todo o seu trabalho duro.";
-				mes "Nossos agentes entraram em contato com voc√™ sempre que os mesmos descobrirem alguma coisa nova.";
-				mes "Lembre-se que ningu√©m pode o que n√≥s temos feito.";
+				mes "Nossos agentes entraram em contato com vocÍ sempre que os mesmos descobrirem alguma coisa nova.";
+				mes "Lembre-se que ninguÈm pode o que nÛs temos feito.";
 				close;
 			}
 			else if (aru_monas == 25 || aru_monas == 26) {
 				mes "[Padre Bamph]";
-				mes "Muito obrigado por nos trazer esta informa√ß√£o importante.";
+				mes "Muito obrigado por nos trazer esta informaÁ„o importante.";
 				mes "Com a sua ajuda, fomos capazes de resolver alguns casos.";
-				mes "N√≥s esper√°vamos algo como isto, mas n√£o t√£o r√°pido.";
+				mes "NÛs esper·vamos algo como isto, mas n„o t„o r·pido.";
 				next;
 				mes "[Padre Bamph]";
-				mes "Eu temo que a corte real est√£o dando prioridade para as suas necessidades ego√≠stas.";
-				mes "Eu rezo para que isto n√£o aumente, desconcentra√ß√£o no caos.";
+				mes "Eu temo que a corte real est„o dando prioridade para as suas necessidades egoÌstas.";
+				mes "Eu rezo para que isto n„o aumente, desconcentraÁ„o no caos.";
 				mes "^666666*Suspiro*^000000";
 				mes "Vamos ver...";
 				close;
 			}
 			else {
 				mes "[Padre Bamph]";
-				mes "Muito obrigado por nos trazer esta informa√ß√£o importante.";
+				mes "Muito obrigado por nos trazer esta informaÁ„o importante.";
 				mes "Com a sua ajuda, fomos capazes de resolver alguns casos.";
-				mes "N√≥s esper√°vamos algo como isto, mas n√£o t√£o r√°pido.";
+				mes "NÛs esper·vamos algo como isto, mas n„o t„o r·pido.";
 				close;
 			}
 // End Nameless Island Access Quest Addition
@@ -2264,31 +2264,31 @@ prt_church,185,106,3	script	Padre Bamph	1_M_PASTOR,{
 prt_church,184,110,3	script	Padre Biscuss	1_M_PASTOR,{
 	if (prt_curse == 54) {
 		mes "[Padre Biscuss]";
-		mes "Hmm, eu ainda suspeito de que algu√©m da Guilda dos Mercen√°rios pode ter assassinado os pr√≠ncipes.";
-		mes "Neste caso, eu terei de enviar um espi√£o.";
-		mes "Mantenha esta informa√ß√£o em segredo.";
+		mes "Hmm, eu ainda suspeito de que alguÈm da Guilda dos Mercen·rios pode ter assassinado os prÌncipes.";
+		mes "Neste caso, eu terei de enviar um espi„o.";
+		mes "Mantenha esta informaÁ„o em segredo.";
 		next;
 		mes "[Padre Biscuss]";
-		mes "Ent√£o est√° bem.";
-		mes "Voc√™ n√£o deve aprender ou escutar algo de n√≥s, e voc√™ n√£o sabe nada sobre a maldi√ß√£o da fam√≠lia real.";
+		mes "Ent„o est· bem.";
+		mes "VocÍ n„o deve aprender ou escutar algo de nÛs, e vocÍ n„o sabe nada sobre a maldiÁ„o da famÌlia real.";
 		mes "De agora em diante, Padre Bamph e eu cuidaremos disso.";
 		close;
 	}
 	else if (prt_curse == 35) {
 		mes "[Padre Biscuss]";
 		mes "Eu nunca vi o Padre Bamph assim antes, mas eu entendo como ele se sente.";
-		mes "Como um dos l√≠deres desta catedral, ele sente grande responsabilidade pela morte dos pr√≠ncipes.";
+		mes "Como um dos lÌderes desta catedral, ele sente grande responsabilidade pela morte dos prÌncipes.";
 		next;
 		mes "[Padre Biscuss]";
 		mes "Estou certo de que ele vai se sentir melhor dentro de alguns dias.";
-		mes "Mas no momento, ele n√£o esta em condi√ß√µes para usar a informa√ß√£o valiosa que voc√™ forneceu, ent√£o eu utilizarei.";
+		mes "Mas no momento, ele n„o esta em condiÁıes para usar a informaÁ„o valiosa que vocÍ forneceu, ent„o eu utilizarei.";
 		next;
 		mes "[Padre Biscuss]";
-		mes "Pessoalmente, eu sinto que o que aconteceu foi tr√°gico, mas deve ser vingado.";
-		mes "Talvez por isso eu tenho uma intoler√¢ncia com Imbullea a todo tempo, de qualquer forma...";
+		mes "Pessoalmente, eu sinto que o que aconteceu foi tr·gico, mas deve ser vingado.";
+		mes "Talvez por isso eu tenho uma intoler‚ncia com Imbullea a todo tempo, de qualquer forma...";
 		next;
 		mes "[Padre Biscuss]";
-		mes "Embora n√£o possamos reconhecer isto publicamente, em nome da Catedral Prontera, eu quero te agradecer por toda a ajuda.";
+		mes "Embora n„o possamos reconhecer isto publicamente, em nome da Catedral Prontera, eu quero te agradecer por toda a ajuda.";
 		prt_curse = 36;
 		completequest 18048;
 		getexp RENEWAL_EXP?90000:1600000,0;
@@ -2296,18 +2296,18 @@ prt_church,184,110,3	script	Padre Biscuss	1_M_PASTOR,{
 	}
 	else if (prt_curse == 36) {
 		mes "[Padre Biscuss]";
-		mes "Ningu√©m conhece a luz sem experimentar as trevas.";
-		mes "Paz n√£o tem sentido enquanto ela tem contrastes com caos.";
+		mes "NinguÈm conhece a luz sem experimentar as trevas.";
+		mes "Paz n„o tem sentido enquanto ela tem contrastes com caos.";
 		next;
 		mes "[Padre Biscuss]";
-		mes "Religi√£o torna-se ainda mais importante durante horas de caos, e horas de necessidade.";
+		mes "Religi„o torna-se ainda mais importante durante horas de caos, e horas de necessidade.";
 		mes "Eu tenho que permanecer calmo, especialmente enquanto Padre Bamph se sente mal sobre este incidente...";
 		close;
 	}
 	else {
 		mes "[Padre Biscuss]";
-		mes "Por favor, respeite o sil√™ncio dentro da Sala do sacerdote.";
-		mes "Obrigado por sua colabora√ß√£o.";
+		mes "Por favor, respeite o silÍncio dentro da Sala do sacerdote.";
+		mes "Obrigado por sua colaboraÁ„o.";
 		close;
 	}
 }
@@ -2322,9 +2322,9 @@ prt_church,177,113,3	script	#gototomb	HIDDEN_NPC,{
 prt_church,23,89,3	script	Padre Biscuss#tomb	1_M_PASTOR,{
 	mes "[Padre Biscuss]";
 	mes "Hmm...?";
-	mes "Voc√™ est√° pronto para subir a escada?";
+	mes "VocÍ est· pronto para subir a escada?";
 	next;
-	if (select("Sim:N√£o") == 1) {
+	if (select("Sim:N„o") == 1) {
 		mes "[Padre Biscuss]";
 		mes "Por favor me siga.";
 		next;
@@ -2332,57 +2332,57 @@ prt_church,23,89,3	script	Padre Biscuss#tomb	1_M_PASTOR,{
 		end;
 	}
 	mes "[Padre Biscuss]";
-	mes "Por favor leve o tempo necess√°rio e investigue tudo o que voc√™ puder.";
+	mes "Por favor leve o tempo necess·rio e investigue tudo o que vocÍ puder.";
 	close;
 }
 
 prt_church,16,114,4	script	Padre Bamph#tomb	1_M_PASTOR,{
 	if (prt_curse == 18) {
 		mes "[Padre Bamph]";
-		mes "Ali est√£o os corpos dos pr√≠ncipes Gaebolg que foram mortos durante o exorcismo.";
-		mes "Por favor, d√™ uma olhada no corpo a esquerda.";
+		mes "Ali est„o os corpos dos prÌncipes Gaebolg que foram mortos durante o exorcismo.";
+		mes "Por favor, dÍ uma olhada no corpo a esquerda.";
 		prt_curse = 19;
 		close;
 	}
 	else if (prt_curse == 19) {
 		mes "[Padre Bamph]";
-		mes "Por favor de uma olhada no corpo que est√° na extrema esquerda, o primeiro Pr√≠ncipe.";
+		mes "Por favor de uma olhada no corpo que est· na extrema esquerda, o primeiro PrÌncipe.";
 		close;
 	}
 	else if (prt_curse == 20) {
 		mes "["+strcharinfo(0)+"]";
-		mes "Esta marca estranha √© muito parecida com escamas de cobra.";
-		mes "√â... √© esta a marca por tr√°s da maldi√ß√£o de Jormungand?";
+		mes "Esta marca estranha È muito parecida com escamas de cobra.";
+		mes "…... È esta a marca por tr·s da maldiÁ„o de Jormungand?";
 		next;
 		mes "[Padre Bamph]";
-		mes "Est√° certo.";
-		mes "Agora, vamos examinar o corpo do segundo pr√≠ncipe, localizado no meio.";
+		mes "Est· certo.";
+		mes "Agora, vamos examinar o corpo do segundo prÌncipe, localizado no meio.";
 		close;
 	}
 	else if (prt_curse == 21) {
 		mes "[Padre Bamph]";
 		mes "Agora...";
-		mes "Agora n√≥s devemos examinar o 3¬∫ pr√≠ncipe.";
+		mes "Agora nÛs devemos examinar o 3∫ prÌncipe.";
 		close;
 	}
 	else if (prt_curse == 22) {
 		mes "[Padre Bamph]";
 		mes "Vamos subir a escada, aonde poderemos continuar com nossa conversa.";
-		mes "Ah, voc√™ pode querer pedir ao Padre Biscuss para levar voc√™.";
+		mes "Ah, vocÍ pode querer pedir ao Padre Biscuss para levar vocÍ.";
 		close;
 	}
 	else if (prt_curse == 32 || prt_curse == 41 || prt_curse == 51) {
 		mes "[Padre Bamph]";
-		mes "Voc√™ est√° com uma ^3131FFGema Amarela^000000 e ^3131FF1 Po√ß√£o Verde^000000 prontas?";
-		mes "Se estiver, voc√™ deve come√ßar o teste no corpo do terceiro pr√≠ncipe, antes dos outros.";
+		mes "VocÍ est· com uma ^3131FFGema Amarela^000000 e ^3131FF1 PoÁ„o Verde^000000 prontas?";
+		mes "Se estiver, vocÍ deve comeÁar o teste no corpo do terceiro prÌncipe, antes dos outros.";
 		close;
 	}
 	else if (prt_curse == 33 || prt_curse == 42 || prt_curse == 52) {
 		mes "[Padre Bamph]";
 		mes "A marca desapareceu?";
-		mes "Oh, isso √© horrivel!";
-		mes "Isso significa que foi utilizado veneno para matar os outros 2 pr√≠ncipes!";
-		mes "Eu quase... n√£o posso...";
+		mes "Oh, isso È horrivel!";
+		mes "Isso significa que foi utilizado veneno para matar os outros 2 prÌncipes!";
+		mes "Eu quase... n„o posso...";
 		next;
 		mes "[Padre Bamph]";
 		mes "Eu... Eu preciso de um tempo para me recuperar do choque e pensar sobre tudo isso com cuidado.";
@@ -2394,8 +2394,8 @@ prt_church,16,114,4	script	Padre Bamph#tomb	1_M_PASTOR,{
 	}
 	else if (prt_curse == 43 || prt_curse == 53) {
 		mes "[Padre Bamph]";
-		mes "N√≥s j√° perturbamos demais os corpos destas pobres almas o bastante.";
-		mes "N√≥s temos que subir a escada agora...";
+		mes "NÛs j· perturbamos demais os corpos destas pobres almas o bastante.";
+		mes "NÛs temos que subir a escada agora...";
 		close;
 	}
 	end;
@@ -2404,23 +2404,23 @@ prt_church,16,114,4	script	Padre Bamph#tomb	1_M_PASTOR,{
 prt_church,19,111,5	script	#prince1	4_M_LIEMAN,{
 	if (prt_curse == 19) {
 		mes "[Padre Bamph]";
-		mes "Este √© o corpo do primeiro filho do rei, o pr√≠ncipe herdeiro.";
-		mes "Assim como tem acontecido h√° gera√ß√µes, a maldi√ß√£o roubou a vida do filho primog√™nito...";
+		mes "Este È o corpo do primeiro filho do rei, o prÌncipe herdeiro.";
+		mes "Assim como tem acontecido h· geraÁıes, a maldiÁ„o roubou a vida do filho primogÍnito...";
 		next;
-		mes "^3355FFSob uma das mangas do pr√≠ncipe, voc√™ observa uma marca escura.";
-		mes "Ao puxar a manga para cima, voc√™ nota que a marca se assemelha √†s escamas de uma serpente.^000000";
+		mes "^3355FFSob uma das mangas do prÌncipe, vocÍ observa uma marca escura.";
+		mes "Ao puxar a manga para cima, vocÍ nota que a marca se assemelha ‡s escamas de uma serpente.^000000";
 		prt_curse = 20;
 		changequest 18037,18038;
 		close;
 	}
 	else if (prt_curse == 33 || prt_curse > 41 && prt_curse < 51 || prt_curse == 52) {
-		mes "^3355FFVoc√™ despejou um pouco da solu√ß√£o feita da Gema Amarela e da Po√ß√£o Verde em cima da marca na pele.";
-		mes "Voc√™ esperou um pouco, mas n√£o houve uma rea√ß√£o da solu√ß√£o^000000";
+		mes "^3355FFVocÍ despejou um pouco da soluÁ„o feita da Gema Amarela e da PoÁ„o Verde em cima da marca na pele.";
+		mes "VocÍ esperou um pouco, mas n„o houve uma reaÁ„o da soluÁ„o^000000";
 		close;
 	}
 	else {
-		mes "^3355FF√â o corpo de um homem vestido com mantos luxuosos.";
-		mes "Apesar de morto, a cor da vida ainda n√£o deixou seu corpo. ";
+		mes "^3355FF… o corpo de um homem vestido com mantos luxuosos.";
+		mes "Apesar de morto, a cor da vida ainda n„o deixou seu corpo. ";
 		close;
 	}
 }
@@ -2428,28 +2428,28 @@ prt_church,19,111,5	script	#prince1	4_M_LIEMAN,{
 prt_church,21,111,5	script	#prince2	4_M_LIEMAN,{
 	if (prt_curse == 20) {
 		mes "[Padre Bamph]";
-		mes "Este √© o corpo do segundo pr√≠ncipe.";
-		mes "A maldi√ß√£o s√≥ deveria matar o princ√≠pe primog√™nito, mas todos os tr√™s pr√≠ncipes dessa gera√ß√£o foram mortos...";
+		mes "Este È o corpo do segundo prÌncipe.";
+		mes "A maldiÁ„o sÛ deveria matar o princÌpe primogÍnito, mas todos os trÍs prÌncipes dessa geraÁ„o foram mortos...";
 		next;
 		mes "[Padre Bamph]";
-		mes "Apesar de nossos grandes esfor√ßos para exorcizar essa poderosa maldi√ß√£o, todos n√≥s fracassamos.";
-		mes "Aqueles envolvidos come√ßaram a acreditar que Odin pode ter nos abandonado... ";
+		mes "Apesar de nossos grandes esforÁos para exorcizar essa poderosa maldiÁ„o, todos nÛs fracassamos.";
+		mes "Aqueles envolvidos comeÁaram a acreditar que Odin pode ter nos abandonado... ";
 		emotion e_omg,1;
 		next;
-		mes "^3355FFVoc√™ examina o corpo do segundo pr√≠ncipe e nota que as marcas de escama em sua pele est√£o mais esmaecidas.";
-		mes "Levemente diferentes quanto √† tonalidade, do que as marcas do primeiro pr√≠ncipe.^000000";
+		mes "^3355FFVocÍ examina o corpo do segundo prÌncipe e nota que as marcas de escama em sua pele est„o mais esmaecidas.";
+		mes "Levemente diferentes quanto ‡ tonalidade, do que as marcas do primeiro prÌncipe.^000000";
 		next;
 		mes "["+strcharinfo(0)+"]";
 		mes "Padre Bamph...!";
-		mes "Olhe, essas marcas do segundo pr√≠ncipe s√£o diferentes das marcas do primeiro";
-		mes "pr√≠ncipe! Viu?";
-		mes "Elas s√£o diferentes tanto na tonalidade quanto na colora√ß√£o.";
+		mes "Olhe, essas marcas do segundo prÌncipe s„o diferentes das marcas do primeiro";
+		mes "prÌncipe! Viu?";
+		mes "Elas s„o diferentes tanto na tonalidade quanto na coloraÁ„o.";
 		next;
 		mes "[Padre Bamph]";
-		mes "Meu Deus, Voc√™ est√° certo!";
-		mes "Como pudemos n√£o prestar aten√ß√£o nisso?!?!";
-		mes "Hmmm, isso sustenta a id√©ia de que uma conspira√ß√£o pode estar envolvida.";
-		mes "Vamos verificar o corpo do terceiro pr√≠ncipe.";
+		mes "Meu Deus, VocÍ est· certo!";
+		mes "Como pudemos n„o prestar atenÁ„o nisso?!?!";
+		mes "Hmmm, isso sustenta a idÈia de que uma conspiraÁ„o pode estar envolvida.";
+		mes "Vamos verificar o corpo do terceiro prÌncipe.";
 		prt_curse = 21;
 		changequest 18038,18039;
 		close;
@@ -2458,40 +2458,40 @@ prt_church,21,111,5	script	#prince2	4_M_LIEMAN,{
 		specialeffect EF_POISONATTACK;
 		specialeffect EF_POISONHIT;
 		specialeffect EF_BUBBLE;
-		mes "^3355FFVoc√™ despejou um pouco da solu√ß√£o feita da Po√ß√£o Verde e da Gema Amarela sobre as marcas de escama do corpo.";
-		mes "As marcas de escama ficam mais fracas a solu√ß√£o borbulha ao contato. ";
+		mes "^3355FFVocÍ despejou um pouco da soluÁ„o feita da PoÁ„o Verde e da Gema Amarela sobre as marcas de escama do corpo.";
+		mes "As marcas de escama ficam mais fracas a soluÁ„o borbulha ao contato. ";
 		close;
 	}
 	else {
-		mes "^3355FF√â o corpo de um homem vestido com mantos luxuosos.";
-		mes "Apesar de morto, a cor da vida ainda n√£o deixou seu corpo. ";
+		mes "^3355FF… o corpo de um homem vestido com mantos luxuosos.";
+		mes "Apesar de morto, a cor da vida ainda n„o deixou seu corpo. ";
 		close;
 	}
 }
 
 prt_church,24,111,5	script	#prince3	4_M_LIEMAN,{
 	if (prt_curse == 21) {
-		mes "^3355FFVoc√™ e o Padre Bamph";
+		mes "^3355FFVocÍ e o Padre Bamph";
 		mes "verificam apressadamente o corpo";
-		mes "do terceiro pr√≠ncipe, e descobrem que";
-		mes "as marcas de escama em sua pele s√£o";
+		mes "do terceiro prÌncipe, e descobrem que";
+		mes "as marcas de escama em sua pele s„o";
 		mes "um pouco mais escuras que as marcas";
-		mes "que est√£o na pele do segundo pr√≠ncipe.^000000";
+		mes "que est„o na pele do segundo prÌncipe.^000000";
 		next;
 		mes "[Padre Bamph]";
-		mes "Isso √© muito suspeito...";
+		mes "Isso È muito suspeito...";
 		mes "As mortes do segundo e do";
-		mes "terceiro pr√≠ncipe foram";
-		mes "causadas por assassinato, e n√£o pela";
-		mes "maldi√ß√£o. Entretanto, o que poderia";
-		mes "ter sido utilizado para mat√°-los?";
+		mes "terceiro prÌncipe foram";
+		mes "causadas por assassinato, e n„o pela";
+		mes "maldiÁ„o. Entretanto, o que poderia";
+		mes "ter sido utilizado para mat·-los?";
 		next;
 		while(1) {
 			if (select("Uma arma!:Veneno!") == 1) {
 				mes "[Padre Bamph]";
 				mes "Hmm... Mas nenhum destes corpos tem hematomas ou cicatrizes.";
-				mes "E se fosse este o caso, tenho certeza de que o rei declararia guerra a algu√©m.";
-				mes "N√£o pode ter sido uma arma.";
+				mes "E se fosse este o caso, tenho certeza de que o rei declararia guerra a alguÈm.";
+				mes "N„o pode ter sido uma arma.";
 				next;
 			}
 			else  break;
@@ -2499,40 +2499,40 @@ prt_church,24,111,5	script	#prince3	4_M_LIEMAN,{
 		mes "[Padre Bamph]";
 		mes "Veneno...?";
 		mes "Oh, minha nossa!";
-		mes "Ningu√©m na Igreja de Prontera saberia nada sobre isso.";
+		mes "NinguÈm na Igreja de Prontera saberia nada sobre isso.";
 		mes "Mas talvez veneno tenha sido usado.";
 		mes "Como podemos ter certeza?";
 		next;
 		mes "[Padre Biscuss]";
-		mes "Vou dizer como, voc√™ vai direto aos especialistas.";
-		mes "Algu√©m da ^FF0000Guilda dos Mercen√°rios em Morroc^000000 deve saber.";
+		mes "Vou dizer como, vocÍ vai direto aos especialistas.";
+		mes "AlguÈm da ^FF0000Guilda dos Mercen·rios em Morroc^000000 deve saber.";
 		mes "Eu ouvi falar que eles podem fazer venenos que matam um homem com apenas uma gota!";
 		next;
 		mes "[Padre Bamph]";
-		mes "Ah, essa √© uma boa id√©ia!";
-		mes "Hmmm, mas primeiro, vamos continuar com nossa conversa l√° fora, certo?";
-		mes "Eu prefiro n√£o pertubar esses corpos...";
+		mes "Ah, essa È uma boa idÈia!";
+		mes "Hmmm, mas primeiro, vamos continuar com nossa conversa l· fora, certo?";
+		mes "Eu prefiro n„o pertubar esses corpos...";
 		prt_curse = 22;
 		close;
 	}
 	else if (prt_curse == 22) {
 		mes "[Padre Bamph]";
 		mes "Vamos subir a escada, aonde poderemos continuar com nossa conversa.";
-		mes "Ah, voc√™ pode querer pedir ao Padre Biscuss para levar voc√™.";
+		mes "Ah, vocÍ pode querer pedir ao Padre Biscuss para levar vocÍ.";
 		close;
 	}
 	else if (prt_curse == 32 || prt_curse == 41 || prt_curse == 51) {
 		if (countitem(506) > 0 && countitem(715) > 0) {
-			mes "^3355FFVoc√™ abre uma garrafa de Po√ß√£o Verde e insere uma Gema Amarela.";
-			mes "A gema se dissolve rapidamente, formando convenientemente, uma solu√ß√£o para testar a presen√ßa de veneno.";
-			mes "Voc√™ a despeja sobre as marcas de escamas do pr√≠ncipe.^000000";
+			mes "^3355FFVocÍ abre uma garrafa de PoÁ„o Verde e insere uma Gema Amarela.";
+			mes "A gema se dissolve rapidamente, formando convenientemente, uma soluÁ„o para testar a presenÁa de veneno.";
+			mes "VocÍ a despeja sobre as marcas de escamas do prÌncipe.^000000";
 			next;
 			specialeffect EF_POISONATTACK;
 			specialeffect EF_POISONHIT;
 			specialeffect EF_BUBBLE;
 			mes "^3355FF*Pssssssssh*^000000";
 			next;
-			mes "^3355FFA solu√ß√£o borbulho ao tocar a pele, e as marcas e escama de serpente come√ßam a desaparecer lentamente do corpo do Jovem Pr√≠ncipe.^000000";
+			mes "^3355FFA soluÁ„o borbulho ao tocar a pele, e as marcas e escama de serpente comeÁam a desaparecer lentamente do corpo do Jovem PrÌncipe.^000000";
 			delitem 506,1; //Green_Potion
 			delitem 715,1; //Yellow_Gemstone
 			if (prt_curse == 32) prt_curse = 33;
@@ -2541,56 +2541,56 @@ prt_church,24,111,5	script	#prince3	4_M_LIEMAN,{
 			changequest 18046,18047;
 			close;
 		}
-		mes "^3355FFVoc√™ precisar√° ter uma Po√ß√£o Verde e uma Gema Amarela para testar e confirmar ser foi veneno que matou o segundo e o terceiro pr√≠ncipe.^000000";
+		mes "^3355FFVocÍ precisar· ter uma PoÁ„o Verde e uma Gema Amarela para testar e confirmar ser foi veneno que matou o segundo e o terceiro prÌncipe.^000000";
 		close;
 	}
 	else if (prt_curse == 33 || prt_curse == 42 || prt_curse == 52) {
-		mes "^3355FFAs marcas de escama de serpente no corpo desse pr√≠ncipe desapareceram ap√≥s voc√™ ter aplicado a Po√ß√£o Verde e a Gema Amarela na pele.^000000";
+		mes "^3355FFAs marcas de escama de serpente no corpo desse prÌncipe desapareceram apÛs vocÍ ter aplicado a PoÁ„o Verde e a Gema Amarela na pele.^000000";
 		close;
 	}
 	else {
-		mes "^3355FF√â o corpo de um homem vestido com mantos luxuosos.";
-		mes "Apesar de morto, a cor da vida ainda n√£o deixou seu corpo. ";
+		mes "^3355FF… o corpo de um homem vestido com mantos luxuosos.";
+		mes "Apesar de morto, a cor da vida ainda n„o deixou seu corpo. ";
 		close;
 	}
 }
 
-moc_fild16,201,295,5	script	Mercen√°rio#poiso	4_M_ACROSS,{
+moc_fild16,201,295,5	script	Mercen·rio#poiso	4_M_ACROSS,{
 	if (prt_curse == 23) {
-		mes "[Mercen√°rio]";
-		mes "Quais os neg√≥cios que o trazem aqui?";
+		mes "[Mercen·rio]";
+		mes "Quais os negÛcios que o trazem aqui?";
 		next;
 		if (select("Veneno:Nada") == 1) {
 			mes "["+strcharinfo(0)+"]";
 			mes "Eu preciso falar com um especialista em venenos.";
 			mes "Estou investigando uma coisa para a Igreja de Prontera, provavelmente um assassinato.";
 			next;
-			mes "[Mercen√°rio]";
+			mes "[Mercen·rio]";
 			mes "...";
 			mes "......";
 			mes ".........";
 			next;
-			mes "[Mercen√°rio da Guilda";
-			mes "Ou√ßa cuidadosamente.";
-			mes "Eu s√≥ irei lhe dizer isso uma vez.";
+			mes "[Mercen·rio da Guilda";
+			mes "OuÁa cuidadosamente.";
+			mes "Eu sÛ irei lhe dizer isso uma vez.";
 			next;
-			mes "[Mercen√°rio]";
-			mes "H√° um Bar Particular de Mercen√°rios a sudoeste de Morroc.";
-			mes "V√° encontrar algu√©m chamado ^3131FFMarjana^000000 l√° dentro.";
+			mes "[Mercen·rio]";
+			mes "H· um Bar Particular de Mercen·rios a sudoeste de Morroc.";
+			mes "V· encontrar alguÈm chamado ^3131FFMarjana^000000 l· dentro.";
 			prt_curse = 24;
 			changequest 18040,18041;
 			close;
 		}
-		mes "[Mercen√°rio]";
-		mes "N√£o. Esse olhar em seus olhos.";
-		mes "Tenho certeza que h√° uma raz√£o para voc√™ ter vindo aqui...";
+		mes "[Mercen·rio]";
+		mes "N„o. Esse olhar em seus olhos.";
+		mes "Tenho certeza que h· uma raz„o para vocÍ ter vindo aqui...";
 		close;
 	}
 	else {
-		mes "[Mercen√°rio]";
-		mes "Est√° muito seco e ventando muito hoje.";
+		mes "[Mercen·rio]";
+		mes "Est· muito seco e ventando muito hoje.";
 		mes "Eu gosto desse clima.";
-		mes "Parece se adequar perfeitamente √† alma de um verdadeiro Mercen√°rio, o solit√°rio que se esconde nas sombras.";
+		mes "Parece se adequar perfeitamente ‡ alma de um verdadeiro Mercen·rio, o solit·rio que se esconde nas sombras.";
 		close;
 	}
 }
@@ -2598,45 +2598,45 @@ moc_fild16,201,295,5	script	Mercen√°rio#poiso	4_M_ACROSS,{
 que_job01,10,16,5	script	Marjana#poison	4_F_ACROSS,{
 	if (prt_curse == 24) {
 		mes "[Marjana]";
-		mes "O que traz voc√™ aqui?";
-		mes "Eu vou lhe dar 4  minutos para me dizer, ent√£o v√° direto ao ponto.";
+		mes "O que traz vocÍ aqui?";
+		mes "Eu vou lhe dar 4  minutos para me dizer, ent„o v· direto ao ponto.";
 		next;
 		mes "["+strcharinfo(0)+"]";
-		mes "Eu quero saber mais sobre venenos e confirmar se foi usado para matar algu√©m.";
+		mes "Eu quero saber mais sobre venenos e confirmar se foi usado para matar alguÈm.";
 		next;
 		mes "[Marjana]";
 		mes "Veneno?";
-		mes "Voc√™ veio √† pessoa certa.";
-		mes "Se eu n√£o souber a resposta, eu duvido que voc√™ encontre algu√©m que possa lhe dar.";
+		mes "VocÍ veio ‡ pessoa certa.";
+		mes "Se eu n„o souber a resposta, eu duvido que vocÍ encontre alguÈm que possa lhe dar.";
 		mes "Pergunte.";
 		next;
 		mes "["+strcharinfo(0)+"]";
-		mes "√â verdade que o veneno de um Mercen√°rio pode ser t√£o poderoso que, apenas uma gota pode matar uma pessoa?";
+		mes "… verdade que o veneno de um Mercen·rio pode ser t„o poderoso que, apenas uma gota pode matar uma pessoa?";
 		next;
 		mes "[Marjana]";
-		mes "√â verdade que veneno t√£o poderoso assim existe, mas tal veneno mortal s√≥ √© usado por Algozes.";
-		mes "Geralmente, Mercen√°rios normais utilizam venenos que s√£o muito menos potentes.";
+		mes "… verdade que veneno t„o poderoso assim existe, mas tal veneno mortal sÛ È usado por Algozes.";
+		mes "Geralmente, Mercen·rios normais utilizam venenos que s„o muito menos potentes.";
 		next;
 		mes "["+strcharinfo(0)+"]";
 		mes "Certo.";
-		mes "Voc√™ pode criar um veneno que deixe uma marca espec√≠fica no corpo?";
+		mes "VocÍ pode criar um veneno que deixe uma marca especÌfica no corpo?";
 		next;
 		mes "[Marjana]";
 		mes "Claro.";
-		mes "H√° tantos tipos de venenos, que eu tenho certeza que voc√™ nem pode imaginar.";
-		mes "Entretanto, os venenos que deixam marcas espec√≠ficas s√£o dif√≠ceis de usar, e somente alguns poucos sabem us√°-los.";
+		mes "H· tantos tipos de venenos, que eu tenho certeza que vocÍ nem pode imaginar.";
+		mes "Entretanto, os venenos que deixam marcas especÌficas s„o difÌceis de usar, e somente alguns poucos sabem us·-los.";
 		next;
 		mes "[Marjana]";
-		mes "Os tipos de marcas que s√£o deixadas dependem dos materiais usados para criar a po√ß√£o.";
-		mes "J√° que alguns materiais s√£o exclusivos de determinadas regi√µes...";
+		mes "Os tipos de marcas que s„o deixadas dependem dos materiais usados para criar a poÁ„o.";
+		mes "J· que alguns materiais s„o exclusivos de determinadas regiıes...";
 		next;
 		mes "[Marjana]";
 		mes "Bem, o tipo de marca";
 		mes "que foi deixada poderia na verdade servir como algum tipo de pista.";
-		mes "Qual era a marca no corpo da v√≠tima?";
+		mes "Qual era a marca no corpo da vÌtima?";
 		next;
 		mes "["+strcharinfo(0)+"]";
-		mes "N√≥s ainda n√£o temos certeza se foi usado veneno, mas h√° marcas que parecem com escamas de cobra deixadas nos corpos.";
+		mes "NÛs ainda n„o temos certeza se foi usado veneno, mas h· marcas que parecem com escamas de cobra deixadas nos corpos.";
 		next;
 		mes "[Marjana]";
 		mes "Hmm...";
@@ -2646,17 +2646,17 @@ que_job01,10,16,5	script	Marjana#poison	4_F_ACROSS,{
 		mes "[Marjana]";
 		mes "Sim...";
 		mes "Os materiais usados para fazer essas marcas de escama de cobra...";
-		mes "Alguns deles n√£o podem podem nem ao menos serem encontrados no continente de Rune-Midgard.";
+		mes "Alguns deles n„o podem podem nem ao menos serem encontrados no continente de Rune-Midgard.";
 		next;
 		mes "[Marjana]";
-		mes "Nosso tempo est√° se esgotando.";
-		mes "Escute, voc√™ pode confirmar se foi utilizado veneno ou n√£o para matar algu√©m misturando uma Gema Amarela com uma Po√ß√£o Verde.";
-		mes "E salpicando a solu√ß√£o pelo corpo.";
+		mes "Nosso tempo est· se esgotando.";
+		mes "Escute, vocÍ pode confirmar se foi utilizado veneno ou n„o para matar alguÈm misturando uma Gema Amarela com uma PoÁ„o Verde.";
+		mes "E salpicando a soluÁ„o pelo corpo.";
 		next;
 		mes "[Marjana]";
-		mes "Se foi utilizado algum veneno, a solu√ß√£o ir√° reagir em contato com o corpo.";
-		mes "Mas, esse m√©todo n√£o ir√° funcionar se tiver passado muito tempo do assassinato.";
-		mes "√â melhor voc√™ experimentar isso logo...";
+		mes "Se foi utilizado algum veneno, a soluÁ„o ir· reagir em contato com o corpo.";
+		mes "Mas, esse mÈtodo n„o ir· funcionar se tiver passado muito tempo do assassinato.";
+		mes "… melhor vocÍ experimentar isso logo...";
 		prt_curse = 25;
 		close;
 	}
@@ -2675,109 +2675,109 @@ OnTouch:
 	if (prt_curse == 25) {
 		mes "["+strcharinfo(0)+"]";
 		mes "Hm....";
-		mes "√â melhor eu rever os fatos que descobri, para que possa me concentrar melhor na investiga√ß√£o.";
+		mes "… melhor eu rever os fatos que descobri, para que possa me concentrar melhor na investigaÁ„o.";
 		mes "Vamos ver...";
 		next;
 		mes "["+strcharinfo(0)+"]";
-		mes "H√° muito tempo, a serpente gigante Jormungand amea√ßava a ra√ßa humana.";
-		mes "7 guerreiros derrotaram Jormungand, liderados por Tristram III da fam√≠lia Gaebolg.";
-		mes "Mas Jormungand quado foi derrotado, jogou uma maldi√ß√£o na linhagem dos Gaebolg.";
+		mes "H· muito tempo, a serpente gigante Jormungand ameaÁava a raÁa humana.";
+		mes "7 guerreiros derrotaram Jormungand, liderados por Tristram III da famÌlia Gaebolg.";
+		mes "Mas Jormungand quado foi derrotado, jogou uma maldiÁ„o na linhagem dos Gaebolg.";
 		next;
 		mes "["+strcharinfo(0)+"]";
-		mes "Desde ent√£o, a maldi√ß√£o mata o pr√≠ncipe primog√™nito da fam√≠lia Gaebolg, quando eles ainda s√£o muito jovens.";
-		mes "Entretanto, todos os pr√≠cipes dessa gera√ß√£o foram mortos.";
+		mes "Desde ent„o, a maldiÁ„o mata o prÌncipe primogÍnito da famÌlia Gaebolg, quando eles ainda s„o muito jovens.";
+		mes "Entretanto, todos os prÌcipes dessa geraÁ„o foram mortos.";
 		next;
 		mes "["+strcharinfo(0)+"]";
-		mes "De acordo com o que eu aprendi com aquele mercen√°rio.";
-		mes "O primeiro pr√≠ncipe morreu da maldi√ß√£o, e os outros dois morreram por envenenamento.";
+		mes "De acordo com o que eu aprendi com aquele mercen·rio.";
+		mes "O primeiro prÌncipe morreu da maldiÁ„o, e os outros dois morreram por envenenamento.";
 		next;
 		mes "["+strcharinfo(0)+"]";
-		mes "√â mais prov√°vel que caso tenha sido usado veneno.";
-		mes "Ent√£o a pessoa que o usou, era um assassino de fora do Reino de Rune-Midgard.";
-		mes "Sim, isso √© quase tudo que sei.";
+		mes "… mais prov·vel que caso tenha sido usado veneno.";
+		mes "Ent„o a pessoa que o usou, era um assassino de fora do Reino de Rune-Midgard.";
+		mes "Sim, isso È quase tudo que sei.";
 		next;
 		mes "["+strcharinfo(0)+"]";
-		mes "Agora, aquela historiadora Rodafrian est√° me esperando para lhe informar sobre a letra certa daquela can√ß√£o.";
-		mes "Mas o Padre Bamph tamb√©m est√° esperando pelas informa√ß√µes que eu descobri com a Guilda dos Mercen√°rios.";
+		mes "Agora, aquela historiadora Rodafrian est· me esperando para lhe informar sobre a letra certa daquela canÁ„o.";
+		mes "Mas o Padre Bamph tambÈm est· esperando pelas informaÁıes que eu descobri com a Guilda dos Mercen·rios.";
 		mes "O que devo fazer?";
 		next;
 		if (select("Ir encontrar com Rodafrian:Ir encontrar com o Padre Bamph") == 1) {
 			mes "["+strcharinfo(0)+"]";
-			mes "Bem, √© mais f√°cil para mim visitar Rodafrian agora.";
-			mes "Ela est√° muito mais perto do que o Padre Bamph, ent√£o eu acho que eu deveria ir falar com ela primeiro.";
+			mes "Bem, È mais f·cil para mim visitar Rodafrian agora.";
+			mes "Ela est· muito mais perto do que o Padre Bamph, ent„o eu acho que eu deveria ir falar com ela primeiro.";
 			prt_curse = 30;
 			changequest 18041,18042;
 			close;
 		}
 		mes "["+strcharinfo(0)+"]";
-		mes "Bem, √© mais importante que eu v√° ver o Padre Bamph e investigue os corpos dos pr√≠ncipes.";
-		mes "√â melhor eu ir para Prontera logo de uma vez.";
+		mes "Bem, È mais importante que eu v· ver o Padre Bamph e investigue os corpos dos prÌncipes.";
+		mes "… melhor eu ir para Prontera logo de uma vez.";
 		prt_curse = 50;
 		changequest 18041,18043;
 		close;
 	}
 }
 
-prt_in,162,99,4	script	Bibliotec√°rio#curse	1_F_02,{
+prt_in,162,99,4	script	Bibliotec·rio#curse	1_F_02,{
 	if (checkweight(1201,1) == 0) {
 		mes "^3355FFEspere um segundo!";
-		mes "Agora, voc√™ est√° carregando muitas coisas com voc√™.";
-		mes "Por favor volte depois de usar o Servi√ßo Kafra para armazenar alguns de seus itens.^000000";
+		mes "Agora, vocÍ est· carregando muitas coisas com vocÍ.";
+		mes "Por favor volte depois de usar o ServiÁo Kafra para armazenar alguns de seus itens.^000000";
 		close;
 	}
 	if (prt_curse == 3) {
 		if (countitem(7431) < 1) {
-			mes "[Bibliotec√°rio]";
-			mes "Por favor, certifique-se de colocar os livros da biblioteca no local correto ap√≥s t√™-los usado.";
-			mes "N√£o temos pessoal suficiente para organizar todos esses livros...";
+			mes "[Bibliotec·rio]";
+			mes "Por favor, certifique-se de colocar os livros da biblioteca no local correto apÛs tÍ-los usado.";
+			mes "N„o temos pessoal suficiente para organizar todos esses livros...";
 			next;
 			if (select("Relatar a perda dos livros:Terminar Conversa") == 1) {
-				mes "[Bibliotec√°rio]";
-				mes "Oh, voc√™ perdeu alguns livros?";
+				mes "[Bibliotec·rio]";
+				mes "Oh, vocÍ perdeu alguns livros?";
 				mes "Por favor, escreva o nome dos livros e pague a muita de 700 zenys.";
-				mes "Afinal, n√≥s iremos lhe fornecer c√≥pias de substitui√ß√£o.";
+				mes "Afinal, nÛs iremos lhe fornecer cÛpias de substituiÁ„o.";
 				next;
 				if (Zeny > 699) {
-					mes "[Bibliotec√°rio]";
-					mes "Ah, aqui est√° voc√™.";
-					mes "Por favor pegue essas c√≥pias de substitui√ß√£o, e tente n√£o perd√™-los de novo.";
+					mes "[Bibliotec·rio]";
+					mes "Ah, aqui est· vocÍ.";
+					mes "Por favor pegue essas cÛpias de substituiÁ„o, e tente n„o perdÍ-los de novo.";
 					mes "Obrigado.";
 					Zeny -= 700;
 					getitem 7431,1; //Books
 					close;
 				}
-				mes "[Bibliotec√°rio]";
+				mes "[Bibliotec·rio]";
 				mes "Hmm...";
-				mes "Volte o mais r√°pido que puder com 700 zenys para pagar a multa de perda de livros.";
+				mes "Volte o mais r·pido que puder com 700 zenys para pagar a multa de perda de livros.";
 				close;
 			}
-			mes "[Bibliotec√°rio]";
-			mes "Por favor fa√ßa sil√™ncio, enquanto est√° dentro da biblioteca.";
-			mes "Obrigado pela compreens√£o.";
+			mes "[Bibliotec·rio]";
+			mes "Por favor faÁa silÍncio, enquanto est· dentro da biblioteca.";
+			mes "Obrigado pela compreens„o.";
 			close;
 		}
 		else {
-			mes "[Bibliotec√°rio]";
-			mes "Ser um bibliotec√°rio pode";
+			mes "[Bibliotec·rio]";
+			mes "Ser um bibliotec·rio pode";
 			mes "ser bem chato. Pessoas";
 			mes "levam os livros todos";
 			mes "desorganizados, e esperam";
 			mes "que sejam organizados. Ooh, livross";
-			mes "eles est√£o sempre perdidos...";
+			mes "eles est„o sempre perdidos...";
 			next;
-			mes "[Bibliotec√°rio]";
-			mes "Quando voc√™ tem que arrumar a bagun√ßa deles, voc√™ percebe como as pessoas s√£o desleixadas.";
+			mes "[Bibliotec·rio]";
+			mes "Quando vocÍ tem que arrumar a bagunÁa deles, vocÍ percebe como as pessoas s„o desleixadas.";
 			close;
 		}
 	}
 	else {
-		mes "[Bibliotec√°rio]";
-		mes "Ser um bibliotec√°rio pode ser bem chato.";
+		mes "[Bibliotec·rio]";
+		mes "Ser um bibliotec·rio pode ser bem chato.";
 		mes "Pessoas levam os livros todos desorganizados, e esperam que sejam organizados.";
-		mes "Ooh, livros eles est√£o sempre perdidos...";
+		mes "Ooh, livros eles est„o sempre perdidos...";
 		next;
-		mes "[Bibliotec√°rio]";
-		mes "Quando voc√™ tem que arrumar a bagun√ßa deles, voc√™ percebe como as pessoas s√£o desleixadas.";
+		mes "[Bibliotec·rio]";
+		mes "Quando vocÍ tem que arrumar a bagunÁa deles, vocÍ percebe como as pessoas s„o desleixadas.";
 		close;
 	}
 }

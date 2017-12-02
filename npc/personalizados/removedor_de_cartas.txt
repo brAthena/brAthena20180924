@@ -2,8 +2,8 @@
 //= Card Removal NPC
 //===== By: ==================================================
 //= TyrNemesis^
-//===== CompatÃ­vel Com: ==========================================
-//= BRathena -- TraduÃ§Ã£o por: Julinhobrow
+//===== Compatível Com: ==========================================
+//= BRathena -- Tradução por: Julinhobrow
 //===== Current Version: =====================================
 //= 1.2a
 //===== Description: =========================================
@@ -14,24 +14,24 @@
 //= 1.2a Added 'disable_items' command. [Euphy]
 //============================================================
 
-prt_in,28,73,4	script	Velha SÃ¡bia#eAcustom	1_F_ORIENT_04,{
+prt_in,28,73,4	script	Velha Sábia#eAcustom	1_F_ORIENT_04,{
 
 	set .zenycost,200000; // Set base cost in zeny of the card remover services
 	set .percardcost,25000; // set cost per card of the card remover services
 	set .faildestroy,0; // Should the card remover have a chance of failure that destroys items? 1 = Yes, 0 = No.
 
 	disable_items;
-	mes "[Velha SÃ¡bia]";
-	mes "Bom dia, meu jovem. Eu tenho a habilidade de remover cartas jÃ¡ colocadas em seus equipamentos.";
+	mes "[Velha Sábia]";
+	mes "Bom dia, meu jovem. Eu tenho a habilidade de remover cartas já colocadas em seus equipamentos.";
 	mes "Gostaria de remover cartas de seus equipamentos?";
 	next;
-	switch(select("Sim, eu quero!.:Quanto custa?:NÃ£o, Obrigado.")) {
+	switch(select("Sim, eu quero!.:Quanto custa?:Não, Obrigado.")) {
 	case 1:
-		mes "[Velha SÃ¡bia]";
-		mes "Muito bem. Qual item devo examinar para vocÃª?";
+		mes "[Velha Sábia]";
+		mes "Muito bem. Qual item devo examinar para você?";
 		next;
 
-		setarray .@position$[1], "CabeÃ§a","Armadura","MÃ£o Esquerda","MÃ£o Direita","Capa","Sapatos","AcessÃ³rio 1","AcessÃ³rio 2","Item Superior 1","Item Superior 2";
+		setarray .@position$[1], "Cabeça","Armadura","Mão Esquerda","Mão Direita","Capa","Sapatos","Acessório 1","Acessório 2","Item Superior 1","Item Superior 2";
 		set .@menu$,"";
 		for( set .@i,1; .@i <= 10; set .@i,.@i+1 )
 		{
@@ -42,45 +42,45 @@ prt_in,28,73,4	script	Velha SÃ¡bia#eAcustom	1_F_ORIENT_04,{
 		}
 		set .@part,select(.@menu$);
 		if(!getequipisequiped(.@part)) {
-			mes "[Velha SÃ¡bia]";
-			mes "Meu jovem... VocÃª nÃ£o estÃ¡ equipado com nenhum item deste tipo.";
+			mes "[Velha Sábia]";
+			mes "Meu jovem... Você não está equipado com nenhum item deste tipo.";
 			close;
 		}
 		if(getequipcardcnt(.@part) == 0) {
-			mes "[Velha SÃ¡bia]";
-			mes "Meu jovem... Nenhuma carta foi colocada neste item. NÃ£o posso fazer nada com isto.";
+			mes "[Velha Sábia]";
+			mes "Meu jovem... Nenhuma carta foi colocada neste item. Não posso fazer nada com isto.";
 			close;
 		}
 		set .@cardcount,getequipcardcnt(.@part);
 		
 		if (!checkweight(1202,(.@cardcount+1))) { 
 			mes "^3355FFAguarde um minuto!";
-			mes "NÃ£o posso lhe oferecer meus serviÃ§os";
-			mes "para vocÃª porque,";
-			mes "vocÃª estÃ¡ carregando muita";
+			mes "Não posso lhe oferecer meus serviços";
+			mes "para você porque,";
+			mes "você está carregando muita";
 			mes "coisa. Coloque seus itens extras no";
-			mes "armazÃ©m das Kafras e depois volte~";
+			mes "armazém das Kafras e depois volte~";
 			close;
 		}
-		mes "[Velha SÃ¡bia]";
-		mes "Este item tem " + .@cardcount + " cartas nele. Para usar minha mÃ¡gica, vou precisar de " + (.zenycost+(.@cardcount * .percardcost)) + " zeny, um ^0000FFFragmento Estelar^000000, e uma ^0000FFGema Amarela^000000.";
+		mes "[Velha Sábia]";
+		mes "Este item tem " + .@cardcount + " cartas nele. Para usar minha mágica, vou precisar de " + (.zenycost+(.@cardcount * .percardcost)) + " zeny, um ^0000FFFragmento Estelar^000000, e uma ^0000FFGema Amarela^000000.";
 		next;
-		if(select("Quero remover.:Deixa pra lÃ¡.") == 2) {
-			mes "[Velha SÃ¡bia]";
+		if(select("Quero remover.:Deixa pra lá.") == 2) {
+			mes "[Velha Sábia]";
 			mes "Muito bem. Volte sempre que precisar de mim.";
 			close;
 		}
 		if((Zeny < (.zenycost+(.@cardcount * .percardcost))) || (countitem(1000) < 1) || (countitem(715) < 1)) {
-			mes "[Velha SÃ¡bia]";
-			mes "VocÃª nÃ£o tem zeny suficiente. Volte quando tiver.";
+			mes "[Velha Sábia]";
+			mes "Você não tem zeny suficiente. Volte quando tiver.";
 			close;
 		}
-		mes "[Velha SÃ¡bia]";
-		mes "Antes que eu comece, Preciso avisÃ¡-lo--Eu posso falhar. Se eu falhar, as cartas podem ser destruÃ­das, o item, ou ambos. Eu nÃ£o dou reembolsos. Sendo assim, qual Ã© mais importante pra vocÃª: As cartas, ou o item?";
+		mes "[Velha Sábia]";
+		mes "Antes que eu comece, Preciso avisá-lo--Eu posso falhar. Se eu falhar, as cartas podem ser destruídas, o item, ou ambos. Eu não dou reembolsos. Sendo assim, qual é mais importante pra você: As cartas, ou o item?";
 		next;
-		switch(select("Eu mudei de idÃ©ia.:O item.:As cartas.")) {
+		switch(select("Eu mudei de idéia.:O item.:As cartas.")) {
 		case 1:
-			mes "[Velha SÃ¡bia]";
+			mes "[Velha Sábia]";
 			mes "Muito bem. Volte sempre que precisar de mim.";
 			close;
 		case 2:
@@ -89,8 +89,8 @@ prt_in,28,73,4	script	Velha SÃ¡bia#eAcustom	1_F_ORIENT_04,{
 		case 3:
 			set .@failtype,2;
 		}
-		mes "[Velha SÃ¡bia]";
-		mes "Muito bem. Devo comeÃ§ar.";
+		mes "[Velha Sábia]";
+		mes "Muito bem. Devo começar.";
 		Zeny -= (.zenycost+(.@cardcount * .percardcost));
 		delitem 1000,1;
 		delitem 715,1;
@@ -105,8 +105,8 @@ prt_in,28,73,4	script	Velha SÃ¡bia#eAcustom	1_F_ORIENT_04,{
 			if(.@failchance < 2) {
 				next;
 				failedremovecards .@part,0;
-				mes "[Velha SÃ¡bia]";
-				mes "O processo foi uma falha total. O item e suas cartas foram detruÃ­dos.";
+				mes "[Velha Sábia]";
+				mes "O processo foi uma falha total. O item e suas cartas foram detruídos.";
 				close;
 			}
 
@@ -114,16 +114,16 @@ prt_in,28,73,4	script	Velha SÃ¡bia#eAcustom	1_F_ORIENT_04,{
 				if (.@failtype == 1) {
 					next;
 					failedremovecards .@part,1;
-					mes "[Velha SÃ¡bia]";
-					mes "Enquanto eu tentava remover as cartas, elas foram destruÃ­das no processo. PorÃ©m, o item estÃ¡ bem.";
+					mes "[Velha Sábia]";
+					mes "Enquanto eu tentava remover as cartas, elas foram destruídas no processo. Porém, o item está bem.";
 					close;
 				}
 
 				if (.@failtype == 2) {
 					next;
 					failedremovecards .@part,2;
-					mes "[Velha SÃ¡bia]";
-					mes "Mas que droga. Eu consegui remover as cartas, mas o item em si, foi destruÃ­do.";
+					mes "[Velha Sábia]";
+					mes "Mas que droga. Eu consegui remover as cartas, mas o item em si, foi destruído.";
 					close;
 				}
 			}
@@ -132,21 +132,21 @@ prt_in,28,73,4	script	Velha SÃ¡bia#eAcustom	1_F_ORIENT_04,{
 		if(.@failchance < 10) {
 			next;
 			failedremovecards .@part,3;
-			mes "[Velha SÃ¡bia]";
-			mes "Eu falhei em remover as cartas. Felizmente, ambos, o item e as cartas estÃ£o ok.";
+			mes "[Velha Sábia]";
+			mes "Eu falhei em remover as cartas. Felizmente, ambos, o item e as cartas estão ok.";
 			close;
 		}
 		next;
 		successremovecards .@part;
-		mes "[Velha SÃ¡bia]";
-		mes "O Processo foi um sucesso. Aqui estÃ£o suas cartas e seu item.";
+		mes "[Velha Sábia]";
+		mes "O Processo foi um sucesso. Aqui estão suas cartas e seu item.";
 		close;
 	case 2:
-		mes "[Velha SÃ¡bia]";
-		mes "Eu cobro a taxa de "+.zenycost+" zeny para remover suas cartas. Valor de "+.percardcost+" zeny por cada carta que eu remover do item. Em adiÃ§Ã£o, Eu preciso de um Fragmento Estelar e uma Gema Amarela para minha magica funcionar.";
+		mes "[Velha Sábia]";
+		mes "Eu cobro a taxa de "+.zenycost+" zeny para remover suas cartas. Valor de "+.percardcost+" zeny por cada carta que eu remover do item. Em adição, Eu preciso de um Fragmento Estelar e uma Gema Amarela para minha magica funcionar.";
 		close;
 	case 3:
-		mes "[Velha SÃ¡bia]";
+		mes "[Velha Sábia]";
 		mes "Muito bem. Volte quando precisar de mim.";
 		close;
 	}

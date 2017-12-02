@@ -43,122 +43,122 @@
 5@tower	mapflag	src4instance
 6@tower	mapflag	src4instance
 //============================================================
-alberta,214,77,6	script	CapitÃ£o Janssen	4_M_SEAMAN,{
+alberta,214,77,6	script	Capitão Janssen	4_M_SEAMAN,{
 	if (checkweight(1201,1) == 0) {
-		mes "^008800Espere aÃ­!!";
-		mes "VocÃª estÃ¡ carregando muitos equipamentos. Porque nÃ£o joga alguns fora e depois retorna.^000000";
+		mes "^008800Espere aí!!";
+		mes "Você está carregando muitos equipamentos. Porque não joga alguns fora e depois retorna.^000000";
 		close;
 	}
 	if (BaseLevel < 50) {
-		mes "[CapitÃ£o Janssen]";
-		mes "*Suspiro*... Eu nÃ£o sei se posso sempre voltar a velejar no mar...";
+		mes "[Capitão Janssen]";
+		mes "*Suspiro*... Eu não sei se posso sempre voltar a velejar no mar...";
 		close;
 	}
 	.@name$ = strcharinfo(0);
 	if (in_102tower == 1) {
-		mes "^0000ff*Olhando incrivelmente animado, o velho correu as pressas para loja da marinha encomendar coisas. VocÃª nÃ£o tem nada melhor pra fazer, entÃ£o vocÃª decide perguntar por que ele estÃ¡ em uma correria dessas.*^000000";
+		mes "^0000ff*Olhando incrivelmente animado, o velho correu as pressas para loja da marinha encomendar coisas. Você não tem nada melhor pra fazer, então você decide perguntar por que ele está em uma correria dessas.*^000000";
 		next;
-		mes "^0000ff*O velho, depois de ter feito suas encomendas, anda em sua direÃ§Ã£o.*^000000";
+		mes "^0000ff*O velho, depois de ter feito suas encomendas, anda em sua direção.*^000000";
 		next;
-		mes "[CapitÃ£o Janssen]";
-		mes "Fiquei comovido quando vocÃª aceitou um pedido meu, um estranho, tÃ£o facilmente. VocÃª deve ser realmente um dos bons, herÃ³i aventureiro. VocÃª estÃ¡ interessado em sair numa viagem oceÃ¢nica?";
+		mes "[Capitão Janssen]";
+		mes "Fiquei comovido quando você aceitou um pedido meu, um estranho, tão facilmente. Você deve ser realmente um dos bons, herói aventureiro. Você está interessado em sair numa viagem oceânica?";
 		next;
 		mes "["+.@name$+"]";
-		mes "JÃ¡ naveguei algumas vezes... Mas agora penso sobre isto, e vejo que nunca cruzei todo o continente";
+		mes "Já naveguei algumas vezes... Mas agora penso sobre isto, e vejo que nunca cruzei todo o continente";
 		next;
-		mes "[CapitÃ£o Janssen]";
-		mes "NÃ£o, isso Ã© bom o suficiente. Talvez eu sÃ³ tenha uma pequena embarcaÃ§Ã£o de pesca, mas eu costumava ser um capitÃ£o que comandou uma frota";
+		mes "[Capitão Janssen]";
+		mes "Não, isso é bom o suficiente. Talvez eu só tenha uma pequena embarcação de pesca, mas eu costumava ser um capitão que comandou uma frota";
 		next;
-		mes "[CapitÃ£o Janssen]";
-		mes "Como vocÃª deve saber apÃ³s algumas viagens marÃ­timas, talvez muitas pessoas nÃ£o tenham atravessado o oceano alÃ©m do continente. Eu tambÃ©m falhei na conquista do oceano.";
+		mes "[Capitão Janssen]";
+		mes "Como você deve saber após algumas viagens marítimas, talvez muitas pessoas não tenham atravessado o oceano além do continente. Eu também falhei na conquista do oceano.";
 		next;
-		mes "^0000ff*Sr. Janssen falou sobre suas perigosas viagens oceÃ¢nicas durante um bom tempo. VocÃª tem bastante tempo livre, entÃ£o vocÃª senta, e em silÃªncio ouve a sua histÃ³ria.*^000000";
+		mes "^0000ff*Sr. Janssen falou sobre suas perigosas viagens oceânicas durante um bom tempo. Você tem bastante tempo livre, então você senta, e em silêncio ouve a sua história.*^000000";
 		next;
-		mes "^0000ff*Pelo menos metade de sua histÃ³ria soou muito exagerada, mas algo chamou sua atenÃ§Ã£o: ele insiste que uma torre monstruosa existe no oceano, e que Ã© tÃ£o alta, que raspa no cÃ©u.*^000000";
+		mes "^0000ff*Pelo menos metade de sua história soou muito exagerada, mas algo chamou sua atenção: ele insiste que uma torre monstruosa existe no oceano, e que é tão alta, que raspa no céu.*^000000";
 		in_102tower = 2;
 		close;
 	} else if (in_102tower == 2) {
-		mes "[CapitÃ£o Janssen]";
-		mes "EntÃ£o tudo que eu podia fazer era lanÃ§ar a Ã¢ncora naquela torre monstruosa depois que minha frota foi destruÃ­da. No inÃ­cio, Ã©ramos para ficar lÃ¡ somente atÃ© que a tempestade acabasse, mas nÃ£o chegou a acabar tÃ£o cedo quanto esperÃ¡vamos.";
+		mes "[Capitão Janssen]";
+		mes "Então tudo que eu podia fazer era lançar a âncora naquela torre monstruosa depois que minha frota foi destruída. No início, éramos para ficar lá somente até que a tempestade acabasse, mas não chegou a acabar tão cedo quanto esperávamos.";
 		next;
-		mes "[CapitÃ£o Janssen]";
+		mes "[Capitão Janssen]";
 		mes "Minha equipe estava com fome, e alguns entraram na torre a fim de encontrar alimento... Eles nunca mais voltaram.";
 		next;
 		mes "["+.@name$+"]";
-		mes "Por que vocÃª nÃ£o foi lÃ¡ com eles?";
+		mes "Por que você não foi lá com eles?";
 		next;
-		mes "[CapitÃ£o Janssen]";
-		mes "Meus instintos me disseram que a torre era perigosa. Fiquei curioso, mas eu nÃ£o iria arriscar a minha vida. NÃ³s esperamos que eles retornassem por 7 dias atÃ© que a tempestade finalmente acabou, mas ninguÃ©m retornou.";
+		mes "[Capitão Janssen]";
+		mes "Meus instintos me disseram que a torre era perigosa. Fiquei curioso, mas eu não iria arriscar a minha vida. Nós esperamos que eles retornassem por 7 dias até que a tempestade finalmente acabou, mas ninguém retornou.";
 		next;
-		mes "[CapitÃ£o Janssen]";
-		mes "Em nosso desespero para sobreviver, abandonamos todos os nossos bens, e deixamos a torre somente com um pouco de Ã¡gua e plantas comestÃ­veis que haviamos encontrado ao redor da torre. Quando finalmente em terra firme, eu era o Ãºnico vivo...";
+		mes "[Capitão Janssen]";
+		mes "Em nosso desespero para sobreviver, abandonamos todos os nossos bens, e deixamos a torre somente com um pouco de água e plantas comestíveis que haviamos encontrado ao redor da torre. Quando finalmente em terra firme, eu era o único vivo...";
 		next;
-		mes "^0000ff*VocÃª pÃ´de imaginar a cena desesperadora da frota morrendo em sua Ãºltima viagem, mesmo que ele nÃ£o explicasse mais nada. Um olhar de lamento sombrio varreu seu rosto enquanto ele permaneceu em silÃªncio, e entÃ£o ele disse:*^000000";
+		mes "^0000ff*Você pôde imaginar a cena desesperadora da frota morrendo em sua última viagem, mesmo que ele não explicasse mais nada. Um olhar de lamento sombrio varreu seu rosto enquanto ele permaneceu em silêncio, e então ele disse:*^000000";
 		next;
-		mes "[CapitÃ£o Janssen]";
-		mes "Tenho algo que devo fazer antes de morrer. Preciso recuperar os restos mortais da minha tripulaÃ§Ã£o que morreu na torre, e dar-lhes um enterro apropriado.";
+		mes "[Capitão Janssen]";
+		mes "Tenho algo que devo fazer antes de morrer. Preciso recuperar os restos mortais da minha tripulação que morreu na torre, e dar-lhes um enterro apropriado.";
 		next;
-		mes "[CapitÃ£o Janssen]";
-		mes "Me sinto tÃ£o afortunado por receber um aventureiro caloroso como vocÃª. Com o dinheiro que vocÃª me deu, finalmente posso velejar atÃ© a torre novamente.";
+		mes "[Capitão Janssen]";
+		mes "Me sinto tão afortunado por receber um aventureiro caloroso como você. Com o dinheiro que você me deu, finalmente posso velejar até a torre novamente.";
 		next;
 		mes "["+.@name$+"]";
 		mes "Que tal me contratar como seu primeiro marujo?";
 		next;
-		mes "[CapitÃ£o Janssen]";
-		mes "Obrigado, mas Ã© um lugar extremamente perigoso. Tenho deveres Ã  cumprir e vocÃª nÃ£o tem nenhuma obrigaÃ§Ã£o comigo ou com eles. NÃ£o quero sacrificar alguÃ©m tÃ£o jovem como vocÃª para ir a um lugar tÃ£o perigoso.";
+		mes "[Capitão Janssen]";
+		mes "Obrigado, mas é um lugar extremamente perigoso. Tenho deveres à cumprir e você não tem nenhuma obrigação comigo ou com eles. Não quero sacrificar alguém tão jovem como você para ir a um lugar tão perigoso.";
 		next;
 		mes "["+.@name$+"]";
-		mes "NÃ£o...";
+		mes "Não...";
 		mes "...";
 		mes "...";
-		mes "Como um aventureiro, Ã© minha obrigaÃ§Ã£o ajudar aqueles que precisam. TambÃ©m estou muito curioso sobre esse lugar...";
+		mes "Como um aventureiro, é minha obrigação ajudar aqueles que precisam. Também estou muito curioso sobre esse lugar...";
 		next;
-		mes "[CapitÃ£o Janssen]";
-		mes "Eu jÃ¡ ia sair imediatamente, mas desde que vocÃª se juntou a mim, devo dar-lhe tempo para se preparar. Estarei aqui esperando atÃ© que vocÃª esteja pronto para ir.";
+		mes "[Capitão Janssen]";
+		mes "Eu já ia sair imediatamente, mas desde que você se juntou a mim, devo dar-lhe tempo para se preparar. Estarei aqui esperando até que você esteja pronto para ir.";
 		next;
-		mes "[CapitÃ£o Janssen]";
-		mes "...entÃ£o ok...";
-		mes "Bem vindo Ã  bordo, primeiro marujo.";
+		mes "[Capitão Janssen]";
+		mes "...então ok...";
+		mes "Bem vindo à bordo, primeiro marujo.";
 		in_102tower = 3;
 		close;
 	} else if (in_102tower == 3) {
-		mes "[CapitÃ£o Janssen]";
+		mes "[Capitão Janssen]";
 		mes "Vamos partir agora?";
 		next;
-		switch(select("Sim, vamos!:NÃ£o, ainda nÃ£o estou pronto...")) {
+		switch(select("Sim, vamos!:Não, ainda não estou pronto...")) {
 		case 1:
-			mes "[CapitÃ£o Janssen]";
-			mes "Em seguida puxe a Ã¢ncora, primeiro marujo!";
+			mes "[Capitão Janssen]";
+			mes "Em seguida puxe a âncora, primeiro marujo!";
 			close2;
 			in_102tower = 4;
 			warp "e_tower",70,114;
 			end;
 		case 2:
-			mes "[CapitÃ£o Janssen]";
+			mes "[Capitão Janssen]";
 			mes "Claro, sem problemas. Volte quando estiver pronto.";
 			close;
 		}
 	} else if (in_102tower > 3) {
-		mes "[CapitÃ£o Janssen]";
-		mes "Bem, para viajar pelo oceano novamente, precisamos repor os suprimentos. Se vocÃª me der 10.000 zenys, eu cuido do resto.";
+		mes "[Capitão Janssen]";
+		mes "Bem, para viajar pelo oceano novamente, precisamos repor os suprimentos. Se você me der 10.000 zenys, eu cuido do resto.";
 		next;
 		switch(select("Voltarei depois.:Vamos, agora!")) {
 		case 1:
 			mes "["+.@name$+"]";
-			mes "Me desculpe, mas nÃ£o tenho muito dinheiro. Vou voltar quando economizar o suficiente.";
+			mes "Me desculpe, mas não tenho muito dinheiro. Vou voltar quando economizar o suficiente.";
 			next;
-			mes "[CapitÃ£o Janssen]";
+			mes "[Capitão Janssen]";
 			mes "Claro, sem problemas. Estarei esperando pelo seu retorno.";
 			close;
 		case 2:
 			if (Zeny < 10000) {
-				mes "[CapitÃ£o Janssen]";
-				mes "Me desculpe, mas vocÃª nÃ£o tem dinheiro suficiente. Preciso de pelo menos 10.000 zenys para reabastecer os nossos suprimentos...";
+				mes "[Capitão Janssen]";
+				mes "Me desculpe, mas você não tem dinheiro suficiente. Preciso de pelo menos 10.000 zenys para reabastecer os nossos suprimentos...";
 				close;
 			}
 			else {
-				mes "[CapitÃ£o Janssen]";
-				mes "Excelente! Agora estamos prontos para ir. Vamos levantar a Ã¢ncora de novo!";
+				mes "[Capitão Janssen]";
+				mes "Excelente! Agora estamos prontos para ir. Vamos levantar a âncora de novo!";
 				Zeny -= 10000;
 				close2;
 				warp "e_tower",70,114;
@@ -166,39 +166,39 @@ alberta,214,77,6	script	CapitÃ£o Janssen	4_M_SEAMAN,{
 			}
 		}
 	} else {
-		mes "[CapitÃ£o Janssen]";
-		mes "Desculpe-me, vocÃª Ã© um aventureiro?";
+		mes "[Capitão Janssen]";
+		mes "Desculpe-me, você é um aventureiro?";
 		next;
-		mes "[CapitÃ£o Janssen]";
-		mes "Desculpe perguntar isso, principalmente quando esta Ã© a primeira vez que nos vemos, mas vocÃª pode me fazer um favor? Serei breve.";
+		mes "[Capitão Janssen]";
+		mes "Desculpe perguntar isso, principalmente quando esta é a primeira vez que nos vemos, mas você pode me fazer um favor? Serei breve.";
 		next;
-		mes "[CapitÃ£o Janssen]";
-		mes "VocÃª pode me doar ^0000ff10.000^000000 zenys? Ã‰ por uma causa importante...";
+		mes "[Capitão Janssen]";
+		mes "Você pode me doar ^0000ff10.000^000000 zenys? É por uma causa importante...";
 		next;
 		switch(select("No!:Sure thing.")) {
 		case 1:
 			mes "["+.@name$+"]";
-			mes "Me desculpe, mas vocÃª perguntou isso a pessoa errada.";
+			mes "Me desculpe, mas você perguntou isso a pessoa errada.";
 			next;
-			mes "[CapitÃ£o Janssen]";
-			mes "Entendo... Desculpe incomodÃ¡-lo. Entendo que seria muito rude perguntar algo assim.";
+			mes "[Capitão Janssen]";
+			mes "Entendo... Desculpe incomodá-lo. Entendo que seria muito rude perguntar algo assim.";
 			close;
 		case 2:
-			mes "[CapitÃ£o Janssen]";
-			mes "HÃ£? Tem certeza que vocÃª nÃ£o se importa em me dar tanto dinheiro? Uau, muito obrigado!";
+			mes "[Capitão Janssen]";
+			mes "Hã? Tem certeza que você não se importa em me dar tanto dinheiro? Uau, muito obrigado!";
 			next;
 			if (Zeny < 10000) {
-				mes "[CapitÃ£o Janssen]";
-				mes "...Sinto muito, mas eu nÃ£o acho que vocÃª tenha 10.000 zenys. Obrigado pela sua gentileza, mas eu preciso mais do que isso.";
+				mes "[Capitão Janssen]";
+				mes "...Sinto muito, mas eu não acho que você tenha 10.000 zenys. Obrigado pela sua gentileza, mas eu preciso mais do que isso.";
 				close;
 			} else {
 				mes "["+.@name$+"]";
-				mes "Eu nÃ£o sei porque vocÃª precisa de tanto dinheiro, mas aqui estÃ¡. Pode pegar.";
+				mes "Eu não sei porque você precisa de tanto dinheiro, mas aqui está. Pode pegar.";
 				next;
-				mes "^0000ff*VocÃª doou 10.000 zenys para o CapitÃ£o Janssen*^000000.";
+				mes "^0000ff*Você doou 10.000 zenys para o Capitão Janssen*^000000.";
 				next;
-				mes "[CapitÃ£o Janssen]";
-				mes "Muito obrigado! Agora posso estocar alimentos e materiais para o meu navio. VocÃª Ã© gentil e muito amÃ¡vel!";
+				mes "[Capitão Janssen]";
+				mes "Muito obrigado! Agora posso estocar alimentos e materiais para o meu navio. Você é gentil e muito amável!";
 				Zeny -= 10000;
 				in_102tower = 1;
 				close;
@@ -207,7 +207,7 @@ alberta,214,77,6	script	CapitÃ£o Janssen	4_M_SEAMAN,{
 	}
 }
 
-e_tower,81,105,0	script	Pedra de ProteÃ§Ã£o da Torre	2_MONEMUS,{
+e_tower,81,105,0	script	Pedra de Proteção da Torre	2_MONEMUS,{
 
 	.@party_id = getcharid(1);
 	.@p_name$ = getpartyname(.@party_id);
@@ -222,19 +222,19 @@ e_tower,81,105,0	script	Pedra de ProteÃ§Ã£o da Torre	2_MONEMUS,{
 	}
 	if (!.@etower_timer) {
 		if (getcharid(0) == getpartyleader(.@party_id,2)) {
-			mes "Confirmado, o grupo foi feito. VocÃª gostaria de reservar a entrada para a Torre Sem Fim?";
+			mes "Confirmado, o grupo foi feito. Você gostaria de reservar a entrada para a Torre Sem Fim?";
 			next;
-			switch(select("Gerar CalabouÃ§o da "+.@md_name$+":Entrar no CalabouÃ§o:Retornar para Alberta:Cancelar")) {
+			switch(select("Gerar Calabouço da "+.@md_name$+":Entrar no Calabouço:Retornar para Alberta:Cancelar")) {
 			case 1:
 				.@instance = instance_create(.@md_name$,.@party_id);
 				if (.@instance < 0) {
 					mes "Nome do grupo: "+.@p_name$;
-					mes "LÃ­der do grupo: "+strcharinfo(0);
+					mes "Líder do grupo: "+strcharinfo(0);
 					mes "^0000ff"+.@md_name$+" ^000000- A reserva falhou!";
 					close;
 				}
 				mes "^0000ff"+.@md_name$+"^000000 - Tentar reservar";
-				mes "Depois de fazer uma reserva, vocÃª tem que falar com o NPC logo atrÃ¡s e selecionar o menu 'Entrar no CalabouÃ§o' para entrar no calabouÃ§o.";
+				mes "Depois de fazer uma reserva, você tem que falar com o NPC logo atrás e selecionar o menu 'Entrar no Calabouço' para entrar no calabouço.";
 				for (.@i = 1; .@i <= 6; ++.@i) {
 					if( instance_attachmap(.@i + "@tower", .@instance) == "" ) {
 						mes "^0000ff"+.@md_name$+" ^000000- A reserva falhou!";
@@ -277,14 +277,14 @@ e_tower,81,105,0	script	Pedra de ProteÃ§Ã£o da Torre	2_MONEMUS,{
 		.@dun_m = (.@dun_ent_t - (.@dun_h * 3600)) / 60;
 		.@dun_s = .@dun_ent_t - ((.@dun_h * 3600) + (.@dun_m * 60));
 
-		mes "Devido os efeitos na torre, vocÃª nÃ£o pode entrar no calabouÃ§o agora, " + .@dun_h + "horas " + .@dun_m + "minutos " + .@dun_s + "segundos restantes para entrar no prÃ³ximo calabouÃ§o.";
+		mes "Devido os efeitos na torre, você não pode entrar no calabouço agora, " + .@dun_h + "horas " + .@dun_m + "minutos " + .@dun_s + "segundos restantes para entrar no próximo calabouço.";
 		next;
-		mes "Ã‰ perigoso aqui. Deixe-me levÃ¡-lo para Alberta.";
+		mes "É perigoso aqui. Deixe-me levá-lo para Alberta.";
 		close2;
 		warp "alberta",223,36;
 		end;
 	} else if (.@etower_timer == 1) {
-		mes "Se vocÃª jÃ¡ tiver gerado o calabouÃ§o, vocÃª pode entrar. ";
+		mes "Se você já tiver gerado o calabouço, você pode entrar. ";
 		next;
 		switch(select("Entrar na "+.@md_name$+":Retornar para Alberta:Cancelar")) {
 		case 1:
@@ -302,17 +302,17 @@ e_tower,81,105,0	script	Pedra de ProteÃ§Ã£o da Torre	2_MONEMUS,{
 		etower_timer = 0;
 		erasequest 60200;
 		erasequest 60201;
-		mes "^0000ffOs registros e efeitos relacionados com a Torre Sem Fim foram removidos. VocÃª pode gerar e entrar no calabouÃ§o da Torre Sem Fim novamente.^000000";
+		mes "^0000ffOs registros e efeitos relacionados com a Torre Sem Fim foram removidos. Você pode gerar e entrar no calabouço da Torre Sem Fim novamente.^000000";
 		close;
 	}
 
 L_Enter:
 	if (has_instance("1@tower") == "") {
-		mes "O calabouÃ§o da " +getarg(2)+ " nÃ£o existe.";
-		mes "O lÃ­der do grupo nÃ£o gerou o calabouÃ§o ainda.";
+		mes "O calabouço da " +getarg(2)+ " não existe.";
+		mes "O líder do grupo não gerou o calabouço ainda.";
 		close;
 	} else {
-		mapannounce "e_tower", strcharinfo(0)+" do grupo " +getarg(3)+", estÃ¡ entrando no calabouÃ§o da Torre sem Fim.",bc_map,"0x00ff99",FW_NORMAL,12;
+		mapannounce "e_tower", strcharinfo(0)+" do grupo " +getarg(3)+", está entrando no calabouço da Torre sem Fim.",bc_map,"0x00ff99",FW_NORMAL,12;
 		if (getarg(1)) {
 			etower_timer = gettimetick(2);
 			setquest 60200;
@@ -329,7 +329,7 @@ L_Enter:
 e_tower,30,30,2	script	Grande Vortex	CLEAR_NPC,2,2,{
 	end;
 OnTouch:
-	mapannounce "e_tower","[ " + strcharinfo(0) + " ], parece ter sido engolido por um enorme vÃ³rtice",bc_map,"0x00ff99",FW_NORMAL,12;
+	mapannounce "e_tower","[ " + strcharinfo(0) + " ], parece ter sido engolido por um enorme vórtice",bc_map,"0x00ff99",FW_NORMAL,12;
 	warp "alberta",223,36;
 	end;
 }
@@ -341,17 +341,17 @@ e_tower,1,1,2	script	#102Administrator Mode	CLEAR_NPC,{
 	.@i = callfunc("F_GM_NPC","dmc2008",1);
 	next;
 	if (.@i == 1) {
-		switch(select("Gerar Pedra da PurificaÃ§Ã£o:Remover Pedra da PurificaÃ§Ã£o:Cancelar")) {
+		switch(select("Gerar Pedra da Purificação:Remover Pedra da Purificação:Cancelar")) {
 		case 1:
-			mes "Criar a pedra da PurificaÃ§Ã£o que permanece por 30 minutos.";
-			donpcevent "Pedra da PurificaÃ§Ã£o#et1::OnEnable";
+			mes "Criar a pedra da Purificação que permanece por 30 minutos.";
+			donpcevent "Pedra da Purificação#et1::OnEnable";
 			break;
 		case 2:
-			mes "Destruir a Pedra da PurificaÃ§Ã£o imediatamente.";
-			donpcevent "Pedra da PurificaÃ§Ã£o#et1::OnDisable";
+			mes "Destruir a Pedra da Purificação imediatamente.";
+			donpcevent "Pedra da Purificação#et1::OnDisable";
 			break;
 		case 3:
-			mes "VocÃª cancelou.";
+			mes "Você cancelou.";
 			break;
 		}
 		close;
@@ -361,13 +361,13 @@ e_tower,1,1,2	script	#102Administrator Mode	CLEAR_NPC,{
 	}
 }
 
-e_tower,69,117,4	script	Pedra da PurificaÃ§Ã£o#et1	2_MONEMUS,{
+e_tower,69,117,4	script	Pedra da Purificação#et1	2_MONEMUS,{
 	etower_timer = 0;
-	mes "^0000ffOs registros e efeitos relacionados com a Torre Sem Fim foram removidos. VocÃª pode gerar e entrar no calabouÃ§o da Torre Sem Fim novamente.^000000";
+	mes "^0000ffOs registros e efeitos relacionados com a Torre Sem Fim foram removidos. Você pode gerar e entrar no calabouço da Torre Sem Fim novamente.^000000";
 	close;
 
 OnInit:
-	disablenpc "Pedra da PurificaÃ§Ã£o#et1";
+	disablenpc "Pedra da Purificação#et1";
 	end;
 
 OnEnable:
@@ -376,26 +376,26 @@ OnEnable:
 
 OnDisable:
 	stopnpctimer;
-	disablenpc "Pedra da PurificaÃ§Ã£o#et1";
+	disablenpc "Pedra da Purificação#et1";
 	end;
 
 OnTimer1000:
-	enablenpc "Pedra da PurificaÃ§Ã£o#et1";
+	enablenpc "Pedra da Purificação#et1";
 	end;
 
 OnTimer1740000:
-	mapannounce "e_tower", "A Pedra da PurificaÃ§Ã£o serÃ¡ distruida em um minuto.",bc_map,"0x00ff99";
+	mapannounce "e_tower", "A Pedra da Purificação será distruida em um minuto.",bc_map,"0x00ff99";
 	end;
 
 OnTimer1800000:
-	disablenpc "Pedra da PurificaÃ§Ã£o#et1";
+	disablenpc "Pedra da Purificação#et1";
 	end;
 }
 
-e_tower,151,185,4	script	Pedra da PurificaÃ§Ã£o#et2	CLEAR_NPC,{
+e_tower,151,185,4	script	Pedra da Purificação#et2	CLEAR_NPC,{
 	callfunc "F_GM_NPC";
 	etower_timer = 0;
-	mes "^0000ffOs registros e efeitos relacionados com a Torre Sem Fim foram removidos. VocÃª pode gerar e entrar no calabouÃ§o da Torre Sem Fim.^000000";
+	mes "^0000ffOs registros e efeitos relacionados com a Torre Sem Fim foram removidos. Você pode gerar e entrar no calabouço da Torre Sem Fim.^000000";
 	close2;
 	warp "e_tower",75,108;
 	end;
@@ -425,7 +425,7 @@ function	script	F_Tower_Monster	{
 		break;
 	case 3:
 		areamonster .@map$,181,351,191,387,"Esqueleto Arqueiro",1016,5,.@label$;
-		areamonster .@map$,181,351,191,387,"Esqueleto OperÃ¡rio",1169,5,.@label$;
+		areamonster .@map$,181,351,191,387,"Esqueleto Operário",1169,5,.@label$;
 		areamonster .@map$,181,351,191,387,"Esqueleto Soldado",1028,5,.@label$;
 		areamonster .@map$,181,351,191,387,"Orc Esqueleto",1152,5,.@label$;
 		areamonster .@map$,181,351,191,387,"Esqueleto Pirata",1071,5,.@label$;
@@ -437,18 +437,18 @@ function	script	F_Tower_Monster	{
 		areamonster .@map$,267,351,277,387,"Argos",1100,5,.@label$;
 		areamonster .@map$,267,351,277,387,"Vocal",1088,1,.@label$;
 		areamonster .@map$,267,351,277,387,"Rocker",1052,5,.@label$;
-		areamonster .@map$,267,351,277,387,"ZangÃ£o",1004,5,.@label$;
+		areamonster .@map$,267,351,277,387,"Zangão",1004,5,.@label$;
 		break;
 	case 5:
-		areamonster .@map$,352,351,362,387,"Besouro-LadrÃ£o Dourado",1086,1,.@label$;
-		areamonster .@map$,352,351,362,387,"Besouro-LadrÃ£o Macho",1054,15,.@label$;
-		areamonster .@map$,352,351,362,387,"Besouro-LadrÃ£o FÃªmea",1053,15,.@label$;
-		areamonster .@map$,352,351,362,387,"Besouro-LadrÃ£o",1051,15,.@label$;
-		areamonster .@map$,352,351,362,387,"Ovo de Besouro-LadrÃ£o",1048,5,.@label$;
+		areamonster .@map$,352,351,362,387,"Besouro-Ladrão Dourado",1086,1,.@label$;
+		areamonster .@map$,352,351,362,387,"Besouro-Ladrão Macho",1054,15,.@label$;
+		areamonster .@map$,352,351,362,387,"Besouro-Ladrão Fêmea",1053,15,.@label$;
+		areamonster .@map$,352,351,362,387,"Besouro-Ladrão",1051,15,.@label$;
+		areamonster .@map$,352,351,362,387,"Ovo de Besouro-Ladrão",1048,5,.@label$;
 		break;
 	case 6:
-		areamonster .@map$,9,267,19,303,"Ovo de DragÃ£o",1721,5,.@label$;
-		areamonster .@map$,9,267,19,303,"Ovo de Besouro-LadrÃ£o",1048,5,.@label$;
+		areamonster .@map$,9,267,19,303,"Ovo de Dragão",1721,5,.@label$;
+		areamonster .@map$,9,267,19,303,"Ovo de Besouro-Ladrão",1048,5,.@label$;
 		areamonster .@map$,9,267,19,303,"Ovo de Andre",1097,5,.@label$;
 		areamonster .@map$,9,267,19,303,"Pupa",1008,5,.@label$;
 		break;
@@ -469,13 +469,13 @@ function	script	F_Tower_Monster	{
 		break;
 	case 10:
 		areamonster .@map$,352,267,362,303,"Abelha-Rainha",1059,1,.@label$;
-		areamonster .@map$,352,267,362,303,"ZangÃ£o Gigante",1303,25,.@label$;
-		areamonster .@map$,352,267,362,303,"ZangÃ£o",1004,20,.@label$;
+		areamonster .@map$,352,267,362,303,"Zangão Gigante",1303,25,.@label$;
+		areamonster .@map$,352,267,362,303,"Zangão",1004,20,.@label$;
 		break;
 	case 11:
-		areamonster .@map$,9,180,19,216,"DrÃ­ade",1493,15,.@label$;
+		areamonster .@map$,9,180,19,216,"Dríade",1493,15,.@label$;
 		areamonster .@map$,9,180,19,216,"Parasita",1500,15,.@label$;
-		areamonster .@map$,9,180,19,216,"ErmitÃ£o Plant",1413,15,.@label$;
+		areamonster .@map$,9,180,19,216,"Ermitão Plant",1413,15,.@label$;
 		areamonster .@map$,9,180,19,216,"Rafflesia",1162,5,.@label$;
 		break;
 	case 12:
@@ -505,17 +505,17 @@ function	script	F_Tower_Monster	{
 	case 16:
 		areamonster .@map$,9,96,19,132,"Raydric Arqueiro",1276,10,.@label$;
 		areamonster .@map$,9,96,19,132,"Orc Arqueiro",1189,10,.@label$;
-		areamonster .@map$,9,96,19,132,"GÃ¡rgula",1253,10,.@label$;
+		areamonster .@map$,9,96,19,132,"Gárgula",1253,10,.@label$;
 		areamonster .@map$,9,96,19,132,"Esqueleto Arqueiro",1016,10,.@label$;
 		break;
 	case 17:
-		areamonster .@map$,93,96,103,132,"TritÃ£o",1264,10,.@label$;
-		areamonster .@map$,93,96,103,132,"BafomÃ© Jr.",1101,10,.@label$;
+		areamonster .@map$,93,96,103,132,"Tritão",1264,10,.@label$;
+		areamonster .@map$,93,96,103,132,"Bafomé Jr.",1101,10,.@label$;
 		areamonster .@map$,93,96,103,132,"Strouf",1065,15,.@label$;
 		areamonster .@map$,93,96,103,132,"Vento da Colina",1629,5,.@label$;
 		break;
 	case 18:
-		areamonster .@map$,181,96,191,132,"CÃ£ibra",1209,25,.@label$;
+		areamonster .@map$,181,96,191,132,"Cãibra",1209,25,.@label$;
 		areamonster .@map$,181,96,191,132,"Tarou",1175,15,.@label$;
 		break;
 	case 19:
@@ -561,11 +561,11 @@ function	script	F_Tower_Monster	{
 		areamonster .@map$,352,9,362,45,"Nove Caudas",1180,15,.@label$;
 		break;
 	case 26:
-		areamonster .@map$,9,351,19,387,"Ãrvore Maldita",1503,10,.@label$;
+		areamonster .@map$,9,351,19,387,"Árvore Maldita",1503,10,.@label$;
 		areamonster .@map$,9,351,19,387,"Pessegueira Encantada",1410,10,.@label$;
 		areamonster .@map$,9,351,19,387,"Golem de Madeira",1497,10,.@label$;
 		areamonster .@map$,9,351,19,387,"Atirador de Pedras",1495,10,.@label$;
-		areamonster .@map$,9,351,19,387,"Salgueiro AnciÃ£o",1033,5,.@label$;
+		areamonster .@map$,9,351,19,387,"Salgueiro Ancião",1033,5,.@label$;
 		break;
 	case 27:
 		areamonster .@map$,93,351,103,387,"Goblin Arqueiro",1258,10,.@label$;
@@ -594,13 +594,13 @@ function	script	F_Tower_Monster	{
 		areamonster .@map$,352,351,362,387,"Ninfa Perversa",1416,30,.@label$;
 		break;
 	case 31:
-		areamonster .@map$,9,267,19,303,"FerrÃ£o",1387,20,.@label$;
-		areamonster .@map$,9,267,19,303,"MÃ£o de Ferro",1212,15,.@label$;
+		areamonster .@map$,9,267,19,303,"Ferrão",1387,20,.@label$;
+		areamonster .@map$,9,267,19,303,"Mão de Ferro",1212,15,.@label$;
 		areamonster .@map$,9,267,19,303,"Argiope",1099,10,.@label$;
-		areamonster .@map$,9,267,19,303,"EscorpiÃ£o",1001,5,.@label$;
+		areamonster .@map$,9,267,19,303,"Escorpião",1001,5,.@label$;
 		break;
 	case 32:
-		areamonster .@map$,93,267,103,303,"LÃ­der Goblin",1299,1,.@label$;
+		areamonster .@map$,93,267,103,303,"Líder Goblin",1299,1,.@label$;
 		areamonster .@map$,93,267,103,303,"Goblin Arqueiro",1258,10,.@label$;
 		areamonster .@map$,93,267,103,303,"Goblin",1122,10,.@label$;
 		areamonster .@map$,93,267,103,303,"Goblin",1123,5,.@label$;
@@ -609,14 +609,14 @@ function	script	F_Tower_Monster	{
 		areamonster .@map$,93,267,103,303,"Goblin",1126,5,.@label$;
 		break;
 	case 33:
-		areamonster .@map$,181,267,191,303,"LÃ­der Kobold",1296,1,.@label$;
+		areamonster .@map$,181,267,191,303,"Líder Kobold",1296,1,.@label$;
 		areamonster .@map$,181,267,191,303,"Kobold",1133,15,.@label$;
 		areamonster .@map$,181,267,191,303,"Kobold Arqueiro",1282,15,.@label$;
 		areamonster .@map$,181,267,191,303,"Kobold",1134,10,.@label$;
 		areamonster .@map$,181,267,191,303,"Kobold",1135,5,.@label$;
 		break;
 	case 34:
-		areamonster .@map$,267,267,277,303,"CrÃ¢nio Flamejante",1869,20,.@label$;
+		areamonster .@map$,267,267,277,303,"Crânio Flamejante",1869,20,.@label$;
 		areamonster .@map$,267,267,277,303,"Sussurro",1179,10,.@label$;
 		areamonster .@map$,267,267,277,303,"Cochicho",1186,10,.@label$;
 		break;
@@ -634,7 +634,7 @@ function	script	F_Tower_Monster	{
 		break;
 	case 37:
 		areamonster .@map$,93,180,103,216,"Gerente",1270,10,.@label$;
-		areamonster .@map$,93,180,103,216,"RelÃ³gio",1269,10,.@label$;
+		areamonster .@map$,93,180,103,216,"Relógio",1269,10,.@label$;
 		areamonster .@map$,93,180,103,216,"Alarme",1193,30,.@label$;
 		break;
 	case 38:
@@ -644,7 +644,7 @@ function	script	F_Tower_Monster	{
 	case 39:
 		areamonster .@map$,267,180,277,216,"Ninfa Perversa",1416,10,.@label$;
 		areamonster .@map$,267,180,277,216,"Mao Guai",1513,10,.@label$;
-		areamonster .@map$,267,180,277,216,"ErmitÃ£o Maligno",1412,10,.@label$;
+		areamonster .@map$,267,180,277,216,"Ermitão Maligno",1412,10,.@label$;
 		areamonster .@map$,267,180,277,216,"Zhu Po Long",1514,10,.@label$;
 		areamonster .@map$,267,180,277,216,"Jin Guai",1517,5,.@label$;
 		break;
@@ -670,20 +670,20 @@ function	script	F_Tower_Monster	{
 		areamonster .@map$,181,96,191,132,"Medusa",1148,10,.@label$;
 		areamonster .@map$,181,96,191,132,"Sorrateiro",1037,40,.@label$;
 		areamonster .@map$,181,96,191,132,"Anaconda",1030,5,.@label$;
-		areamonster .@map$,181,96,191,132,"JibÃ³ia",1025,5,.@label$;
+		areamonster .@map$,181,96,191,132,"Jibóia",1025,5,.@label$;
 		break;
 	case 44:
 		areamonster .@map$,267,96,277,132,"Filhote de Hatii",1515,20,.@label$;
-		areamonster .@map$,267,96,277,132,"BafomÃ© Jr",1101,20,.@label$;
+		areamonster .@map$,267,96,277,132,"Bafomé Jr",1101,20,.@label$;
 		areamonster .@map$,267,96,277,132,"Filhote de Orc",1686,1,.@label$;
 		areamonster .@map$,267,96,277,132,"Filhote de Lobo do Deserto",1107,10,.@label$;
-		areamonster .@map$,267,96,277,132,"BebÃª Selvagem",1167,10,.@label$;
+		areamonster .@map$,267,96,277,132,"Bebê Selvagem",1167,10,.@label$;
 		break;
 	case 45:
 		areamonster .@map$,352,96,362,132,"Osiris",1038,1,.@label$;
-		areamonster .@map$,352,96,362,132,"MÃºmia AnciÃ£",1297,15,.@label$;
+		areamonster .@map$,352,96,362,132,"Múmia Anciã",1297,15,.@label$;
 		areamonster .@map$,352,96,362,132,"Verit",1032,15,.@label$;
-		areamonster .@map$,352,96,362,132,"MÃºmia",1041,20,.@label$;
+		areamonster .@map$,352,96,362,132,"Múmia",1041,20,.@label$;
 		break;
 	case 46:
 		areamonster .@map$,9,9,19,45,"Rastreador",1774,20,.@label$;
@@ -691,24 +691,24 @@ function	script	F_Tower_Monster	{
 		break;
 	case 47:
 		areamonster .@map$,93,9,103,45,"Exterminador",1384,20,.@label$;
-		areamonster .@map$,93,9,103,45,"DeletÃ©rio",1385,10,.@label$;
+		areamonster .@map$,93,9,103,45,"Deletério",1385,10,.@label$;
 		areamonster .@map$,93,9,103,45,"Petite Voador",1156,10,.@label$;
 		areamonster .@map$,93,9,103,45,"Petite",1155,10,.@label$;
 		break;
 	case 48:
-		areamonster .@map$,181,9,191,45,"Verme SÃ¡bio",1305,10,.@label$;
-		areamonster .@map$,181,9,191,45,"MÃºmia AnciÃ£",1297,10,.@label$;
-		areamonster .@map$,181,9,191,45,"MÃ­mico Antigo",1699,10,.@label$;
+		areamonster .@map$,181,9,191,45,"Verme Sábio",1305,10,.@label$;
+		areamonster .@map$,181,9,191,45,"Múmia Anciã",1297,10,.@label$;
+		areamonster .@map$,181,9,191,45,"Mímico Antigo",1699,10,.@label$;
 		break;
 	case 49:
 		areamonster .@map$,267,9,277,45,"Grizzly",1381,20,.@label$;
 		areamonster .@map$,267,9,277,45,"Leib Olmai",1306,7,.@label$;
 		areamonster .@map$,267,9,277,45,"Zipper",1417,5,.@label$;
 		areamonster .@map$,267,9,277,45,"Sasquatch",1243,5,.@label$;
-		areamonster .@map$,267,9,277,45,"PÃ© Grande",1060,5,.@label$;
+		areamonster .@map$,267,9,277,45,"Pé Grande",1060,5,.@label$;
 		break;
 	case 50:
-		areamonster .@map$,352,9,362,45,"FaraÃ³",1157,1,.@label$;
+		areamonster .@map$,352,9,362,45,"Faraó",1157,1,.@label$;
 		areamonster .@map$,352,9,362,45,"Amon Ra",1511,1,.@label$;
 		areamonster .@map$,352,9,362,45,"Anubis",1098,10,.@label$;
 		areamonster .@map$,352,9,362,45,"Marduk",1140,10,.@label$;
@@ -716,14 +716,14 @@ function	script	F_Tower_Monster	{
 		break;
 	case 51:
 		areamonster .@map$,9,351,19,387,"Diabinho",1292,20,.@label$;
-		areamonster .@map$,9,351,19,387,"DiabÃ³lico",1382,20,.@label$;
+		areamonster .@map$,9,351,19,387,"Diabólico",1382,20,.@label$;
 		areamonster .@map$,9,351,19,387,"Deviruchi",1109,10,.@label$;
 		break;
 	case 52:
 		areamonster .@map$,93,351,103,387,"Harpia",1376,20,.@label$;
 		areamonster .@map$,93,351,103,387,"Grand Peco",1369,10,.@label$;
-		areamonster .@map$,93,351,103,387,"Borboleta SanguinÃ¡ria",1408,10,.@label$;
-		areamonster .@map$,93,351,103,387,"GÃ¡rgula",1253,10,.@label$;
+		areamonster .@map$,93,351,103,387,"Borboleta Sanguinária",1408,10,.@label$;
+		areamonster .@map$,93,351,103,387,"Gárgula",1253,10,.@label$;
 		areamonster .@map$,93,351,103,387,"Vento da Colina",1680,5,.@label$;
 		areamonster .@map$,93,351,103,387,"Vento da Colina",1629,5,.@label$;
 		break;
@@ -745,7 +745,7 @@ function	script	F_Tower_Monster	{
 	case 56:
 		areamonster .@map$,9,267,19,303,"Congelador",1319,10,.@label$;
 		areamonster .@map$,9,267,19,303,"Filhote de Hatii",1515,10,.@label$;
-		areamonster .@map$,9,267,19,303,"TitÃ£ de Gelo",1777,15,.@label$;
+		areamonster .@map$,9,267,19,303,"Titã de Gelo",1777,15,.@label$;
 		areamonster .@map$,9,267,19,303,"Yeti",1775,10,.@label$;
 		areamonster .@map$,9,267,19,303,"Gazeti",1778,10,.@label$;
 		break;
@@ -765,11 +765,11 @@ function	script	F_Tower_Monster	{
 		areamonster .@map$,181,267,191,303,"Rybio",1201,10,.@label$;
 		areamonster .@map$,181,267,191,303,"Zumbi Prisioneiro",1197,10,.@label$;
 		areamonster .@map$,181,267,191,303,"Esqueleto Prisioneiro",1196,5,.@label$;
-		areamonster .@map$,181,267,191,303,"InjustiÃ§ado",1257,5,.@label$;
+		areamonster .@map$,181,267,191,303,"Injustiçado",1257,5,.@label$;
 		break;
 	case 59:
-		areamonster .@map$,267,267,277,303,"MÃ­mico Antigo",1699,30,.@label$;
-		areamonster .@map$,267,267,277,303,"MÃ­mico",1191,20,.@label$;
+		areamonster .@map$,267,267,277,303,"Mímico Antigo",1699,30,.@label$;
+		areamonster .@map$,267,267,277,303,"Mímico",1191,20,.@label$;
 		areamonster .@map$,267,267,277,303,"Presente",1249,10,.@label$;
 		break;
 	case 60:
@@ -802,11 +802,11 @@ function	script	F_Tower_Monster	{
 		break;
 	case 64:
 		areamonster .@map$,267,180,277,216,"Ungoliant",1618,30,.@label$;
-		areamonster .@map$,267,180,277,216,"Verme SÃ¡bio",1305,2,.@label$;
+		areamonster .@map$,267,180,277,216,"Verme Sábio",1305,2,.@label$;
 		areamonster .@map$,267,180,277,216,"Lagarta",1300,2,.@label$;
-		areamonster .@map$,267,180,277,216,"Creamy AmeaÃ§ador",1293,2,.@label$;
+		areamonster .@map$,267,180,277,216,"Creamy Ameaçador",1293,2,.@label$;
 		areamonster .@map$,267,180,277,216,"Mantis Assassino",1294,2,.@label$;
-		areamonster .@map$,267,180,277,216,"ZangÃ£o Gigante",1303,2,.@label$;
+		areamonster .@map$,267,180,277,216,"Zangão Gigante",1303,2,.@label$;
 		break;
 	case 65:
 		areamonster .@map$,352,180,362,216,"Atroce",1785,1,.@label$;
@@ -815,31 +815,31 @@ function	script	F_Tower_Monster	{
 	case 66:
 		areamonster .@map$,9,96,19,132,"Incubus",1374,20,.@label$;
 		areamonster .@map$,9,96,19,132,"Aliot",1736,20,.@label$;
-		areamonster .@map$,9,96,19,132,"InjustiÃ§ado",1257,10,.@label$;
+		areamonster .@map$,9,96,19,132,"Injustiçado",1257,10,.@label$;
 		break;
 	case 67:
 		areamonster .@map$,93,96,103,132,"Acidus",1716,10,.@label$;
 		areamonster .@map$,93,96,103,132,"Acidus",1713,10,.@label$;
 		areamonster .@map$,93,96,103,132,"Exterminador",1384,5,.@label$;
-		areamonster .@map$,93,96,103,132,"DragÃ£o Mutante",1262,10,.@label$;
+		areamonster .@map$,93,96,103,132,"Dragão Mutante",1262,10,.@label$;
 		areamonster .@map$,93,96,103,132,"Petite Voador",1156,5,.@label$;
 		break;
 	case 68:
 		areamonster .@map$,181,96,191,132,"Golem de Lava",1366,10,.@label$;
-		areamonster .@map$,181,96,191,132,"Golem EstalactÃ­tico",1278,10,.@label$;
-		areamonster .@map$,181,96,191,132,"TitÃ£ de Gelo",1777,10,.@label$;
+		areamonster .@map$,181,96,191,132,"Golem Estalactítico",1278,10,.@label$;
+		areamonster .@map$,181,96,191,132,"Titã de Gelo",1777,10,.@label$;
 		areamonster .@map$,181,96,191,132,"Golem de Madeira",1497,5,.@label$;
 		areamonster .@map$,181,96,191,132,"Golem",1040,5,.@label$;
 		break;
 	case 69:
 		areamonster .@map$,267,96,277,132,"Dama da Guarda",1700,20,.@label$;
 		areamonster .@map$,267,96,277,132,"Senhora do Abrigo",1701,10,.@label$;
-		areamonster .@map$,267,96,277,132,"Baronesa da RetribuiÃ§Ã£o",1702,10,.@label$;
+		areamonster .@map$,267,96,277,132,"Baronesa da Retribuição",1702,10,.@label$;
 		areamonster .@map$,267,96,277,132,"Lady Solace",1703,10,.@label$;
 		areamonster .@map$,267,96,277,132,"Anjo Fajuto",1371,10,.@label$;
 		break;
 	case 70:
-		areamonster .@map$,352,96,362,132,"Orc HerÃ³i",1087,1,.@label$;
+		areamonster .@map$,352,96,362,132,"Orc Herói",1087,1,.@label$;
 		areamonster .@map$,352,96,362,132,"Senhor dos Orcs",1190,1,.@label$;
 		areamonster .@map$,352,96,362,132,"Filhote de Orc",1686,20,.@label$;
 		break;
@@ -875,10 +875,10 @@ function	script	F_Tower_Monster	{
 		areamonster .@map$,267,9,277,45,"Venatu",1676,6,.@label$;
 		break;
 	case 75:
-		areamonster .@map$,352,9,362,45,"BafomÃ©",1039,1,.@label$;
+		areamonster .@map$,352,9,362,45,"Bafomé",1039,1,.@label$;
 		areamonster .@map$,352,9,362,45,"Senhor das Trevas",1272,1,.@label$;
-		areamonster .@map$,352,9,362,45,"BafomÃ© Jr.",1101,20,.@label$;
-		areamonster .@map$,352,9,362,45,"IlusÃ£o das Trevas",1302,10,.@label$;
+		areamonster .@map$,352,9,362,45,"Bafomé Jr.",1101,20,.@label$;
+		areamonster .@map$,352,9,362,45,"Ilusão das Trevas",1302,10,.@label$;
 		break;
 	case 76:
 		areamonster .@map$,9,351,19,387,"Cavaleiro do Abismo",1219,30,.@label$;
@@ -887,14 +887,14 @@ function	script	F_Tower_Monster	{
 		break;
 	case 77:
 		areamonster .@map$,93,351,103,387,"Banshee",1867,30,.@label$;
-		areamonster .@map$,93,351,103,387,"ApariÃ§Ã£o",1291,10,.@label$;
-		areamonster .@map$,93,351,103,387,"DruÃ­da Maligno",1117,10,.@label$;
+		areamonster .@map$,93,351,103,387,"Aparição",1291,10,.@label$;
+		areamonster .@map$,93,351,103,387,"Druída Maligno",1117,10,.@label$;
 		areamonster .@map$,93,351,103,387,"Alma Penada",1192,10,.@label$;
-		areamonster .@map$,93,351,103,387,"XamÃ£ do Vento",1263,10,.@label$;
+		areamonster .@map$,93,351,103,387,"Xamã do Vento",1263,10,.@label$;
 		break;
 	case 78:
-		areamonster .@map$,181,351,191,387,"GuardiÃ£o Espadachim",1829,5,.@label$;
-		areamonster .@map$,181,351,191,387,"Cavaleiro SanguinÃ¡rio",1268,10,.@label$;
+		areamonster .@map$,181,351,191,387,"Guardião Espadachim",1829,5,.@label$;
+		areamonster .@map$,181,351,191,387,"Cavaleiro Sanguinário",1268,10,.@label$;
 		areamonster .@map$,181,351,191,387,"Cavaleiro do  Abismo",1219,5,.@label$;
 		areamonster .@map$,181,351,191,387,"Dullahan",1504,10,.@label$;
 		areamonster .@map$,181,351,191,387,"Raydric",1163,20,.@label$;
@@ -903,7 +903,7 @@ function	script	F_Tower_Monster	{
 		areamonster .@map$,267,351,277,387,"Hydrolancer",1720,10,.@label$;
 		areamonster .@map$,267,351,277,387,"Ferus",1714,10,.@label$;
 		areamonster .@map$,267,351,277,387,"Ferus",1717,10,.@label$;
-		areamonster .@map$,267,351,277,387,"DeletÃ©rio",1385,5,.@label$;
+		areamonster .@map$,267,351,277,387,"Deletério",1385,5,.@label$;
 		areamonster .@map$,267,351,277,387,"Petite",1155,5,.@label$;
 		break;
 	case 80:
@@ -916,23 +916,23 @@ function	script	F_Tower_Monster	{
 		areamonster .@map$,9,267,19,303,"Executor",1205,20,.@label$;
 		break;
 	case 82:
-		areamonster .@map$,93,267,103,303,"Cavaleiro SanguinÃ¡rio",1268,10,.@label$;
+		areamonster .@map$,93,267,103,303,"Cavaleiro Sanguinário",1268,10,.@label$;
 		areamonster .@map$,93,267,103,303,"Agav",1769,10,.@label$;
 		areamonster .@map$,93,267,103,303,"Serial Killer",1507,10,.@label$;
 		areamonster .@map$,93,267,103,303,"Skogul",1752,10,.@label$;
-		areamonster .@map$,93,267,103,303,"InjustiÃ§ado",1257,10,.@label$;
+		areamonster .@map$,93,267,103,303,"Injustiçado",1257,10,.@label$;
 		break;
 	case 83:
 		areamonster .@map$,181,267,191,303,"Skeggiold",1754,10,.@label$;
-		areamonster .@map$,181,267,191,303,"IlusÃ£o das Trevas",1302,10,.@label$;
+		areamonster .@map$,181,267,191,303,"Ilusão das Trevas",1302,10,.@label$;
 		areamonster .@map$,181,267,191,303,"Grifo",1259,10,.@label$;
 		areamonster .@map$,181,267,191,303,"Quimera",1283,10,.@label$;
 		break;
 	case 84:
 		areamonster .@map$,267,267,277,303,"Succubus",1370,10,.@label$;
-		areamonster .@map$,267,267,277,303,"IlusÃ£o das Trevas",1302,20,.@label$;
+		areamonster .@map$,267,267,277,303,"Ilusão das Trevas",1302,20,.@label$;
 		areamonster .@map$,267,267,277,303,"Duque Coruja",1320,10,.@label$;
-		areamonster .@map$,267,267,277,303,"BarÃ£o Coruja",1295,10,.@label$;
+		areamonster .@map$,267,267,277,303,"Barão Coruja",1295,10,.@label$;
 		areamonster .@map$,267,267,277,303,"Incubus",1374,10,.@label$;
 		break;
 	case 85:
@@ -953,8 +953,8 @@ function	script	F_Tower_Monster	{
 	case 88:
 		areamonster .@map$,181,180,191,216,"Necromante",1870,15,.@label$;
 		areamonster .@map$,181,180,191,216,"Anubis",1098,15,.@label$;
-		areamonster .@map$,181,180,191,216,"ApariÃ§Ã£o",1291,10,.@label$;
-		areamonster .@map$,181,180,191,216,"MÃºmia AnciÃ£",1297,10,.@label$;
+		areamonster .@map$,181,180,191,216,"Aparição",1291,10,.@label$;
+		areamonster .@map$,181,180,191,216,"Múmia Anciã",1297,10,.@label$;
 		areamonster .@map$,181,180,191,216,"Khalitzburg",1132,10,.@label$;
 		break;
 	case 89:
@@ -965,37 +965,37 @@ function	script	F_Tower_Monster	{
 		break;
 	case 90:
 		areamonster .@map$,352,180,362,216,"Valkyrie Randgris",1751,1,.@label$;
-		areamonster .@map$,352,180,362,216,"Baronesa da RetribuiÃ§Ã£o",1702,10,.@label$;
+		areamonster .@map$,352,180,362,216,"Baronesa da Retribuição",1702,10,.@label$;
 		areamonster .@map$,352,180,362,216,"Lady Solace",1703,10,.@label$;
 		areamonster .@map$,352,180,362,216,"Anjo Fajuto",1371,10,.@label$;
 		break;
 	case 91:
 		areamonster .@map$,9,96,19,132,"Cecil Damon",1638,10,.@label$;
-		areamonster .@map$,9,96,19,132,"GuardiÃ£o Arqueiro",1830,10,.@label$;
+		areamonster .@map$,9,96,19,132,"Guardião Arqueiro",1830,10,.@label$;
 		areamonster .@map$,9,96,19,132,"Kavach Icarus",1656,30,.@label$;
 		break;
 	case 92:
 		areamonster .@map$,93,96,103,132,"Kathryne Keyron",1639,15,.@label$;
-		areamonster .@map$,93,96,103,132,"AnciÃ£o",1377,10,.@label$;
+		areamonster .@map$,93,96,103,132,"Ancião",1377,10,.@label$;
 		areamonster .@map$,93,96,103,132,"Laurell Weinder",1657,10,.@label$;
-		areamonster .@map$,93,96,103,132,"XamÃ£ do Vento",1263,10,.@label$;
+		areamonster .@map$,93,96,103,132,"Xamã do Vento",1263,10,.@label$;
 		areamonster .@map$,93,96,103,132,"Marduk",1140,10,.@label$;
 		break;
 	case 93:
 		areamonster .@map$,181,96,191,132,"Seyren Windsor",1634,15,.@label$;
-		areamonster .@map$,181,96,191,132,"Cavaleiro SanguinÃ¡rio",1268,10,.@label$;
+		areamonster .@map$,181,96,191,132,"Cavaleiro Sanguinário",1268,10,.@label$;
 		areamonster .@map$,181,96,191,132,"Cavaleiro do Abismo",1219,10,.@label$;
 		areamonster .@map$,181,96,191,132,"Andarilho",1208,10,.@label$;
 		break;
 	case 94:
-		areamonster .@map$,267,96,277,132,"GuardiÃ£o Espadachim",1829,15,.@label$;
-		areamonster .@map$,267,96,277,132,"GuardiÃ£o Arqueiro",1830,15,.@label$;
+		areamonster .@map$,267,96,277,132,"Guardião Espadachim",1829,15,.@label$;
+		areamonster .@map$,267,96,277,132,"Guardião Arqueiro",1830,15,.@label$;
 		break;
 	case 95:
 		areamonster .@map$,352,96,362,132,"Belzebu",1873,1,.@label$;
-		areamonster .@map$,352,96,362,132,"Mosca CaÃ§adora",1035,30,.@label$;
-		areamonster .@map$,352,96,362,132,"ChonChon de AÃ§o",1042,5,.@label$;
-		areamonster .@map$,352,96,362,132,"LibÃ©lula",1091,5,.@label$;
+		areamonster .@map$,352,96,362,132,"Mosca Caçadora",1035,30,.@label$;
+		areamonster .@map$,352,96,362,132,"ChonChon de Aço",1042,5,.@label$;
+		areamonster .@map$,352,96,362,132,"Libélula",1091,5,.@label$;
 		areamonster .@map$,352,96,362,132,"ChonChon",1011,5,.@label$;
 		break;
 	case 96:
@@ -1049,33 +1049,33 @@ function	script	F_Tower_Monster	{
 			else if (.@mob_ran == 14)
 				areamonster .@map$,267,9,277,45,"Seyren Windsor",1634,15,.@label$;
 			else if (.@mob_ran == 15)
-				areamonster .@map$,267,9,277,45,"Cavaleiro SanguinÃ¡rio",1268,10,.@label$;
+				areamonster .@map$,267,9,277,45,"Cavaleiro Sanguinário",1268,10,.@label$;
 			else if (.@mob_ran == 16)
 				areamonster .@map$,267,9,277,45,"Cavaleiro do Abismo",1219,10,.@label$;
 			else if (.@mob_ran == 17)
 				areamonster .@map$,267,9,277,45,"Andarilho",1208,10,.@label$;
 			else if (.@mob_ran == 18)
-				areamonster .@map$,267,9,277,45,"Espadachim GuardiÃ£o",1829,15,.@label$;
+				areamonster .@map$,267,9,277,45,"Espadachim Guardião",1829,15,.@label$;
 			else if (.@mob_ran == 19)
-				areamonster .@map$,267,9,277,45,"Arqueiro GuardiÃ£o",1830,15,.@label$;
+				areamonster .@map$,267,9,277,45,"Arqueiro Guardião",1830,15,.@label$;
 			else if (.@mob_ran == 20)
 				areamonster .@map$,267,9,277,45,"Kathryne Keyron",1639,15,.@label$;
 			else if (.@mob_ran == 21)
-				areamonster .@map$,267,9,277,45,"AnciÃ£o",1377,10,.@label$;
+				areamonster .@map$,267,9,277,45,"Ancião",1377,10,.@label$;
 			else if (.@mob_ran == 22)
 				areamonster .@map$,267,9,277,45,"Laurell Weinder",1657,10,.@label$;
 			else if (.@mob_ran == 23)
-				areamonster .@map$,267,9,277,45,"XamÃ£ do Vento",1263,10,.@label$;
+				areamonster .@map$,267,9,277,45,"Xamã do Vento",1263,10,.@label$;
 			else if (.@mob_ran == 24)
 				areamonster .@map$,267,9,277,45,"Marduk",1140,10,.@label$;
 			else if (.@mob_ran == 25)
 				areamonster .@map$,267,9,277,45,"Cecil Damon",1638,10,.@label$;
 			else if (.@mob_ran == 26)
-				areamonster .@map$,267,9,277,45,"Arqueiro GuardiÃ£o",1830,10,.@label$;
+				areamonster .@map$,267,9,277,45,"Arqueiro Guardião",1830,10,.@label$;
 			else if (.@mob_ran == 27)
 				areamonster .@map$,267,9,277,45,"Kavach Icarus",1656,30,.@label$;
 			else if (.@mob_ran == 28)
-				areamonster .@map$,267,9,277,45,"Baronesa da RetribuiÃ§Ã£o",1702,10,.@label$;
+				areamonster .@map$,267,9,277,45,"Baronesa da Retribuição",1702,10,.@label$;
 			else if (.@mob_ran == 29)
 				areamonster .@map$,267,9,277,45,"Lady Solace",1703,10,.@label$;
 			else
@@ -1197,21 +1197,21 @@ function	script	F_Tower_Warp	{
 // Andar 1-25
 //============================================================
 1@tower,50,360,0	script	Braseiro Imortal#	CLEAR_NPC,{
-	mes "- Uma mensagem Ã© gravada no brasero -";
-	mes "Aquele que espalha as cinzas da escuridÃ£o neste lugar estarÃ¡ um passo mais perto de Naght Sieger, a Sombra do Reis das Trevas...";
+	mes "- Uma mensagem é gravada no brasero -";
+	mes "Aquele que espalha as cinzas da escuridão neste lugar estará um passo mais perto de Naght Sieger, a Sombra do Reis das Trevas...";
 	next;
 
-	setarray .@level$[1],"26Â°","51Â°","76Â°";
+	setarray .@level$[1],"26°","51°","76°";
 	setarray .@map$[1],"2@tower","3@tower","4@tower";
-	.@i = select("26Â° andar:51Â° andar:76Â° andar");
+	.@i = select("26° andar:51° andar:76° andar");
 
 	if (countitem(6000) < .@i) {
 		mes "-Aviso-";
-		mes "Para ir ao "+.@level$[.@i]+" andar, vocÃª precisa de "+.@i+" Cinzas da EscuridÃ£o.";
+		mes "Para ir ao "+.@level$[.@i]+" andar, você precisa de "+.@i+" Cinzas da Escuridão.";
 		close;
 	}
-	delitem 6000,.@i; //Cinzas da EscuridÃ£o
-	mapannounce instance_mapname("1@tower"), strcharinfo(0)+". VocÃª serÃ¡ teleportado para o "+.@level$[.@i]+" Andar.",bc_map,"0x00ff99";
+	delitem 6000,.@i; //Cinzas da Escuridão
+	mapannounce instance_mapname("1@tower"), strcharinfo(0)+". Você será teleportado para o "+.@level$[.@i]+" Andar.",bc_map,"0x00ff99";
 	warp instance_mapname(.@map$[.@i]),52,354;
 	close;
 
@@ -1220,7 +1220,7 @@ OnInstanceInit:
 	end;
 
 OnTimer10000:
-	mapannounce instance_mapname("1@tower"), "Aviso: Domar um monstro nÃ£o conta.",bc_map,"0xff0000";
+	mapannounce instance_mapname("1@tower"), "Aviso: Domar um monstro não conta.",bc_map,"0xff0000";
 	stopnpctimer;
 	end;
 }
@@ -1242,11 +1242,11 @@ OnMyMobDead:
 		initnpctimer;
 		//SetItemPartyInMap in_102floor 1
 	} else
-		mapannounce .@map$, "Monstros vivos no 1Â° andar: - "+.@mob_dead_num,bc_map,"0x00ff99";
+		mapannounce .@map$, "Monstros vivos no 1° andar: - "+.@mob_dead_num,bc_map,"0x00ff99";
 	end;
 
 OnTimer5000:
-	mapannounce instance_mapname("1@tower"), "Todos os monstros no 1Â° andar foram derrotados.",bc_map,"0xffff00";
+	mapannounce instance_mapname("1@tower"), "Todos os monstros no 1° andar foram derrotados.",bc_map,"0xffff00";
 	donpcevent instance_npcname("1FGate102tower")+"::OnEnable";
 	stopnpctimer;
 	end;
@@ -1372,10 +1372,10 @@ OnInstanceInit:
 
 OnTimer15000:
 OnTimer60000:
-	mapannounce instance_mapname("1@tower"), "Aviso: Em situaÃ§Ãµes anormais quando vocÃª derrota um monstro, vocÃª nÃ£o pode avanÃ§ar para o prÃ³ximo nÃ­vel!",bc_map,"0xff0000";
+	mapannounce instance_mapname("1@tower"), "Aviso: Em situações anormais quando você derrota um monstro, você não pode avançar para o próximo nível!",bc_map,"0xff0000";
 	end;
 OnTimer120000:
-	mapannounce instance_mapname("1@tower"), "Aviso: Em situaÃ§Ãµes anormais quando vocÃª derrota um monstro, vocÃª nÃ£o pode avanÃ§ar para o prÃ³ximo nÃ­vel!",bc_map,"0xff0000";
+	mapannounce instance_mapname("1@tower"), "Aviso: Em situações anormais quando você derrota um monstro, você não pode avançar para o próximo nível!",bc_map,"0xff0000";
 	stopnpctimer;
 	end;
 }
@@ -1386,16 +1386,16 @@ OnTimer120000:
 	.@i = callfunc("F_GM_NPC","dmc2008",1);
 	next;
 	if (.@i == 1) {
-		mes "Este NPC controla a torre do 1Â° ao 25Â° andar.";
-		mes "Por favor, digite o nÃºmero do andar que queira abrir:";
+		mes "Este NPC controla a torre do 1° ao 25° andar.";
+		mes "Por favor, digite o número do andar que queira abrir:";
 		mes "(ex.: 1F->1, 25F->25)";
 		input .@input,1,25;
 		next;
 		if (.@input < 1 || .@input > 25)
-			mes "Digite apenas nÃºmeros entre 1 e 25.";
+			mes "Digite apenas números entre 1 e 25.";
 		else {
 			donpcevent instance_npcname(.@input+"FGate102tower")+"::OnEnable";
-			mes "*** "+ .@input + "Â° andar estÃ¡ abrindo. ***";
+			mes "*** "+ .@input + "° andar está abrindo. ***";
 		}
 	}
 	close;
@@ -1421,11 +1421,11 @@ OnMyMobDead:
 		//SetItemPartyInMap in_102floor 26
 	}
 	else
-		mapannounce .@map$, "Monstros vivos no 26Â° andar: " + .@mob_dead_num,bc_map,"0x00ff99";
+		mapannounce .@map$, "Monstros vivos no 26° andar: " + .@mob_dead_num,bc_map,"0x00ff99";
 	end;
 
 OnTimer5000:
-	mapannounce instance_mapname("2@tower"), "Todos os monstros no 26Â° andar foram derrotados.",bc_map,"0xffff00";
+	mapannounce instance_mapname("2@tower"), "Todos os monstros no 26° andar foram derrotados.",bc_map,"0xffff00";
 	donpcevent instance_npcname("26FGate102tower")+"::OnEnable";
 	stopnpctimer;
 	end;
@@ -1502,16 +1502,16 @@ OnTouch_:
 	.@i = callfunc("F_GM_NPC","dmc2008",1);
 	next;
 	if (.@i == 1) {
-		mes "Este NPC controla a torre do 26Â° atÃ© o 50Â° andar.";
-		mes "Por favor, digite o nÃºmero do andar que queira abrir.";
+		mes "Este NPC controla a torre do 26° até o 50° andar.";
+		mes "Por favor, digite o número do andar que queira abrir.";
 		mes "(ex.: 26F->26, 50F->50)";
 		input .@input,26,50;
 		next;
 		if (.@onput < 26 || .@input > 50)
-			mes "VocÃª deve digitar apenas nÃºmeros entre 26 e 50.";
+			mes "Você deve digitar apenas números entre 26 e 50.";
 		else {
 			donpcevent instance_npcname(.@input+"FGate102tower")+"::OnEnable";
-			mes "*** "+ .@input + "Â° andar estÃ¡ sendo aberto. ***";
+			mes "*** "+ .@input + "° andar está sendo aberto. ***";
 		}
 	}
 	close;
@@ -1537,11 +1537,11 @@ OnMyMobDead:
 		//SetItemPartyInMap in_102floor 51
 	}
 	else
-		mapannounce .@map$, "Monstros vivos no 51Â° andar: " + .@mob_dead_num,bc_map,"0x00ff99";
+		mapannounce .@map$, "Monstros vivos no 51° andar: " + .@mob_dead_num,bc_map,"0x00ff99";
 	end;
 
 OnTimer5000:
-	mapannounce instance_mapname("3@tower"), "Todos os monstros no 51Â° andar foram derrotados.",bc_map,"0xffff00";
+	mapannounce instance_mapname("3@tower"), "Todos os monstros no 51° andar foram derrotados.",bc_map,"0xffff00";
 	donpcevent instance_npcname("51FGate102tower")+"::OnEnable";
 	stopnpctimer;
 	end;
@@ -1618,16 +1618,16 @@ OnTouch_:
 	.@i = callfunc("F_GM_NPC","dmc2008",1);
 	next;
 	if (.@i == 1) {
-		mes "Este NPC controla a torre do 51Â° ao 75Â° andar.";
-		mes "Por favor, digite o nÃºmero do andar que queira abrir.";
+		mes "Este NPC controla a torre do 51° ao 75° andar.";
+		mes "Por favor, digite o número do andar que queira abrir.";
 		mes "(ex.: 51F->51, 75F->75)";
 		input .@input,51,75;
 		next;
 		if (.@input < 51 || .@input > 75)
-			mes "VocÃª deve digitar apenas nÃºmeros entre 51 e 75.";
+			mes "Você deve digitar apenas números entre 51 e 75.";
 		else {
 			donpcevent instance_npcname(.@input+"FGate102tower")+"::OnEnable";
-			mes "*** "+ .@input + "Â° andar estÃ¡ sendo aberto. ***";
+			mes "*** "+ .@input + "° andar está sendo aberto. ***";
 		}
 	}
 	close;
@@ -1653,11 +1653,11 @@ OnMyMobDead:
 		//SetItemPartyInMap in_102floor 76
 	}
 	else
-		mapannounce .@map$,"Monstros vivos no 76Â° andar: " + .@mob_dead_num,bc_map,"0x00ff99";
+		mapannounce .@map$,"Monstros vivos no 76° andar: " + .@mob_dead_num,bc_map,"0x00ff99";
 	end;
 
 OnTimer5000:
-	mapannounce instance_mapname("4@tower"),"Todos os monstros no 76Â° andar foram derrotados.",bc_map,"0xffff00";
+	mapannounce instance_mapname("4@tower"),"Todos os monstros no 76° andar foram derrotados.",bc_map,"0xffff00";
 	donpcevent instance_npcname("76FGate102tower")+"::OnEnable";
 	stopnpctimer;
 	end;
@@ -1733,59 +1733,59 @@ OnTouch_:
 	.@i = callfunc("F_GM_NPC","dmc2008",1);
 	next;
 	if (.@i == 1) {
-		mes "Este NPC controla a torre do 76Â° ao 99Â° andar.";
-		mes "Por favor, digite o nÃºmero do andar que queira abrir.";
+		mes "Este NPC controla a torre do 76° ao 99° andar.";
+		mes "Por favor, digite o número do andar que queira abrir.";
 		mes "(ex.: 76F->76, 99F->99)";
 		input .@input,76,99;
 		next;
 		if (.@input < 76 || .@input > 99)
-			mes "VocÃª deve digitar apenas nÃºmeros entre 76 e 99.";
+			mes "Você deve digitar apenas números entre 76 e 99.";
 		else {
 			donpcevent instance_npcname(.@input+"FGate102tower")+"::OnEnable";
-			mes "*** "+ .@input + "Â° andar estÃ¡ sendo aberto. ***";
+			mes "*** "+ .@input + "° andar está sendo aberto. ***";
 		}
 	}
 	close;
 }
 
-// CentÃ©simo Andar
+// Centésimo Andar
 //============================================================
-5@tower,106,109,2	script	Cristal TranslÃºcido#102	CLEAR_NPC,{
+5@tower,106,109,2	script	Cristal Translúcido#102	CLEAR_NPC,{
 	if (in_102tower < 10) {
-		mes "^0000ff*Uma misteriosa voz ecoa pela sala dizendo para vocÃª tocar o cristal translÃºcido que estÃ¡ irradiando uma luz forte.*^000000";
+		mes "^0000ff*Uma misteriosa voz ecoa pela sala dizendo para você tocar o cristal translúcido que está irradiando uma luz forte.*^000000";
 		next;
 		mes "[Voz Misteriosa]";
-		mes "Bem-vindo ao meu lar, intrusos. Eu me diverti vendo vocÃªs suportarem todas as dificuldades que eu tenho posto diante de vocÃªs.";
+		mes "Bem-vindo ao meu lar, intrusos. Eu me diverti vendo vocês suportarem todas as dificuldades que eu tenho posto diante de vocês.";
 		next;
 		mes "[Voz Misteriosa]";
 		mes "Infelizmente, chegou a hora de terminar o show.";
 		next;
 		mes "[Voz Misteriosa]";
-		mes "Ainda Ã© muito cedo para comemorar a vitÃ³ria contra o meu braÃ§o direito Knothen porque ele nÃ£o estÃ¡ completamente destruÃ­do!";
+		mes "Ainda é muito cedo para comemorar a vitória contra o meu braço direito Knothen porque ele não está completamente destruído!";
 		next;
 		mes "[Voz Misteriosa]";
-		mes "Vou ressuscitÃ¡-lo para o prÃ³ximo show. Derrote-o novamente, e entÃ£o aceitarei com prazer o desafio de vocÃªs.";
+		mes "Vou ressuscitá-lo para o próximo show. Derrote-o novamente, e então aceitarei com prazer o desafio de vocês.";
 		next;
 		mes "[Voz Misteriosa]";
-		mes "AtÃ© logo.";
-		mes "Mais uma vez, havia um bom tempo, os seres humanos. Estou ansioso para vÃª-los novamente.";
+		mes "Até logo.";
+		mes "Mais uma vez, havia um bom tempo, os seres humanos. Estou ansioso para vê-los novamente.";
 		next;
-		mes "^0000ff*Assim que a voz parou de falar, uma forÃ§a irresistÃ­vel o levantou e lhe moveu para algum lugar.*";
+		mes "^0000ff*Assim que a voz parou de falar, uma força irresistível o levantou e lhe moveu para algum lugar.*";
 		close2;
 		in_102tower = 10;
 		warp "alberta",223,36;
 	}
 	else {
-		mes "^0000ff*A peÃ§a de cristal irradiando parece acenar para vocÃª, assim como da Ãºltima vez.*^000000";
+		mes "^0000ff*A peça de cristal irradiando parece acenar para você, assim como da última vez.*^000000";
 		next;
 		mes "[Voz Misteriosa]";
-		mes "Devo ter subestimado vocÃª... Eu nÃ£o esperava vÃª-lo novamente.";
+		mes "Devo ter subestimado você... Eu não esperava vê-lo novamente.";
 		next;
 		mes "[Voz Misteriosa]";
-		mes "Posso sentir o seu suor, ouvir os suspiros de cansaÃ§o em combate. Ah~ O desejo humano pela vitÃ³ria sempre me excita.";
+		mes "Posso sentir o seu suor, ouvir os suspiros de cansaço em combate. Ah~ O desejo humano pela vitória sempre me excita.";
 		next;
 		mes "[Voz Misteriosa]";
-		mes "Agora permito que vocÃª venha ao meu encontro. Venha atÃ© mim, para o grande Naght Sieger o Rei dos reis das Trevas!";
+		mes "Agora permito que você venha ao meu encontro. Venha até mim, para o grande Naght Sieger o Rei dos reis das Trevas!";
 		close2;
 		warp instance_mapname("6@tower"),32,12;
 	}
@@ -1793,11 +1793,11 @@ OnTouch_:
 
 OnInstanceInit:
 OnDisable:
-	disablenpc instance_npcname("Cristal TranslÃºcido#102");
+	disablenpc instance_npcname("Cristal Translúcido#102");
 	end;
 
 OnEnable:
-	enablenpc instance_npcname("Cristal TranslÃºcido#102");
+	enablenpc instance_npcname("Cristal Translúcido#102");
 	donpcevent instance_npcname("#102Effect1")+"::OnEnable";
 	end;
 }
@@ -1860,9 +1860,9 @@ OnMyMobDead:
 	.@map$ = instance_mapname("5@tower");
 	.@mob_dead_num = mobcount(.@map$,instance_npcname("#102FShadowDust1")+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		mapannounce .@map$, "Voz misteriosa: Quem Ã© vocÃª para ousar invadir o meu santuÃ¡rio?!",bc_map,"0xffff00";
+		mapannounce .@map$, "Voz misteriosa: Quem é você para ousar invadir o meu santuário?!",bc_map,"0xffff00";
 		donpcevent instance_npcname("#102FShadowDust")+"::OnDisable";
-		donpcevent instance_npcname("Cristal TranslÃºcido#102")+"::OnEnable";
+		donpcevent instance_npcname("Cristal Translúcido#102")+"::OnEnable";
 		//SetItemPartyInMap in_102floor 100
 	}
 	end;
@@ -1921,12 +1921,12 @@ OnEnable:
 
 5@tower,71,1,0	script	#Manager Mode5	CLEAR_NPC,{
 	callfunc "F_GM_NPC";
-	mes "Este NPC controla o cristal no 100Â° andar. Por favor, digite a senha.";
+	mes "Este NPC controla o cristal no 100° andar. Por favor, digite a senha.";
 	.@i = callfunc("F_GM_NPC","dmc2008",1);
 	next;
 	if (.@i == 1) {
-		donpcevent instance_npcname("Cristal TranslÃºcido#102")+"::OnEnable";
-		mes "O cristal do 100Â° andar foi ativado.";
+		donpcevent instance_npcname("Cristal Translúcido#102")+"::OnEnable";
+		mes "O cristal do 100° andar foi ativado.";
 	} else
 		mes "Por favor, digite a senha correta.";
 	close;
@@ -1935,7 +1935,7 @@ OnEnable:
 // Andar 101
 //============================================================
 6@tower,45,89,2	script	Fonte da Vida#1	CLEAR_NPC,{
-	mes "^0066ff*VocÃª tomou um gole de Ã¡gua lÃ­mpida e sentiu-se revigorado.*^000000";
+	mes "^0066ff*Você tomou um gole de água límpida e sentiu-se revigorado.*^000000";
 	heal (MaxHp-Hp),(MaxSp-Sp);
 	close;
 
@@ -1998,15 +1998,15 @@ OnEnable:
 	end;
 
 OnTimer500:
-	mapannounce instance_mapname("6@tower"),"HÃ³spedes, hein? Eu espero que vocÃªs venham aqui, sabendo que vocÃªs serÃ£o enterrados neste lugar. Se vocÃªs nÃ£o sabem, bem... Ã© tarde demais!",bc_map,"0x00ffcc";
+	mapannounce instance_mapname("6@tower"),"Hóspedes, hein? Eu espero que vocês venham aqui, sabendo que vocês serão enterrados neste lugar. Se vocês não sabem, bem... é tarde demais!",bc_map,"0x00ffcc";
 	end;
 
 OnTimer5500:
-	mapannounce instance_mapname("6@tower"),"Ã‰ por isso que vocÃªs, aventureiros, sempre acabam mortos.",bc_map,"0x00ffcc";
+	mapannounce instance_mapname("6@tower"),"É por isso que vocês, aventureiros, sempre acabam mortos.",bc_map,"0x00ffcc";
 	end;
 
 OnTimer10500:
-	mapannounce instance_mapname("6@tower"),"Pretendo aplaudi-los por sua coragem... Mas Ã© claro que, antes, pretendo brincar um pouco com vocÃªs.",bc_map,"0x00ffcc";
+	mapannounce instance_mapname("6@tower"),"Pretendo aplaudi-los por sua coragem... Mas é claro que, antes, pretendo brincar um pouco com vocês.",bc_map,"0x00ffcc";
 	end;
 
 OnTimer15500:
@@ -2015,10 +2015,10 @@ OnTimer15500:
 
 OnTimer20500:
 	.@map$ = instance_mapname("6@tower");
-	mapannounce .@map$,"Vamos ver quem corre mais rÃ¡pido. EstÃ£o prontos?",bc_map,"0x00ffcc";
+	mapannounce .@map$,"Vamos ver quem corre mais rápido. Estão prontos?",bc_map,"0x00ffcc";
 	stopnpctimer;
-	areamonster .@map$,151,66,153,106,"GuardiÃ£o de Ossos",1152,50,instance_npcname("#1st Beeper")+"::OnMyMobDead";
-	areamonster .@map$,158,66,160,106,"GuardiÃ£o de Ossos",1152,50,instance_npcname("#1st Beeper")+"::OnMyMobDead";
+	areamonster .@map$,151,66,153,106,"Guardião de Ossos",1152,50,instance_npcname("#1st Beeper")+"::OnMyMobDead";
+	areamonster .@map$,158,66,160,106,"Guardião de Ossos",1152,50,instance_npcname("#1st Beeper")+"::OnMyMobDead";
 	end;
 
 OnMyMobDead:
@@ -2041,7 +2041,7 @@ OnEnable:
 	end;
 
 OnTimer500:
-	mapannounce instance_mapname("6@tower"),"Bem, acho que eles nÃ£o foram muito desafiadores para vocÃªs.",bc_map,"0x00ffcc";
+	mapannounce instance_mapname("6@tower"),"Bem, acho que eles não foram muito desafiadores para vocês.",bc_map,"0x00ffcc";
 	end;
 
 OnTimer5500:
@@ -2052,8 +2052,8 @@ OnTimer10500:
 	.@map$ = instance_mapname("6@tower");
 	mapannounce .@map$,"Quero bis!",bc_map,"0x00ffcc";
 	stopnpctimer;
-	areamonster .@map$,151,66,153,106,"GuardiÃ£o de Vento",1263,30,instance_npcname("#2nd Beeper")+"::OnMyMobDead";
-	areamonster .@map$,158,66,160,106,"GuardiÃ£o de Vento",1263,30,instance_npcname("#2nd Beeper")+"::OnMyMobDead";
+	areamonster .@map$,151,66,153,106,"Guardião de Vento",1263,30,instance_npcname("#2nd Beeper")+"::OnMyMobDead";
+	areamonster .@map$,158,66,160,106,"Guardião de Vento",1263,30,instance_npcname("#2nd Beeper")+"::OnMyMobDead";
 	end;
 
 OnMyMobDead:
@@ -2076,19 +2076,19 @@ OnEnable:
 	end;
 
 OnTimer500:
-	mapannounce instance_mapname("6@tower"),"Sim, isso estÃ¡ ficando emocionante!",bc_map,"0x00ffcc";
+	mapannounce instance_mapname("6@tower"),"Sim, isso está ficando emocionante!",bc_map,"0x00ffcc";
 	end;
 
 OnTimer5500:
-	mapannounce instance_mapname("6@tower"),"Lembrarei de vocÃªs como uns dos poucos que conseguiram me entreter.",bc_map,"0x00ffcc";
+	mapannounce instance_mapname("6@tower"),"Lembrarei de vocês como uns dos poucos que conseguiram me entreter.",bc_map,"0x00ffcc";
 	end;
 
 OnTimer10500:
 	.@map$ = instance_mapname("6@tower");
-	mapannounce .@map$,"Como quer jogar comigo o prÃ³ximo round?",bc_map,"0x00ffcc";
+	mapannounce .@map$,"Como quer jogar comigo o próximo round?",bc_map,"0x00ffcc";
 	stopnpctimer;
-	areamonster .@map$,151,66,153,106,"GuardiÃ£o da Espada GÃªmea",1132,20,instance_npcname("#3rd Beeper")+"::OnMyMobDead";
-	areamonster .@map$,158,66,160,106,"GuardiÃ£o da Espada GÃªmea",1132,20,instance_npcname("#3rd Beeper")+"::OnMyMobDead";
+	areamonster .@map$,151,66,153,106,"Guardião da Espada Gêmea",1132,20,instance_npcname("#3rd Beeper")+"::OnMyMobDead";
+	areamonster .@map$,158,66,160,106,"Guardião da Espada Gêmea",1132,20,instance_npcname("#3rd Beeper")+"::OnMyMobDead";
 	end;
 
 OnMyMobDead:
@@ -2111,16 +2111,16 @@ OnEnable:
 	end;
 
 OnTimer500:
-	mapannounce instance_mapname("6@tower"),"Ok, chegou o momento de fazer a minha apariÃ§Ã£o!",bc_map,"0x00ffcc";
+	mapannounce instance_mapname("6@tower"),"Ok, chegou o momento de fazer a minha aparição!",bc_map,"0x00ffcc";
 	end;
 
 OnTimer5500:
-	mapannounce instance_mapname("6@tower"),"VocÃªs querem saber quem sou?",bc_map,"0x00ffcc";
+	mapannounce instance_mapname("6@tower"),"Vocês querem saber quem sou?",bc_map,"0x00ffcc";
 	end;
 
 OnTimer10500:
 	.@map$ = instance_mapname("6@tower");
-	mapannounce .@map$,"SaberÃ£o em breve. Tenho a face da morte!",bc_map,"0x00ffcc";
+	mapannounce .@map$,"Saberão em breve. Tenho a face da morte!",bc_map,"0x00ffcc";
 	stopnpctimer;
 	monster .@map$,156,147,"Nacht Sieger",1956,1,instance_npcname("#4th Beeper")+"::OnMyMobDead";
 	end;
@@ -2132,52 +2132,52 @@ OnMyMobDead:
 
 6@tower,169,127,2	script	Alma Perdida#102	4_M_NFDEADSWDMAN,{
 	if (checkweight(1201,1) == 0) {
-		mes "VocÃª estÃ¡ carregando muito equipamento. Porque nÃ£o joga alguns fora e depois retorna?";
+		mes "Você está carregando muito equipamento. Porque não joga alguns fora e depois retorna?";
 		close;
 	}
 	mes "[Alma Perdida]";
-	mes "Foram vocÃªs que nos libertaram do terrÃ­vel Naght Sieger.";
+	mes "Foram vocês que nos libertaram do terrível Naght Sieger.";
 	next;
 	mes "[Alma Perdida]";
-	mes "Muito obrigado. Agora podemos escapar deste lugar frio e escuro... para o cÃ©u.";
+	mes "Muito obrigado. Agora podemos escapar deste lugar frio e escuro... para o céu.";
 	next;
 	if ((countitem(13412) > 0) && (countitem(13413) > 0)) {
 		mes "[Alma Perdida]";
-		mes "Ei, vocÃª tem os restos de Naght Sieger com vocÃª.";
+		mes "Ei, você tem os restos de Naght Sieger com você.";
 		next;
 		mes "[Alma Perdida]";
-		mes "Elas podem parecer espadas de uma mÃ£o, mas posso colocÃ¡-las juntas para fazer uma de duas mÃ£os se quiser. Essa Ã© a Ãºnica maneira para que eu possa retribuir-lhes por me libertar.";
+		mes "Elas podem parecer espadas de uma mão, mas posso colocá-las juntas para fazer uma de duas mãos se quiser. Essa é a única maneira para que eu possa retribuir-lhes por me libertar.";
 		next;
-		switch(select("FaÃ§a uma espada de 2 mÃ£os.:NÃ£o, obrigado.")) {
+		switch(select("Faça uma espada de 2 mãos.:Não, obrigado.")) {
 		case 1:
 			mes "[Alma Perdida]";
-			mes "Se sua arma jÃ¡ foi aprimorada ou tem uma carta inserida, estes efeitos desaparecerÃ£o. Tudo bem pra vocÃª?";
+			mes "Se sua arma já foi aprimorada ou tem uma carta inserida, estes efeitos desaparecerão. Tudo bem pra você?";
 			next;
-			switch(select("Por mim, estÃ¡ tudo bem. Por favor, crie uma.:De forma alguma!")) {
+			switch(select("Por mim, está tudo bem. Por favor, crie uma.:De forma alguma!")) {
 			case 1:
 				mes "[Alma Perdida]";
-				mes "Bom, entÃ£o eu vou combinÃ¡-las para criar uma espada de duas mÃ£os.";
+				mes "Bom, então eu vou combiná-las para criar uma espada de duas mãos.";
 				next;
-				delitem 13412,1; //LÃ¢mina GÃªmea de Naght Sieger [3] - Azul
-				delitem 13413,1; //LÃ¢mina GÃªmea de Naght Sieger [3] - Vermelha
+				delitem 13412,1; //Lâmina Gêmea de Naght Sieger [3] - Azul
+				delitem 13413,1; //Lâmina Gêmea de Naght Sieger [3] - Vermelha
 				getitem 1185,1;  //Terror Violeta [2]
 				break;
 			case 2:
 				mes "[Alma Perdida]";
-				mes "Entendo. Acho que vocÃª nÃ£o Ã© tÃ£o ganancioso ou ambicioso quanto os outros aventureiros.";
+				mes "Entendo. Acho que você não é tão ganancioso ou ambicioso quanto os outros aventureiros.";
 				next;
 				break;
 			}
 			break;
 		case 2:
 			mes "[Alma Perdida]";
-			mes "Entendo. Acho que vocÃª nÃ£o Ã© tÃ£o ganancioso ou ambicioso quanto os outros aventureiros.";
+			mes "Entendo. Acho que você não é tão ganancioso ou ambicioso quanto os outros aventureiros.";
 			next;
 			break;
 		}
 	}
 	mes "[Alma Perdida]";
-	mes "Gostaria de falar mais com vocÃªs, mas tenho... Tenho que ir agora.";
+	mes "Gostaria de falar mais com vocês, mas tenho... Tenho que ir agora.";
 	next;
 	mes "[Alma Perdida]";
 	mes "Adeus, jovens aventureiros. Desejo-lhes boa sorte.";
@@ -2197,11 +2197,11 @@ OnEnable:
 	end;
 
 OnTimer500:
-	mapannounce instance_mapname("6@tower"),"Isso... isso nÃ£o pode estar acontecendo! NÃ£o posso ser derrotado!",bc_map,"0xffff00";
+	mapannounce instance_mapname("6@tower"),"Isso... isso não pode estar acontecendo! Não posso ser derrotado!",bc_map,"0xffff00";
 	end;
 
 OnTimer5500:
-	mapannounce instance_mapname("6@tower"),"NÃ£Ã£Ã£o! Minha alma... Meu corpo...! NÃ£Ã£Ã£Ã£oo!",bc_map,"0xffff00";
+	mapannounce instance_mapname("6@tower"),"Nããão! Minha alma... Meu corpo...! Nããããoo!",bc_map,"0xffff00";
 	end;
 
 OnTimer10500:

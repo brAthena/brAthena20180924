@@ -11,14 +11,14 @@
 //============================================================
 
 prontera,124,201,1	script	Garota Negociante	4_F_JOB_BLACKSMITH,{
-	/* FAZER: Isso pode ser otimizado com apenas o setmount(), j√° que ele pode
+	/* FAZER: Isso pode ser otimizado com apenas o setmount(), j· que ele pode
 Auto-detectar a necessidade adequada de cada classe/habilidade. */
 	if (hascashmount()) {
-		message strcharinfo(0),"Primeiramente voc√™ deve remover a sua montaria.";
+		message strcharinfo(0),"Primeiramente vocÍ deve remover a sua montaria.";
 		end;
 	} else if ((eaclass()&EAJ_THIRDMASK) == EAJ_RANGER && !countitem(Wolf's_Flute)) {
 		if (!checkfalcon() && getskilllv(HT_FALCON) && !checkwug()) {
-			if (select(" ~ Falc√£o: ~ Worg") == 1)
+			if (select(" ~ Falc„o: ~ Worg") == 1)
 				setfalcon;
 			else
 				getitem Wolf's_Flute, 1;
@@ -44,11 +44,11 @@ Auto-detectar a necessidade adequada de cada classe/habilidade. */
 	} else if (!checkfalcon() && getskilllv(HT_FALCON) && !checkwug()) {
 		setfalcon;
 	} else if (checkmount() != MOUNT_PECO && getskilllv(KN_RIDING)) {
-		setmount; // Peco ou Drag√£o
+		setmount; // Peco ou Drag„o
 	} else if (checkmount() != MOUNT_MADO && getskilllv(NC_MADOLICENCE)) {
 		setmount(MOUNT_MADO);
 	} else {
-		message strcharinfo(0),"Voc√™ n√£o tem o necess√°rio para utilizar meus servi√ßos.";
+		message strcharinfo(0),"VocÍ n„o tem o necess·rio para utilizar meus serviÁos.";
 		end;
 	}
 	specialeffect2 EF_TEIHIT3;

@@ -12,14 +12,14 @@
 //   |--------------------------------------------------------|
 //   | Criado por: eA/rA/Herc/brA Dev. Team                   |
 //   |--------------------------------------------------------|
-//   | Vers√µes eA/rA/Herc/brA: 1.6/1.6/1.6/1.0                |
+//   | Versıes eA/rA/Herc/brA: 1.6/1.6/1.6/1.0                |
 //   |--------------------------------------------------------|
-//   | Descri√ß√£o: Batalha Campal Flavius02                    |
+//   | DescriÁ„o: Batalha Campal Flavius02                    |
 //   |--------------------------------------------------------|
 //   | Changelog:                                             |
-//   | 1.0 Cabe√ßalho brAthena [Axl]                           |
+//   | 1.0 CabeÁalho brAthena [Axl]                           |
 //   |--------------------------------------------------------|
-//   | - Anota√ß√µes                                            |
+//   | - AnotaÁıes                                            |
 //   | Time vencedor: 9 emblemas                              |
 //   | Time perdedor: 3 emblemas                              |
 //   \________________________________________________________/
@@ -29,7 +29,7 @@
 bat_room,142,227,4	script	Tenente Huvas	4_M_KY_KNT,{
 	end;
 OnInit:
-	waitingroom "Esta√ß√£o de Batalha",11,"start#bat_b02::OnReadyCheck",1,0,80;
+	waitingroom "EstaÁ„o de Batalha",11,"start#bat_b02::OnReadyCheck",1,0,80;
 	end;
 OnEnterBG:
 	$@FlaviusBG2_id1 = waitingroom2bg("bat_b02",10,290,"start#bat_b02::OnGuillaumeQuit","");
@@ -39,7 +39,7 @@ OnEnterBG:
 bat_room,142,204,0	script	Tenente Yukon	4_M_CRU_KNT,{
 	end;
 OnInit:
-	waitingroom "Esta√ß√£o de Batalha",11,"start#bat_b02::OnReadyCheck",1,0,80;
+	waitingroom "EstaÁ„o de Batalha",11,"start#bat_b02::OnReadyCheck",1,0,80;
 	end;
 OnEnterBG:
 	$@FlaviusBG2_id2 = waitingroom2bg("bat_b02",390,10,"start#bat_b02::OnCroixQuit","");
@@ -105,10 +105,10 @@ OnReadyCheck:
 	donpcevent "OBJ#bat_b02_a::OnEnable";
 	donpcevent "OBJ#bat_b02_b::OnKill";
 	donpcevent "OBJ#bat_b02_b::OnEnable";
-	donpcevent "guardi√£o#bat_b02_a::OnKill";
-	donpcevent "guardi√£o#bat_b02_b::OnKill";
-	donpcevent "guardi√£o#bat_b02_a::OnEnable";
-	donpcevent "guardi√£o#bat_b02_b::OnEnable";
+	donpcevent "guardi„o#bat_b02_a::OnKill";
+	donpcevent "guardi„o#bat_b02_b::OnKill";
+	donpcevent "guardi„o#bat_b02_a::OnEnable";
+	donpcevent "guardi„o#bat_b02_b::OnEnable";
 	donpcevent "cell#bat_b02_a::OnRed";
 	donpcevent "cell#bat_b02_b::OnRed";
 	donpcevent "time#bat_b02::OnEnable";
@@ -127,10 +127,10 @@ OnReset:
 	donpcevent "OBJ#bat_b02_a::OnEnable";
 	donpcevent "OBJ#bat_b02_b::OnKill";
 	donpcevent "OBJ#bat_b02_b::OnEnable";
-	donpcevent "guardi√£o#bat_b02_a::OnKill";
-	donpcevent "guardi√£o#bat_b02_b::OnKill";
-	donpcevent "guardi√£o#bat_b02_a::OnEnable";
-	donpcevent "guardi√£o#bat_b02_b::OnEnable";
+	donpcevent "guardi„o#bat_b02_a::OnKill";
+	donpcevent "guardi„o#bat_b02_b::OnKill";
+	donpcevent "guardi„o#bat_b02_a::OnEnable";
+	donpcevent "guardi„o#bat_b02_b::OnEnable";
 	donpcevent "cell#bat_b02_a::OnRed";
 	donpcevent "cell#bat_b02_b::OnRed";
 	donpcevent "time#bat_b02::OnEnable";
@@ -164,7 +164,7 @@ OnKill:
 
 OnMyMobDead:
 	if (mobcount("bat_b02","OBJ#bat_b02_a::OnMyMobDead") < 1) {
-		mapannounce "bat_b02", "O Cristal Guillaume foi destru√≠do.",bc_map,"0xFFCE00";
+		mapannounce "bat_b02", "O Cristal Guillaume foi destruÌdo.",bc_map,"0xFFCE00";
 		if ($@Croix_ScoreBG2 > 0) {
 			$@FlaviusBG2_Victory = 2;
 			$@Croix_ScoreBG2 = $@Croix_ScoreBG2+1;
@@ -197,7 +197,7 @@ OnKill:
 
 OnMyMobDead:
 	if (mobcount("bat_b02","OBJ#bat_b02_b::OnMyMobDead") < 1) {
-		mapannounce "bat_b02", "O Cristal de Croix foi destru√≠do.",bc_map,"0xFFCE00";
+		mapannounce "bat_b02", "O Cristal de Croix foi destruÌdo.",bc_map,"0xFFCE00";
 		if ($@Guill_ScoreBG2 > 0) {
 			$@FlaviusBG2_Victory = 1;
 			++$@Guill_ScoreBG2;
@@ -219,38 +219,38 @@ OnMyMobDead:
 	end;
 }
 
-bat_b02,1,3,3	script	guardi√£o#bat_b02_a	CLEAR_NPC,{
+bat_b02,1,3,3	script	guardi„o#bat_b02_a	CLEAR_NPC,{
 OnEnable:
-	bg_monster $@FlaviusBG2_id1,"bat_b02",108,159,"Guardi√£o de Guillaume",1949,"guardi√£o#bat_b02_a::OnMyMobDead";
-	bg_monster $@FlaviusBG2_id1,"bat_b02",108,141,"Guardi√£o de Guillaume",1949,"guardi√£o#bat_b02_a::OnMyMobDead";
+	bg_monster $@FlaviusBG2_id1,"bat_b02",108,159,"Guardi„o de Guillaume",1949,"guardi„o#bat_b02_a::OnMyMobDead";
+	bg_monster $@FlaviusBG2_id1,"bat_b02",108,141,"Guardi„o de Guillaume",1949,"guardi„o#bat_b02_a::OnMyMobDead";
 	end;
 
 OnKill:
-	killmonster "bat_b02","guardi√£o#bat_b02_a::OnMyMobDead";
+	killmonster "bat_b02","guardi„o#bat_b02_a::OnMyMobDead";
 	end;
 
 OnMyMobDead:
-	if (mobcount("bat_b02","guardi√£o#bat_b02_a::OnMyMobDead") < 1) {
+	if (mobcount("bat_b02","guardi„o#bat_b02_a::OnMyMobDead") < 1) {
 		donpcevent "cell#bat_b02_a::OnGreen";
-		mapannounce "bat_b02", "O Guardi√£o que protegia o Cristal de Guillaume foi destru√≠do.",bc_map,"0xFFCE00";
+		mapannounce "bat_b02", "O Guardi„o que protegia o Cristal de Guillaume foi destruÌdo.",bc_map,"0xFFCE00";
 	}
 	end;
 }
 
-bat_b02,1,3,3	script	guardi√£o#bat_b02_b	CLEAR_NPC,{
+bat_b02,1,3,3	script	guardi„o#bat_b02_b	CLEAR_NPC,{
 OnEnable:
-	bg_monster $@FlaviusBG2_id2,"bat_b02",307,160,"Guardi√£o de Croix",1949,"guardi√£o#bat_b02_b::OnMyMobDead";
-	bg_monster $@FlaviusBG2_id2,"bat_b02",307,138,"Guardi√£o de Croix",1949,"guardi√£o#bat_b02_b::OnMyMobDead";
+	bg_monster $@FlaviusBG2_id2,"bat_b02",307,160,"Guardi„o de Croix",1949,"guardi„o#bat_b02_b::OnMyMobDead";
+	bg_monster $@FlaviusBG2_id2,"bat_b02",307,138,"Guardi„o de Croix",1949,"guardi„o#bat_b02_b::OnMyMobDead";
 	end;
 
 OnKill:
-	killmonster "bat_b02","guardi√£o#bat_b02_b::OnMyMobDead";
+	killmonster "bat_b02","guardi„o#bat_b02_b::OnMyMobDead";
 	end;
 
 OnMyMobDead:
-	if (mobcount("bat_b02","guardi√£o#bat_b02_b::OnMyMobDead") < 1) {
+	if (mobcount("bat_b02","guardi„o#bat_b02_b::OnMyMobDead") < 1) {
 		donpcevent "cell#bat_b02_b::OnGreen";
-		mapannounce "bat_b02", "O Guardi√£o que protegia o Cristal de Croix foi destru√≠do.",bc_map,"0xFFCE00";
+		mapannounce "bat_b02", "O Guardi„o que protegia o Cristal de Croix foi destruÌdo.",bc_map,"0xFFCE00";
 	}
 	end;
 }
@@ -296,7 +296,7 @@ bat_b02,10,294,3	script	Curandeira#b02_a	4_F_SISTER,{
 	mes "[Curandeira]";
 	mes "Agora feche o seus olhos,";
 	mes "e respire bem fundo.";
-	mes "Voc√™ pode se libertar da dor agora.";
+	mes "VocÍ pode se libertar da dor agora.";
 	close;
 
 OnTimer25000:
@@ -341,7 +341,7 @@ bat_b02,389,14,3	script	Curandeira#b02_b	4_F_SISTER,{
 	mes "[Curandeira]";
 	mes "Agora feche o seus olhos";
 	mes "e respire bem fundo.";
-	mes "Voc√™ pode se libertar da dor agora.";
+	mes "VocÍ pode se libertar da dor agora.";
 	close;
 
 OnTimer25000:
@@ -402,17 +402,17 @@ bat_b02,10,294,3	script	Armada de Guillaume#b02_a	4_M_RASWORD,{
 			.@medal_gap = 500 - .@your_medal;
 			if (.@medal_gap > 8) {
 				mes "[Axl Rose]";
-				mes "Aben√ßoado Guillaume!";
+				mes "AbenÁoado Guillaume!";
 				mes "amos comemorar o nosso glorioso triunfo!!";
-				mes ""+strcharinfo(0)+", isto √© um sinal que reflete a nossa vit√≥ria.";
+				mes ""+strcharinfo(0)+", isto È um sinal que reflete a nossa vitÛria.";
 				close2;
 				getitem 7829,9; //BF_Badge2
 			}
 			else {
 				mes "[Axl Rose]";
-				mes "Aben√ßoado Guillaume!";
+				mes "AbenÁoado Guillaume!";
 				mes "Vamos comemorar o nosso glorioso triunfo!";
-				mes ""+strcharinfo(0)+", isto √© um sinal que reflete a nossa vit√≥ria.";
+				mes ""+strcharinfo(0)+", isto È um sinal que reflete a nossa vitÛria.";
 				close2;
 				getitem 7829,.@medal_gap; //BF_Badge2
 			}
@@ -422,17 +422,17 @@ bat_b02,10,294,3	script	Armada de Guillaume#b02_a	4_M_RASWORD,{
 			.@medal_gap = 500 - .@your_medal;
 			if (.@medal_gap > 2) {
 				mes "[Axl Rose]";
-				mes "Voc√™ foi derrotado, por√©m voc√™ se dedicou a esta batalha.";
-				mes "Este √© o pr√™mio por voc√™ ter se dedicado ao grande Guillaume Marollo!";
-				mes "Tome esta derrota somente como li√ß√£o, na pr√≥xima vez voc√™ ir√° se sair vitorioso com certeza.";
+				mes "VocÍ foi derrotado, porÈm vocÍ se dedicou a esta batalha.";
+				mes "Este È o prÍmio por vocÍ ter se dedicado ao grande Guillaume Marollo!";
+				mes "Tome esta derrota somente como liÁ„o, na prÛxima vez vocÍ ir· se sair vitorioso com certeza.";
 				close2;
 				getitem 7829,3; //BF_Badge2
 			}
 			else {
 				mes "[Axl Rose]";
-				mes "Voc√™ foi derrotado, por√©m voc√™ se dedicou a esta batalha.";
-				mes "Este √© o pr√™mio por voc√™ ter se dedicado ao grande Guillaume Marollo!";
-				mes "Tome esta derrota somente como li√ß√£o, na pr√≥xima vez voc√™ ir√° se sair vitorioso com certeza.";
+				mes "VocÍ foi derrotado, porÈm vocÍ se dedicou a esta batalha.";
+				mes "Este È o prÍmio por vocÍ ter se dedicado ao grande Guillaume Marollo!";
+				mes "Tome esta derrota somente como liÁ„o, na prÛxima vez vocÍ ir· se sair vitorioso com certeza.";
 				close2;
 				getitem 7829,.@medal_gap; //BF_Badge2
 			}
@@ -454,17 +454,17 @@ bat_b02,389,14,3	script	Armada de Croix#b02_b	4_M_RASWORD,{
 			.@medal_gap = 500 - .@your_medal;
 			if (.@medal_gap > 8) {
 				mes "[Swandery]";
-				mes "Aben√ßoado Croix!";
-				mes "Vamos comemorar a nossa gloriosa vit√≥ria!";
-				mes ""+strcharinfo(0)+", isto √© um sinal que reflete a nossa vit√≥ria.";
+				mes "AbenÁoado Croix!";
+				mes "Vamos comemorar a nossa gloriosa vitÛria!";
+				mes ""+strcharinfo(0)+", isto È um sinal que reflete a nossa vitÛria.";
 				close2;
 				getitem 7829,9; //BF_Badge2
 			}
 			else {
 				mes "[Swandery]";
-				mes "Aben√ßoado Croix!";
-				mes "Vamos comemorar a nossa gloriosa vit√≥ria!";
-				mes ""+strcharinfo(0)+", isto √© um sinal que reflete a nossa vit√≥ria.";
+				mes "AbenÁoado Croix!";
+				mes "Vamos comemorar a nossa gloriosa vitÛria!";
+				mes ""+strcharinfo(0)+", isto È um sinal que reflete a nossa vitÛria.";
 				close2;
 				getitem 7829,.@medal_gap; //BF_Badge2
 			}
@@ -482,9 +482,9 @@ bat_b02,389,14,3	script	Armada de Croix#b02_b	4_M_RASWORD,{
 			}
 			else {
 				mes "[Swandery]";
-				mes "Oh, "+strcharinfo(0)+". N√£o fique triste.";
-				mes "Mesmo que n√£o tenhamos vencido, n√≥s demos nosso melhor.";
-				mes "Este √© o majestoso presente do nosso Croix, e por favor n√£o esque√ßa esta batalha. N√≥s ganharemos com toda certeza a pr√≥xima batalha.";
+				mes "Oh, "+strcharinfo(0)+". N„o fique triste.";
+				mes "Mesmo que n„o tenhamos vencido, nÛs demos nosso melhor.";
+				mes "Este È o majestoso presente do nosso Croix, e por favor n„o esqueÁa esta batalha. NÛs ganharemos com toda certeza a prÛxima batalha.";
 				close2;
 				getitem 7829,.@medal_gap; //BF_Badge2
 			}
@@ -518,7 +518,7 @@ OnTimer7000:
 	end;
 
 OnTimer8000:
-	mapannounce "bat_b02", "Armada de Croix Swandery : Mesmo que Guillaume esteja lutando contra nossa vit√≥ria, ela j√° √© nossa!. Vamos mostr√°-los o nosso poder.",bc_map,"0xFF99CC";
+	mapannounce "bat_b02", "Armada de Croix Swandery : Mesmo que Guillaume esteja lutando contra nossa vitÛria, ela j· È nossa!. Vamos mostr·-los o nosso poder.",bc_map,"0xFF99CC";
 	end;
 
 OnTimer1800000:
@@ -526,15 +526,15 @@ OnTimer1800000:
 	end;
 
 OnTimer1803000:
-	mapannounce "bat_b02", "Marollo VII : Ambos ex√©rcitos s√£o muito competitivos, ent√£o √© dif√≠cil julgar qual time √© superior.",bc_map,"0x99CC00";
+	mapannounce "bat_b02", "Marollo VII : Ambos exÈrcitos s„o muito competitivos, ent„o È difÌcil julgar qual time È superior.",bc_map,"0x99CC00";
 	end;
 
 OnTimer1808000:
-	mapannounce "bat_b02", "Marollo VII : Essa batalha por Flavius √© uma grande perda de tempo. Eu irei decidir sobre a vit√≥ria e a derrota atrav√©s de cada um dos progressos.",bc_map,"0x99CC00";
+	mapannounce "bat_b02", "Marollo VII : Essa batalha por Flavius È uma grande perda de tempo. Eu irei decidir sobre a vitÛria e a derrota atravÈs de cada um dos progressos.",bc_map,"0x99CC00";
 	end;
 
 OnTimer1822000:
-	mapannounce "bat_b02", "Marollo VII : Se voc√™s n√£o podem aceitar isso como resultado, tentem a sorte em outro vale de batalha!",bc_map,"0x99CC00";
+	mapannounce "bat_b02", "Marollo VII : Se vocÍs n„o podem aceitar isso como resultado, tentem a sorte em outro vale de batalha!",bc_map,"0x99CC00";
 	end;
 
 OnTimer1825000:
@@ -587,17 +587,17 @@ bat_b02,10,294,3	script	Armada#bat_b02_aover	4_M_KY_HEAD,{
 			.@medal_gap = 500 - .@your_medal;
 			if (.@medal_gap > 8) {
 				mes "[Axl Rose]";
-				mes "Aben√ßoado Guillaume!";
+				mes "AbenÁoado Guillaume!";
 				mes "Vamos comemorar o nosso glorioso triunfo!";
-				mes ""+strcharinfo(0)+", isto √© um sinal que reflete a nossa vit√≥ria.";
+				mes ""+strcharinfo(0)+", isto È um sinal que reflete a nossa vitÛria.";
 				close2;
 				getitem 7829,9; //BF_Badge2
 			}
 			else {
 				mes "[Axl Rose]";
-				mes "Aben√ßoado Guillaume!";
+				mes "AbenÁoado Guillaume!";
 				mes "Vamos comemorar o nosso glorioso triunfo!";
-				mes ""+strcharinfo(0)+", isto √© um sinal que reflete a nossa vit√≥ria.";
+				mes ""+strcharinfo(0)+", isto È um sinal que reflete a nossa vitÛria.";
 				close2;
 				getitem 7829,.@medal_gap; //BF_Badge2
 			}
@@ -607,17 +607,17 @@ bat_b02,10,294,3	script	Armada#bat_b02_aover	4_M_KY_HEAD,{
 			.@medal_gap = 500 - .@your_medal;
 			if (.@medal_gap > 2) {
 				mes "[Axl Rose]";
-				mes "Voc√™ foi derrotado, por√©m voc√™ se dedicou a esta batalha.";
-				mes "Este √© o pr√™mio por voc√™ ter se dedicado ao grande Guillaume Marollo!";
-				mes "Tome esta derrota somente como li√ß√£o, na pr√≥xima vez voc√™ ir√° se sair vitorioso com certeza.";
+				mes "VocÍ foi derrotado, porÈm vocÍ se dedicou a esta batalha.";
+				mes "Este È o prÍmio por vocÍ ter se dedicado ao grande Guillaume Marollo!";
+				mes "Tome esta derrota somente como liÁ„o, na prÛxima vez vocÍ ir· se sair vitorioso com certeza.";
 				close2;
 				getitem 7829,3; //BF_Badge2
 			}
 			else {
 				mes "[Axl Rose]";
-				mes "Voc√™ foi derrotado, por√©m voc√™ se dedicou a esta batalha.";
-				mes "Este √© o pr√™mio por voc√™ ter se dedicado ao grande Guillaume Marollo!";
-				mes "Tome esta derrota somente como li√ß√£o, na pr√≥xima vez voc√™ ir√° se sair vitorioso com certeza.";
+				mes "VocÍ foi derrotado, porÈm vocÍ se dedicou a esta batalha.";
+				mes "Este È o prÍmio por vocÍ ter se dedicado ao grande Guillaume Marollo!";
+				mes "Tome esta derrota somente como liÁ„o, na prÛxima vez vocÍ ir· se sair vitorioso com certeza.";
 				close2;
 				getitem 7829,.@medal_gap; //BF_Badge2
 			}
@@ -627,17 +627,17 @@ bat_b02,10,294,3	script	Armada#bat_b02_aover	4_M_KY_HEAD,{
 			.@medal_gap = 500 - .@your_medal;
 			if (.@medal_gap > 2) {
 				mes "[Axl Rose]";
-				mes "Voc√™ foi derrotado, por√©m voc√™ se dedicou a esta batalha.";
-				mes "Este √© o pr√™mio por voc√™ ter se dedicado ao grande Guillaume Marollo!";
-				mes "Tome esta derrota somente como li√ß√£o, na pr√≥xima vez voc√™ ir√° se sair vitorioso com certeza.";
+				mes "VocÍ foi derrotado, porÈm vocÍ se dedicou a esta batalha.";
+				mes "Este È o prÍmio por vocÍ ter se dedicado ao grande Guillaume Marollo!";
+				mes "Tome esta derrota somente como liÁ„o, na prÛxima vez vocÍ ir· se sair vitorioso com certeza.";
 				close2;
 				getitem 7829,3; //BF_Badge2
 			}
 			else {
 				mes "[Axl Rose]";
-				mes "Voc√™ foi derrotado, por√©m voc√™ se dedicou a esta batalha.";
-				mes "Este √© o pr√™mio por voc√™ ter se dedicado ao grande Guillaume Marollo!";
-				mes "Tome esta derrota somente como li√ß√£o, na pr√≥xima vez voc√™ ir√° se sair vitorioso com certeza.";
+				mes "VocÍ foi derrotado, porÈm vocÍ se dedicou a esta batalha.";
+				mes "Este È o prÍmio por vocÍ ter se dedicado ao grande Guillaume Marollo!";
+				mes "Tome esta derrota somente como liÁ„o, na prÛxima vez vocÍ ir· se sair vitorioso com certeza.";
 				close2;
 				getitem 7829,.@medal_gap; //BF_Badge2
 			}
@@ -645,7 +645,7 @@ bat_b02,10,294,3	script	Armada#bat_b02_aover	4_M_KY_HEAD,{
 	}
 	else {
 		mes "[Axl Rose]";
-		mes "Por que voc√™ est√° aqui mercen√°rio do Croix? Eu tenho a absoluta certeza de vit√≥ria contra um tolo Croix como voc√™. Haha!";
+		mes "Por que vocÍ est· aqui mercen·rio do Croix? Eu tenho a absoluta certeza de vitÛria contra um tolo Croix como vocÍ. Haha!";
 		close;
 	}
 	bg_leave;
@@ -665,17 +665,17 @@ bat_b02,389,14,3	script	Armada#bat_b02_bover	4_M_CRU_HEAD,{
 			.@medal_gap = 500 - .@your_medal;
 			if (.@medal_gap > 2) {
 				mes "[Swandery]";
-				mes "Oh, "+strcharinfo(0)+". N√£o fique triste.";
-				mes "Mesmo que n√£o tenhamos vencido, n√≥s demos nosso melhor.";
-				mes "Este √© o majestoso presente do nosso Croix e por favor, n√£o esque√ßa esta batalha. N√≥s ganharemos com toda certeza a pr√≥xima batalha.";
+				mes "Oh, "+strcharinfo(0)+". N„o fique triste.";
+				mes "Mesmo que n„o tenhamos vencido, nÛs demos nosso melhor.";
+				mes "Este È o majestoso presente do nosso Croix e por favor, n„o esqueÁa esta batalha. NÛs ganharemos com toda certeza a prÛxima batalha.";
 				close2;
 				getitem 7829,3; //BF_Badge2
 			}
 			else {
 				mes "[Swandery]";
-				mes "Oh, "+strcharinfo(0)+". N√£o fique triste.";
-				mes "Mesmo que n√£o tenhamos vencido, n√≥s demos nosso melhor.";
-				mes "Este √© o majestoso presente do nosso Croix e por favor, n√£o esque√ßa esta batalha. N√≥s ganharemos com toda certeza a pr√≥xima batalha.";
+				mes "Oh, "+strcharinfo(0)+". N„o fique triste.";
+				mes "Mesmo que n„o tenhamos vencido, nÛs demos nosso melhor.";
+				mes "Este È o majestoso presente do nosso Croix e por favor, n„o esqueÁa esta batalha. NÛs ganharemos com toda certeza a prÛxima batalha.";
 				close2;
 				getitem 7829,.@medal_gap; //BF_Badge2
 			}
@@ -685,17 +685,17 @@ bat_b02,389,14,3	script	Armada#bat_b02_bover	4_M_CRU_HEAD,{
 			.@medal_gap = 500 - .@your_medal;
 			if (.@medal_gap > 2) {
 				mes "[Swandery]";
-				mes "Oh, "+strcharinfo(0)+". N√£o fique triste.";
-				mes "Mesmo que n√£o tenhamos vencido, n√≥s demos nosso melhor.";
-				mes "Este √© o majestoso presente do nosso Croix e por favor, n√£o esque√ßa esta batalha. N√≥s ganharemos com toda certeza a pr√≥xima batalha.";
+				mes "Oh, "+strcharinfo(0)+". N„o fique triste.";
+				mes "Mesmo que n„o tenhamos vencido, nÛs demos nosso melhor.";
+				mes "Este È o majestoso presente do nosso Croix e por favor, n„o esqueÁa esta batalha. NÛs ganharemos com toda certeza a prÛxima batalha.";
 				close2;
 				getitem 7829,3; //BF_Badge2
 			}
 			else {
 				mes "[Swandery]";
-				mes "Oh, "+strcharinfo(0)+". N√£o fique triste.";
-				mes "Mesmo que n√£o tenhamos vencido, n√≥s demos nosso melhor.";
-				mes "Este √© o majestoso presente do nosso Croix e por favor, n√£o esque√ßa esta batalha. N√≥s ganharemos com toda certeza a pr√≥xima batalha.";
+				mes "Oh, "+strcharinfo(0)+". N„o fique triste.";
+				mes "Mesmo que n„o tenhamos vencido, nÛs demos nosso melhor.";
+				mes "Este È o majestoso presente do nosso Croix e por favor, n„o esqueÁa esta batalha. NÛs ganharemos com toda certeza a prÛxima batalha.";
 				close2;
 				getitem 7829,.@medal_gap; //BF_Badge2
 			}
@@ -705,17 +705,17 @@ bat_b02,389,14,3	script	Armada#bat_b02_bover	4_M_CRU_HEAD,{
 			.@medal_gap = 500 - .@your_medal;
 			if (.@medal_gap > 8) {
 				mes "[Swandery]";
-				mes "Aben√ßoado Croix!";
-				mes "Vamos comemorar a nossa gloriosa vit√≥ria!";
-				mes ""+strcharinfo(0)+", isto √© um sinal que reflete a nossa vit√≥ria.";
+				mes "AbenÁoado Croix!";
+				mes "Vamos comemorar a nossa gloriosa vitÛria!";
+				mes ""+strcharinfo(0)+", isto È um sinal que reflete a nossa vitÛria.";
 				close2;
 				getitem 7829,9; //BF_Badge2
 			}
 			else {
 				mes "[Swandery]";
-				mes "Aben√ßoado Croix!";
-				mes "Vamos comemorar a nossa gloriosa vit√≥ria!";
-				mes ""+strcharinfo(0)+", isto √© um sinal que reflete a nossa vit√≥ria.";
+				mes "AbenÁoado Croix!";
+				mes "Vamos comemorar a nossa gloriosa vitÛria!";
+				mes ""+strcharinfo(0)+", isto È um sinal que reflete a nossa vitÛria.";
 				close2;
 				getitem 7829,.@medal_gap; //BF_Badge2
 			}
@@ -723,7 +723,7 @@ bat_b02,389,14,3	script	Armada#bat_b02_bover	4_M_CRU_HEAD,{
 	}
 	else {
 		mes "[Swandery]";
-		mes "Por que voc√™ veio at√© aqui caro Guillaume? Voc√™ ser√° mandado para onde deveria estar!";
+		mes "Por que vocÍ veio atÈ aqui caro Guillaume? VocÍ ser· mandado para onde deveria estar!";
 		close;
 	}
 	bg_leave;
@@ -743,7 +743,7 @@ bat_b02,1,10,3	script	Liberar todos#b02	4_DOG01,{
 	} else if (.@i == 0) {
 		end;
 	} else {
-		mes "Posso ajud√°-lo?";
+		mes "Posso ajud·-lo?";
 		next;
 		switch(select("Liberar todos.:Cancelar.")) {
 		case 1:

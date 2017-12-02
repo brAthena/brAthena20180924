@@ -19,27 +19,27 @@
 prt_in,49,172,3	script	Marianne#juice	1_M_INNKEEPER,{
 	if (MISC_QUEST&1 || morison_meat == 15) {
 		mes "[Marianne]";
-		mes "Ai minha Nossa Senhora, eu n√£o sei o que eu fa√ßo com esse menino! Ele s√≥ quer saber de comer Carne!";
-		mes "Ele precisa comer Frutas, mas diz que elas s√£o duras demais... Ser√° que ele as comeria trituradas?";
+		mes "Ai minha Nossa Senhora, eu n„o sei o que eu faÁo com esse menino! Ele sÛ quer saber de comer Carne!";
+		mes "Ele precisa comer Frutas, mas diz que elas s„o duras demais... Ser· que ele as comeria trituradas?";
 		next;
 		mother_marienu = 0;
 		morison_meat = 0;
 		MISC_QUEST |= 1;
 		mes "[Marianne]";
-		mes "Eu lembro que algu√©m disse que tem um mo√ßo que faz isso... Tritura as Frutas e as transforma em Suco.";
-		mes "Mas que cabe√ßa a minha, n√£o consigo lembrar se era em Payon ou em Morroc...";
+		mes "Eu lembro que alguÈm disse que tem um moÁo que faz isso... Tritura as Frutas e as transforma em Suco.";
+		mes "Mas que cabeÁa a minha, n„o consigo lembrar se era em Payon ou em Morroc...";
 		close;
 	}
 	if (mother_marienu == 1) {
 		mes "[Marianne]";
-		mes "Morrison, meu filhinho, voc√™ precisa comer Frutas!!";
-		mes "Se voc√™ comer s√≥ Carnes vai virar um porquinho!";
+		mes "Morrison, meu filhinho, vocÍ precisa comer Frutas!!";
+		mes "Se vocÍ comer sÛ Carnes vai virar um porquinho!";
 		next;
 		if ( select( "Conversar:Cancel" ) == 1 ) {
 			mes "[Marianne]";
-			mes "Voc√™ t√° me achando com cara de qu√™ hein, seu atrevido?";
-			mes "Eu estou aqui desesperda por que meu filho n√£o come Frutas,";
-			mes "e voc√™ deu uma Carne pra ele? Seu louco!";
+			mes "VocÍ t· me achando com cara de quÍ hein, seu atrevido?";
+			mes "Eu estou aqui desesperda por que meu filho n„o come Frutas,";
+			mes "e vocÍ deu uma Carne pra ele? Seu louco!";
 			next;
 			mes "[Mariana]";
 			mes "Nem ouse aparecer na minha frente de novo!";
@@ -53,28 +53,28 @@ prt_in,49,172,3	script	Marianne#juice	1_M_INNKEEPER,{
 		mother_marienu = 1;
 		mes "[Marianne]";
 		mes "Oh!!.... Isto...";
-		mes "O que √© isso...??";
-		mes "Como voc√™ p√¥de fazer uma coisa dessas ao meu garoto?!";
+		mes "O que È isso...??";
+		mes "Como vocÍ pÙde fazer uma coisa dessas ao meu garoto?!";
 		next;
 		mes "[Marianne]";
 		mes "Argh! Saia da minha casa agora!";
 		close;
 	}
 	mes "[Marianne]";
-	mes "Morrison, meu filhinho, come uma frutinha, faz esse favor pra sua mam√£ezinha...";
-	mes "Eu n√£o aguento mais esse menino, ele s√≥ quer saber de Carne!";
+	mes "Morrison, meu filhinho, come uma frutinha, faz esse favor pra sua mam„ezinha...";
+	mes "Eu n„o aguento mais esse menino, ele sÛ quer saber de Carne!";
 	next;
 	mes "[Marianne]";
 	mes "Sigh~!! Tal pai, tal filho...";
 	next;
 	switch(select("Conversar:Cancelar")) {
 		mes "[Marianne]";
-		mes "*Sigh*... Este aqui √© o Morrison...";
-		mes "Meu √∫nico e solit√°rio filho";
+		mes "*Sigh*... Este aqui È o Morrison...";
+		mes "Meu ˙nico e solit·rio filho";
 		next;
 		mes "[Marianne]";
-		mes "Ele se recusa a comer Frutas, olha s√≥ pra cara dele... Amarelada por falta de vitaminas...";
-		mes "Eu n√£o consigo descobrir uma forma dele comer Frutas e Vegetais.";
+		mes "Ele se recusa a comer Frutas, olha sÛ pra cara dele... Amarelada por falta de vitaminas...";
+		mes "Eu n„o consigo descobrir uma forma dele comer Frutas e Vegetais.";
 		close;
 	}
 	mes "[Marianne]";
@@ -85,13 +85,13 @@ prt_in,49,172,3	script	Marianne#juice	1_M_INNKEEPER,{
 prt_in,47,173,3	script	Morrison#juice	4W_M_01,{
 	if (MISC_QUEST&1 || morison_meat == 15) {
 		mes "[Pequeno Morrison]";
-		mes "D√° o fora, n√£o d√™ ouvidos a minha m√£e maluca.";
+		mes "D· o fora, n„o dÍ ouvidos a minha m„e maluca.";
 		close;
 	}
 	if (morison_meat > 9) {
 		mes "[Pequeno Morrison]";
 		mes "Ahh... Estou de barriga cheia agora.";
-		mes "Voc√™ n√£o precisa me dar mais Carne, aquela j√° foi o suficiente.";
+		mes "VocÍ n„o precisa me dar mais Carne, aquela j· foi o suficiente.";
 		if (morison_meat == 10) {
 			next;
 			++morison_meat;
@@ -100,7 +100,7 @@ prt_in,47,173,3	script	Morrison#juice	4W_M_01,{
 			mes "pegue isto.";
 			next;
 			mes "[Pequeno Morrison]";
-			mes "S√£o as minhas Balas favoritas, eu escondo elas da minha m√£e. Hehhehehehe.";
+			mes "S„o as minhas Balas favoritas, eu escondo elas da minha m„e. Hehhehehehe.";
 			close;
 			getitem 529,3; //Candy
 			getitem 530,1; //Candy_Striper
@@ -108,70 +108,70 @@ prt_in,47,173,3	script	Morrison#juice	4W_M_01,{
 		close;
 	}
 	mes "[Pequeno Morrison]";
-	mes "Eu j√° disse, n√£o quero comer essas Frutas idiotas!.";
+	mes "Eu j· disse, n„o quero comer essas Frutas idiotas!.";
 	mes "Eu quero Carne!!!";
 	next;
 	if (countitem(517) > 0) {
 		switch( select( "Conversar:Mostrar a Carne:Cancelar" )) {
 			case 1:
 			mes "[Pequeno Morrison]";
-			mes "Que m√£e idiota que eu tenho, fica me for√ßando a comer Frutas.";
-			mes "Eu odeio Frutas, elas s√£o duras demais pros meus dentes!";
-			mes "Carnes s√£o muito mais macias e saborosas.";
+			mes "Que m„e idiota que eu tenho, fica me forÁando a comer Frutas.";
+			mes "Eu odeio Frutas, elas s„o duras demais pros meus dentes!";
+			mes "Carnes s„o muito mais macias e saborosas.";
 			close;
 		case 2:
 			mes "[Pequeno Morrison]";
 			mes "Aaahh!! Carne!";
-			mes "Hmm... Eu estou com tanta fome... Voc√™ poderia me dar essa Carne?";
+			mes "Hmm... Eu estou com tanta fome... VocÍ poderia me dar essa Carne?";
 			next;
-			if (select("Dar a Carne para ele:N√£o dar a Carne para ele") == 1) {
+			if (select("Dar a Carne para ele:N„o dar a Carne para ele") == 1) {
 				delitem 517,1; //Meat
 				++morison_meat;
 				mes "[Pequeno Morrison]";
-				mes "Finalmente! Minha m√£e nunca me d√° Carne pra comer!";
+				mes "Finalmente! Minha m„e nunca me d· Carne pra comer!";
 				mes "Muito obrigado!";
 				close;
 			}
 			morison_meat = 15;
 			mes "[Pequeno Morrison]";
-			mes "Voc√™ √© idiota como a minha m√£e. Adultos, s√£o todos iguais.";
+			mes "VocÍ È idiota como a minha m„e. Adultos, s„o todos iguais.";
 			close;
 		case 3:
 			mes "[Pequeno Morrison]";
-				mes "Argh!!! Vegetais s√£o t√£o nojentos!";
+				mes "Argh!!! Vegetais s„o t„o nojentos!";
 			close;
 		}
 	}
 	if ( select( "Conversar:Cancelar" ) == 1 ) {
 		mes "[Pequeno Morrison]";
-		mes "Que m√£e idiota que eu tenho, fica me for√ßando a comer Frutas.";
-		mes "Eu odeio Frutas, elas s√£o duras demais pros meus dentes!";
-		mes "Carnes s√£o muito mais macias e saborosas.";
+		mes "Que m„e idiota que eu tenho, fica me forÁando a comer Frutas.";
+		mes "Eu odeio Frutas, elas s„o duras demais pros meus dentes!";
+		mes "Carnes s„o muito mais macias e saborosas.";
 		close;
 	}
 	mes "[Pequeno Morrison]";
-	mes "Argh!!! Vegetais s√£o t√£o nojentos!";
+	mes "Argh!!! Vegetais s„o t„o nojentos!";
 	close;
 }
 
 payon_in03,188,146,5	script	Marx Hansen#juice	4_M_04,{
 	if (checkweight(1201,1) == 0) {
-		mes "- Ei, espere a√≠ !! -";
-		mes "- Voc√™ n√£o pode receber mais itens -";
-		mes "Porque est√° carregando muitos itens. -";
+		mes "- Ei, espere aÌ !! -";
+		mes "- VocÍ n„o pode receber mais itens -";
+		mes "Porque est· carregando muitos itens. -";
 		mes "- Por favor, alivie um pouco a sua carga e tente de novo - ";
 		close;
 	}
 	if (MISC_QUEST&1) {
 		mes "[Marxhansens, o Mercador]";
-		mes "Bem-vindo. Voc√™ veio aqui fazer Sucos?";
+		mes "Bem-vindo. VocÍ veio aqui fazer Sucos?";
 		next;
-		switch( select( "Sim.:Instru√ß√µes de como fazer Sucos.:Cancelar." ) ) {
+		switch( select( "Sim.:InstruÁıes de como fazer Sucos.:Cancelar." ) ) {
 			case 1:
 				mes "[Marxhansens, o Mercador]";
-				mes "Qual Suco voc√™ quer fazer?";
+				mes "Qual Suco vocÍ quer fazer?";
 			next;
-				switch( select( "Suco de Ma√ß√£.:Suco de Banana.:Suco de Cenoura.:Suco de Uva.:Cancelar" ) ) {
+				switch( select( "Suco de MaÁ„.:Suco de Banana.:Suco de Cenoura.:Suco de Uva.:Cancelar" ) ) {
 			case 1:
 				.@fruit = 512;
 				.@juice = 531;
@@ -190,24 +190,24 @@ payon_in03,188,146,5	script	Marx Hansen#juice	4_M_04,{
 				break;
 			case 5:
 				mes "[Marxhansens, o Mercador]";											
-				mes "At√© mais.";
+				mes "AtÈ mais.";
 				close;
 			}
 			if (countitem(.@fruit) == 0 || countitem(713) == 0 || Zeny < 3) {
 				mes "[Merchant Marx Hansen]";
-					mes "Ah n√£o...";
-					mes "Voc√™ n√£o tem todos os materiais necess√°rios.";
+					mes "Ah n„o...";
+					mes "VocÍ n„o tem todos os materiais necess·rios.";
 					mes "Para fazer "+getitemname(.@juice)+" eu preciso de 1 "+getitemname(.@fruit)+", 1 Garrafa Vazia e 3 Zeny por Suco.";
 				next;
 					mes "[Merchant Marx Hansen]";
-					mes "Quando voc√™ tiver tudo preparado, eu irei lhe fazer o Suco!";
+					mes "Quando vocÍ tiver tudo preparado, eu irei lhe fazer o Suco!";
 				close;
 			}
 
 		mes "[Marxhansens, o Mercador]";
-		mes "Quantas garrafas de Suco voc√™ quer?";
+		mes "Quantas garrafas de Suco vocÍ quer?";
 		next;
-		switch( select( "Tanto quanto for poss√≠vel.:Eu quero definir a quantidade.:Desistir." ) ) {
+		switch( select( "Tanto quanto for possÌvel.:Eu quero definir a quantidade.:Desistir." ) ) {
 			case 1:
 				.@make = countitem(.@fruit);
 				if (countitem(713) < .@make) .@make = countitem(713);
@@ -215,19 +215,19 @@ payon_in03,188,146,5	script	Marx Hansen#juice	4_M_04,{
 				break;
 			case 2:
 				mes "[Marxhansens, o Mercador]";
-				mes "Defina um n√∫mero de 1 a 100, para cancelar digite '0'.";
-				mes "Voc√™ pode fazer at√© " + countitem(.@fruit) + " garrafas de Suco.";
+				mes "Defina um n˙mero de 1 a 100, para cancelar digite '0'.";
+				mes "VocÍ pode fazer atÈ " + countitem(.@fruit) + " garrafas de Suco.";
 				next;
 				while(1) {
 					input .@input;
 					if (.@input == 0) {
 						mes "[Marxhansens, o Mercador]";																									
-						mes "At√© mais.";
+						mes "AtÈ mais.";
 						close;
 					}
 					else if (.@input > 100) {
 						mes "[Marxhansens, o Mercador]";																									
-						mes "Voc√™ n√£o pode fazer mais de 100 Sucos de uma vez.";
+						mes "VocÍ n„o pode fazer mais de 100 Sucos de uma vez.";
 						next;
 					}
 					else {
@@ -238,7 +238,7 @@ payon_in03,188,146,5	script	Marx Hansen#juice	4_M_04,{
 				break;
 			case 3:
 				mes "[Marxhansens, o Mercador]";																									
-				mes "At√© mais.";
+				mes "AtÈ mais.";
 				close;
 			}
 
@@ -246,7 +246,7 @@ payon_in03,188,146,5	script	Marx Hansen#juice	4_M_04,{
 
 			if (countitem(.@fruit) < .@make || countitem(713) < .@make || Zeny < .@total_zeny) {
 				mes "[Marxhansens, o Mercador]";
-				mes "Eu sinto muito, voc√™ n√£o tem todos os materiais necess√°rios.";
+				mes "Eu sinto muito, vocÍ n„o tem todos os materiais necess·rios.";
 					mes "Traga-os e eu farei os Sucos.";
 				close;
 			}
@@ -256,22 +256,22 @@ payon_in03,188,146,5	script	Marx Hansen#juice	4_M_04,{
 			getitem .@juice,.@make;
 
 				mes "[Marxhansens, o Mercador]";
-				mes "Aqui est√°! Suco fresquinho!";
-				mes "At√© mais.";
+				mes "Aqui est·! Suco fresquinho!";
+				mes "AtÈ mais.";
 				close;
 			case 2:
 				mes "[Marxhansens, o Mercador]";
-				mes "Quando os humanos ainda eram n√¥mades, eles dependiam das Frutas que achavam.";
+				mes "Quando os humanos ainda eram nÙmades, eles dependiam das Frutas que achavam.";
 				mes "E com o tempo eles aprenderam fazer Sucos com elas, para conservar por mais tempo.";
 				next;
 				mes "[Marxhansens, o Mercador]";
-				mes "Agora, temos grandes hortas, e podemos ter todas as Frutas que gostar√≠amos.";
-				mes "Mas os Sucos continuam a ser muito importantes, por conterem apenas o que √© bom da Fruta.";
-				mes "Nos Sucos, voc√™ pode aproveitar um sabor muito mais concentrado.";
+				mes "Agora, temos grandes hortas, e podemos ter todas as Frutas que gostarÌamos.";
+				mes "Mas os Sucos continuam a ser muito importantes, por conterem apenas o que È bom da Fruta.";
+				mes "Nos Sucos, vocÍ pode aproveitar um sabor muito mais concentrado.";
                 next;
 				mes "Materiais pra se fazer Suco";
-				mes "Suco de Ma√ß√£";
-				mes "Ma√ß√£ x 1, Garrafa Vazia x 1, 3 zeny.";
+				mes "Suco de MaÁ„";
+				mes "MaÁ„ x 1, Garrafa Vazia x 1, 3 zeny.";
 				mes "";
 				mes "Suco de Banana";
 				mes "Banana x 1, Garrafa Vazia x 1, 3 zeny.";					
@@ -284,7 +284,7 @@ payon_in03,188,146,5	script	Marx Hansen#juice	4_M_04,{
 				close;
 			case 3:
 				mes "[Marxhansens, o Mercador]";
-				mes "Voc√™ veio at√© aqui por nada?";
+				mes "VocÍ veio atÈ aqui por nada?";
 				close;
 		}
 	}
@@ -294,17 +294,17 @@ payon_in03,188,146,5	script	Marx Hansen#juice	4_M_04,{
 		next;
 		if (select("Conversar:Cancelar") == 1) {
 			mes "[Marxhansens, o Mercador]";
-			mes "Quando os humanos ainda eram n√¥mades, eles dependiam das Frutas que achavam.";
+			mes "Quando os humanos ainda eram nÙmades, eles dependiam das Frutas que achavam.";
 			mes "E com o tempo eles aprenderam fazer Sucos com elas, para conservar por mais tempo.";
 			next;
 			mes "[Marxhansens, o Mercador]";
-			mes "Agora, temos grandes hortas, ent√£o podemos ter todas as Frutas que gostar√≠amos.";
-			mes "Mas os Sucos continuam a ser muito importantes, por conterem apenas o que √© bom da Fruta.";
-			mes "Nos nossos Sucos, voc√™ pode aproveitar um sabor muito mais concentrado.";
+			mes "Agora, temos grandes hortas, ent„o podemos ter todas as Frutas que gostarÌamos.";
+			mes "Mas os Sucos continuam a ser muito importantes, por conterem apenas o que È bom da Fruta.";
+			mes "Nos nossos Sucos, vocÍ pode aproveitar um sabor muito mais concentrado.";
 			close;
 		}
 		mes "[Marxhansens, o Mercador]";
-		mes "Voc√™ veio at√© aqui por nada?";
+		mes "VocÍ veio atÈ aqui por nada?";
 		close;
 	}
 }
