@@ -11,25 +11,25 @@
 //= 1.01 fixed bugs [Lupus]
 //============================================================
   
-payon,93,81,4	script	Exorcist Master Fahae	4_M_BUDDHIST,{
+payon,93,81,4	script	Exorcista Fahae	4_M_BUDDHIST,{
 
-	mes "[Exorcist Master Fahae]";
-	mes "Greetings young warrior, I'm the Exorcist Master Fahae.";
-	mes "I have been tracking the elusive Bacsojin for some time.";
+	mes "[Exorcista Fahae]";
+	mes "Olá jovem guerreiro! Eu sou o Exorcista Fahae.";
+	mes "Estou a procura da Lady Branca há um tempo.";
 	next;
-	mes "[Exorcist Master Fahae]";
-	mes "I feel it is time I let another warrior try to complete";
-	mes "my quest. I have some items to assist you in my quest.";
+	mes "[Exorcista Fahae]";
+	mes "Acho que já é tempo de eu deixar um jovem concluir";
+	mes "minha busca. Eu tenho uns itens que ajudarão você na sua jornada.";
 	next;
-	if (select("I wish to buy","No thanks") != 1) {
-		mes "[Exorcist Master Fahae]";
-		mes "The path of fully venquishing evil is far, help me in the way of God.";
+	if (select("Eu desejo comprá-los","Não obrigado") != 1) {
+		mes "[Exorcista Fahae]";
+		mes "O caminho de acabar com o mal ainda está longe, siga-me no caminho de Deus.";
 		close;
 	}
-	mes "[Exorcist Master Fahae]";
-	mes "I have 2 items which might become useful to you.";
+	mes "[Exorcista Fahae]";
+	mes "Eu só tenho apenas dois itens que podem ser úteis à você.";
 	next;
-	switch (select("Realgar Wine","Exorcize Herb")) {
+	switch (select("Vinho de Realgar","Erva de Exorcismo")) {
 	case 1:
 		.@itemid = Realgar_Wine; // 682
 		.@price = 20000;
@@ -39,54 +39,55 @@ payon,93,81,4	script	Exorcist Master Fahae	4_M_BUDDHIST,{
 		.@price = 10000;
 		break;
 	}
-	mes "[Exorcist Master Fahae]";
-	mes "How many do you require?";
-	mes "You may only buy 5 at one time.";
-	mes "Each costs "+ .@price +"z.";
-	mes "(Type in 0 to cancel)";
+	mes "[Exorcista Fahae]";
+	mes "Quantas você quer?";
+	mes "Você só pode comprar 5 por vez.";
+	mes "Cada uma custa "+ .@price +"z.";
+	mes "(coloque 0 para cancelar)";
 	next;
 	input @input;
 	if (@input == 0)
 		close;
 	if (@input > 5) {
-		mes "[Exorcist Master Fahae]";
-		mes "You must not be stingy, it is the path of God to be honest.";
+		mes "[Exorcista Fahae]";
+		mes "Você deve ser um pagão... Este é o caminho de Deus para a bondade.";
 		close;
 	}
 	if (Zeny < @input * .@price) {
-		mes "[Exorcist Master Fahae]";
-		mes "Money doesn't bring joy to everyone, but we need it to support the temple and myself. Please, try to kill some monsters and take their drops.";
+		mes "[Exorcista Fahae]";
+		mes "Dinheiro não traz felicidade, mas ajuda a manter o templo e eu, então colete todos os itens que os monstros jogarem.";
 		close;
 	}
 	Zeny -= @input * .@price;
 	getitem .@itemid, @input;
-	mes "[Exorcist Master Fahae]";
-	mes "Here you go, I hope you may succeed in my quest.";
+	mes "[Exorcista Fahae]";
+	mes "Aqui está, espero que isso o ajude na sua jornada.";
 	close;
 }
   
-// Monsters
-//============================================================
-gef_fild00,0,0,0,0	monster	Dumpling	1520,20,60000,66000
-gef_fild07,0,0,0,0	monster	Dumpling	1520,20,60000,66000
-gef_fild04,0,0,0,0	monster	Dumpling	1520,20,60000,66000
-gef_fild00,0,0,0,0	monster	Dumpling	1520,20,60000,66000
-prt_fild06,0,0,0,0	monster	Dumpling	1520,20,60000,66000
-prt_fild01,0,0,0,0	monster	Dumpling	1520,20,60000,66000
-prt_fild05,0,0,0,0	monster	Dumpling	1520,20,60000,66000
-prt_fild08,0,0,0,0	monster	Dumpling	1520,20,60000,66000
-pay_fild04,0,0,0,0	monster	Dumpling	1520,20,60000,66000
-moc_fild02,0,0,0,0	monster	Dumpling	1520,20,60000,66000
-pay_fild01,0,0,0,0	monster	Dumpling	1520,20,60000,66000
-pay_fild07,0,0,0,0	monster	Dumpling	1520,20,60000,66000
-moc_fild03,0,0,0,0	monster	Dumpling	1520,20,60000,66000
-pay_fild06,0,0,0,0	monster	Dumpling	1520,20,60000,66000
-pay_fild05,0,0,0,0	monster	Dumpling	1520,20,60000,66000
-pay_fild02,0,0,0,0	monster	Dumpling	1520,20,60000,66000
-pay_fild09,0,0,0,0	monster	Dumpling	1520,20,60000,66000
-
-moc_fild03,0,0,0,0	monster	Bacsojin	1518,1,60000,66000
-
+// ~Bolinho de massa~
+gef_fild00,0,0,0,0	monster	Bolinho de Massa	1520,20,60000,66000
+gef_fild07,0,0,0,0	monster	Bolinho de Massa	1520,20,60000,66000
+gef_fild04,0,0,0,0	monster	Bolinho de Massa	1520,20,60000,66000
+gef_fild00,0,0,0,0	monster	Bolinho de Massa	1520,20,60000,66000
+prt_fild06,0,0,0,0	monster	Bolinho de Massa	1520,20,60000,66000
+prt_fild01,0,0,0,0	monster	Bolinho de Massa	1520,20,60000,66000
+prt_fild05,0,0,0,0	monster	Bolinho de Massa	1520,20,60000,66000
+prt_fild08,0,0,0,0	monster	Bolinho de Massa	1520,20,60000,66000
+pay_fild04,0,0,0,0	monster	Bolinho de Massa	1520,20,60000,66000
+moc_fild02,0,0,0,0	monster	Bolinho de Massa	1520,20,60000,66000
+pay_fild01,0,0,0,0	monster	Bolinho de Massa	1520,20,60000,66000
+pay_fild07,0,0,0,0	monster	Bolinho de Massa	1520,20,60000,66000
+moc_fild03,0,0,0,0	monster	Bolinho de Massa	1520,20,60000,66000
+pay_fild06,0,0,0,0	monster	Bolinho de Massa	1520,20,60000,66000
+pay_fild05,0,0,0,0	monster	Bolinho de Massa	1520,20,60000,66000
+pay_fild02,0,0,0,0	monster	Bolinho de Massa	1520,20,60000,66000
+pay_fild09,0,0,0,0	monster	Bolinho de Massa	1520,20,60000,66000
+  
+// ~Bacsojin~
+moc_fild03,0,0,0,0	monster	Lady Branca	1518,1,60000,66000
+  
+// ~Chung E~
 moc_fild03,0,0,0,0	monster	Chung E	1519,1,60000,66000
 moc_fild13,0,0,0,0	monster	Chung E	1519,1,60000,66000
 pay_fild01,0,0,0,0	monster	Chung E	1519,1,60000,66000
