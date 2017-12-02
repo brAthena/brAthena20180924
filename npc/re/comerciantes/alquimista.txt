@@ -12,49 +12,49 @@
 //=     Updated dialogue to match the official script.
 //============================================================
 
-alde_alche,31,186,3	script	Craft Book Merchant#alde	4_M_ALCHE_D,{
-	mes "[Craft Book Merchant]";
-	mes "Welcome.";
-	mes "I'm here to sell";
-	mes "^0000FFspecial craft books^000000 for Geneticists.";
+alde_alche,31,186,3	script	Negociante de Livros#alde	4_M_ALCHE_D,{
+	mes "[Negociante de Livros]";
+	mes "Seja bem vindo.";
+	mes "Estou aqui para vender";
+	mes "^0000FFLivros Especiais^000000 para Bioquímicos.";
 	next;
-	mes "[Craft Book Merchant]";
-	mes "Geneticists have some skills";
-	mes "that require craft books to activate.";
+	mes "[Negociante de Livros]";
+	mes "Bioquímicos possuem muitas habilidades";
+	mes "que necessitam de livros para serem ativadas.";
 	next;
-	mes "[Craft Book Merchant]";
-	mes "The more craft books you have,";
-	mes "the more skills you can use.";
+	mes "[Negociante de Livros]";
+	mes "Quanto mais livros você tem,";
+	mes "Mais habilidades você poderá usar.";
 	next;
-	mes "[Craft Book Merchant]";
-	mes "Please understand that";
-	mes "I specialize in the sale of these special books and";
-	mes "I ^FF0000don't sell other items^000000.";
+	mes "[Negociante de Livros]";
+	mes "Por favor tenha em mente que";
+	mes "Eu sou Especialista na venda destes livros e";
+	mes "Eu ^FF0000não vendo outros itens^000000.";
 	next;
-	mes "[Craft Book Merchant]";
-	mes "Would you like to take a look at my craft books?";
+	mes "[Negociante de Livros]";
+	mes "Gostaria de dar uma olhada em meus livros?";
 	next;
-	if(select("Sure.:No.") == 2) {
-		mes "[Craft Book Merchant]";
-		mes "Thank you for visiting my shop.";
-		mes "Please be safe on your travels.";
+	if(select("Certo.:Não, Obrigado.") == 2) {
+		mes "[Negociante de Livros]";
+		mes "Ok. Obrigado por visitar minha loja.";
+		mes "Passar bem.";
 		close;
 	}
 	if (checkweight(1201,1) == 0) {
-		mes "[Craft Book Merchant]";
-		mes "I'm sorry, but your inventory is almost full.";
-		mes "Please empty your inventory first.";
+		mes "[Negociante de Livros]";
+		mes "Sinto muito, mas o seu inventório está lotado de coisas.";
+		mes "Esvazie ele primeiro.";
 		close;
 	}
 	if (MaxWeight - Weight < 2500) {
-		mes "[Craft Book Merchant]";
-		mes "Please empty your inventory first.";
+		mes "[Negociante de Livros]";
+		mes "Por favor, esvazie o seu inventório primeiro.";
 		close;
 	}
-	mes "[Craft Book Merchant]";
-	mes "Okay then, here's the list of available craft books.";
+	mes "[Negociante de Livros]";
+	mes "Ok, então, aqui está a lista de livros disponíveis para compra.";
 	next;
-	switch(select("[Apple Bomb Craft Book] 100,000 zeny:[Pineapple Bomb Craft Book] 100,000 zeny:[Coconut Bomb Craft Book] 100,000 zeny:[Melon Bomb Craft Book] 100,000 zeny:[Banana Bomb Craft Book] 100,000 zeny:[Plant Gene Cultivation Method] 100,000 zeny:[Superior Potion Craft Manual] 100,000 zeny:[Mix Cooking Book] 100,000 zeny:[Health Improvement Research Book] 100,000 zeny:[Vigor Drink Recipe] 100,000 zeny:Close")){
+	switch(select("[Livro de Bombas de Maçã] 100,000 zenys:[Livro de Bombas de Abacaxi] 100,000 zenys:[Livro de Bombas de Coco] 100,000 zenys:[Livro de Bombas de Melão] 100,000 zenys:[Livro de Bombas de Banana] 100,000 zeny:[Livro de Genética Vegetal] 100,000 zenys:[Livro de Farmacologia] 100,000 zenys:[Livro de Culinária Avançada] 100,000 zenys:[Livro de Aumento de Força] 100,000 zenys:[Livro de Aumento de Energia] 100,000 zenys:Fechar")){
 	case 1: .@item = 6279; break;
 	case 2: .@item = 6280; break;
 	case 3: .@item = 6281; break;
@@ -66,52 +66,52 @@ alde_alche,31,186,3	script	Craft Book Merchant#alde	4_M_ALCHE_D,{
 	case 9: .@item = 11023; break;
 	case 10: .@item = 11024; break;
 	case 11:
-		mes "[Craft Book Merchant]";
-		mes "Thank you for your patronage.";
-		mes "Please come again.";
+		mes "[Negociante de Livros]";
+		mes "Obrigado pelo seu patrocínio.";
+		mes "Por favor venha novamente qualquer hora dessas.";
 		close;
 	}
-	mes "[Craft Book Merchant]";
-	mes "^0000FF["+getitemname(.@item)+"] costs";
-	mes "100,000 zeny.";
-	mes "How many would you like to purchase?";
+	mes "[Negociante de Livros]";
+	mes "^0000FF["+getitemname(.@item)+"]^000000 custa";
+	mes "100,000 zenys.";
+	mes "Quantos você gostaria de comprar?";
 	next;
 	input .@amount;
 	if (.@amount == 0) {
-		mes "[Craft Book Merchant]";
-		mes "Would you like to see some different books?";
+		mes "[Negociante de Livros]";
+		mes "Gostaria de ver alguns livros diferentes?";
 		close;
 	}
 	if (.@amount < 1 || .@amount > 99 ){
-		mes "[Craft Book Merchant]";
-		mes "You cannot purchase more than 100 at a time.";
+		mes "[Negociante de Livros]";
+		mes "Você não pode comprar mais de 100 por vez.";
 		close;
 	}
-	mes "[Craft Book Merchant]";
-	mes "You've entered "+.@amount+"x ^0000FF["+getitemname(.@item)+"]^000000 to be purchased.";
-	mes "Would you like to continue?";
+	mes "[Negociante de Livros]";
+	mes "Você escolheu "+.@amount+"x ^0000FF["+getitemname(.@item)+"]^000000 para serem comprados.";
+	mes "Gostaria de continuar?";
 	next;
-	if (select("Yes:No") == 1) {
+	if (select("Sim:Não") == 1) {
 		.@total = .@amount * 100000;
 		if (Zeny < .@total) {
-			mes "[Craft Book Merchant]";
-			mes "I'm sorry, but you don't have enough money.";
+			mes "[Negociante de Livros]";
+			mes "Desculpe, mas você não tem dinheiro suficiente.";
 			close;
 		}
 		if (checkweight(.@item,.@amount) == 0){
-			mes "[Craft Book Merchant]";
-			mes "It doesn't seem like you can carry everything.";
-			mes "Please check the space in your inventory.";
+			mes "[Negociante de Livros]";
+			mes "Não parece que você pode carregar tudo isso.";
+			mes "Por favor, cheque o espaço em seu inventório.";
 			close;
 		}
-		mes "[Craft Book Merchant]";
-		mes "Thank you for your patronage.";
+		mes "[Negociante de Livros]";
+		mes "Obrigado pelo seu patrocínio.";
 		Zeny -= .@total;
 		getitem .@item,.@amount;
 		close;
 	}
-	mes "[Craft Book Merchant]";
-	mes "Please take your time";
-	mes "before you make your decision.";
+	mes "[Negociante de Livros]";
+	mes "Por favor, escolha sábiamente";
+	mes "antes de tomar sua decisão.";
 	close;
 }

@@ -14,132 +14,132 @@
 
 // Dragon Breeder
 //============================================================
-job3_rune01,88,62,5	script	Dragon Breeder	8W_SOLDIER,{
-	mes "[Dragon Breeder]";
+job3_rune01,88,62,5	script	Criador de Dragões	8W_SOLDIER,{
+	mes "[Criador de Dragões]";
 	if (Class == Job_Rune_Knight || Class == Job_Rune_Knight_T || Class == Job_Baby_Rune) {
-		mes "Welcome. Would you like to rent a Dragon?";
+		mes "Bem vindo. Você gostaria de alugar um Dragão como montaria?";
 		next;
-		switch(select("Yes:No")) {
+		switch(select("Sim:Não")) {
 		case 1:
 			//if (!getskilllv(RK_DRAGONTRAINING)) {
 			if (!getskilllv(KN_RIDING)) {
-				mes "[Dragon Breeder]";
-				mes "Please learn how to ride a Dragon first.";
+				mes "[Criador de Dragões]";
+				mes "Por favor, aprenda a habilidade Adestrar Dragão primeiro.";
 				close;
 			} else if (checkmount()) {
-				mes "[Dragon Breeder]";
-				mes "You already have a Dragon.";
+				mes "[Criador de Dragões]";
+				mes "Você já possui uma montaria.";
 				close;
 			} else if(hascashmount()) {
-				mes "[Dragon Breeder]";
-				mes "Please remove your cash mount.";
+				mes "[Criador de Dragões]";
+				mes "Você já possui uma montaria.";
 				close;
 			}
 			setmount(MOUNT_DRAGON);
 			close;
 		case 2:
-			mes "[Dragon Breeder]";
-			mes "I see. Then have a great day.";
+			mes "[Criador de Dragões]";
+			mes "Entendo. Então tenha um ótimo dia.";
 			close;
 		}
 	}
-	mes "What are you doing here?";
-	mes "Only Rune Knights can rent a Dragon.";
+	mes "O que você está fazendo aqui?";
+	mes "Somente Cavaleiros Rúnicos podem alugar Dragões.";
 	close;
 }
 
-// Dragon/Gryphon Master
+// Mestre de Dragões/Grifos
 //============================================================
-prontera,130,213,5	script	Riding Creature Master	8W_SOLDIER,{
-	mes "[Riding Creature Master]";
+prontera,130,213,5	script	Mestre de Criaturas	8W_SOLDIER,{
+	mes "[Mestre de Criaturas]";
 	if (Class == Job_Rune_Knight || Class == Job_Rune_Knight_T || Class == Job_Baby_Rune) {
-		mes "Welcome. Would you like to rent a Dragon?";
+		mes "Bem vindo. Você gostaria de alugar um Dragão como montaria?";
 		next;
-		switch(select("Yes:No")) {
+		switch(select("Sim:Não")) {
 		case 1:
 			//if (!getskilllv(RK_DRAGONTRAINING)) {
 			if (!getskilllv(KN_RIDING)) {
-				mes "[Riding Creature Master]";
-				mes "Please learn how to ride a Dragon first.";
+				mes "[Mestre de Criaturas]";
+				mes "Por favor, aprenda a habilidade Adestrar Dragão primeiro.";
 				close;
 			} else if (checkmount()) {
-				mes "[Riding Creature Master]";
-				mes "You already have a Dragon.";
+				mes "[Mestre de Criaturas]";
+				mes "Você já possui uma montaria.";
 				close;
 			} else if(hascashmount()) {
-				mes "[Riding Creature Master]";
-				mes "Please remove your cash mount.";
+				mes "[Mestre de Criaturas]";
+				mes "Você já possui uma montaria.";
 				close;
 			}
 			setmount(MOUNT_DRAGON);
 			close;
 		case 2:
-			mes "[Riding Creature Master]";
-			mes "I see. Then have a great day.";
+			mes "[Mestre de Criaturas]";
+			mes "Entendo. Então tenha um ótimo dia.";
 			close;
 		}
 	}
 	if (Class == Job_Royal_Guard || Class == Job_Royal_Guard_T || Class == Job_Baby_Guard) {
-		mes "Welcome. Would you like to rent a Gryphon?";
+		mes "Bem vindo. Gostaria de alugar um Grifo como montaria?";
 		next;
-		switch(select("Yes:No")) {
+		switch(select("Sim:Não")) {
 		case 1:
 			if(!getskilllv(KN_RIDING)) {
-				mes "[Riding Creature Master]";
-				mes "Please learn how to ride a Gryphon first.";
+				mes "[Mestre de Criaturas]";
+				mes "Por favor, aprenda a habilidade de Montaria primeiro.";
 				close;
 			} else if (checkmount()) {
-				mes "[Riding Creature Master]";
-				mes "You already have a Gryphon.";
+				mes "[Mestre de Criaturas]";
+				mes "Você já possui uma montaria.";
 				close;
 			} else if(hascashmount()) {
-				mes "[Riding Creature Master]";
-				mes "Please remove your cash mount.";
+				mes "[Mestre de Criaturas]";
+				mes "Você já possui uma montaria.";
 				close;
 			}
 			setmount(MOUNT_PECO);
 			close;
 		case 2:
-			mes "[Riding Creature Master]";
-			mes "I see. Then have a great day.";
+			mes "[Mestre de Criaturas]";
+			mes "Entendo. Então tenha um ótimo dia.";
 			close;
 		}
 	}
-	mes "I'm here to provide Rune Knights and Royal Guards with riding creatures.";
+	mes "Eu estou aqui para fornecer a Cavaleiros Rúnicos e Guardiões Reais criaturas para montar.";
 	close;
 }
 
-geffen,100,55,3	duplicate(Riding Creature Master)	Riding Creature Master#2	8W_SOLDIER
-payon,166,102,5	duplicate(Riding Creature Master)	Riding Creature Master#3	8W_SOLDIER
-aldebaran,133,109,5	duplicate(Riding Creature Master)	Riding Creature Master#4	8W_SOLDIER
-yuno,171,187,3	duplicate(Riding Creature Master)	Riding Creature Master#5	8W_SOLDIER
-rachel,106,130,5	duplicate(Riding Creature Master)	Riding Creature Master#6	8W_SOLDIER
+geffen,100,55,3	duplicate(Mestre de Criaturas)	Mestre de Criaturas#2	8W_SOLDIER
+payon,166,102,5	duplicate(Mestre de Criaturas)	Mestre de Criaturas#3	8W_SOLDIER
+aldebaran,133,109,5	duplicate(Mestre de Criaturas)	Mestre de Criaturas#4	8W_SOLDIER
+yuno,171,187,3	duplicate(Mestre de Criaturas)	Mestre de Criaturas#5	8W_SOLDIER
+rachel,106,130,5	duplicate(Mestre de Criaturas)	Mestre de Criaturas#6	8W_SOLDIER
 
-// Peco removing NPC
+// Removedor de Montaria
 //============================================================
-prontera,125,208,5	script	Peco Peco Remover	8W_SOLDIER,{
-	mes "[Soldier]";
-	mes "If you're unable to dismount from a Peco Peco";
-	mes "for some unknown reason,";
-	mes "please feel free to use my services.";
+prontera,125,208,5	script	Removedor de Montaria	8W_SOLDIER,{
+	mes "[Soldado]";
+	mes "Se você não conseguir desmontar de um Peco Peco";
+	mes "por alguma razão desconhecida,";
+	mes "por favor, sinta-se livre para usar meus serviços.";
 	if (checkmount() == MOUNT_PECO) {
 		next;
-		mes "[Soldier]";
-		mes "You're riding a Peco Peco.";
-		mes "Would you like to dismount?";
+		mes "[Soldado]";
+		mes "Você está montado em um Peco Peco.";
+		mes "Gostaria de desmontá-lo?";
 		next;
-		switch(select("Yes:No")) {
+		switch(select("Sim:Não")) {
 		case 1:
 			setmount(MOUNT_NONE);
-			mes "[Soldier]";
-			mes "Say, how does it feel to";
-			mes "step on the ground on your own";
-			mes "feet again?";
+			mes "[Soldado]";
+			mes "Diga, como você se sente";
+			mes "ao pisar no chão com os";
+			mes "próprios pés novamente?";
 			close;
 		case 2:
-			mes "[Soldier]";
-			mes "I see. Please feel free to ask me";
-			mes "if you change your mind.";
+			mes "[Soldado]";
+			mes "Entendo. Sinta-se à vontade para conversar comigo novamente";
+			mes "se você mudar de ideia.";
 			close;
 		}
 	}
@@ -149,58 +149,58 @@ prontera,125,208,5	script	Peco Peco Remover	8W_SOLDIER,{
 // Magic Gear Renter
 //============================================================
 -	script	::mgm	-1,{
-	mes "[Magic Gear Master]";
+	mes "[Mestre da Engrenagem]";
 	if (Class == Job_Mechanic || Class == Job_Mechanic_T || Class == Job_Baby_Mechanic) {
-		mes "Welcome, Mechanic.";
-		mes "Would you like to rent a Pushcart or";
-		mes "ride a Magic Gear?";
+		mes "Bem vindo, mecânico.";
+		mes "Você gostaria de alugar um Carrinho ou";
+		mes "montar em um M.E.C.H.A?";
 		next;
-		switch(select("Rent a Pushcart:Ride a Magic Gear:Cancel")) {
+		switch(select("Alugar um Carrinho:Alugar um M.E.C.H.A:Cancelar")) {
 		case 1:
 			if (checkcart()) {
-				mes "[Magic Gear Master]";
-				mes "I'm sorry, but you already";
-				mes "have a Pushcart.";
+				mes "[Mestre da Engrenagem]";
+				mes "Sinto muito, mas você já";
+				mes "possui um carrinho.";
 				close;
 			}
 			setcart;
-			mes "[Magic Gear Master]";
-			mes "There you go!";
+			mes "[Mestre da Engrenagem]";
+			mes "Ai está!";
 			close;
 		case 2:
 			if (checkmount() == MOUNT_MADO) {
-				mes "[Magic Gear Master]";
-				mes "I'm sorry, but you're already";
-				mes "riding a Magic Gear.";
+				mes "[Mestre da Engrenagem]";
+				mes "Sinto muito, mas você já está";
+				mes "montado em um M.E.C.H.A.";
 				close;
 			} else if (!getskilllv(NC_MADOLICENCE)) {
-				mes "[Magic Gear Master]";
-				mes "Please learn the skill to get the Magic Gear License first.";
+				mes "[Mestre da Engrenagem]";
+				mes "Por favor, aprenda a habilidade Licença de Pilotagem primeiro.";
 				close;
 			} else if(hascashmount()) {
-				mes "[Magic Gear Master]";
-				mes "Please remove your cash mount.";
+				mes "[Mestre da Engrenagem]";
+				mes "Por favor, remova a sua montaria atual primeiro.";
 				close;
 			}
 			setmount(MOUNT_MADO);
-			mes "[Magic Gear Master]";
-			mes "Have fun, and please come again!";
+			mes "[Mestre da Engrenagem]";
+			mes "Divirta-se, e por favor, volte sempre que precisar!";
 			close;
 		case 3:
 			close;
 		}
 	}
-	mes "How may I help you?";
-	mes "Magic Gears are only available for Mechanics.";
+	mes "Será que eu posso ajuda-lo?";
+	mes "M.E.C.H.A.S estão disponíveis apenas para Mecânicos.";
 	close;
 }
-prontera,163,178,3	duplicate(mgm)	Magic Gear Master#prt	8W_SOLDIER
-geffen,103,55,5	duplicate(mgm)	Magic Gear Master#gef	8W_SOLDIER
-payon,166,106,5	duplicate(mgm)	Magic Gear Master#pay	8W_SOLDIER
-aldebaran,133,112,5	duplicate(mgm)	Magic Gear Master#alde	8W_SOLDIER
-yuno,167,187,3	duplicate(mgm)	Magic Gear Master#yuno	8W_SOLDIER
-rachel,106,134,5	duplicate(mgm)	Magic Gear Master#ra	8W_SOLDIER
-dicastes01,187,207,3	duplicate(mgm)	Magic Gear Master#dic	8W_SOLDIER
-manuk,273,212,5	duplicate(mgm)	Magic Gear Master#man	8W_SOLDIER
-splendide,180,174,5	duplicate(mgm)	Magic Gear Master#spl	8W_SOLDIER
-mid_camp,242,243,3	duplicate(mgm)	Magic Gear Master#mid	8W_SOLDIER
+prontera,163,178,3	duplicate(mgm)	Mestre da Engrenagem#prt	8W_SOLDIER
+geffen,103,55,5	duplicate(mgm)	Mestre da Engrenagem#gef	8W_SOLDIER
+payon,166,106,5	duplicate(mgm)	Mestre da Engrenagem#pay	8W_SOLDIER
+aldebaran,133,112,5	duplicate(mgm)	Mestre da Engrenagem#alde	8W_SOLDIER
+yuno,167,187,3	duplicate(mgm)	Mestre da Engrenagem#yuno	8W_SOLDIER
+rachel,106,134,5	duplicate(mgm)	Mestre da Engrenagem#ra	8W_SOLDIER
+dicastes01,187,207,3	duplicate(mgm)	Mestre da Engrenagem#dic	8W_SOLDIER
+manuk,273,212,5	duplicate(mgm)	Mestre da Engrenagem#man	8W_SOLDIER
+splendide,180,174,5	duplicate(mgm)	Mestre da Engrenagem#spl	8W_SOLDIER
+mid_camp,242,243,3	duplicate(mgm)	Mestre da Engrenagem#mid	8W_SOLDIER
