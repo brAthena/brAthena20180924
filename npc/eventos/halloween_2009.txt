@@ -1,123 +1,125 @@
-//===== Hercules Script ======================================
-//= iRO Halloween (2009)
-//===== By: ==================================================
-//= Kisuka
-//===== Current Version: =====================================
-//= 1.1
-//===== Description: =========================================
-//= iRO Halloween (2009)
-//= Quest for Weird Pumpkin Hat.
-//= Exchange treats for buffs.
-//= Summon event monsters in towns.
-//===== Notes: ===============================================
-//= You must enable the event items in item_db2.
-//= You must enable the event mobs in mob_db2, mob_avail, and
-//= their skills in mob_skill_db2.
-//===== Additional Comments: =================================
-//= 1.0 First version. [Kisuka]
-//= 1.1 Fixed even exploit, fixed mobs overlap. [Lupus]
-//============================================================
+//    ________________________________________________________
+//   /                                                        \
+//   |       _           _   _   _                            |
+//   |      | |__  _ __ / \ | |_| |__   ___ _ __   __ _       |
+//   |      | '_ \| '__/ _ \| __| '_ \ / _ \ '_ \ / _` |      |
+//   |      | |_) | | / ___ \ |_| | | |  __/ | | | (_| |      |
+//   |      |_.__/|_|/_/   \_\__|_| |_|\___|_| |_|\__,_|      |
+//   |                                                        |
+//   |                    brAthena Script                     |
+//   |--------------------------------------------------------|
+//   | Nome do Script:  halloween_2009.txt                    |
+//   |--------------------------------------------------------|
+//   | Criado por: eA/rA/Herc/brA Dev. Team                   |
+//   |--------------------------------------------------------|
+//   | Versões eA/rA/Herc/brA: 1.1/1.1/1.1/1.0                |
+//   |--------------------------------------------------------|
+//   | Changelog:                                             |
+//   | 1.0 Cabeçalho brAthena [Axl]                           |
+//   |--------------------------------------------------------|
+//   | - Anotações                                            |
+//   \________________________________________________________/
 
 // Headgear Quest - Pumpkin Hat
-//============================================================
-prontera,152,192,5	script	Pumpkin Hat Researcher	4_M_05,{
+// ============================
+prontera,152,192,5	script	Pesquisador de Chapéis de Abóbora	4_M_05,{
 	if(BaseLevel < 45) {
-		mes "[Pumpkin Hat Researcher]";
-		mes "Shoo, I don't need a child. Shoo! I don't talk to novices.";
+		mes "[Pesquisador de Chapéis de Abóbora]";
+		mes "Xô, eu não quero crianças. Xô! Eu não falo com novatos.";
 		next;
-		mes "[Pumpkin Hat Researcher]";
-		mes "Go reach a level that can fight with stronger monsters and come back.";
+		mes "[Pesquisador de Chapéis de Abóbora]";
+		mes "Chegue a um nível que você possa lutar com monstros fortes, e depois volte aqui.";
 		close;
 	}
-	mes "[Pumpkin Hat Researcher]";
-	mes "Say do you like Pumpkin Pies?";
+	mes "[Pesquisador de Chapéis de Abóbora]";
+	mes "Você gosta de Torta de Abóbora, né?";
 	next;
-	mes "[Pumpkin Hat Researcher]";
-	mes "I'm a Pumpkin Hat researcher, Why don't you listen to my story?";
+	mes "[Pesquisador de Chapéis de Abóbora]";
+	mes "Eu sou um pesquisador, pesquiso sobre o Chapéu de Abóbora, não quer ouvir minha história?";
 	next;
 	while(1) {
-		switch(select("Listen to the story.:Ask about Pumpkin Hat.:Get a Pumpkin Hat.:Stop the conversation.")) {
+		switch(select("Ouvir a história.:Perguntar sobre o Chapéu de Abóbora.:Pegar o Chapéu de Abóbora.:Parar de conversar.")) {
 			case 1:
-				mes "[Pumpkin Hat Researcher]";
-				mes "I've been studying about an upgraded Pumpkin Hat.";
-				mes "I have discovered that it is a very simple process.";
+				mes "[Pesquisador de Chapéis de Abóbora]";
+				mes "Estive estudando sobre a criação desse grande Chapéu de Abóbora.";
+				mes "E eu descobri que é um processo muito simples.";
 				next;
-				mes "[Pumpkin Hat Researcher]";
-				mes "The process is quite simple.";
-				mes "If you bring me ^4a4aff20 Jack o' Pumpkin^000000 I can show you.";
-				mes "Isn't that a tempting proposal?";
+				mes "[Pesquisador de Chapéis de Abóbora]";
+				mes "O processo é simplesmente esse:";
+				mes "Se você trouxer ^4a4aff20 Zés-Lanternas^000000, eu posso te mostrar.";
+				mes "Não é uma proposta tentadora?";
 				next;
 				break;
 			case 2:
-				mes "[Pumpkin Hat Researcher]";
-				mes "This upgraded pumpkin hat is powerful stuff!";
+				mes "[Pesquisador de Chapéis de Abóbora]";
+				mes "Esse grande Chapéu de Abóbora é uma coisa muito poderosa.";
 				next;
-				mes "[Pumpkin Hat Researcher]";
-				mes "It can make a Pumpkin Pie that restores a large percentage of HP & SP using condensed energy to the person who wears it.";
+				mes "[Pesquisador de Chapéis de Abóbora]";
+				mes "A torta de abóbora quando usada, recupera uma grande quantidade de HP & SP da pessoa que a come.";
 				next;
-				mes "[Pumpkin Hat Researcher]";
-				mes "All you need is ^4a4aff20 Jack o' Pumpkin^000000s.";
+				mes "[Pesquisador de Chapéis de Abóbora]";
+				mes "Só você trazer ^4a4aff20 Zés-Lanternas^000000s.";
 				next;
 				break;
 			case 3:
-				mes "[Pumpkin Hat Researcher]";
-				mes "Do you want to get Pumpkin Pies? Okay, let me count the Jack o' Pumpkins you've brought.";
+				mes "[Pesquisador de Chapéis de Abóbora]";
+				mes "Você quer a Torta de Abóbora? Tudo bem, deixe-me contar quantos Zé-Lanternas você me trouxe.";
 				next;
 				if(countitem(1062) < 20) {
-					mes "[Pumpkin Hat Researcher]";
-					mes "I need ^4a4aff20 Jack o' Pumpkin^000000.";
-					mes "I'm not an alchemist or a wizard to create something from nothing.";
+					mes "[Pesquisador de Chapéis de Abóbora]";
+					mes "Eu preciso de ^4a4affZé-Lanternas^000000.";
+					mes "Eu não sou um alquimista ou um arquimago para criar algo sem nada.";
 					next;
-					mes "[Pumpkin Hat Researcher]";
-					mes "Okay, go hunting monsters and come back.";
-					mes "I'm going to stay here for a while so take your time.";
+					mes "[Pesquisador de Chapéis de Abóbora]";
+					mes "Ok, vá caçar monstros e volte.";
+					mes "Eu vou ficar aqui te esperando por um tempo.";
 					next;
 					break;
 				}else{
-					mes "[Pumpkin Hat Researcher]";
-					mes "I hope this will be useful to you. Don't forget to wear it while fighting to get your Pumpkin Pies.";
+					mes "[Pesquisador de Chapéis de Abóbora]";
+					mes "Espero que isso seja útil. Não se esqueça de usar na batalha com os monstros para pegar as Tortas de Abóbora.";
 					delitem 1062,20;	// Jack o' Pumpkin
 					getitem 5668,1;		// Weird Pumpkin Hat
 					next;
-					mes "[Pumpkin Hat Researcher]";
-					mes "I guess that I should get back to my research.";
+					mes "[Pesquisador de Chapéis de Abóbora]";
+					mes "Eu acho que eu deveria voltar para a minha pesquisa.";
 					close;
 				}
 			case 4:
-				mes "[Pumpkin Hat Researcher]";
-				mes "Bye, until we'll see each other again.";
-				mes "I wish you well...";
+				mes "[Pesquisador de Chapéis de Abóbora]";
+				mes "Tchau, até nos vermos outra vez.";
+				mes "Eu quero seu bem...";
 				close;
 		}
 	}
 }
 
 // Buffs - Trick or Treaters
-//============================================================
--	script	Trick or Treater::09Treats	4_M_KID1,2,2,{
+// =========================
+-	script	Doces ou Travessuras::09Treats	4_M_KID1,2,2,{
 OnTouch:
 	hideoffnpc strnpcinfo(3);
 	initnpctimer;
-	mes "[Trick or Treater]";
-	mes "Hooray! hooray! Hooray!";
-	mes "Trick or Treat?";
+	mes "[Doces ou Travessuras]";
+	mes "Hahahaha, FELIZ HALLOWEN!";
+	mes "Doces ou Travessuras?";
 	next;
-	if(select("Trick.:Treat.") == 1) {
-		mes "[Trick or Treater]";
+	if(select("Travessuras.:Doces.") == 1) {
+		mes "[Doces ou Travessuras]";
 		mes "!!!!";
-		mes "Fine. I have no choice but to trick you back!";
+		mes "Bom. Eu não tenho escolha, tome a travessura!";
 		sc_start SC_STUN,5000,0;
 		close;
 	}
-	mes "[Trick or Treater]";
-	mes "Oh yay! What kind of treat do you have?";
+	mes "[Doces ou Travessuras]";
+	mes "Obaa! Que tipo de doce você tem?";
 	next;
-	switch(select("Candy:Candy Cane:Well-baked Cookie:Nothing")) {
+	switch(select("Bala:Bengala Doce da Sorte:Biscoito de Gengibre:Nenhum")) {
 		case 1:
 			if(countitem(529) > 0) {
-				mes "[Trick or Treater]";
-				mes "Yay thank you!";
-				mes "Here, take this for being so nice!";
+				mes "[Doces ou Travessuras]";
+				mes "Obaa, obrigado!";
+				mes "Aqui, tome isso por ser tão bom!";
 				sc_start SC_FOOD_STR, 1800000, 5;
 				sc_start SC_FOOD_INT, 1800000, 5;
 				sc_start SC_FOOD_VIT, 1800000, 5;
@@ -128,17 +130,17 @@ OnTouch:
 				delitem 529,1;	// Candy
 				close;
 			}else{
-				mes "[Trick or Treater]";
-				mes "At least a Candy, a Candy Cane or a Well-baked Cookie is all I ask for a treat.";
-				mes "Fine. I have no choice but to trick you!";
+				mes "[Doces ou Travessuras]";
+				mes "Pelo menos uma Bala, ou um Biscoito de Gengibre, ou até uma Bengala Doce da Sorte, é tudo que eu peço.";
+				mes "Bom. Eu não tenho escolha, tome a travessura!";
 				sc_start SC_STUN,5000,0;
 				close;
 			}
 		case 2:
 			if(countitem(530) > 0) {
-				mes "[Trick or Treater]";
-				mes "Yay thank you!";
-				mes "Here, take this for being so nice!";
+				mes "[Doces ou Travessuras]";
+				mes "Obaa, obrigado!";
+				mes "Aqui, tome isso por ser tão bom!";
 				sc_start SC_FOOD_STR, 1800000, 5;
 				sc_start SC_FOOD_INT, 1800000, 5;
 				sc_start SC_FOOD_VIT, 1800000, 5;
@@ -149,17 +151,17 @@ OnTouch:
 				delitem 530,1;	// Candy Cane
 				close;
 			}else{
-				mes "[Trick or Treater]";
-				mes "At least a Candy, a Candy Cane or a Well-baked Cookie is all I ask for a treat.";
-				mes "Fine. I have no choice but to trick you!";
+				mes "[Doces ou Travessuras]";
+				mes "Pelo menos uma Bala, ou um Biscoito de Gengibre, ou até uma Bengala Doce da Sorte, é tudo que eu peço.";
+				mes "Bom. Eu não tenho escolha, tome a travessura!";
 				sc_start SC_STUN,5000,0;
 				close;
 			}
 		case 3:
 			if(countitem(538) > 0) {
-				mes "[Trick or Treater]";
-				mes "Yay thank you!";
-				mes "Here, take this for being so nice!";
+				mes "[Doces ou Travessuras]";
+				mes "Obaa, obrigado!";
+				mes "Aqui, tome isso por ser tão bom!";
 				sc_start SC_FOOD_STR, 1800000, 5;
 				sc_start SC_FOOD_INT, 1800000, 5;
 				sc_start SC_FOOD_VIT, 1800000, 5;
@@ -170,16 +172,16 @@ OnTouch:
 				delitem 538,1;	// Well-baked Cookie
 				close;
 			}else{
-				mes "[Trick or Treater]";
-				mes "At least a Candy, a Candy Cane or a Well-baked Cookie is all I ask for a treat.";
-				mes "Fine. I have no choice but to trick you!";
+				mes "[Doces ou Travessuras]";
+				mes "Pelo menos uma Bala, ou um Biscoito de Gengibre, ou até uma Bengala Doce da Sorte, é tudo que eu peço.";
+				mes "Bom. Eu não tenho escolha, tome a travessura!";
 				sc_start SC_STUN,5000,0;
 				close;
 			}
 		case 4:
-			mes "[Trick or Treater]";
-			mes "At least a Candy, a Candy Cane or a Well-baked Cookie is all I ask for a treat.";
-			mes "Fine. I have no choice but to trick you!";
+			mes "[Doces ou Travessuras]";
+			mes "Pelo menos uma Bala, ou um Biscoito de Gengibre, ou até uma Bengala Doce da Sorte, é tudo que eu peço.";
+			mes "Bom. Eu não tenho escolha, tome a travessura!";
 			sc_start SC_STUN,5000,0;
 			close;
 	}
@@ -193,17 +195,17 @@ OnInit:
 	hideonnpc "Trick or Treater#iRO7";
 	hideonnpc "Trick or Treater#iRO8";
 	end;
-	
+
 OnEnableTreat:
 	enablenpc strnpcinfo(3);
 	hideonnpc strnpcinfo(3);
 	end;
-	
+
 OnTimer15000:
 	hideonnpc strnpcinfo(3);
 	disablenpc strnpcinfo(3);
 	end;
-		
+
 OnTimer300000:
 	donpcevent strnpcinfo(3)+"::OnEnableTreat";
 	stopnpctimer;
@@ -219,28 +221,28 @@ prontera,134,125,5	duplicate(09Treats)	Trick or Treater#iRO7	4_M_KID1,2,2
 prontera,220,72,5	duplicate(09Treats)	Trick or Treater#iRO8	4_M_KID1,2,2
 
 // Monster Summoning - Halloween Wizard
-//============================================================
--	script	Halloween Wizard#iRO09::09HallowWiz	4_DARKLORD,{
-	mes "[Halloween Wizard]";
+// ====================================
+-	script	Bruxo do Halloween#iRO09::09HallowWiz	4_DARKLORD,{
+	mes "[Bruxo do Halloween]";
 	mes "...";
-	mes "Do you want to play a trick on someone?";
+	mes "Você quer pregar uma peça em alguém?";
 	next;
 	while(1) {
-		switch(select("What trick?:Sure:No.")) {
+		switch(select("O que, pregar?:Quero:Não.")) {
 			case 1:
-				mes "[Halloween Wizard]";
-				mes "I can summon monsters in other parts of the world with just a few materials.";
+				mes "[Bruxo do Halloween]";
+				mes "Eu posso invocar monstros em outras partes do mundo com apenas alguns materiais.";
 				next;
-				mes "[Halloween Wizard]";
-				mes "Sounds interesting huh?";
+				mes "[Bruxo do Halloween]";
+				mes "Interessante, não?";
 				next;
-				mes "[Halloween Wizard]";
-				mes "If you bring me Fabric, Jack o' Pumpkins, Worn Fabric, or Crushed Pumpkins I can summon the monsters.";
+				mes "[Bruxo do Halloween]";
+				mes "Se você me trouxer Tecido, Zés-Lanternas, Worn Fabric, ou Crushed Pumpkins, eu posso invocar alguns monstros.";
 				next;
 				break;
 			case 2:
-				mes "[Halloween Wizard]";
-				mes "Which town do you want to play a trick on?";
+				mes "[Bruxo do Halloween]";
+				mes "Em qual cidade você quer pregar uma peça?";
 				next;
 				getmapxy(.@mapname$,.@mapx,.@mapy,0,""+strcharinfo(0)+"");
 				if (.@mapname$ == "prontera") {
@@ -324,25 +326,25 @@ prontera,220,72,5	duplicate(09Treats)	Trick or Treater#iRO8	4_M_KID1,2,2
 					}
 				}
 				setarray .@HallowTowns$[1],"prontera","payon","geffen","alberta","aldebaran";
-				mes "[Halloween Wizard]";
-				mes "Ok then let's go to the next step.";
+				mes "[Bruxo do Halloween]";
+				mes "Ok, então vamos para a próxima etapa.";
 				next;
-				mes "[Halloween Wizard]";
-				mes "How many Fabrics or Jack o' Pumpkins do you want to use? Don't go over 100 because that is the max amount that I can use.";
+				mes "[Bruxo do Halloween]";
+				mes "Quantos Tecidos ou Zés-Lanternas você deseja usar? Não use mais de 100, porque esse número é o máximo que eu posso usar.";
 				next;
 				input .@input;
 				if (.@input == 0) {
-					mes "[Halloween Wizard]";
-					mes "You have no definite idea.";
-					mes "It's not a big deal.";
-					mes "Let me know.";
+					mes "[Bruxo do Halloween]";
+					mes "Você ainda não se decidiu.";
+					mes "Não é um grande negócio.";
+					mes "Volte depois.";
 					next;
 					break;
 				}
 				else if (.@input > 100) {
-					mes "[Halloween Wizard]";
-					mes "I told you that it must be between 1 to 100!";
-					mes "You didn't pay attention!";
+					mes "[Bruxo do Halloween]";
+					mes "Eu lhe disse entre 1 a 100!";
+					mes "Você não prestou atenção!";
 					next;
 					break;
 				}
@@ -357,8 +359,8 @@ prontera,220,72,5	duplicate(09Treats)	Trick or Treater#iRO8	4_M_KID1,2,2
 					.@total = .@fabric + .@jack + .@worn + .@crushed;
 
 					if(.@total < .@input) {
-						mes "[Halloween Wizard]";
-						mes "Recount the number of items you have and tell me the total.";
+						mes "[Bruxo do Halloween]";
+						mes "Conte novamente o número de itens que você tem e me diga o total.";
 						mes "Huhuhuhuhuhu...";
 						next;
 						break;
@@ -413,21 +415,21 @@ prontera,220,72,5	duplicate(09Treats)	Trick or Treater#iRO8	4_M_KID1,2,2
 						}
 					}
 					if (.@input > 0) {
-						mes "Theres a problem.";
+						mes "Há um problema.";
 						close;
 					}
 					monster ""+.@HallowTowns$[.@HallowTown]+"",0,0,"Halloween Whisper",3014,.@whispers;
 					monster ""+.@HallowTowns$[.@HallowTown]+"",0,0,"Halloween Dark Lord",3015,.@darklords;
-					mes "[Halloween Wizard]";
+					mes "[Bruxo do Halloween]";
 					mes "Here's what you wanted.";
-					mes "Imagine what the people must be thinking in the other villages?";
+					mes "Imagine o que o povo deve estar pensando em outros lugares?";
 					mes "Muahahaha";
 					close;
 				}
 			case 3:
-				mes "[Halloween Wizard]";
-				mes "If you change your mind, come back here...";
-				mes "I'll stay here for a while...";
+				mes "[Bruxo do Halloween]";
+				mes "Se você mudar de idéia, volte aqui...";
+				mes "Eu vou ficar aqui por um tempo...";
 				mes "Kkkk...";
 				close;
 		}

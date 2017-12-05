@@ -1,112 +1,118 @@
-//===== Hercules Script ======================================
-//= Swordman Class Tutorial and Job Specific Quest
-//===== By: ==================================================
-//= Fix up by Jukka
-//===== Current Version: =====================================
-//= 1.7
-//===== Description: =========================================
-//= [Official Conversion]
-//= Swordman training quest.
-//===== Additional Comments: =================================
-//= 1.0 Fully working
-//= 1.1 optimized [Lupus]
-//= 1.2 Fixed a typo on NPC name. [SinSloth]
-//= 1.3 Fixed experience gains to match upcoming rate adjustments. [SinSloth]
-//= 1.4 Misc. updates. [L0ne_W0lf]
-//= 1.5 Added Renewal Izlude coordinates.
-//= 1.6 Added Pre-Renewal support. [Euphy]
-//= 1.7 Fixed quest log linking [KirieZ]
-//============================================================
+//    ________________________________________________________
+//   /                                                        \
+//   |       _           _   _   _                            |
+//   |      | |__  _ __ / \ | |_| |__   ___ _ __   __ _       |
+//   |      | '_ \| '__/ _ \| __| '_ \ / _ \ '_ \ / _` |      |
+//   |      | |_) | | / ___ \ |_| | | |  __/ | | | (_| |      |
+//   |      |_.__/|_|/_/   \_\__|_| |_|\___|_| |_|\__,_|      |
+//   |                                                        |
+//   |                    brAthena Script                     |
+//   |--------------------------------------------------------|
+//   | Nome do Script: espadachim.txt                         |
+//   |--------------------------------------------------------|
+//   | Criado por: eA/rA/brA Dev. Team                        |
+//   |--------------------------------------------------------|
+//   | Versões eA/rA/brA: ??/1.5/1.1                          |
+//   |--------------------------------------------------------|
+//   | Descrição: Tutorial da classe espadachim.              |
+//   |--------------------------------------------------------|
+//   | Changelog:                                             |
+//   | 1.0 Criado Cabeçalho [Megasantos]                      |
+//   | 1.1 Tradução [Clare]                                   |
+//   | 1.2 Revisão [Saraii]                                   |
+//   |--------------------------------------------------------|
+//   | - Anotações                                            |
+//   \________________________________________________________/
 
 // Shurank
 //============================================================
 izlude_in,82,163,3	script	Shurank	4_M_JOB_KNIGHT1,{
 	mes "[Shurank]";
-	if(Class == Job_Novice || Class == Job_Baby){
-		mes "Still wondering";
-		mes "what to do with";
-		mes "your future, eh?";
+	if (Class == Job_Novice || Class == Job_Baby){
+		mes "Ainda querendo saber";
+		mes "o que fazer com";
+		mes "com o seu futuro, hein?";
 		next;
 		mes "[Shurank]";
-		mes "If I may be so bold,";
-		mes "I suggest that you follow";
-		mes "the path of strength.";
-		mes "Become... A Swordman.";
+		mes "Se me permite ser ousado,";
+		mes "eu sugiro que você siga";
+		mes "o caminho da força,";
+		mes "tornando-se... um Espadachim.";
 		next;
 		mes "[Shurank]";
-		mes "If you wish to stake your life on the way of the sword, speak to the Swordman Association representative to the left.";
+		mes "Se você quiser arriscar sua vida no caminho da espada, fale com o representante da Associação dos Espadachins logo a esquerda.";
 		next;
 		mes "[Shurank]";
-		mes "Whatever you do,";
-		mes "I hope that you live out your life without any regrets. And if you do happen to become a Swordman,";
-		mes "come back to me...";
+		mes "Seja o que for que você faça,";
+		mes "espero que você viva sua vida sem arrependimentos. E se acontecer de você tornar-se um Espadachim,";
+		mes "volte até mim...";
 		close;
 	}
 	if(BaseClass == Job_Swordman && eaclass()&(EAJL_2|EAJL_UPPER|EAJL_THIRD)){
-		mes "From your raiment,";
-		mes "I see that you are";
-		if(Sex)
-			mes "a man of the sword.";
+		mes "Pelas suas roupas,";
+		mes "eu vejo que você é";
+		if (Sex)
+			mes "um homem da espada.";
 		else
-			mes "a woman of the sword.";
-		mes "Your eyes tell me that";
-		mes "you've seen many a battle.";
+			mes "uma mulher da espada.";
+		mes "Seus olhos me dizem que";
+		mes "você já viu muitas batalhas.";
 		next;
 		mes "[Shurank]";
-		mes "There's nothing that I can actually offer to teach you. But if you know any new Swordmen that show potential, please direct them to me.";
+		mes "Não há mais nada que eu possa te ensinar. Mas se você conhecer algum Espadachim novo que demonstre potencial, por favor encaminhe-o até mim.";
 		close;
 	}
-	if(BaseClass != Job_Swordman){
-		mes "Greetings adventurer.";
-		mes "If you happen to know";
-		mes "any new Swordmen,";
-		mes "please direct them to me.";
+	if (BaseClass != Job_Swordman){
+		mes "Saudações aventureiro.";
+		mes "Se por acaso você conhecer";
+		mes "algum novo Espadachim,";
+		mes "por favor encaminhe-os para mim.";
 		next;
 		mes "[Shurank]";
-		mes "My specialty happens to be teaching the fundamentals of the Swordman job to green recruits that have just made the job change.";
+		mes "Minha função é ensinar os fundamentos da classe Espadachim aos novos recrutas que acabaram de fazer a mudança de classe.";
 		next;
 		mes "[Shurank]";
-		mes "Although it would be great if everyone can wield a sword,";
-		mes "I'm afraid there's nothing I can effectively teach to you. The methods of your job are...";
-		mes "Foreign to me.";
+		mes "Não há nada que eu possa ensinar para você. Os métodos de sua classe...";
+		mes "são estranhos para mim,";
+		mes "apesar de que seria ótimo se todos pudesem empunhar uma espada.";
 		close;
 	}
 	switch(tu_swordman){
 	case 23:
-		mes "Greetings, my friend.";
-		mes "There is nothing more";
-		mes "that I can teach you...";
+		mes "Saudações, meu amigo.";
+		mes "Não há mais nada";
+		mes "que eu possa te ensinar...";
 		next;
 		mes "[Shurank]";
-		mes "To improve your skills,";
-		mes "you must explore this vast world and experience all sorts of battle situations. And always commit yourself to your training.";
+		mes "Para melhorar as suas habilidades,";
+		mes "você deve explorar este vasto mundo e experimentar todos os tipos de situações de batalhas. E sempre empenhar-se em seu treino.";
 		close;
 	case 22:
-		mes "This will be my";
-		mes "final lecture to you.";
-		mes "Please listen carefully";
-		mes "as I tell you all about";
-		mes "Magnum Break.";
+		mes "Este será o meu";
+		mes "ensinamento final para você.";
+		mes "por favor ouça com atenção";
+		mes "vou te contar tudo sobre";
+		mes "Impacto Explosivo.";
 		next;
 		mes "[Shurank]";
-		mes "Magnum Break, mastered at Skill Level 10, requires ^5D478BLevel 5 Bash^000000. When used, this skill inflicts splash damage to enemies surrounding the caster.";
+		mes "Impacto Explosivo, dominada em nível de habilidade 10, requer ^5D478BGolpe Fuminante nível 5^000000. Quando usada, causa dano aos inimigos em volta do usuário.";
 		next;
 		mes "[Shurank]";
-		mes "Enemies struck by Magnum Break";
-		mes "will be pushed back by a Fire property attack. Afterwards, your weapon will temporarily inflict 20% more damage with Fire property attacks.";
+		mes "Inimigos atingidos por Impacto Explosivo";
+		mes "serão empurrados para trás, por um ataque de propriedade fogo. Depois, sua arma causará 20% a mais de dano com ataques de propriedade fogo.";
 		next;
 		mes "[Shurank]";
-		mes "Magnum Break is ideal for use";
-		mes "when surrounded by foes, but also keep in mind that it also inflicts a little damage on its caster.";
+		mes "Impacto Explosivo é ideal para uso";
+		mes "quando se está cercado por inimigos, mas tendo em mente que ela também causa um pequeno dano em seu usuário.";
 		next;
 		.@chk_magnum = getskilllv(SM_MAGNUM);
 		if(.@chk_magnum > 5){
 			mes "[Shurank]";
-			mes "I see that you've been training in the use of Magnum Break. Although it is an awesome skill, it's not for every Swordman. Still, there's no harm in learning it.";
+			mes "Eu vejo que você foi ao treinamento de Impacto Explosivo. Embora seja uma habilidade incrível, não é para todos os Espadachins. Ainda assim, não há mal nenhum em aprender.";
 			next;
 			mes "[Shurank]";
-			mes "Here is a humble reward for";
-			mes "your great efforts. But do not let your talents allow you to grow arrogant!";
+			mes "Aqui é uma humilde recompensa pelo";
+			mes "seu grande esforço. Mas não deixe que os seus talentos o tornem arrogante!";
 			tu_swordman = 23;
 			completequest 8228;
 			if (RENEWAL_EXP)
@@ -116,88 +122,88 @@ izlude_in,82,163,3	script	Shurank	4_M_JOB_KNIGHT1,{
 			getitem 1113,1; //Scimiter
 			next;
 			mes "[Shurank]";
-			mes "That is all I have to teach you about Swordman skills. Hopefully, I've been able to clear up anything you haven't understood about your job and skills.";
+			mes "Isso é tudo que tenho para lhe ensinar sobre sobre as habilidades de Espadachim. Espero ter sido capaz de explicar qualquer coisa que você não sabia sobre sua classe e habilidades.";
 			next;
 			mes "[Shurank]";
-			mes "As for the matter concerning";
-			mes "that murderer, it's no longer in our hands. At this time, there's nothing that we can effectively";
-			mes "do about it.";
+			mes "Quanto a questão relacionada";
+			mes "ao assassino, não está mais em nossas mãos. Nesse momento, não há mais nada que possamos fazer de forma eficaz";
+			mes "sobre isso.";
 			next;
 			mes "[Shurank]";
-			mes "However, I'd like";
-			mes "to ask that you keep the";
-			mes "information you've learned";
-			mes "to yourself. This matter is considered highly classified...";
+			mes "No entanto, eu gostaria";
+			mes "de pedir para que você mantenha";
+			mes "as informações que ficou sabendo";
+			mes "apenas para si mesmo. Este assunto é considerado altamente confidencial...";
 			next;
 			mes "[Shurank]";
-			mes "In any case, there's no need to worry about it anymore. But if we ever need assistance, I'll remember to ask you for your help.";
+			mes "Em todo caso, não há necessidade de se preocupar com isso. Mas se alguma vez eu precisar de um assistente, vou lembrar de pedir sua ajuda.";
 			next;
 			mes "[Shurank]";
-			mes "You've done very well. Continue training and if you reach ^5D478BJob Level 40^000000, you can be promoted to a Knight or a Crusader.";
+			mes "Você se saiu muito bem. Continue treinando e quando chegar ao ^5D478Bnível de classe 40^000000, você poderá se tornar um Cavaleiro ou Templário.";
 			next;
 			mes "[Shurank]";
-			mes "Well...";
-			mes "We Swordmen typically aren't prone to being sentimental, but I'm glad to have met you. Do your best and become a splendid Swordman.";
+			mes "Bem...";
+			mes "Nos Espadachins não somos propensos a ser sentimentais, mas eu estou contente de ter te conhecido. Faça o seu melhor e se torne um Espadachim esplêndido.";
 			close;
 		}
 		mes "[Shurank]";
-		mes "That is all I have to teach you about Swordman skills. Hopefully, I've been able to clear up anything you haven't understood about your job and skills.";
+		mes "Isso é tudo que tenho para lhe ensinar sobre sobre as habilidades de Espadachim. Espero ter sido capaz de explicar qualquer coisa que você não sabia sobre sua classe e habilidades.";
 		next;
 		mes "[Shurank]";
-		mes "As for the matter concerning";
-		mes "that murderer, it's no longer in our hands. At this time, there's nothing that we can effectively do about it.";
+		mes "Quanto a questão relacionada";
+		mes "ao assassino, não está mais em nossas mãos. Nesse momento, não há mais nada que possamos fazer de forma eficaz";
 		next;
 		mes "[Shurank]";
-		mes "However, I'd like";
-		mes "to ask that you keep the";
-		mes "information you've learned";
-		mes "to yourself. This matter is considered highly classified...";
+		mes "No entanto, eu gostaria";
+		mes "de pedir para que você mantenha";
+		mes "as informações que ficou sabendo";
+		mes "apenas para si mesmo. Este assunto é considerado altamente confidencial...";
 		next;
 		mes "[Shurank]";
-		mes "In any case, there's no need to worry about it anymore. But if we ever need assistance, I'll remember to ask you for your help.";
+		mes "Em todo caso, não há necessidade de se preocupar com isso. Mas se alguma vez eu precisar de um assistente, vou lembrar de pedir sua ajuda.";
 		next;
 		mes "[Shurank]";
-		mes "You've done very well. Continue training and if you reach ^5D478BJob Level 40^000000, you can be promoted to a Knight or a Crusader.";
+		mes "Você se saiu muito bem. Continue treinando e quando chegar ao ^5D478Bnível de classe 40^000000, você poderá se tornar um Cavaleiro ou Templário.";
 		next;
 		mes "[Shurank]";
-		mes "Well...";
-		mes "We Swordmen typically aren't prone to being sentimental, but I'm glad to have met you. Do your best and become a splendid Swordman.";
+		mes "Bem...";
+		mes "Nos Espadachins não somos propensos a ser sentimentais, mas eu estou contente de ter te conhecido. Faça o seu melhor e se torne um Espadachim esplêndido.";
 		next;
 		mes "[Shurank]";
-		mes "Before you go, please take this.";
-		mes "I hope that you make good use of it as you train to become stronger and stronger. Good luck out there.";
+		mes "Antes de ir, por favor pegue isso.";
+		mes "Eu espero que você faça bom uso dela em seu treinamento e se torne cada vez mais forte e mais forte. Boa sorte lá fora.";
 		tu_swordman = 23;
 		completequest 8228;
 		getitem 1113,1; //Scimiter
 		close;
 	case 21:
-		mes "Ah, you've returned. I've just received a communique from";
-		mes "Dequ'ee. It seems you've been working very hard and that you've made the most of this experience.";
+		mes "Ah, você voltou. Acabei de recer um comunicado do";
+		mes "Dequ'ee. Parece que você teve um trabalho bem difícil e que tirou o máximo de esperiência disso.";
 		next;
 		mes "[Shurank]";
-		mes "For now, I believe you'll benefit from learning some more about Swordman skills. First, let me tell you more about the Sword Masteries.";
+		mes "Por agora, eu acreito que você se beneficiou aprendendo um pouco mais sobre as habilidades de Espadachim. Primeiro, deixe-me lhe explicar sobre o Sword Masteries.";
 		next;
 		mes "[Shurank]";
-		mes "There are two different kinds:";
-		mes "^5D478BOne Handed Sword Mastery^000000 and";
-		mes "^5D478BTwo Handed Sword Mastery^000000. Both";
-		mes "are Passive Skills that increase your Attack Power as these skills are leveled up.";
+		mes "Há dois diferentes tipos:";
+		mes "^5D478BHabilidade Com Uma Mão^000000 e";
+		mes "^5D478BHabilidade Com Duas Mãos^000000. Ambas";
+		mes "são habilidades passivas que aumentam o seu poder de ataque conforme as habilidades aumentam de nível.";
 		next;
 		mes "[Shurank]";
-		mes "One Handed Sword Mastery";
-		mes "increases the damage of Daggers and One Handed Swords while Two Handed Sword Mastery increases the damage of Two Handed Swords.";
+		mes "Habilidade Com Uma Mão";
+		mes "aumenta o dano com adagas e espadas de uma mão enquanto Habilidade Com Duas Mãos aumenta o seu dano com espadas de duas mãos.";
 		next;
 		.@chk_hanson = getskilllv(SM_SWORD);
 		.@chk_yangson = getskilllv(SM_TWOHAND);
 		if((.@chk_hanson > 9) || (.@chk_yangson > 9)){
 			mes "[Shurank]";
-			mes "Ah, from the way you handle your Sword, I see that you have mastered a Sword Mastery. I'm thoroughly impressed.";
+			mes "Ah, pela forma que você manuseia sua espada, eu vejo que você domina uma Habilidade com Espada. Eu estou completamento impressionado.";
 			next;
 			mes "[Shurank]";
-			mes "Let me give you";
-			mes "this small reward";
-			mes "in recognition of";
-			mes "your accomplishment.";
+			mes "Deixe-me lhe dar";
+			mes "esta pequena recompensa,";
+			mes "é um reconhecimento";
+			mes "pelo seu feito.";
 			tu_swordman = 22;
 			changequest 8227,8228;
 			if (RENEWAL_EXP)
@@ -206,28 +212,28 @@ izlude_in,82,163,3	script	Shurank	4_M_JOB_KNIGHT1,{
 				getexp 1860,0;
 			next;
 			mes "[Shurank]";
-			mes "Next time, I will tell you more about the Magnum Break skill.";
-			mes "I'll be here when you're ready to learn more.";
+			mes "Da próxima vez, eu vou lhe dizer mais sobre a habilidade Impacto Explosivo.";
+			mes "Eu vou estar aqui quando você estiver pronto para aprender mais.";
 			close;
 		}
 		mes "[Shurank]";
-		mes "Next time, I will tell you more about the Magnum Break skill.";
-		mes "I'll be here when you're ready to learn more.";
+		mes "Da próxima vez, eu vou lhe dizer mais sobre a habilidade Impacto Explosivo.";
+		mes "Eu vou estar aqui quando você estiver pronto para aprender mais.";
 		tu_swordman = 22;
 		changequest 8227,8228;
 		close;
 	case 13:
-		mes "You should leave as soon as possible to meet Dequ'ee in Geffen. You do remember where to find him, don't you?";
+		mes "Você deve sair daqui o mais breve possível para atender o Dequ'ee em Geffen. Você se lembra onde encontrá-lo, não é?";
 		close;
 	case 12:
-		mes "So how has your";
-		mes "training for the Endure";
-		mes "skill coming along?";
+		mes "Então, como está indo";
+		mes "o treinamento da";
+		mes "habilidade Vigor?";
 		next;
 		.@chk_endure = getskilllv(SM_ENDURE);
 		if(.@chk_endure > 1){
 			mes "[Shurank]";
-			mes "From that gleen of toughness upon your skin, I see now that I was foolish to ask. Well done~";
+			mes "Vendo a resistência de sua pele, vejo que fui um tolo em perguntar. Bom trabalho~";
 			tu_swordman = 13;
 			changequest 8221, 8222;
 			if (RENEWAL_EXP)
@@ -236,61 +242,61 @@ izlude_in,82,163,3	script	Shurank	4_M_JOB_KNIGHT1,{
 				getexp 1260,0;
 			next;
 			mes "[Shurank]";
-			mes "Ah, once again, I have";
-			mes "another task for you to perform. Please visit Dequ'ee in Geffen since it seems he has something";
-			mes "to ask of you.";
+			mes "Ah, mais uma vez eu tenho";
+			mes "uma outra tarefa para você realizar. Por favor visite o Dequ'ee em Geffen já que parece que ele tem alguma coisa";
+			mes "para pedir-lhe.";
 			next;
 			mes "[Shurank]";
-			mes "Hurry and meet with Dequ'ee and return to me when you complete whatever it is that he wishes for you to do.";
+			mes "Aprese-se, vá falar com o Dequ'ee e volte até mim quando você completar o que ele quer que você faça.";
 			close;
 		} else {
 			mes "[Shurank]";
 			mes "Hmm...";
-			mes "You're not quite";
-			mes "there yet. In the";
-			mes "meantime, I encourage";
-			mes "you to double your efforts!";
+			mes "Você ainda não";
+			mes "é muito bom. Mas";
+			mes "enquanto isso, eu aconselho";
+			mes "você a dobrar seus esforços!";
 			close;
 		}
 	case 11:
-		mes "So have you";
-		mes "learned how to use";
-		mes "the Endure skill yet?";
+		mes "Então você";
+		mes "já aprendeu a usar";
+		mes "a habilidade Vigor certo?";
 		next;
 		.@chk_endure = getskilllv(SM_ENDURE);
 		if((.@chk_endure > 0) && (.@chk_endure < 2)){
 			mes "[Shurank]";
-			mes "I see that you";
-			mes "know how to use the";
-			mes "Endure skill. Still, it wouldn't hurt if I review the basic details regarding its use...";
+			mes "Eu vejo que você";
+			mes "já sabe usar";
+			mes "a habilidade Vigor. Ainda assim, não faria mal revisar os detalhes básicos sobre o seu uso...";
 			next;
 			mes "[Shurank]";
-			mes "As you've noticed, receiving any damage causes you to reel in pain, stunning you for an instant. Thus, rapidly attacking enemies are dangerous since it's difficult to counter or escape them.";
+			mes "Como você já percebeu, receber qualquer dano faz com que você sinta dor, atordoando você por um estante. Assim, se os inimigos atacarem rápidamente será perigoso, pois será dificil escapar deles.";
 			next;
 			mes "[Shunrank]";
-			mes "Activating Endure enables you to shrug off attacks. You'll receive damage, but enemy attacks will not impede you as much. This means you can counter enemy attacks or escape if you need to.";
+			mes "Ativando Vigor você desvia de ataques. Você receberá dano, mas os ataques inimigos não te afetarão tanto. Isso significa que você poderá combater os ataques inimigos ou fugir se precisar.";
 			next;
 			mes "[Shurank]";
-			mes "Of course, you can't use Endure forever. However, the more you increase the level of the Endure";
-			mes "skill, the longer Endure's effect will last. Also, remember that Endure also has a skill delay.";
+			mes "Claro, você não pode usar Vigor para sempre. No entando quanto mais você aumentar o nível da habilidade";
+			mes "Vigor, maior será a sua duração. Mas, lembre-se que Vigor também tem um atraso de habilidade.";
 			next;
 			mes "[Shurank]";
-			mes "Since you've learned the Endure skill already, I don't think I need to explain it any further. You've done well.";
+			mes "Uma vez que você já aprendeu a habilidade Vigor, eu não acho que será preciso te explicar mais nada. Você fez bem.";
 			changequest 8221, 8222;
 			tu_swordman = 13;
 			next;
 			mes "[Shurank]";
-			mes "Ah, once again, I have";
-			mes "another task for you to perform. Please visit Dequ'ee in Geffen since it seems he has something";
-			mes "to ask of you.";
+			mes "Ah, mais uma vez, eu tenho";
+			mes "uma outra tarefa para você realizar. Por favor visite o Dequ'ee em Geffen, parece que ele tem alguma coisa";
+			mes "para pedir-lhe.";
 			next;
 			mes "[Shurank]";
-			mes "Hurry and meet with Dequ'ee and return to me when you complete whatever it is that he wishes for you to do.";
+			mes "Apresse-se, vá ate o Dequ'ee e volte até mim quando completar o que ele quer que você faça.";
 			close2;
 			end;
 		} else if(.@chk_endure > 1){
 			mes "[Shurank]";
-			mes "From that gleen of toughness upon your skin, I see now that I was foolish to ask. Well done~";
+			mes "Vendo a resistência de sua pele, vejo que fui um tolo em perguntar. Bom trabalho~";
 			tu_swordman = 13;
 			changequest 8221, 8222;
 			if (RENEWAL_EXP)
@@ -299,76 +305,76 @@ izlude_in,82,163,3	script	Shurank	4_M_JOB_KNIGHT1,{
 				getexp 1260,0;
 			next;
 			mes "[Shurank]";
-			mes "Ah, once again, I have";
-			mes "another task for you to perform. Please visit Dequ'ee in Geffen since it seems he has something";
-			mes "to ask of you.";
+			mes "Ah, mais uma vez, eu tenho";
+			mes "uma outra tarefa para você realizar. Por favor visite o Dequ'ee em Geffen, parece que ele tem alguma coisa";
+			mes "para pedir-lhe.";
 			next;
 			mes "[Shurank]";
-			mes "Hurry and meet with Dequ'ee and return to me when you complete whatever it is that he wishes for you to do.";
+			mes "Apresse-se, vá ate o Dequ'ee e volte até mim quando completar o que ele quer que você faça.";
 			close;
 		} else {
 			mes "[Shurank]";
-			mes "No...?";
-			mes "I recommend that you learn it as soon as you can. Endure is an invaluable skill for any Swordman to have!";
+			mes "Não...?";
+			mes "Eu recomendo que você aprenda o mais rápido possível. Vigor é uma habilidade de valor inestimavel, todo Espadachim deve ter!";
 			close;
 		}
 	case 10:
-		mes "The time has come";
-		mes "for me to tell you";
-		mes "all I know about";
-		mes "the Endure skill.";
+		mes "Chegou a hora";
+		mes "de te dizer";
+		mes "tudo que eu sei sobre";
+		mes "a habilidade Vigor.";
 		next;
 		.@chk_endure = getskilllv(SM_ENDURE);
 		if(.@chk_endure == 0){
 			mes "[Shurank]";
-			mes "As you've noticed, receiving any damage causes you to reel in pain, stunning you for an instant. Thus, rapidly attacking enemies are dangerous since it's difficult to counter or escape them.";
+			mes "Como você já percebeu, receber qualquer dano faz com que você sinta dor, atordoando você por um estante. Assim, se os inimigos atacarem rápidamente será perigoso, pois será dificil escapar deles.";
 			next;
 			mes "[Shunrank]";
-			mes "Activating Endure enables you to shrug off attacks. You'll receive damage, but enemy attacks will not impede you as much. This means you can counter enemy attacks or escape if you need to.";
+			mes "Ativando Vigor você você desvia de ataques. você receberá dano, mas os ataques inimigos não te afetarão tanto. Isso significa que você poderá combater os ataques inimigos ou fugir se precisar.";
 			next;
 			mes "[Shurank]";
-			mes "Of course, you can't use Endure forever. However, the more you increase the level of the Endure";
-			mes "skill, the longer Endure's effect will last. Also, remember that Endure also has a skill delay.";
+			mes "Claro, você não pode usar Vigor para sempre. No entando quanto mais você aumentar o nível da habilidade";
+			mes "Vigor, maior será a sua duração. Mas, lembre-se que Vigor também tem um atraso de habilidade.";
 			next;
 			mes "[Shurank]";
-			mes "Alright. Now I want you to train in the use of the Endure skill. You can become a great Swordman";
-			mes "if you can endure attacks";
-			mes "from your enemies!";
+			mes "Tudo bem. Agora eu quero que você treine o uso da habilidade Vigor. Você poderá se tornar um grande Espadachim";
+			mes "se você puder suportar os ataques";
+			mes "de seus inimigos!";
 			tu_swordman = 11;
 			changequest 8220,8221;
 			close;
 		} else if((.@chk_endure > 0) && (.@chk_endure < 2)){
 			mes "[Shurank]";
-			mes "I see that you";
-			mes "know how to use the";
-			mes "Endure skill. Still, it wouldn't hurt if I review the basic details regarding its use...";
+			mes "Eu vejo que você";
+			mes "já sabe usar";
+			mes "a habilidade Vigor. Ainda assim, não faria mal revisar os detalhes básicos sobre o seu uso...";
 			next;
 			mes "[Shurank]";
-			mes "As you've noticed, receiving any damage causes you to reel in pain, stunning you for an instant. Thus, rapidly attacking enemies are dangerous since it's difficult to counter or escape them.";
+			mes "Como você já percebeu, receber qualquer dano faz com que você sinta dor, atordoando você por um estante. Assim, se os inimigos atacarem rápidamente será perigoso, pois será dificil escapar deles.";
 			next;
 			mes "[Shurank]";
-			mes "Activating Endure enables you to shrug off attacks. You'll receive damage, but enemy attacks will not impede you as much. This means you can counter enemy attacks or escape if you need to.";
+			mes "Ativando Vigor você você desvia de ataques. você receberá dano, mas os ataques inimigos não te afetarão tanto. Isso significa que você poderá combater os ataques inimigos ou fugir se precisar.";
 			next;
 			mes "[Shurank]";
-			mes "Of course, you can't use Endure forever. However, the more you increase the level of the Endure";
-			mes "skill, the longer Endure's effect will last. Also, remember that Endure also has a skill delay.";
+			mes "Claro, você não pode usar Vigor para sempre. No entando quanto mais você aumentar o nível da habilidade";
+			mes "Vigor, maior será a sua duração. Mas, lembre-se que Vigor também tem um atraso de habilidade.";
 			next;
 			mes "[Shurank]";
-			mes "Since you've learned the Endure skill already, I don't think I need to explain it any further. You've done well.";
+			mes "Uma vez que você já aprendeu a habilidade Vigor, eu não acho que será preciso te explicar mais nada. Você fez bem.";
 			tu_swordman = 13;
 			changequest 8220, 8222;
 			next;
 			mes "[Shurank]";
-			mes "Ah, once again, I have";
-			mes "another task for you to perform. Please visit Dequ'ee in Geffen since it seems he has something";
-			mes "to ask of you.";
+			mes "Ah, mais uma vez, eu tenho";
+			mes "uma outra tarefa para você realizar. Por favor visite o Dequ'ee em Geffen, parece que ele tem alguma coisa";
+			mes "para pedir-lhe.";
 			next;
 			mes "[Shurank]";
-			mes "Hurry and meet with Dequ'ee and return to me when you complete whatever it is that he wishes for you to do.";
+			mes "Apresse-se, vá ate o Dequ'ee e volte até mim quando completar o que ele quer que você faça.";
 			close;
 		} else if(.@chk_endure > 1){
 			mes "[Shurank]";
-			mes "Hm. But judging from the gleen of toughness on your skin, I suppose teaching you about Endure would be a waste of your time. Well done!";
+			mes "Hm. Mas julgando pela resistência de sua pele, suponho que explicar-lhe sobre o Vigor seria uma perca de tempo para você. Você fez bem!";
 			tu_swordman = 13;
 			changequest 8220, 8222;
 			if (RENEWAL_EXP)
@@ -377,23 +383,23 @@ izlude_in,82,163,3	script	Shurank	4_M_JOB_KNIGHT1,{
 				getexp 1260,0;
 			next;
 			mes "[Shurank]";
-			mes "Ah, once again, I have";
-			mes "another task for you to perform. Please visit Dequ'ee in Geffen since it seems he has something";
-			mes "to ask of you.";
+			mes "Ah, mais uma vez, eu tenho";
+			mes "uma outra tarefa para você realizar. Por favor visite o Dequ'ee em Geffen, parece que ele tem alguma coisa";
+			mes "para pedir-lhe.";
 			next;
 			mes "[Shurank]";
-			mes "Hurry and meet with Dequ'ee and return to me when you complete whatever it is that he wishes for you to do.";
+			mes "Apresse-se, vá ate o Dequ'ee e volte até mim quando completar o que ele quer que você faça.";
 			close;
 		}
 	case 9:
-		mes "So have you been";
-		mes "learning more about";
-		mes "the use of the Provoke skill?";
+		mes "Então você quer";
+		mes "aprender mais sobre";
+		mes "o uso da habilidade Provoke?";
 		next;
 		.@chk_provoke = getskilllv(SM_PROVOKE);
 		if((.@chk_provoke > 4) && (.@chk_provoke < 10)){
 			mes "[Shurank]";
-			mes "Ah, I see that you have a fairly good understanding of the Provoke skill. Let me reward you in this small way for your efforts.";
+			mes "Ah, Eu vejo que você já compreende bem o uso da habilidade Provoke. Deixe-me te dar uma pequena recompensa pelos seus esforços.";
 			tu_swordman = 10;
 			changequest 8219, 8220;
 			if (RENEWAL_EXP)
@@ -402,16 +408,16 @@ izlude_in,82,163,3	script	Shurank	4_M_JOB_KNIGHT1,{
 				getexp 1120,0;
 			next;
 			mes "[Shurank]";
-			mes "Next time we speak, I will tell you what I know about the ^5D478BEndure^000000 skill. When you're ready to learn, come back to me.";
+			mes "Da proxima vez que nos falarmos, Eu vou te dizer tudo que eu sei sobre a habilidade ^5D478BVigor^000000. Quando você estiver pronto para aprender, volte ate mim.";
 			close;
 		} else if(.@chk_provoke == 10){
 			mes "[Shurank]";
-			mes "Y-you've mastered";
-			mes "Provoke? Impressive!";
-			mes "I see that you've made";
-			mes "up your mind to become";
-			mes "an outstanding Swordman.";
-			mes "Here is a small reward...";
+			mes "V-você domina";
+			mes "Provoke? Impressionante!";
+			mes "Eu vejo que você têm";
+			mes "uma mente brilhante";
+			mes "para se tornar um excelente Espadachim.";
+			mes "Aqui está uma pequena recompensa...";
 			tu_swordman = 10;
 			changequest 8219, 8220;
 			if (RENEWAL_EXP)
@@ -420,52 +426,53 @@ izlude_in,82,163,3	script	Shurank	4_M_JOB_KNIGHT1,{
 				getexp 1260,0;
 			next;
 			mes "[Shurank]";
-			mes "Next time we speak, I will tell you what I know about the ^5D478BEndure^000000 skill. When you're ready to learn, come back to me.";
+			mes "Da proxima vez que nos falarmos, Eu vou te dizer tudo que eu sei sobre a habilidade ^5D478BVigor^000000. Quando você estiver pronto para aprender, volte a ate mim.";
 			close;
 		} else {
 			mes "[Shurank]";
-			mes "Hmm, I acknowledge";
-			mes "your progress, but you're not quite there yet. You've got to become more skilled in Provoke before";
-			mes "I can continue my lectures.";
+			mes "Hmm, eu reconheço";
+			mes "seu progresso, mas você ainda não acabou. Você deve se tornar mais hábil em provocar antes";
+			mes "Assim eu poderei continuar meus ensinamentos.";
 			close;
 		}
+		break;
 	case 8:
-		mes "Ah, you've returned.";
-		mes "So how has your training";
-		mes "in the use of the Provoke";
-		mes "skill been progressing?";
+		mes "Ah, você voltou.";
+		mes "Então como foi seu treinamento";
+		mes "no uso de Provoke?";
+		mes "sua habilidade progrediu?";
 		next;
 		.@chk_provoke = getskilllv(SM_PROVOKE);
 		if((.@chk_provoke > 0) && (.@chk_provoke < 5)){
 			mes "[Shurank]";
-			mes "Ah, now I can see that you";
-			mes "know how to use it. That's a vast improvement over not being able to use it at all. Let me refesh you on Provoke's details.";
+			mes "Ah, agora eu posso ver que você";
+			mes "já sabe como usar. Isso é uma grande melhoria para quem não era capaz de usa-lá. Mesmo assim deixe-me revisar com você os detalhes de Provoke.";
 			next;
 			mes "[Shurank]";
-			mes "In order to effectively use Provoke, you must understand";
-			mes "how it works: Provoke infuriates your opponents, making them";
-			mes "want to attack you.";
+			mes "Para utilizar Provoke de uma forma eficaz, você deve entender";
+			mes "como funciona: Provoke infurece seus oponentes, fazendo eles";
+			mes "quererem ataca-ló.";
 			next;
 			mes "[Shurank]";
-			mes "When provoked, an enemy will have greater attack strength, making it more dangerous, but will also have reduced defense, making your enemy easier to defeat.";
+			mes "Quando provocado, o inimigo terá uma maior força de ataque, tornando-se mais perigosos, mas também terá sua defesa reduzida, tornando-se mais fácil de se derrotar.";
 			next;
 			mes "[Shurank]";
-			mes "Ideally, you may wish to use Provoke on enemies when they are weakened enough so that you can finish them off more quickly. But that's up to you.";
+			mes "O Ideal é você usar Provoke nos inimigos quando eles estão enfraquecidos o suficiente para que você possa acabar com eles mais rápidamente. Mas isso é com você.";
 			next;
 			mes "[Shurank]";
-			mes "Also, the higher the level of Provoke that is used, the higher the attack increase and defense decrease of your target.";
+			mes "Além disso, quanto maior o nível do Provoke usado, maior serão o aumento do ataque e redução de defesa sofridos pelo alvo.";
 			next;
 			mes "[Shurank]";
-			mes "As an Active Skill, Provoke will consume a small amount of SP, just like Bash. So be careful not to run out of SP when using this skill.";
+			mes "Como uma habilidade ativa, Provoke vai consumir uma pequena quantia de SP, como o Golpe Fuminante. Portanto tenha cuidado para não ficar sem SP ao usar essa habilidade.";
 			next;
 			mes "[Shurank]";
-			mes "Alright, come back to me when you become sufficiently skilled in the use of Provoke. In the meantime, keep training.";
+			mes "Tudo bem, volte ate mim quando você estiver suficientemente qualificado para o uso de Provoke. Enquanto isso, continue treinando.";
 			tu_swordman = 9;
 			changequest 8218,8219;
 			close;
 		} else if((.@chk_provoke > 4) && (.@chk_provoke < 10)){
 			mes "[Shurank]";
-			mes "Ah, I see that you have a fairly good understanding of the Provoke skill. Let me reward you in this small way for your efforts.";
+			mes "Ah, Eu vejo que você já compreende bem o uso da habilidade Provoke. Deixe-me te dar uma pequena recompensa pelos seus esforços.";
 			tu_swordman = 10;
 			changequest 8218,8220;
 			if (RENEWAL_EXP)
@@ -474,16 +481,16 @@ izlude_in,82,163,3	script	Shurank	4_M_JOB_KNIGHT1,{
 				getexp 1120,0;
 			next;
 			mes "[Shurank]";
-			mes "Next time we speak, I will tell you what I know about the ^5D478BEndure^000000 skill. When you're ready to learn, come back to me.";
+			mes "Da proxima vez que nos falarmos, Eu vou te dizer tudo que eu sei sobre a habilidade ^5D478BVigor^000000. Quando você estiver pronto para aprender, volte ate mim.";
 			close;
-		} else if(.@chk_provoke == 10){
+		} else if (@chk_provoke == 10){
 			mes "[Shurank]";
-			mes "Y-you've mastered";
-			mes "Provoke? Impressive!";
-			mes "I see that you've made";
-			mes "up your mind to become";
-			mes "an outstanding Swordman.";
-			mes "Here is a small reward...";
+			mes "V-você domina";
+			mes "Provoke? Impressionante!";
+			mes "Eu vejo que você têm";
+			mes "uma mente brilhante";
+			mes "para se tornar um excelente Espadachim.";
+			mes "Aqui está uma pequena recompensa...";
 			tu_swordman = 10;
 			changequest 8218,8220;
 			if (RENEWAL_EXP)
@@ -491,84 +498,84 @@ izlude_in,82,163,3	script	Shurank	4_M_JOB_KNIGHT1,{
 			else
 				getexp 1260,0;
 			next;
-			mes "Next time we speak, I will tell you what I know about the ^5D478BEndure^000000 skill. When you're ready to learn, come back to me.";
+			mes "Da proxima vez que nos falarmos, vou te dizer tudo que eu sei sobre a habilidade ^5D478BVigor^000000. Quando você estiver pronto para aprender, volte ate mim.";
 			close;
 		} else {
 			mes "[Shurank]";
-			mes "Still haven't learned Provoke, eh? As a Swordman, I believe that it's important that you at least be able to use Provoke!";
+			mes "Ainda não aprendeu Provoke, ein? Como um Espadachim, eu acredito que saber como usar Provoke é algo muito importante!";
 			close;
 		}
 	case 7:
-		mes "Ah, you've returned. For a new Swordman, you are doing quite";
-		mes "well. So what is the message";
-		mes "from Dequ'ee?";
+		mes "Ah, você voltou. Para um Espadachim novato, você está fazendo um bom";
+		mes "trabalho. Qual é a mensagem";
+		mes "do Dequ'ee?";
 		next;
 		mes "[Shurank]";
-		mes "I see...";
-		mes "Well, now that we taken care";
-		mes "of that, let me continue your instruction on Swordman skills. This time, we'll cover Provoke.";
+		mes "Eu vejo...";
+		mes "Agora devemos tomar cuidado...";
+		mes "Bem, deixe-me continuar com as instruções das habilidades de Espadachim. Agora nós vamos falar de Provoke.";
 		next;
 		.@chk_provoke = getskilllv(SM_PROVOKE);
 		if(.@chk_provoke == 0){
 			mes "[Shurank]";
-			mes "You haven't";
-			mes "learned Provoke yet?";
-			mes "Hm. All the more reason why";
-			mes "I should explain it to you then.";
+			mes "Você ainda não";
+			mes "aprendeu Provoke?";
+			mes "Hm. Mais uma razão para que";
+			mes "eu deva explicar isso para você.";
 			next;
 			mes "[Shurank]";
-			mes "In order to effectively use Provoke, you must understand";
-			mes "how it works: Provoke infuriates your opponents, making them";
-			mes "want to attack you.";
+			mes "Para utilizar Provoke de uma forma eficaz, você deve entender";
+			mes "como funciona: Provoke infurece seus oponentes, fazendo eles";
+			mes "quererem ataca-ló.";
 			next;
 			mes "[Shurank]";
-			mes "When provoked, an enemy will have greater attack strength, making it more dangerous, but will also have reduced defense, making your enemy easier to defeat.";
+			mes "Quando provocado, o inimigo terá uma maior força de ataque, tornando-se mais perigosos, mas também terá sua defesa reduzida, tornando-se mais fácil de se derrotar.";
 			next;
 			mes "[Shurank]";
-			mes "Ideally, you may wish to use Provoke on enemies when they are weakened enough so that you can finish them off more quickly. But that's up to you.";
+			mes "O Ideal, é você usar Provoke nos inimigos quando eles estão enfraquecidos o suficiente para que você possa acabar com eles mais rápidamente. Mas isso é com você.";
 			next;
 			mes "[Shurank]";
-			mes "Also, the higher the level of Provoke that is used, the higher the attack increase and defense decrease of your target.";
+			mes "Além disso, quanto maior o nível do Provoke usado, maior serão o aumento do ataque e redução de defesa sofridos pelo alvo.";
 			next;
 			mes "[Shurank]";
-			mes "As an Active Skill, Provoke will consume a small amount of SP, just like Bash. So be careful not to run out of SP when using this skill.";
+			mes "Como uma habilidade ativa, Provoke vai consumir uma pequena quantia de SP, como o Golpe Fuminante. Portanto tenha cuidado para não ficar sem SP ao usar essa habilidade.";
 			next;
 			mes "[Shurank]";
-			mes "Now I ask that you train yourself in the use of Provoke. Come back";
-			mes "to me when you have a sufficient understanding of the use of the Provoke skill.";
+			mes "Agora eu peço que você treine o uso de Provoke. Volte";
+			mes "ate mim quando você estiver suficientemente qualificado para o uso de Provoke.";
 			tu_swordman = 8;
 			changequest 8217,8218;
 			close;
 		} else if((.@chk_provoke > 0) && (.@chk_provoke < 5)){
 			mes "[Shurank]";
-			mes "Hm. You seem to have a basic understanding of Provoke, but let me give you a few details so that you can better understand the use of that skill.";
+			mes "Hm. Você parece ter o entendimento básico sobre Provoke, mas deixe-me dar-lhe alguns detalhes para que você possa entender melhor o uso dessa habilidade.";
 			next;
 			mes "[Shurank]";
-			mes "In order to effectively use Provoke, you must understand";
-			mes "how it works: Provoke infuriates your opponents, making them";
-			mes "want to attack you.";
+			mes "Para utilizar Provoke de uma forma eficaz, você deve entender";
+			mes "como funciona: Provoke infurece seus oponentes, fazendo eles";
+			mes "quererem ataca-ló.";
 			next;
 			mes "[Shurank]";
-			mes "When provoked, an enemy will have greater attack strength, making it more dangerous, but will also have reduced defense, making your enemy easier to defeat.";
+			mes "Quando provocado, o inimigo terá uma maior força de ataque, tornando-se mais perigosos, mas também terá sua defesa reduzida, tornando-se mais fácil de se derrotar.";
 			next;
 			mes "[Shurank]";
-			mes "Ideally, you may wish to use Provoke on enemies when they are weakened enough so that you can finish them off more quickly. But that's up to you.";
+			mes "O Ideal, é você usar Provoke nos inimigos quando eles estão enfraquecidos o suficiente para que você possa acabar com eles mais rápidamente. Mas isso é com você.";
 			next;
 			mes "[Shurank]";
-			mes "Also, the higher the level of Provoke that is used, the higher the attack increase and defense decrease of your target.";
+			mes "Além disso, quanto maior o nível do Provoke usado, maior serão o aumento do ataque e redução de defesa sofridos pelo alvo.";
 			next;
 			mes "[Shurank]";
-			mes "As an Active Skill, Provoke will consume a small amount of SP, just like Bash. So be careful not to run out of SP when using this skill.";
+			mes "Como uma habilidade ativa, Provoke vai consumir uma pequena quantia de SP, como o Golpe Fuminante. Portanto tenha cuidado para não ficar sem SP ao usar essa habilidade.";
 			next;
 			mes "[Shurank]";
-			mes "Now I ask that you train yourself in the use of Provoke. Come back";
-			mes "to me when you have a sufficient understanding of the use of the Provoke skill.";
+			mes "Agora eu peço que você treine o uso de Provoke. Volte";
+			mes "ate mim quando você estiver suficientemente qualificado para o uso de Provoke.";
 			tu_swordman = 9;
 			changequest 8217,8219;
 			close;
 		} else if((.@chk_provoke > 4) && (.@chk_provoke < 10)){
 			mes "[Shurank]";
-			mes "Ah, I see that you have a fairly good understanding of the Provoke skill. Let me reward you in this small way for your efforts.";
+			mes "Ah, Eu vejo que você já compreende bem o uso da habilidade Provoke. Deixe-me te dar uma pequena recompensa pelos seus esforços.";
 			tu_swordman = 10;
 			changequest 8217,8220;
 			if (RENEWAL_EXP)
@@ -577,16 +584,16 @@ izlude_in,82,163,3	script	Shurank	4_M_JOB_KNIGHT1,{
 				getexp 1120,0;
 			next;
 			mes "[Shurank]";
-			mes "Next time we speak, I will tell you what I know about the ^5D478BEndure^000000 skill. When you're ready to learn, come back to me.";
+			mes "Da proxima vez que nos falarmos, vou te dizer tudo que eu sei sobre a habilidade ^5D478BVigor^000000. Quando você estiver pronto para aprender, volte ate mim.";
 			close;
 		} else if(.@chk_provoke == 10){
 			mes "[Shurank]";
-			mes "Y-you've mastered";
-			mes "Provoke? Impressive!";
-			mes "I see that you've made";
-			mes "up your mind to become";
-			mes "an outstanding Swordman.";
-			mes "Here is a small reward...";
+			mes "V-você domina";
+			mes "Provoke? Impressionante!";
+			mes "Eu vejo que você têm";
+			mes "uma mente brilhante";
+			mes "para se tornar um excelente Espadachim.";
+			mes "Aqui está uma pequena recompensa...";
 			tu_swordman = 10;
 			changequest 8217,8220;
 			if (RENEWAL_EXP)
@@ -595,91 +602,91 @@ izlude_in,82,163,3	script	Shurank	4_M_JOB_KNIGHT1,{
 				getexp 1260,0;
 			next;
 			mes "[Shurank]";
-			mes "Next time we speak, I will tell you what I know about the ^5D478BEndure^000000 skill. When you're ready to learn, come back to me.";
+			mes "Da proxima vez que nos falarmos, Eu vou te dizer tudo que eu sei sobre a habilidade ^5D478BVigor^000000. Quando você estiver pronto para aprender, volte ate mim.";
 			close;
 		}
 	case 6:
-		mes "I wish for you to find a Knight named ^5D478BDequ'ee^000000 in ^5D478BGeffen^000000. Listen carefully, this is the message";
-		mes "I want you to give him.";
+		mes "Eu quero que você encontre um Cavaleiro chamado ^5D478BDequ'ee^000000 em ^5D478BGeffen^000000. Ouça com atenção, está é a mensagem";
+		mes "que eu quero que você entregue para ele.";
 		next;
 		mes "[Shurank]";
-		mes "^0000FFWhat happened";
-		mes "to the murderer?^000000";
-		mes "^0000FFDid you find out who he is? If you did, what are we supposed to do now?^000000";
+		mes "^0000FFO que aconteceu";
+		mes "com o assassino?^000000";
+		mes "^0000FFVocê descobriu quem ele é? Se você descobriu, o que nós devemos fazer agora?^000000";
 		next;
 		mes "[Shurank]";
-		mes "If you use those exact words, Dequ'ee will understand what";
-		mes "you're talking about. Remember his response and let me know his answer.";
+		mes "Se você usar exatamente essas palavras, Dequ'ee vai saber sobre o que";
+		mes "você está falando. Lembre-se de sua repsosta, pois eu preciso saber o que ele disser.";
 		next;
 		mes "[Shurank]";
-		mes "It shouldn't be too hard fighting the monsters on the way to Geffen, but if you encounter any that are too strong, there's no shame in running away.";
+		mes "Não deve ser muito difícil lutar contra os monstros no caminho para Geffen, mas se você encontrar qualquer um que seja muito fortes, não tenha vergonha de fugir.";
 		next;
 		mes "[Shurank]";
-		mes "But now that I think about it, it may take you a while to travel to Geffen. I shall send you there myself! Good luck!";
+		mes "Mas acho que pode demorar um tempo para você chegar até Geffen. Eu estou te enviando em meu lugar! Boa sorte!";
 		next;
 		warp "gef_fild07",35,192;
 		close;
 	case 5:
-		mes "Ah, you've returned. I know I said that I would teach you what I know about the Provoke skill, but...";
+		mes "Ah, você voltou. Eu sei que disse que iria te ensinar tudo que eu sei sobre a habilidade Provoke, mas...";
 		next;
 		mes "[Shurank]";
-		mes "I actually have an important task that I'd like for you to perform. It's not very difficult: All you must do is deliver a message.";
+		mes "Na verdade tem uma importante tarefa que eu gostaria que você fizese. Não é muito difícil: Tudo o que você precisa fazer é entregar uma mensagem..";
 		next;
 		mes "[Shurank]";
-		mes "I wish for you to find a Knight named ^5D478BDequ'ee^000000 in ^5D478BGeffen^000000. Listen carefully, this is the message";
-		mes "I want you to give him.";
+		mes "Eu quero que você encontre um Cavaleiro chamado ^5D478BDequ'ee^000000 em ^5D478BGeffen^000000. Ouça com atenção, está é a mensagem";
+		mes "que eu quero que você entregue para ele.";
 		next;
 		mes "[Shurank]";
-		mes "^0000FFWhat happened";
-		mes "to the murderer?^000000";
-		mes "^0000FFDid you find out who he is? If you did, what are we supposed to do now?^000000";
+		mes "^0000FFO que aconteceu";
+		mes "com o assassino?^000000";
+		mes "^0000FFVocê descobriu quem ele é? Se você descobriu, o que nós devemos fazer agora?^000000";
 		next;
 		mes "[Shurank]";
-		mes "If you use those exact words, Dequ'ee will understand what";
-		mes "you're talking about. Remember his response and let me know his answer.";
+		mes "Se você usar exatamente essas palavras, Dequ'ee vai saber sobre o que";
+		mes "você está falando. Lembre-se de sua resposta, pois eu preciso saber o que ele disser.";
 		next;
 		mes "[Shurank]";
-		mes "It shouldn't be too hard fighting the monsters on the way to Geffen, but if you encounter any that are too strong, there's no shame in running away.";
+		mes "Não deve ser muito difícil lutar contra os monstros no caminho para Geffen, mas se você encontrar qualquer um que seja muito fortes, não tenha vergonha de fugir.";
 		next;
 		mes "[Shurank]";
-		mes "Although there's a Warp service,";
-		mes "I recommend traveling by foot. You cannot grow strong without testing your strength and practicing your skills!";
+		mes "Embora haja um serviço de teleporte,";
+		mes "recomendo que você viaje a pé. Você não pode tornar-se forte sem testar sua força e praticar suas habilidades!";
 		tu_swordman = 6;
 		changequest 8215,8216;
 		close;
 	case 4:
-		mes "Since you've mastered Bash,";
-		mes "I feel that you're ready to learn more about Swordman skills.";
+		mes "Uma vez que você já domina o Golpe Fuminante,";
+		mes "sinto que você está pronto para aprender mais sobre as outras habilidades de Espadachim.";
 		next;
 		mes "[Shurank]";
-		mes "Now, you must be familiar with the ^5D478BIncrease HP Recovery Skill^000000. When";
-		mes "it comes to damage, you must be";
-		mes "able to both take it and dish it out.";
+		mes "Agora, você já deve está familiarizado com a habilidade ^5D478BIncrease HP Recovery^000000. Quando";
+		mes "se trata de dano, você deve ser";
+		mes "capaz de recebe-ló e recuperá-lo depois.";
 		next;
 		.@chk_hp = getskilllv(SM_RECOVERY);
 		if(.@chk_hp == 0){
 			mes "[Shurank]";
-			mes "But judging from that";
-			mes "scrawny frame of yours,";
-			mes "its looks like you haven't learned the Increase HP Recovery Skill at all...!";
+			mes "Mas julgando o quão";
+			mes "baixa é a sua recuperação,";
+			mes "parece que você ainda não aprendeu a aumentar completamente a recuperação de HP...!";
 			next;
 			mes "[Shurank]";
-			mes "The Increase HP Recovery Skill";
-			mes "is a passive skill that is always in effect and does not consume";
-			mes "any of your SP.";
+			mes "a habilidade Increase HP Recovery";
+			mes "é uma habilidade passiva que está sempre em vigor e não consome";
+			mes "nenhuma quantia do seu SP.";
 			next;
 			mes "[Shurank]";
-			mes "It enables you to regenerate your health twice as fast. This might not seem like a big deal, but it will reduce the time you need to rest from battles.";
+			mes "Ela permite que você restaure sua saúde duas vezes mais rápido quando parado. Isso pode não parecer grande coisa, mas vai reduzir o tempo que você precisa para descansar de batalhas.";
 			next;
 			mes "[Shurank]";
-			mes "I strongly suggest that you";
-			mes "learn this skill! Of course, there are other Swordman skills that are just as important, though...";
+			mes "Eu sugiro muito que você";
+			mes "aprenda essa habilidade! Claro, existem outras habilidades de Espadachim que também são importantes, porém...";
 			tu_swordman = 5;
 			next;
 		} else if(.@chk_hp == 10){
 			mes "[Shurank]";
-			mes "Ah! That healthy glow!";
-			mes "I see that you've mastered this skill already. Let me give you a little reward for your hard training!";
+			mes "Ah! que rosto saudável!";
+			mes "Eu vejo que você já domina essa habilidade. Deixe-me dar-lhe uma pequena recompensa pelo seu trabalho duro!";
 			tu_swordman = 5;
 			if (RENEWAL_EXP)
 				getexp 112,0;
@@ -688,42 +695,42 @@ izlude_in,82,163,3	script	Shurank	4_M_JOB_KNIGHT1,{
 			next;
 		} else {
 			mes "[Shurank]";
-			mes "Ah, and I see that you've already learned a little bit about it. But let me briefly tell you more about Increase HP Recovery.";
+			mes "Ah, eu vejo que você já aprendeu um pouco sobre isso. Mas deixe-me dizer-lhe brevemente mais sobre Increase HP Recovery.";
 			next;
 			mes "[Shurank]";
-			mes "The Increase HP Recovery Skill";
-			mes "is a passive skill that is always in effect and does not consume";
-			mes "any of your SP.";
+			mes "A habilidade Increase HP Recovery";
+			mes "é uma habilidade passiva que está sempre em vigor e não consome";
+			mes "nenhuma quantia do seu SP.";
 			next;
 			mes "[Shurank]";
-			mes "It enables you to regenerate your health twice as fast. This might not seem like a big deal, but it will reduce the time you need to rest from battles.";
+			mes "Ela permite que você restaure sua saúde duas vezes mais rápido quando parado. Isso pode não parecer grande coisa, mas vai reduzir o tempo que você precisa para descansar de batalhas.";
 			next;
 			mes "[Shurank]";
-			mes "Increase HP Recovery is a fairly important skill, but whether or not you want to master that is really up to you.";
+			mes "Increase HP Recovery é uma habilidade muito importante, mas cabe a você decidir se deve ou não aumentar essa habilidade até o máximo.";
 			tu_swordman = 5;
 			next;
 		}
 		mes "[Shurank]";
-		mes "By now, I believe that you know enough about the Increase HP Recovery skill. Next time, I shall teach you what I know about the Provoke skill.";
+		mes "Até agora, eu acredito que você sabe o suficiente sobre a habilidadee Increase HP Recovery. Da proxima vez, eu vou te ensinar o que sei sobre a habilidade Provoke.";
 		changequest 8214, 8215;
 		close;
 	case 3:
-		mes "If you want to be";
-		mes "able to use the full";
-		mes "power of the Bash skill,";
-		mes "you better have mastered it";
-		mes "if you want me to acknowledge";
-		mes "you as a fellow Swordman.";
+		mes "Se você quer ser";
+		mes "capaz de utilizar plenamente";
+		mes "o poder da habilidade Golpe Fuminante,";
+		mes "é melhor que você aumente-á até o máximo";
+		mes "Isto é um conselho que um";
+		mes "companheiro Espadachim está dando a você.";
 		next;
 		.@chk_bash = getskilllv(SM_BASH);
 		if(.@chk_bash == 10){
 			mes "[Shurank]";
-			mes "Those calluses...!";
-			mes "Only a master of the Bash skill has those kinds of hands. Great work, Swordman. I'm very impressed.";
+			mes "Esses calos...!";
+			mes "Apenas um mestre da habilidade Golpe Fuminante tem esses tipos de mãos. Ótimo trabalho, Espadachim. Estou muito impressionado.";
 			next;
 			mes "[Shurank]";
-			mes "Here's a small prize in recognition of your efforts thus far. But don't relax yet! You still have a long way to go before grasping";
-			mes "all of the basics.";
+			mes "Aqui está um pequeno prêmio em reconhecimento dos seus esforços até agora. mas ainda não relaxe! Você tem um longo caminho a percorrer antes de conquistar";
+			mes "as principais coisas.";
 			tu_swordman = 4;
 			changequest 8213, 8214;
 			if (RENEWAL_EXP)
@@ -734,35 +741,35 @@ izlude_in,82,163,3	script	Shurank	4_M_JOB_KNIGHT1,{
 			close;
 		} else {
 			mes "[Shurank]";
-			mes "Hmm, you might be able to";
-			mes "use Bash quite well, but you are not a master of it yet. I encourage you to master Bash in order to unleash its true potential!";
+			mes "Hmm, você pode ser capaz de";
+			mes "usar Golpe Fuminante muito bem, mas você ainda não é um mestre nisso. Aconselho você a dominar Golpe Fuminante até o máximo para libertar o seu verdadeiro poder!";
 			close;
 		}
 	case 2:
-		mes "I hope you've been";
-		mes "training yourself in using";
-		mes "Bash. If you want to grow as a Swordman, you will have great";
-		mes "need to master this skill.";
+		mes "Espero que você ande";
+		mes "treinando em usar";
+		mes "Golpe Fuminante. Se você quer se tornar um grande Espadachim, você terá uma grande";
+		mes "necessidade de dominar essa habilidade";
 		next;
 		.@chk_bash = getskilllv(SM_BASH);
 		if((.@chk_bash > 4) && (.@chk_bash < 10)){
 			mes "[Shurank]";
-			mes "Hm. It doesn't look like you've gained mastery of Bash, but it seems like you're trying hard.";
+			mes "Hm. Estou vendo que você ainda não dominou completamente Golpe Fuminante, mas parece que você está se esforçando.";
 			next;
 			mes "[Shurank]";
-			mes "Let me review the use of the Bash skill to you. If you've heard this before, it'll be a good refresher.";
+			mes "Deixe-me rever o uso da habilidade Golpe Fuminante com você. Se você já ouviu isso antes, vai ser uma boa revisão.";
 			next;
 			mes "[Shurank]";
-			mes "Bash is an active skill, mastered at Level 10, which allows you to smash your target. In essense,";
-			mes "it's a highly damaging attack!";
+			mes "Golpe Fuminante é uma habilidade ativa, se dominada em nível 10, permite esmagar os seus adversários fácilmente. É essêncial,";
+			mes "pois se trata de um ataque altamente ofensivo!";
 			next;
 			mes "[Shurank]";
-			mes "Since it's an active skill, Bash consumes SP each time it is";
-			mes "used. If you're not careful, you'll be out of SP in no time...!";
+			mes "Já que é uma habilidade ativa, Golpe Fuminante consome SP cada vez que é";
+			mes "usado. Basta tomar cuidado, e você não ficará sem SP em momento algum...!";
 			next;
 			mes "[Shurank]";
-			mes "Here's a little reward for all of your hard work. I hope you realize the importance of using Bash as";
-			mes "you grow stronger.";
+			mes "Aqui está uma pequena recompensa por todo o trabalho duro. Eu espero que você perceba a importância do uso Golpe Fuminante para";
+			mes "para tornar-se mais forte.";
 			tu_swordman = 3;
 			changequest 8212, 8213;
 			if (RENEWAL_EXP)
@@ -772,51 +779,51 @@ izlude_in,82,163,3	script	Shurank	4_M_JOB_KNIGHT1,{
 			close;
 		} else if(.@chk_bash == 10){
 			mes "[Shurank]";
-			mes "Those calluses...!";
-			mes "Only a master of the Bash skill has those kinds of hands. Great work, Swordman. I'm very impressed.";
+			mes "Esses calos...!";
+			mes "Apenas um mestre da habilidade Golpe Fuminante tem esses tipos de mãos. Ótimo trabalho, Espadachim. Estou muito impressionado.";
 			next;
 			mes "[Shurank]";
-			mes "Here's a small prize in recognition of your efforts thus far. But don't relax yet! You still have a long way to go before grasping";
-			mes "all of the basics.";
+			mes "Aqui está um pequeno prêmio em reconhecimento dos seus esforços até agora. mas ainda não relaxe! Você tem um longo caminho a percorrer antes de conquistar";
+			mes "as principais coisas.";
 			tu_swordman = 4;
 			changequest 8212, 8214;
 			if (RENEWAL_EXP)
 				getexp 97,0;
 			else
 				getexp 970,0;
-			getitem 2503,1; //Muffler
+			getitem 2503,1;
 			close;
 		} else {
 			mes "[Shurank]";
-			mes "Hmm, you might be able to";
-			mes "use Bash quite well, but you are not a master of it yet. I encourage you to master Bash in order to unleash its true potential!";
+			mes "Hmm, você pode ser capaz de";
+			mes "usar Golpe Fuminante muito bem, mas você ainda não é um mestre nisso. Aconselho você a dominar Golpe Fuminante até o máximo para libertar o seu verdadeiro poder!";
 			close;
 		}
 	case 1:
-		mes "Have you been learning";
-		mes "the art of using Bash? I fervently believe that the Bash skill is the essense of Swordmanship!";
+		mes "Você está aprendendo";
+		mes "a arte de usar Golpe Fuminante? Eu acredito que a habilidade Golpe Fuminante é totalmente a essência de esgrima!";
 		next;
 		.@chk_bash = getskilllv(SM_BASH);
 		if((.@chk_bash > 0) && (.@chk_bash < 5)){
 			mes "[Shurank]";
-			mes "I see that you understand";
-			mes "a little bit about the Bash skill. But still, it's not enough. Let me explain in detail...";
+			mes "Eu vejo que você entende";
+			mes "um pouco sobre a habilidade Golpe Fuminante. Mas ainda assim, não é suficiente. Deixe-me explicar em detalhes...";
 			next;
 			mes "[Shurank]";
-			mes "Bash is an active skill, mastered at Level 10, which allows you to smash your target. In essense,";
-			mes "it's a highly damaging attack!";
+			mes "Golpe Fuminante é uma habilidade ativa, se dominada em nível 10, permite esmagar os seus adversários fácilmente. É essêncial,";
+			mes "pois se trata de um ataque altamente ofensivo!";
 			next;
 			mes "[Shurank]";
-			mes "Since it's an active skill, Bash consumes SP each time it is";
-			mes "used. If you're not careful, you'll be out of SP in no time...!";
+			mes "Já que é uma habilidade ativa, Golpe Fuminante consome SP cada vez que é";
+			mes "usado. Basta tomar cuidado, e você não ficará sem SP em momento algum...!";
 			next;
 			mes "[Shurank]";
-			mes "Well, that's all I can tell you about Bash for now. As for its subtle nuances, you'll have to experience them for yourself";
-			mes "in battle.";
+			mes "Bem, isso é tudo que posso lhe falar sobre o Golpe Fuminante por enquanto. Já sobre seus movimentos sutis, você deverá treiná-los sozinho.";
+			mes "nas batalhas.";
 			next;
 			mes "[Shurank]";
-			mes "Still, for your training efforts, let me give you a humble reward. But remember, we still have more";
-			mes "of the fundamentals to cover!";
+			mes "Ainda assim, pelo seu esforço no treinamento, deixe-me lhe dar uma humilde recompensa. Mas lembre-se, ainda temos mais";
+			mes "fundamentos para aprender!";
 			tu_swordman = 2;
 			changequest 8211, 8212;
 			if (RENEWAL_EXP)
@@ -827,29 +834,25 @@ izlude_in,82,163,3	script	Shurank	4_M_JOB_KNIGHT1,{
 		} else if((.@chk_bash > 4) && (.@chk_bash < 10)){
 			mes "[Shurank]";
 			mes "Hmm...";
-			mes "Still haven't mastered Bash, eh? Well, in any case, I think you've made some progress.";
+			mes "Ainda não domina Golpe Fuminante, ein? Bem, em todo caso, eu acho que você fez algum progresso.";
 			next;
 			mes "[Shurank]";
-			mes "Let me explain the use of the Bash skill to you. If you've heard this before, it'll be a good refresher.";
+			mes "Deixe-me rever o uso da habilidade Golpe Fuminante com você. Se você já ouviu isso antes, vai ser uma boa revisão.";
 			next;
 			mes "[Shurank]";
-			mes "I see that you understand";
-			mes "a little bit about the Bash skill. But still, it's not enough. Let me explain in detail...";
+			mes "Golpe Fuminante é uma habilidade ativa, se dominada em nível 10, permite esmagar os seus adversários fácilmente. É essêncial,";
+			mes "pois se trata de um ataque altamente ofensivo!";
 			next;
 			mes "[Shurank]";
-			mes "Bash is an active skill, mastered at Level 10, which allows you to smash your target. In essense,";
-			mes "it's a highly damaging attack!";
+			mes "Já que é uma habilidade ativa, Golpe Fuminante consome SP cada vez que é";
+			mes "usado. Basta tomar cuidado, e você não ficará sem SP em momento algum...!";
 			next;
 			mes "[Shurank]";
-			mes "Since it's an active skill, Bash consumes SP each time it is";
-			mes "used. If you're not careful, you'll be out of SP in no time...!";
+			mes "Bem, isso é tudo que posso lhe falar sobre o Golpe Fuminante por enquanto. Já sobre seus movimentos sutis, você deverá treiná-los sozinho.";
+			mes "nas batalhas.";
 			next;
 			mes "[Shurank]";
-			mes "Well, that's all I can tell you about Bash for now. As for its subtle nuances, you'll have to experience them for yourself";
-			mes "in battle.";
-			next;
-			mes "[Shurank]";
-			mes "For your efforts and patience, I offer you this small reward. Please take it and grow even stronger...";
+			mes "Por seu esforço e paciência, eu lhe ofereço essa pequena recompensa. Por favor pegue-a e use para se tornar cada vez mais forte...";
 			tu_swordman = 3;
 			changequest 8211, 8213;
 			if (RENEWAL_EXP)
@@ -858,16 +861,16 @@ izlude_in,82,163,3	script	Shurank	4_M_JOB_KNIGHT1,{
 				getexp 830,0;
 			next;
 			mes "[Shurank]";
-			mes "I believe that every true Swordman should master the Bash skill. If you ever do master the skill as a Swordman, come back to me.";
+			mes "Eu acredito que todo Espadachim de verdade deve dominar a habilidade Golpe Fuminante. Quando você dominar essa habilidade, volte até mim.";
 			close;
 		} else if(.@chk_bash == 10){
 			mes "[Shurank]";
-			mes "Those calluses...!";
-			mes "Only a master of the Bash skill has those kinds of hands. Great work, Swordman. I'm very impressed.";
+			mes "Esses calos...!";
+			mes "Apenas um mestre da habilidade Golpe Fuminante tem esses tipos de mãos. Ótimo trabalho, Espadachim. Estou muito impressionado.";
 			next;
 			mes "[Shurank]";
-			mes "Here's a small prize in recognition of your efforts thus far. But don't relax yet! You still have a long way to go before grasping";
-			mes "all of the basics.";
+			mes "Aqui está um pequeno prêmio em reconhecimento dos seus esforços até agora. mas ainda não relaxe! Você tem um longo caminho a percorrer antes de conquistar";
+			mes "as principais coisas.";
 			tu_swordman = 4;
 			changequest 8211, 8214;
 			if (RENEWAL_EXP)
@@ -878,33 +881,33 @@ izlude_in,82,163,3	script	Shurank	4_M_JOB_KNIGHT1,{
 			close;
 		} else {
 			mes "[Shurank]";
-			mes "You still can't even use Bash...? What's the use of a sword if not to smash things?! Come back to me";
-			mes "once you've learned how to use";
-			mes "that skill!";
+			mes "Você realmente não pode usar Golpe Fuminante...? Qual a utilidade de uma espada se não for para esmagar coisas?! Volte até mim";
+			mes "quando você tiver aprendido a usar";
+			mes "essa habilidade!";
 			close;
 		}
 	case 0:
-		mes "Ah, a comrade in arms.";
-		mes "Allow me to introduce myself. I am Shurank Chainlier, a Knight in the service of the Prontera Chivalry.";
+		mes "Ah, um colega de armas.";
+		mes "Permita-me apresentar-me. Eu sou Shurank Chainlier, um Cavaleiro a serviço da cavalaria de Prontera.";
 		next;
 		mes "[Shurank]";
-		mes "It concerns me deeply that the Swordmen of today may not truly understand the way of the sword. And to think that they may become Knights later...";
+		mes "Preocupa-me profudamente o fato dos Espadachins de hoje não entenderem o verdadeiro caminho da espada. E pensar que eles poderão se tornar Cavaleiros mais tarde...";
 		next;
 		mes "[Shurank]";
-		mes "Have you been training";
-		mes "to be an expert Swordman?";
-		mes "If so, you must learn the";
-		mes "fundamentals, the first of";
-		mes "which is the ^5D478BBash^000000 skill.";
+		mes "Você já foi ao treinamento";
+		mes "para tornar-se um Espadachim perito?";
+		mes "Você tem de aprender o";
+		mes "principal, a primeira das";
+		mes "habilidades que é o ^5D478BGolpe Fuminante^000000.";
 		next;
 		.@chk_bash = getskilllv(SM_BASH);
 		if(.@chk_bash == 0){
 			mes "[Shurank]";
 			mes "^333333*Gasp*^000000";
-			mes "Those soft, delicate hands! You've never learned how to use Bash, haven't you?! How do you expect to lead battles without knowing Bash?";
+			mes "Essas suaves e delicadas mãos! Você nunca aprendeu a usar Golpe Fuminante?! Como você espera ir para a batalha sem saber usar Golpe Fuminante?";
 			next;
 			mes "[Shurank]";
-			mes "Now, if you wish to become a true Swordman, you must learn the Bash skill. There's no question about it: You've got to know these basics! Take this, and learn to Bash!";
+			mes "Agora, se você deseja torna-se um Espadachim de verdade, você precisa aprender a habilidade Golpe Fuminante. Não tenha dúvidas quanto a isso: você tem de conhecer esses principios! Tome isso, e vá aprender Golpe Fuminante!";
 			tu_swordman = 1;
 			if (RENEWAL_EXP)
 				getexp 49,0;
@@ -914,24 +917,24 @@ izlude_in,82,163,3	script	Shurank	4_M_JOB_KNIGHT1,{
 			close;
 		} else if((.@chk_bash > 0) && (.@chk_bash < 5)){
 			mes "[Shurank]";
-			mes "I see that you understand";
-			mes "a little bit about the Bash skill. But still, it's not enough. Let me explain in detail...";
+			mes "Eu vejo que você entende";
+			mes "um pouco sobre a habilidade Golpe Fuminante. Mas ainda assim, não é suficiente. Deixe-me explicar em detalhes...";
 			next;
 			mes "[Shurank]";
-			mes "Bash is an active skill, mastered at Level 10, which allows you to smash your target. In essense,";
-			mes "it's a highly damaging attack!";
+			mes "Golpe Fuminante é uma habilidade ativa, se dominada em nível 10, permite esmagar os seus adversários fácilmente. É essêncial,";
+			mes "pois se trata de um ataque altamente ofensivo!";
 			next;
 			mes "[Shurank]";
-			mes "Since it's an active skill, Bash consumes SP each time it is";
-			mes "used. If you're not careful, you'll be out of SP in no time...!";
+			mes "Já que é uma habilidade ativa, Golpe Fuminante consome SP cada vez que é";
+			mes "usado. Basta tomar cuidado, e você não ficará sem SP em momento algum...!";
 			next;
 			mes "[Shurank]";
-			mes "Well, that's all I can tell you about Bash for now. As for its subtle nuances, you'll have to experience them for yourself";
-			mes "in battle.";
+			mes "Bem, isso é tudo que posso lhe falar sobre o Golpe Fuminante por enquanto. Já sobre seus movimentos sutis, você deverá treiná-los sozinho.";
+			mes "nas batalhas.";
 			next;
 			mes "[Shurank]";
-			mes "Still, for your training efforts, let me give you a humble reward. But remember, we still have more";
-			mes "of the fundamentals to cover!";
+			mes "Ainda assim, pelo seu esforço no treinamento, deixe-me lhe dar uma humilde recompensa. Mas lembre-se, ainda temos mais";
+			mes "fundamentos para aprender!";
 			tu_swordman = 2;
 			setquest 8212;
 			if (RENEWAL_EXP)
@@ -941,23 +944,23 @@ izlude_in,82,163,3	script	Shurank	4_M_JOB_KNIGHT1,{
 			close;
 		} else if((.@chk_bash > 4) && (.@chk_bash < 10)){
 			mes "[Shurank]";
-			mes "I see that you've gained some proficiency with the Bash skill. But still, it's not enough. Let me explain...";
+			mes "Eu vejo que você está melhorando no uso de Golpe Fuminante. Ainda assim, não é o suficiente. Deixe-me explicar...";
 			next;
 			mes "[Shurank]";
-			mes "Bash is an active skill, mastered at Level 10, which allows you to smash your target. In essense,";
-			mes "it's a highly damaging attack!";
+			mes "Golpe Fuminante é uma habilidade ativa, se dominada em nível 10, permite esmagar os seus adversários fácilmente. É essêncial,";
+			mes "pois se trata de um ataque altamente ofensivo!";
 			next;
 			mes "[Shurank]";
-			mes "Since it's an active skill, Bash consumes SP each time it is";
-			mes "used. If you're not careful, you'll be out of SP in no time...!";
+			mes "Já que é uma habilidade ativa, Golpe Fuminante consome SP cada vez que é";
+			mes "usado. Basta tomar cuidado, e você não ficará sem SP em momento algum...!";
 			next;
 			mes "[Shurank]";
-			mes "Well, that's all I can tell you about Bash for now. As for its subtle nuances, you'll have to experience them for yourself";
-			mes "in battle.";
+			mes "Bem, isso é tudo que posso lhe falar sobre o Golpe Fuminante por enquanto. Já sobre seus movimentos sutis, você deverá treiná-los sozinho.";
+			mes "nas batalhas.";
 			next;
 			mes "[Shurank]";
-			mes "Still, for your training efforts, let me give you a humble reward. But remember, we still have more";
-			mes "of the fundamentals to cover!";
+			mes "Ainda assim, pelo seu esforço no treinamento, deixe-me lhe dar uma humilde recompensa. Mas lembre-se, ainda temos mais.";
+			mes "dos fundamentos para aprender!";
 			tu_swordman = 3;
 			setquest 8213;
 			if (RENEWAL_EXP)
@@ -966,16 +969,16 @@ izlude_in,82,163,3	script	Shurank	4_M_JOB_KNIGHT1,{
 				getexp 830,0;
 			next;
 			mes "[Shurank]";
-			mes "But if you wish to become an expert Swordman in my eyes, you must master Bash!";
+			mes "Mas se você quiser mesmo ser visto por mim como um verdadeiro Espadachim, você deverá dominar Golpe Fuminante!";
 			close;
 		} else if(.@chk_bash == 10){
 			mes "[Shurank]";
-			mes "Those calluses...!";
-			mes "Only a master of the Bash skill has those kinds of hands. Great work, Swordman. I'm very impressed.";
+			mes "Esses calos...!";
+			mes "Apenas um mestre da habilidade Golpe Fuminante tem esses tipos de mãos. Ótimo trabalho, Espadachim. Estou muito impressionado.";
 			next;
 			mes "[Shurank]";
-			mes "Here's a small prize in recognition of your efforts thus far. But don't relax yet! You still have a long way to go before grasping";
-			mes "all of the basics.";
+			mes "Aqui está um pequeno prêmio em reconhecimento dos seus esforços até agora. mas ainda não relaxe! Você tem um longo caminho a percorrer antes de conquistar";
+			mes "as principais coisas.";
 			tu_swordman = 4;
 			setquest 8214;
 			if (RENEWAL_EXP)
@@ -991,1262 +994,1262 @@ izlude_in,82,163,3	script	Shurank	4_M_JOB_KNIGHT1,{
 	close;
 }
 
-// Daqu'ee
+// Dequee
 //============================================================
 geffen,154,143,3	script	Dequ'ee	4_M_JOB_KNIGHT2,{
 	if(BaseJob == Job_Novice){
 		mes "[Dequ'ee]";
-		mes "Hey there.";
-		mes "Frustrated with";
-		mes "being a Novice?";
-		mes "I know, I know,";
-		mes "we've all been";
-		mes "there once.";
+		mes "Ei você!";
+		mes "Frustrado por";
+		mes "ser um novato?";
+		mes "Eu sei, eu sei,";
+		mes "todos nós já fomos";
+		mes "um dia.";
 		next;
 		mes "[Dequ'ee]";
-		mes "If you want to become stronger,";
-		mes "why don't you consider becoming a Swordman? It'll require discipline on your part, but that job will shape you into a tough warrior.";
+		mes "Se você quer se tornar mais forte,";
+		mes "porque não pensa em se tornar um Espadachim? Vai exigir disciplina de sua parte, mas o trabalho duro irá te tornar um guerreiro durão.";
 		next;
 		mes "[Dequ'ee]";
-		mes "It's ultimately your decision.";
-		mes "I don't know how you want to live your life, but you should give the Swordman job some serious thought...";
+		mes "Mas isso vai depender de sua decisão.";
+		mes "Eu não sei do que você quer viver, mas deveria pensar seriamente em pertencer a classe dos Espadachins...";
 		close;
 	}
-	if(BaseClass == Job_Swordman && eaclass()&(EAJL_2|EAJL_UPPER)){
+	if (BaseClass == Job_Swordman && eaclass()&(EAJL_2|EAJL_UPPER)){
 		mes "[Dequ'ee]";
 		mes "Ah...";
-		mes "A fellow sword wielder!";
-		mes "How have you been doing?";
+		mes "Um companheiro portador de espada!";
+		mes "O que você está fazendo?";
 		next;
 		mes "[Dequ'ee]";
-		mes "There must be many who must";
-		mes "depend on the strength of your blade. It's an awesome responsibility, but we can never let our allies down in battle...";
+		mes "Devem haver muitos que";
+		mes "dependem da força de sua lâmina. É uma enorme responsabilidade, mas nunca devemos deixar nossos aliados em combate...";
 		close;
 	}
-	if(BaseClass != Job_Swordman){
+	if (BaseClass != Job_Swordman){
 		mes "[Dequ'ee]";
-		mes "Hello there.";
-		mes "Not a fan of swords, are you?";
-		mes "Well, if you were, we'd have";
-		mes "something to talk about.";
+		mes "Olá.";
+		mes "você não é um fã da espada?";
+		mes "Bem, se você fosse, teriamos";
+		mes "alguma coisa para falar.";
 		next;
 		mes "[Dequ'ee]";
-		mes "Yeah.";
-		mes "Not much";
-		mes "conversation";
-		mes "happening here.";
-		mes "Pretty boring...";
+		mes "É,";
+		mes "não tenho muito";
+		mes "o que conversar";
+		mes "sobre os acontecimentos daqui.";
+		mes "É bem chato...";
 		close;
 	}
 	if(tu_swordman > 20){
-		mes "[Dequ'ee]";
-		mes "I hope you continue";
-		mes "to train yourself in";
-		mes "the ways of the sword.";
-		mes "There's an art to";
-		mes "wielding a blade...";
-		close;
+	mes "[Dequ'ee]";
+	mes "Eu espero que você continue";
+	mes "com seu treinamento";
+	mes "no caminho da Espada.";
+	mes "Saber empunhar uma lâmina";
+	mes "é uma arte...";
+	close;
 	}
 	if(tu_swordman == 20){
-		mes "[Dequ'ee]";
-		mes "Huh...?";
-		mes "Aren't you supposed";
-		mes "to keep an eye on Bankley?";
-		mes "What happened?";
-		next;
-		mes "[Dequ'ee]";
-		mes "Suicide...?";
-		mes "Are you serious?!";
-		mes "But there's no need to kill";
-		mes "himself if he suspected that he's been caught. Something shady's going on here!";
-		next;
-		mes "[Dequ'ee]";
-		mes "Well, you've done a good job.";
-		mes "As for the other three suspects, I'll make sure that they're monitored by members of the Swordman Association.";
-		next;
-		mes "[Dequ'ee]";
-		mes "Still, I don't think we'll learn anything new from those three.";
-		mes "It looks like this case is closed for now. Once again, thanks for your help.";
-		next;
-		mes "[Dequ'ee]";
-		mes "Why don't you report back to Shurank now? I guess he still";
-		mes "wants to show you the ropes of Swordmanship.";
+	mes "[Dequ'ee]";
+	mes "Huh...?";
+	mes "Você não deveria";
+	mes "está vigiando Bankley?";
+	mes "O que aconteceu?";
+	next;
+	mes "[Dequ'ee]";
+	mes "Suicidio...?";
+	mes "Você está falando sério?!";
+	mes "Mas não havia necessidade de se matar!";
+	mes "Ele mesmo suspeitava que seria pego. Alguma coisa muito estranha está acontecendo aqui!";
+	next;
+	mes "[Dequ'ee]";
+	mes "Bem, você fez um bom trabalho.";
+	mes "Quanto aos outros três suspeitos, eu vou ter certeza de que eles estão sendo monitoradas por membros da Associação dos Espadachins.";
+	next;
+	mes "[Dequ'ee]";
+	mes "Ainda assim eu não acho que vamos descobrir nada de novo com aqueles três.";
+	mes "Mais uma vez parece que esse caso está encerrado. Mais uma vez, agradeço pela sua ajuda.";
+	next;
+	mes "[Dequ'ee]";
+	mes "Porque você não volta ate Shurank agora? Eu acho que ele ainda";
+	mes "quer mostrar-lhe alguma coisa sobre esgrima.";
 		tu_swordman = 21;
 		changequest 8226,8227;
-		close2;
+	close2;
 		if (RENEWAL)
 			warp "izlude",127,100;
 		else
-			warp "izlude",35,78;
-		end;
+	warp "izlude",35,78;
+	end;
 	}
 	if(tu_swordman == 19){
-		mes "[Dequ'ee]";
-		mes "What are still doing here?";
-		mes "Hurry and check on Bankley!";
-		mes "There's no telling what";
-		mes "he might be up to!";
-		close;
+	mes "[Dequ'ee]";
+	mes "O que ainda está fazendo aqui?";
+	mes "Vá depressa vigiar o Bankley!";
+	mes "Não há como saber o que";
+	mes "ele é capaz de fazer!";
+	close;
 	}
 	if((tu_swordman == 17) || (tu_swordman == 18)){
-		mes "[Dequ'ee]";
+	mes "[Dequ'ee]";
 		if(tu_swordman == 17){
-			mes "TheisWesomeof";
-			mes "ConBanfoevidehi";
-			mes "victkleyundncem";
-			mes "hekdlfiDrindkelsd";
-			next;
-		} else if(tu_swordman == 18){
-			mes "hekdlfiDrindkelsd";
-			mes "TheisWesomeof";
-			mes "ConBanfoevidehi";
-			mes "victkleyundncem";
-			next;
-		}
-		mes "[Dequ'ee]";
-		mes "I get it now!";
-		mes "This is a complex transposition cipher in which we remove one person's code from the rest of them. So who do you think is";
-		mes "the murderer?";
+		mes "TheisWesomeof";
+		mes "ConBanfoevidehi";
+		mes "victkleyundncem";
+		mes "hekdlfiDrindkelsd";
 		next;
-		switch(select("Hans:Bankley:Geil:Muetro")) {
+		} else if(tu_swordman == 18){
+		mes "hekdlfiDrindkelsd";
+		mes "TheisWesomeof";
+		mes "ConBanfoevidehi";
+		mes "victkleyundncem";
+		next;
+	}
+	mes "[Dequ'ee]";
+	mes "Agora entendi!";
+	mes "Isso é uma cifra de transposição complexa em que remove o código de uma pessoa a partir de seus restos. Então quem você acha que é";
+	mes "o assassino?";
+	next;
+	switch(select("Hans", "Bankley", "Geil", "Muetro")){
 		case 1:
 			mes "[Dequ'ee]";
 			mes "Hans...?";
-			mes "That can't be right.";
-			mes "It doesn't match with";
-			mes "this algorithm I just";
-			mes "made up. You've got";
-			mes "to try it again!";
+			mes "Isso não pode estar certo.";
+			mes "Não corresponde com ";
+			mes "esse algoritimo que";
+			mes "eu fiz. Você tem";
+			mes "que tentar novamente!";
 			close;
 		case 2:
 			mes "[Dequ'ee]";
 			mes "Bankley...?";
-			mes "Hey, you might be";
-			mes "right. Let me check...";
+			mes "Ei, você pode estar";
+			mes "certo. Deixe-me ver...";
 			next;
 			mes "[Dequ'ee]";
-			mes "Yeah, when you take out Bankley's password from the rest of them and read it all in the right order...";
+			mes "Sim, quando você retira a palavra Bankley do código e deixa o resto é possível se ler na ordem correta...";
 			next;
 			mes "[Dequ'ee]";
-			mes "Alright! It looks like Bankley is the murderer! Although we can't trust this 100%, this evidence is pretty conclusive.";
+			mes "É isso! parece que Bankley é o assassino! Embora não possamos ter 100% de certeza, esta prova é muito conclusiva.";
 			next;
 			mes "[Dequ'ee]";
-			mes "Hurry over to Morroc and monitor Bankley in case he does anything desperate. If something happens, report to me right away!";
+			mes "Depressa vá ate Morroc e monitore Bankley, ele pode acabar tomando alguma decisão desesperada. Se acontecer alguma coisa, avise-me imediatamente!";
 			tu_swordman = 19;
 			changequest 8224,8225;
 			if (RENEWAL_EXP)
 				getexp 162,0;
 			else
-				getexp 1620,0;
+			getexp 1620,0;
 			close2;
 			warp "moc_fild07",359,201;
 			end;
 		case 3:
 			mes "[Dequ'ee]";
 			mes "Geil...?";
-			mes "That can't be right.";
-			mes "It doesn't match with";
-			mes "this algorithm I just";
-			mes "made up. You've got";
-			mes "to try it again!";
+			mes "Isso não pode estar certo.";
+			mes "Não corresponde com ";
+			mes "este algoritimo que";
+			mes "eu fiz. Você tem";
+			mes "que tentar novamente!";
 			close;
 		case 4:
 			mes "[Dequ'ee]";
 			mes "Muetro...?";
-			mes "That can't be right.";
-			mes "It doesn't match with";
-			mes "this algorithm I just";
-			mes "made up. You've got";
-			mes "to try it again!";
+			mes "Isso não pode estar certo.";
+			mes "Não corresponde com ";
+			mes "este algoritimo que";
+			mes "eu fiz. Você tem";
+			mes "que tentar novamente!";
 			close;
-		}
+	}
 	}
 	if(tu_swordman == 16){
-		mes "[Dequ'ee]";
-		mes "I guess these codes need to be arranged in a certain order before we can figure out its secrets.";
-		next;
-		mes "[Dequ'ee]";
-		mes "Hm, you guess the order and I'll try to formulate a cryptanalysis based on your guess.";
-		next;
-		switch(select("Muetro:Hans:Geil:Bankley")) {
+	mes "[Dequ'ee]";
+	mes "Eu acho que esses códigos precisam ser organizados em uma certa ordem para que possamos desvendar seus segredos";
+	next;
+	mes "[Dequ'ee]";
+	mes "Hm, você tenta adivinhar a ordem e eu vou tentar formular uma criptóanalise com base em seu palpite.";
+	next;
+	switch(select("Muetro", "Hans", "Geil", "Bankley")){
 		case 1:
 			mes "[Dequ'ee]";
-			mes "Okay, Muetro's";
-			mes "code is what we'll";
-			mes "use first. Now, whose";
-			mes "code do you think";
-			mes "should go second?";
+			mes "Ok, Muetro,";
+			mes "esse é o que nós vamos";
+			mes "usar primeiro. Agora, em quem";
+			mes "você está pensando";
+			mes "para usar em segundo no código?";
 			next;
-			switch(select("Hans:Geil:Bankley")) {
-			case 1:
-				mes "[Dequ'ee]";
-				mes "Hans...?";
-				mes "Alright, then";
-				mes "the person with";
-				mes "the third code";
-				mes "would be...?";
-				next;
-				switch(select("Geil:Bankley")) {
+			switch(select("Hans", "Geil", "Bankley")){
 				case 1:
 					mes "[Dequ'ee]";
-					mes "Muetro, Hans,";
-					mes "Geil and Bankley.";
-					mes "So then the full";
-					mes "code would be...";
+					mes "Hans...?";
+					mes "Tudo bem, então,";
+					mes "a terceira pessoa";
+					mes "do código";
+					mes "seria...?";
 					next;
-					mes "[Dequ'ee]";
-					mes " ";
-					mes "ConBanfoevidehi";
-					mes "victkleyundncem";
-					mes "TheisWesomeof";
-					mes "hekdlfiDrindkelsd";
-					next;
-					mes "[Dequ'ee]";
-					mes "No...";
-					mes "There's no way";
-					mes "I can decode it the";
-					mes "way it is now. Let's";
-					mes "try another combination.";
-					close;
+					switch(select("Geil", "Bankley")){
+						case 1:
+							mes "[Dequ'ee]";
+							mes "Muetro, Hans,";
+							mes "Geil e Bankley.";
+							mes "então o código completo";
+							mes "seria o seguinte...";
+							next;
+							mes "[Dequ'ee]";
+							mes " ";
+							mes "ConBanfoevidehi";
+							mes "victkleyundncem";
+							mes "TheisWesomeof";
+							mes "hekdlfiDrindkelsd";
+							next;
+							mes "[Dequ'ee]";
+							mes "Não...";
+							mes "De maneira alguma";
+							mes "eu vou conseguir";
+							mes "descodificar do jeito que está agora. Vamos";
+							mes "tentar outra combinação.";
+							close;
+							break;
+						case 2:
+							mes "[Dequ'ee]";
+							mes "Muetro, Hans,";
+							mes "Geil e Bankley.";
+							mes "Então o código completo";
+							mes "seria o seguinte...";
+							next;
+							mes "[Dequ'ee]";
+							mes " ";
+							mes "ConBanfoevidehi";
+							mes "victkleyundncem";
+							mes "hekdlfiDrindkelsd";
+							mes "TheisWesomeof";
+							next;
+							mes "[Dequ'ee]";
+							mes "Não...";
+							mes "De maneira alguma";
+							mes "eu vou conseguir";
+							mes "descodificar do jeito que está agora. Vamos";
+							mes "tentar outra combinação.";
+							close;
+					}
 				case 2:
 					mes "[Dequ'ee]";
-					mes "Muetro, Hans,";
-					mes "Geil and Bankley.";
-					mes "So then the full";
-					mes "code would be...";
+					mes "Geil...?";
+					mes "Tudo bem, então,";
+					mes "a terceira pessoa";
+					mes "do código";
+					mes "seria...?";
 					next;
+					switch(select("Hans", "Bankley")){
+						case 1:
+							mes "[Dequ'ee]";
+							mes "Muetro, Geil,";
+							mes "Hans e Bankley.";
+							mes "Então o código completo";
+							mes "seria o seguinte...";
+							next;
+							mes "[Dequ'ee]";
+							mes " ";
+							mes "ConBanfoevidehi";
+							mes "TheisWesomeof";
+							mes "victkleyundncem";
+							mes "hekdlfiDrindkelsd";
+							next;
+							mes "[Dequ'ee]";
+							mes "Não...";
+							mes "De maneira alguma";
+							mes "eu vou conseguir";
+							mes "descodificar do jeito que está agora. Vamos";
+							mes "tentar outra combinação.";
+							close;
+						case 2:
+							mes "[Dequ'ee]";
+							mes "Muetro, Geil,";
+							mes "Bankley e Hans.";
+							mes "Então o código completo";
+							mes "seria o seguinte...";
+							next;
+							mes "[Dequ'ee]";
+							mes " ";
+							mes "ConBanfoevidehi";
+							mes "TheisWesomeof";
+							mes "hekdlfiDrindkelsd";
+							mes "victkleyundncem";
+							next;
+							mes "[Dequ'ee]";
+							mes "Não...";
+							mes "De maneira alguma";
+							mes "eu vou conseguir";
+							mes "descodificar do jeito que está agora. Vamos";
+							mes "tentar outra combinação.";
+							close;
+					}
+				case 3:
 					mes "[Dequ'ee]";
-					mes " ";
-					mes "ConBanfoevidehi";
-					mes "victkleyundncem";
-					mes "hekdlfiDrindkelsd";
-					mes "TheisWesomeof";
+					mes "Bankley...?";
+					mes "Tudo bem, então";
+					mes "a terceira pessoa";
+					mes "do código";
+					mes "seria...?";
 					next;
-					mes "[Dequ'ee]";
-					mes "No...";
-					mes "There's no way";
-					mes "I can decode it the";
-					mes "way it is now. Let's";
-					mes "try another combination.";
-					close;
-				}
-			case 2:
-				mes "[Dequ'ee]";
-				mes "Geil's...?";
-				mes "Alright, then";
-				mes "the person with";
-				mes "the third code";
-				mes "would be...?";
-				next;
-				switch(select("Hans:Bankley")) {
-				case 1:
-					mes "[Dequ'ee]";
-					mes "Muetro, Geil,";
-					mes "Hans and Bankley.";
-					mes "So then the full";
-					mes "code would be...";
-					next;
-					mes "[Dequ'ee]";
-					mes " ";
-					mes "ConBanfoevidehi";
-					mes "TheisWesomeof";
-					mes "victkleyundncem";
-					mes "hekdlfiDrindkelsd";
-					next;
-					mes "[Dequ'ee]";
-					mes "No...";
-					mes "There's no way";
-					mes "I can decode it the";
-					mes "way it is now. Let's";
-					mes "try another combination.";
-					close;
-				case 2:
-					mes "[Dequ'ee]";
-					mes "Muetro, Geil,";
-					mes "Bankley and Hans.";
-					mes "So then the full";
-					mes "code would be...";
-					next;
-					mes "[Dequ'ee]";
-					mes " ";
-					mes "ConBanfoevidehi";
-					mes "TheisWesomeof";
-					mes "hekdlfiDrindkelsd";
-					mes "victkleyundncem";
-					next;
-					mes "[Dequ'ee]";
-					mes "No...";
-					mes "There's no way";
-					mes "I can decode it the";
-					mes "way it is now. Let's";
-					mes "try another combination.";
-					close;
-				}
-			case 3:
-				mes "[Dequ'ee]";
-				mes "Bankley's...?";
-				mes "Alright, then";
-				mes "the person with";
-				mes "the third code";
-				mes "would be...?";
-				next;
-				switch(select("Hans:Geil")) {
-				case 1:
-					mes "[Dequ'ee]";
-					mes "Muetro, Bankley,";
-					mes "Hans and Geil.";
-					mes "So then the full";
-					mes "code would be...";
-					next;
-					mes "[Dequ'ee]";
-					mes " ";
-					mes "ConBanfoevidehi";
-					mes "hekdlfiDrindkelsd";
-					mes "victkleyundncem";
-					mes "TheisWesomeof";
-					next;
-					mes "[Dequ'ee]";
-					mes "No...";
-					mes "There's no way";
-					mes "I can decode it the";
-					mes "way it is now. Let's";
-					mes "try another combination.";
-					close;
-				case 2:
-					mes "[Dequ'ee]";
-					mes "Muetro, Bankley,";
-					mes "Geil and Hans.";
-					mes "So then the full";
-					mes "code would be...";
-					next;
-					mes "[Dequ'ee]";
-					mes " ";
-					mes "ConBanfoevidehi";
-					mes "hekdlfiDrindkelsd";
-					mes "TheisWesomeof";
-					mes "victkleyundncem";
-					next;
-					mes "[Dequ'ee]";
-					mes "No...";
-					mes "There's no way";
-					mes "I can decode it the";
-					mes "way it is now. Let's";
-					mes "try another combination.";
-					close;
-				}
+					switch(select("Hans", "Geil")){
+						case 1:
+							mes "[Dequ'ee]";
+							mes "Muetro, Bankley,";
+							mes "Hans e Geil.";
+							mes "Então o código completo";
+							mes "seria o seguinte...";
+							next;
+							mes "[Dequ'ee]";
+							mes " ";
+							mes "ConBanfoevidehi";
+							mes "hekdlfiDrindkelsd";
+							mes "victkleyundncem";
+							mes "TheisWesomeof";
+							next;
+							mes "[Dequ'ee]";
+							mes "Não...";
+							mes "De maneira alguma";
+							mes "eu vou conseguir";
+							mes "descodificar do jeito que está agora. Vamos";
+							mes "tentar outra combinação.";
+							close;
+						case 2:
+							mes "[Dequ'ee]";
+							mes "Muetro, Bankley,";
+							mes "Geil e Hans.";
+							mes "Então o código completo";
+							mes "seria o seguinte...";
+							next;
+							mes "[Dequ'ee]";
+							mes " ";
+							mes "ConBanfoevidehi";
+							mes "hekdlfiDrindkelsd";
+							mes "TheisWesomeof";
+							mes "victkleyundncem";
+							next;
+							mes "[Dequ'ee]";
+							mes "Não...";
+							mes "De maneira alguma";
+							mes "eu vou conseguir";
+							mes "descodificar do jeito que está agora. Vamos";
+							mes "tentar outra combinação.";
+							close;
+					}
 			}
 			break;
 		case 2:
 			mes "[Dequ'ee]";
-			mes "Okay, Hans's";
-			mes "code is what we'll";
-			mes "use first. Now, whose";
-			mes "code do you think";
-			mes "should go second?";
+			mes "Ok, Hans,";
+			mes "esse é o que nós vamos";
+			mes "usar primeiro. Agora, em quem";
+			mes "você está pensando";
+			mes "para usar em segundo no código?";
 			next;
-			switch(select("Muetro:Geil:Bankley")) {
-			case 1:
-				mes "[Dequ'ee]";
-				mes "Muestro's...?";
-				mes "Alright, then";
-				mes "the person with";
-				mes "the third code";
-				mes "would be...?";
-				next;
-				switch(select("Geil:Bankley")) {
+			switch(select("Muetro", "Geil", "Bankley")){
 				case 1:
 					mes "[Dequ'ee]";
-					mes "Hans, Muetro,";
-					mes "Geil and Bankley.";
-					mes "So then the full";
-					mes "code would be...";
+					mes "Muestro...?";
+					mes "Tudo bem, então";
+					mes "a terceira pessoa";
+					mes "do código";
+					mes "seria...?";
 					next;
-					mes "[Dequ'ee]";
-					mes " ";
-					mes "victkleyundncem";
-					mes "ConBanfoevidehi";
-					mes "TheisWesomeof";
-					mes "hekdlfiDrindkelsd";
-					next;
-					mes "[Dequ'ee]";
-					mes "No...";
-					mes "There's no way";
-					mes "I can decode it the";
-					mes "way it is now. Let's";
-					mes "try another combination.";
-					close;
+					switch(select("Geil", "Bankley")){
+						case 1:
+							mes "[Dequ'ee]";
+							mes "Hans, Muetro,";
+							mes "Geil e Bankley.";
+							mes "Então o código completo";
+							mes "seria o seguinte...";
+							next;
+							mes "[Dequ'ee]";
+							mes " ";
+							mes "victkleyundncem";
+							mes "ConBanfoevidehi";
+							mes "TheisWesomeof";
+							mes "hekdlfiDrindkelsd";
+							next;
+							mes "[Dequ'ee]";
+							mes "Não...";
+							mes "De maneira alguma";
+							mes "eu vou conseguir";
+							mes "descodificar do jeito que está agora. Vamos";
+							mes "tentar outra combinação.";
+							close;
+						case 2:
+							mes "[Dequ'ee]";
+							mes "Hans, Muetro,";
+							mes "Bankley e Geil.";
+							mes "Então o código completo";
+							mes "seria o seguinte...";
+							next;
+							mes "[Dequ'ee]";
+							mes " ";
+							mes "victkleyundncem";
+							mes "ConBanfoevidehi";
+							mes "hekdlfiDrindkelsd";
+							mes "TheisWesomeof";
+							next;
+							mes "[Dequ'ee]";
+							mes "Não...";
+							mes "De maneira alguma";
+							mes "eu vou conseguir";
+							mes "descodificar do jeito que está agora. Vamos";
+							mes "tentar outra combinação.";
+							close;
+					}
 				case 2:
 					mes "[Dequ'ee]";
-					mes "Hans, Muetro,";
-					mes "Bankley and Geil.";
-					mes "So then the full";
-					mes "code would be...";
+					mes "Geil...?";
+					mes "Tudo bem, então";
+					mes "a terceira pessoa";
+					mes "do código";
+					mes "seria...?";
 					next;
+					switch(select("Muetro", "Bankley")){
+						case 1:
+							mes "[Dequ'ee]";
+							mes "Hans, Geil,";
+							mes "Muetro e Bankley.";
+							mes "Então o código completo";
+							mes "seria o seguinte...";
+							next;
+							mes "[Dequ'ee]";
+							mes " ";
+							mes "victkleyundncem";
+							mes "TheisWesomeof";
+							mes "ConBanfoevidehi";
+							mes "hekdlfiDrindkelsd";
+							next;
+							mes "[Dequ'ee]";
+							mes "Não...";
+							mes "De maneira alguma";
+							mes "eu vou conseguir";
+							mes "descodificar do jeito que está agora. Vamos";
+							mes "tentar outra combinação.";
+							close;
+						case 2:
+							mes "[Dequ'ee]";
+							mes "Hans, Geil,";
+							mes "Bankley e Muetro.";
+							mes "Então o código completo";
+							mes "seria o seguinte...";
+							next;
+							mes "[Dequ'ee]";
+							mes " ";
+							mes "victkleyundncem";
+							mes "TheisWesomeof";
+							mes "hekdlfiDrindkelsd";
+							mes "ConBanfoevidehi";
+							next;
+							mes "[Dequ'ee]";
+							mes "Não...";
+							mes "De maneira alguma";
+							mes "eu vou conseguir";
+							mes "descodificar do jeito que está agora. Vamos";
+							mes "tentar outra combinação.";
+							close;
+					}
+				case 3:
 					mes "[Dequ'ee]";
-					mes " ";
-					mes "victkleyundncem";
-					mes "ConBanfoevidehi";
-					mes "hekdlfiDrindkelsd";
-					mes "TheisWesomeof";
+					mes "Bankley...?";
+					mes "Tudo bem, então";
+					mes "a terceira pessoa";
+					mes "do código";
+					mes "seria...?";
 					next;
-					mes "[Dequ'ee]";
-					mes "No...";
-					mes "There's no way";
-					mes "I can decode it the";
-					mes "way it is now. Let's";
-					mes "try another combination.";
-					close;
-				}
-			case 2:
-				mes "[Dequ'ee]";
-				mes "Geil's...?";
-				mes "Alright, then";
-				mes "the person with";
-				mes "the third code";
-				mes "would be...?";
-				next;
-				switch(select("Muetro:Bankley")) {
-				case 1:
-					mes "[Dequ'ee]";
-					mes "Hans, Geil,";
-					mes "Muetro and Bankley.";
-					mes "So then the full";
-					mes "code would be...";
-					next;
-					mes "[Dequ'ee]";
-					mes " ";
-					mes "victkleyundncem";
-					mes "TheisWesomeof";
-					mes "ConBanfoevidehi";
-					mes "hekdlfiDrindkelsd";
-					next;
-					mes "[Dequ'ee]";
-					mes "No...";
-					mes "There's no way";
-					mes "I can decode it the";
-					mes "way it is now. Let's";
-					mes "try another combination.";
-					close;
-				case 2:
-					mes "[Dequ'ee]";
-					mes "Hans, Geil,";
-					mes "Bankley and Muetro.";
-					mes "So then the full";
-					mes "code would be...";
-					next;
-					mes "[Dequ'ee]";
-					mes " ";
-					mes "victkleyundncem";
-					mes "TheisWesomeof";
-					mes "hekdlfiDrindkelsd";
-					mes "ConBanfoevidehi";
-					next;
-					mes "[Dequ'ee]";
-					mes "No...";
-					mes "There's no way";
-					mes "I can decode it the";
-					mes "way it is now. Let's";
-					mes "try another combination.";
-					close;
-				}
-			case 3:
-				mes "[Dequ'ee]";
-				mes "Bankley's...?";
-				mes "Alright, then";
-				mes "the person with";
-				mes "the third code";
-				mes "would be...?";
-				next;
-				switch(select("Muetro:Geil")) {
-				case 1:
-					mes "[Dequ'ee]";
-					mes "Hans, Bankley,";
-					mes "Muetro and Geil.";
-					mes "So then the full";
-					mes "code would be...";
-					next;
-					mes "[Dequ'ee]";
-					mes " ";
-					mes "victkleyundncem";
-					mes "hekdlfiDrindkelsd";
-					mes "ConBanfoevidehi";
-					mes "TheisWesomeof";
-					next;
-					mes "[Dequ'ee]";
-					mes "No...";
-					mes "There's no way";
-					mes "I can decode it the";
-					mes "way it is now. Let's";
-					mes "try another combination.";
-					close;
-				case 2:
-					mes "[Dequ'ee]";
-					mes "Hans, Bankley,";
-					mes "Geil and Muetro.";
-					mes "So then the full";
-					mes "code would be...";
-					next;
-					mes "[Dequ'ee]";
-					mes " ";
-					mes "victkleyundncem";
-					mes "hekdlfiDrindkelsd";
-					mes "TheisWesomeof";
-					mes "ConBanfoevidehi";
-					next;
-					mes "[Dequ'ee]";
-					mes "No...";
-					mes "There's no way";
-					mes "I can decode it the";
-					mes "way it is now. Let's";
-					mes "try another combination.";
-					close;
-				}
+					switch(select("Muetro", "Geil")){
+						case 1:
+							mes "[Dequ'ee]";
+							mes "Hans, Bankley,";
+							mes "Muetro e Geil.";
+							mes "Então o código completo";
+							mes "seria o seguinte...";
+							next;
+							mes "[Dequ'ee]";
+							mes " ";
+							mes "victkleyundncem";
+							mes "hekdlfiDrindkelsd";
+							mes "ConBanfoevidehi";
+							mes "TheisWesomeof";
+							next;
+							mes "[Dequ'ee]";
+							mes "Não...";
+							mes "De maneira alguma";
+							mes "eu vou conseguir";
+							mes "descodificar do jeito que está agora. Vamos";
+							mes "tentar outra combinação.";
+							close;
+						case 2:
+							mes "[Dequ'ee]";
+							mes "Hans, Bankley,";
+							mes "Geil e Muetro.";
+							mes "Então o código completo";
+							mes "seria o seguinte...";
+							next;
+							mes "[Dequ'ee]";
+							mes " ";
+							mes "victkleyundncem";
+							mes "hekdlfiDrindkelsd";
+							mes "TheisWesomeof";
+							mes "ConBanfoevidehi";
+							next;
+							mes "[Dequ'ee]";
+							mes "Não...";
+							mes "De maneira alguma";
+							mes "eu vou conseguir";
+							mes "descodificar do jeito que está agora. Vamos";
+							mes "tentar outra combinação.";
+							close;
+					}
 			}
 			break;
 		case 3:
 			mes "[Dequ'ee]";
-			mes "Okay, Geil's";
-			mes "code is what we'll";
-			mes "use first. Now, whose";
-			mes "code do you think";
-			mes "should go second?";
+			mes "Ok, Geil,";
+			mes "esse é o que nós vamos";
+			mes "usar primeiro. Agora, em quem";
+			mes "você está pensando";
+			mes "para usar em segundo no código?";
 			next;
-			switch(select("Muetro:Hans:Bankley")) {
-			case 1:
-				mes "[Dequ'ee]";
-				mes "Muestro's...?";
-				mes "Alright, then";
-				mes "the person with";
-				mes "the third code";
-				mes "would be...?";
-				next;
-				switch(select("Hans:Bankley")) {
+			switch(select("Muetro", "Hans", "Bankley")){
 				case 1:
 					mes "[Dequ'ee]";
-					mes "Geil, Muetro,";
-					mes "Hans and Bankley.";
-					mes "So then the full";
-					mes "code would be...";
+					mes "Muestro...?";
+					mes "Tudo bem, então";
+					mes "a terceira pessoa";
+					mes "do código";
+					mes "seria...?";
 					next;
-					mes "[Dequ'ee]";
-					mes " ";
-					mes "TheisWesomeof";
-					mes "ConBanfoevidehi";
-					mes "victkleyundncem";
-					mes "hekdlfiDrindkelsd";
-					next;
-					mes "[Dequ'ee]";
-					mes "No...";
-					mes "There's no way";
-					mes "I can decode it the";
-					mes "way it is now. Let's";
-					mes "try... Wait!";
-					next;
-					mes "[Dequ'ee]";
-					mes "I think that we";
-					mes "can make sense of this";
-					mes "thing! Give me a while";
-					mes "to formulate an algorithm!";
-					tu_swordman = 17;
-					close;
+					switch(select("Hans", "Bankley")){
+						case 1:
+							mes "[Dequ'ee]";
+							mes "Geil, Muetro,";
+							mes "Hans e Bankley.";
+							mes "Então o código completo";
+							mes "seria o seguinte...";
+							next;
+							mes "[Dequ'ee]";
+							mes " ";
+							mes "TheisWesomeof";
+							mes "ConBanfoevidehi";
+							mes "victkleyundncem";
+							mes "hekdlfiDrindkelsd";
+							next;
+							mes "[Dequ'ee]";
+							mes "Não...";
+							mes "De maneira alguma";
+							mes "eu vou conseguir";
+							mes "descodificar do jeito que está agora. Vamos";
+							mes "tentar... Espere!";
+							next;
+							mes "[Dequ'ee]";
+							mes "Eu acho que";
+							mes "esse que fizemos agora possa ter";
+							mes "sentido! Espere um segundo";
+							mes "já irei formular o algoritmo!";
+							set tu_swordman, 17;
+							close;
+						case 2:
+							mes "[Dequ'ee]";
+							mes "Geil, Muetro,";
+							mes "Bankley e Hans.";
+							mes "Então o código completo";
+							mes "seria o seguinte...";
+							next;
+							mes "[Dequ'ee]";
+							mes " ";
+							mes "TheisWesomeof";
+							mes "ConBanfoevidehi";
+							mes "hekdlfiDrindkelsd";
+							mes "victkleyundncem";
+							next;
+							mes "[Dequ'ee]";
+							mes "Não...";
+							mes "De maneira alguma";
+							mes "eu vou conseguir";
+							mes "descodificar do jeito que está agora. Vamos";
+							mes "tentar outra combinação.";
+							close;
+					}
 				case 2:
 					mes "[Dequ'ee]";
-					mes "Geil, Muetro,";
-					mes "Bankley and Hans.";
-					mes "So then the full";
-					mes "code would be...";
+					mes "Han...?";
+					mes "Tudo bem, então";
+					mes "a terceira pessoa";
+					mes "do código";
+					mes "seria...?";
 					next;
+					switch(select("Muetro", "Bankley")){
+						case 1:
+							mes "[Dequ'ee]";
+							mes "Geil, Hans,";
+							mes "Muetro e Bankley.";
+							mes "Então o código completo";
+							mes "seria o seguinte...";
+							next;
+							mes "[Dequ'ee]";
+							mes " ";
+							mes "TheisWesomeof";
+							mes "victkleyundncem";
+							mes "ConBanfoevidehi";
+							mes "hekdlfiDrindkelsd";
+							next;
+							mes "[Dequ'ee]";
+							mes "Não...";
+							mes "De maneira alguma";
+							mes "eu vou conseguir";
+							mes "descodificar do jeito que está agora. Vamos";
+							mes "tentar outra combinação.";
+							close;
+						case 2:
+							mes "[Dequ'ee]";
+							mes "Geil, Hans,";
+							mes "Bankley e Muetro.";
+							mes "Então o código completo";
+							mes "seria o seguinte...";
+							next;
+							mes "[Dequ'ee]";
+							mes " ";
+							mes "TheisWesomeof";
+							mes "victkleyundncem";
+							mes "hekdlfiDrindkelsd";
+							mes "ConBanfoevidehi";
+							next;
+							mes "[Dequ'ee]";
+							mes "Não...";
+							mes "De maneira alguma";
+							mes "eu vou conseguir";
+							mes "descodificar do jeito que está agora. Vamos";
+							mes "tentar outra combinação.";
+							close;
+					}
+				case 3:
 					mes "[Dequ'ee]";
-					mes " ";
-					mes "TheisWesomeof";
-					mes "ConBanfoevidehi";
-					mes "hekdlfiDrindkelsd";
-					mes "victkleyundncem";
+					mes "Bankley...?";
+					mes "Tudo bem, então";
+					mes "a terceira pessoa";
+					mes "do código";
+					mes "seria...?";
 					next;
-					mes "[Dequ'ee]";
-					mes "No...";
-					mes "There's no way";
-					mes "I can decode it the";
-					mes "way it is now. Let's";
-					mes "try another combination.";
-					close;
-				}
-			case 2:
-				mes "[Dequ'ee]";
-				mes "Han's...?";
-				mes "Alright, then";
-				mes "the person with";
-				mes "the third code";
-				mes "would be...?";
-				next;
-				switch(select("Muetro:Bankley")) {
-				case 1:
-					mes "[Dequ'ee]";
-					mes "Geil, Hans,";
-					mes "Muetro and Bankley.";
-					mes "So then the full";
-					mes "code would be...";
-					next;
-					mes "[Dequ'ee]";
-					mes " ";
-					mes "TheisWesomeof";
-					mes "victkleyundncem";
-					mes "ConBanfoevidehi";
-					mes "hekdlfiDrindkelsd";
-					next;
-					mes "[Dequ'ee]";
-					mes "No...";
-					mes "There's no way";
-					mes "I can decode it the";
-					mes "way it is now. Let's";
-					mes "try another combination.";
-					close;
-				case 2:
-					mes "[Dequ'ee]";
-					mes "Geil, Hans,";
-					mes "Bankley and Muetro.";
-					mes "So then the full";
-					mes "code would be...";
-					next;
-					mes "[Dequ'ee]";
-					mes " ";
-					mes "TheisWesomeof";
-					mes "victkleyundncem";
-					mes "hekdlfiDrindkelsd";
-					mes "ConBanfoevidehi";
-					next;
-					mes "[Dequ'ee]";
-					mes "No...";
-					mes "There's no way";
-					mes "I can decode it the";
-					mes "way it is now. Let's";
-					mes "try another combination.";
-					close;
-				}
-			case 3:
-				mes "[Dequ'ee]";
-				mes "Bankley's...?";
-				mes "Alright, then";
-				mes "the person with";
-				mes "the third code";
-				mes "would be...?";
-				next;
-				switch(select("Muetro:Hans")) {
-				case 1:
-					mes "[Dequ'ee]";
-					mes "Geil, Bankley,";
-					mes "Muetro and Hans.";
-					mes "So then the full";
-					mes "code would be...";
-					next;
-					mes "[Dequ'ee]";
-					mes " ";
-					mes "TheisWesomeof";
-					mes "hekdlfiDrindkelsd";
-					mes "ConBanfoevidehi";
-					mes "victkleyundncem";
-					next;
-					mes "[Dequ'ee]";
-					mes "No...";
-					mes "There's no way";
-					mes "I can decode it the";
-					mes "way it is now. Let's";
-					mes "try another combination.";
-					close;
-				case 2:
-					mes "[Dequ'ee]";
-					mes "Geil, Bankley,";
-					mes "Hans and Muetro.";
-					mes "So then the full";
-					mes "code would be...";
-					next;
-					mes "[Dequ'ee]";
-					mes " ";
-					mes "TheisWesomeof";
-					mes "hekdlfiDrindkelsd";
-					mes "victkleyundncem";
-					mes "ConBanfoevidehi";
-					next;
-					mes "[Dequ'ee]";
-					mes "No...";
-					mes "There's no way";
-					mes "I can decode it the";
-					mes "way it is now. Let's";
-					mes "try another combination.";
-					close;
-				}
+					switch(select("Muetro", "Hans")){
+						case 1:
+							mes "[Dequ'ee]";
+							mes "Geil, Bankley,";
+							mes "Muetro e Hans.";
+							mes "Então o código completo";
+							mes "seria o seguinte...";
+							next;
+							mes "[Dequ'ee]";
+							mes " ";
+							mes "TheisWesomeof";
+							mes "hekdlfiDrindkelsd";
+							mes "ConBanfoevidehi";
+							mes "victkleyundncem";
+							next;
+							mes "[Dequ'ee]";
+							mes "Não...";
+							mes "De maneira alguma";
+							mes "eu vou conseguir";
+							mes "descodificar do jeito que está agora. Vamos";
+							mes "tentar outra combinação.";
+							close;
+						case 2:
+							mes "[Dequ'ee]";
+							mes "Geil, Bankley,";
+							mes "Hans e Muetro.";
+							mes "Então o código completo";
+							mes "seria o seguinte...";
+							next;
+							mes "[Dequ'ee]";
+							mes " ";
+							mes "TheisWesomeof";
+							mes "hekdlfiDrindkelsd";
+							mes "victkleyundncem";
+							mes "ConBanfoevidehi";
+							next;
+							mes "[Dequ'ee]";
+							mes "Não...";
+							mes "De maneira alguma";
+							mes "eu vou conseguir";
+							mes "descodificar do jeito que está agora. Vamos";
+							mes "tentar outra combinação.";
+							close;
+					}
 			}
 			break;
 		case 4:
 			mes "[Dequ'ee]";
-			mes "Okay, Bankley's";
-			mes "code is what we'll";
-			mes "use first. Now, whose";
-			mes "code do you think";
-			mes "should go second?";
+			mes "Ok, Bankley,";
+			mes "esse é o que nós vamos";
+			mes "usar primeiro. Agora, em quem";
+			mes "você está pensando";
+			mes "para usar em segundo no código?";
 			next;
-			switch(select("Muetro:Hans:Geil")) {
-			case 1:
-				mes "[Dequ'ee]";
-				mes "Muestro's...?";
-				mes "Alright, then";
-				mes "the person with";
-				mes "the third code";
-				mes "would be...?";
-				next;
-				switch(select("Hans:Geil")) {
+			switch(select("Muetro", "Hans", "Geil")){
 				case 1:
 					mes "[Dequ'ee]";
-					mes "Bankley, Muetro,";
-					mes "Hans and Geil.";
-					mes "So then the full";
-					mes "code would be...";
+					mes "Muestro...?";
+					mes "Tudo bem, então";
+					mes "a terceira pessoa";
+					mes "do código";
+					mes "seria...?";
 					next;
-					mes "[Dequ'ee]";
-					mes " ";
-					mes "hekdlfiDrindkelsd";
-					mes "ConBanfoevidehi";
-					mes "victkleyundncem";
-					mes "TheisWesomeof";
-					next;
-					mes "[Dequ'ee]";
-					mes "No...";
-					mes "There's no way";
-					mes "I can decode it the";
-					mes "way it is now. Let's";
-					mes "try another combination.";
-					close;
+					switch(select("Hans", "Geil")){
+						case 1:
+							mes "[Dequ'ee]";
+							mes "Bankley, Muetro,";
+							mes "Hans e Geil.";
+							mes "Então o código completo";
+							mes "seria o seguinte...";
+							next;
+							mes "[Dequ'ee]";
+							mes " ";
+							mes "hekdlfiDrindkelsd";
+							mes "ConBanfoevidehi";
+							mes "victkleyundncem";
+							mes "TheisWesomeof";
+							next;
+							mes "[Dequ'ee]";
+							mes "Não...";
+							mes "De maneira alguma";
+							mes "eu vou conseguir";
+							mes "descodificar do jeito que está agora. Vamos";
+							mes "tentar outra combinação.";
+							close;
+						case 2:
+							mes "[Dequ'ee]";
+							mes "Bankley, Muetro,";
+							mes "Geil e Hans.";
+							mes "Então o código completo";
+							mes "seria o seguinte...";
+							next;
+							mes "[Dequ'ee]";
+							mes " ";
+							mes "hekdlfiDrindkelsd";
+							mes "ConBanfoevidehi";
+							mes "TheisWesomeof";
+							mes "victkleyundncem";
+							next;
+							mes "[Dequ'ee]";
+							mes "Não...";
+							mes "De maneira alguma";
+							mes "eu vou conseguir";
+							mes "descodificar do jeito que está agora. Vamos";
+							mes "tentar outra combinação.";
+							close;
+					}
 				case 2:
 					mes "[Dequ'ee]";
-					mes "Bankley, Muetro,";
-					mes "Geil and Hans.";
-					mes "So then the full";
-					mes "code would be...";
+					mes "Hans...?";
+					mes "Tudo bem, então";
+					mes "a terceira pessoa";
+					mes "do código";
+					mes "seria...?";
 					next;
+					switch(select("Muetro", "Geil")){
+						case 1:
+							mes "[Dequ'ee]";
+							mes "Bankley, Hans,";
+							mes "Muetro e Geil.";
+							mes "Então o código completo";
+							mes "seria o seguinte...";
+							next;
+							mes "[Dequ'ee]";
+							mes " ";
+							mes "hekdlfiDrindkelsd";
+							mes "victkleyundncem";
+							mes "ConBanfoevidehi";
+							mes "TheisWesomeof";
+							next;
+							mes "[Dequ'ee]";
+							mes "Não...";
+							mes "De maneira alguma";
+							mes "eu vou conseguir";
+							mes "descodificar do jeito que está agora. Vamos";
+							mes "tentar outra combinação.";
+							close;
+						case 2:
+							mes "[Dequ'ee]";
+							mes "Bankley, Hans,";
+							mes "Geil e Muetro.";
+							mes "Então o código completo";
+							mes "seria o seguinte...";
+							mes " ";
+							mes "hekdlfiDrindkelsd";
+							mes "victkleyundncem";
+							mes "TheisWesomeof";
+							mes "ConBanfoevidehi";
+							next;
+							mes "[Dequ'ee]";
+							mes "Não...";
+							mes "De maneira alguma";
+							mes "eu vou conseguir";
+							mes "descodificar do jeito que está agora. Vamos";
+							mes "tentar outra combinação.";
+							close;
+					}
+				case 3:
 					mes "[Dequ'ee]";
-					mes " ";
-					mes "hekdlfiDrindkelsd";
-					mes "ConBanfoevidehi";
-					mes "TheisWesomeof";
-					mes "victkleyundncem";
+					mes "Geil...?";
+					mes "Tudo bem, então";
+					mes "a terceira pessoa";
+					mes "do código";
+					mes "seria...?";
 					next;
-					mes "[Dequ'ee]";
-					mes "No...";
-					mes "There's no way";
-					mes "I can decode it the";
-					mes "way it is now. Let's";
-					mes "try another combination.";
-					close;
-				}
-			case 2:
-				mes "[Dequ'ee]";
-				mes "Hans's...?";
-				mes "Alright, then";
-				mes "the person with";
-				mes "the third code";
-				mes "would be...?";
-				next;
-				switch(select("Muetro:Geil")) {
-				case 1:
-					mes "[Dequ'ee]";
-					mes "Bankley, Hans,";
-					mes "Muetro and Geil.";
-					mes "So then the full";
-					mes "code would be...";
-					next;
-					mes "[Dequ'ee]";
-					mes " ";
-					mes "hekdlfiDrindkelsd";
-					mes "victkleyundncem";
-					mes "ConBanfoevidehi";
-					mes "TheisWesomeof";
-					next;
-					mes "[Dequ'ee]";
-					mes "No...";
-					mes "There's no way";
-					mes "I can decode it the";
-					mes "way it is now. Let's";
-					mes "try another combination.";
-					close;
-				case 2:
-					mes "[Dequ'ee]";
-					mes "Bankley, Hans,";
-					mes "Geil and Muetro.";
-					mes "So then the full";
-					mes "code would be...";
-					mes " ";
-					mes "hekdlfiDrindkelsd";
-					mes "victkleyundncem";
-					mes "TheisWesomeof";
-					mes "ConBanfoevidehi";
-					next;
-					mes "[Dequ'ee]";
-					mes "No...";
-					mes "There's no way";
-					mes "I can decode it the";
-					mes "way it is now. Let's";
-					mes "try another combination.";
-					close;
-				}
-			case 3:
-				mes "[Dequ'ee]";
-				mes "Geil's...?";
-				mes "Alright, then";
-				mes "the person with";
-				mes "the third code";
-				mes "would be...?";
-				next;
-				switch(select("Muetro:Hans")) {
-				case 1:
-					mes "[Dequ'ee]";
-					mes "Bankley, Geil,";
-					mes "Muetro, and Hans.";
-					mes "So then the full";
-					mes "code would be...";
-					next;
-					mes "[Dequ'ee]";
-					mes " ";
-					mes "hekdlfiDrindkelsd";
-					mes "TheisWesomeof";
-					mes "ConBanfoevidehi";
-					mes "victkleyundncem";
-					next;
-					mes "[Dequ'ee]";
-					mes "No...";
-					mes "There's no way";
-					mes "I can decode it the";
-					mes "way it is now. Let's";
-					mes "try... Wait!";
-					next;
-					mes "[Dequ'ee]";
-					mes "I think that we";
-					mes "can make sense of this";
-					mes "thing! Give me a while";
-					mes "to formulate an algorithm!";
-					tu_swordman = 18;
-					close;
-				case 2:
-					mes "[Dequ'ee]";
-					mes "Bankley, Geil,";
-					mes "Hans, Muetro.";
-					mes "So then the full";
-					mes "code would be...";
-					next;
-					mes "[Dequ'ee]";
-					mes " ";
-					mes "hekdlfiDrindkelsd";
-					mes "TheisWesomeof";
-					mes "victkleyundncem";
-					mes "ConBanfoevidehi";
-					next;
-					mes "[Dequ'ee]";
-					mes "No...";
-					mes "There's no way";
-					mes "I can decode it the";
-					mes "way it is now. Let's";
-					mes "try another combination.";
-					close;
-				}
+					switch(select("Muetro", "Hans")){
+						case 1:
+							mes "[Dequ'ee]";
+							mes "Bankley, Geil,";
+							mes "Muetro, e Hans.";
+							mes "Então o código completo";
+							mes "seria o seguinte...";
+							next;
+							mes "[Dequ'ee]";
+							mes " ";
+							mes "hekdlfiDrindkelsd";
+							mes "TheisWesomeof";
+							mes "ConBanfoevidehi";
+							mes "victkleyundncem";
+							next;
+							mes "[Dequ'ee]";
+							mes "Não...";
+							mes "De maneira alguma";
+							mes "eu vou conseguir";
+							mes "descodificar do jeito que está agora. Vamos";
+							mes "tentar... Espere!";
+							next;
+							mes "[Dequ'ee]";
+							mes "Eu acho que";
+							mes "esse que fizemos agora possa ter";
+							mes "sentido! Espere um segundo";
+							mes "já irei formular o algoritmo!";
+							set tu_swordman, 18;
+							close;
+						case 2:
+							mes "[Dequ'ee]";
+							mes "Bankley, Geil,";
+							mes "Hans, Muetro.";
+							mes "Então o código completo";
+							mes "seria o seguinte...";
+							next;
+							mes "[Dequ'ee]";
+							mes " ";
+							mes "hekdlfiDrindkelsd";
+							mes "TheisWesomeof";
+							mes "victkleyundncem";
+							mes "ConBanfoevidehi";
+							next;
+							mes "[Dequ'ee]";
+							mes "Não...";
+							mes "De maneira alguma";
+							mes "eu vou conseguir";
+							mes "descodificar do jeito que está agora. Vamos";
+							mes "tentar outra combinação.";
+							close;
+					}
 			}
 			break;
-		}
+	}
 	}
 	if(tu_swordman == 15){
 		.@hans$ = "victkleyundncem";
 		.@bang$ = "hekdlfiDrindkelsd";
 		.@mutr$ = "ConBanfoevidehi";
 		.@geil$ = "TheisWesomeof";
-		mes "[Dequ'ee]";
-		mes "Ah, you're back.";
-		mes "I've just got a new";
-		mes "lead on the possible";
-		mes "identity of the killer.";
-		next;
-		mes "[Dequ'ee]";
-		mes "I've just heard that all our suspects have pieces of some";
-		mes "sort of code. If we can put the code together and decipher it, we can figure out who the murderer might be.";
-		next;
-		mes "[Dequ'ee]";
-		mes "Did you get all the codes";
-		mes "from all the suspects? First,";
-		mes "tell me the code that Hans had.";
-		next;
+	mes "[Dequ'ee]";
+	mes "Ah, você está de volta.";
+	mes "Eu descobri uma nova maneira";
+	mes "que possívelmente irá nos levar";
+	mes "a identidade do assassino.";
+	next;
+	mes "[Dequ'ee]";
+	mes "Acabei de ouvir que todos os suspeitos têm pedaços de alguma";
+	mes "espécie de código. Se pudermor colocar o código em ordem e decifrá-lo, poderemos descobrir quem é o assassino.";
+	next;
+	mes "[Dequ'ee]";
+	mes "Você conseguiu todos os códigos";
+	mes "de todos os suspeitos? Primeiro,";
+	mes "diga-me o código que Hans tinha.";
+	next;
 		input .@inputstr$;
 		if(.@inputstr$ == .@hans$){
-			mes "[Dequ'ee]";
-			mes "victkleyundncem?";
-			mes "That's certainly";
-			mes "strange sounding.";
-			mes "Now, tell me Bankley's.";
+		mes "[Dequ'ee]";
+		mes "victkleyundncem?";
+		mes "Isso certamente";
+		mes "soa estranho.";
+		mes "Agora, diga-me o de Bankley.";
 			next;
 			input .@inputstr$;
 			if(.@inputstr$ == .@bang$){
-				mes "[Dequ'ee]";
-				mes "hekdlfiDrindkelsd..";
-				mes "What the hell is that...?";
-				mes "It's certainly cryptic.";
-				mes "What about Muetro's?";
-				next;
+			mes "[Dequ'ee]";
+			mes "hekdlfiDrindkelsd..";
+			mes "Mas o que diabos é isso...?";
+			mes "É certamente enigmatico.";
+			mes "Qual era o de Muetro?";
+			next;
 				input .@inputstr$;
 				if(.@inputstr$ == .@mutr$){
-					mes "[Dequ'ee]";
-					mes "ConBanfoevidehi.";
-					mes "This is going to";
-					mes "be tough to figure";
-					mes "out. Alright, now";
-					mes "tell me Geil's.";
-					next;
+				mes "[Dequ'ee]";
+				mes "ConBanfoevidehi.";
+				mes "Isso vai ser";
+				mes "bem difícil de";
+				mes "entender. Tudo bem, agora";
+				mes "diga-me o de Geil.";
+				next;
 					input .@inputstr$;
 					if(.@inputstr$ == .@geil$){
-						mes "[Dequ'ee]";
-						mes "TheisWesomeof...";
-						mes "Alright, great.";
-						mes "Now all we have to";
-						mes "do is figure out what";
-						mes "all of this means.";
-						next;
-						mes "[Dequ'ee]";
-						mes "This is going to";
-						mes "be really difficult.";
-						mes "Do you have any ideas?";
-						mes "We have to figure this";
-						mes "out, it's the only clue";
-						mes "that we have...";
+					mes "[Dequ'ee]";
+					mes "TheisWesomeof...";
+					mes "Tudo bem, ótimo.";
+					mes "Agora tudo que temos de";
+					mes "de fazer é descobrir o que";
+					mes "tudo isso significa.";
+					next;
+					mes "[Dequ'ee]";
+					mes "Isso vai ser";
+					mes "realmente muito difícil.";
+					mes "Tem alguma ideia?";
+					mes "Nós temos de descobrir o";
+					mes "significado, Essa é a única pista";
+					mes "que temos...";
 						tu_swordman = 16;
 						changequest 8223,8224;
-						close;
-					} else {
-						mes "[Dequ'ee]";
-						mes "...Are you sure that you heard";
-						mes "him right? Why don't you go check it out again?";
-						close;
-					}
+					close;
 				} else {
 					mes "[Dequ'ee]";
-					mes "...Are you sure that you heard";
-					mes "him right? Why don't you go check it out again?";
+					mes "...Tem certeza que você ouviu certo o que";
+					mes "ele disse? Por que você não da uma olhada novamente?";
 					close;
 				}
 			} else {
 				mes "[Dequ'ee]";
-				mes "...Are you sure that you heard";
-				mes "him right? Why don't you go check it out again?";
+				mes "...Tem certeza que você ouviu certo o que";
+				mes "ele disse? Por que você não da uma olhada novamente?";
 				close;
 			}
 		} else {
 			mes "[Dequ'ee]";
-			mes "Are you sure that's right?";
-			mes "No, no, I don't think it is.";
-			mes "Would you check that code and interrogate the suspects again";
-			mes "if you need to?";
+			mes "...Tem certeza que você ouviu certo o que";
+			mes "ele disse? Por que você não da uma olhada novamente?";
 			close;
 		}
+	} else {
+		mes "[Dequ'ee]";
+		mes "Você tem certeza que isso está certo?";
+		mes "Não, não, eu não acho que é isso.";
+		mes "Você poderia interrogar os suspeitos e verificar o código mais uma vez?";
+		mes "Isso realmente será preciso...";
+		close;
+	}
 	}
 	if(tu_swordman == 14){
-		mes "[Dequ'ee]";
-		mes "Didn't I ask you";
-		mes "to interrogate the";
-		mes "suspects over in Morroc?";
-		mes "We need to finish this";
-		mes "investigation as soon";
-		mes "as possible!";
-		close;
+	mes "[Dequ'ee]";
+	mes "Não se importaria se eu pedise";
+	mes "para interrogar";
+	mes "os suspeitos em Morroc?";
+	mes "Precisamos terminar essa";
+	mes "investigação o mais breve";
+	mes "possível!";
+	close;
 	}
 	if(tu_swordman == 13){
-		mes "[Dequ'ee]";
-		mes "Ah, you're here!";
-		mes "Shurank must have";
-		mes "asked you to help me.";
-		mes "I really appreciate that.";
-		next;
-		mes "[Dequ'ee]";
-		mes "As you've probably figured out, I'm currently investigating a murder. Basically, I want you to help me figure out who the killer is.";
-		next;
-		mes "[Dequ'ee]";
-		mes "As for the victim, well, that's classified information. You understand, don't you?";
-		next;
-		mes "[Dequ'ee]";
-		mes "Now, I want you to go to Morroc and interrogate four suspects. Their names are ^5D478BMuetro^000000, ^5D478BGeil^000000, ^5D478BHans^000000";
-		mes "and ^5D478BBankley^000000. It shouldn't be too difficult.";
-		next;
-		mes "[Dequ'ee]";
-		mes "After you speak to all of them, come back and report to me. And it's especially important that you remember or write down any important clues you might get";
-		mes "from our suspects.";
-		next;
-		mes "[Dequ'ee]";
-		mes "Also, keep in mind that this is a special mission for the Swordman Association. So keep everything you learn a secret. Understood?";
-		next;
-		mes "[Dequ'ee]";
-		mes "Now go and see if you can learn anything from Muetro, Geil, Hans and Bankley. We've got to figure out the killer's identity as soon as we can!";
-		next;
-		mes "[Dequ'ee]";
-		mes "Oh wait...";
-		mes "Morroc is a little far. Alright, I'll drop you off somewhere";
-		mes "near that city.";
-		next;
-		tu_swordman = 14;
-		changequest 8222,8223;
-		warp "moc_fild07",359,201;
-		close;
+	mes "[Dequ'ee]";
+	mes "Ah, você está aqui!";
+	mes "Shurank deve ter";
+	mes "pedido para você me ajudar.";
+	mes "Eu realmente fico feliz.";
+	next;
+	mes "[Dequ'ee]";
+	mes "Como você já deve ter percebido, eu estou investigando um assassino. Basicamente, eu quero que você me ajude a descobrir quem é esse assassino.";
+	next;
+	mes "[Dequ'ee]";
+	mes "Quanto a vítima, bem, isso é uma informação confidencial. Você entende, não é?";
+	next;
+	mes "[Dequ'ee]";
+	mes "Agora, eu quero que você vá para Morroc e investigue os quatro suspeitos. Seus nomes são ^5D478BMuetro^000000, ^5D478BGeil^000000, ^5D478BHans^000000";
+	mes "e ^5D478BBankley^000000. Não deve ser muito difícil encontrá-los.";
+	next;
+	mes "[Dequ'ee]";
+	mes "Depos de falar com todos eles, volte e diga tudo para mim. E é muito importante que você se lembre ou escreva quaisquer pistas importantes que você possa obter";
+	mes "de nossos suspeitos.";
+	next;
+	mes "[Dequ'ee]";
+	mes "Além disso, tenha em mente que essa é uma missão especial para a associação dos Espadachins. Mantenha tudo que descobrir em segredo. Entendido?";
+	next;
+	mes "[Dequ'ee]";
+	mes "Agora vá e veja se você pode descobrir alguma coisa com Muetro, Geil, Hans e Bankley. Nós temos que descobrir a identidade do assassino!";
+	next;
+	mes "[Dequ'ee]";
+	mes "Ah espere...";
+	mes "Morroc é um pouco longe. Tudo bem, vou deixar você em algum lugar";
+	mes "perto da cidade.";
+	next;
+	set tu_swordman, 14;
+	warp "moc_fild07",359,201;
+	close;
 	}
 	if((tu_swordman > 7) && (tu_swordman < 13)){
-		mes "[Dequ'ee]";
-		mes "Hmm...";
-		mes "Still receiving";
-		mes "special training";
-		mes "from Shurank?";
-		next;
-		mes "[Dequ'ee]";
-		mes "That's great.";
-		mes "Swordmen nowadays are getting sloppier and sloppier. Someone has to keep the new guys in line and on their toes!";
-		close;
+	mes "[Dequ'ee]";
+	mes "Hmm...";
+	mes "Ainda realizando o";
+	mes "treinamento especial";
+	mes "do Shurank?";
+	next;
+	mes "[Dequ'ee]";
+	mes "Isso é ótimo,";
+	mes "os Espadachins hoje em dia estão ficando cada vez mais desleixados. Alguém tem que ensinar esses novatos a serem durões!";
+	close;
 	}
 	if(tu_swordman == 7){
-		mes "[Dequ'ee]";
-		mes "What are you";
-		mes "still doing here?";
-		mes "Go and deliver my";
-		mes "message to Shurank.";
-		next;
-		mes "[Dequ'ee]";
-		mes "Let him now that we aren't";
-		mes "sure of the killer's identity,";
-		mes "but we have a list of suspects.";
-		mes "Sooner or later, we'll figure";
-		mes "out who he is.";
-		close;
+	mes "[Dequ'ee]";
+	mes "O que você";
+	mes "ainda está fazendo aqui?";
+	mes "Vá e entregue a minha";
+	mes "mensagem para Shurank.";
+	next;
+	mes "[Dequ'ee]";
+	mes "Diga para ele que ainda não sabemos";
+	mes "qual a identidade do assassino,";
+	mes "mas que temos uma lista de suspeitos.";
+	mes "Mais cedo ou mais tarde, vamos descobrir";
+	mes "quem é ele.";
+	close;
 	}
 	if(tu_swordman == 6){
-		mes "[Dequ'ee]";
-		mes "Ah...!";
-		mes "Are you the Swordman";
-		mes "sent by Shurank? Good,";
-		mes "I've been waiting...";
-		next;
-		mes "[Dequ'ee]";
-		mes "Now tell me...";
-		mes "What message does";
-		mes "Shurank have for me?";
-		next;
-		switch(select("Killer...:Murderer...")) {
+	mes "[Dequ'ee]";
+	mes "Ah...!";
+	mes "É você o Espadachim";
+	mes "enviado por Shurank? Bom,";
+	mes "eu estava te esperando...";
+	next;
+	mes "[Dequ'ee]";
+	mes "Agora diga-me...";
+	mes "qual a mensagem";
+	mes "que Shurank mandou para mim?";
+	next;
+	switch(select("Assassino...", "Vítima...")){
 		case 1:
 			mes "[" + strcharinfo(0) + "]";
-			mes "What happened";
-			mes "to the killer?";
+			mes "O que aconteceu";
+			mes "com o assassino?";
 			next;
-			switch(select("Who he is...:Who is behind...")) {
-			case 1:
-				mes "[" + strcharinfo(0) + "]";
-				mes "Did you find";
-				mes "out who he is?";
-				mes "If you did...";
-				next;
-				switch(select("Why are we...:What are we...")) {
+			switch(select("Quem ele é...", "Quem está por trás disso...")){
 				case 1:
 					mes "[" + strcharinfo(0) + "]";
-					mes "Why are sitting";
-					mes "around, doing nothing?!";
+					mes "Você descobriu";
+					mes "quem ele é?";
+					mes "Se descobriu...";
 					next;
-					mes "[Dequ'ee]";
-					mes "So Shurank is asking,";
-					mes "'What happened to the killer?";
-					mes "Did you find out who he is? If you did, why are we sitting around, doing nothing?'";
-					next;
-					mes "[Dequ'ee]";
-					mes "Hmm...";
-					mes "That doesn't seem to";
-					mes "be the message I'm supposed to receive from Shurack. I need his exact message or I can't send";
-					mes "a response...";
-					close;
-				case 2:
-					mes "[" + strcharinfo(0) + "]";
-					mes "What are we";
-					mes "supposed to do now?";
-					next;
-					mes "[Dequ'ee]";
-					mes "So Shurank is asking,";
-					mes "'What happened to the killer?";
-					mes "Did you find out who he is? If you did, what are we supposed to do now?'";
-					next;
-					mes "[Dequ'ee]";
-					mes "Hmm...";
-					mes "That doesn't seem to";
-					mes "be the message I'm supposed to receive from Shurack. I need his exact message or I can't send";
-					mes "a response...";
-					close;
+					switch(select("Porque estamos...", "O que estamos...")){
+						case 1:
+							mes "[" + strcharinfo(0) + "]";
+							mes "Porque está sentado";
+							mes "ao redor, sem fazer nada?!";
+							next;
+							mes "[Dequ'ee]";
+							mes "Então Shurank está perguntando";
+							mes "o que aconteceu com o assassino?";
+							mes "Você descobriu quem ele é? E se descobriu, porque estamos sentados, sem fazer nada?'";
+							next;
+							mes "[Dequ'ee]";
+							mes "Hmm...";
+							mes "Isso não parece";
+							mes "ser a mensagem que eu deveria receber de Shurack. Preciso que me dê uma mensagem exata ou não conseguirei enviar";
+							mes "uma resposta...";
+							close;
+						case 2:
+							mes "[" + strcharinfo(0) + "]";
+							mes "O que nós";
+							mes "devemos fazer agora?";
+							next;
+							mes "[Dequ'ee]";
+							mes "Então Shurank está perguntando";
+							mes "o que aconteceu com o assassino?";
+							mes "Você descobriu quem ele é? E se descobriu, o que nós devemos fazer agora?'";
+							next;
+							mes "[Dequ'ee]";
+							mes "Hmm...";
+							mes "Isso não parece";
+							mes "ser a mensagem que eu deveria receber de Shurack. Preciso que me dê uma mensagem exata ou não conseguirei enviar";
+							mes "uma resposta...";
+							close;
 				}
-			case 2:
-				mes "[" + strcharinfo(0) + "]";
-				mes "Did you figure out";
-				mes "who's behind all this?";
-				mes "If you did...";
-				next;
-				switch(select("Why are we...:What are we...")) {
-				case 1:
-					mes "[" + strcharinfo(0) + "]";
-					mes "Why are sitting";
-					mes "around, doing nothing?!";
-					next;
-					mes "[Dequ'ee]";
-					mes "So Shurank is asking,";
-					mes "'What happened to the killer?";
-					mes "Did you figure out who's behind all this? If you did, why are we sitting around, doing nothing?'";
-					next;
-					mes "[Dequ'ee]";
-					mes "Hmm...";
-					mes "That doesn't seem to";
-					mes "be the message I'm supposed to receive from Shurack. I need his exact message or I can't send";
-					mes "a response...";
-					close;
 				case 2:
 					mes "[" + strcharinfo(0) + "]";
-					mes "What are we";
-					mes "supposed to do now?";
+					mes "Você descobriu";
+					mes "quem está por trás de tudo isso?";
+					mes "E se descobriu...";
 					next;
-					mes "[Dequ'ee]";
-					mes "So Shurank is asking,";
-					mes "'What happened to the killer?";
-					mes "Did you figure out who's behind all this? If you did, what are we supposed to do now?'";
-					next;
-					mes "[Dequ'ee]";
-					mes "Hmm...";
-					mes "That doesn't seem to";
-					mes "be the message I'm supposed to receive from Shurack. I need his exact message or I can't send";
-					mes "a response...";
-					close;
+					switch(select("Porque estamos...", "O que estamos...")){
+						case 1:
+							mes "[" + strcharinfo(0) + "]";
+							mes "Porque estamos sentados";
+							mes "em volta, sem fazer nada?!";
+							next;
+							mes "[Dequ'ee]";
+							mes "Então Shurank Está perguntando";
+							mes "o que aconteceu com o assassino?";
+							mes "Será que você descobriu quem está por trás de tudo isso? E se descobriu, porque nós estamos sentados em volta, sem fazer nada?'";
+							next;
+							mes "[Dequ'ee]";
+							mes "Hmm...";
+							mes "Isso não parece";
+							mes "ser a mensagem que eu deveria receber de Shurack. Preciso que me dê uma mensagem exata ou não conseguirei enviar";
+							mes "uma resposta...";
+							close;
+						case 2:
+							mes "[" + strcharinfo(0) + "]";
+							mes "O que nós";
+							mes "devemos fazer agora?";
+							next;
+							mes "[Dequ'ee]";
+							mes "Então Shurank está perguntando";
+							mes "o que aconteceu com o assassino?";
+							mes "Será que você descobriu quem está por trás de tudo isso? E se descobriu, o que devemos fazer agora?'";
+							next;
+							mes "[Dequ'ee]";
+							mes "Hmm...";
+							mes "Isso não parece";
+							mes "ser a mensagem que eu deveria receber de Shurack. Preciso que me dê uma mensagem exata ou não conseguirei enviar";
+							mes "uma resposta...";
+							close;
 				}
 			}
 			break;
 		case 2:
 			mes "[" + strcharinfo(0) + "]";
-			mes "What happened";
-			mes "to the murderer?";
+			mes "O que aconteceu";
+			mes "com o assassino?";
 			next;
-			switch(select("Who he is...:Who is behind...")) {
-			case 1:
-				mes "[" + strcharinfo(0) + "]";
-				mes "Did you find";
-				mes "out who he is?";
-				mes "If you did...";
-				next;
-				switch(select("Why are we...:What are we...")) {
+			switch(select("Quem ele é...", "Quem está por trás disso...")){
 				case 1:
 					mes "[" + strcharinfo(0) + "]";
-					mes "Why are sitting";
-					mes "around, doing nothing?!";
+					mes "Você descobriu";
+					mes "quem ele é?";
+					mes "E se descobriu...";
 					next;
-					mes "[Dequ'ee]";
-					mes "So Shurank is asking,";
-					mes "'What happened to the";
-					mes "murderer? Did you find";
-					mes "out who he is? If you did,";
-					mes "why are we sitting around,";
-					mes "doing nothing?'";
-					next;
-					mes "[Dequ'ee]";
-					mes "Hmm...";
-					mes "That doesn't seem to";
-					mes "be the message I'm supposed to receive from Shurack. I need his exact message or I can't send";
-					mes "a response...";
-					close;
-				case 2:
-					mes "[" + strcharinfo(0) + "]";
-					mes "What are we";
-					mes "supposed to do now?";
-					next;
-					mes "[Dequ'ee]";
-					mes "So Shurank is asking,";
-					mes "'What happened to the";
-					mes "murderer? Did you find";
-					mes "out who he is? If you did,";
-					mes "what are we supposed to do now?'";
-					next;
-					mes "[Dequ'ee]";
-					mes "Hmm...";
-					mes "I understand";
-					mes "his concerns.";
-					mes "Alright, now please";
-					mes "give him this answer.";
-					next;
-					mes "[Dequ'ee]";
-					mes "We haven't found";
-					mes "out who the murderer";
-					mes "is for sure. However,";
-					mes "we have a list of suspects";
-					mes "and we'll figure it out soon.";
-					next;
-					mes "[Dequ'ee]";
-					mes "Thank you for taking the trouble to come this far. Let me reward you with some experience points.";
-					tu_swordman = 7;
-					changequest 8216,8217;
+					switch(select("Porque estamos...", "O que estamos...")){
+						case 1:
+							mes "[" + strcharinfo(0) + "]";
+							mes "Porque estamos sentados";
+							mes "em volta, sem fazer nada?!";
+							next;
+							mes "[Dequ'ee]";
+							mes "Então Shurank está perguntando,";
+							mes "O que aconteceu com o";
+							mes "assassino? E se eu descobri";
+							mes "quem ele é? E se descobri,";
+							mes "porque nós estamos sentados,";
+							mes "sem fazer nada?'";
+							next;
+							mes "[Dequ'ee]";
+							mes "Hmm...";
+							mes "Isso não parece";
+							mes "ser a mensagem que eu deveria receber de Shurack. Preciso que me dê uma mensagem exata ou não conseguirei enviar";
+							mes "uma resposta...";
+							close;
+						case 2:
+							mes "[" + strcharinfo(0) + "]";
+							mes "O que nós";
+							mes "devemos fazer agora?";
+							next;
+							mes "[Dequ'ee]";
+							mes "Então Shurank está perguntando";
+							mes "o que aconteceu com o";
+							mes "assassino? E se descobri";
+							mes "quem ele é? E se descobri,";
+							mes "o que devemos fazer agora?'";
+							next;
+							mes "[Dequ'ee]";
+							mes "Hmm...";
+							mes "Eu entendo";
+							mes "suas preocupações.";
+							mes "Tudo bem, agora por favor";
+							mes "dê para ele está resposta.";
+							next;
+							mes "[Dequ'ee]";
+							mes "Nós ainda não descobrimos";
+							mes "quem é o assassino";
+							mes "com certeza. No entanto,";
+							mes "temos uma lista de suspeitos";
+							mes "e vamos descobrir em breve.";
+							next;
+							mes "[Dequ'ee]";
+							mes "Obrigado por ter o trabalho de vir até aqui. Deixe-me te recompensar com alguns pontos de experiência.";
+							set tu_swordman, 7;
+							changequest 8216,8217;
 					if (RENEWAL_EXP)
-						getexp 112,0;
-					else
-						getexp 1120,0;
-					next;
-					mes "[Dequ'ee]";
-					mes "Take care";
-					mes "of yourself,";
-					mes "brave Swordman.";
-					next;
+								getexp 112,0;
+							else
+								getexp 1120,0;
+							next;
+							mes "[Dequ'ee]";
+							mes "Tome conta";
+							mes "de si mesmo,";
+							mes "corajoso Espadachim.";
+							next;
 					if (RENEWAL)
-						warp "izlude",127,100;
-					else
-						warp "izlude",35,78;
-					close;
+								warp "izlude",127,100;
+							else
+								warp "izlude",35,78;
+							close;
 				}
-			case 2:
-				mes "[" + strcharinfo(0) + "]";
-				mes "Did you figure out";
-				mes "who's behind all this?";
-				mes "If you did...";
-				next;
-				switch(select("Why are we...:What are we...")) {
-				case 1:
-					mes "[" + strcharinfo(0) + "]";
-					mes "Why are sitting";
-					mes "around, doing nothing?!";
-					next;
-					mes "[Dequ'ee]";
-					mes "So Shurank is asking,";
-					mes "'What happened to the";
-					mes "murderer? Did you figure";
-					mes "out who's behind all this?";
-					mes "If you did, why are we sitting around, doing nothing?'";
-					next;
-					mes "[Dequ'ee]";
-					mes "Hmm...";
-					mes "That doesn't seem to";
-					mes "be the message I'm supposed to receive from Shurack. I need his exact message or I can't send";
-					mes "a response...";
-					close;
 				case 2:
 					mes "[" + strcharinfo(0) + "]";
-					mes "What are we";
-					mes "supposed to do now?";
+					mes "Você descobriu";
+					mes "quem está por trás de tudo isso?";
+					mes "E se descobriu...";
 					next;
-					mes "[Dequ'ee]";
-					mes "So Shurank is asking,";
-					mes "'What happened to the";
-					mes "murderer? Did you figure";
-					mes "out who's behind all this?";
-					mes "If you did, what are we";
-					mes "supposed to do now?";
-					next;
-					mes "[Dequ'ee]";
-					mes "Hmm...";
-					mes "That doesn't seem to";
-					mes "be the message I'm supposed to receive from Shurack. I need his exact message or I can't send";
-					mes "a response...";
-					close;
+					switch(select("Porque nós...", "O que nós...")){
+						case 1:
+							mes "[" + strcharinfo(0) + "]";
+							mes "Porque estamos sentados";
+							mes "em volta, sem fazer nada?!";
+							next;
+							mes "[Dequ'ee]";
+							mes "Então Shurank está perguntando";
+							mes "o que aconteceu com o";
+							mes "assassino? E se eu descobri";
+							mes "quem está por trás de tudo isso?";
+							mes "E se descobri, porque estamos sentados, sem fazer nada?'";
+							next;
+							mes "[Dequ'ee]";
+							mes "Hmm...";
+							mes "Isso não parece";
+							mes "ser a mensagem que eu deveria receber de Shurack. Preciso que me dê uma mensagem exata ou não conseguirei enviar";
+							mes "uma resposta...";
+							close;
+						case 2:
+							mes "[" + strcharinfo(0) + "]";
+							mes "O que nós";
+							mes "devemos fazer agora?";
+							next;
+							mes "[Dequ'ee]";
+							mes "Então Shurank está perguntando";
+							mes "O que aconteceu com o";
+							mes "assassino? E se descobri quem";
+							mes "quem está por trás de tudo isso?";
+							mes "E se descobri, o que nós";
+							mes "devemos fazer agora?";
+							next;
+							mes "[Dequ'ee]";
+							mes "Hmm...";
+							mes "Isso não parece";
+							mes "ser a mensagem que eu deveria receber de Shurack. Preciso que me dê uma mensagem exata ou não conseguirei enviar";
+							mes "uma resposta...";
+							close;
 				}
 			}
 			break;
-		}
+	}
 	}
 	mes "Hmm...?";
-	mes "Do you have any";
-	mes "business with me?";
+	mes "Você tem algum";
+	mes "assunto comigo?";
 	close;
 }
 
@@ -2254,50 +2257,50 @@ geffen,154,143,3	script	Dequ'ee	4_M_JOB_KNIGHT2,{
 //============================================================
 morocc_in,51,101,3	script	Geil	4_M_ORIENT02,{
 	mes "[Geil]";
-	if(tu_swordman == 15){
-		mes "Were you sent by the authorities? Quit giving me such a hard time! I'm not the murderer! I don't even know who was killed. I'm not the one you're looking for!";
+	if (tu_swordman == 15){
+		mes "Você foi enviado pelas autoridades? Me deixe, não estou bem! Eu não sou o assassino! Eu nem mesmo sei quem foi morto. Eu não sou aquele que você está procurando!";
 		next;
 		mes "[Geil]";
-		mes "Sure, some weird";
-		mes "guy told me some";
-		mes "kind of code related to all this, but that's it! That's all I know! I'm not the killer, I'm not an accessory, nothing!";
+		mes "Claro, algumas pessoas";
+		mes "estranhas me disseram que há algum";
+		mes "tipo de código relacionado a tudo isso, mas isso é tudo! Isso é tudo que eu sei! Eu não sou o assassino, e eu não sou nenhum acessório, nenhum!";
 		next;
 		mes "[Geil]";
 		mes "^5D478BTheisWesomeof^000000";
-		mes "That's the code. I can't believe that I'm unable to forget this.";
-		mes "I mean, I think I was drunk";
-		mes "when that guy told me.";
+		mes "Esse é o código. Eu não posso acreditar que fui incapaz de esquecer isso.";
+		mes "Quer dizer, eu acho que eu estava bebado";
+		mes "quando me falaram.";
 		next;
 		mes "[Geil]";
-		mes "What's so important about this code, and why do you guys keep hounding me about the murder?!";
+		mes "O que é tão importante sobre esse código, e porque vocês estão me perseguindo falando sobre o assassino?!";
 		close;
 	}
 	if(tu_swordman == 14){
-		mes "Were you sent by the authorities? Quit giving me such a hard time! I'm not the murderer! I don't even know who was killed. I'm not the one you're looking for!";
+		mes "Você foi enviado pelas autoridades? Me deixe, não estou bem! Eu não sou o assassino! Eu nem mesmo sei quem foi morto. Eu não sou aquele que você está procurando!";
 		next;
 		mes "[Geil]";
-		mes "Sure, some weird";
-		mes "guy told me some";
-		mes "kind of code related to all this, but that's it! That's all I know! I'm not the killer, I'm not an accessory, nothing!";
+		mes "Claro, algumas pessoas";
+		mes "estranhas me disseram que há algum";
+		mes "tipo de código relacionado a tudo isso, mas isso é tudo! Isso é tudo que eu sei! Eu não sou o assassino, e eu não sou nenhum acessório, nenhum!";
 		next;
 		mes "[Geil]";
 		mes "^5D478BTheisWesomeof^000000";
-		mes "That's the code. I can't believe that I'm unable to forget this.";
-		mes "I mean, I think I was drunk";
-		mes "when that guy told me.";
+		mes "Esse é o código. Eu não posso acreditar que fui incapaz de esquecer isso.";
+		mes "Quer dizer, eu acho que eu estava bebado";
+		mes "quando me falaram.";
 		next;
 		mes "[Geil]";
-		mes "What's so important about this code, and why do you guys keep hounding me about the murder?!";
+		mes "O que é tão importante sobre esse código, e porque vocês estão me perseguindo falando sobre o assassino?!";
 		tu_swordman = 15;
 		close;
 	}
-	mes "We should all";
-	mes "strive to live in";
-	mes "peace and harmony";
-	mes "with our fellow man.";
+	mes "Nós todos";
+	mes "nos esforçamos para viver";
+	mes "em paz e harmonia";
+	mes "com nossos semelhantes.";
 	next;
 	mes "[Geil]";
-	mes "But fear, distrust and panic always seem to get in the way and mess up world events. We've got to find it within ourselves to get along with others. Don't you agree?";
+	mes "Mas o medo, desconfiança e pânico parecem sempre ficar no caminho e atrapalhar os eventos mundiais. Nós temos de encontrar a paz dentro de nós mesmos para podermos nos dar bem com os outros. Você não concorda?";
 	close;
 }
 
@@ -2306,39 +2309,39 @@ morocc_in,51,101,3	script	Geil	4_M_ORIENT02,{
 morocc,82,292,5	script	Muetro	4_M_02,{
 	mes "[Muetro]";
 	if(tu_swordman == 15){
-		mes "You're just";
-		mes "like all the others.";
-		mes "You want the code";
-		mes "I know, right?";
+		mes "Você veio aqui apenas";
+		mes "pelo mesmo motivos dos outros.";
+		mes "Você quer o código que";
+		mes "eu sei, certo?";
 		next;
 		mes "[Muetro]";
 		mes "^5D478BConBanfoevidehi^000000";
-		mes "Happy now? Now";
-		mes "leave me alone and";
-		mes "catch the murderer.";
+		mes "Feliz agora? Agora";
+		mes "deixe-me e vá";
+		mes "pegar o assassino.";
 		close;
 	}
 	if(tu_swordman == 14){
-		mes "You're just";
-		mes "like all the others.";
-		mes "You want the code";
-		mes "I know, right?";
+		mes "Você veio aqui apenas";
+		mes "pelo mesmo motivos dos outros.";
+		mes "Você quer o código que";
+		mes "eu sei, certo?";
 		next;
 		mes "[Muetro]";
 		mes "^5D478BConBanfoevidehi^000000";
-		mes "Happy now? Now";
-		mes "leave me alone and";
-		mes "catch the murderer.";
+		mes "Feliz agora? Agora";
+		mes "deixe-me e vá";
+		mes "pegar o assassino.";
 		tu_swordman = 15;
 		close;
 	}
 	mes "^666666*Sigh*^000000";
-	mes "I try and I try, but sometimes ridiculous things happen and";
-	mes "I can't do anything about them.";
+	mes "Eu tento e tento, mas as vezes as coisas acontecem de uma forma ridícula e";
+	mes "eu não posso fazer nada sobre isso.";
 	next;
 	mes "[Muetro]";
-	mes "I suppose it's fate. There's no escaping what I can't possibly";
-	mes "hope to control or understand.";
+	mes "Eu acho que é o destino. Não há como escapar de algo que eu não vou possívelmente";
+	mes "esperar controlar ou entender.";
 	close;
 }
 
@@ -2346,141 +2349,141 @@ morocc,82,292,5	script	Muetro	4_M_02,{
 //============================================================
 morocc,240,72,3	script	Hans	4_M_04,{
 	mes "[Hans]";
-	if(tu_swordman == 15){
-		mes "Help me!";
-		mes "Please help me!";
-		mes "I'm no murderer!";
-		mes "I'm practically";
-		mes "harmless!";
+	if (tu_swordman == 15){
+		mes "Ajude-me!";
+		mes "Por favor ajude-me!";
+		mes "Eu não sou o assassino!";
+		mes "Eu sou praticamente";
+		mes "inofensivo!";
 		next;
 		mes "[Hans]";
 		mes "^5D478Bvictkleyundncem^000000";
-		mes "This is code I know.";
-		mes "Some strange person";
-		mes "told it to me earlier and said";
-		mes "that I'd need to know it soon!";
+		mes "Este é o código que eu sei.";
+		mes "uma pessoa estranha";
+		mes "disse-me mais cedo";
+		mes "que eu precisava saber disso!";
 		next;
 		mes "[Hans]";
-		mes "He said that this code";
-		mes "would save my life. First,";
-		mes "I thought he was crazy, but for";
-		mes "some reason I can't forget it.";
+		mes "Esse código que ele disse";
+		mes "iria salvar a minha vida. Primeiro,";
+		mes "eu pensei que ele fosse louco, mas por";
+		mes "alguma razão eu não pude esquecer isso.";
 		next;
 		mes "[Hans]";
-		mes "It's like he used magic or something to make it stick out in my brain. Please leave me alone, this is all I know!";
+		mes "E mesmo que ele tenha usado alguma magia para que eu não esquecese disso... Por favor deixe-me sozinho, isso é tudo que eu sei!";
 		close;
 	}
-	if(tu_swordman == 14){
-		mes "Help me!";
-		mes "Please help me!";
-		mes "I'm no murderer!";
-		mes "I'm practically";
-		mes "harmless!";
+	if (tu_swordman == 14){
+		mes "Ajude-me!";
+		mes "Por favor ajude-me!";
+		mes "Eu não sou o assassino!";
+		mes "Eu sou praticamente";
+		mes "inofensivo!";
 		next;
 		mes "[Hans]";
 		mes "^5D478Bvictkleyundncem^000000";
-		mes "This is code I know.";
-		mes "Some strange person";
-		mes "told it to me earlier and said";
-		mes "that I'd need to know it soon!";
+		mes "Este é o código que eu sei.";
+		mes "uma pessoa estranhaa";
+		mes "disse-me mais cedo";
+		mes "que eu precisava saber disso!";
 		next;
 		mes "[Hans]";
-		mes "He said that this code";
-		mes "would save my life. First,";
-		mes "I thought he was crazy, but for";
-		mes "some reason I can't forget it.";
+		mes "Esse código que ele disse";
+		mes "iria salvar a minha vida. Primeiro,";
+		mes "eu pensei que ele fosse louco, mas por";
+		mes "alguma razão eu não pude esquecer isso.";
 		next;
 		mes "[Hans]";
-		mes "It's like he used magic or something to make it stick out in my brain. Please leave me alone, this is all I know!";
+		mes "E mesmo que ele tenha usado alguma magia para que eu não esquecese disso... Por favor deixe-me sozinho, isso é tudo que eu sei!";
 		tu_swordman = 15;
 		close;
 	}
-	mes "I'm sorry...";
-	mes "But I don't think I can be of any help to you. Right now, it seems that I've got problems of my own...";
+	mes "Me desculpe...";
+	mes "Mas eu acredito que eu não possa lhe ser de alguma ajuda agora. Já tenhos os meus próprios problemas...";
 	close;
 }
 
 // Bankley
 //============================================================
 morocc_in,12,156,3	script	Bankley	4W_M_01,{
-	if(tu_swordman > 19){
-		mes "^3355FFBankley had a pitiable";
-		mes "expression on his face.^000000";
-		mes "^3355FFHis body is completely lifeless. There's a long, deep wound in his chest, and a blood drenched knife is clenched in his right hand.^000000";
+	if (tu_swordman > 19){
+		mes "^3355FFBankley está com uma lamentável";
+		mes "expresão em seu rosto.^000000";
+		mes "^3355FFSeu corpo é completamente sem vida. Há uma ferida longa, e profunda em seu peito, e ele está apertando com sua mão direita uma faca coberta de sangue.^000000";
 		close;
 	}
-	if(tu_swordman == 19){
+	if (tu_swordman == 19){
 		mes "...";
 		mes "......";
 		next;
-		mes "^3355FFHe's dead!^000000";
+		mes "^3355FFEle está morto!^000000";
 		next;
-		mes "^3355FFBankley had a sad, pitiable expression on his face. Since the color is still fresh in his cheeks, he died only a little while ago.";
-		mes "^3355FFThere is a long, deep wound in his chest, and a blood drenched knife is clenched in his right hand.^000000";
-		tu_swordman = 20;
+		mes "^3355FFBankley tinha uma triste expresão em seu rosto. Pela cor do seu rosto e sangue, ele estava naquele estado a pouco tempo.";
+		mes "^3355FFHá uma longa e profunda ferida em seu peito, e ele está apertando com a sua mão direita uma faca coberta de sangue.^000000";
+		set tu_swordman, 20;
 		changequest 8225,8226;
 		close;
 	}
 	mes "[Bankley]";
 	if(tu_swordman == 15){
-		mes "I didn't kill anybody...!";
-		mes "I'm innocent and don't";
-		mes "have anything to hide!";
+		mes "Eu não matei ninguém...!";
+		mes "Eu sou inocente e eu não";
+		mes "não tenho nada a esconder!";
 		next;
 		mes "[Bankley]";
-		mes "But look...";
-		mes "If it helps, let me give you this weird code that some strange guy gave me. I guess it's supposed to be some kind of clue.";
+		mes "Mas olha...";
+		mes "Se isso ajuda, deixe-me dar-lhe esse código que uma pessoa estranha disse para mim. Eu acho que deve conter algum tipo de pista.";
 		next;
 		mes "[Bankley]";
 		mes "^5D478BhekdlfiDrindkelsd^000000";
-		mes "Do you understand what";
-		mes "it means? I have no idea, but";
-		mes "I told you everything I know!";
+		mes "Você entende o que";
+		mes "isso significa? Eu não tenho ideia, mas";
+		mes "eu te disse tudo que sei!";
 		next;
 		mes "[Bankley]";
-		mes "I feel so violated!";
-		mes "Once you prove I'm innocent, are you going to compensate me for";
-		mes "my mental suffering!?";
+		mes "Eu me sinto tão violado!";
+		mes "Uma vez que a minha inocencia for provada, você vai me dar uma recompensa pelo";
+		mes "meu sofrimento mental!?";
 		next;
 		mes "[Bankley]";
-		mes "Stop bothering me";
-		mes "and wasting your time.";
-		mes "You're better off hunting";
-		mes "for the real culprit!";
+		mes "Pare de me encomodar";
+		mes "e perder seu tempo.";
+		mes "Você deveria estar caçando";
+		mes "o verdadeiro culpado!";
 		close;
 	}
 	if(tu_swordman == 14){
-		mes "I didn't kill anybody...!";
-		mes "I'm innocent and don't";
-		mes "have anything to hide!";
+		mes "Eu não matei ninguém...!";
+		mes "Eu sou inocente e eu não";
+		mes "não tenho nada a esconder!";
 		next;
 		mes "[Bankley]";
-		mes "But look...";
-		mes "If it helps, let me give you this weird code that some strange guy gave me. I guess it's supposed to be some kind of clue.";
+		mes "Mas olha...";
+		mes "Se isso ajuda, deixe-me dar lhe esse código que uma pessoa estranha disse para mim. Eu acho que deve conter algum tipo de pista.";
 		next;
 		mes "[Bankley]";
 		mes "^5D478BhekdlfiDrindkelsd^000000";
-		mes "Do you understand what";
-		mes "it means? I have no idea, but";
-		mes "I told you everything I know!";
+		mes "Você entende o que";
+		mes "isso significa? Eu não tenho ideia, mas";
+		mes "eu te disse tudo que sei!";
 		next;
 		mes "[Bankley]";
-		mes "I feel so violated!";
-		mes "Once you prove I'm innocent, are you going to compensate me for";
-		mes "my mental suffering!?";
+		mes "Eu me sinto tão violado!";
+		mes "Uma vez que a minha inocencia for provada, você vai me dar uma recompensa pelo";
+		mes "meu sofrimento mental!?";
 		next;
 		mes "[Bankley]";
-		mes "Stop bothering me";
-		mes "and wasting your time.";
-		mes "You're better off hunting";
-		mes "for the real culprit!";
+		mes "Pare de me encomodar";
+		mes "e perder seu tempo.";
+		mes "Você deveria estar caçando";
+		mes "o verdadeiro culpado!";
 		tu_swordman = 15;
 		close;
 	}
-	mes "Even though I can't afford it now, my dream is to travel around the world and visit all of its great cities!";
+	mes "Mesmo que eu não possa pagar agora, meu sonho é viajar ao redor do mundo e conhecer todas as suas grandes cidades!";
 	next;
 	mes "[Bankley]";
-	mes "Someday, I'm sure I'll get the chance to make my dreams";
-	mes "come true. But for now, I'll have to live as best as I can.";
+	mes "Algum dia eu tenho certeza que vou ser capaz de transformar esse sonho";
+	mes "em realidade. Mas por agora, eu vou ter de viver da melhor forma que puder.";
 	close;
 }

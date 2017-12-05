@@ -1,56 +1,68 @@
-//===== Hercules Script ======================================
-//= Monk Skills Quests
-//===== By: ==================================================
-//= Lupus, Reddozen, Samuray22
-//===== Current Version: =====================================
-//= 1.5
-//===== Description: =========================================
-//= [Official Conversion]
-//= Quests for skills: Spiritual Bestowment, Excruciating Palm
-//===== Additional Comments: =================================
-//= 1.5 Rescripted to Aegis 10.3 stadards. [L0ne_W0lf]
-//============================================================
+//    ________________________________________________________
+//   /                                                        \
+//   |       _           _   _   _                            |
+//   |      | |__  _ __ / \ | |_| |__   ___ _ __   __ _       |
+//   |      | '_ \| '__/ _ \| __| '_ \ / _ \ '_ \ / _` |      |
+//   |      | |_) | | / ___ \ |_| | | |  __/ | | | (_| |      |
+//   |      |_.__/|_|/_/   \_\__|_| |_|\___|_| |_|\__,_|      |
+//   |                                                        |
+//   |                    brAthena Script                     |
+//   |--------------------------------------------------------|
+//   | Nome do Script: Quest Habilidades de Platina: Monge    |
+//   |--------------------------------------------------------|
+//   | Criado por: eA/rA/brA Dev. Team                        |
+//   |--------------------------------------------------------|
+//   | Versões eA/rA/brA: 1.4a/1.5/1.1                        |
+//   |--------------------------------------------------------|
+//   | Descrição: Quest das habilidade Concessão Espiritual e |
+//   | Punhos Intensos.                                       |
+//   |--------------------------------------------------------|
+//   | Changelog:                                             |
+//   | 1.0 Cabeçalho Criado [Holy]                            |
+//   | 1.1 Tradução (PT-BR) [Hold]                            |
+//   |--------------------------------------------------------|
+//   | - Anotações                                            |
+//   \________________________________________________________/
 
-prt_monk,270,198,3	script	Apprentice Monk#qsk_mo	4_M_MONK,{
+prt_monk,270,198,3	script	Monge Aprendiz#qsk_mo	4_M_MONK,{
 	if (BaseJob == Job_Monk) {
 		if (MONK_SK == 7) {
-			mes "[Monk]";
-			mes "To take the time to";
-			mes "comtemplate on your most";
-			mes "important goal, your highest";
-			mes "priority, is never a waste.";
-			mes "Never confuse your means";
-			mes "to the end you wish to achieve.";
+			mes "[Monge]";
+			mes "Encontrar tempo para";
+			mes "realizar seus principais";
+			mes "objetivos, suas prioridades,";
+			mes "nunca é desperdício de tempo.";
+			mes "Nunca se atrapalhe fazendo o";
+			mes "possível para alcançar o que deseja.";
 			close;
 		}
 		if (MONK_SK == 6 && getskilllv("MO_KITRANSLATION") == 0) {
-			mes "[Monk]";
-			mes "You've forgotten the";
-			mes "basics behind performing";
-			mes "Spiritual Bestowment?";
-			mes "How can this be...?";
+			mes "[Monge]";
+			mes "Você esqueceu os princípios";
+			mes "básicos de como usar a";
+			mes "Concessão Espiritual?";
+			mes "Como isso aconteceu...?";
 			next;
-			mes "[Monk]";
-			mes "Ah, now I understand.";
-			mes "You've transcended the";
-			mes "limitations that used to";
-			mes "hold you back, and have";
-			mes "become a Champion. I'm";
-			mes "sorry for underestimating you.";
+			mes "[Monge]";
+			mes "Ah, agora entendo.";
+			mes "Você transcendeu e expandiu";
+			mes "seus limites, e agora se tornou";
+			mes "um Mestre. Me desculpe por";
+			mes "não ter percebido antes.";
 			next;
-			mes "[Monk]";
-			mes "Very well. It will be an honor";
-			mes "for me to help you relearn the";
-			mes "Spiritual Bestowment skill. As";
-			mes "a side effect, you will probably relearn Excruciating Palm as well.";
+			mes "[Monge]";
+			mes "Tudo bem. Será um honra";
+			mes "para mim ajudá-lo a reaprender";
+			mes "a habilidade Concessão Espiritual.";
+			mes "Como efeito colateral, você provavelmente";
+			mes "irá reaprender também Punhos Itensos.";
 			next;
-			mes "[Monk]";
-			mes "Now be still and relax";
-			mes "as I perform my special";
-			mes "accupressure treatment that";
-			mes "will commit these skills to";
-			mes "your nervous system and ";
-			mes "motor memory...";
+			mes "[Monge]";
+			mes "Agora acalme-se e relaxe";
+			mes "com minha técnica especial";
+			mes "de acumpressura vou treinar";
+			mes "seu sistema nervoso para";
+			mes "receber a habilidade...";
 			next;
 			mes "^3355FF*Tap-tap-tap-tap-tap-tap-tap-tap- tap-tap-tap-tap-tap-tap-tap-tap-";
 			mes "tap-tap-tap-tap-tap-tap-tap-tap- tap-tap-tap-tap-tap-tap-tap-tap-";
@@ -60,55 +72,54 @@ prt_monk,270,198,3	script	Apprentice Monk#qsk_mo	4_M_MONK,{
 			skill "MO_KITRANSLATION",1,0;
 			skill "MO_BALKYOUNG",1,0;
 			next;
-			mes "[Monk]";
-			mes "It is done. Please";
-			mes "continue to use these";
-			mes "special skills to promote";
-			mes "peace and harmony in this";
-			mes "world. Farewell, my friend.";
+			mes "[Monge]";
+			mes "Está pronto. Por favor";
+			mes "continue usando essas técnicas";
+			mes "para promover a paz e";
+			mes "harmonia nesse mundo.";
+			mes "Até mais, meu bom amigo.";
 			close;
 		}
 		if (MONK_SK > 2) {
-			mes "[Monk]";
-			mes "To take the time to";
-			mes "comtemplate on your most";
-			mes "important goal, your highest";
-			mes "priority, is never a waste.";
-			mes "Never confuse your means";
-			mes "to the end you wish to achieve.";
+			mes "[Monge]";
+			mes "Encontrar tempo para";
+			mes "realizar seus principais";
+			mes "objetivos, suas prioridades,";
+			mes "nunca é desperdício de tempo.";
+			mes "Nunca se atrapalhe fazendo o";
+			mes "possível para alcançar o que deseja.";
 			next;
-			mes "[Monk]";
-			mes "Ah, I have a favor to ask.";
-			mes "Please do not tell others that";
-			mes "I have taught you Spiritual";
-			mes "Bestowment. I don't wish to";
-			mes "spend my time teaching too";
-			mes "many people this skill...";
+			mes "[Monge]";
+			mes "Ah, Eu tenho um favor para lhe pedir.";
+			mes "Por favor não diga aos outros";
+			mes "que eu lhe ensinei a Concessão";
+			mes "Espiritual. Eu não quero gastar";
+			mes "todo meu tempo ensinando";
+			mes "habilidades para muitas pessoas...";
 			close;
 		}
 		if (MONK_SK == 2) {
 			if (Weight == 0) {
-				mes "[Monk]";
-				mes "Ah. Well done. I see";
-				mes "that you managed to learn";
-				mes "the most important thing,";
-				mes "selflessness, on your own.";
-				mes "Now I trust that you won't";
-				mes "abuse what I have to teach you.";
+				mes "[Monge]";
+				mes "Ah. Muito bem. Estou vendo";
+				mes "que você aprendeu uma coisa";
+				mes "muito importante, desapego";
+				mes "de si mesmo. Eu acredito que";
+				mes "você não irá abusar das";
+				mes "técnicas que lhe ensinei.";
 				next;
-				mes "[Monk]";
-				mes "My test may seem too strict,";
-				mes "but it is impossible to learn";
-				mes "Spiritual Bestowment without^FFFFFF ^000000 the right discipline. As with all";
-				mes "things, readiness and preparation precede all forms of realization.";
+				mes "[Monge]";
+				mes "Meu teste pode parecer um pouco";
+				mes "rigoroso, mas é impossível aprender a";
+				mes "Concessão Espiritual sem a disciplina adequada. Como todas";
+				mes "as coisas, desenvoltura e preparação são importates para tudo o que fazemos.";
 				next;
-				mes "[Monk]";
-				mes "Now just relax for a moment.";
-				mes "I will use accupressure to";
-				mes "train your nervous system to";
-				mes "physically memorize the energy";
-				mes "flow and movements required";
-				mes "for Spiritual Bestowment.";
+				mes "[Monge]";
+				mes "Agora relaxe por um momento.";
+				mes "eu vou usar minha técnica de acumpressura";
+				mes "para preparar seu sitema nervoso para";
+				mes "aprender os movimentos necessários";
+				mes "da Concessão Espiritual.";
 				next;
 				mes "^3355FF*Tap... tap*";
 				mes "*Tap... Tap*";
@@ -123,326 +134,302 @@ prt_monk,270,198,3	script	Apprentice Monk#qsk_mo	4_M_MONK,{
 				mes "tap-tap-tap-tap-tap-tap-tap-tap- tap-tap-tap-tap-tap-tap-tap-tap-";
 				mes "tap-tap-tap-tap-tap-tap* *POKE*^000000";
 				next;
-				mes "[Monk]";
-				mes "It is done. You are now";
-				mes "capable of using Spiritual";
-				mes "Bestowment. Ah, yes. I've never";
-				mes "really named this skill, but that is what it is usually called by";
-				mes "other Monks who have seen it.";
+				mes "[Monge]";
+				mes "Pronto. Você agora é capaz";
+				mes "de usar a Concessão Espiritual.";
+				mes "Ah, sim. Eu nunca dei um nome";
+				mes "a essa habilidade, mas é assim que ela é chamada";
+				mes "pelos outros monges que já a viram.";
 				next;
-				mes "[Monk]";
-				mes "Remember that this skill has a";
-				mes "long Cast Time and Skill Delay,";
-				mes "so use it very carefully. This";
-				mes "skill will let you give a Spirit Sphere to one of your Party";
-				mes "Members by consuming 40 SP.";
+				mes "[Monge]";
+				mes "Lembre-se esta habilidade possui";
+				mes "um grande tempo de conjuração e pós-conjuração,";
+				mes "use-a com bastante cuidado. Ela";
+				mes "também permite que você passe Esferas Espirituais para os companheiros do seu grupo";
+				mes "consumindo 40 de SP.";
 				next;
-				mes "[Monk]";
-				mes "You will better understand";
-				mes "the use of this skill if you";
-				mes "practice. Keep in mind that";
-				mes "fighting may be necessary at";
-				mes "times, but it is a means to an";
-				mes "end, and not an end in itself.";
-				MONK_SK = 3;
+				mes "[Monge]";
+				mes "Você entenderá melhor o";
+				mes "funcionamento da habilidade";
+				mes "praticando-a. Tenha sempre o pensamento";
+				mes "de que lutar é necessário as vezes,";
+				mes "porém, os meios não justificam os fins.";
+				set MONK_SK,3;
 				skill "MO_KITRANSLATION",1,0;
 				next;
-				mes "[Monk]";
-				mes "Our skills should not be";
-				mes "used to shed blood. If you";
-				mes "can transcend conflict, you";
-				mes "will know that fighting has";
-				mes "no worth, no value. Peace";
-				mes "be with you, my friend.";
+				mes "[Monge]";				
+				mes "Nossas habilidades não devem";
+				mes "ser usadas para derramar sangue.";
+				mes "Se você pode evitar um conflito,";
+				mes "você verá que uma luta não vale";
+				mes "a pena. Fique em paz, meu amigo.";
 				close;
 			}
 			else {
-				mes "[Monk]";
-				mes "Have you learned the";
-				mes "meaning of selflessness?";
-				mes "When you abandon greed";
-				mes "and the desires of the world,";
-				mes "you will be ready for my teaching. ^FFFFFF ^000000";
+				mes "[Monge]";				
+				mes "Você aprendeu a";
+				mes "desapega-se de si mesmo?";
+				mes "Quando você abandonar a ganância";
+				mes "e os desejos mundanos,";
+				mes "você estará pronto para meus ensinamentos.";
 				close;
 			}
 		}
 		if (MONK_SK == 1) {
-			mes "[Monk]";
-			mes "Fighting is meaningless.";
-			mes "Transcend conflict and";
-			mes "difference through the";
-			mes "realization that all are";
-			mes "one. Discipline your mind";
-			mes "and the truth will be revealed.";
+			mes "[Monge]";			
+			mes "Lutar é algo sem sentido.";
+			mes "Devemos evitar os conflitos";
+			mes "e perceber que somos todos";
+			mes "um só. Treine sua mente e a";
+			mes "verdade será revelada.";
 			next;
-			mes "[Monk]";
-			mes "Hm? To what purpose have";
-			mes "you come to visit me? Ah, so";
-			mes "you wish to learn the skill that^FFFFFF ^000000 I have developed. My colleague";
-			mes "was right: more and more people have been wanting to learn this.";
+			mes "[Monge]";			
+			mes "Hum? Para qual propósito";
+			mes "você veio até aqui? Ah, então";
+			mes "você deseja aprender a habilidade que eu desenvolvi.";
+			mes "Meu amigo estava certo: Muitas e muitas pessoas queriam aprender isso.";
 			next;
-			mes "[Monk]";
-			mes "Do not misunderstand me.";
-			mes "It is true that power and";
-			mes "justice, wisdom and action";
-			mes "must be balanced. However,";
-			mes "I have been visited by too many power hungry, bloodthirsty people.";
+			mes "[Monge]";			
+			mes "Não me entenda mal.";
+			mes "É verdade que o poder e";
+			mes "a justiça, sabedoria e força";
+			mes "devem ser balenceados. Contudo,";
+			mes "eu tenho sido visitado por muitas pessoas com fome de poder e sede de sangue.";
 			next;
-			mes "[Monk]";
-			mes "In all fairness, I shall";
-			mes "give you a chance. Prove";
-			mes "to me that you would use";
-			mes "the skills I teach you for";
-			mes "peace and justice. Prove that";
-			mes "you are free from selfishness.";
-			MONK_SK = 2;
+			mes "[Monge]";			
+			mes "Com toda confiança, eu lhe";
+			mes "darei uma chance. Prove para";
+			mes "mim que você irá usar as";
+			mes "habilidades que lhe ensinarei em prol";
+			mes "da paz e da justiça. Prove";
+			mes "que você está livre do egoísmo.";
+			set MONK_SK,2;
 			close;
 		}
 	}
-	mes "[Monk]";
-	mes "Fighting is meaningless.";
-	mes "Transcend conflict and";
-	mes "difference through the";
-	mes "realization that all are";
-	mes "one. Discipline your mind";
-	mes "and the truth will be revealed.";
+	mes "[Monge]";	
+	mes "Lutar é algo sem sentido.";
+	mes "Devemos evitar os conflitos e";
+	mes "perceber que somos todos";
+	mes "um só. Treine sua mente e";
+	mes "a verdade será revelada.";
 	close;
 }
 
-monk_test,316,69,5	script	Monk#qsk_mo	4_M_CHNMONK,{
+monk_test,316,69,5	script	Monge#qsk_mo	4_M_CHNMONK,{
 	if (BaseJob == Job_Monk) {
 		if (MONK_SK == 6) {
-			mes "[Monk]";
-			mes "How did you convince";
-			mes "that monk to teach you";
-			mes "Spiritual Bestowment? It'd";
-			mes "be nice to popularize both";
-			mes "of our specialty skills, but the world may not be ready yet.";
+			mes "[Monge]";			
+			mes "Como você convenceu";
+			mes "aquele monge e te ensinar";
+			mes "a Concessão Espiritual?";
+			mes "Seria legal popularizar nossas";
+			mes "habilidades especiais, mas o mundo pode não estar pronto ainda.";
 			close;
 		}
 		if (MONK_SK == 5) {
-			mes "[Monk]";
-			mes "To begin, Excruciating Palm";
-			mes "is performed by taking your";
-			mes "inner strength and making it";
-			mes "into outer strength. Then, you";
-			mes "focus all of that into your palm. You'll explode if you do it wrong.";
+			mes "[Monge]";			
+			mes "Vamos começar, para utilizar";
+			mes "Punhos Itensos você deve transformar";
+			mes "sua força interior em força exterior.";
+			mes "Após isso, você deve focar a energia em suas mãos.";
+			mes "Você poderá até explodir se cometer algum erro.";
 			next;
-			mes "[Monk]";
-			mes "This skill truly causes";
-			mes "excruciating pain, consuming";
-			mes "20 SP and even 10 HP. It will";
-			mes "knock back monsters with the";
-			mes "chance of stunning them, but only the targeted monster is damaged.";
+			mes "[Monge]";			
+			mes "O uso dessa habilidade pode";
+			mes "ser um pouco doloroso, consome";
+			mes "20 SP e 10 HP. Ela irá empurrar";
+			mes "os inimigos para trás com uma certa";
+			mes "chance de atordoá-los, mas somente o monstro-alvo sofrerá dano.";
 			next;
-			mes "[Monk]";
-			mes "If you use this skill on";
-			mes "other players, it will cause";
-			mes "a certain amount of damage,";
-			mes "but it won't knock back other";
-			mes "players near the original target. Does that make sense?";
+			mes "[Monge]";			
+			mes "Se você usar esta habilidade";
+			mes "em outras pessoas, irá causar";
+			mes "uma boa quantidade de dano,";
+			mes "mas não irá empurrar outras";
+			mes "pessoas além do alvo. Isso faz algum sentido?";
 			next;
-			mes "[Monk]";
-			mes "Anyway, keep practicing";
-			mes "these principles and you'll";
-			mes "master Excruciating Palm.";
-			mes "You should definitely be able";
-			mes "to do it since you've learned";
-			mes "Spiritual Endowment.";
+			mes "[Monge]";
+			mes "Enfim, continue praticando";
+			mes "esses princípios e você será";
+			mes "um mestre dos Punhos Intensos.";
+			mes "Você deverá ser capaz disso";
+			mes "já que conseguiu aprender";
+			mes "a Concessão Espiritual.";
 			MONK_SK = 6;
 			skill "MO_BALKYOUNG",1,0;
 			next;
-			mes "[Monk]";
-			mes "Well, we've completed";
-			mes "the lesson. I hope you";
-			mes "use your new skills to";
-			mes "fight for justice and";
-			mes "combat evil. Goodbye";
-			mes "for now, my friend.";
+			mes "[Monge]";
+			mes "Bem, completamos todo";
+			mes "o ensinamento. Acredito";
+			mes "que você irá usar suas novas";
+			mes "habilidades para lutar pela";
+			mes "justiça e combater o mal.";
+			mes "Adeus por enquanto, bom amigo.";
 			close;
 		}
 		if (MONK_SK == 4 && countitem(905) > 19 && countitem(711) > 2) {
-			mes "[Monk]";
-			mes "What's that...?";
-			mes "You've learned the";
-			mes "Spiritual Bestowment";
-			mes "skill? I assume that you";
-			mes "wish to learn Excruciating";
-			mes "Palm next. Am I correct?";
+			mes "[Monge]";			
+			mes "O quê...?";
+			mes "Você aprendeu a habilidade";
+			mes "Concessão Espiritual? Acredito";
+			mes "que você queira aprender agora";
+			mes "Punhos Intensos. Estou certo?";
 			next;
-			mes "[Monk]";
-			mes "Hm. Well, you are strong";
-			mes "enough to handily defeat a";
-			mes "good number of Mandragoras.";
-			mes "All right. You seem to be ready. Come back in a little while so";
-			mes "that I can finish preparations.";
-			delitem 905,20; //Stem
-			delitem 711,3; //Shoot
+			mes "[Monge]";			
+			mes "Hum. Bem, você é forte";
+			mes "o suficiente para derrotar";
+			mes "muitas Mandrágoras. Tudo bem então,";
+			mes "você parece estar preparado. Volte daqui a pouco";
+			mes "enquanto termino os preparativos.";
+			delitem 905,20; //Caule
+			delitem 711,3; //Broto
 			MONK_SK = 5;
 			close;
 		}
 		if (MONK_SK == 4) {
-			mes "[Monk]";
-			mes "What's that...?";
-			mes "You've learned the";
-			mes "Spiritual Bestowment";
-			mes "skill? I assume that you";
-			mes "wish to learn Excruciating";
-			mes "Palm next. Am I correct?";
+			mes "[Monge]";			
+			mes "O quê...?";
+			mes "Você aprendeu a";
+			mes "habilidade Concessão";
+			mes "Espiritual? Acredito que";
+			mes "você queira aprender agora";
+			mes "Punhos Intensos.Estou certo?";
 			next;
-			mes "[Monk]";
-			mes "As I mentioned to you";
-			mes "before, you must subjugate";
-			mes "Mandragoras to prove that";
-			mes "you are qualified, in terms";
-			mes "of strength and compassion,";
-			mes "to learn Excruciating Palm.";
+			mes "[Monge]";			
+			mes "Como eu já mencionei,";
+			mes "você deve derrotar Mandrágoras";
+			mes "para mostrar que você é qualificado";
+			mes "em termos de força e compaixão,";
+			mes "logo após poderá aprender Punhos Itensos.";
 			next;
-			mes "[Monk]";
-			mes "Fight to protect those";
-			mes "innocents terrorized by";
-			mes "the aggressive Mandragoras.";
-			mes "If you bring me ^FF000020 Stems^000000 and";
-			mes "^FF00003 Shoots^000000, I will be satisfied^FFFFFF ^000000 with this proof of your ability.";
+			mes "[Monge]";			
+			mes "Lute para proteger aqueles";
+			mes "inocentes que estiverem sendo";
+			mes "aterrorizados pelas terríveis Mandrágoras.";
+			mes "Se você me trouxer^FF0000 20 Caules^000000 e";
+			mes "^FF0000 3 Brotos^000000, eu ficarei satisfeito com essa prova de habilidade.";
 			next;
-			mes "[Monk]";
-			mes "Do you understand now?";
+			mes "[Monge]";
+			mes "Conseguiu entender agora?";
 			close;
 		}
 		if (MONK_SK == 3) {
-			mes "[Monk]";
-			mes "Have you come to learn";
-			mes "Excruciating Palm? If only";
-			mes "that were possible. There";
-			mes "are two obstacles we face";
-			mes "in fulfilling your request.";
+			mes "[Monge]";			
+			mes "Você veio para aprender";
+			mes "Punhos Intensos? Se for";
+			mes "isso mesmo. Existem dois";
+			mes "obstáculos que você deverá";
+			mes "superar para conseguir.";
 			next;
-			mes "[Monk]";
-			mes "Firstly, you must learn";
-			mes "the Spiritual Bestowment";
-			mes "skill beforehand. It will be";
-			mes "difficult to get that monk";
-			mes "to teach it to you, if not";
-			mes "outright impossible.";
+			mes "[Monge]";
+			mes "Primeiramente, você deve";
+			mes "aprender a habilidade Concessão";
+			mes "Espiritual antes. Será muito difícil";
+			mes "convecer aquele monge a te ensinar,";
+			mes "se não for impossível.";
 			next;
-			mes "[Monk]";
-			mes "Secondly, you will need";
-			mes "to pass my little test of";
-			mes "strength, so that I can be";
-			mes "use that your body can endure";
-			mes "the awesome power involved";
-			mes "in using Excruciating Palm.";
+			mes "[Monge]";			
+			mes "Segundo, você precisará.";
+			mes "passar em meu pequeno teste de";
+			mes "força, para que eu possar saber";
+			mes "se seu corpo suporta o";
+			mes "uso de Punhos Itensos.";
 			next;
-			mes "[Monk]";
-			mes "Mm. I know that Mandragoras";
-			mes "have been menacing travelers,";
-			mes "so if you can prove to me that";
-			mes "you've been hunting them, you";
-			mes "will prove worthy of learning";
-			mes "Excruciating Palm.";
+			mes "[Monge]";			
+			mes "Hum. Eu sei que aquelas Mandrágoras";
+			mes "têem incomodado os viajantes,";
+			mes "então se você me provar que";
+			mes "consegue caçá-las, você provará.";
+			mes "que é capaz de aprender";
+			mes "Punhos Intensos.";
 			next;
-			mes "[Monk]";
-			mes "If you can somehow convince";
-			mes "that monk to teach you how to";
-			mes "perform Spiritual Bestowment,";
-			mes "I shall then ask you to bring";
-			mes "^FF000020 Stems^000000 and ^FF00003 Shoots^000000 from";
-			mes "hunting Mandragoras.";
+			mes "[Monge]";			
+			mes "Se você conseguir convencer";
+			mes "aquele monge e lhe ensinar";
+			mes "Concessão Espiritual, pedirei";
+			mes "a você para me trazer";
+			mes "^FF0000 20 Caules^000000 e^FF0000 3 Brotos^000000";
+			mes "caçando Mandrágoras.";
 			next;
-			mes "[Monk]";
-			mes "Of course, completing";
-			mes "my test is meaningless";
-			mes "if you do not first learn the";
-			mes "Spiritual Bestowment skill.";
-			mes "I wish you luck with that...";
+			mes "[Monge]";			
+			mes "Mas claro, não será possível";
+			mes "concluir meu teste se você";
+			mes "não aprender antes a";
+			mes "Concessão Espiritual.";
+			mes "Desejo-lhe boa sorte...";
 			MONK_SK = 4;
 			close;
 		}
 		if (MONK_SK == 1) {
-			mes "[Monk]";
-			mes "There is a pacifist monk";
-			mes "living in seclusion that";
-			mes "can teach the Spiritual";
-			mes "Bestowment skill. However,";
-			mes "he is stubborn, and has refused^FFFFFF ^000000 many who wish to learn from him.";
+			mes "[Monge]";			
+			mes "Lá tem um monge pacifista";
+			mes "vivendo em isolamento ele";
+			mes "pode te ensinar a habilidade";
+			mes "Concessão Espiritual. Contudo,";
+			mes "ele é teimoso e já se recusou a ensinar muitas pessoas que queriam aprender com ele.";
 			next;
-			mes "[Monk]";
-			mes "It would be good if";
-			mes "you can convince him";
-			mes "to teach it to you, as it is";
-			mes "impossible to learn how";
-			mes "to perform this skill alone.";
-			mes "It's really quite a pity...";
+			mes "[Monge]";			
+			mes "Seria bom se você";
+			mes "conseguisse convencê-lo a lhe";
+			mes "lhe ensinar, sendo que é impossível";
+			mes "aprender esta habilidade sozinha.";
+			mes "É realmente uma pena...";
 			close;
 		}
 		if (MONK_SK == 0) {
-			mes "[Monk]";
-			mes "Power without justice will";
-			mes "not last. Justice without";
-			mes "power cannot be upheld.";
-			mes "Power does not equate to";
-			mes "justice, but true justice can";
-			mes "be the means to power.";
+			mes "[Monge]";			
+			mes "Poder sem justiça não";
+			mes "resulta em nada. Justiça sem";
+			mes "poder não se mantém.";
+			mes "O poder não se compara a";
+			mes "justiça, mas a verdadeira justiça";
+			mes "pode ser um caminho para o poder.";
 			next;
-			mes "[Monk]";
-			mes "Always remember this truth.";
-			mes "Justice and power, compassion";
-			mes "and strength, wisdom and action. These are all complements that";
-			mes "go hand in hand and must always";
-			mes "be harmoniousy balanced.";
+			mes "[Monge]";			
+			mes "Lembre-se sempre desses ensinamentos.";
+			mes "Justiça e poder, compaixão";
+			mes "e força, conhecimento e ações. Todos esses componentes andam de";
+			mes "mãos dadas e precisam estar";
+			mes "sempre harmoniosamente balaceados.";
 			next;
-			mes "[Monk]";
-			mes "So it is with some skills.";
-			mes "I have developed a skill";
-			mes "that is the pure manifestation";
-			mes "of power, Excruciating Palm!";
-			mes "However, it is useless without";
-			mes "its complement to balance it.";
+			mes "[Monge]";			
+			mes "Isso acontece com algumas habilidades.";
+			mes "Eu desenvolvi uma habilidade que é";
+			mes "manifestação de poder: Punhos Intensos!";
+			mes "No entanto, ela é inútil sem";
+			mes "um complemento para balanceá-la.";
 			next;
-			mes "[Monk]";
-			mes "The complement to my skill";
-			mes "is a skill known as Spiritual";
-			mes "Bestowment, which can only";
-			mes "be taught by one Monk. However,";
-			mes "he refuses to teach it to others, believing they are unworthy.";
+			mes "[Monge]";			
+			mes "O complemento para minha habilidade";
+			mes "é uma outra habilidade chamada";
+			mes "Concessão Espiritual, que só pode";
+			mes "ser ensinada por um Monge. No entanto,";
+			mes "ele se recusa a ensiná-la aos outros, achando que eles não são merecedores.";
 			next;
-			mes "[Monk]";
-			mes "Although I've let him know";
-			mes "that he should popularize his";
-			mes "teaching of that skill, I must respect his decision. Still, you";
-			mes "may try talking to him if you wish to try to learn some new skills.";
+			mes "[Monge]";			
+			mes "Embora eu tenha tentado convencê-lo";
+			mes "que seria bom popularizar a habilidade,";
+			mes "devo respeitar a opinião dele. Mesmo assim,";
+			mes "você pode tentar convencê-lo a lhe ensinar a";
+			mes "habilidade se estiver com vontade de aprender nova técnicas.";
 			MONK_SK = 1;
 			next;
-			mes "[Monk]";
-			mes "To find him, simply seek";
-			mes "out the monk who always";
-			mes "preaches the empty meaning";
-			mes "of fighting. That will be him.";
+			mes "[Monge]";			
+			mes "Para encontrá-lo, basta procurar";
+			mes "um monge que sempre fala sobre ";
+			mes "o quão vazio são as lutas.";
+			mes "Este será ele.";
 			close;
 		}
 	}
-	mes "[Monk]";
-	mes "Power without justice will";
-	mes "not last. Justice without";
-	mes "power cannot be upheld.";
-	mes "Power does not equate to";
-	mes "justice, but true justice can";
-	mes "be the means to power.";
+	mes "[Monge]";	
+	mes "Poder sem justiça não resulta";
+	mes "em nada. Justiça sem";
+	mes "poder não se mantém.";
+	mes "O poder não se compara a";
+	mes "justiça, mas a verdadeira justiça";
+	mes "poder ser um caminho para o poder.";
 	close;
 }
 
-//============================================================
-// Old changelog
-//============================================================
-//= 1.0 for fully working skills only [Lupus]
-//= 1.1 Added more new skill quests for more classes [Lupus]
-//= Somehow eA engine doesn't let you keep learn't skill V_V'
-//= 1.2 Added to correct locations, correct NPC's, fixed
-//= some of the items required and made them into real
-//= quests. [Reddozen]
-//= 1.3 Fixed bugs and minor typos. Optimized [Lupus]
-//= 1.3a fixed an item ID typo, thx 2Spiritual Kid
-//= 1.3b Splitted into different files [DracoRPG]
-//= 1.4 Updated to the official one. [Samuray22]
-//= 1.4a replaced item "names" with item id. [Lupus]
-//============================================================

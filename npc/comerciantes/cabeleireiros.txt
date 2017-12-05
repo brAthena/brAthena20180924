@@ -1,48 +1,50 @@
-//===== Hercules Script ======================================
-//= Hair Dresser
-//===== By: ==================================================
-//= Muad_Dib, Samuray22, Kisuka
-//===== Current Version: =====================================
-//= 1.4
-//===== Description: =========================================
-//= [Official Conversion]
-//= Allows you to change your hairstyle.
-//===== Additional Comments: =================================
-//= 1.2 Rescripted to the Aegis 10.3 Standards. [Samuray22]
-//= 1.3 Updated to match AEGIS script. [Kisuka]
-//= 1.4 Added Lighthalzen Hair Dresser. [L0ne_W0lf]
-//============================================================
+//    ________________________________________________________
+//   /                                                        \
+//   |       _           _   _   _                            |
+//   |      | |__  _ __ / \ | |_| |__   ___ _ __   __ _       |
+//   |      | '_ \| '__/ _ \| __| '_ \ / _ \ '_ \ / _` |      |
+//   |      | |_) | | / ___ \ |_| | | |  __/ | | | (_| |      |
+//   |      |_.__/|_|/_/   \_\__|_| |_|\___|_| |_|\__,_|      |
+//   |                                                        |
+//   |                    brAthena Script                     |
+//   |--------------------------------------------------------|
+//   | Nome do Script:  cabeleireiros.txt                     |
+//   |--------------------------------------------------------|
+//   | Criado por: eA/rA/Herc/brA Dev. Team                   |
+//   |--------------------------------------------------------|
+//   | Versões eA/rA/Herc/brA: 1.1/1.1/1.1/1.0                |
+//   |--------------------------------------------------------|
+//   | Changelog:                                             |
+//   | 1.0 Cabeçalho brAthena [Axl]                           |
+//   |--------------------------------------------------------|
+//   | - Anotações                                            |
+//   \________________________________________________________/
 
 // Hair Dresser Veronica
 // ============================================================
-alberta_in,55,142,7	script	Hair Dresser	4_F_02,{
+alberta_in,55,142,7	script	Cabeleleira	4_F_02,{
 	mes "[Veronica]";
-	mes "Welcome to Veronica's hair salon.";
-	mes "How can I help you?";
+	mes "Bem-Vindo ao Veronicas Salão de Beleza.";
+	mes "Como posso lhe ajudar?";
 	next;
-	switch(select("See available hair styles.:Change hair style.:End conversation.")) {
+	switch(select("Ver estilos de cabelo.:Mudar estilo de Cabelo.:Terminar conversa.")) {
 	case 1:
 		mes "[Veronica]";
-		mes "We have a total of 19 styles, available from no.1 to no.19.";
-		mes "Which one do you want to see?";
-		mes "If you wish to cancel,";
-		mes "please enter 0.";
+		mes "Nós temos um total de 19 estilos, do número 1 ao 19.";
+		mes "Qual você gostaria de ver?";
+		mes "Se deseja cancelar, digite 0.";
 		next;
 		input .@style;
 		if(.@style > 19) {
 			mes "[Veronica]";
-			mes "Oops, I'm sorry, but that";
-			mes "style is not available.";
-			mes "Remember to enter a number";
-			mes "from 1 to 19.";
+			mes "Opa, me desculpe, mas esse estilo não existe.";
+			mes "Lembre-se apenas números entre 1 e 19.";
 			next;
 		} else if(.@style == 0) {
 			mes "[Veronica]";
-			mes "So, how do you like the style?";
-			mes "Feel free to ask me about any";
-			mes "available hairstyle. It will";
-			mes "be my pleasure to style your";
-			mes "hair.";
+			mes "Então, como você gosta do estilo?";
+			mes "Sinta-se à vontade para perguntar sobre qualquer estilo.";
+			mes "Vai ser um prazer estilizar seus cabelos.";
 			close;
 		}
 		else {
@@ -50,380 +52,153 @@ alberta_in,55,142,7	script	Hair Dresser	4_F_02,{
 			mes "[Veronica]";
 			switch(.@style) {
 			case 1:
-				if(Sex == 1) {
-					mes "Oh, that's 'Play Dead' style!";
-					mes "It's a nice, basic haircut.";
-					mes "I notice that usually the";
-					mes "cute, conversative types seem";
-					mes "to prefer this style.";
-					close2; cutin "",255; end;
-				}
-					mes "Oh, that's 'First Aid' style!";
-					mes "The shoulder length tresses";
-					mes "are straightened for those";
-					mes "no nonsense adventurers. It";
-					mes "seems to be the style of";
-					mes "choice for Novices.";
+					mes "Oh, esse é estilo "+(( Sex == 1 ) ? "'Engana Morte'" : "'Primeiros Socorros'")+"!";
+					mes "É um corte de cabelo básico.";
+					mes "Eu observo que geralmente "+(( Sex == 1 ) ? "os bonitinhos":"as bonitinhas")+" preferem este estilo.";
 					close2; cutin "",255; end;
 			case 2:
-				if(Sex == 1) {
-					mes "Oh, that's the 'Two Handed Sword";
-					mes "Mastery' style! It's perfect for";
-					mes "for Swordmen who might muss their";
-					mes "hair while swinging their swords";
-					mes "all day long.";
-					close2; cutin "",255; end;
-				}
-					mes "Oh, that's 'Bash' style!";
-					mes "For the powerful woman that's";
-					mes "not afraid to get a little";
-					mes "blood on her hands, but knows";
-					mes "how great her hair will look";
-					mes "while wildly flailing a sword.";
+					mes "Oh, esse é estilo "+(( Sex == 1 ) ? "'Perícia com Espadas de Duas Mãos'":"'Golpe Fulminante'")+"!";
+					mes "Isso é perfeito para Espadachins que mechem seus cabelos enquanto balançam suas espadas o dia todo.";
 					close2; cutin "",255; end;
 			case 3:
-				if(Sex == 1) {
-					mes "Oh, that's 'Napalm Beat' style!";
-					mes "It's a unique look with a hint";
-					mes "of eccentricity that's offset";
-					mes "with a helping of elegance.";
-					close2; cutin "",255; end;
-				}
-					mes "Oh, that's 'Frost Diver' style!";
-					mes "The pigtails lend an innocent,";
-					mes "demure look for those Mages";
-					mes "and Wizards that usually scare";
-					mes "off the boys with their spells.";
+					mes "Oh, esse é estilo "+(( Sex == 1 ) ? "'Napalm Beat'":"'Rajada Congelante'")+"!";
+					mes "É um olhar único, com um toque de excentricidade que é compensado com uma porção de elegância.";
 					close2; cutin "",255; end;
 			case 4:
-				if(Sex == 1) {
-					mes "Oh, that's the 'Double Strafe'";
-					mes "style! The arrangement of the";
-					mes "hair conducts ambient static";
-					mes "electricity, naturally clearing";
-					mes "the mind. At least, that's what";
-					mes "I was taught in fashion school.";
-					close2; cutin "",255; end;
-				}
-					mes "Oh, that's 'Arrow Shower' style!";
-					mes "For the Bowswoman who doesn't";
-					mes "want fashion to interfere with";
-					mes "her depth perception. Much more";
-					mes "attractive than those horrid";
-					mes "granny-style hairbuns.";
+					mes "Oh, esse é estilo "+(( Sex == 1 ) ? "'Rajada de Flechas'":"'Chuva de Flechas'")+"!";
+					mes "O arranjo do cabelo conduz a um ambiente estático de eletricidade, naturalmente limpando a mente.";
+					mes "Pelo menos, é o que aprendi na escola de moda.";
 					close2; cutin "",255; end;
 			case 5:
-				if(Sex == 1) {
-					mes "Oh, that's 'Angelus' style!";
-					mes "It's for calm and devout people,";
-					mes "as well as those bashful,";
-					mes "mild-mannered types.";
-					close2; cutin "",255; end;
-				}
-					mes "Oh, that's 'Heal' style!";
-					mes "This is in trend among";
-					mes "Priests and Acolytes since";
-					mes "this style is appropriate";
-					mes "for formal situations, but";
-					mes "is also practical in battle.";
+					mes "Oh, esse é estilo "+(( Sex == 1 ) ? "'Angelus'":"'Curar'")+"!";
+					mes "É para pessoas calmas e devotas, assim como para os tímidos.";
 					close2; cutin "",255; end;
 			case 6:
-				if(Sex == 1) {
-					mes "Oh, that's 'Push Cart' style!";
-					mes "It was based on the design of a";
-					mes "cart...at least, that's what";
-					mes "I learned in beautician school.";
-					close2; cutin "",255; end;
-				}
-					mes "Ooh, that's 'Vending' style!";
-					mes "It's the hairdo of money";
-					mes "makers...and if I may say so,";
-					mes "it's also economical.";
+					mes "Oh, esse é estilo "+(( Sex == 1 ) ? "'Puchar Carrinho'":"'Comércio'")+"!";
+					mes "Oh, esse é o estilo 'Puchar Carrinho'!";
+					mes "Este é o penteado para fabricantes de dinheiro...";
+					mes "Pelo menos, foi o que eu aprendi na escola de moda.";
 					close2; cutin "",255; end;
 			case 7:
-				if(Sex == 1) {
-					mes "Ooh, that's 'Envenom' style!";
-					mes "It looks great on Thieves and";
-					mes "and Assassins when they're";
-					mes "out poisoning people and animals.";
-					mes "It's fashion for the aggressive";
-					mes "and eclectic~!";
-					close2; cutin "",255; end;
-				}
-					mes "Oh, that's 'Double Attack' style!";
-					mes "The adorable pigtail, paired with";
-					mes "those provacative bangs are sure";
-					mes "to help you steal the heart of";
-					mes "some cute guy.";
+					mes "Oh, esse é estilo "+(( Sex == 1 ) ? "'Envenenar'":"'Ataque Duplo'")+"!";
+					mes "Parece ótimo para Gatunos e Mercenários.";
+					mes "É moda para o agressivo e eclético~!";
 					close2; cutin "",255; end;
 			case 8:
-				if(Sex == 1) {
-					mes "Oh, that's 'Bowling Bash' style!";
-					mes "A popular style for Knights, its";
-					mes "manly, rugged look tends to";
-					mes "attract all of the ladies,";
-					mes "and looks great on men with";
-					mes "strong chins.";
-					close2; cutin "",255; end;
-				}
-					mes "Oh, that's 'Gloria' style!";
-					mes "It's very elegant and looks";
-					mes "great on holy Priests. This";
-					mes "style is most attractive to";
-					mes "ladies who aren't that used";
-					mes "to fighting with their hands.";
+					mes "Oh, esse é estilo "+(( Sex == 1 ) ? "'Impacto de Tyr'":"'Glória'")+"!";
+					mes "Esse é muito elegante e cai bem, possui uma aparência robusta.";
 					close2; cutin "",255; end;
 			case 9:
-				if(Sex == 1) {
-					mes "Oh, that's 'Venom Dust' style!";
-					mes "Definitely a look for rebels,";
-					mes "the sweeping, yet decidedly";
-					mes "luxorious locks seems to enchant";
-					mes "girls with a fatal attraction.";
-					close2; cutin "",255; end;
-				}
-					mes "Oh, that's 'SP Recovery' style!";
-					mes "To add more body to the special";
-					mes "style of these bangs, I use a";
-					mes "special conditioner that makes";
-					mes "you feel like you're regaining SP";
-					mes "...Although, it acutally doesn't.";
+					mes "Oh, esse é estilo "+(( Sex == 1 ) ? "'Névoa Tóxica'":"'Recuperação de SP'")+"!";
+					mes "Parece adicionar mais corpo para o estilo especial destes estrondos.";
 					close2; cutin "",255; end;
 			case 10:
-				if(Sex == 1) {
-					mes "Oh, that's 'Turn Undead' style!";
-					mes "This is popular among Priests";
-					mes "that want a serious, yet a bit";
-					mes "of a wild, agressive look.";
-					mes "Definitely more attractive";
-					mes "than the 'Holy Light' mullet.";
-					close2; cutin "",255; end;
-				}
-					mes "Oh, that's 'Prepare Potion' style!";
-					mes "The flared out tresses are chosen";
-					mes "by beginning Alchemists, since";
-					mes "early, explosive experiments would";
-					mes "make their hair to stick out anyway.";
+					mes "Oh, esse é estilo "+(( Sex == 1 ) ? "'Esconjurar'":"'Preparar Poção'")+"!";
+					mes "Este é popular entre aqueles que querem ser mais sérios, tendo uma aparência agressiva.";
 					close2; cutin "",255; end;
 			case 11:
-				if(Sex == 1) {
-					mes "Oh, that's 'Dragonology' style!";
-					mes "It's neat and clean cut, perfect";
-					mes "for studious people and looks";
-					mes "great with eyeglasses. This";
-					mes "is a fashion well suited to";
-					mes "intellectual types.";
-					close2; cutin "",255; end;
-				}
-					mes "Oh, that's 'Grand Cross' style!";
-					mes "It's in style among those pious";
-					mes "Crusaders that need hair that";
-					mes "won't muss during fighting, yet";
-					mes "is respectable enough to attend";
-					mes "religious services.";
+					mes "Oh, esse é estilo "+(( Sex == 1 ) ? "'Dragonologia'":"'Crux Magnum'")+"!";
+					mes "É um corte puro e limpo, ficam ótimos com óculos.";
+					mes "Essa é a forma adequada para intelectuais.";
 					close2; cutin "",255; end;
 			case 12:
-				if(Sex == 1) {
-					mes "Oh, that's 'Mace Mastery' style!";
-					mes "A lot of care goes into making";
-					mes "that tussled hair say, 'I don't";
-					mes "care how I look at all.'";
-					close2; cutin "",255; end;
-				}
-					mes "Oh, that's 'Intimidate' style!";
-					mes "The Rogue women seem to like";
-					mes "this style...although I imagine";
-					mes "that more of them would prefer";
-					mes "something wilder to match those";
-					mes "stockings...";
+					mes "Oh, esse é estilo "+(( Sex == 1 ) ? "'Perícia com Maça'":"'Ataque Surpresa'")+"!";
+					mes "Muito cuidado ao fazer este estilo, seus cabelos vão dizer, 'Eu não me importo como olho para todos!'.";
 					close2; cutin "",255; end;
 			case 13:
-				if(Sex == 1) {
-					mes "Oh, that's 'Thunder Storm' style!";
-					mes "This hot, flamboyant hairstyle";
-					mes "flares out wildly like thunder.";
-					mes "...And you will too with this new look.";
-					close2; cutin "",255; end;
-				}
-					mes "Oh, that's 'Spiritual Sphere";
-					mes "Absorption' style! There's a";
-					mes "charismatic quality to this";
-					mes "fashion: it's tough, slightly";
-					mes "tomboyish, but not so much";
-					mes "that it can't be cute.";
+					mes "Oh, esse é estilo "+(( Sex == 1 ) ? "'Tempestade de Raios'":"'Absorver Esferas Espirituais'")+"!";
+					mes "Neste mostra uma qualidade carismática para a moda: é duro, mas nem tanto, que pode não ser bonito.";
+					mes "...E você também com este novo olhar.";
 					close2; cutin "",255; end;
 			case 14:
-				if(Sex == 1) {
-					mes "Oh, that's 'Encore' style!";
-					mes "The elegant, flowing locks";
-					mes "fit well with Bards, or men who";
-					mes "appreciate the value of male";
-					mes "beauty.";
-					close2; cutin "",255; end;
-				}
-					mes "Oh, that's 'Gypsy's Kiss' style!";
-					mes "Dancers seem to like this style,";
-					mes "although personally, I think";
-					mes "this fashion fits very well";
-					mes "with glasses.";
+					mes "Oh, esse é estilo "+(( Sex == 1 ) ? "'Bis'":"'Beijo da Odalisca'")+"!";
+					mes "O elegante fechamento de fluxo, se encaixa bem naqueles que apreciam a beleza.";
 					close2; cutin "",255; end;
 			case 15:
-				if(Sex == 1) {
-					mes "Oh, that's 'Grimtooth' style!";
-					mes "Spiky and unkempt, this style";
-					mes "is a popular counterculture";
-					mes "street fashion. You might";
-					mes "not want to wear your hair";
-					mes "this way at a wedding, though.";
-					close2; cutin "",255; end;
-				}
-					mes "Oh, that's 'Counter Attack' style!";
-					mes "This is an intimidating look for";
-					mes "girls that want to say 'You hit";
-					mes "me, I'll hit you back!' It really";
-					mes "emphasizes strong looking";
-					mes "foreheads and cheekbones.";
+					mes "Oh, esse é estilo "+(( Sex == 1 ) ? "'Tocaia'":"'Chute Tornado'")+"!";
+					mes "Este estilo é uma cultura de rua.";
 					close2; cutin "",255; end;
 			case 16:
-				if(Sex == 1) {
-					mes "Oh, that's 'Blitz Beat' style!";
-					mes "A funky and lively fashion,";
-					mes "this style was developed for a";
-					mes "Hunter who liked really long";
-					mes "bangs and wanted to see";
-					mes "through them at the same time.";
-					close2; cutin "",255; end;
-				}
-					mes "Oh, that's 'Anke Snare' style!";
-					mes "The style style is specially";
-					mes "made for Hunters that don't like";
-					mes "to get their hair tangled...";
-					mes "After all, what kind of Hunter";
-					mes "lets their hair get trapped?";
+					mes "Oh, esse é estilo "+(( Sex == 1 ) ? "'Ataque Aéreo'":"'Instalar Armadilha'")+"!";
+					mes "Uma forma divertida e animada, este estilo foi desenvolvido por um Caçador.";
 					close2; cutin "",255; end;
 			case 17:
-				if(Sex == 1) {
-					mes "Oh, that's 'Find Ore' style!";
-					mes "It's a practical, economical look";
-					mes "that is popular among Blacksmiths.";
-					mes "Some swear that this fashion helps";
-					mes "them in finding ores, but where's";
-					mes "the science in that??";
-					close2; cutin "",255; end;
-				}
-					mes "Oh, that's 'Hammer Fall' style!";
-					mes "For the woman that doesn't want";
-					mes "her hair to get in the way when";
-					mes "she's savagely swinging heavy";
-					mes "objects. Of course, this is a";
-					mes "Blacksmith favorite.";
+					mes "Oh, esse é estilo "+(( Sex == 1 ) ? "'Encontrar Minério'":"'Martelo de Thor'")+"!";
+					mes "É prático e econômico, é popular entre os Ferreiros.";
 					close2; cutin "",255; end;
 			case 18:
-				if(Sex == 1) {
-					mes "Oh, that's 'Fire Pillar' style!";
-					mes "It's a trendy look, in which";
-					mes "you cover one eye for that";
-					mes "intrigue effect. The element";
-					mes "of mystery is always in";
-					mes "fashion, don't you think?";
-					close2; cutin "",255; end;
-				}
-					mes "Oh, that's 'Jupitel Thunder'";
-					mes "style! A look that strikes";
-					mes "like lightening, without";
-					mes "any of that annoying static";
-					mes "cling or muss. This fashion";
-					mes "looks great with Mage Hats.";
+					mes "Oh, esse é estilo "+(( Sex == 1 ) ? "'Coluna de Fogo'":"'Trovão de Júpiter'")+"!";
+					mes "Este visual fica ótimo com chapéis de Mago.";
 					close2; cutin "",255; end;
 			case 19:
-				if(Sex == 1) {
-					mes "Oh, that's 'Guillotine Fist'";
-					mes "style! The smooth, slicked back";
-					mes "pompadour shows that you're";
-					mes "serious about your passion";
-					mes "for brawling... or just your passion.";
-					close2; cutin "",255; end;
-				}
-					mes "Oh, that's 'Whirlwind' style!";
-					mes "A favorite among the studious";
-					mes "Sages, the hair is tied back";
-					mes "in a stylish braid so that";
-					mes "it doesn't fly around after";
-					mes "casting those windy spells.";
+					mes "Oh, esse é estilo "+(( Sex == 1 ) ? "'Punho Supremo de Asura'":"'Tornado'")+"!";
+					mes "Elegante, mostra que você está sério para suas lutas...";
+					mes "...ou apenas passivo.";
 					close2; cutin "",255; end;
 			}
 		}
 	case 2:
 		if(BaseLevel < 60) {
 			mes "[Veronica]";
-			mes "Oh, dear, you're looking fabulous with";
-			mes "your current hairstyle. Why don't you";
-			mes "try a new hair accessory rather than changing your look?";
+		mes "Oh, querido, você está fabuloso com seu cabelo atual.";
+			mes "Por que você não tenta um novo acessório para o cabelo?";
 			close;
 		} else if((countitem(973) < 3) || (countitem(974) < 3) || (countitem(901) <100) || (countitem(1094) <100) || (countitem(1020) <100) || (countitem(1060) <100) || (countitem(7152) <100) || (Zeny < 99800)) {
 			mes "[Veronica]";
-			mes "If you wish to change your";
-			mes "hairstyle, you should meet some";
-			mes "requirements. I suggest that you";
-			mes "write down all the items that";
-			mes "you will need.";
+			mes "Se você deseja mudar seu cabelo, você deve me trazer alguns ingredientes.";
+			mes "Sugiro que você anote todos os itens que precisa.";
 			next;
 			mes "[Veronica]";
-			mes "3 Counteragent,";
-			mes "3 Mixture,";
-			mes "100 Danggie,";
-			mes "100 Short Danggie,";
-			mes "100 Black Hair,";
-			mes "100 Golden Hair,";
-			mes "100 Glossy Hair, and lastly...";
+			mes "3 Antígenos,";
+			mes "3 Misturas,";
+			mes "100 Tranças,";
+			mes "100 Tranças Curtas,";
+			mes "100 Cabelos Morenos,";
+			mes "100 Cabelos Dourados,";
+			mes "100 Cabelos Perfumados, e por último...";
 			next;
 			mes "[Veronica]";
-			mes "You will need 99,800 zeny.";
-			mes "Please come back when you're";
-			mes "ready. I will make you look";
-			mes "fabulous. Hohohohoho~";
+			mes "Você vai precisar de 99.800 zeny.";
+			mes "Volte quando estiver com tudo em mãos.";
+			mes "Farei você ficar com um visual fabuloso.";
+			mes "Hohohohoho~";
 			close;
 		}
 		mes "[Veronica]";
-		mes "Okay now, please choose the style";
-		mes "you desire from styles no.1 to";
-		mes "no.19.  I will do my best to";
-		mes "make you look your very best.";
+		mes "Certo, escolha o estilo de cabelo que deseja, entre o estilo 1 e o 19.";
+		mes "Farei meu melhor para que você fique muito mais elegante.";
 		next;
 		input .@style;
 		if(.@style > 19) {
 			mes "[Veronica]";
-			mes "I am sorry, you chose an unavailable style.";
-			mes "Make sure you enter the correct number.";
+			mes "Me desculpe, você escolheu um estilo inexistente.";
+			mes "Tenha certeza que digitou o número correto.";
 			close;
 		} else if(.@style == 0) {
 			mes "[Veronica]";
-			mes "You have canceled your request.";
+			mes "Você cancelou a negociação.";
 			close;
 		} else if(getlook(1) == .@style) {
 			mes "[Veronica]";
-			mes "I am sorry, but you are already";
-			mes "wearing the style you have";
-			mes "requested. Would you please";
-			mes "choose a different style?";
+			mes "Me desculpe, mas você já está com o estilo que escolheu.";
+			mes "Você poderia escolher um estilo diferente?";
 			close;
 		}
 			callsub L_cutin,.@style;
 			mes "[Veronica]";
-			mes "You have chosen style no. (" + .@style + ").";
-			mes "I shall proceed with your request.";
-			mes "Would you mind?";
+			mes "Você escolheu o estilo número (" + .@style + ").";
+			mes "Irei proceguir com seu pedido.";
+			mes "Você se importa?";
 			next;
-			if(select("No, I don't mind.:Yes, let me choose another one.") == 1) {
+			if (select("Não, tudo bem.:Sim, deixe-me escolher outro.") == 1) {
 				if(getlook(6) == 0) {
 					mes "[Veronica]";
-					mes "Oh, my, you haven't dyed your hair";
-					mes "at all. You would look even more";
-					mes "fabulous if you dyed your hair...";
-					mes "Oh well, I will do it for free.";
-					mes "So what kind of color would you like?";
+					mes "Oh, você não tingiu seu cabelo todo.";
+					mes "Você ficaria ainda mais fabuloso se tingisse seu cabelo...";
+					mes "Bem, irei fazer isso de graça.";
+					mes "Então, que tipo de cor você deseja?";
 					next;
-					switch(select("Red.:Yellow.:Purple.:Orange.:Green.:Blue.:White.:Dark Brown.:Cancel.")) {
+					switch(select("Vermelho.:Amarelo.:Roxo.:Laranja.:Verde.:Azul.:Branco.:Castanho Escuro.:Cancelar.")) {
 					case 1:
 						.@pallete = 8;
 						break;
@@ -450,19 +225,18 @@ alberta_in,55,142,7	script	Hair Dresser	4_F_02,{
 						break;
 					case 9:
 						mes "[Veronica]";
-						mes "Oh, I was gonna do it for free.";
-						mes "Well, if you change your mind, please come again.";
-						mes "The color of your hair enhances your look.";
+						mes "Oh, Eu iria fazer isso de graça.";
+						mes "Bem, se mudar de idéia volte aqui.";
+						mes "A cor do seu cabelo melhora sua aparência.";
 						close;
 					}
 				}
 				nude;
 				mes "[Veronica]";
-				mes "Now, let's get started. Try to";
-				mes "stay still, dear. If you move,";
-				mes "it might ruin the perfect look";
-				mes "I intend to give you. Trust me,";
-				mes "I will make you look fabulous~";
+				mes "Agora, vamos começar.";
+				mes "Tente ficar parado, querido.";
+				mes "Se você se mover, pode arruinar o visual perfeito que quero lhe dar.";
+				mes "Acredite, irei fazer você ficar com um visual fabuloso.";
 				next;
 				mes "[Veronica]";
 				mes "- *snip snip snip snip* -";
@@ -482,26 +256,22 @@ alberta_in,55,142,7	script	Hair Dresser	4_F_02,{
 				setlook 6,.@pallete;
 				cutin "",255;
 				mes "[Veronica]";
-				mes "Alright, it's done~";
-				mes "I hope you like";
-				mes "this style no.(" + .@style + ").";
-				mes "Feel free to come back anytime";
-				mes "when you want a new hairstyle. Hohohohohoho~";
+				mes "Certo, está feito~";
+				mes "Espero que goste este é o estilo número ("+ .@style +").";
+				mes "Sinta-se à vontade para voltar sempre que quiser um novo estilo de cabelo.";
+				mes "Hohohohohoho~";
 				setlook 1,.@style;
 				setlook 6,.@pallete;
 				close;
 			}
 			mes "[Veronica]";
-			mes "Okay then, please choose one";
-			mes "a hairstyle again. I believe";
-			mes "you will find the look that's best for you.";
+			mes "Certo, escolha outro estilo de cabelo.";
+			mes "Acredito que você vai encontrar o visual que é o melhor para você.";
 			close;
 	case 3:
 		mes "[Veronica]";
-		mes "Everybody deserves the right to";
-		mes "pursue beauty. I hope that you";
-		mes "will find the right hairstyle";
-		mes "one of these days.";
+		mes "Todos tem o direito de ficar bonito.";
+		mes "Espero que você encontre o estilo certo algum dia.";
 		close;
 	}
 
@@ -523,123 +293,82 @@ L_cutin:
 // Roving Hair Dresser
 // ============================================================
 alberta,33,141,7	script	Roving Hair Dresser	4_M_BARBER,{
-	mes "[Rui Vishop]";
-	mes "That Veronica...";
-	mes "Hah! Best hair dresser my ass.";
-	mes "She's not the best hair dresser...";
+	mes "Essa Veronica...";
+	mes "Hah! Melhor cabeleireira, nada.";
+	mes "Ela não é a melhor...";
 	mes "...";
-	mes "I am!";
+	mes "Eu sou!";
 	next;
 	mes "[Rui Vishop]";
-	mes "I, Rui Vishop, the man to whom";
-	mes "all scalps are canvases";
-	mes "waiting to be transformed into";
-	mes "works of magnificent art~!";
+	mes "Eu, Rui Vishop, o homem a quem todos esperam que meus trabalhos se tornem magníficas artes~!";
 	next;
-	switch(select("What are you?:Do my hair, please!:.....")) {
+	switch(select("Quem é você?:Faça meu cabelo, por favor!:.....")) {
 	case 1:
 		mes "[Rui Vishop]";
-		mes "Do you not know that I, Rui";
-		mes "Vishop, maestro of the shears";
-		mes "and sculptor of hair, am an";
-		mes "artist far ahead of his time?!";
-		mes "Well, I suppose an adventurer";
-		mes "like yourself wouldn't know...";
+		mes "Você não sabe que eu, Rui Vishop, maestro da tesoura e escultor de cabelos, um artista muito à frente de sua época?!";
+		mes "Bem, suponho que um aventureiro como você não saberia...";
 		next;
 		mes "[Rui Vishop]";
-		mes "As a hair sculptor, I find joy";
-		mes "in bestowing upon others the";
-		mes "supreme favour of doing their";
-		mes "hairstyle at a reasonable price.";
+		mes "Como um escultor de cabelos, sinto alegria em doar aos outros a graça suprema de fazer o seu penteado, a um preço razoável.";
 		next;
 		mes "[Rui Vishop]";
-		mes "Recently, however, I happened to";
-		mes "overhear that some tyro has had";
-		mes "the audacity to call herself a";
-		mes "hair dresser.";
+		mes "Recentemente, no entanto, aconteceu que escutei que alguns aprendizes tiveram a audácia de chamar-se de cabeleireiro.";
 		next;
 		mes "[Rui Vishop]";
-		mes "So one day I went there,";
-		mes "pretending to be a customer.";
-		mes "I was apalled to see the boring,";
-		mes "lifeless hairstyles that she was";
-		mes "giving all of her clients...";
+		mes "Então um dia fui lá, fingindo ser cliente.";
+		mes "Fiquei apavorado com os estilos sem vida que ela dava aos seus clientes...";
 		next;
 		mes "[Rui Vishop]";
-		mes "It wasn't hard to notice that her";
-		mes "skills, or lack thereof, are a";
-		mes "joke. She brings shame to the";
-		mes "great and honorable";
-		mes "profession of hair dressing.";
-		mes "A complete and utter disgrace!";
+		mes "Não era difícil perceber que as habilidades dela, ou falta de, são uma piada.";
+		mes "Ela traz vergonha para a grande e honorável profissão de cabeleireiro.";
+		mes "Uma desgraça completa e absoluta!";
 		next;
 		mes "[Rui Vishop]";
-		mes "But the worst part was...";
-		mes "she forced her customers to";
-		mes "choose a hairstyle before she";
-		mes "styled their hair!";
+		mes "Mas a pior parte foi...";
+		mes "quando ela forçou seus clientes a escolher um penteado antes de estilizar seu cabelo!";
 		next;
 		mes "[Rui Vishop]";
-		mes "That's not how talented hair";
-		mes "dressers do their job! She";
-		mes "should know what hair style will";
-		mes "fit a customer without ever";
-		mes "asking them!";
+		mes "Isso não é como talentosos cabeleireiros fazem seus trabalhos!";
+		mes "Ela deveria saber qual estilo de cabelo fica melhor em cada cliente, sem perguntar!";
 		next;
 		mes "[Rui Vishop]";
-		mes "If by any chance you decide to";
-		mes "do your hair, don't even think";
-		mes "about giving her patronage.";
-		mes "Instead, you may ask for my";
-		mes "services. I assure you, I am";
-		mes "faaaar better than her.";
+		mes "Se por acaso você decidir fazer seu cabelo, nem pense em ir até ela.";
+		mes "Em vez disso, você pode ficar com meus serviços.";
+		mes "Eu garanto, eu sou muuuuuito melhor que ela.";
 		next;
 		mes "[Rui Vishop]";
-		mes "Do you understand? I mean, don't";
-		mes "let her ruin your hair needlessly!";
-		mes "You could get a Swordman to hack";
-		mes "away at your hair if you want a";
-		mes "hairstyle that horrible~!";
+		mes "Você entendeu? Quero dizer, não deixe ela arruinar seu cabelo desnecessariamente!";
+		mes "Você poderia começar com um corte Espadachim em seu cabelo, se você quiser ficar com um penteado horrível~!";
 		close;
 	case 2:
 		if(BaseLevel < 60) {
 			mes "[Rui Vishop]";
-			mes "Hmm, I must say, your current";
-			mes "style fits you best. Trust me, I know what I am saying.";
+			mes "Humm, Eu devo dizer, seu atual penteado lhe fica melhor.";
+			mes "Acredite, eu sei o que estou dizendo.";
 			close;
 		} else if(Zeny < 199800) {
 			mes "[Rui Vishop]";
-			mes "Ah, I see that that you can";
-			mes "recognize genius when it is";
-			mes "right before you. In light";
-			mes "of your good taste, I will";
-			mes "only require money for my";
-			mes "services.";
+			mes "Ah, vejo que você pode reconhecer um gênio quando está perto de você.";
+			mes "A luz de seu bom gosto, apenas vou precisar de algum dinheiro para meu serviço.";
 			next;
 			mes "[Rui Vishop]";
-			mes "Simply pay me the small";
-			mes "fee of 199,800 zeny. You must";
-			mes "know that I am doing you a";
-			mes "huge favor by charging you";
-			mes "such a small amount. My";
-			mes "art is priceless, after all.";
+			mes "Simplesmente pague-me uma pequena taxa de 199.800 zeny.";
+			mes "Você precisa saber que eu estou lhe fazendo um grande favor ao cobrar tão pouco.";
+			mes "Afinal, minha arte não tem preço!";
+			close;
 			close;
 		}
 		mes "[Rui Vishop]";
-		mes "Alright, I will be taking my";
-		mes "199,800 zeny service charge now.";
+		mes "Certo, eu vou pegar minha taxa de 199.800 zeny para o serviço.";
 		next;
 		mes "[Rui Vishop]";
-		mes "If you don't wish to do";
-		mes "this right now, though I can't";
-		mes "imagine why, you may ask that";
-		mes "stupid hair dresser to";
-		mes "do her clumsy work on you...";
+		mes "Se você não quiser fazer isto agora, embora não possa imaginar porque,";
+		mes "você pode deixar aquela cabeleireira estúpida fazer aquele trabalho desajeitado em você...";
 		next;
-		if(select("No, please do my hair.:Umm, I changed my mind.") ==1 ) {
+		if(select("Não, por favor faça meu cabelo.:Humm, mudei de idéia.") ==1 ) {
 			mes "[Rui Vishop]";
-			mes "O~k~a~y!";
-			mes "Now, let us begin~!";
+			mes "C~e~r~t~o!";
+			mes "Agora, vamos começar~!";
 			next;
 			mes "[Rui Vishop]";
 			mes "Wooooo~oooohhhh!! Toohhhhh~oooohhhh!!";
@@ -651,32 +380,26 @@ alberta,33,141,7	script	Roving Hair Dresser	4_M_BARBER,{
 			mes "Voila!";
 			next;
 			mes "[Rui Vishop]";
-			mes "Oh, great~ it's awesome!";
-			mes "Another Vishop masterpiece~";
-			mes "Once more I've outdone myself.";
-			mes "It's such a unique and talented";
-			mes "style! Yes, I am the best! Wooohahahahahaha!";
+			mes "Oh, ótimo~ isso é impressionante!";
+			mes "Outra obra de Vishop~";
+			mes "Mais uma vez tenho me superado.";
+			mes "Isto é um penteado original e talentoso!";
+			mes "Sim, eu sou o melhor! Wooohahahahahaha!";
 			Zeny -= 199800;
 			setlook 1,rand(1,19);
 			setlook 6,rand(1,8);
 			close;
 		}
 		mes "[Rui Vishop]";
-		mes "Bah! Alright! It's your decision.";
-		mes "But don't blame me later!";
-		mes "One day you'll wake up, realize";
-		mes "you're ugly and regret not";
-		mes "having my genius shape every lock";
-		mes "of hair on your head.";
+		mes "Bah! Certo! É sua decisão.";
+		mes "Mas não me culpe depois!";
+		mes "Um dia você acorda, e percebe que é feio e vai se arrepender de não ter minha geniosa arte em sua cabeça.";
 		close;
 	case 3:
 		mes "[Rui Vishop]";
-		mes "What? What a shame!";
-		mes "Will you let that...that";
-		mes "charlatan of a hair dresser ruin";
-		mes "your hairstyle!? I'm sure the";
-		mes "heavens are crying tears of";
-		mes "pity at mankind's ignorance...";
+		mes "O que? Que vergonha!";
+		mes "Você vai permitir que... essa chalatão de cabeleireira ruína seu penteado!?";
+		mes "Tenho certeza que os céus estão chorando lágrimas de pena na ignorância da humanidade...";
 		close;
 	}
 }
@@ -685,123 +408,94 @@ alberta,33,141,7	script	Roving Hair Dresser	4_M_BARBER,{
 // Lighthalzen
 lhz_in02,100,143,3	script	Hair Dresser#li	2_M_DYEINGER,{
 	mes "[Prince Shammi]";
-	mes "Welcome to Prince Shammi's";
-	mes "Beauty Shop, the place to go";
-	mes "for faaabulous hair. Don't be";
-	mes "shy, tell me exactly how you";
-	mes "want me to make you glamorous~";
+	mes "Bem-vindo ao Príncipe Shammi's Cabeleireiro";
+	mes "o lugar para ir para cabelos fabulosos.";
+	mes "Não seja tímido, conte-me exatamente o que deseja~";
 	next;
-	switch(select("Check all hairstyles:Change hairstyle:Cancel")) {
+	switch(select("Ver todos os penteados:Mudar penteado:Cancelar")) {
 	case 1:
-		mes "[Prince Shammi]";
-		mes "Oh, would you like to";
-		mes "see all of the trendy new";
-		mes "hairstyles I offer?";
+		mes "[Príncipe Shammi]";
+		mes "Oh, você gostaria de ver todos os novos penteados que ofereço?";
 		next;
-		mes "[Prince Shammi]";
-		mes "Please, oh please, choose from the following styles and I will show you a preview.";
+		mes "[Príncipe Shammi]";
+		mes "Por favor, escolha um dos seguintes estilos e irei lhe mostrar uma amostra.";
 		next;
-		switch(select("Old Hairstyles:New Hairstyles")) {
+		switch(select("Antigos Penteados:Novos Penteados")) {
 		case 1:
 			if (Sex == 1) {
-				switch(select("Petite Style:Executioner Style:Prince Style:Deviace Style:Cancel")) {
+				switch(select("Estilo Petite:Estilo Executor:Estilo Príncipe:Estilo Deviace:Cancelar")) {
 				case 1:
 					cutin "hair_m_20",4;
 					mes "[Prince Shammi]";
-					mes "This is the ^3131FFPetite Style^000000,";
-					mes "which softens the gentleman's";
-					mes "appearance with long braids";
-					mes "for a fluffier appearance.";
+					mes "Este é o ^3131FFEstilo Petite^000000, que suaviza a aparência do cavaleiro com tranças longas para dar um aspecto mais macio.";
 					break;
 				case 2:
 					cutin "hair_m_21",4;
 					mes "[Prince Shammi]";
-					mes "Oh, the ^3131FFExecutioner Style^000000!";
-					mes "It's a rugged, shaggy style";
-					mes "for that tough guy look that's";
-					mes "becoming popular these days.";
-					mes "And every girl loves a tough";
-					mes "guy, right? ^333333*Tee hee~*^000000";
+					mes "Oh, o ^3131FFEstilo Executor^000000!";
+					mes "É um estilo áspero, peludo que fornece um olhar de durão que é mais popular hoje em dia.";
+					mes "E toda garota ama um cara durão né?";
+					mes "^333333*Tee hee~*^000000";
 					break;
 				case 3:
 					cutin "hair_m_22",4;
 					mes "[Prince Shammi]";
-					mes "You certainly have an";
-					mes "eye for fashion! Yes, this";
-					mes "is the ^3131FFPrince Style^000000, the";
-					mes "pinnacle of sexiness and";
-					mes "sophistication. Magnifique, no?";
-					mes "Yes, choose this one, this one!";
+					mes "Você certamente tem olhos para a moda!";
+					mes "Sim, este é o ^3131FFEstilo Príncipe^000000, o mais sexy e sofisticado.";
+					mes "Magnífico, não?";
+					mes "Sim, escolha este, este mesmo!";
 					break;
 				case 4:
 					cutin "hair_m_23",4;
 					mes "[Prince Shammi]";
-					mes "A-ha~! The ^3131FFDeviace Style^000000!";
-					mes "This is much like the Prince";
-					mes "Style, but with shorter hair";
-					mes "in the back. Yes, this look";
-					mes "is very neat and dandy.";
+					mes "A-ha~! O ^3131FFEstilo Deviace^000000!";
+					mes "Este é muito parecido com o Estilo Príncipe, mas com um cabelo mais curto nas costas.";
+					mes "Sim, este é um visual muito arrumado e elegante.";
 					break;
 				case 5:
 					cutin "hair_f_01",255;
 					mes "[Prince Shammi]";
-					mes "No? You didn't want";
-					mes "to take a look? Please,";
-					mes "you're an adventurer, I know";
-					mes "you can be more daring than";
-					mes "that! Be fashionably adventurous, you fashionable adventurer~";
+					mes "Não? Você não quer um novo visual?";
+					mes "Pense bem, você é um aventureiro, eu sei que você pode ser mais ousado que isso!";
+					mes "Seja um aventureiro da moda!";
 					emotion e_lv,"Hair Dresser#i";
 					close;
 				}
 			}
 			else {
-				switch(select("Spring Rabbit Style:Harpy Style:Medusa Style:Isis Style:Cancel")) {
+				switch(select("Estilo Coelho:Estilo Harpia:Estilo Medusa:Estilo Ísis:Cancelar")) {
 				case 1:
 					cutin "hair_f_20",4;
 					mes "[Prince Shammi]";
-					mes "Oh yes, this is the ";
-					mes "^3131FFSpring Rabbit Style^000000.";
-					mes "The bobbing forelock";
-					mes "adds an aura of chic,";
-					mes "cutsiness and playfulness.";
-					mes "Yes? No? Yes? No? Oh yes!";
+					mes "Oh sim, este é o ^3131FFEstilo Coelho^000000.";
+					mes "O topete sacode acrescenta uma aura chique, bonita e divertida.";
+					mes "Sim? Não? Sim? Não? Oh sim!";
 					break;
 				case 2:
 					cutin "hair_f_21",4;
 					mes "[Prince Shammi]";
-					mes "Ooh, are you interested";
-					mes "in the ^3131FFHarpy Style^000000? The";
-					mes "natural curl coupled with";
-					mes "the pony tail results in";
-					mes "a sophisticated, yet very";
-					mes "natural and relaxed look~";
+					mes "Ooh, você está interessada no ^3131FFEstilo Harpia^000000?";
+					mes "A onda natural associada ao rabo de cavalo resultando em algo bem sofisticado, uma aparência natual e relaxada~";
 					break;
 				case 3:
 					cutin "hair_f_22",4;
 					mes "[Prince Shammi]";
-					mes "Ahh, the ^3131FFMedusa Style^000000~";
-					mes "These boldy flowing locks";
-					mes "scream power and dominance";
-					mes "and is ideal for the big career";
-					mes "woman who wishes to be...";
-					mes "irresistable to men~";
+					mes "Ahh, o ^3131FFEstilo Medusa^000000~";
+					mes "Estas mechas voando causa um grito de poder e dominação e é o ideal para uma grande carreira,";
+					mes "de uma mulher que deseja ser irresistível para os homens~";
 					break;
 				case 4:
 					cutin "hair_f_23",4;
 					mes "[Prince Shammi]";
-					mes "Ooh, the ^3131FFIsis Style^000000~";
-					mes "Yes, you'll look very cute";
-					mes "with your hair in buns on";
-					mes "on both sides of your head.";
-					mes "It'll be very darling on you!";
+					mes "Ooh, o ^3131FFEstilo Ísis^000000~";
+					mes "Você ficará muito bonita com seu cabelo.";
+					mes "Vai ser demais para você!";
 					break;
 				case 5:
 					mes "[Prince Shammi]";
-					mes "No? You didn't want";
-					mes "to take a look? Please,";
-					mes "you're an adventurer, I know";
-					mes "you can be more daring than";
-					mes "that! Be fashionably adventurous, you fashionable adventurer~";
+					mes "Não? Você não quer uma nova aparência?";
+					mes "Por favor, você é uma aventureira, eu sei que você pode ser mais inteligente que isso!";
+					mes "Seja uma aventureira da moda!";
 					emotion e_lv,"Hair Dresser#li";
 					close;
 				}
@@ -809,80 +503,75 @@ lhz_in02,100,143,3	script	Hair Dresser#li	2_M_DYEINGER,{
 			break;
 		case 2:
 			if (Sex == 1) {
-				switch(select("Emergency Heal Perm:Aura Blade Cut:Power Swing:Renovatio Cut:Cancel")) {
+				switch(select("Cura Emergêncial:Corte Energia Cortante:Poder Dançante:Corte Renovatio:Cancel")) {
 				case 1:
 					cutin "hair_m_24",4;
 					mes "[Prince Shammi]";
-					mes "This is the ^3131FFEmergency Heal Perm^000000";
-					mes "It is quite popular among the healing class.";
+					mes "Este é a ^3131FFCura Emergêncial^000000";
+					mes "Este é o mais popular entre as classes curandeiras.";
 					break;
 				case 2:
 					cutin "hair_m_25",4;
 					mes "[Prince Shammi]";
-					mes "You must be after a lady yes?";
-					mes "The ^3131FFAura Blade Cut^000000";
-					mes "is known to make the ladies swoon, you tiger you!";
+					mes "Você deve estar atrás de uma mulher, certo?";
+					mes "O ^3131FFCorte Energia Cortante^000000 é conhecido por fazer mulheres desmaiarem por você!";
 					break;
 				case 3:
 					cutin "hair_m_26",4;
 					mes "[Prince Shammi]";
-					mes "Oh you brute!";
-					mes "^3131FFPower Swing Cut^000000";
-					mes "Flex your style muscles with this hairstyle. This is definitely your look.";
+					mes "Oh você é bruto!";
+					mes "^3131FFCorte Poder Dançante^000000";
+					mes "Flexionar seus músculos com este penteado. Este é definitivamente o seu olhar.";
 					break;
 				case 4:
 					cutin "hair_m_27",4;
 					mes "[Prince Shammi]";
-					mes "Ah! I see you're only interested in the latest trends.";
-					mes "Straight from the runway is the ^3131FFRenovatio Cut^000000.";
+					mes "Ah! Eu vejo que você está apenas interessado nas últimas modas.";
+					mes "Direto das passarelas ^3131FFCorte Renovatio^000000.";
 					break;
 				case 5:
 					mes "[Prince Shammi]";
-					mes "No? You didn't want";
-					mes "to take a look? Please,";
-					mes "you're an adventurer, I know";
-					mes "you can be more daring than";
-					mes "that! Be fashionably adventurous, you fashionable adventurer~";
+					mes "Não? Você não quer uma nova aparência?";
+					mes "Por favor, você é um aventureiro, eu sei que você pode ser mais inteligente que isso!";
+					mes "Seja um aventureiro da moda!";
 					emotion e_lv,"Hair Dresser#li";
 					close;
 				}
 			}
 			else {
-				switch(select("Assumptio Perm:Soul Changer Cut:X Tornado Cut:Oratio Cut:Cancel")) {
+				switch(select("Assumptio Permanente:Corte Pácto dos Espíritos:Corte Tornado X:Corte Oratio:Cancel")) {
 				case 1:
 					cutin "hair_f_24",4;
 					mes "[Prince Shammi]";
-					mes "This is the ^3131FFAssumptio Perm^000000";
-					mes "It's a shorter style perm that allows for maximum spellcasting.";
+					mes "Este é o ^3131FFAssumptio Permanente^000000";
+					mes "É um estilo mais curto que permite a conjuração máxima.";
 					break;
 				case 2:
 					cutin "hair_f_25",4;
 					mes "[Prince Shammi]";
-					mes "You must be a man killer no?";
-					mes "The ^3131FFSoul Changer Cut^000000";
-					mes "will make any man open his wall... er heart to you!";
+					mes "Você deve ser uma matadora de homens, não?";
+					mes "O ^3131FFCorte Pácto dos Espíritos^000000";
+					mes "vai fazer qualquer homem abrir suas paredes... e seu coração para você!";
 					break;
 				case 3:
 					cutin "hair_f_26",4;
 					mes "[Prince Shammi]";
-					mes "This is a bit of a trendy style";
-					mes "^3131FFX Tornado Cut^000000";
-					mes "It's for adventurous people who like change.";
+					mes "Este é um pedaço da nova moda";
+					mes "^3131FFCorte Tornado X^000000";
+					mes "Este é para aventureiras que gostam de mudar.";
 					break;
 				case 4:
 					cutin "hair_f_27",4;
 					mes "[Prince Shammi]";
-					mes "Ah! I see you're only interested in the latest trends.";
-					mes "Straight from the runway is the ^3131FFOratio Cut^000000.";
-					mes "You'll be the envy of all of your friends with this hairstyle.";
+				mes "Ah! Vejo que está interessada nas últimas novidades!";
+					mes "Direto da passarela ^3131FFCorte Oratio^000000.";
+					mes "Você será a inveja de todas suas amigas com este penteado!";
 					break;
 				case 5:
 					mes "[Prince Shammi]";
-					mes "No? You didn't want";
-					mes "to take a look? Please,";
-					mes "you're an adventurer, I know";
-					mes "you can be more daring than";
-					mes "that! Be fashionably adventurous, you fashionable adventurer~";
+					mes "Não? Você não quer uma nova aparência?";
+					mes "Por favor, você é uma aventureira, eu sei que você pode ser mais inteligente que isso!";
+					mes "Seja uma aventureira da moda!";
 					emotion e_lv,"Hair Dresser#li";
 					close;
 				}
@@ -894,93 +583,72 @@ lhz_in02,100,143,3	script	Hair Dresser#li	2_M_DYEINGER,{
 	case 2:
 		if (BaseLevel < 60) {
 			mes "[Prince Shammi]";
-			mes "Oh, I'm so sorry, but";
-			mes "I can only perform my";
-			mes "services for clients that have";
-			mes "matured enough to find their";
-			mes "true inner beauty. But please";
-			mes "come back once you do, okay?";
+			mes "Oh, me desculpe, mas eu só posso realizar meus serviços em clientes que tem maturidade o suficiente.";
+			mes "Mas por favor volte quando tiver, ok?";
 			close;
 		}
 		else if ((countitem(973) < 3) || (countitem(974) < 3) || (countitem(901) < 100) || (countitem(1094) < 100) || (countitem(1020) < 100) || (countitem(1060) < 100) || (countitem(7152) < 100) || (Zeny < 99800)) {
 			mes "[Prince Shammi]";
-			mes "If you've already decided";
-			mes "what hairstyle you'd like,";
-			mes "please have my service charge";
-			mes "ready, as well as the materials";
-			mes "I will need in performing this";
-			mes "service, okay? Please bring...";
+			mes "Se você já estiver decidido do penteado que deseja, tenha os materiais que preciso em mãos.";
+			mes "Para realizar este serviço, traga-me...";
 			next;
-			mes "[Prince Shammi]";
-			mes "^3355FF3 Counteragent^000000,";
-			mes "^3355FF3 Mixture^000000,";
-			mes "^3355FF100 Daenggie^000000,";
-			mes "^3355FF100 Short Daenggie^000000...";
-			next;
-			mes "[Prince Shammi]";
-			mes "^3355FF100 Black Hair^000000,";
-			mes "^3355FF100 Golden Hair^000000,";
-			mes "^3355FF100 Glossy Hair^000000";
-			mes "and ^3355FF99,800 zeny^000000.";
-			mes "Once you do that, I'll make";
-			mes "a miracle out of your hair!";
+			mes "[Príncipe Shammi]";
+			mes "^3355FF3 Antígeno^000000,";
+			mes "^3355FF3 Mistura^000000,";
+			mes "^3355FF100 Trança^000000,";
+			mes "^3355FF100 Trança Curta^000000...";
+			mes "^3355FF100 Cabelos Morenos^000000,";
+			mes "^3355FF100 Cabelos Dourados^000000,";
+			mes "^3355FF100 Cabelos Perfumados^000000";
+			mes "e ^3355FF99,800 zeny^000000.";
+			mes "Assim que me trouxer, irei fazer um milagre com seus cabelos!";
 			close;
 		}
 		mes "[Prince Shammi]";
-		mes "Alright, please choose";
-		mes "which hairstyle you wish";
-		mes "to have from numbers 20 to 25.";
-		mes "Here's a list of the style names just in case you need them~";
+		mes "Certo, por favor escolha qual penteado você gostaria de ter do número 20 ao 25.";
+		mes "Aqui está a lista dos nomes dos penteados caso você precise~";
 		next;
 		mes "[Prince Shammi]";
 		if (Sex == 1) {
-			mes "No. 20: Petite Style";
-			mes "No. 21: Executioner Style";
-			mes "No. 22: Prince Style";
-			mes "No. 23: Deviace Style";
-			mes "No. 24: Emergency Heal Perm";
-			mes "No. 25: Aura Blade Cut";
-			mes "No. 26: Power Swing and";
-			mes "No. 27: Renovatio Cut.";
+			mes "No. 20: Estilo Petite";
+			mes "No. 21: Estilo Executor";
+			mes "No. 22: Estilo Príncipe";
+			mes "No. 23: Estilo Deviace";
+			mes "No. 24: Cura Emergencial";
+			mes "No. 25: Corte Aura Cortante";
+			mes "No. 26: Poder Dançante e";
+			mes "No. 27: Corte Renovatio.";
 		}
 		else {
-			mes "No. 20: Spring Rabbit Style";
-			mes "No. 21: Harpy Style";
-			mes "No. 22: Medusa Style";
-			mes "No. 23: Isis Style";
-			mes "No. 24: Assumptio Perm";
-			mes "No. 25: Soul Changer Cut";
-			mes "No. 26: X Tornado Cut and";
-			mes "No. 27: Oratio Cut.";
+			mes "No. 20: Estilo Coelho";
+			mes "No. 21: Estilo Harpia";
+			mes "No. 22: Estilo Medusa";
+			mes "No. 23: Estilo Ísis";
+			mes "No. 24: Assumptio Permanente";
+			mes "No. 25: Corte Pácto dos Espíritos";
+			mes "No. 26: Corte Tornado X e";
+			mes "No. 27: Corte Oratio.";
 		}
 		next;
 		input .@input;
 		if (.@input == 0) {
 			mes "[Prince Shammi]";
 			mes "Oh...?";
-			mes "You decided to cancel?";
-			mes "Well, you know what's";
-			mes "best for you, I suppose.";
-			mes "Still, I'm so disappointed~";
+			mes "Você decidiu cancelar?";
+			mes "Bem, você sabe o melhor para você, eu creio.";
+			mes "Ainda assim, estou tão desapontado~";
 			close;
 		}
 		else if ((.@input < 20) || (.@input > 27)) {
 			mes "[Prince Shammi]";
-			mes "Dearie, please enter";
-			mes "a number from ''20'' to";
-			mes "''25,'' alright? Then I can";
-			mes "get right to work at making";
-			mes "you soooooooo beautiful!";
+			mes "Por favor digite um número entre '20' e '25' certo?";
+			mes "Então poderei fazer você ficar suuuuuper bonito!";
 			close;
 		}
 		else if (getlook(LOOK_HAIR) == .@input) {
 			mes "[Prince Shammi]";
-			mes "Oh dear me, you're not";
-			mes "going to waste money for";
-			mes "the same hairstyle that you";
-			mes "have now, are you? You can";
-			mes "have someone else change";
-			mes "your hair color, you know.";
+			mes "Oh querido, você não está gastando seu dinheiro para o mesmo penteado que tem agora, está?";
+			mes "Você pode mudar a cor de seu cabelo.";
 			close;
 		}
 		else {
@@ -989,22 +657,18 @@ lhz_in02,100,143,3	script	Hair Dresser#li	2_M_DYEINGER,{
 			else
 				cutin "hair_f_"+.@input+".BMP",4;
 			mes "[Prince Shammi]";
-			mes "Oooh! Now, is this the";
-			mes "hairstyle that you wanted?";
-			mes "This is No. "+.@input+", by the way.";
+			mes "Oooh! Agora sim, este é o penteado que você deseja?";
+			mes "Este é o No. "+.@input+", a propósito.";
 			next;
-			switch(select("Yes.:No.")) {
+			switch(select("Sim.:Não.")) {
 			case 1:
 				if (getlook(LOOK_HAIR_COLOR) == 0) {
 					mes "[Prince Shammi]";
-					mes "Oh, Sweet Christmas,";
-					mes "I almost forgot! Would";
-					mes "you like me to dye your";
-					mes "hair, free of charge? It's";
-					mes "a part of my service, so";
-					mes "please choose a color~";
+					mes "Oh, Doces de Natal, eu quase esqueci!";
+					mes "Você gostaria de tingir seu cabelo de graça?";
+					mes "Isso é parte do meu serviço, então escolha a cor~";
 					next;
-					switch(select("Red:Yellow:Purple:Orange:Green:Blue:White:Dark Brown")) {
+					switch(select("Vermelho:Amarelo:Roxo:Laranja:Verde:Azul:Branco:Castanho Escuro")) {
 					case 1:
 						.@headpalette = 8;
 						break;
@@ -1031,11 +695,8 @@ lhz_in02,100,143,3	script	Hair Dresser#li	2_M_DYEINGER,{
 						break;
 					}
 				}
-				mes "[Prince Shammi]";
-				mes "Okay, let's get";
-				mes "started, shall we?";
-				mes "Keep your head still,";
-				mes "now. Yes, that's good...";
+				mes "Certo, vamos começar!";
+				mes "Mantenha sua cabeça parada. Sim, está ótimo...";
 				next;
 				mes "^3355FF*Snip snip*";
 				mes "*Rustle rustle*";
@@ -1052,153 +713,114 @@ lhz_in02,100,143,3	script	Hair Dresser#li	2_M_DYEINGER,{
 				delitem 7152,100; //Glossy_Hair
 				setlook LOOK_HAIR,.@input;
 				setlook LOOK_HAIR_COLOR,.@headpalette;
-				mes "[Prince Shammi]";
-				mes "Well, we're all finished!";
-				mes "And my, oh my, you look even";
-				mes "more fabulous that I thought";
-				mes "you would! Oh, I can't believe";
+				mes "[Príncipe Shammi]";
+				mes "Bem, nós terminamos!";
+				mes "E... nossa... você está muito melhor que pensei que ficaria!";
+				mes "Oh! Não posso acreditar";
 				if (Sex == 1) {
-					mes "how tough and elegant you are~";
-					mes "So ruggedly manly and handsome!";
+					mes "como resistente e elegante você está~";
+					mes "Tão jeitoso, viril e bonito!";
 				}
 				else {
-					mes "how graceful and elegant you";
-					mes "look! Absolutely gorgeous!";
+					mes "como graciosa e elegante você está!";
+					mes "Absolutamente linda!";
 				}
 				emotion e_kis,"Hair Dresser#li";
 				next;
-				mes "[Prince Shammi]";
-				mes "You love your new";
-				mes "hair, don't you? Feel";
-				mes "free to come back anytime.";
-				mes "I'll make you the best looking";
-				mes "person in the entire world!";
+				mes "[Príncipe Shammi]";
+				mes "Você adorou seu novo penteado, né?";
+				mes "Sinta-se à vontade para voltar a qualquer momento.";
+				mes "Lhe deixarei a pessoa mais bonita do mundo inteiro!";
 				emotion e_no1,"Hair Dresser#li";
 				close;
 			case 2:
 				mes "[Prince Shammi]";
-				mes "Oh, did you forget which";
-				mes "hairstyle goes with which";
-				mes "number? By all means, please";
-				mes "check again! Find the one that";
-				mes "is perfect just for you, okay?";
+				mes "Oh, você esqueceu qual penteado você deseja?";
+				mes "Por favor cheque novamente!";
+				mes "Encontre aquele que é perfeito para você, certo?";
 				close;
 			}
 		}
 		break;
 	case 3:
-		mes "[Prince Shammi]";
-		mes "Humm ? ";
-		mes "Maybe you don't understand";
-		mes "my futuristic styles.";
-		mes "Goodbye! ";
+		mes "[Príncipe Shammi]";
+		mes "Humm?";
+		mes "Talvez você não entendeu meus penteados futurísticos.";
+		mes "Adeus!";
 		close;
 	}
 }
 
-lhz_in02,91,155,5	script	Assistant Beautician#li	4_F_LGTGIRL,{
-	mes "[Assistant Beautician]";
-	mes "Wah?! Sweet Jiminy,";
-	mes "you freaked me out!";
-	mes "What are you doing?!";
+lhz_in02,91,155,5	script	Assistente de Cabeleireiro#li	4_F_LGTGIRL,{
+	mes "[Assistente de Cabeleireiro]";
+	mes "Quê?! Querido Jiminy, você me assustou!";
+	mes "O que está fazendo?!";
 	emotion e_omg,"Assistant Beautician#li";
 	next;
-	mes "[Assistant Beautician]";
-	mes "Oh! Um, a customer!";
-	mes "H-h-h-h-h-hello! Can";
-	mes "I help you with anything?";
+	mes "[Assistente de Cabeleireiro]";
+	mes "Oh! Humm, um cliente!";
+	mes "O-o-o-o-oiee! Posso lhe ajuda com algo?";
 	next;
-	switch(select("What do you do?:Please change my hairstyle.:Who is Prince Shammi?")) {
+	switch(select("O que você faz?:Por favor mude meu penteado.:Quem é o Príncipe Shammi?")) {
 	case 1:
-		mes "[Assistant Beautician]";
-		mes "Oh! Me...? I'm";
-		mes "just an assistant";
-		mes "beautician, but I'm";
-		mes "training hard everyday";
-		mes "so that I can become";
-		mes "a real professional!";
+		mes "[Assistente de Cabeleireiro]";
+		mes "Oh! Eu...? Eu sou apenas uma assistente de cabeleireiro, mas estou treinando todo dia para ser profissional!";
 		next;
-		mes "[Assistant Beautician]";
-		mes "Yeah, I do all sorts of";
-		mes "grunt work for the boss while";
-		mes "I'm in training. Sometimes, he";
-		mes "makes me work pretty hard.";
-		mes "In fact, I better get back to work before he gets angry at me!";
+		mes "[Assistente de Cabeleireiro]";
+		mes "Sim, eu faço todo o tipo de trabalho duro para o chefe enquanto estou treinando.";
+		mes "Às vezes, ele me da trabalhos difíceis.";
+		mes "De fato, é melhor eu voltar ao trabalho antes que ele fique com raiva de mim!";
 		close;
 	case 2:
 		if (BaseLevel < 60) {
-			mes "[Assistant Beautician]";
-			mes "Me...? Oh no,";
-			mes "no I can't! I mean,";
-			mes "I'd love to but, I'm";
-			mes "still in training and";
-			mes "I can't take responsibility";
-			mes "if I mess up on a little kid!";
+			mes "[Assistente de Cabeleireiro]";
+			mes "Eu...? Ah não, eu não posso!";
+			mes "Quero dizer, eu adoraria mas, eu ainda estou treinando e eu não posso pegar essa responsabilidade, e se eu fracassar em um garotinho?";
 			close;
 		}
 		else if ((Zeny < 250000)) {
-			mes "[Assistant Beautician]";
-			mes "Well... I'm just an";
-			mes "assistant, but I have been";
-			mes "studying hairstyling after";
-			mes "work. If you want, just bring";
-			mes "me 250,000 zeny and I'll try";
-			mes "my best to change your hair~";
+			mes "[Assistente de Cabeleireiro]";
+			mes "Bem... Eu sou apenas uma assistente, mas eu tenho estudado penteados depois do trabalho.";
+			mes "Se você quiser, apenas traga-me 250.000 zeny e eu tentarei meu melhor com seu cabelo~";
 			next;
-			mes "[Assistant Beautician]";
-			mes "I'd appreciate it if you'd";
-			mes "give me this chance! The";
-			mes "boss doesn't think I'm ready";
-			mes "for styling real people yet, so";
-			mes "I haven't had much practice!";
+			mes "[Assistente de Cabeleireiro]";
+			mes "Eu adoraria se você me desse essa oportunidade! Meu chefe acha que ainda não estou pronta para começar.";
+			mes "Então não tenho muita prática!";
 			next;
-			mes "[Assistant Beautician]";
-			mes "I just know I could";
-			mes "do a good job on your";
-			mes "hair! Just... Just please";
-			mes "understand if I mess up.";
-			mes "It won't be too bad, I promise~";
+			mes "[Assistente de Cabeleireiro]";
+			mes "Eu sei que posso fazer um bom trabalho com seu cabelo!";
+			mes "Apenas entenda, se eu falhar. Não serei tão ruim, eu prometo~";
 			close;
 		}
 		else {
-			mes "[Assistant Beautician]";
-			mes "You're really going to";
-			mes "give me a chance to practice?";
-			mes "Oh, I love you so much! Okay,";
-			mes "I'll need 250,000 zeny to make";
-			mes "up for the material expenses.";
-			mes "Is that okay with you?";
+			mes "[Assistente de Cabeleireiro]";
+			mes "Você está realmente me dando uma chance?";
+			mes "Ah, eu te amo demais!";
+			mes "Certo, vou precisar de 250.000 zeny para pagar os materiais.";
+			mes "Tudo bem por você?";
 			next;
-			switch(select("Of course~:On second thought...")) {
+			switch(select("É claro~:Espere um segundo...")) {
 			case 1:
-				mes "[Assistant Beautician]";
-				mes "Great! Now, please";
-				mes "choose a hairstyle";
-				mes "from ''1'' to ''23.''";
-				mes "Um, if you need to";
-				mes "cancel, just enter ''0.''";
+				mes "[Assistente de Cabeleireiro]";
+				mes "Ótimo! Agora, escolha um penteado entre '1' e '23'.";
+				mes "Se precisar cancelar digite '0'.";
 				next;
 				input .@input;
 				if (.@input == 0) {
-					mes "[Assistant Beautician]";
+					mes "[Assistente de Cabeleireiro]";
 					mes "Awwww...";
-					mes "I guess you don't";
-					mes "trust me after all...";
+					mes "Eu sabia que não iria confiar em mim...";
 					close;
 				}
 				else if ((.@input < 1) || (.@input > 23)) {
-					mes "[Assistant Beautician]";
-					mes "Huh? I thought I asked";
-					mes "you to enter a number from";
-					mes "''1'' to ''23?'' What did I do";
-					mes "wrong this time? Hmmm...";
+					mes "[Assistente de Cabeleireiro]";
+					mes "Huh? Eu pedi para que digitasse um número entre '1' e '23'?";
+					mes "O que você fez de errado dessa vez? Hummm...";
 					close;
 				}
 				else {
-					mes "[Assistant Beautician]";
-					mes "So this is the";
-					mes "style you want me";
-					mes "to try to do for you?";
+					mes "[Assistente de Cabeleireiro]";
+					mes "Então este é o penteado que você deseja que eu tente para você?";
 					if (Sex == 1) {
 						if (.@input < 10)
 							cutin "hair_m_0"+.@input+".BMP",4;
@@ -1212,84 +834,73 @@ lhz_in02,91,155,5	script	Assistant Beautician#li	4_F_LGTGIRL,{
 							cutin "hair_f_"+.@input+".BMP",4;
 					}
 					next;
-					switch(select("Yes, let's try it~:Cancel.")) {
+					switch(select("Sim, vamos tentar isso~:Cancelar.")) {
 					case 1:
 						break;
 					case 2:
-						mes "[Assistant Beautician]";
-						mes "Oooh, there must";
-						mes "be some style that";
-						mes "you like, right? Hmmm...";
+						mes "[Assistente de Cabeleireiro]";
+						mes "Oooh, este deve ser o penteado que você gosta, certo? Humm...";
 						close;
 					}
 				}
-				mes "[Assistant Beautician]";
-				mes "Great, you finally";
-				mes "picked one! What, which";
-				mes "one did you pick again?";
-				mes "Ah, I found it, I found it!";
-				mes "Haha! No problem here!";
-				mes "Now it's time to style!";
+				mes "[Assistente de Cabeleireiro]";
+				mes "Ótimo, você finalmente escolheu um!";
+				mes "Agora é a hora de mudar seu penteado!";
 				next;
 				nude;
-				mes "[Assistant Beautician]";
+				mes "[Assistente de Cabeleireiro]";
 				mes "Bwwwwaaaahhhh!";
+				next;
+				mes "[Assistente de Cabeleireiro]";
+				mes "Yap! Pwwwaaattt!";
 				next;
 				mes "[Assistant Beautician]";
 				mes "Yap! Pwwwaaattt!";
 				next;
-				mes "[Assistant Beautician]";
+				mes "[Assistente de Cabeleireiro]";
 				mes "Waaaah!";
 				mes "Oh crap!";
-				mes "Wait, I can...";
-				mes "I can fix this!";
+				mes "Espere, eu posso...";
+				mes "Eu posso arrumar!";
 				next;
 				.@style_r = rand(1,23);
 				.@color_r = rand(1,8);
-				mes "[Assistant Beautician]";
+				mes "[Assistente de Cabeleireiro]";
 				mes "^333333*Pant Pant Pant*^000000";
 				next;
 				Zeny -= 250000;
 				setlook LOOK_HAIR,.@style_r;
 				setlook LOOK_HAIR_COLOR,.@color_r;
-				mes "[Assistant Beautician]";
-				mes "Bwahahaha! Success!";
+				mes "[Assistente de Cabeleireiro]";
+				mes "Bwahahaha! Sucesso!";
 				if (.@input == .@style_r) {
-					mes "So... How do you like";
-					mes "your new style? I love it!";
+						mes "Então... O que achou do seu novo penteado? Eu adorei!";
+
 				}
 				else {
-					mes "Wha...? This isn't what";
-					mes "you wanted? Uh oh... Um...";
-					mes "Well, next time I know I can";
-					mes "do a much better job! Right!";
+					mes "Quê...? Este não era o que você queria?";
+					mes "Humm.... Hamm...";
+					mes "Bem, na próxima eu sei que posso fazer um trabalho muito melhor!";
 				}
 				next;
-				mes "[Assistant Beautician]";
-				mes "Oh, you're such a";
-				mes "sweetheart for helping";
-				mes "me! Thank you for using";
-				mes "my service and come again~";
+			mes "[Assistente de Cabeleireiro]";
+				mes "Oh, você é um amor por me ajudar!";
+				mes "Obrigado por usar meus serviços e volte sempre~";
 				emotion e_kis,"Assistant Beautician#li";
 				close;
 			case 2:
-				mes "[Assistant Beautician]";
-				mes "Huh? Oh no, you're";
-				mes "quitting? Well, I guess";
-				mes "I couldn't trust me to";
-				mes "style my hair either...";
-				mes "You're... You're right.";
+				mes "[Assistente de Cabeleireiro]";
+				mes "Huh? Oh não, você está cancelando?";
+				mes "Bem, eu sabia que eu não podia confiar que meu penteado ficaria bom...";
+				mes "Você está... Você está certo.";
 				close;
 			}
 		}
 	case 3:
-		mes "[Assistant Beautician]";
-		mes "Prince Shammi?";
-		mes "He's only a genius when";
-		mes "it comes to hairstyling!";
-		mes "I'm just his apprentice, but";
-		mes "maybe someday, I can be a";
-		mes "force in the fashion world too!";
+		mes "[Assistente de Cabeleireiro]";
+		mes "Príncipe Shammi?";
+		mes "Ele é simplesmente o gênio quando se trata de penteados!";
+		mes "Sou apenas o aprendiz dele, mas talvez algum dia, eu poderei ser uma potência no mundo da moda também!";
 		close;
 	}
 }

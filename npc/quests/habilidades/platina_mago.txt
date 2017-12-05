@@ -1,167 +1,165 @@
-//===== Hercules Script ======================================
-//= Mage Skill Quest
-//===== By: ==================================================
-//= kobra_k88
-//===== Current Version: =====================================
-//= 1.8
-//===== Description: =========================================
-//= Quest for skills: Energy Coat
-//===== Additional Comments: =================================
-//= 1.5 Rescripted to Aegis 10.3 stadards. [L0ne_W0lf]
-//= 1.6 Fixed a typo in job check. (Bugreport:1531) [L0ne_W0lf]
-//= 1.7 Updated to latest available official file. [Masao]
-//= 1.8 Fixed JobLevel requirements. [Euphy]
-//============================================================
+//    ________________________________________________________
+//   /                                                        \
+//   |       _           _   _   _                            |
+//   |      | |__  _ __ / \ | |_| |__   ___ _ __   __ _       |
+//   |      | '_ \| '__/ _ \| __| '_ \ / _ \ '_ \ / _` |      |
+//   |      | |_) | | / ___ \ |_| | | |  __/ | | | (_| |      |
+//   |      |_.__/|_|/_/   \_\__|_| |_|\___|_| |_|\__,_|      |
+//   |                                                        |
+//   |                    brAthena Script                     |
+//   |--------------------------------------------------------|
+//   | Nome do Script: Quest das Habilidades de Mago          |
+//   |--------------------------------------------------------|
+//   | Criado por: eA/rA/brA Dev. Team                        |
+//   |--------------------------------------------------------|
+//   | Versões eA/rA/brA: 1.6/1.8/1.1                         |
+//   |--------------------------------------------------------|
+//   | Descrição: Quest da Habilidade: Proteção Arcana        |
+//   |--------------------------------------------------------|
+//   | Changelog:                                             |
+//   | 1.0 Cabeçalho Criado [Holy]                            |
+//   | 1.1 Tradução PT-BR [Kuvakei]                           |
+//   |--------------------------------------------------------|
+//   | - Anotações                                            |
+//   \________________________________________________________/
 
-geffen_in,151,119,4	script	Great Wizard	1_M_WIZARD,{
+geffen_in,151,119,4	script	Grande Mago	1_M_WIZARD,{
 	mes "[BLIZZARDRISS]";
-	mes "Hey ! My friend !";
-	mes "I see that you are a mage.";
-	mes "Look into yourself to discover";
-	mes "your hidden abilities !";
+	mes "Olá ! Meu Amigo !";
+	mes "Vejo que você é um Mago.";
+	mes "Olhe para seu interior para descobrir";
+	mes "suas habilidades ocultas !";
 	next;
-	switch (select("About mage's hidden ability :About skill ^3355FF' Energy Coat '^000000 :End conversation")) {
+	switch(select("Sobre as habilidades ocultas dos Magos:Sobre a habilidade^3355FF' Proteção Arcana '^000000:Terminar conversa")) {
 	case 1:
 		mes "[BLIZZARDRISS]";
-		mes "For many years";
-		mes "I have studied the ancient";
-		mes "magic's of Geffen.";
-		mes "Recently, I discovered";
-		mes "a very good forgotten skill! ! !";
-		mes "Isn't that fortunate?";
+		mes "Por muitos anos";
+		mes "eu estudei a magia";
+		mes "antiga de Geffen.";
+		mes "Recentemente, Eu descobri";
+		mes "uma habilidade esquecida muito poderosa ! ! !";
+		mes "Isso não e otimo ?";
 		next;
 		mes "[BLIZZARDRISS]";
-		mes "The skill uses your mental";
-		mes "energy to block attacks against you.";
-		mes "It is like a magical shield, or armor.";
-		mes "Only the most special of persons can";
-		mes "use this amazing skills.";
+		mes "A Habilidade usa sua energia";
+		mes "metal para bloquear ataques contra você.";
+		mes "E como um escudo magico, ou armadura.";
+		mes "Apenas as pessoas mais especiais podem";
+		mes "usar essa habilidade espetacular.";
 		next;
 		mes "[BLIZZARDRISS]";
-		mes "But the most amazing part is that I";
-		mes "can use the skill! ! !";
-		mes "I can use this to protect myself !";
+		mes "Mais a melhor parte de tudo e que eu";
+		mes "posso usar a habilidade! ! !";
+		mes "Eu posso utilizar ela para me proteger!";
 		mes "Pu hah hah hah !!";
 		next;
 		mes "[BLIZZARDRISS]";
-		mes "Ok Ok, don't get too excited.";
-		mes "Listen carefully to what I can tell you.";
-		mes "Those who use this spell must tap";
-		mes "the hidden energies and abilities";
-		mes "locked within themselves !";
+		mes "Ok Ok, não fique tão animado.";
+		mes "Escute com atenção oque Eu vou te contar.";
+		mes "Aqueles que usam está magia devem atingir";
+		mes "as energias e habilidades";
+		mes "ocultas dentro deles !";
 		next;
 		mes "[BLIZZARDRISS]";
-		mes "If you wish to learn this skill, you";
-		mes "must first have a few items to";
-		mes "be used during the process.";
+		mes "Se você deseja aprender está habilidade, primeiro";
+		mes "você presisa de alguns itens";
+		mes "que são usados durante o processo.";
 		next;
 		mes "[BLIZZARDRISS]";
-		mes "three ^3355FFGlass Bead^000000 ";
-		mes "one ^3355FF1 carat Diamond^000000 ";
-		mes "five ^3355FFShell^000000 ";
-		mes "one ^3355FFSolid Shell^000000 ";
-		mes "Bring me these items.";
+		mes "três ^3355FF Bolinha de Gude^000000 ";
+		mes "um ^3355FF1 Diamante de 1 quilate^000000 ";
+		mes "cinco ^3355FF Casca^000000 ";
+		mes "um ^3355FF Casca Rija^000000 ";
+		mes "Traga estes itens para min.";
 		next;
 		mes "[BLIZZARDRISS]";
-		mes "Also, one more thing. . .";
-		mes "You must be sufficiently experienced";
-		mes "in the magical arts. This means you must";
-		mes "either be a wizard or mage job level 35+.";
+		mes "Te mais, uma coisa. . .";
+		mes "Você precisa de bastante experiencia";
+		mes "em artes magicas. Isso siginifica que você";
+		mes "precisa ser um bruxo ou um mago com o nivel de classe maior que 35.";
 		next;
 		mes "[BLIZZARDRISS]";
-		mes "Wizards already have already";
-		mes "experienced the role of a mage";
-		mes "and so do not require a job level.";
-		mes "In any case, one who wishes to";
-		mes "be trained in this art must be in a";
-		mes "healthy and strong mental state.";
+		mes "Bruxos ja tem muita experiencia como mago";
+		mes "e por iso não necessita do nivel de classe.";
+		mes "De qualquer forma, se quiser ser";
+		mes "treinado nesta arte você precisa está";
+		mes "com a mente saudavel e forte.";
 		next;
 		mes "[BLIZZARDRISS]";
 		mes "Okay . .";
-		mes "There is nothing more to say, are you interested?";
+		mes "Não tenho mais nada para lhe dizer, está interessado?";
 		close;
 	case 2:
 		if (getskilllv("MG_ENERGYCOAT") == 1) {
 			mes "[BLIZZARDRISS]";
-			mes "It seems that you have ";
-			mes "already mastered this skill.";
-			mes "Your skill in 'Energy Coat' ";
-			mes "is evident.";
-			mes "I am sorry, ";
-			mes "I have nothing more to teach you ...";
+			mes "Posso ver que você";
+			mes "ja e um mestre nesta habilidade.";
+			mes "Sua habilidade na 'Proteção Arcana' ";
+			mes "e evidente.";
+			mes "Eu sinto muito, ";
+			mes "mais nao tenho mais nada para lhe ensinar...";
 			close;
 		}
 		if ((countitem(746) > 2) && (countitem(730) > 0) && (countitem(935) > 4) && (countitem(943) > 0) && (JobLevel > 34 || (BaseJob == Job_Wizard || BaseJob == Job_Sage)) && (BaseClass == Job_Mage)) {
 			mes "[BLIZZARDRISS]";
-			mes "Okay, I have received your request.";
-			mes "I will now awaken your hidden energies . .";
-			mes ". . . . . .";
-			mes ". . . . . . . . . . . . .";
-			mes ". . . . . . . . . . . . . . . . . . . . . . . . . .";
-			next;
-			mes "[BLIZZARDRISS]";
-			mes "Ancient powers of";
-			mes "Geffen! I seek the enlightenment";
-			mes "and honor of your presence. ";
-			mes "I am humbled in your presence!";
-			mes " ...";
-			next;
-			mes "[BLIZZARDRISS]";
-			mes "Grant me your power!";
-			mes "Release your spirit";
-			mes "Mana Shield! Metal Armor!";
-			mes ". . . . . . . . . . . .";
-			mes "ENERGY COAT! ! !";
-			next;
-			delitem 746,3; //Glass_Bead
-			delitem 730,1; //Crystal_Jewel
-			delitem 935,5; //Shell
-			delitem 943,1; //Solid_Shell
+		mes "Okay, Eu recebi seu pedido.";
+		mes "Agora irei revelar suas energias ocultas. .";
+		mes ". . . . . .";
+		mes ". . . . . . . . . . . . .";
+		mes ". . . . . . . . . . . . . . . . . . . . . . . . . .";
+		next;
+		mes "[BLIZZARDRISS]";
+		mes "Poderes antigos de";
+		mes "Geffen! Eu procuro a luz";
+		mes "e a honra de sua presença. ";
+		mes "Eu me humilho em sua presença!";
+		mes " ...";
+		next;
+		mes "[BLIZZARDRISS]";
+		mes "Conceda-me seu poder!";
+		mes "Revele seu espirito";
+		mes "Armadura de Mana! Armadura de Metal!";
+		mes ". . . . . . . . . . . .";
+		mes "Proteção Arcana! ! !";
+		next;
+			delitem 746,3; // Bolinha de Gude
+			delitem 730,1; // Diamante de 1 quilate
+			delitem 935,5; // Casca
+			delitem 943,1; // Casca Rija
 			skill "MG_ENERGYCOAT",1,0;
 			mes "[BLIZZARDRISS]";
 			mes ". . . . .";
-			mes "It is done. . .";
-			mes "You know have the ";
-			mes "elite skill of ^3355FF' Energy Coat '^000000 .";
-			mes "Use it well.";
-			next;
-			mes "[BLIZZARDRISS]";
-			mes "Do not shame our";
-			mes "class with disgraceful";
-			mes "use of this or any skill.";
-			mes "Your new power calls for new responsibility.";
-			close;
-		}
-		mes "[BLIZZARDRISS]";
-		mes "Look!!";
-		mes "Didn't you listen to my explanation ? !";
-		mes "You have not prepared fully";
-		mes "for me to assist you.";
-		mes "Check that you have all the requirements.";
+		mes "Terminei. . .";
+		mes "Agora você sabe como usar";
+		mes "a habilidade suprema ^3355FF' Proteção Arcana '^000000 .";
+		mes "Use-a para o bem.";
 		next;
 		mes "[BLIZZARDRISS]";
-		mes "If you need me to explain";
-		mes "all this again, then ask me.";
-		mes "I would be happy to explain again";
-		mes "if only you would listen. . .";
+		mes "Não envergonhe nossa classe";
+		mes "com o uso irresponsavel";
+		mes "desta ou de qualquer outra habilidade.";
+		mes "Seus novos poderes requerem maior resposabilidade.";
+			close;
+		}
+	mes "[BLIZZARDRISS]";
+	mes "Veja!!";
+	mes "Você não escutou oque eu disse? !";
+	mes "Você não esta totalmente preparado";
+	mes "para eu lhe ajudar.";
+	mes "Veja se você tem todos os requisitos.";
+	next;
+	mes "[BLIZZARDRISS]";
+	mes "Se você precisar de min";
+	mes "para explicar tudo isso de novo.";
+	mes "Eu ficarei feliz em lhe ajudar";
+	mes "apenas se você me escutar. . .";
 		close;
 	case 3:
 		mes "[BLIZZARDRISS]";
-		mes "The wise man must have patience !";
-		mes "Prepare yourself again,";
-		mes "and return when you are ready.";
+		mes "O homen sábio precisa de paciencia!";
+		mes "Prepare-se,";
+		mes "e volte quando estiver pronto.";
 		close;
 	}
 }
 
-//============================================================
-// Old changelog
-//============================================================
-//= 1.0a Now using functions found in "Global_Functions.txt"
-//=     for class checks.[kobra_k88]
-//= 1.2 Added Baby Class Support [Lupus]
-//= 1.3 Removed callfunc Is_####_Class in favor of baseClass [Silentdragon]
-//= 1.4 Fixed exploit [Lupus]
-//= 1.4a Fixed some typos [IVBela]
-//= 1.4b changed perm. variables to temp ones [Lupus]
-//============================================================

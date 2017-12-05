@@ -22,33 +22,33 @@
 //   | - Anotações                                            |
 //   \________________________________________________________/
 
-// KvM Officer - Guillaume
+// Oficial KvM - Guillaume
 //============================================================
-bat_room,164,178,5	script	KVM Mercenary Officer#1	4_M_KY_KNT,{
+bat_room,164,178,5	script	Oficial de KVM#1	4_M_KY_KNT,{
 	/*
 	.@kvm = questprogress(6026,PLAYTIME);
 	if (.@kvm == 1) {
-		mes "[Croix Mercenary Officer]";
-		mes "I know that you've already signed with the Croix. Go back and join their team. We will not accept traitors to fight for us.";
+		mes "[Oficial KVM de Guillaume]";
+		mes "Eu sei que você já está ao lado dos Croix. Volte para o seu time. Nós não aceitamos traidores para se juntarem ao nosso lado.";
 		close;
 	}
 	else if (.@kvm == 2) erasequest 6026;
 	*/
 	.@permit = questprogress(6025,PLAYTIME);
 	if (.@permit == 1) {
-		mes "[Guillaume Mercenary Officer]";
-		mes "It seems you have recently participated in a KVM battle. You must wait 5 minutes before signing up again.";
+		mes "[Oficial KVM de Guillaume]";
+		mes "Você já participou recentemente de uma batalha de KVM. Você deve aguardar 5 minutos antes de se inscrever novamente.";
 		close;
 	}
 	else if (.@permit == 2) erasequest 6025;
-	mes "[Guillaume Mercenary Officer]";
-	mes "Let them know the real might of Guillaume!";
+	mes "[Oficial KVM de Guillaume]";
+	mes "Vamos mostrar o verdadeiro poder dos Guillaume!";
 	next;
-	switch(select("I will fight with you.:End Conversation.")) {
+	switch(select("Vou lutar com vocês.:Terminar conversa.")) {
 	case 1:
-		mes "[Guillaume Mercenary Officer]";
-		mes "Show them how strong we are.";
-		mes "Today, everyone will hear the shout of triumph from Guillaume!";
+		mes "[Oficial KVM de Guillaume]";
+		mes "Mostre a eles o quanto você é forte.";
+		mes "Hoje, todos ouvirão o grito de triunfo de Guillaume!";
 		close2;
 		//setquest 6025;
 		if (BaseLevel > 79)  warp "bat_room",169,223;
@@ -56,99 +56,99 @@ bat_room,164,178,5	script	KVM Mercenary Officer#1	4_M_KY_KNT,{
 		else warp "bat_room",225,223;
 		end;
 	case 2:
-		mes "[Guillaume Mercenary Officer]";
-		mes "We will win!";
+		mes "[Oficial KVM de Guillaume]";
+		mes "Vamos vencer!";
 		close;
 	}
 }
 
-// Guillaume Knight - KvM
+// Cavaleiro de Guillaume - KvM
 //============================================================
-bat_room,167,178,5	script	Guillaume Knight#kvm	4_M_KY_SOLD,{
-	mes "[Guillaume Knight]";
-	mes "Hello.";
-	mes "What do you want to know?";
+bat_room,167,178,5	script	Cavaleiro de Guillaume#kvm	4_M_KY_SOLD,{
+	mes "[Cavaleiro de Guillaume]";
+	mes "Olá.";
+	mes "O que você quer saber?";
 	next;
-	switch(select("Apply for KVM.:What is KVM?:How do I participate in KVM?:I want to know my Kreiger Points.")) {
+	switch(select("Inscrever-me para KVM.:O que é KVM?:Como participo do KVM?:Quero saber quantos Pontos Kreiger tenho.")) {
 	case 1:
-		mes "[Guillaume Knight]";
-		mes "Applications are not available yet.";
-		mes "To apply, you need to go to a KVM Mercenary Officer.";
+		mes "[Cavaleiro de Guillaume]";
+		mes "As inscrições ainda não estão abertas.";
+		mes "Para se inscrever, você precisa falar com um Oficial de Alistamento do KVM.";
 		close;
 	case 2:
-		mes "[Guillaume Knight]";
-		mes "KVM is the abbreviation of Kreiger Von Midgard.";
-		mes "Adventurer, are you aware that the way to the new world has been opened?";
+		mes "[Cavaleiro de Guillaume]";
+		mes "KVM é a abreviação Kreiger Von Midgard.";
+		mes "Aventureiro, você já sabe do novo mundo que foi descoberto?";
 		next;
-		mes "[Guillaume Knight]";
-		mes "We, the Guillaume Administration, have several plans to advance to the new world.";
-		mes "And KVM is one of them.";
+		mes "[Cavaleiro de Guillaume]";
+		mes "Nós, da Administração de Guillaume, formamos vários planos para colonizar o novo mundo.";
+		mes "E o KVM é um deles.";
 		next;
-		mes "[Guillaume Knight]";
-		mes "It means that we, one of many countries in the Midgard continent,";
-		mes "have decided to employ many adventurers for the immediate advance to the new world.";
+		mes "[Cavaleiro de Guillaume]";
+		mes "Nós, de um dos muitos países do continente de Midgard,";
+		mes "decidimos empregar aventureiros para o avanço imediato sobre o novo mundo.";
 		next;
-		mes "[Guillaume Knight]";
-		mes "Therefore, to select the best adventurers, we are holding the KVM.";
-		mes "We exspect responses from many adventurers.";
+		mes "[Cavaleiro de Guillaume]";
+		mes "Portanto, para escolher os melhores aventureiros, organizamos o KVM.";
+		mes "Esperamos receber muitos candidatos.";
 		next;
-		mes "[Guillaume Knight]";
-		mes "And we will give them rewards for their participation!";
-		mes "As for the rewards, please contact a KVM Logistic Officer.";
+		mes "[Cavaleiro de Guillaume]";
+		mes "E também damos algumas recompensas!";
+		mes "Para saber delas, entre em contato com um Oficial de Logística do KVM.";
 		close;
 	case 3:
-		mes "[Guillaume Knight]";
-		mes "Basically, KVM is a 5 on 5 battle.";
-		mes "First, you apply with a KVM receptionist, in a group or individually.";
+		mes "[Cavaleiro de Guillaume]";
+		mes "Basicamente, o KVM é uma batalha 5 contra 5.";
+		mes "Primeiro, você se inscreve com um recepcionista do KVM, em grupo ou individualmente.";
 		next;
-		mes "[Guillaume Knight]";
-		mes "Group applications are for when you intend to enter the KVM with your party members,";
-		mes "and a personal application is for when you intend to enter the KVM individually.";
+		mes "[Cavaleiro de Guillaume]";
+		mes "As inscrições em grupo servem para quando você quer entrar no KVM com os membros do seu grupo,";
+		mes "e uma inscrição pessoal serve para quando você quer entrar no KVM por conta própria.";
 		next;
-		mes "[Guillaume Knight]";
-		mes "Please apply with a KVM officer, and he will contact you later when you are in Prontera.";
+		mes "[Cavaleiro de Guillaume]";
+		mes "Por favor, faça a inscrição com um oficial do KVM, e ele entrará em contato com você mais tarde, em Prontera.";
 		next;
-		mes "[Guillaume Knight]";
-		mes "Then you enter and follow the instructions in the battlefield.";
+		mes "[Cavaleiro de Guillaume]";
+		mes "Então, você poderá entrar e seguir as instruções no campo de batalha.";
 		next;
-		mes "[Guillaume Knight]";
-		mes "However, please be advised that unless you are in the KVM office, he cannot contact you.";
+		mes "[Cavaleiro de Guillaume]";
+		mes "Mas lembre-se, a menos que você esteja no escritório do KVM, ele não poderá entrar em contato com você.";
 		close;
 	case 4:
-		mes "[Guillaume Knight]";
-		mes "Your Kreiger Points are:";
+		mes "[Cavaleiro de Guillaume]";
+		mes "Seus Pontos Kreiger são:";
 		mes ""+kvm_point+".";
 		close;
 	}
 }
 
-// KvM Officer - Croix
+// Oficial KvM - Croix
 //============================================================
-bat_room,164,121,1	script	KVM Mercenary Officer#2	4_M_CRU_KNT,{
+bat_room,164,121,1	script	Oficial de KVM#2	4_M_CRU_KNT,{
 	/*
 	.@kvm = questprogress(6025,PLAYTIME);
 	if (.@kvm == 1) {
-		mes "[Croix Mercenary Officer]";
-		mes "I know that you've already signed with the Guillaume. Go back and join their team. We will not accept traitors to fight for us.";
+		mes "[Oficial KVM de Croix]";
+		mes "Eu sei que você já está ao lado dos Guillaume. Volte para o seu time. Nós não aceitamos traidores para se juntarem ao nosso lado.";
 		close;
 	}
 	else if (.@kvm == 2) erasequest 6025;
 	*/
 	.@permit = questprogress(6025,PLAYTIME);
 	if (.@permit == 1) {
-		mes "[Croix Mercenary Officer]";
-		mes "It seems you have recently participated in a KVM battle. You must wait 5 minutes before signing up again.";
+		mes "[Oficial KVM de Croix]";
+		mes "Você já participou recentemente de uma batalha de KVM. Você deve aguardar 5 minutos antes de se inscrever novamente.";
 		close;
 	}
 	else if (.@permit == 2) erasequest 6025;
-	mes "[Croix Mercenary Officer]";
-	mes "Let them know the real might of Croix!";
+	mes "[Oficial KVM de Croix]";
+	mes "Vamos mostrar o verdadeiro poder dos Croix!";
 	next;
-	switch(select("I will fight with you.:End Conversation.")) {
+	switch(select("Vou lutar com vocês.:Terminar conversa.")) {
 	case 1:
-		mes "[Croix Mercenary Officer]";
-		mes "Show them how strong we are.";
-		mes "Today, everyone will hear the shout of triumph from Croix!";
+		mes "[Oficial KVM de Croix]";
+		mes "Mostre a eles o quanto você é forte.";
+		mes "Hoje, todos ouvirão o grito de triunfo de Croix!";
 		close2;
 		//setquest 6026;
 		if (BaseLevel > 79) warp "bat_room",169,207;
@@ -156,67 +156,67 @@ bat_room,164,121,1	script	KVM Mercenary Officer#2	4_M_CRU_KNT,{
 		else warp "bat_room",225,207;
 		end;
 	case 2:
-		mes "[Croix Mercenary Officer]";
-		mes "We will win!";
+		mes "[Oficial KVM de Croix]";
+		mes "Vamos vencer!";
 		close;
 	}
 }
 
-// Croix Knight - KvM
+// Cavaleiro de Croix - KvM
 //============================================================
-bat_room,167,121,1	script	Croix Knight#kvm	4_M_CRU_SOLD,{
-	mes "[Croix Knight]";
-	mes "Hello.";
-	mes "What do you want to know?";
+bat_room,167,121,1	script	Cavaleiro de Croix#kvm	4_M_CRU_SOLD,{
+	mes "[Cavaleiro de Croix]";
+	mes "Olá.";
+	mes "O que você quer saber?";
 	next;
-	switch(select("Apply for KVM.:What is KVM?:How do I participate in KVM?:I want to know my Kreiger Points.")) {
+	switch(select("Inscrever-me para KVM.:O que é KVM?:Como participo do KVM?:Quero saber quantos Pontos Kreiger tenho.")) {
 	case 1:
-		mes "[Croix Knight]";
-		mes "Applications are not available yet.";
-		mes "To apply, you need to go to a KVM Mercenary Officer.";
+		mes "[Cavaleiro de Croix]";
+		mes "As inscrições ainda não estão abertas.";
+		mes "Para se inscrever, você precisa falar com um Oficial de Alistamento do KVM.";
 		close;
 	case 2:
-		mes "[Croix Knight]";
-		mes "KVM is the abbreviation of Kreiger Von Midgard.";
-		mes "Adventurer, are you aware that the way to the new world has been opened?";
+		mes "[Cavaleiro de Croix]";
+		mes "KVM é a abreviação Kreiger Von Midgard.";
+		mes "Aventureiro, você já sabe do novo mundo que foi descoberto?";
 		next;
-		mes "[Croix Knight]";
-		mes "We, the Croix Administration, have several plans to advance to the new world.";
-		mes "And KVM is one of them.";
+		mes "[Cavaleiro de Croix]";
+		mes "Nós, da Administração de Croix, formamos vários planos para colonizar o novo mundo.";
+		mes "E o KVM é um deles.";
 		next;
-		mes "[Croix Knight]";
-		mes "It means that we, one of many countries in the Midgard continent,";
-		mes "have decided to employ many adventurers for the immediate advance to the new world.";
+		mes "[Cavaleiro de Croix]";
+		mes "Nós, de um dos muitos países do continente de Midgard,";
+		mes "decidimos empregar aventureiros para o avanço imediato sobre o novo mundo.";
 		next;
-		mes "[Croix Knight]";
-		mes "Therefore, to select the best adventurers, we are holding the KVM.";
-		mes "We exspect responses from many adventurers.";
+		mes "[Cavaleiro de Croix]";
+		mes "Portanto, para escolher os melhores aventureiros, organizamos o KVM.";
+		mes "Esperamos receber muitos candidatos.";
 		next;
-		mes "[Croix Knight]";
-		mes "And we will give them rewards for their participation!";
-		mes "As for the rewards, please contact a KVM Logistic Officer.";
+		mes "[Cavaleiro de Croix]";
+		mes "E também damos algumas recompensas!";
+		mes "Para saber delas, entre em contato com um Oficial de Logística do KVM.";
 		close;
 	case 3:
-		mes "[Croix Knight]";
-		mes "Basically, KVM is a 5 on 5 battle.";
-		mes "First, you apply with a KVM receptionist, in a group or individually.";
+		mes "[Cavaleiro de Croix]";
+		mes "Basicamente, o KVM é uma batalha 5 contra 5.";
+		mes "Primeiro, você se inscreve com um recepcionista do KVM, em grupo ou individualmente.";
 		next;
-		mes "[Croix Knight]";
-		mes "Group applications are for when you intend to enter the KVM with your party members,";
-		mes "and a personal application is for when you intend to enter the KVM individually.";
+		mes "[Cavaleiro de Croix]";
+		mes "As inscrições em grupo servem para quando você quer entrar no KVM com os membros do seu grupo,";
+		mes "e uma inscrição pessoal serve para quando você quer entrar no KVM por conta própria.";
 		next;
-		mes "[Croix Knight]";
-		mes "Please apply with a KVM officer, and he will contact you later when you are in Prontera.";
+		mes "[Cavaleiro de Croix]";
+		mes "Por favor, faça a inscrição com um oficial do KVM, e ele entrará em contato com você mais tarde, em Prontera.";
 		next;
-		mes "[Croix Knight]";
-		mes "Then you enter and follow the instructions in the battlefield.";
+		mes "[Cavaleiro de Croix]";
+		mes "Então, você poderá entrar e seguir as instruções no campo de batalha.";
 		next;
-		mes "[Croix Knight]";
-		mes "However, please be advised that unless you are in the KVM office, he cannot contact you.";
+		mes "[Cavaleiro de Croix]";
+		mes "Mas lembre-se, a menos que você esteja no escritório do KVM, ele não poderá entrar em contato com você.";
 		close;
 	case 4:
-		mes "[Croix Knight]";
-		mes "Your Kreiger Points are:";
+		mes "[Cavaleiro de Croix]";
+		mes "Seus Pontos Kreiger são:";
 		mes ""+kvm_point+".";
 		close;
 	}

@@ -1,55 +1,62 @@
-//=====Hercules Script =======================================
-//= Armor Enchanter
-//===== By: ==================================================
-//= L0ne_W0lf
-//===== Current Version: =====================================
-//= 1.3a
-//===== Description: =========================================
-//= [Official Conversion]
-//= Add a +1, +2, or +3 random stat to a specified armor.
-//===== Additional Comments: =================================
-//= 1.0 First version.
-//= 1.1 Corrected typo (Sit -> Suit) (bugreport:4586)
-//= 1.2 Optimized. [Euphy]
-//= 1.3 Fixed some typos and optimized a little more. [Daegaladh]
-//= 1.3a Added 'disable_items' command. [Euphy]
-//============================================================
+//    ________________________________________________________
+//   /                                                        \
+//   |       _           _   _   _                            |
+//   |      | |__  _ __ / \ | |_| |__   ___ _ __   __ _       |
+//   |      | '_ \| '__/ _ \| __| '_ \ / _ \ '_ \ / _` |      |
+//   |      | |_) | | / ___ \ |_| | | |  __/ | | | (_| |      |
+//   |      |_.__/|_|/_/   \_\__|_| |_|\___|_| |_|\__,_|      |
+//   |                                                        |
+//   |                    brAthena Script                     |
+//   |--------------------------------------------------------|
+//   | Nome do Script:  encantador.txt                        |
+//   |--------------------------------------------------------|
+//   | Criado por: eA/rA/Herc/brA Dev. Team                   |
+//   |--------------------------------------------------------|
+//   | Versões eA/rA/Herc/brA: 1.1/1.1/1.1/1.0                |
+//   |--------------------------------------------------------|
+//   | Changelog:                                             |
+//   | 1.0 Cabeçalho brAthena [Axl]                           |
+//   |--------------------------------------------------------|
+//   | - Anotações                                            |
+//   \________________________________________________________/
 
-prontera,165,60,2	script	Apprentice Craftsman	1_F_MERCHANT_01,{
+prontera,165,60,2	script	Aprendiz de Artesão	1_F_MERCHANT_01,{
 	disable_items;
-	mes "[Apprentice Craftsman]";
+	mes "[Aprendiz de Artesão]";
 	if (Zeny >= 400000) {
-		mes "I've been studying ways to enhance an armor to maximize its capability.";
+		mes "Venho estudando maneiras de melhorar uma armadura para aumentar a sua real capacidade.";
 		next;
-		mes "[Apprentice Craftsman]";
-		mes "Enchanting is an awesome skill that infuses a mysterious status powers into the armor's hidden socket.";
+		mes "[Aprendiz de Artesão]";
+		mes "Encantar é uma habilidade incrível que funde um poder misterioso em um espaço escondido da armadura.";
 		next;
-		mes "[Apprentice Craftsman]";
-		mes "However, you have to keep in mind that if there are two armors of the same kind in your possession, the Enchantment will be applied in the order they are placed in your inventory.";
+		mes "[Aprendiz de Artesão]";
+		mes "No entanto, você tem que ter em mente que, se houver duas armaduras do mesmo tipo em seu inventário.";
+		mes "O encantamento será aplicado na ordem em que estão colocados no seu inventário.";
 		next;
-		mes "[Apprentice Craftsman]";
-		mes "In that case, the Enchantment may be applied to an item which you didn't mean to Enchant. So just bring ^5555ffONE Armor^000000 you want enchanted to be safe...";
+		mes "[Aprendiz de Artesão]";
+		mes "Nesse caso, o encantamento pode ser aplicado a um item que você não queira encantar.";
+		mes "Então basta trazer ^5555ffuma Armadura^000000 que você deseja, podendo então encantar com segurança.";
 		next;
-		mes "[Apprentice Craftsman]";
-		mes "I'm not responsible for what would happen if you have more than one of the same kind in your inventory.";
+		mes "[Aprendiz de Artesão]";
+		mes "Eu não sou responsável por aquilo que pode acontecer se você tiver mais de um equipamento do mesmo tipo em seu inventário.";
 		next;
-		switch(select("Non Slotted Armor.:Slotted Armor.:High Grade Armor.:Maybe next time.")) {
-		case 1:
+		switch(select("Armadura sem Slot.","Armadura com Slot.","Armadura de Alto Nível.","Talvez na próxima.")) {
+			case 1:
 			setarray .@items[0],2307,2309,2314,2316,2321,2325,2327,2328,2330,2332,2334,2335,2341,2344,2346,2348,2350,2337,2386,2394,2395,2396;
 			.@j = 50;
 			break;
-		case 2:
+			case 2:
 			setarray .@items[0],2311,2318,2319,2320,2308,2310,2315,2317,2322,2324,2326,2331,2333,2336,2342,2345,2347,2349,2351;
 			.@j = 55;
 			.@k = 1;
 			break;
-		case 3:
+			case 3:
 			setarray .@items[0],2364,2365,2391,2374,2375,2376,2377,2378,2379,2380,2381,2382,2387,2388,2389,2390;
 			.@j = 60;
 			break;
-		case 4:
-			mes "[Apprentice Craftsman]";
-			mes "Please come back when you have any interest in enchanting your armor.";
+			case 4:
+			mes "[Aprendiz de Artesão]";
+			mes "Por favor, volte quando você tiver algum interesse em encantar sua armadura.";
 			close;
 		}
 		.@menu$ = "";
@@ -58,38 +65,39 @@ prontera,165,60,2	script	Apprentice Craftsman	1_F_MERCHANT_01,{
 		callsub S_EnchantArmor, .@items[select(.@menu$)-1], .@j;
 		end;
 	}
-	mes "I am in charge of Enchanting Armors. Simply put, I've been studying ways to power-up armor.";
+	mes "Estou encarregado de encantar armaduras.";
+	mes "Basta pôr, estive estudando formas de aumentar o poder das armaduras.";
 	next;
-	mes "[Apprentice Craftsman]";
-	mes "If by any chance, you would want to enchant your armor, bring me 400,000 zeny and the armor you want to enchant and you are all set to go.";
+	mes "[Aprendiz de Artesão]";
+	mes "Se por acaso, você quiser encantar a sua armadura, traga-me 400,000 zeny e a armadura que pretende encantar e então tudo estará pronto.";
 	close;
 
-S_EnchantArmor:
+	S_EnchantArmor:
 	.@itemid = getarg(0);
 	.@failrate = getarg(1);
-	mes "[Apprentice Craftsman]";
+	mes "[Aprendiz de Artesão]";
 	if (countitem(.@itemid) == 1) {
-		mes "Socket enchant will cost you 400,000 zeny. And there will be a random option enchanted. Of course, there is a chance of breaking your armor.";
+		mes "Adicionar um slot irá lhe custar 400,000 zeny.";
+		mes "E haverá uma opção aleatória encantamento. Naturalmente, há uma chance de quebrar sua armadura.";
 		next;
-		mes "[Apprentice Craftsman]";
-		mes "First and most importantly.";
-		mes "^ff5555Existing Refine Level of the Armor";
-		mes "and Cards will be GONE.^000000";
-		mes "Do you still want to try an Enchant?";
+		mes "[Aprendiz de Artesão]";
+		mes "Primeiro e mais importante.";
+		mes "^ff5555Refinamento existente ou carta na armadura serão perdidos.^000000";
+		mes "Você ainda quer tentar encantar?";
 		next;
-		if(select("Hmm... Let me think it over.:Go ahead.") == 1) {
-			mes "[Apprentice Craftsman]";
-			mes "Well, I can't blame you. Safety first, eh?";
-			mes "Now you have a nice day.";
+		if(select("Deixe-me pensar mais.","Vá em frente.") == 1) {
+			mes "[Aprendiz de Artesão]";
+			mes "Bem, eu não posso culpá-lo. Segurança em primeiro lugar, certo?";
+			mes "Agora tenha um bom dia.";
 			close;
 		}
-		mes "[Apprentice Craftsman]";
-		mes "Quite of an adventurer huh? Well, shall we?";
+		mes "[Aprendiz de Artesão]";
+		mes "Então, um aventureiro hein? Bom, vamos.";
 		close2;
 		specialeffect2 EF_MAPPILLAR;
 		if (Zeny < 400000) {
-			mes "[Apprentice Craftsman]";
-			mes "Sorry, but you don't have enough zeny.";
+			mes "[Aprendiz de Artesão]";
+			mes "Desculpe, mas você não tem zeny suficiente.";
 			close;
 		}
 		progressbar "ffff00",7;
@@ -133,17 +141,17 @@ S_EnchantArmor:
 			case 35:
 			case 36: .@addpart = 4750;break;
 			default:
-				specialeffect2 EF_PHARMACY_FAIL;
-				mes "[Apprentice Craftsman]";
-				mes "Well that's too bad.";
-				mes "The requested equipment has failed to enchant.";
-				close;
+			specialeffect2 EF_PHARMACY_FAIL;
+			mes "[Aprendiz de Artesão]";
+			mes "Bem, isso é muito ruim.";
+			mes "Não consegui encantar seu equipamento.";
+			close;
 		}
 		getitem2 .@itemid, 1, 1, 0, 0, 0, 0, 0, .@addpart;
 	}
 	else {
-		mes "Hmm? There's nothing to be enchanted!";
-		mes "Please come back with just ONE equipment to be enchanted.";
+		mes "Hmm? Não há nada para se encantar!";
+		mes "Por favor, volte com apenas UM equipamento para encantar.";
 		close;
 	}
 }
