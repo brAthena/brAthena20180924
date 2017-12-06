@@ -1,7 +1,3 @@
-PrivateBin
- New    Clone    Raw text
- English 
- This document will expire in 29 days.
 //    ________________________________________________________
 //   /                                                        \
 //   |       _           _   _   _                            |
@@ -3250,4 +3246,3 @@ lhz_dun04,147,279,0	script	Entrada do Laboratório#memo	CLEAR_NPC,{
 		enablenpc instance_npcname("Wolfchev#last");
 		end;
 }
-PrivateBin - Because ignorance is bliss1.1 PrivateBin is a minimalist, open source online pastebin where the server has zero knowledge of pasted data. Data is encrypted/decrypted in the browser using 256 bits AES. More information on the project page.
