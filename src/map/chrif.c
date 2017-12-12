@@ -1454,6 +1454,8 @@ int chrif_parse(int fd) {
 			case 0x2b24: chrif->keepalive_ack(fd); break;
 			case 0x2b25: chrif->deadopt(RFIFOL(fd,2), RFIFOL(fd,6), RFIFOL(fd,10)); break;
 			case 0x2b27: chrif->authfail(fd); break;
+			// [CarlosHenrq] Pacote de resposta para ban de mac-address
+			case 0x27f2: chrif->ask_mac_response(fd); break;
 			default:
 				ShowError("chrif_parse : Pacote desconhecido (sessao #%d): 0x%x. Desconectando.\n", fd, cmd);
 				sockt->eof(fd);
@@ -1653,11 +1655,46 @@ void chrif_ask_mac_unban(const char* mac_address)
 }
 
 /**
+ * Procura o mac_address e faz o logout do jogor pois foi banido por mac.
+ */
+int chrif_foreach_mac(struct map_session_data* sd, va_list ap)
+{
+	const char* mac_address = va_arg(ap, const char*);
+	
+	// Se o jogador possuir o mac_address informado, ele será deslogado por motivos de ban.
+	if(sd && !strcmpi(mac_address, sd->mac_address))
+	{
+		chrif->save(sd, 1); // Salva os dados do jogador. 
+		sockt->eof(sd->fd); // Força o socket do jogador se desconectar
+		map->quit(sd); // Remove tudo que sobrou do jogador.
+	}
+	
+	return 1;
+}
+
+/**
  * Recebe o pacote de retorno de status para banir o mac_address [CarlosHenrq]
  */
 void chrif_ask_mac_response(int fd)
 {
-	// @Todo: Resposta sobre o ban de mac_address
+	// Incializa informações de mac.
+	char mac_address[MAC_LENGTH];
+	int response = 0;
+	
+	// Realiza a leitura do pacote.
+	safestrncpy(mac_address, (char*)RFIFOP(fd,2), MAC_LENGTH);
+	response = RFIFOL(fd, 20);
+	RFIFOSKIP(fd, 24);
+
+	// Somente em caso de ban permitido, irá usar
+	// Esta condição para deslogar qualquer jogador logado com mac
+	if(response == 1)
+	{
+		ShowNotice("Pedido de char-server para desconectar todos so mac "CL_WHITE"%s"CL_RESET".\n", mac_address);
+		map->foreachpc(chrif->foreach_mac, (const char*)mac_address);
+	}
+
+	return;
 }
 
 /**
@@ -1841,4 +1878,5 @@ void chrif_defaults(void) {
 	chrif->ask_mac_ban = chrif_ask_mac_ban;
 	chrif->ask_mac_unban = chrif_ask_mac_unban;
 	chrif->ask_mac_response = chrif_ask_mac_response;
+	chrif->foreach_mac = chrif_foreach_mac;
 }

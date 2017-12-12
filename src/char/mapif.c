@@ -215,8 +215,15 @@ struct mapif_interface *mapif;
  */
 void mapif_send_mac_response(int fd, const char* mac_address, int response)
 {
-	
+	// Responde o pacote recebido para o char-server
+	WFIFOHEAD(fd, 24);
+	WFIFOW(fd,0) = 0x27f2;
+	memcpy(WFIFOP(fd,2), mac_address, MAC_LENGTH);
+	WFIFOL(fd, 20) = response;
+	WFIFOSET(fd, 24);
 }
+
+// for( i = 0; i < ARRAYLENGTH(chr->server); ++i )
 
 
 void mapif_defaults(void) {

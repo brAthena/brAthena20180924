@@ -194,17 +194,26 @@ void loginif_connect_to_server(void)
  */
 void loginif_ask_mac_ban(const char* mac_address, int minute)
 {
-	// @Todo: Envio dos pacotes ao servidor de login
+	// Envia ao login-server o pedido para banir o mac-address informado
+	WFIFOHEAD(chr->login_fd, 24);
+	WFIFOW(chr->login_fd,0) = 0x27f0;
+	memcpy(WFIFOP(chr->login_fd,2), mac_address, MAC_LENGTH);
+	WFIFOL(chr->login_fd, 20) = minute;
+	WFIFOSET(chr->login_fd, 24);
 }
 
 /**
- * Envia ao login o pedido de banimento do mac-address [CarlosHenrq]
+ * Envia ao login o pedido de retirar o ban do mac-address [CarlosHenrq]
  *
  * @param mac_address
  */
 void loginif_ask_mac_unban(const char* mac_address)
 {
-	// @Todo: Envio dos pacotes ao servidor de login
+	// Envia o pedido ao login-server para desbanir o mac-address informado
+	WFIFOHEAD(chr->login_fd, 20);
+	WFIFOW(chr->login_fd,0) = 0x27f1;
+	memcpy(WFIFOP(chr->login_fd,2), mac_address, MAC_LENGTH);
+	WFIFOSET(chr->login_fd, 20);
 }
 
 void loginif_defaults(void) {

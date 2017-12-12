@@ -2672,7 +2672,34 @@ void char_parse_fromlogin_accinfo2_ok(int fd)
  */
 void char_parse_fromlogin_macresponse(int fd)
 {
+	char mac_address[MAC_LENGTH];
+	int response = 0, i;
 	
+	safestrncpy(mac_address, (char*)RFIFOP(fd,2), MAC_LENGTH);
+	response = RFIFOL(fd, 20);
+	RFIFOSKIP(fd,24);
+
+	// 0: Negado/Impossível/Desabilitado
+	if(response == 0)
+	{
+		ShowError("Impossível banir/desbanir o mac "CL_WHITE"%s"CL_RESET". Verifique as configurações.\n",
+			mac_address);
+	}
+	else if(response == 1)
+	{
+		ShowInfo("O mac "CL_WHITE"%s"CL_RESET" foi banido com sucesso.\n", mac_address);
+	}
+	else if(response == 2)
+	{
+		ShowInfo("O mac "CL_WHITE"%s"CL_RESET" foi desbanido com sucesso.\n", mac_address);
+	}
+	
+	// Informa a todos os map-server o retorno da solicitação de ban do mac.
+	for(i = 0; i < ARRAYLENGTH(chr->server); i++)
+	{
+		mapif->send_mac_response(chr->server[i].fd, mac_address, response);
+	}
+
 }
 
 int char_parse_fromlogin(int fd) {
