@@ -504,6 +504,8 @@ bool mac_config_read(const char* key, const char* value)
             login->config->mac_block_dual = (bool)config_switch(value);
         else if(strcmpi(key, "ban_enable") == 0)
             login->config->mac_ban_enable = (bool)config_switch(value);
+		else if(strcmpi(key, "force_packet") == 0)
+			login->config->mac_force_packet = (bool)config_switch(value);
         else
         // Configurações de acesso ao banco de dados.
         if( strcmpi(key, "sql.db_hostname") == 0 )
