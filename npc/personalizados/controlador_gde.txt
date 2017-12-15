@@ -163,7 +163,7 @@ OnMinute00:
 							donpcevent "Agit#"+.Castles$[.@j]+"::OnAgitEnd";
 							killmonster .Castles$[.@j], "Agit#"+.Castles$[.@j]+"::OnAgitBreak";
 						} else {
-							donpcevent "Manager#"+.Castles$[.@j]+"::OnAgitEnd2";
+							donpcevent "Gerenciador#"+.Castles$[.@j]+"::OnAgitEnd2";
 							killmonster .Castles$[.@j], "Steward#"+.EndLabel$[.@j-20]+"::OnStartArena";
 						}
 					}
