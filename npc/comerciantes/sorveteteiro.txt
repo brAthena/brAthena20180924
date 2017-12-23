@@ -1,72 +1,67 @@
-//===== Hercules Script ======================================
-//= Ice Cream Maker
-//===== By: ==================================================
-//= KOOK SWU, Kisuka
-//===== Current Version: =====================================
-//= 1.5
-//===== Description: =========================================
-//= A man makes you ice-cream
-//===== Additional Comments: =================================
-//= 1.1 Optimized, changed overlapping coords in Alberta [Lupus]
-//= 1.2 According to the patch, IceCream seller has been removed from Morocc [Lupus]
-//= 1.3 No more label menu and updated to match AEGIS script. [Kisuka]
-//= 1.4 Duplicates now spawn from floating NPCs. [L0ne_W0lf]
-//= 1.5 Fixed small checkweight issue. [Kisuka]
-//============================================================
+//    ________________________________________________________
+//   /                                                        \
+//   |       _           _   _   _                            |
+//   |      | |__  _ __ / \ | |_| |__   ___ _ __   __ _       |
+//   |      | '_ \| '__/ _ \| __| '_ \ / _ \ '_ \ / _` |      |
+//   |      | |_) | | / ___ \ |_| | | |  __/ | | | (_| |      |
+//   |      |_.__/|_|/_/   \_\__|_| |_|\___|_| |_|\__,_|      |
+//   |                                                        |
+//   |                    brAthena Script                     |
+//   |--------------------------------------------------------|
+//   | Nome do Script:  sorveteteiro.txt                      |
+//   |--------------------------------------------------------|
+//   | Criado por: eA/rA/Herc/brA Dev. Team                   |
+//   |--------------------------------------------------------|
+//   | Versões eA/rA/Herc/brA: 1.1/1.1/1.1/1.0                |
+//   |--------------------------------------------------------|
+//   | Changelog:                                             |
+//   | 1.0 Cabeçalho brAthena [Axl]                           |
+//   |--------------------------------------------------------|
+//   | - Anotações                                            |
+//   \________________________________________________________/
 
 -	script	Ice Cream Maker::IceCreamer	-1,{
-	mes "[Ice Cream Maker]";
-	mes "Fresh Ice Cream made with snow from Lutie!";
-	mes "Enjoy it now, it won't be on sale for long!";
-	mes "^3355FF100 Zeny^000000 Ice Cream,";
-	mes "Ice Cream!";
+	mes "[Sorveteiro]";
+	mes "Um sorvete fresco feito com a neve de Lutie!";
+	mes "Aproveite agora, ele não vai estar à venda por muito tempo!";
+	mes "^3355FF100 Zeny^000000 por Sorvete!";
 	next;
-	if(select("Gimme Ice Cream!:Cancel Trade") == 2) {
-		mes "Are you sure you don't want any?";
-		mes "I won't be selling it for long,";
-		mes "and once I run out,";
-		mes "there won't be any more!!!";
-		close;
+	if(select("Me dê sorvete!:Cancelar") == 2) {
+	mes "[Sorveteiro]";
+	mes "Você tem certeza que não quer?";
+	mes "Não estarei vendendo por muito tempo, e quando acabar de vender, não haverá mais!!!";
+	close;
 	}
 	mes "[Ice Cream Maker]";
-	mes "Fresh Ice Cream made with snow from Lutie!";
-	mes "Everyone wants our delicious ice cream, ";
-	mes "but we have a limited amount,";
-	mes "so you can only purchase 5 at a time!!";
+	mes "Um sorvete fresco feito com a neve de Lutie!";
+	mes "Todos mundo quer meus deliciosos sorvetes, mas nós temos uma quantia limitada, então você só poderá comprar 5 por vez!!";
 	next;
 	while(1) {
 		input .@input;
 		if(.@input < 1) {
 			mes "[Ice Cream Maker]";
-			mes "If you don't want to buy any,";
-			mes "could you please let the next customer";
-			mes "make a purchase?";
-			mes "Thank you.";
+			mes "Se você não quer comprar nada, poderia deixar o próximo cliente fazer uma compra?";
+			mes "Obrigado.";;
 			close;
 		}
 		if(.@input > 5) {
-			mes "[Ice Cream Maker]";
-			mes "Ouch";
-			mes "You expect too much.";
-			mes "Dear customer,";
-			mes "If you eat more than 5 Ice creams,";
-			mes "If you might haveto make a lot of trips";
-			mes "to the bathroom tonight.";
+			mes "[Sorveteiro]";
+			mes "Ouch!";
+			mes "Você quer sorvetes demais.";
+			mes "Caro cliente, se você comer mais do que 5 Sorvetes, terá de ir ao banheiro várias vezes à noite....";
 			next;
 		}
 	}
 	if(Zeny<.@input*100) {
-		mes "[Ice Cream Maker]";
-		mes "Dear customer, your wallet seems to be light.";
-		mes "Price is ^3355FF100 Zeny^000000 per ice cream.";
+		mes "[Sorveteiro]";
+		mes "Caro cliente, sua carteira é a luz.";
+		mes "O preço é ^3355FF100 Zeny^000000 por Sorvete.";
 		close;
 	}
 	if(checkweight(536,.@input) == 0) {
-		mes "[Ice Cream Maker]";
-		mes "Dear customer,you look like you're carrying a lot.";
-		mes "Ice Cream is fine,";
-		mes "but you must consider your weight";
-		mes "before making a purchase.";
+		mes "[Sorveteiro]";
+		mes "Caro cliente, você está carregando coisas demais.";
+		mes "Sorvete é ótimo, mas primeiro verifique o seu peso antes de fazer uma compra.";
 		close;
 	}
 	Zeny -= 100*.@input;
@@ -75,10 +70,10 @@
 }
 
 // Alberta
-alberta,120,45,2	duplicate(IceCreamer)	Ice Cream Maker#1	4_M_03
+alberta,120,45,2	duplicate(IceCreamer)	Sorveteiro#1	4_M_03
 
 // Morroc Field
-moc_fild16,88,304,4	duplicate(IceCreamer)	Ice Cream Maker#2	4_M_03
+moc_fild16,88,304,4	duplicate(IceCreamer)	Sorveteiro#2	4_M_03
 
 // Morroc
-//morocc,160,144,4	duplicate(IceCreamer)	Ice Cream Maker#3	4_M_03
+//morocc,160,144,4	duplicate(IceCreamer)	Sorveteiro#3	4_M_03

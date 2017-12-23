@@ -8,81 +8,81 @@
 //   |                                                        |
 //   |                    brAthena Script                     |
 //   |--------------------------------------------------------|
-//   | Nome do Script:  menestrel.txt                         |
+//   | Nome do Script: Quest da Classe Menestrel              |
 //   |--------------------------------------------------------|
 //   | Criado por: eA/rA/Herc/brA Dev. Team                   |
 //   |--------------------------------------------------------|
 //   | Versões eA/rA/Herc/brA: 1.3/1.3/1.3/1.0                |
 //   |--------------------------------------------------------|
-//   | Descrição: Quest da classe Menestrel.                  |
+//   | Descrição: Mudança de Classe para Menestrel.           |
 //   |--------------------------------------------------------|
 //   | Changelog:                                             |
-//   | 1.0 Cabeçalho brAthena [Axl]                           |
+//   | 1.0 Criado Cabeçalho [Megasantos]                      |
+//   | 1.1 Tradução PT-BR [Haseo]                             |
 //   |--------------------------------------------------------|
 //   | - Anotações                                            |
 //   \________________________________________________________/
 
-valkyrie,53,54,3	script	Minstrel#Valkyrie	2_M_BARD_ORIENT,{
+valkyrie,53,54,3	script	Menestrel#Valquiria	2_M_BARD_ORIENT,{
 	if (ADVJOB == 0 || Upper != 1) {
-		.@karma_d = rand(1,10);
+		set .@karma_d,rand(1,10);
 		if (.@karma_d > 4) {
-			mes "[Minstrel]";
-			mes "Congratulations.";
-			mes "Honor to the warriors!";
+			mes "[Menestrel]";
+			mes "Parabéns.";
+			mes "Honra aos guerreiros!";
 			close;
 		}
-		mes "[Minstrel]";
-		mes "Do you want to";
-		mes "sing a song with me?";
-		mes "Sha la la la la~";
+		mes "[Menestrel]";
+		mes "Você quer cantar";
+		mes "uma canção comigo?";
+		mes "Sha lá lá lá lá~";
 		close;
-	}
-	else if (ADVJOB == Job_Clown && Class == Job_Archer_High && JobLevel > 39) {
-		mes "[Minstrel]";
-		mes "The dreary world";
-		mes "of mortals is in need";
-		mes "of more cheerful song.";
-		mes "Will you bring it to them";
-		mes "and turn the tide in the";
-		mes "battle against evil?";
+	} else if (ADVJOB == Job_Clown && Class == Job_Archer_High && JobLevel > 39) {
+		mes "[Menestrel]";
+		mes "O mundo aborrecido dos";
+		mes "mortais está necessitando";
+		mes "de uma canção mais alegre.";
+		mes "você vai trazer isto para";
+		mes "eles e virar a maré na batalha";
+		mes "contra o mal?";
 		next;
-		mes "[Minstrel]";
-		mes "Will you do this";
-		mes "for Rune-Midgard...";
-		mes "As a Minstrel?";
+		mes "[Menestrel]";
+		mes "Você faria isso";
+		mes "por Rune-Midgard...";
+		mes "Como um Menestrel?";
 		next;
-		if (select("No.:Yes.") == 1) {
-			mes "[Minstrel]";
-			mes "When you're ready,";
-			mes "feel free to come back.";
-			mes "Honor to the warriors!";
+		if (select("Não.:Sim.") == 1) {
+			mes "[Menestrel]";
+			mes "Quando você estiver pronto,";
+			mes "Sinta-se livre para voltar.";
+			mes "Honra aos guerreiros!";
 			close;
 		}
 		if (SkillPoint) {
-			mes "[Minstrel]";
-			mes "It is still possible for you to learn more skills. Please use";
-			mes "all of your remaining Skill Points before returning to me.";
+			mes "[Menestrel]";
+			mes "Você ainda tem pontos de habilidades. Por favor,";
+			mes "use todos os seus pontos de habilidade restantes, e depois volte aqui.";
 			close;
 		}
 		jobchange Job_Clown;
-		ADVJOB = 0;
-		mes "[Minstrel]";
-		mes "Congratulations!";
-		mes "As a Minstrel, your";
-		mes "your songs will bring";
-		mes "hope to your allies, and";
-		mes "desperation to your foes.";
+		set ADVJOB,0;
+		mes "[Menestrel]";
+		mes "Parabéns!";
+		mes "Como um Menestrel, suas";
+		mes "canções trarão a";
+		mes "esperança aos seus aliados, e o";
+		mes "desespero aos seus inimigos.";
 		close;
 	}
-	mes "[Minstrel]";
-	mes "Welcome";
-	mes "to Valhalla,";
-	mes "the Hall of Honor.";
+	mes "[Menestrel]";
+	mes "Bem-vindo";
+	mes "a Valhalla,";
+	mes "o Salão da Honra.";
 	next;
-	mes "[Minstrel]";
-	mes "Please make";
-	mes "yourself comfortable";
-	mes "while you are here.";
-	mes "Honor to the warriors!";
+	mes "[Menestrel]";
+	mes "Por favor";
+	mes "sinta-se confortável";
+	mes "enquanto estiver aqui.";
+	mes "Honra aos guerreiros!";
 	close;
 }

@@ -1,128 +1,121 @@
-//===== Hercules Script ======================================
-//= Wandering Minstrel Quest
-//===== By: ==================================================
-//= Riotblade and L0ne_W0lf
-//===== Current Version: =====================================
-//= 1.5
-//===== Description: =========================================
-//= Help the bard remember how his song goes.
-//===== Comments: ============================================
-//= [Official Conversion]
-//= Needs optimizing.
-//= Reconverted with iRO Dialogs.
-//= Possible NPC conflict with "Representative"
-//===== Additional Comments: =================================
-//= 1.0 First version, needs testing. [L0ne_W0lf]
-//= 1.1 Fixed bug, optimized. Not yet final version [Lupus]
-//=
-//= Variables:
-//=		.@random : temp var
-//=		.@inputstr$ : temp var
-//=
-//= This Quest has relation with brisingamen_seal.txt (Seals)
-//= 1.2 Changed variable to "gef_bards_q" to avoid job quest conflict. [L0ne_W0lf]
-//=     Progress prior to the 5th+ step will be lost. Job quest takes priority.
-//= 1.3 Fixed experience gains to match upcoming rate adjustments. [SinSloth]
-//= 1.4 Replaced effect numerics with constants. [L0ne_W0lf]
-//= 1.5 Updated RE/Pre-RE EXP. [Euphy]
-//============================================================
+//    ________________________________________________________
+//   /                                                        \
+//   |       _           _   _   _                            |
+//   |      | |__  _ __ / \ | |_| |__   ___ _ __   __ _       |
+//   |      | '_ \| '__/ _ \| __| '_ \ / _ \ '_ \ / _` |      |
+//   |      | |_) | | / ___ \ |_| | | |  __/ | | | (_| |      |
+//   |      |_.__/|_|/_/   \_\__|_| |_|\___|_| |_|\__,_|      |
+//   |                                                        |
+//   |                    brAthena Script                     |
+//   |--------------------------------------------------------|
+//   | Nome do Script: Quest Trovador Errante                 |
+//   |--------------------------------------------------------|
+//   | Criado por: eA/rA/brA Dev. Team                        |
+//   |--------------------------------------------------------|
+//   | Versões eA/rA/brA: 1.4/1.4/1.1                         |
+//   |--------------------------------------------------------|
+//   | Descrição: Quest Trovador Errante.                     |
+//   | Essa quest tem relação com o Selo de Brisingamen.      |
+//   |--------------------------------------------------------|
+//   | Changelog:                                             |
+//   | 1.0 Cabeçalho Criado [Holy]                            |
+//   | 1.1 Tradução PT-BR [Boomer]                            |
+//   |--------------------------------------------------------|
+//   | - Anotações                                            |
+//   \________________________________________________________/
 
-geffen,132,38,3	script	Bard#2	1_M_BARD,{
+geffen,132,38,3	script	Bardo#2	1_M_BARD,{
 	if (BARD_Q > 5) gef_bard_q = BARD_Q;
 	@name$ = strcharinfo(0);
 	if (gef_bard_q > 29) {
 		cutin "bard_eland02",2;
-		mes "[Errende]";
-		mes "Why, hello there~";
-		mes "Isn't the weather";
-		mes "especially pleasant today?";
+		mes "[Errante]";
+		mes "Não está um clima";
+		mes "especialmente agradável hoje?";
 		next;
-		mes "[Errende]";
-		mes "Ah~ There are only two things that can make this picturesque moment even more beautiful: story and song. Now then, which would you like to hear?";
+		mes "[Errante]";
+		mes "Existem apenas duas coisas que podemos fazer que são mais lindas que este momento especial história e música. O que você gostaria de ouvir?";
 		callsub S_StorySong,1;
-
 	} else if (gef_bard_q == 14 || gef_bard_q == 15) {
 		if (gef_bard_q == 14) {
 			cutin "bard_eland04",2;
-			mes "[Errende]";
-			mes "Hmmm?";
-			mes "Is that the seal of black...? Huh. Kino Kitty removed the one he gave me without a trace, so I surmise that he likes you a lot. Otherwise...";
+			mes "[Errante]";
+			mes "Humm?";
+			mes "É isso o selo preto ...? Gato Kino removeu o que ele me deu sem deixar rastro, por isso, faz de conta que ele gosta muito de ti. Caso contrário...";
 			next;
-			mes "^3355FFYou give Errende the letter";
-			mes "you have received from Kino Kitty.^000000";
+			mes "^3355FFVocê dá à Errante a carta que";
+			mes "recebeu de Gato Kino.^000000";
 			next;
 			cutin "bard_eland01",2;
-			mes "[Errende]";
-			mes "Er, he knows everything already? From this spot of blood, I think he still has health problems. He should stop torturing himself...";
+			mes "[Errante]";
+			mes "Er, ele já sabe tudo? Essa mancha de sangue... acho que ele ainda tem problemas de saúde. Ele devia parar de se torturar...";
 			next;
-			mes "[Errende]";
-			mes "Thank you, I really appreciate what you've done for me. But, what would be an appropriate way to express my gratitude for an adventurer like yourself?";
+			mes "[Errante]";
+			mes "Obrigado, eu realmente aprecio o que você fez por mim. Mas, o que seria uma forma adequada para expressar a minha gratidão por um aventureiro como você?";
 		} else {
 			cutin "bard_eland01",2;
-			mes "[Errende]";
-			mes "Ah, so how did it go?";
-			mes "Wait, you already found it?";
-			mes "Yes, this is it! Great!";
-			mes "This is so amazing!!";
-			mes "Ah, yes, right.";
-			mes "Right.";
+			mes "[Errante]";
+			mes "E então, como foi?";
+			mes "Pera ai, você já achou?";
+			mes "Sim, é isso! Perfeito!";
+			mes "Isto é tão fascinante!!";
+			mes "Sim, certo.";
+			mes "Certo.";
 			next;
-			mes "[Errende]";
-			mes "I would like to express my gratitute. But, what would be appropriate for an adventurer";
-			mes "like yourself?";
+			mes "[Errante]";
+			mes "Gostaria de manifestar a minha gratidão. Mas, o que seria adequado para um aventureiro";
+			mes "como você?";
 		}
 		next;
-		mes "[Errende]";
-		mes "Oh~! I have just the thing. Alright, please make yourself comfortable, and listen to my song.";
+		mes "[Errante]";
+		mes "Ah! Tenho apenas 'a coisa'. Tudo bem,ajeite-se ai, e escute minha canção.";
 		next;
 		cutin "bard_eland03",2;
-		mes "^483D8BEvery god never grows old";
-		mes "Because of beautiful";
-		mes "Goddess, Idun.";
-		mes "Keeper of the apples of youth";
-		mes "Goddess of immortality.^000000";
-		specialeffect2 EF_STEAL;
+		mes "^483D8BTodo Deus nunca cresce velho";
+		mes "Por causa da bela";
+		mes "Deusa, Idun.";
+		mes "Guardiã das maçãs da juventude";
+		mes "Deusa da imortalidade.^000000";
+		specialeffect2 EF_STEAL; // Efeito de Roubo
 		next;
-		mes "^483D8BEvery god never grows old.";
-		mes "Idun, the wife of Bragi,";
-		mes "Idun, Odin's daughter in law~";
-		mes "The apples she keeps";
-		mes "In her basket.^000000";
+		mes "^483D8BTodo Deus nunca cresce velho.";
+		mes "Idun, a esposa de Bragi,";
+		mes "Idun, a filha de Odin na lei.";
+		mes "As maçãs ela mantém";
+		mes "Na sua cesta.^000000";
 		next;
-		mes "^483D8BWithout Idun,";
-		mes "Every god would";
-		mes "have succumbed to age.";
-		mes "Even Thor, the strongest of gods,";
-		mes "would grow frail, Megingjard would";
-		mes "slip from his waist, and Mjolnir";
-		mes "would never fly again.^000000";
+		mes "^483D8BTodo Deus nunca cresce velho.";
+		mes "Idun, a esposa de Bragi,";
+		mes "Idun, a filha de Odin na lei.";
+		mes "As maçãs ela mantém";
+		mes "Na sua cesta.^000000";
 		next;
-		mes "^483D8BWithout Idun,";
-		mes "Every god would";
-		mes "have succumbed to age.";
-		mes "Loki was careless once,";
-		mes "and made her lost to the gods.";
-		mes "He was forced to get her back.^000000";
-		specialeffect2 EF_STEAL;
+		mes "^483D8BSem Idun,";
+		mes "Todo Deus";
+		mes "sucumbiria à idade.";
+		mes "Loki foi negligente uma só vez,";
+		mes "e fez com que perdesse para os deuses.";
+		mes "Ele foi obrigado a levá-la de volta.^000000";
+		specialeffect2 EF_STEAL; // Efeito Furto
 		next;
-		mes "^483D8BMy goddess stands";
-		mes "In the field of Asgard";
-		mes "She hands me fruit from heaven.";
-		mes "You will be loved by every god...";
-		mes "You will be blessed";
-		mes "By every god...^000000";
+		mes "^483D8BA minha deusa vive";
+		mes "No campo de Asgard";
+		mes "Ela me dá frutos do céu.";
+		mes "~Você será amada por todos os deuses...";
+		mes "Você será abençoada";
+		mes "Por cada deus...~^000000";
 		next;
-		specialeffect EF_BEGINSPELL6;
-		mes "^483D8BIf you share the";
-		mes "Apple of youth with me";
-		mes "Even a bite of it with";
-		mes "This poor poet.";
-		mes "You will be loved by every god...";
-		mes "You will be blessed";
-		mes "By every god...^000000";
+		specialeffect EF_BEGINSPELL6; // Efeito Feitiço
+		mes "^483D8BSe você compartilha a";
+		mes "Maçã da juventude comigo,";
+		mes "Mesmo sendo uma mordida";
+		mes "Com este pobre poeta.";
+		mes "Você será amada por todos os deuses...";
+		mes "Você será abençoada";
+		mes "Por cada deus...^000000";
 		next;
-		specialeffect2 EF_RESURRECTION;
-		mes "^3355FFWhile listening to his song, you feel at ease, and your thoughts become clearer. You believe that you see the vision of an angel, and you gain some experience points.^000000";
+		specialeffect2 EF_RESURRECTION; // Efeito Ressurreição
+		mes "^3355FFAo ouvir o seu canto, você se sente à vontade, e os seus pensamentos tornam-se mais claros. Você acredita que você veja a visão de um anjo, e você ganha alguns pontos de experiência.^000000";
 		gef_bard_q += 16; //30,31
 		if (RENEWAL_EXP) {
 			if (BaseLevel < 56) getexp 450,0;
@@ -147,847 +140,822 @@ geffen,132,38,3	script	Bard#2	1_M_BARD,{
 		}
 		next;
 		cutin "bard_eland02",2;
-		mes "[Errende]";
-		mes "So, how do you feel now? I hope my song has refreshed you. I'm afraid it may not be enough to repay you, but please understand that this is the best way for me to express my gratitude.";
+		mes "[Errante]";
+		mes "Então, como você se sente agora? Espero que a minha canção tenha lhe feito bem. Acho que ela pode não ser suficiente para lhe restituir, mas, por favor, compreenda que esta é a melhor maneira de expressar a minha gratidão.";
 		next;
-		mes "[Errende]";
-		mes "Besides, I've been thinking of you now as my friend, with whom I may candidly speak without any worry. And I think you have a beautiful smile. Am I wrong~? Hahaha~";
+		mes "[Errante]";
+		mes "Além disso, tenho estado a pensar em ti agora como meu amigo, com quem eu falo mais abertamente, sem qualquer preocupação. E eu acho que você tem um belo sorriso. Estou errado? hehehe";
 		next;
-		mes "[Errende]";
-		mes "I hope that you'll always remain honest and respectful towards other people, and that you continue to ignore greed for fortune or power.";
+		mes "[Errante]";
+		mes "Espero que você permaneça honesta e respeitosa para com outras pessoas, e que você continue a ignorar a ganância de fortuna ou poder.";
 		goto L_End;
 
 	} else if (gef_bard_q > 11 && gef_bard_q < 14) {
 		cutin "bard_eland02",2;
-		mes "[Errende]";
-		mes "It seems you haven't found it yet. Well, take your time, I can wait as long as you want. It doesn't really bore me, since waiting seems to be a part of my profession.";
+		mes "[Errante]";
+		mes "Parece que você não encontrou ainda. Bem, fique à vontade, eu posso esperar o tempo que quiser. Realmente não me aborrece, pois paciência parece ser uma parte da minha profissão.";
 		goto L_End;
 
 	} else if (gef_bard_q == 11) {
 		cutin "bard_eland01",2;
-		mes "[Errende]";
-		mes "Mr. Skezti has a small book store on the book street at the right side of Mineta in Juno. If you show him the seal, he'll help you out.";
+		mes "[Errante]";
+		mes "Sr. Skezti tem uma pequena livraria na rua do livro no lado direito da Mineta em Juno. Se você mostrar-lhe o selo, ele vai te ajudar.";
 		goto L_End;
 
 	} else if (gef_bard_q == 10) {
 		cutin "bard_eland01",2;
-		mes "[Errende]";
-		mes "So, have you met Mr. Kitty?";
-		mes "Ah, in Morroc? He has a chronic disease, but obviously doesn't";
-		mes "seem to care about it.";
-		mes "So what did he say?";
+		mes "[Errante]";
+		mes "Então, você conhece o Sr. Gato?";
+		mes "Ah, em Morroc? Ele tem uma doença crônica, mas, obviamente, não";
+		mes "parecem importar-se com ela.";
+		mes "Então, o que ele disse?";
 		next;
-		mes "[Errende]";
-		mes "Hm? In Juno?";
-		mes "Then that must be it.";
-		mes "It won't be easy if you want to go visit Mr. Sketzi's book store. Here, let me mark you with";
-		mes "^483D8BThe Seal of Friendship^000000.";
+		mes "[Errante]";
+		mes "Hm? Em Juno?";
+		mes "Vamos, deve ser isso.";
+		mes "Não será fácil visitar a livraria do Sr. Sketzi. Deixe-me marcar você com";
+		mes "^483D8BO Selo da Amizade.^000000.";
 		next;
 		cutin "bard_eland03",2;
-		mes "[Errende]";
-		mes "Give me your left hand.";
-		mes "Now, let me cast a spell...";
-		mes "*Mumble mumble...*";
+		mes "[Errante]";
+		mes "Dá-me a tua mão esquerda.";
+		mes "Agora, deixe-me lançar um feitiço...";
+		mes "*Gagueja gagueja...*";
 		next;
 		specialeffect2 EF_CONE;
-		mes "^3355FFOn your left wrist, a crescent shaped mark glowing with a silver light appeared. It's only noticeable when you concentrate on finding it, but it might clearly appear under the moonlight.^000000";
+		mes "^3355FFEm seu punho esquerdo, uma marca em forma crescente com uma luz brilhante apareceu. É perceptível só quando se concentrar em encontrá-lo, mas pode aparecer claramente sob o luar.^000000";
 		next;
-		mes "[Errende]";
-		mes "There you go. Now, you may go to Mr. Sketzi. Remember, you must";
-		mes "show him the Seal of Friendship.";
-		mes "Good luck, now~";
+		mes "[Errante]";
+		mes "Vá. Agora, você pode ir até o Sr. Sketzi. Lembre-se, você deve";
+		mes "mostrar-lhe o Selo da Amizade.";
+		mes "Boa sorte.";
 		gef_bard_q = 11;
 		goto L_End;
 
 	} else if (gef_bard_q == 20) {
 		cutin "bard_eland03",2;
 		mes "[Bard]";
-		mes "^483D8BWhat day is";
-		mes "best for drinking?";
-		mes "La la la~";
-		mes "It's the day of";
-		mes "the earth, the sun";
-		mes "And the moon~";
-		mes "La la la~^000000";
+		mes "^483D8BQue dia é";
+		mes "melhor para beber?";
+		mes "*La la la*";
+		mes "É o dia da";
+		mes "terra, do sol";
+		mes "E da lua";
+		mes "*La la la*^000000";
 		next;
-		mes "^483D8BLa la la~";
-		mes "I'll only";
-		mes "drink on one day~";
-		mes "So if you'll tell me";
-		mes "when you'll drink";
-		mes "I'll tell you when";
-		mes "I'll drink with you~^000000";
+		mes "^483D8B*La la la*";
+		mes "Venho beber";
+		mes "apenas em um dia.";
+		mes "Então, se você vai me dizer";
+		mes "quando você bebe";
+		mes "Eu digo-te quando";
+		mes "Eu vou beber com você.^000000";
 		next;
-		mes "^483D8BLet's get together";
-		mes "Yea yea ye-^000000 Hmmmmm...?";
+		mes "^483D8BVamos ficar juntos";
+		mes "Sim sim sim-^000000 Hummmm...?";
 		next;
 		mes "[Bard]";
-		mes "Why, hello there. Oh, have you come to listen to my song and forget your worries?";
+		mes "Olá, olá. Ah, você veio para ouvir a minha canção e esquecer suas preocupações?";
 		next;
 
-		if(select("Who are you?:Ignore him.")==1) {
+		if (select("Quem é você?:Ignorá-lo.")==1) {
 			cutin "bard_eland04",2;
 			mes "[" + @name$ + "]";
-			mes "You seem to be";
-			mes "new around here...";
-			mes "Who are you?";
+			mes "Você parece ser";
+			mes "novo por aqui...";
+			mes "Quem é você?";
 			next;
 			cutin "bard_eland02",2;
-			mes "[Errende]";
-			mes "Mm? Ah yes. I am merely another wandering poet who goes where the wind takes him. Please call me ^483D8BErrende^000000, the Bard who wishes to please you.";
+			mes "[Errante]";
+			mes "Hum? Ah sim. Sou apenas mais um poeta errante, que vai onde o vento leva. Por favor, me chame de ^483D8BErrante^000000, o Bardo que deseja agradá-lo.";
 			next;
-			mes "[Errende]";
-			mes "If you will let me, I will tell you of my travels. By your leave,";
-			mes "I will play a song that will help you forget your troubles.";
+			mes "[Errante]";
+			mes "Se você me permitir, eu vou te contar sobre minhas viagens. Com sua licença,";
+			mes "Vou tocar uma canção que irá ajudá-lo a esquecer os seus problemas.";
 			gef_bard_q = 21;
 			callsub S_StorySong,2;
 
 		} else {
 			cutin "bard_eland01",2;
-			mes "[Errende]";
-			mes "Waaah, wah~";
-			mes "You can't just ignore me like that! Where's your sense of merriment, your sense of romance?";
+			mes "[Errante]";
+			mes "Aaaah, Aah...";
+			mes "Você não pode simplesmente ignorar-me assim! Onde está o seu sentimento de alegria, o seu senso de romance?";
 			goto L_End;
 		}
 
 	} else if (gef_bard_q == 27) {
 		cutin "bard_eland01",2;
-		mes "[Errende]";
-		mes "How could I forget the song?";
-		mes "I'm worthless as a Bard~!";
-		mes "Please... Just...";
-		mes "Please just leave";
-		mes "me alone.";
+		mes "[Errante]";
+		mes "Como poderia esquecer a canção?";
+		mes "Eu sou um inútil como Bardo!";
+		mes "Por favor... Só...";
+		mes "Por favor, deixe-me";
+		mes "em paz.";
 		next;
 
-		if(select("No problem~:Is there any way I can help you?")==1) {
+		if (select("Sem problemas: Existe alguma maneira de eu te ajudar?")==1) {
 			cutin "bard_eland04",2;
-			mes "[Errende]";
-			mes "Waaaah~! You're so mean!";
-			mes "You're supposed to say, 'Errende, what's wrong? Maybe I can help?'";
+			mes "[Errante]";
+			mes "Aaaaah! Você está tão mau!";
+			mes "Você está pronto para dizer, 'Errante, o que há de errado? Posso te ajudar?'";
 			next;
-			mes "[Errende]";
-			mes "I mean, we're supposed";
-			mes "to know each other better";
-			mes "than that. But...";
-			mes "Maybe I was wrong!";
+			mes "[Errante]";
+			mes "Quer dizer, estamos supostamente";
+			mes "a nos conhecer melhor";
+			mes "do que isso. Mas...";
+			mes "Talvez eu estivesse errado!";
 			next;
-			mes "[Errende]";
-			mes "*Sob...*";
-			mes "Who made this poor Bard cry by neglecting him? *Sniff* I do believe it was you!";
+			mes "[Errante]";
+			mes "*Choro...*";
+			mes "Quem fez essa pobre bardo chorar? Acredito que foi você!";
 		} else {
-			mes "[Errende]";
-			mes "Help me?";
+			mes "[Errante]";
+			mes "Ajude-me?";
 			mes "Hmmm...";
-			mes "That's it!";
+			mes "É isso!";
 			mes "Gunther!";
 			next;
-			mes "[Errende]";
-			mes "Let me ask you a favor.";
-			mes "If perchance you happen to meet ^483D8BGunther Doubleharmony^000000, please inform him of my dilemna.";
+			mes "[Errante]";
+			mes "Deixe-me pedir-lhe um favor.";
+			mes "Se por ventura tiver encontrar ^483D8BGunther^000000, informe-o do meu dilema.";
 			next;
-			mes "[Errende]";
-			mes "Tell him that ^483D8BMinty Errende^000000 happened to forget a line of the song, ^483D8BAt One, I Fall in Love^000000. The line is called ^483D8B8th love^000000.";
+			mes "[Errante]";
+			mes "Diga a ele que ^483D8BErrante Menta^000000 esqueceu uma linha da canção, ^483D8BEm um, eu fico apaixonado^000000. A linha se chama ^483D8B8º amor^000000.";
 			next;
-			mes "[Errende]";
-			mes "I beseech you, if you meet him, please ask him of the 8th love and inform me of that lyric immediately~";
+			mes "[Errante]";
+			mes "Eu te suplico, se você encontrá-lo, por favor, pergunte-lhe o 8º amor e me diga imediatamente a letra.";
 			gef_bard_q = 22;
 		}
 		goto L_End;
 
 	} else if (gef_bard_q == 26) {
 		cutin "bard_eland01",2;
-		mes "[Errende]";
+		mes "[Errante]";
 		mes "Argh...!";
-		mes "Who changed the words of this song anyway? It's really difficult to understand. I wish I could ask the person who changed the words.";
+		mes "Quem mudou as palavras desta canção afinal? É realmente difícil de entender. Gostaria de poder falar com pessoa que mudou a expressão.";
 		next;
-		mes "[Errende]";
-		mes "This is so frustrating!";
-		mes "Now, I've lost the passion";
-		mes "to sing or play...";
+		mes "[Errante]";
+		mes "Isto é tão frustrante!";
+		mes "Agora, eu perdi a paixão";
+		mes "para cantar ou tocar...";
 		next;
 		mes "[" + @name$ + "]";
-		mes "Don't you think...";
-		mes "The person would be...";
+		mes "O senhor não acha...";
+		mes "A pessoa seria...";
 		input .@inputstr$;
 		mes .@inputstr$ + "?";
 		next;
 
 		if (.@inputstr$ == "Kino Kitty") {
 			cutin "bard_eland04",2;
-			mes "[Errende]";
-			mes "Ah! Of course!";
-			mes "I think you're right!";
-			mes "How could I not think of that?";
+			mes "[Errante]";
+			mes "Ah! É claro!";
+			mes "Acho que você está certo!";
+			mes "Como eu não pensei nisso antes?";
 			next;
-			mes "[Errende]";
-			mes "It all makes sense now. After all, he used to be a member of the Invincible Single Army. His changes might have been a little mean, since this song used to be about a happy couple...";
+			mes "[Errante]";
+			mes "Tudo faz sentido agora. Afinal, ele costumava ser um membro do Único Exército Invencível. Suas mudanças podem ter significado pouco, uma vez que esta canção é usada sobre um casal feliz...";
 			next;
 			cutin "bard_eland01",2;
-			mes "[Errende]";
-			mes "Ummm...";
-			mes "I'm sorry to ask a favor of you again, but in your travels, do you think you could find the original lyrics for this song? I can wait for it...";
+			mes "[Errante]";
+			mes "Humm...";
+			mes "Estou arrependido de pedir um favor de você novamente, mas em suas viagens, você acha que poderia encontrar a letra original para esta canção? Posso esperar por ela...";
 			next;
 
-			if(select("No, thanks.:I can, so stop crying.")==1) {
-				mes "[Errende]";
-				mes "Ah, I guess it was too much to ask of you. My apologies. Don't worry about it, I'll find out some other way.";
+			if (select("Não, desculpe.:Posso, portanto pare de chorar.")==1) {
+				mes "[Errante]";
+				mes "Ah, eu acho que era demais para pedir-lhe. Minhas desculpas. Não se preocupe, eu vou descobrir alguma outra maneira.";
 				gef_bard_q = 25;
 
 			} else {
-				mes "[Errende]";
-				mes "Are you serious?";
-				mes "Oh, thank you so much!";
-				mes "You must be an angel!";
-				mes "An angel that truly understands the heart of a poet!";
+				mes "[Errante]";
+				mes "Está falando sério?";
+				mes "Oh, muito obrigado!";
+				mes "Você deve ser um anjo!";
+				mes "Um anjo que realmente entende o coração de um poeta!";
 				next;
-				mes "[Errende]";
-				mes "I'll pay you back somehow!";
-				mes "Thank you for your trouble";
-				mes "in advance~";
-				gef_bard_q = 24;
+				mes "[Errante]";
+				mes "Pagarei sua volta de alguma forma!";
+				mes "Obrigado pela sua preocupação.";
+				set gef_bard_q,24;
 			}
 			goto L_End;
 
 		} else if (.@inputstr$ == "Gunther") {
-			mes "[Errende]";
-			mes "Gunther? I don't think he would do this. He always puts lines in his songs like 'doubleharmony for you.' Plus, he's too silly for that.";
+			mes "[Errante]";
+			mes "Gunther? Eu não acho que ele faria isso. Ele coloca sempre linhas em suas músicas como 'harmonias duplas para você.' Ele é muito bobo pra isso.";
 			goto L_End;
 
-		} else if (.@inputstr$ == "Gunther Doubleharmony") {
-			mes "[Errende]";
-			mes "Gunther? I don't think he would do this. He always puts lines in his songs like 'doubleharmony for you.' Plus, he's too silly for that.";
-			goto L_End;
-
-		} else if (.@inputstr$ == "Errende") {
+		} else if (@inputstr$ == "Errante") {
 			cutin "bard_eland04",2;
-			mes "[Errende]";
-			mes "Surely you jest!";
-			mes "If I did, why would";
-			mes "I not know what";
-			mes "this song is about?";
+			mes "[Errante]";
+			mes "Certamente você está brincando!";
+			mes "Se eu fiz, é por que";
+			mes "eu não sei sobre";
+			mes "o que é esta canção?";
 			goto L_End;
 
 		} else {
-			mes "[Errende]";
-			mes "" + .@inputstr$ +"...?";
-			mes "I don't think I know that person. Maybe you misunderstood";
-			mes "something? *Sigh...*";
+			mes "[Errante]";
+			mes "" + @inputstr$ +"...?";
+			mes "Acho que não conheço essa pessoa. Talvez tenha sido um mal-entendido?";
+			mes "*Sigh...*";
 			next;
-			mes "[Errende]";
-			mes "What was the line...?";
-			mes "How could I forget";
-			mes "the 8th love?";
+			mes "[Errante]";
+			mes "Qual foi a linha...?";
+			mes "Como poderia esquecer";
+			mes "o 8º amor?";
 			gef_bard_q = 26;
 			goto L_End;
 		}
 
 	} else if (gef_bard_q == 25) {
 		cutin "bard_eland04",2;
-		mes "[Errende]";
+		mes "[Errante]";
 		mes "Oh...!";
-		mes "These tears just won't stop!";
-		mes "Wh-why must people always treat Bards like this?";
+		mes "Estas lágrimas não vão parar!";
+		mes "Por-porquê as pessoas costumam tratar os bardos assim?";
 		next;
-		mes "^483D8BWho made";
-		mes "this poor Bard cry?";
-		mes "Who broke his";
-		mes "tender heart of glass?";
-		mes "Shattering his dreams...^000000";
+		mes "^483D8BQuem fez";
+		mes "esse pobre bardo chorar?";
+		mes "Quem quebrou os";
+		mes "corações de vidro?";
+		mes "Quebre seus sonhos...^000000";
 		next;
-		mes "^483D8BNo dreams,";
-		mes "No heart,";
-		mes "No love,";
-		mes "No hope";
-		mes "No....^000000";
+		mes "^483D8BNão tem sonhos,";
+		mes "não tem coração,";
+		mes "não tem amor,";
+		mes "não tem esperança";
+		mes "não tem....^000000";
 		.@random = rand(1,50);
 		next;
 
 		if (.@random > 27  && .@random < 37 ) {
-			mes "^3355FFErrende continues to sing about his personal despair. He seems to be disappointed in your refusal to help him. Of course, you begin to feel sorry for him.^000000";
+			mes "^3355FFErrante continua a cantar sobre o seu desespero pessoal. Ele parece estar decepcionado com a sua recusa em ajudá-lo. Claro, você começa a sentir pena dele.^000000";
 			next;
 
-			if(select("Well, I should help him then...:Ignore him anyway.")==1) {
+			if (select("Bem, eu deveria ajudá-lo em seguida...:Ignora-o assim mesmo.")==1) {
 				mes "[" + @name$ + "]";
-				mes "Hey. Hey, Errende. Stop singing this song. It's embarassing, okay? Alright, I'll go find the original song for you.";
+				mes "Ei. Ei, Errante. Pare de cantar essa canção. É embaraçoso, ok? Tudo bem, eu vou encontrar a canção original para você.";
 				next;
-				mes "[Errende]";
-				mes "*Gasp!* Really! Are you sure? Thank you! Thank you so much!";
-				mes "You really do care about";
-				mes "the sadness of a Bard!";
+				mes "[Errante]";
+				mes "*Gasp!* Sério! Tem certeza? Obrigado! Muito obrigado!";
+				mes "Você realmente se importa com";
+				mes "a tristeza de um Bardo!";
 				next;
-				mes "[Errende]";
-				mes "I promise to pay you back as best as I can! I'll wait for you here until you return!";
+				mes "[Errante]";
+				mes "Eu prometo lhe pagar de volta o melhor que puder! Vou esperar por você aqui até voltar!";
 				gef_bard_q = 24;
 			} else {
 				cutin "bard_eland04",2;
-				mes "^3355FFYou ignore his";
-				mes "heart wrenching song.";
-				mes "But at what cost to your soul?^000000";
+				mes "^3355FFVocê ignora o";
+				mes "coração dele flexionando a canção.";
+				mes "Mas a que custo para a sua alma?^000000";
 			}
 			goto L_End;
 
 		} else {
 			cutin "bard_eland01",2;
-			mes "[Errende]";
-			mes "You don't have anything you want to ask me, do you? If not, would you like to listen to my song...?";
+			mes "[Errante]";
+			mes "Você não tem nada que queira me perguntar, não é? Se não, você gostaria de ouvir a minha música?";
 			next;
-			mes "^483D8BMiiiiserable...";
-			mes "Noboooody looooves meee";
-			mes "Friends foooooor never...";
-			mes "Ooooooooh wah!^000000";
+			mes "^483D8BMiserável...";
+			mes "Ninguém me ama.";
+			mes "Amigos para nada...";
+			mes "Ooooooooh não!^000000";
 			goto L_End;
 		}
 
 	} else if (gef_bard_q == 24) {
 		cutin "bard_eland02",2;
-		mes "[Errende]";
-		mes "Umm...";
-		mes "I am not sure exactly where Mr. Kitty is. Maybe you might be able to find out at the Monster Museum in Juno? I think he's a member of the Monster Research Organization.";
+		mes "[Errante]";
+		mes "Hmm...";
+		mes "Não sei exatamente onde o Sr. Gato está. Talvez você possa ser capaz de descobrir... no Museu do Monstro em Juno? Acho que ele é um membro da Organização de Estudo de Monstros.";
 		next;
-		mes "[Errende]";
-		mes "If you're experienced in exploration, you'd know the Monster Research Organization. Recently, many scholars have been wounded as a result of researching monsters.";
+		mes "[Errante]";
+		mes "Se você é experiente com exploração, você conhece a Organização de Estudo de Monstros. Recentemente, muitos estudiosos têm sido feridos em resultado de pesquisa de monstros.";
 		next;
 		cutin "bard_eland01",2;
-		mes "[Errende]";
-		mes "Because of the dangers of monster research, adventurers are needed to gather the information for the researchers.";
+		mes "[Errante]";
+		mes "Por causa dos perigos da investigação, aventureiros são necessários para recolher as informações para os pesquisadores.";
 		next;
-		mes "[Errende]";
-		mes "For wanderers like myself, it's a great way to earn money. We give them the information they need, and they give us financial support to live the way we please.";
+		mes "[Errante]";
+		mes "Para nômades como eu, é uma ótima maneira de ganhar dinheiro. Damos-lhes as informações que precisam, e eles nos dão apoio financeiro para sobrevivermos.";
 		next;
-		mes "[Errende]";
-		mes "Anyway, you should visit the Monster Museum in Juno to find out about Mr. Kitty. It's pretty far from here, but when you get to Juno, the Museum is West of the central plaza.";
+		mes "[Errante]";
+		mes "Enfim, você deve visitar o Museu do Monstro em Juno para descobrir mais sobre o Sr. Gato. É muito longe daqui, mas quando você entra em Juno, é o Museu do Ocidente praça central.";
 		next;
-		mes "[Errende]";
-		mes "Once again,";
-		mes "thank you so much";
-		mes "for your help.";
+		mes "[Errante]";
+		mes "Mais uma vez,";
+		mes "muito obrigado";
+		mes "por sua ajuda.";
 		goto L_End;
 
 	} else if (gef_bard_q == 22) {
-		mes "[Errende]";
+		mes "[Errante]";
 		mes "*Sigh...*";
-		mes "Where can";
-		mes "I find the 8th love...?";
-		mes "Have you met Gunther?";
-		mes "Ah, perhaps not yet.";
+		mes "Onde posso";
+		mes "encontrar o 8º amor...?";
+		mes "Já conheceu Gunther?";
+		mes "Ah, talvez ainda não.";
 		next;
 		cutin "bard_eland04",2;
-		mes "[Errende]";
-		mes "*Sigh* I've lost the heart to sing ever since I've forgotten that line to the song. I just... can't. My spirit is unmoved. There's no inspiration.";
+		mes "[Errante]";
+		mes "*Sigh* Perdi o coração pra cantar desde que eu esqueci a linha da canção. Eu só ...não posso. Meu espírito é insensível. Não há nenhuma inspiração.";
 		next;
-		mes "[Errende]";
-		mes "Please ask ^483D8BGunther^000000 about the ^483D8B8th love^000000 in ^483D8BAt One, I Fall in Love^000000. Thank you in advance.";
+		mes "[Errante]";
+		mes "Por favor, pergunte a ^483D8BGunther^000000 sobre o ^483D8B8º amor^000000 em ^483D8BEm um, eu fico apaixonado^000000. Agradeço antecipadamente.";
 		goto L_End;
 
 	} else if (gef_bard_q == 23) {
 		cutin "bard_eland02",2;
-		mes "[Errende]";
-		mes "So...";
-		mes "Have you";
-		mes "seen Gunther?";
+		mes "[Errante]";
+		mes "Então...";
+		mes "Já viu";
+		mes "Gunther?";
 		next;
-		mes "^3355FFYou turn around";
-		mes "to show him your back.^000000";
+		mes "^3355FFVocê vira";
+		mes "para mostrar-lhe as costas.^000000";
 		next;
-		mes "[Errende]";
+		mes "[Errante]";
 		mes "Huh...?!";
-		mes "Isn't that?!";
-		mes "Is that the line of the song written on your back? Wait, don't move! The 8th love is...";
-		mes "Now I see!";
+		mes "Não é isso?!";
+		mes "Que linha da canção é essa escrita em suas costas? Espere, não se mova! O 8º amor é...";
+		mes "Agora eu vejo!";
 		next;
-		mes "[Errende]";
-		mes "At One, I fall in love.";
-		mes "At Two, you give me your smile.";
-		mes "At Three, I adore your touch.";
-		mes "At Four, a tender kiss.";
+		mes "[Errante]";
+		mes "Em um, eu fico apaixonado.";
+		mes "Em dois, você me mostra um sorriso.";
+		mes "Em três, eu adoro seu toque.";
+		mes "Em quatro, um beijo macio.";
 		next;
-		mes "[Errende]";
-		mes "At Five, we change our minds.";
-		mes "A petal scatters through the air.";
-		mes "At Six, I fall in love~";
-		mes "At Seven, you fall in love~";
+		mes "[Errante]";
+		mes "Em cinco, vamos mudar nossas mentes.";
+		mes "Uma pétala cai pelo ar.";
+		mes "Em seis, eu fico apaixonado.";
+		mes "Em sete, você se apaixona.";
 		next;
-		mes "[Errende]";
-		mes "At Eight we turn away...";
-		mes "At Nine, love is reborn.";
-		mes "At Ten, my Love is gone.";
-		mes "At Eleven I find out why.";
+		mes "[Errante]";
+		mes "Em oito nos afastamos...";
+		mes "Em nove, o amor renasce.";
+		mes "Em dez, meu amor se foi.";
+		mes "Em onze eu descubro porquê.";
 		if (Sex)
-			mes "At Twelve I see his new girlfriend?";
+			mes "Em doze vejo sua nova namorada?";
 		else
-			mes "At Twelve I see her new boyfriend?";
+			mes "Em doze vejo seu novo namorado?";
 		next;
-		mes "[Errende]";
+		mes "[Errante]";
 		mes "...";
 		next;
-		mes "[Errende]";
+		mes "[Errante]";
 		mes "...";
 		mes "......";
 		next;
 		cutin "bard_eland04",2;
-		mes "[Errende]";
-		mes "This...";
-		mes "This cannot be.";
-		mes "This song is supposed to be about love, not a romantic travesty!";
+		mes "[Errante]";
+		mes "Isso...";
+		mes "Isso não pode ser.";
+		mes "Essa música supostamente é sobre amor, não uma farsa romântica!";
 		next;
-		mes "[Errende]";
-		mes "The lyrics. They must have been changed. Did Gunther say anything about this?! Hmmm, but who would change the lyrics...?";
+		mes "[Errante]";
+		mes "As letras. Elas devem ter sido mudadas. Gunther disse alguma coisa sobre isto?! Hmmm, mas quem é que iria alterar as letras...?";
 		next;
 		cutin "bard_eland01",2;
-		input .@inputstr$;
+		input @inputstr$;
 
-		if (.@inputstr$ == "Kino Kitty") {
-			mes "[Errende]";
-			mes "Ah! Of course!";
-			mes "I think you're right!";
-			mes "How could I not think of that?";
+		if (@inputstr$ == "Gato Kino") {
+			mes "[Errante]";
+			mes "Ah, é claro!";
+			mes "Com certeza você está certo!";
+			mes "Como eu não pensei nisso antes?";
 			next;
-			mes "[Errende]";
-			mes "It all makes sense now. After all, he used to be a member of the Invincible Single Army. His changes might have been a little mean, since this song used to be about a happy couple...";
+			mes "[Errante]";
+			mes "Tudo faz sentido agora. Afinal, ele costumava ser um membro do Único Exército Invencível. Suas mudanças podem ter significado pouco, uma vez que esta canção é usada sobre um casal feliz...";
 			next;
-			mes "[Errende]";
-			mes "Ummm...";
-			mes "I'm sorry to ask a favor of you again, but in your travels, do you think you could find the original lyrics for this song? I can wait for it...";
+			mes "[Errante]";
+			mes "Hmmm...";
+			mes "Estou arrependido de pedir um favor de você novamente, mas em suas viagens, você acha que poderia encontrar a letra original para esta canção? Posso esperar por ela...";
 			next;
 
-			if(select("No, thanks.:I can, so stop crying.")==1) {
-				mes "[Errende]";
-				mes "Ah, I guess it was too much to ask of you. My apologies. Don't worry about it, I'll find out some other way.";
+			if (select("Não, desculpe.:Posso, portanto pare de chorar.")==1) {
+				mes "[Errante]";
+				mes "Ah, eu acho que era demais para pedir-lhe. Minhas desculpas. Não se preocupe, eu vou descobrir alguma outra maneira.";
 				gef_bard_q = 25;
 			} else {
-				mes "[Errende]";
-				mes "Are you serious?";
-				mes "Oh, thank you so much!";
-				mes "You must be an angel!";
-				mes "An angel that truly understands the heart of a poet!";
+				mes "[Errante]";
+				mes "Está falando sério?";
+				mes "Oh, muito obrigado!";
+				mes "Você deve ser um anjo!";
+				mes "Um anjo que realmente entende o coração de um poeta!";
 				next;
-				mes "[Errende]";
-				mes "I'll pay you back somehow!";
-				mes "Thank you for your trouble";
-				mes "in advance~";
-				gef_bard_q = 24;
+				mes "[Errante]";
+				mes "Pagarei sua volta de alguma forma!";
+				mes "Obrigado pela sua preocupação.";
+				set gef_bard_q,24;
 			}
 			goto L_End;
 
-		} else if (.@inputstr$ == "Gunther") {
-			mes "[Errende]";
-			mes "Gunther? I don't think he would do this. He always puts lines in his songs like 'doubleharmony for you.' Plus, he's too silly for that.";
+		} else if (@inputstr$ == "Gunther") {
+			mes "[Errante]";
+			mes "Gunther? Eu não acho que ele faria isso. Ele coloca sempre linhas em suas músicas como 'harmonias duplas para você.' Ele é muito bobo pra isso.";
 			gef_bard_q = 26;
 			goto L_End;
 
-		} else if (.@inputstr$ == "Gunther Doubleharmony") {
-			mes "[Errende]";
-			mes "Gunther? I don't think he would do this. He always puts lines in his songs like 'doubleharmony for you.' Plus, he's too silly for that.";
-			gef_bard_q = 26;
-			goto L_End;
-
-		} else if (.@inputstr$ == "Errende") {
+		} else if (@inputstr$ == "Errante") {
 			cutin "bard_eland04",2;
-			mes "[Errende]";
-			mes "Surely you jest!";
-			mes "If I did, why would";
-			mes "I not know what this";
-			mes "song is about?";
+			mes "[Errante]";
+			mes "Certamente você está brincando!";
+			mes "Se eu fiz, é por que";
+			mes "eu não sei sobre";
+			mes "o que é esta canção?";
 			gef_bard_q = 26;
 			goto L_End;
 
 		} else {
-			mes "[Errende]";
-			mes "" + .@inputstr$ +"...?";
-			mes "I don't think I know that person. Maybe you misunderstood";
-			mes "something? *Sigh...*";
+			mes "[Errante]";
+			mes "" + @inputstr$ +"...?";
+			mes "Acho que não conheço essa pessoa. Talvez tenha sido um mal-entendido?";
+			mes "*Sigh...*";
 			next;
-			mes "[Errende]";
-			mes "What was the line...?";
-			mes "How could I forget";
-			mes "the 8th love?";
+			mes "[Errante]";
+			mes "Qual foi a linha...?";
+			mes "Como poderia esquecer";
+			mes "o 8º amor?";
 			gef_bard_q = 26;
 			goto L_End;
 		}
 
 	} else if (gef_bard_q == 21) {
 		cutin "bard_eland01",2;
-		mes "[Errende]";
-		mes "Welcome back,";
+		mes "[Errante]";
+		mes "Bem-vindo de volta,";
 		mes "" + @name$ + "~";
-		mes "What would you like";
-		mes "me to do for you?";
-		mes "Would you like to hear";
-		mes "a tale or listen to a song?";
+		mes "O que você gostaria";
+		mes "que fizesse por você?";
+		mes "Gostaria de ouvir";
+		mes "um conto ou escutar uma canção?";
 		callsub S_StorySong,3;
 
 	} else if (gef_bard_q == 7) {
 		cutin "bard_eland04",2;
-		mes "[Errende]";
-		mes "How could I forget the song?";
-		mes "I'm worthless as a Bard~! Please... Just... Please just leave me alone.";
+		mes "[Errante]";
+		mes "Como poderia esquecer a canção?";
+		mes "Eu sou um inútil como Bardo! Por favor, só..., Por favor, deixe-me em paz.";
 		next;
 
-		if(select("No problem.:Is there any way I can help you?")==1){
-			mes "[Errende]";
-			mes "Waaaah~! You're so mean!";
-			mes "You're supposed to say, 'Errende, what's wrong? Maybe I can help?'";
+		if (select("Sem problemas:Existe alguma maneira de eu te ajudar?")==1){
+			mes "[Errante]";
+			mes "Aaaaah! Você está tão mau!";
+			mes "Você está pronto para dizer, 'Errante, o que há de errado? Posso te ajudar?'";
 			next;
-			mes "[Errende]";
-			mes "I mean, we're supposed to know each other better than that. But, but maybe I was wrong!";
+			mes "[Errante]";
+			mes "Quer dizer, estamos supostamente a nos conhecer melhor do que isso. Mas... Talvez eu estivesse errado!";
 			next;
-			mes "[Errende]";
-			mes "*Sob...*";
-			mes "Who made this poor Bard cry by neglecting him? *Sniff* I do believe it was you!";
+			mes "[Errante]";
+			mes "*Choro*";
+			mes "Quem fez essa pobre bardo chorar? Acredito que foi você!";
 		} else {
 			cutin "bard_eland01",2;
-			mes "[Errende]";
-			mes "Help me?";
+			mes "[Errante]";
+			mes "Ajude-me?";
 			mes "Hmmmmmmm...";
-			mes "That's it!";
+			mes "É isso!";
 			mes "Gunther!";
 			next;
-			mes "[Errende]";
-			mes "Let me ask you a favor. If perchance you happen to meet ^3355FFGunther Doubleharmony^000000, please inform him of my dilemna.";
+			mes "[Errante]";
+			mes "Se por ventura encontrar ^483D8BGunther^000000, informe-o do meu dilema.";
 			next;
-			mes "[Errende]";
-			mes "Tell him that ^483D8BMinty Errende^000000 happened to forget a line of the song, ^483D8BAt One, I Fall in Love^000000. The line is called ^483D8B8th love^000000.";
+			mes "[Errante]";
+			mes "Diga a ele que ^483D8BErrante Menta^000000 esqueceu uma linha da canção, ^483D8BEm um, eu fico apaixonado^000000. A linha se chama ^483D8B8º amor^000000.";
 			next;
-			mes "[Errende]";
-			mes "I beseech you, if you meet him, please ask him of the 8th love and inform me of that lyric immediately~";
-			gef_bard_q = 2;
+			mes "[Errante]";
+			mes "Eu te suplico, se você encontrá-lo, por favor, pergunte-lhe o 8º amor e me diga imediatamente a letra.";
+			set gef_bard_q,2;
 		}
 		goto L_End;
 
 	} else if (gef_bard_q == 6) {
 		cutin "bard_eland04",2;
-		mes "[Errende]";
-		mes "Who could have changed the lyrics to the song? I can't understand why such a thing would happen. I really wish I could ask the person who changed the words...";
+		mes "[Errante]";
+		mes "Quem mudou as palavras desta canção afinal? É realmente difícil de entender. Gostaria de poder falar com pessoa que mudou a expressão.";
 		next;
-		mes "[Errende]";
-		mes "*Sigh* I'm so frustrated I can't even sing. I just... can't. My spirit is unmoved. There's no inspiration.";
+		mes "[Errante]";
+		mes "*Sigh* Eu estou tão frustrado que não posso cantar.. Eu só ...não posso. Meu espírito é insensível. Não há nenhuma inspiração.";
 		next;
 		mes "[" + @name$ + "]";
-		mes "Could it be that";
-		mes "the person who";
-		mes "changed the song is...";
-		input .@inputstr$;
-		mes "" + .@inputstr$ + "?";
+		mes "O senhor não acha...";
+		mes "Que a pessoa...";
+		mes "que mudou a canção seria...";
+		input @inputstr$;
+		mes "" + @inputstr$ + "?";
 		next;
 
-		if (.@inputstr$ == "Kino Kitty") {
+		if (@inputstr$ == "Gato Kino") {
 			cutin "bard_eland01",2;
-			mes "[Errende]";
-			mes "Ah! Of course!";
-			mes "I think you're right!";
-			mes "How could I not think of that?";
+			mes "[Errante]";
+			mes "Ah! É claro!";
+			mes "Acho que você está certo!";
+			mes "Como eu não pensei nisso antes?";
 			next;
-			mes "[Errende]";
-			mes "It all makes sense now. After all, he used to be a member of the Invincible Single Army. His changes might have been a little mean, since this song used to be about a happy couple...";
+			mes "[Errante]";
+			mes "Tudo faz sentido agora. Afinal, ele costumava ser um membro do Único Exército Invencível. Suas mudanças podem ter significado pouco, uma vez que esta canção é usada sobre um casal feliz...";
 			next;
-			mes "[Errende]";
-			mes "Ummm...";
-			mes "I'm sorry to ask a favor of you again, but in your travels, do you think you could find the original lyrics for this song? I can wait for it...";
+			mes "[Errante]";
+			mes "Hmmm...";
+			mes "Estou arrependido de pedir um favor de você novamente, mas em suas viagens, você acha que poderia encontrar a letra original para esta canção? Posso esperar por ela...";
 			next;
-			if(select("No, thanks.:I can, so stop crying.")==1) {
-				mes "[Errende]";
-				mes "Ah, I guess it was too much to ask of you. My apologies. Don't worry about it, I'll find out some other way.";
+			if (select("Não, desculpe.:Posso, portanto pare de chorar.")==1) {
+				mes "[Errante]";
+				mes "Ah, eu acho que era demais para pedir-lhe. Minhas desculpas. Não se preocupe, eu vou descobrir alguma outra maneira.";
 				gef_bard_q = 5;
 			} else {
-				mes "[Errende]";
-				mes "Are you serious? Oh, thank you so much! You must be an angel! An angel that truly understands the heart of a poet!";
+				mes "[Errante]";
+				mes "Está falando sério? Oh, muito obrigado! Você deve ser um anjo! Um anjo que realmente entende o coração de um poeta!";
 				next;
-				mes "[Errende]";
-				mes "I'll pay you back somehow! Thank you for your trouble in advance~";
+				mes "[Errante]";
+				mes "Pagarei sua volta de alguma forma! Obrigado pela sua preocupação.";
 				gef_bard_q = 4;
 			}
 			goto L_End;
 
-		} else if (.@inputstr$ == "Gunther") {
-			mes "[Errende]";
-			mes "Gunther? I don't think he would do this. He always puts lines in his songs like 'doubleharmony for you.' Plus, he's too silly for that.";
+		} else if (@inputstr$ == "Gunther") {
+			mes "[Errante]";
+			mes "Gunther? Eu não acho que ele faria isso. Ele coloca sempre linhas em suas músicas como 'harmonias duplas para você.' Ele é muito bobo pra isso.";
 			goto L_End;
 
-		} else if (.@inputstr$ == "Gunther Doubleharmony") {
-			mes "[Errende]";
-			mes "Gunther? I don't think he would do this. He always puts lines in his songs like 'doubleharmony for you.' Plus, he's too silly for that.";
-			goto L_End;
-
-		} else if (.@inputstr$ == "Errende") {
+		} else if (@inputstr$ == "Errante") {
 			cutin "bard_eland04",2;
-			mes "[Errende]";
-			mes "Surely you jest! If I did, why would I not know what this song is about?";
+			mes "[Errante]";
+			mes "Certamente você está brincando! Se eu fiz, é por que eu não sei sobre o que é esta canção?";
 			goto L_End;
 
 		} else {
-			mes "[Errende]";
-			mes "" + .@inputstr$ +"...?";
-			mes "I don't think I know that person. Maybe you misunderstood something? *Sigh...*";
+			mes "[Errante]";
+			mes "" + @inputstr$ +"...?";
+			mes "Acho que não conheço essa pessoa. Talvez tenha sido um mal-entendido? *Sigh...*";
 			next;
-			mes "[Errende]";
-			mes "What was the line...?";
-			mes "How could I forget";
-			mes "the 8th love?";
+			mes "[Errante]";
+			mes "Qual foi a linha...?";
+			mes "Como poderia esquecer";
+			mes "o 8º amor?";
 			gef_bard_q = 6;
 			goto L_End;
 		}
 
 	} else if (gef_bard_q == 5) {
 		cutin "bard_eland04",2;
-		mes "[Errende]";
+		mes "[Errante]";
 		mes "Oh...!";
-		mes "These tears just won't stop!";
-		mes "Wh-why must people always treat Bards like this?";
+		mes "Estas lágrimas não vão parar!";
+		mes "Por-porquê as pessoas costumam tratar os bardos assim?";
 		next;
-		mes "^483D8BWho made this poor Bard cry?";
-		mes "Who broke his tender heart of glass?";
-		mes "Shattering his dreams...";
-		mes "No dreams, no heart, no love, no hope, no...^000000";
+		mes "^483D8BQuem fez esse pobre bardo chorar?";
+		mes "Quem quebrou os corações de vidro?";
+		mes "Quebre seus sonhos...";
+		mes "Não tem sonhos, não tem coração, não tem amor, não tem esperança não tem...^000000";
 		next;
 		.@random = rand(1,50);
 
-		if (.@random > 27 && .@random < 37) {
-			mes "^3355FFErrende continues to sing about his personal despair. He seems to be disappointed in your refusal to help him. Of course, you begin to feel sorry for him.^000000";
+		if (@random > 27 && @random < 37) {
+			mes "^3355FFErrante continua a cantar sobre o seu desespero pessoal. Ele parece estar decepcionado com a sua recusa em ajudá-lo. Claro, você começa a sentir pena dele.^000000";
 			next;
 
-			if(select("Well, I should help him then...:Ignore him anyway.")==1) {
+			if (select("Bem, eu deveria ajudá-lo em seguida...:Ignora-o assim mesmo.")==1) {
 				mes "[" + @name$ + "]";
-				mes "Hey. Hey, Errende. Stop singing this song. It's embarassing, okay? Alright, I'll go find the original song for you.";
+				mes "Ei. Ei, Errante. Pare de cantar essa canção. É embaraçoso, ok? Tudo bem, eu vou encontrar a canção original para você.";
 				next;
 				cutin "bard_eland01",2;
-				mes "[Errende]";
-				mes "*Gasp!* Really! Are you sure? Thank you! Thank you so much! You really do care about the sadness of a Bard!";
+				mes "[Errante]";
+				mes "*Gasp!* Sério! Tem certeza? Obrigado! Muito obrigado! Você realmente se importa com a tristeza de um Bardo!";
 				next;
-				mes "[Errende]";
-				mes "I promise to pay you back as best as I can! I'll wait for you here until you return!";
+				mes "[Errante]";
+				mes "Eu prometo lhe pagar de volta o melhor que puder! Vou esperar por você aqui até voltar!";
 				gef_bard_q = 4;
 			} else {
-				mes "^3355FFYou ignore his";
-				mes "heart wrenching song.";
-				mes "But at what cost to your soul?^000000";
+				mes "^3355FFVocê ignora o";
+				mes "coração dele flexionando a canção.";
+				mes "Mas a que custo para a sua alma?^000000";
 			}
 			goto L_End;
 
 		} else {
 			cutin "bard_eland01",2;
-			mes "[Errende]";
-			mes "You don't have anything you want to ask me, do you? If not, would you like to listen to my song...?";
+			mes "[Errante]";
+			mes "Você não tem nada que queira me perguntar, não é? Se não, você gostaria de ouvir a minha música?";
 			next;
-			mes "^483D8BMiiiiserable...";
-			mes "Noboooody looooves meee";
-			mes "Friends foooooor never...";
-			mes "Ooooooooooh wah!^000000";
+			mes "^483D8BMiserável...";
+			mes "Ninguém me ama.";
+			mes "Amigos para nada...";
+			mes "Ooooooooh não!^000000";
 			goto L_End;
 		}
 
 	} else if (gef_bard_q == 4) {
 		cutin "bard_eland01",2;
-		mes "[Errende]";
-		mes "Umm...";
-		mes "I am not sure exactly where Mr. Kitty is. Maybe you might be able to find out at the Monster Museum in Juno? I think he's a member of the Monster Research Organization.";
+		mes "[Errante]";
+		mes "Hmm...";
+		mes "Não sei exatamente onde o Sr. Gato está. Talvez você possa ser capaz de descobrir... no Museu do Monstro em Juno? Acho que ele é um membro da Organização de Estudo de Monstros.";
 		next;
-		mes "[Errende]";
-		mes "If you're experienced in exploration, you'd know the Monster Research Organization. Recently, many scholars have been wounded as a result of researching monsters.";
+		mes "[Errante]";
+		mes "Se você é experiente com exploração, você conhece a Organização de Estudo de Monstros. Recentemente, muitos estudiosos têm sido feridos em resultado de pesquisa de monstros.";
 		next;
-		mes "[Errende]";
-		mes "Because of the dangers of monster research, adventurers are needed to gather the information for the researchers.";
+		mes "[Errante]";
+		mes "Por causa dos perigos da investigação, aventureiros são necessários para recolher as informações para os pesquisadores.";
 		next;
-		mes "[Errende]";
-		mes "For wanderers like myself, it's a great way to earn money. We give them the information they need, and they give us financial support to live the way we please.";
+		mes "[Errante]";
+		mes "Para nômades, como eu, é uma ótima maneira de ganhar dinheiro. Damos-lhes as informações que precisam e eles nos dão apoio financeiro para sobrevivermos.";
 		next;
-		mes "[Errende]";
-		mes "Anyway, you should visit the Monster Museum in Juno to find out about Mr. Kitty. It's pretty far from here, but when you get to Juno, the Museum is West of the central plaza.";
+		mes "[Errante]";
+		mes "Enfim, você deve visitar o Museu do Monstro em Juno para descobrir mais sobre o Sr. Gato. É muito longe daqui, mas quando você entra em Juno, é o Museu do Ocidente praça central.";
 		next;
-		mes "[Errende]";
-		mes "Once again,";
-		mes "thank you so much";
-		mes "for your help.";
+		mes "[Errante]";
+		mes "Mais uma vez,";
+		mes "muito obrigado";
+		mes "por sua ajuda.";
 		goto L_End;
 
 	} else if (gef_bard_q == 2) {
 		cutin "bard_eland04",2;
-		mes "[Errende]";
-		mes "*Sigh...* Where can I find the 8th love...? Have you met Gunther?";
-		mes "Ah, perhaps not yet.";
+		mes "[Errante]";
+		mes "*Sigh...* Onde posso encontrar o 8º amor...? Já conheceu Gunther?";
+		mes "Ah, talvez ainda não.";
 		next;
-		mes "[Errende]";
-		mes "*Sigh* I've lost the heart to sing ever since I forgotten that line to the song. I just... can't. My spirit is unmoved. There's no inspiration.";
+		mes "[Errante]";
+		mes "*Sigh* Perdi o coração pra cantar desde que eu esqueci a linha da canção. Eu só ...não posso. Meu espírito é insensível. Não há nenhuma inspiração.";
 		next;
-		mes "[Errende]";
-		mes "Please ask ^483D8BGunther^000000 about the ^483D8B8th love^000000 in ^483D8BAt One, I Fall in Love^000000. Thank you in advance.";
+		mes "[Errante]";
+		mes "Por favor, pergunte a ^483D8BGunther^000000 sobre o ^483D8B8º amor^000000 em ^483D8BEm um, eu fico apaixonado^000000. Agradeço antecipadamente.";
 		goto L_End;
 
 	} else if (gef_bard_q == 3) {
 		cutin "bard_eland02",2;
-		mes "[Errende]";
-		mes "So...";
-		mes "Have you";
-		mes "seen Gunther?";
+		mes "[Errante]";
+		mes "Então...";
+		mes "Já viu";
+		mes "Gunther?";
 		next;
-		mes "^3355FFYou turn around";
-		mes "to show him your back.^000000";
+		mes "^3355FFVocê vira";
+		mes "para mostrar-lhe as costas.^000000";
 		next;
 		cutin "bard_eland03",2;
-		mes "[Errende]";
+		mes "[Errante]";
 		mes "Huh...?!";
-		mes "Isn't that?!";
-		mes "Is that the line of the song written on your back? Wait, don't move! The 8th love is...";
-		mes "Now I see!";
+		mes "Não é isso?!";
+		mes "Que linha da canção é essa escrita em suas costas? Espere, não se mova! O 8º amor é...";
+		mes "Agora eu vejo!";
 		next;
-		mes "[Errende]";
-		mes "At One, I fall in love.";
-		mes "At Two, you give me your smile.";
-		mes "At Three, I adore your touch.";
-		mes "At Four, a tender kiss.";
+		mes "[Errante]";
+		mes "Em um, eu fico apaixonado.";
+		mes "Em dois, você me mostra um sorriso.";
+		mes "Em três, eu adoro seu toque.";
+		mes "Em quatro, um beijo macio.";
 		next;
-		mes "[Errende]";
-		mes "At Five, we change our minds.";
-		mes "A petal scatters through the air.";
-		mes "At Six, I fall in love~";
-		mes "At Seven, you fall in love~";
+		mes "[Errante]";
+		mes "Em cinco, vamos mudar nossas mentes.";
+		mes "Uma pétala cai pelo ar.";
+		mes "Em seis, eu fico apaixonado.";
+		mes "Em sete, você se apaixona.";
 		next;
-		mes "[Errende]";
-		mes "At Eight we turn away...";
-		mes "At Nine, love is reborn.";
-		mes "At Ten, my Love is gone.";
-		mes "At Eleven I find out why.";
+		mes "[Errante]";
+		mes "Em oito nos afastamos...";
+		mes "Em nove, o amor renasce.";
+		mes "Em dez, meu amor se foi.";
+		mes "Em onze eu descubro porquê.";
 		if (Sex)
-			mes "At Twelve I see her new boyfriend?";
+			mes "Em doze vejo seu novo namorado?";
 		else
-			mes "At Twelve I see his new girlfriend?";
+			mes "Em doze vejo sua nova namorada?";
 		next;
-		mes "[Errende]";
+		mes "[Errante]";
 		mes "...";
 		next;
-		mes "[Errende]";
+		mes "[Errante]";
 		mes "...";
 		mes "......";
 		next;
 		cutin "bard_eland04",2;
-		mes "[Errende]";
-		mes "This...";
-		mes "This cannot be.";
-		mes "This song is supposed to be about love, not a romantic travesty!";
+		mes "[Errante]";
+		mes "Isso...";
+		mes "Isso não pode ser.";
+		mes "Essa música supostamente é sobre amor, não uma farsa romântica!";
 		next;
-		mes "[Errende]";
-		mes "The lyrics. They must have been changed. Did Gunther say anything about this?! Hmmm, but who would change the lyrics...?";
+		mes "[Errante]";
+		mes "As letras. Elas devem ter sido mudadas. Gunther disse alguma coisa sobre isto?! Hmmm, mas quem é que iria alterar as letras...?";
 		next;
-		input .@inputstr$;
-		if (.@inputstr$ == "Kino Kitty") {
+		input @inputstr$;
+		if (@inputstr$ == "Gato Kino") {
 			cutin "bard_eland01",2;
-			mes "[Errende]";
-			mes "Ah! Of course!";
-			mes "I think you're right!";
-			mes "How could I not think of that?";
+			mes "[Errante]";
+			mes "Ah, é claro!";
+			mes "Com certeza você está certo!";
+			mes "Como eu não pensei nisso antes?";
 			next;
-			mes "[Errende]";
-			mes "It all makes sense now. After all, he used to be a member of the Invincible Single Army. His changes might have been a little mean, since this song used to be about a happy couple...";
+			mes "[Errante]";
+			mes "Tudo faz sentido agora. Afinal, ele costumava ser um membro do Único Exército Invencível. Suas mudanças podem ter significado pouco, uma vez que esta canção é usada sobre um casal feliz...";
 			next;
-			mes "[Errende]";
-			mes "Ummm...";
-			mes "I'm sorry to ask a favor of you again, but in your travels, do you think you could find the original lyrics for this song? I can wait for it...";
+			mes "[Errante]";
+			mes "Hmmm...";
+			mes "Estou arrependido de pedir um favor de você novamente, mas em suas viagens, você acha que poderia encontrar a letra original para esta canção? Posso esperar por ela...";
 			next;
 
-			if(select("No, thanks.:I can, so stop crying.")==1) {
-				mes "[Errende]";
-				mes "Ah, I guess it was too much to ask of you. My apologies. Don't worry about it, I'll find out some other way.";
-				gef_bard_q = 5;
+			if (select("Não, desculpe.:Posso, portanto pare de chorar.")==1) {
+				mes "[Errante]";
+				mes "Ah, eu acho que era demais para pedir-lhe. Minhas desculpas. Não se preocupe, eu vou descobrir alguma outra maneira.";
+				set gef_bard_q,5;
 			} else {
-				mes "[Errende]";
-				mes "Are you serious? Oh, thank you so much! You must be an angel! An angel that truly understands the heart of a poet!";
+				mes "[Errante]";
+				mes "Está falando sério? Oh, muito obrigado! Você deve ser um anjo! Um anjo que realmente entende o coração de um poeta!";
 				next;
-				mes "[Errende]";
-				mes "I'll pay you back somehow! Thank you for your trouble in advance~";
+				mes "[Errante]";
+				mes "Pagarei sua volta de alguma forma! Obrigado pela sua preocupação.";
 				gef_bard_q = 4;
 			}
 			goto L_End;
 
-		} else if (.@inputstr$ == "Gunther") {
-			mes "[Errende]";
-			mes "Gunther? I don't think he would do this. He always puts lines in his songs like 'doubleharmony for you.' Plus, he's too silly for that.";
-			gef_bard_q = 6;
-			goto L_End;
-		}
-
-		else if (.@inputstr$ == "Gunther Doubleharmony") {
-			mes "[Errende]";
-			mes "Gunther? I don't think he would do this. He always puts lines in his songs like 'doubleharmony for you.' Plus, he's too silly for that.";
-			gef_bard_q = 6;
+		} else if (@inputstr$ == "Gunther") {
+			mes "[Errante]";
+			mes "Gunther? Eu não acho que ele faria isso. Ele coloca sempre linhas em suas músicas como 'harmonias duplas para você.' Ele é muito bobo pra isso.";
+			set gef_bard_q,6;
 			goto L_End;
 
-		} else if (.@inputstr$ == "Errende") {
+		} else if (@inputstr$ == "Errante") {
 			cutin "bard_eland04",2;
-			mes "[Errende]";
-			mes "Surely you jest! If I did, why would I not know what this song is about?";
+			mes "[Errante]";
+			mes "Certamente você está brincando! Se eu fiz, é por que eu não sei sobre o que é esta canção?";
 			gef_bard_q = 6;
 			goto L_End;
 
 		} else {
-			mes "[Errende]";
-			mes "" + .@inputstr$ +"...?";
-			mes "I don't think I know that person. Maybe you misunderstood something? *Sigh...*";
+			mes "[Errante]";
+			mes "" + @inputstr$ +"...?";
+			mes "Acho que não conheço essa pessoa. Talvez tenha sido um mal-entendido? *Sigh...*";
 			next;
-			mes "[Errende]";
-			mes "What was the line...?";
-			mes "How could I forget";
-			mes "the 8th love?";
+			mes "[Errante]";
+			mes "Qual foi a linha...?";
+			mes "Como poderia esquecer";
+			mes "o 8º amor?";
 			gef_bard_q = 6;
 			goto L_End;
 		}
 
 	} else if (gef_bard_q == 1) {
 		cutin "bard_eland01",2;
-		mes "[Errende]";
-		mes "Welcome back,";
+		mes "[Errante]";
+		mes "Bem-vindo de volta,";
 		mes "" + @name$ + "~";
-		mes "What would you like";
-		mes "me to do for you?";
-		mes "Would you like to hear";
-		mes "a tale or listen to a song?";
+		mes "O que você gostaria";
+		mes "que fizesse por você?";
+		mes "Gostaria de ouvir";
+		mes "um conto ou escutar uma canção?";
 		callsub S_StorySong,4;
 
 	} else {
 		cutin "bard_eland03",2;
-		mes "^483D8BWhat day is";
-		mes "best for drinking?";
-		mes "La la la~";
-		mes "It's the day of";
-		mes "the earth, the sun";
-		mes "And the moon~";
-		mes "La la la~^000000";
+		mes "^483D8BQue dia é";
+		mes "melhor para beber?";
+		mes "*La la la*";
+		mes "É o dia da";
+		mes "terra, do sol";
+		mes "E da lua";
+		mes "*La la la*^000000";
 		next;
-		mes "^483D8BLa la la~";
-		mes "I'll only";
-		mes "drink on one day~";
-		mes "So if you'll tell me";
-		mes "when you'll drink";
-		mes "I'll tell you when";
-		mes "I'll drink with you~^000000";
+		mes "^483D8B*La la la*";
+		mes "Venho beber";
+		mes "apenas em um dia.";
+		mes "Então, se você vai me dizer";
+		mes "quando você bebe";
+		mes "Eu digo-te quando";
+		mes "Eu vou beber com você.^000000";
 		next;
-		mes "^483D8BLet's get together";
-		mes "Yea yea ye-^000000 Hmmmmm...?";
+		mes "^483D8BVamos ficar juntos";
+		mes "Yeah yeah ye...^000000 Hmmmmm...?";
 		next;
-		mes "[Bard]";
-		mes "Why, hello there. Oh, have you come to listen to my song and forget your worries?";
+		mes "[Bardo]";
+		mes "Olá, olá. Oh, você veio para ouvir a minha canção e esquecer suas preocupações?";
 		next;
 
-		if(select("Who are you?:Ignore him.")==1) {
+		if (select("Quem é você?:Ignora-o.")==1) {
 			cutin "bard_eland04",2;
 			mes "[" + @name$ + "]";
-			mes "You seem to be";
-			mes "new around here...";
-			mes "Who are you?";
+			mes "Você parece ser";
+			mes "novo por aqui...";
+			mes "Quem é você?";
 			next;
 			cutin "bard_eland02",2;
-			mes "[Errende]";
-			mes "Mm? Ah yes. I am merely another wandering poet who goes where the wind takes him. Please call me ^483D8BErrende^000000, the Bard who wishes to please you.";
+			mes "[Errante]";
+			mes "Hm? Ah sim. Sou apenas mais um poeta errante, que vai onde o vento leva. Por favor, me chame de ^483D8BErrante^000000, o Bardo que deseja agradá-lo.";
 			next;
-			mes "[Errende]";
-			mes "If you will let me, I will tell you of my travels. By your leave,";
-			mes "I will play a song that will help you forget your troubles.";
+			mes "[Errante]";
+			mes "Se você me permitir, eu vou te contar sobre minhas viagens. Com sua licença,";
+			mes "Vou tocar uma canção que irá ajudá-lo a esquecer os seus problemas.";
 			gef_bard_q = 1;
 			callsub S_StorySong,5;
 
 		} else {
-			mes "[Errende]";
-			mes "Waaah, wah~";
-			mes "You can't just ignore me like that! Where's your sense of merriment, your sense of romance?";
+			mes "[Errante]";
+			mes "Aaaah, Aah...";
+			mes "Você não pode simplesmente ignorar-me assim! Onde está o seu sentimento de alegria, o seu senso de romance?";
 		}
 
 	}
@@ -1001,1050 +969,1047 @@ L_End:
 
 S_StorySong:
 	next;
-	switch(select("Tell me a story.:Would you play a song?:Eh, maybe later.")) {
+	switch(select("Conte-me uma história.:Você pode tocar uma música?:Err, talvez mais tarde.")) {
 	case 1:
-		mes "[Errende]";
-		mes "You like stories, huh? What kind of story would you like me to tell? I'll you whatever I know... Just for you, of course. *Grins*";
+		mes "[Errante]";
+		mes "Você gosta de histórias, hein? Que tipo de história que você gostaria que eu contasse? Vou te contar o que eu sei ... Só para você, é claro.";
 		next;
-
-		if(select("News and rumors~:Cancel.")==1) {
+		if (select("Notícias e boatos.:Cancelar.")==1) {
 			cutin "bard_eland01",2;
-			mes "[Errende]";
-			.@random = rand(1,3);
-			if (.@random == 1) {
-				mes "Hmmm. Then shall we talk about this town, Geffen? Have you ever been to the Pub or the Inn here?";
+			mes "[Errante]";
+			switch(rand(1,3)) {
+			case 1:
+				mes "Hmmm. Então vamos falar sobre Geffen? Alguma vez já foste para o bar ou o Estaleiro aqui?";
 				next;
-				mes "[Errende]";
-				mes "I'd be lying if I didn't say that the sisters that work the Pub and Inn are... ^FF6699sensuously captivating^000000.";
+				mes "[Errante]";
+				mes "Eu estaria mentindo se eu não dissesse que as irmãs que trabalham no Pub e no Estaleiro são... ^FF6699cativantes^000000.";
 				next;
-				mes "[Errende]";
-				mes "The elder one is gorgeous, graceful and carries with her an air of refinement. And the younger one is so cheerful, energetic and so... ^FF6699nubile^000000.";
+				mes "[Errante]";
+				mes "A senhora é uma mulher linda, graciosa e traz com ela um ar de requinte. E a mais jovem é uma moça tão alegre, tão enérgica e... núbil.";
 				next;
-				mes "[Errende]";
-				mes "But I digress.";
-				mes "Sometimes though,";
-				mes "just sometimes mind you,";
-				mes "they're not as sexy as usual.";
+				mes "[Errante]";
+				mes "Mas eu divago.";
+				mes "Às vezes, porém,";
+				mes "Só às vezes você mente,";
+				mes "Eles não são tão sexy como de costume.";
 				next;
-				mes "[Errende]";
-				mes "It seems the spirit of their late father, God bless his soul for siring such hot women, possesses them from time to time.";
+				mes "[Errante]";
+				mes "Parece que o espírito de seu pai, tão importante para elas, às possui de vez em quando.";
 				next;
 				cutin "bard_eland02",2;
-				mes "[Errende]";
-				mes "I guess when someone acts even";
-				mes "a little flirtacious towards those girls, their father's spirit takes over. I should know.";
+				mes "[Errante]";
+				mes "Acho que quando alguém age até mesmo";
+				mes "um pouco covarde para essas meninas, o pai retoma o espírito. Eu deveria saber.";
 				next;
-				mes "[Errende]";
-				mes "I guess a father's love endures forever, even into the afterlife. Of course, I wouldn't know.";
+				mes "[Errante]";
+				mes "Acho que o amor de um pai dura pra sempre, mesmo depois da vida. Mas, é claro, não tenho certeza.";
 				next;
-				mes "[Errende]";
+				mes "[Errante]";
 				cutin "bard_eland01",2;
-				mes "Let's see...";
-				mes "Look out for this really shady Merchant that hangs out behind";
-				mes "the Pub in Geffen.";
+				mes "Vamos ver...";
+				mes "Esteja atento a esta realidade que mostra sombra que paira por detrás dos Comerciantes";
+				mes "do Bar, em Geffen.";
 				next;
-				mes "[Errende]";
-				mes "Judging from his clothes, he must be from Morroc, which is a lot warmer. That's why he's got a Hood, even though it has no drawstrings, for the cooler weather over here.";
+				mes "[Errante]";
+				mes "A julgar pelas suas roupas, ele deve ser de Morroc, que é muito mais quente. É por isso que ele tem um exaustor, mesmo que ele não tenha aquecedor, para as condições atmosféricas mais frias por aqui.";
 				next;
-				mes "[Errende]";
-				mes "I must warn you, don't let him talk you into buying that Hood of his since he's selling it for an outrageous price. He's definitely not trustworthy.";
+				mes "[Errante]";
+				mes "Devo adverti-lo, não deixe que ele fale que você compra aquecedor porque ele irá vendê-lo por um preço escandaloso. Ele definitivamente não é confiável.";
 				next;
-				mes "[Errende]";
-				mes "Lastly, I want to mention the lost city of Geffenia, hidden under the Geffen Tower. I hear some kind of condition is required to enter Geffenia, but I'm not sure.";
+				mes "[Errante]";
+				mes "Por último, gostaria de lembrar a cidade de Geffenia perdida, escondida sob a Torre de Geffen. Eu ouvi dizer que algum tipo de condição é necessária para entrar Geffenia, mas não tenho certeza.";
 				next;
-				mes "[Errende]";
-				mes "Geffenia is related to the two attractive ladies I mentioned earlier. It seems their father, William, entered Geffen Tower with a party to exterminate monsters, but he never returned.";
+				mes "[Errante]";
+				mes "Geffenia está relacionado com as duas senhoras atraentes que mencionei há pouco. Parece que seu pai, William, entrou na Torre de Geffen com um grupo para exterminar monstros, mas ele nunca retornou.";
 				next;
-				mes "[Errende]";
-				mes "It's tragic that he left his family behind in that way. But perhaps, it is more tragic that his spirit scares away anyone interested in those girls.";
-
-			} else if (.@random == 2) {
-				mes "Okay, let me tell you a story about Morroc, city of the desert. Adventurers worth their salt are expected to have explored the city and its surrounding desert.";
+				mes "[Errante]";
+				mes "É trágico que ele deixou sua família pra trás dessa forma. Mas, talvez, seja mais trágico que o seu espírito assuste qualquer pessoa interessada nessas meninas.";
+			case 2:
+				mes "Ok, deixe-me contar uma história sobre Morroc, cidade do deserto. Aventureiros para valer os seus sais são esperados para ter explorado a cidade e seu envolvente deserto.";
 				next;
-				mes "[Errende]";
-				mes "The Sphinx and the Pyramids are especially popular areas of exploration for adventurers. Have you been there before? I haven't yet, but perhaps someday I'll go.";
+				mes "[Errante]";
+				mes "A Esfinge e as pirâmides são zonas populares e especiais de exploração por aventureiros. Você já esteve lá antes? Eu ainda não, mas talvez algum dia eu vá.";
 				next;
-				mes "[Errende]";
-				mes "While I was in Morroc, I found a Merchant that sells Sword Maces to Priests and Priestess. Aside from those, Priests are prohibited from using any kind of weapon with blades.";
+				mes "[Errante]";
+				mes "Enquanto eu estava em Morroc, encontrei um mercador que vendia Maça-Espada para Sacerdotes e Sacerdotisas. Fora esses, Sacerdotes estão proibidos de utilizar qualquer tipo de arma com lâminas.";
 				next;
-				mes "[Errende]";
-				mes "I also saw an energetic little boy who kept begging his father to tame a Munak for him. I heard the father speak a bit, and it seems that one of his friends from Morroc is lost in Alberta.";
-				next;
-				cutin "bard_eland02",2;
-				mes "[Errende]";
-				mes "In any case, I helped the father with an errand, and he gave me a mysterious box in return. When I opened that box, I found a strange feather. I'm unaware of how it works, though...";
-				next;
-				mes "[Errende]";
-				mes "I wonder if that man's friend, Pandger Mayer, ever found";
-				mes "his way back home...";
-
-			} else if (.@random == 3) {
-				mes "Why don't we talk about Alberta? There is a sunken ship developed by an event agency as a place where adventurers may go on expeditions. It seems they're making a lot of money.";
-				next;
-				mes "[Errende]";
-				mes "When the sunken ship first drifted near Alberta, it was immediately found by one of the Alberta Security Knights.";
-				next;
-				mes "[Errende]";
-				mes "That Security Knight ventured inside and found an infant deep inside one of the rooms. Next to the baby was a music box.";
-				next;
-				mes "[Errende]";
-				mes "This baby was the one and only survivor from the sunken ship. He was brought up in Alberta, although he was treated with contempt when he was a child. He's fine now, but I digress.";
-				next;
-				mes "[Errende]";
-				mes "As for the sunken ship, I'm unsure of whether or not it was a pirate ship. It is said that skeleton monsters wearing pirate costumes roam its remains.";
-				next;
-				mes "[Errende]";
-				mes "One of Alberta's other mysteries is the elusive Turtle Island. It seems that one seafarer has found a dependable route to that place and is giving passage to adventurers.";
-				next;
-				mes "[Errende]";
-				mes "Still, it seems Turtle Island is not quite safe. Two squads of Alberta Security Knights have already traveled there, but have not yet returned. Verily, this is cause for concern.";
-				next;
-				mes "[Errende]";
-				mes "Still, that didn't stop me from visiting that place. By sheer accident, I found the journal of an adventurer who had already been there. It seems he's a famous scholar now.";
+				mes "[Errante]";
+				mes "Também vi um garotinho vigoroso que implorava ao pai para domar um Munak para ele. Eu ouvi o pai falar um pouco e parece que um dos seus amigos do Morroc está perdido em Alberta.";
 				next;
 				cutin "bard_eland02",2;
-				mes "[Errende]";
-				mes "In that journal are details about an ultimate swordsman, and the exploration of Turtle Island. I'm sure that anyone seeking treasure in that place will find exciting adventure.";
+				mes "[Errante]";
+				mes "Em todo caso, eu ajudei o pai a fazer um recado e ele me deu uma misteriosa caixa em troca. Quando eu abri a caixa, encontrei uma pena estranha. Tenho conhecimento de como funciona, mas...";
+				next;
+				mes "[Errante]";
+				mes "Pergunto-me se esse amigo do homem, Pandger Mayer, alguma vez";
+				mes "encontrou o caminho de volta para casa...";
+			case 3:
+				mes "Por que não falamos de Alberta? Há um navio afundado para eventos. É um lugar onde os aventureiros podem ir em expedições. Parece que eles estão fazendo um monte de dinheiro.";
+				next;
+				mes "[Errante]";
+				mes "Quando o primeiro navio foi afundado perto de Alberta, ele foi imediatamente encontrado por um dos Cavaleiros de Segurança de Alberta.";
+				next;
+				mes "[Errante]";
+				mes "Aquele Cavaleiro de Segurança se aventurou dentro e encontrou um bebê dentro de um dos quartos. Avançou até o bebê... era uma caixa de música.";
+				next;
+				mes "[Errante]";
+				mes "Este bebê foi o primeiro e único sobrevivente do navio afundado. Ele foi trazido para Alberta. Embora ele tenha sido tratado com desprezo quando ele era uma criança, ele está bem agora, mas eu divago.";
+				next;
+				mes "[Errante]";
+				mes "Tal como o navio afundado, estou inseguro se era ou não um navio pirata. Diz-se que esqueletos vestindo trajes piratas vagam seus restos mortais.";
+				next;
+				mes "[Errante]";
+				mes "Um dos outros mistérios de Alberta é a Ilha Tartaruga. Parece que um marinheiro encontradou uma rota segura para aquele lugar e está dando passagem para aventureiros.";
+				next;
+				mes "[Errante]";
+				mes "Ainda assim, a Ilha Tartaruga não é absolutamente segura. Dois esquadrões de Cavaleiros de Segurança de Alberta Segurança já passaram por lá, mas não retornaram. Certamente, este é um motivo de preocupação.";
+				next;
+				mes "[Errante]";
+				mes "E, mesmo assim, não parava de visitar aquele lugar. Por puro acaso, encontrei o diário de um aventureiro que já tinha estado lá. Parece que ele é um famoso sábio agora.";
+				next;
+				cutin "bard_eland02",2;
+				mes "[Errante]";
+				mes "Nas revistas existem detalhes sobre um derradeiro espadachim, e da exploração da Ilha Tartaruga. Tenho certeza de que ninguém à procura do tesouro naquele lugar vai achar a aventura emocionante.";
 			}
-
 		} else {
 			cutin "bard_eland01",2;
-			mes "[Errende]";
-			mes "Oh, how disappointing. But promise me that you will drop by later, so that we can share stories and merriment.";
+			mes "[Errante]";
+			mes "Ah, que decepcionante. Mas eu prometo que você vai passar por lá mais tarde, para que possam compartilhar histórias e diversão.";
 		}
 		goto L_End;
 
 	case 2:
-		mes "[Errende]";
-		if(getarg(0) < 3)
-			mes "You recognize my talent, so you deserve to listen to my songs! Now, what would you like to hear? I can play anything you want, you know.";
+		mes "[Errante]";
+		if (getarg(0) < 3)
+			mes "Você conhece o meu talento, de modo que você merece ouvir minhas músicas! Agora, o que você gostaria de ouvir? Eu posso tocar tudo o que você quiser, você sabe.";
 		else
-			mes "At last, I've met someone who recognizes my talent! You deserve to listen to my songs! Now, what would you like to hear? I can play anything you want, you know.";
+			mes "Até que enfim, conheci alguém que reconhece o meu talento! Você merece a ouvir minhas músicas! Agora, o que você gostaria de ouvir? Eu posso tocar tudo o que você quiser, você sabe.";
 		next;
-
-		switch(select("Hmm, any song will do.:Play an upbeat song~!:Never mind...")) {
-
+		switch(select("Hmm, vai fazer alguma canção.:Toque uma canção otimista!:Esquece...")) {
 		case 1:
-			mes "[Errende]";
+			mes "[Errante]";
 			if (Zeny > 499) {
-				Zeny -= 500;
+				set Zeny, Zeny-500;
 				cutin "bard_eland03",2;
-				mes "Alright.";
-				mes "Here we go~";
+				mes "Certo.";
+				mes "Aqui vamos nós~";
 
 				.@random = rand(1,3);
-				if (.@random == 1)
+				if (@random == 1)
 					soundeffect "ring_of_nibelungen.wav",0;
-				else if (.@random == 2)
+				else if (@random == 2)
 					soundeffect "dont_forget_me_not.wav",0;
 				else
 					soundeffect "in_to_the_abyss.wav",0;
 
 			} else {
 				cutin "bard_eland04",2;
-				mes "Ahahaha~";
-				mes "My apologies,";
-				mes "But I cannot offer my services for free. Even a Bard needs zeny to live, wouldn't you agree?";
+				mes "Hahahaha";
+				mes "Minhas desculpas,";
+				mes "mas eu não posso oferecer meus serviços de graça. Mesmo um bardo necessita de zeny para viver, não acha?";
 			}
 			goto L_End;
 
 		case 2:
 			cutin "bard_eland03",2;
-			mes "[Errende]";
-			mes "An upbeat song...?";
-			mes "Hmmm... Let's see.";
-			mes "An upbeat song,";
-			mes "An upbeat song...";
-			mes "Okay, here we go~";
+			mes "[Errante]";
+			mes "Uma canção otimista?";
+			mes "Bom, deixe-me ver.";
+			mes "Uma canção otimista,";
+			mes "uma canção otimista...";
+			mes "Ok, aqui vamos nós~";
 			next;
-			//for 3 and 4 variants, we need higher chance
-			if(getarg(0) == 3 || getarg(0) == 4)
-				.@random = rand(1,5);
+			if (getarg(0) == 3 || getarg(0) == 4)
+				set @random,rand(1,5);
 			else
 				.@random = rand(1,3);
-			if (.@random == 1) {
-				mes "^483D8BValhalla dazzles in gold";
-				mes "The fifth as we know";
-				mes "Is old Glast Heim!";
-				mes "Glorious warriors answer";
-				mes "The summons of Odin.^000000";
+			if (@random == 1) {
+				mes "^483D8BValhalla reluz em ouro";
+				mes "O Quinto, como sabemos";
+				mes "É a velha Glast Heim!";
+				mes "Guerreiros gloriosos pronunciam";
+				mes "A convocação de Odin.^000000";
 				next;
-				mes "^483D8BPalace of the dead";
-				mes "With a silver roof~";
-				mes "The third as we know...";
+				mes "^483D8BPalácio dos mortos";
+				mes "Com um telhado cor de prata";
+				mes "O Terceiro, como sabemos...";
 				mes "Valaskjalf!";
-				mes "Glorious warriors answer";
-				mes "The summons of Odin.^000000";
+				mes "Guerreiros gloriosos pronunciam";
+				mes "A convocação de Odin.^000000";
 				next;
-				mes "^483D8BFive hundred forty doors";
-				mes "In the grand halls of Valhalla";
-				mes "Fling open to the heart of a hero.";
-				mes "Eight hundred warriors gather";
-				mes "Under the will of God, and";
-				mes "Charge as one out through";
-				mes "Those doors.^000000";
+				mes "^483D8BQuinhentos e quarenta portas";
+				mes "Nos grandes salões de Valhalla";
+				mes "Aventuram-se a abrir o coração de um herói.";
+				mes "Oitocentos guerreiros recolhem";
+				mes "Sob a vontade de Deus, e";
+				mes "Com um encargo de sair";
+				mes "Dessas portas.^000000";
 				next;
-				mes "^483D8BGodly warriors";
-				mes "Step into Yggdrassil";
-				mes "Towards their fate.";
-				mes "With pride and honor,";
-				mes "They accept Valyrie's";
-				mes "Welcome.^000000";
+				mes "^483D8BPiedosos guerreiros";
+				mes "Entram em Yggdrasil";
+				mes "Para sua sorte.";
+				mes "Com orgulho e honra,";
+				mes "Eles aceitam as boas-vindas";
+				mes "da Valquíria.^000000";
 				next;
-				mes "^483D8BWarriors fallen in battle";
-				mes "In glorious clashes of red";
-				mes "Death may have come,";
-				mes "But your fame lives on";
-				mes "and your spirit will be";
-				mes "led to Valhalla.^000000";
+				mes "^483D8BGuerreiros caídos em batalha";
+				mes "Nos gloriosos confrontos do vermelho";
+				mes "A morte pode ter chegado,";
+				mes "Mas sua fama";
+				mes "E seu espírito";
+				mes "Conduziram Valhalla.^000000";
 				//Expanded version for 2nd variant
-				if(getarg(0) == 2){
+				if (getarg(0) == 2){
 					next;
-					mes "[Errende]";
+					mes "[Errante]";
 					mes "...";
 					next;
-					mes "[Errende]";
+					mes "[Errante]";
 					mes "...";
 					mes "......";
 					next;
-					mes "[Errende]";
-					mes "You know this song is about a legend regarding Valhalla don't you? Supposedly, more than one place was used as the sacred Hall of Honor.";
+					mes "[Errante]";
+					mes "Você sabe que esta canção é sobre uma lenda em relação Valhalla, não é? Supostamente, mais do que um lugar sagrado foi usado como o Salão de Honra.";
 					next;
-					mes "[Errende]";
-					mes "But only the gods will know if this was true or not. Was a place like Glast Heim really the fifth Valhalla? We humans";
-					mes "may never know";
-					mes "with certainty.";
+					mes "[Errante]";
+					mes "Mas só os deuses sabem se isto é verdade ou não. Seria Glast Heim realmente o quinto Valhalla? Nós, seres humanos,";
+					mes "nunca saberemos";
+					mes "com certeza.";
 				}
 				goto L_End;
 
-			} else if (.@random == 2) {
+			} else if (@random == 2) {
 
-				mes "^483D8BThe sounds of galloping";
-				mes "Echo in the distance.";
-				mes "A cloud of hazy dust";
-				mes "Fills the setting sun.";
-				mes "Thousands of eyes open";
-				mes "Torches on the castle";
-				mes "Flare like thousands of Ifrits.";
+				mes "^483D8BOs sons do galope";
+				mes "Ecoam à distância.";
+				mes "Uma nuvem nebulosa de poeira";
+				mes "Preenche o sol poente";
+				mes "Milhares de olhos abertos";
+				mes "Tochas no castelo";
+				mes "Chamas como milhares de Ifrits.";
 				next;
-				mes "^483D8BHear the throbbing of my heart,";
-				mes "The blood flowing in my veins.";
-				mes "Feeling the heaviness of my armor.";
-				mes "The enemy has appeared before us.^000000";
+				mes "^483D8BEscute meu coração latejante,";
+				mes "O sangue flui nas minhas veias.";
+				mes "Sentido o peso da minha armadura.";
+				mes "O inimigo tem aparecido antes de nós.^000000";
 				next;
-				mes "^483D8BBeat the drums hard, harder!";
-				mes "Courage, soldiers, march forward!";
-				mes "Shout loud, soldiers, louder!";
-				mes "Today will never come back!^000000";
+				mes "^483D8BToque forte os tambores, mais forte!";
+				mes "Coragem, soldados, marchem pra frente!";
+				mes "Gritem alto, soldados, mais alto!";
+				mes "Hoje nunca vai voltar!^000000";
 				next;
-				mes "^483D8BStun the sky";
-				mes "Provoke the earth.";
-				mes "I feel my heartbeat again.";
-				mes "Blow the bugle to";
-				mes "Sway the fortress.";
-				mes "Today will never come back!^000000";
+				mes "^483D8BAtordoar o céu";
+				mes "Provocar a terra.";
+				mes "Sinto novamente meu coração.";
+				mes "Toquem as cornetas para";
+				mes "Balançar a fortaleza.";
+				mes "Hoje nunca vai voltar!^000000";
 				next;
-				mes "[Errende]";
-				mes "Ah, this is called 'Drumming in the Battlefield,' which was written by Mr. Iolo. Yes, I rather like this song.";
+				mes "[Errante]";
+				mes "Ah, essa se chama 'Tambores no Campo de Batalha' que é de autoria do Sr. Iolo. Sim, sim, eu gosto dessa música.";
 
 			} else {
-				// For 3 and 4 cases we set more chance earlier on .@random
-				if(getarg(0) == 3 || getarg(0) == 4){
-					mes "[Errende]";
+				// For 3 and 4 cases we set more chance earlier on @random
+				if (getarg(0) == 3 || getarg(0) == 4){
+					mes "[Errante]";
 					if (Sex)
-						mes "Heroic warrior,";
+						mes "Guerreiro heróico,";
 					else
-						mes "My fair lady,";
-					mes "Please listen to my song. If you have a flower in hand and are in love, let's count the flower petals as we go along.";
+						mes "Minha justa senhora,";
+					mes "Por favor, ouça a minha canção. Se você tem uma flor na mão e está apaixonado, vamos contar as pétalas de flores enquanto prosseguimos com o projeto.";
 					next;
-					mes "^483D8BAt One, I fall in love.";
-					mes "At Two, you give me your smile.";
-					mes "At Three, I adore your touch.";
-					mes "At Four, a tender kiss.";
-					mes "At Five, we change our minds.";
-					mes "A petal scatters through the air.^000000";
+					mes "^483D8BEm um, eu fico apaixonado.";
+					mes "Em dois, você me mostra um sorriso.";
+					mes "Em três, eu adoro seu toque.";
+					mes "Em quatro, um beijo macio.";
+					mes "Em cinco, vamos mudar nossas mentes.";
+					mes "Uma pétala cai pelo ar.^000000";
 					next;
 					cutin "bard_eland04",2;
-					mes "^483D8BAt Six, I fall in love~";
-					mes "At Seven, you fall in love~";
-					mes "At Eight~^000000";
+					mes "^483D8BEm seis, eu fico apaixonado.";
+					mes "Em sete, você se apaixona.";
+					mes "Em oito...^000000";
 					next;
-					mes "[Errende]";
-					mes "At eight~";
-					mes "At... Eight...";
-					mes "What was next...?";
+					mes "[Errante]";
+					mes "Em oito...";
+					mes "Em... oito...";
+					mes "Qual seria a próxima...?";
 					next;
-					mes "[Errende]";
-					mes "Oh my...!";
-					mes "What was the next part?!";
-					mes "What was the 8th love?!";
-					mes "How shameful for a Bard";
-					mes "to forget the words";
-					mes "to a song!";
+					mes "[Errante]";
+					mes "Ai meu Deus!";
+					mes "Qual é a próxima parte?";
+					mes "Qual é o 8º amor?";
+					mes "Que vergonha para um bardo";
+					mes "esquecer as palavras";
+					mes "de uma canção!";
 					next;
-					mes "[Errende]";
-					mes "I...";
-					mes "I can't bear the humiliation!";
-					mes "Or the suspense of what";
-					mes "happens next...!";
+					mes "[Errante]";
+					mes "Eu...";
+					mes "não posso suportar a humilhação!";
+					mes "Ou o suspense do que";
+					mes "acontece a seguir...!";
 					next;
-					mes "[Errende]";
-					mes "You're an adventurer, aren't you? So you must travel quite a bit? It's embarassing for me to ask,";
-					mes "but I have a favor to ask...!";
+					mes "[Errante]";
+					mes "Tu és um aventureiro, não és? Então você ao menos viaja um pouco, certo? É embaraçoso para mim pedir,";
+					mes "mas eu tenho um pedido a fazer.";
 					next;
 
-					if(select("Sure, no problem.:I ain't gonna help you.")==1) {
+					if (select("Claro, sem problema.:Eu não vou te ajudar.")==1) {
 						cutin "bard_eland01",2;
-						mes "[Errende]";
-						mes "Thank you, so much!";
-						mes "Let's see, who would know?";
-						mes "I've got it! Gunther!";
+						mes "[Errante]";
+						mes "Muito obrigado!";
+						mes "Vamos ver, quem sabe? ";
+						mes "Já sei! Gunther!";
 						next;
-						mes "[Errende]";
-						mes "If perchance you happen to meet ^483D8BGunther Doubleharmony^000000, please inform him of my dilemna.";
+						mes "[Errante]";
+						mes "Se por ventura encontrar ^483D8BGunther^000000, informe-o do meu dilema.";
 						next;
-						mes "[Errende]";
-						mes "Tell him that ^483D8BMinty Errende^000000 happened to forget a line of the song, ^483D8BAt One, I Fall in Love^000000. The line is called ^483D8B8th love^000000.";
+						mes "[Errante]";
+						mes "Diga a ele que ^483D8BErrante Menta^000000 esqueceu uma linha da canção, ^483D8BEm um, eu fico apaixonado^000000. A linha se chama ^483D8B8º amor^000000.";
 						next;
-						mes "[Errende]";
-						mes "I beseech you, if you meet him, please ask him of the 8th love and inform me of that lyric immediately~";
+						mes "[Errante]";
+						mes "Eu te suplico, se você encontrá-lo, por favor, pergunte-lhe o 8º amor e me diga imediatamente a letra.";
 						if(gef_bard_q==1) gef_bard_q = 2;
 						if(gef_bard_q==21) gef_bard_q = 22;
 
 					} else {
-						mes "[Errende]";
+						mes "[Errante]";
 						mes "*Sigh...*";
-						mes "I can't remember the 8th part of this song if my life depended on it. And it does~! *Wahhhh~*";
+						mes "Não me lembro da 8ª parte desta canção... se minha vida dependesse disso... E depende! *Wahhhh*";
 						if(gef_bard_q==1) gef_bard_q = 7;
 						if(gef_bard_q==21) gef_bard_q = 27;
 					}
 					goto L_End;
 
 				}
-				mes "^483D8BA good Bard sings";
-				mes "To please his listener.";
-				mes "So do not expect a sad song";
-				mes "That deepens your anguish.^000000";
+				mes "^483D8BUm bom bardo canta";
+				mes "Para agradar seus ouvintes.";
+				mes "Então, não espere uma canção triste";
+				mes "Isso aumenta a sua angústia.^000000";
 				next;
-				mes "^483D8BA good Dancer dances";
-				mes "To please her audience.";
-				mes "Shall we dance together?";
-				mes "Just hold my hands.";
-				mes "La la la~ La la la~^000000";
+				mes "^483D8BUma boa Odalisca dança";
+				mes "Para agradar seu público-alvo.";
+				mes "Vamos dançar juntos?";
+				mes "Basta segurar a minha mão.";
+				mes "*La la la* *La la la*^000000";
 				next;
 				mes "[" + @name$ + "]";
-				mes "By the way...";
-				mes "Why do you guys play";
-				mes "discords sometimes?";
-				mes "It sounds weird";
-				mes "when you do that.";
+				mes "À propósito...";
+				mes "Porque é que vocês";
+				mes "brigam às vezes?";
+				mes "Soa estranho";
+				mes "quando você faz isso.";
 				next;
-				mes "[Errende]";
-				mes "H-how can you say such a thing, "+ @name$ +"? Have you ever been a Bard before? It's difficult to come up with fresh, original melodies!";
+				mes "[Errante]";
+				mes "C-como você pode dizer tal coisa, "+ @name$ +"? Já foste bardo alguma vez? É difícil chegar a melodias originais!";
 			}
 			goto L_End;
 
 		case 3:
 			cutin "bard_eland01",2;
-			mes "[Errende]";
-			mes "But of course.";
-			mes "Merriment is best";
-			mes "enjoyed when you";
-			mes "are in the mood for it.";
-			mes "Please come again.";
+			mes "[Errante]";
+			mes "Mas é claro.";
+			mes "Os folguedos são melhores";
+			mes "quando se tem";
+			mes "disposição para isso.";
+			mes "Por favor, venha novamente.";
 			goto L_End;
 
 		}
 
 	case 3:
 		cutin "bard_eland01",2;
-		mes "[Errende]";
-		mes "Hmm~?";
-		mes "Well, alright. Though, listening to a good story or cheerful song can really do you some good. Alright then, see you later.";
+		mes "[Errante]";
+		mes "Hmm?";
+		mes "Tudo bem. No entanto, ao ouvir uma boa história ou alegre canção que você pode realmente você se sente bem. Muito bem, então, vejo você mais tarde.";
 		goto L_End;
 	}
 }
 
-morocc,134,111,3	script	Bard#3	2_M_BARD_ORIENT,{
+morocc,134,111,3	script	Bardo#3	2_M_BARD_ORIENT,{
 	@name$ = strcharinfo(0);
 	if (gef_bard_q == 31) {
-		mes "[Kino Kitty]";
-		mes "Everything will be";
-		mes "fine in the end, right?";
-		mes "I'll be okay, Jorti will be okay, and she'll be... Oh.";
+		mes "[Gato Kino]";
+		mes "Tudo vai ficar";
+		mes "bem no final, certo?";
+		mes "Eu vou ficar bem, Jorti vai ficar bem, e ela vai ser... *Oh*";
 		next;
-		mes "[Kino Kitty]";
-		mes "I'm sorry, I was just";
-		mes "muttering to myself.";
-		mes "Is there anything";
-		mes "you want from me?";
+		mes "[Gato Kino]";
+		mes "Peço desculpas, estava apenas";
+		mes "balbuciando comigo mesmo.";
+		mes "Tem alguma coisa";
+		mes "que você queira de mim?";
 		next;
 
-		switch(select("Tell me a story...:Your voice is...:No thanks, I appreciate it though.")) {
+		switch(select("Conte-me uma história...:Sua voz é...: Não, obrigado, no entanto, lhe aprecio.")) {
 		case 1:
-			.@random = rand(1,3);
-			if (.@random == 1) {
-				mes "[Kino Kitty]";
-				mes "Many legends have been passed down as songs. Stories of Gods and tales of brave warriors have all been written as songs.";
+			@random = rand(1,3);
+			if (@random == 1) {
+				mes "[Gato Kino]";
+				mes "Muitas lendas foram passados como canções. Histórias dos deuses e contos de bravos guerreiros foram todos escritos como canções.";
 				next;
-				mes "[Kino Kitty]";
-				mes "Many people love to listen to those songs because they dream of the romantic past. To sing these kinds of songs is the reason people like me exist.";
+				mes "[Gato Kino]";
+				mes "Muitas pessoas adoram ouvir aquelas músicas por causa do sonho romântico do passado. Para cantar estes tipos de canções que existem pessoas como eu.";
 				next;
-				mes "^3355FFKino Kitty adjusted the strings on his guitar, and began to sing in a low voice.^000000";
+				mes "^3355FFGato Kino ajusta as cordas do seu violão e começa a cantar em voz baixa.^000000";
 				next;
 				mes "^D43D1ARheingold...";
-				mes "Hidden in the Rhein river.";
-				mes "If made into a ring,";
-				mes "Could rule the world~^000000";
+				mes "Escondido no rio Reno.";
+				mes "Se fosse feita como um anel,";
+				mes "Poderia governar o mundo...^000000";
 				next;
-				mes "^D43D1AProtected by a spell";
-				mes "Cursing its thief";
-				mes "To never find love.";
-				mes "Alberich had known";
-				mes "Nonetheless stole it.";
-				mes "Love was forsaken for power.^000000";
+				mes "^D43D1AProtegido por um feitiço";
+				mes "Que amaldiçoa o seu ladrão";
+				mes "Para nunca encontrar o seu amor.";
+				mes "Alberich o conheceu";
+				mes "Não demorou muito e o roubou.";
+				mes "O amor foi abandonado pelo poder.^000000";
 				next;
-				mes "^D43D1AGiants built beautiful Valhalla";
-				mes "Matrimony with Freya";
-				mes "Goddess of beauty";
-				mes "Their supposed payment.";
-				mes "In not receiving it";
-				mes "They forcefully took her.^000000";
+				mes "^D43D1AGigantes construíram a bela Valhalla.";
+				mes "Matrimônio com Freya";
+				mes "Deusa da beleza";
+				mes "Seria seu suposto pagamento.";
+				mes "Ao não recebê-la";
+				mes "Eles levaram-na vigorosamente.^000000";
 				next;
-				mes "^D43D1AThe gods would";
-				mes "give Alberich's treasure";
-				mes "To the Giants for Freya's return.";
-				mes "Loki tricked Alberich,";
-				mes "Stealing his ring or power.^000000";
+				mes "^D43D1AMas os Deuses";
+				mes "dariam o tesouro de Alberich";
+				mes "Aos gigantes pelo retorno de Freya.";
+				mes "Loki enganou Alberich,";
+				mes "Roubando o anel do poder.^000000";
 				next;
-				mes "^D43D1ABut Alberich cursed his ring";
-				mes "Before it was returned to him,";
-				mes "Envy and death would";
-				mes "befall its wearers.^000000";
+				mes "^D43D1AMas Alberich amaldiçoou o anel";
+				mes "Antes de retornar para ele,";
+				mes "Inveja e morte seria";
+				mes "inevitável a seus portadores.^000000";
 				next;
-				mes "^D43D1AThe ring was given to the giants";
-				mes "Freya was returned to the gods";
-				mes "The giants killed themselves";
-				mes "Fighting over the rheingold,";
-				mes "Victims of";
-				mes "Alberich's curse~^000000";
+				mes "^D43D1AO anel foi dado para os gigantes";
+				mes "E Freya foi devolvida aos Deuses";
+				mes "Os gigantes se mataram";
+				mes "batalhando pelo Rheingold,";
+				mes "Vítimas da";
+				mes "Maldição de Alberich.^000000";
 				next;
-				mes "[Kino Kitty]";
+				mes "[Gato Kino]";
 				mes "Hmm...";
-				mes "^333333*Cough Cough*^000000";
-				mes "This old song";
-				mes "is about the ring";
-				mes "of the Nibelungs.";
+				mes "^333333*Cof Cof*^000000";
+				mes "Esta velha canção";
+				mes "fala sobre o Anel";
+				mes "dos Nibelungos.";
 				next;
-				mes "[Kino Kitty]";
-				mes "^333333*Cough Cough*^000000";
-				mes "Hah... I can't sing more than one song nowadays. But did you like it? ^333333*Cough Cough*^000000";
+				mes "[Gato Kino]";
+				mes "^333333*Cof Cof*^000000";
+				mes "Eu não posso cantar uma música atual. Mas, você gostou dela? ^333333*Cof Cof*^000000";
 				close;
 
-			} else if (.@random == 2) {
-				mes "[Kino Kitty]";
+			} else if (@random == 2) {
+				mes "[Gato Kino]";
 				mes "Ah...";
-				mes "I do feel like singing a song. You know, every song has its own story. ^333333*Cough Cough*^000000";
+				mes "Eu sinto como se estivesse cantando uma canção. Você sabe, cada canção tem sua história. ^333333*Cof Cof*^000000";
 				next;
-				mes "^3355FFKino Kitty coughed a few times, wiping his mouth with his sleeve. As he adjusts the guitar strings, you notice small stains of blood on his sleeve. Then, he began to sing.^000000";
+				mes "^3355FFGato Kino tossiu algumas vezes, limpando a boca com a manga da camisa. Quando ele ajusta as cordas do violão, você percebe pequenas manchas de sangue na manga. Então, ele começa a cantar.^000000";
 				next;
-				mes "^D43D1ABrave hero Siegfried ";
-				mes "Vanquished a mighty dragon	";
-				mes "Its blood coated his skin";
-				mes "Making it impenetrable";
-				mes "Save for one tender spot";
-				mes "Blocked by a single leaf";
-				mes "From a linden tree.^000000";
+				mes "^D43D1ABravo herói Siegfried";
+				mes "Vencido um poderoso dragão";
+				mes "Seu sangue revestindo sua pele";
+				mes "Tornando-a impenetrável";
+				mes "Exceto por um ponto";
+				mes "Fechado por uma única folha";
+				mes "De uma tília.^000000";
 				next;
-				mes "^D43D1ASiegfried was powerful";
-				mes "Clearly invincible, save for";
-				mes "those who knew of his secret.";
-				mes "In the end he was killed, by";
-				mes "A spear flung into his back";
-				mes "set into motion by the wrath";
-				mes "And jealousy of a woman.^000000";
+				mes "^D43D1ASiegfried era poderoso";
+				mes "Claramente invencível, exceto para";
+				mes "aqueles que conheciam seu segredo.";
+				mes "No final, ele foi morto, por";
+				mes "Um dardo lançado em suas costas";
+				mes "que foi colocada em movimento pela ira";
+				mes "E pelo cíume de uma mulher.^000000";
 				next;
 				mes "[Jorti]";
 				mes "Bravo, Bravo~!";
-				mes "Uncle Kino is the best Bard in the world~! Jorti likes Uncle Kino's singing!";
+				mes "Tio Kino é o melhor bardo do mundo! Jorti gosta quando o Tio Kino canta!";
 				next;
-				mes "[Kino Kitty]";
-				mes "Thank you, Jorti.";
-				mes "Anytime for my";
-				mes "little princess.";
+				mes "[Gato Kino]";
+				mes "Obrigado, Jorti.";
+				mes "Todo tempo para";
+				mes "minha pequena princesa.";
 				next;
-				mes "[Kino Kitty]";
-				mes "This song is about Sigfried, who was invincible, except for a single spot on his back. Just singing this reminds me of the influence women have over the world.";
+				mes "[Gato Kino]";
+				mes "Esta canção é sobre Sigfried, que era invencível, com exceção de uma única mancha nas suas costas. Só de cantar esta faz-me lembrar a influência que as mulheres têm no mundo.";
 				close;
 
 			} else {
-				mes "[Kino Kitty]";
-				mes "You want to";
-				mes "listen to a story?";
-				mes "Mmm, let me think...";
+				mes "[Gato Kino]";
+				mes "Pretende ouvir";
+				mes "uma história?";
+				mes "Hmm, deixe-me pensar...";
 				next;
-				mes "[Kino Kitty]";
-				mes "When you go venture Southwest from Morroc, you will arrive at Fortress Sandarman. Did you know that the fortress is built on a sand hill, which serves as a natural defense?";
+				mes "[Gato Kino]";
+				mes "Quando você for a Sudoeste de Morroc, chegará a Fortaleza Sandarman. Você sabia que a fortaleza é construída sobre uma colina de areia, que funciona como uma defesa natural?";
 				next;
-				mes "[Kino Kitty]";
-				mes "When you go South of Sandarman, you will see Paros Lighthouse. East from the Lighthouse, you will see Kokomo Beach. North of the beach is Papuchica Forest.";
+				mes "[Gato Kino]";
+				mes "Quando você for para o Sul de Sandarman, você verá o Farol Paros. A leste do Farol, verá a Praia Kokomo. A norte da praia verá a Floresta Papuchica.";
 				next;
-				mes "[Kino Kitty]";
-				mes "I'm not boring you, am I? I just wanted to tell you about the village of Umbala, which is above that last place I was telling you about. Have you ever been there?";
+				mes "[Gato Kino]";
+				mes "Eu não estou sendo chato com você, estou? Eu só queria te falar sobre a aldeia de Umbala, que está acima desse último lugar que te falei. Alguma vez você já esteve lá?";
 				next;
-				mes "[Kino Kitty]";
-				mes "Umbala itself is a pretty interesting place. But I'm really interested in this giant tree in Umbala. I've heard that it leads to Niffheim...";
+				mes "[Gato Kino]";
+				mes "Umbala em si é um local bastante interessante. Mas eu estou realmente interessado nesta árvore gigante em Umbala. Ouvi dizer que ele leva para Niflheim...";
 				next;
-				mes "[Kino Kitty]";
-				mes "I wonder...";
-				mes "Could that tree be Yggdrasil? Is it possible that I could meet her in the Niffheim, realm of the dead?";
+				mes "[Gato Kino]";
+				mes "Me pergunto...";
+				mes "Que tipo de árvore é a Yggdrasil? Será possível eu encontrar ela em Niflheim, o reino dos mortos?";
 				close;
 			}
 		case 2:
-			mes "[Kino Kitty]";
-			mes "Oh... Well, I have a chronic disease so I can't speak out loud. I, um, even cough up a little blood. But aside from that, I'm perfectly healthy.";
+			mes "[Gato Kino]";
+			mes "Ah... Bem, eu tenho uma doença crônica, portanto não posso falar alto. Eu, tusso até mesmo um pouco de sangue. Mas, além disso, estou perfeitamente saudável.";
 			next;
-			mes "^3355FFA look of bitterness momentarily flashed across Kino Kitty's face. He then adjusted his guitar strings and began to play, humming a low tune.^000000";
+			mes "^3355FFUm olhar de amargura momentaneamente aparece na face de Gato Kino. Ele então ajusta as cordas de seu violão e começa a tocar, cantarolando uma melodia baixa.^000000";
 			soundeffect "humming.wav",0;
 			close;
+
 		case 3:
-			mes "[Kino Kitty]";
+			mes "[Gato Kino]";
 			mes "Hmm...?";
-			mes "I wish everyone in the world were as kind and honest as you. If that were the case, there'd be no selfish fights. Hahahahaha~";
+			mes "Queria que todas as pessoas do mundo fossem tão gentis e honestas como você. Se fosse esse o caso, aí não ia haveria brigas egoístas. *Hahahahaha*";
 			close;
 		}
 
 	} else if (gef_bard_q == 30) {
-		mes "[Kino Kitty]";
-		mes "Everything will be";
-		mes "fine in the end, right?";
-		mes "I'll be okay, Jorti will be okay, and she'll be... Oh.";
+		mes "[Gato Kino]";
+		mes "Tudo vai ficar";
+		mes "bem no final, certo?";
+		mes "Eu vou ficar bem, Jorti vai ficar bem, e ela vai ser... *Oh*";
 		next;
-		mes "[Kino Kitty]";
-		mes "I'm sorry, I was just";
-		mes "muttering to myself.";
-		mes "Is there anything";
-		mes "you want from me?";
+		mes "[Gato Kino]";
+		mes "Peço desculpas, estava apenas";
+		mes "balbuciando comigo mesmo.";
+		mes "Tem alguma coisa";
+		mes "que você queira de mim?";
 		next;
 
-		switch(select("Tell me a story, or sing something~:Your voice is...:No thanks. I appreciate it, though.")) {
+		switch(select("Conte-me uma história...:Sua voz é...: Não, obrigado, no entanto, lhe aprecio.")) {
 		case 1:
-			.@random = rand(1,3);
-			if (.@random == 1) {
-				mes "[Kino Kitty]";
+			@random = rand(1,3);
+			if (@random == 1) {
+				mes "[Gato Kino]";
 				mes "Ah...";
-				mes "I do feel like singing a song. You know, every song has its own story. ^333333*Cough Cough*^000000";
+				mes "Eu sinto como se estivesse cantando uma canção. Você sabe, cada canção tem sua história. ^333333*Cof Cof*^000000";
 				next;
-				mes "^3355FFKino Kitty coughed a few times, wiping his mouth with his sleeve. As he adjusts the guitar strings, you notice small stains of blood on his sleeve. Then, he began to sing.^000000";
+				mes "^3355FFGato Kino tossiu algumas vezes, limpando a boca com a manga da camisa. Quando ele ajusta as cordas do violão, você percebe pequenas manchas de sangue na manga. Então, ele começa a cantar.^000000";
 				next;
-				mes "^D43D1ABrave hero Siegfried ";
-				mes "Vanquished a mighty dragon";
-				mes "Its blood coated his skin";
-				mes "Making it impenetrable";
-				mes "Save for one tender spot";
-				mes "Blocked by a single leaf";
-				mes "From a linden tree.^000000";
+				mes "^D43D1ABravo herói Siegfried";
+				mes "Vencido um poderoso dragão";
+				mes "Seu sangue revestindo sua pele";
+				mes "Tornando-a impenetrável";
+				mes "Exceto por um ponto";
+				mes "Fechado por uma única folha";
+				mes "De uma tília.^000000";
 				next;
-				mes "^D43D1ASiegfried was powerful";
-				mes "Clearly invincible, save for";
-				mes "those who knew of his secret.";
-				mes "In the end he was killed, by";
-				mes "A spear flung into his back";
-				mes "set into motion by the wrath";
-				mes "And jealousy of a woman.^000000";
+				mes "^D43D1ASiegfried era poderoso";
+				mes "Claramente invencível, exceto para";
+				mes "aqueles que conheciam seu segredo.";
+				mes "No final, ele foi morto, por";
+				mes "Um dardo lançado em suas costas";
+				mes "que foi colocada em movimento pela ira";
+				mes "E pelo cíume de uma mulher.^000000";
 				next;
 				mes "[Jorti]";
 				mes "Bravo, Bravo~!";
-				mes "Uncle Kino is the best Bard in the world~! Jorti likes Uncle Kino's singing!";
+				mes "Tio Kino é o melhor bardo do mundo! Jorti gosta quando o Tio Kino canta!";
 				next;
-				mes "[Kino Kitty]";
-				mes "Thank you, Jorti.";
-				mes "Anytime for my";
-				mes "little princess.";
+				mes "[Gato Kino]";
+				mes "Obrigado, Jorti.";
+				mes "Todo tempo para";
+				mes "minha pequena princesa.";
 				next;
-				mes "[Kino Kitty]";
-				mes "This song is about Sigfried, who was invincible, except for a single spot on his back. Just singing this reminds me of the influence women have over the world.";
+				mes "[Gato Kino]";
+				mes "Esta canção é sobre Sigfried, que era invencível, com exceção de uma única mancha nas suas costas. Só de cantar esta faz-me lembrar a influência que as mulheres têm no mundo.";
 				close;
 
-			} else if (.@random == 2) {
-				mes "[Kino Kitty]";
+			} else if (@random == 2) {
+				mes "[Gato Kino]";
 				mes "Ah...";
-				mes "I do feel like singing a song. You know, every song has its own story. ^333333*Cough Cough*^000000";
+				mes "Eu sinto como se estivesse cantando uma canção. Você sabe, cada canção tem sua história. ^333333*Cof Cof*^000000";
 				next;
-				mes "^3355FFKino Kitty coughed a few times, wiping his mouth with his sleeve. As he adjusts the guitar strings, you notice small stains of blood on his sleeve. Then, he began to sing.^000000";
+				mes "^3355FFGato Kino tossiu algumas vezes, limpando a boca com a manga da camisa. Quando ele ajusta as cordas do violão, você percebe pequenas manchas de sangue na manga. Então, ele começa a cantar.^000000";
 				next;
-				mes "^D43D1AI still remember feeling";
-				mes "Your shoulder's warmth";
-				mes "As I leaned on it.";
-				mes "You held my hands";
-				mes "until the final moment.^000000";
+				mes "^D43D1ALembro-me ainda o sentimento";
+				mes "Do calor de seus ombros";
+				mes "Como se estivesse inclinado sobre ela.";
+				mes "Você prendeu as minhas mãos";
+				mes "Até o último instante.^000000";
 				next;
-				mes "^D43D1ACrying on the inside,";
-				mes "I saw you off with a smile.";
-				mes "Things would never be the same,";
-				mes "But I'd remember every single";
-				mes "Moment we shared.^000000";
+				mes "^D43D1AChorando no interior,";
+				mes "Eu vi você com um largo sorriso.";
+				mes "As coisas nunca seriam as mesmas,";
+				mes "Mas eu lembro cada momento";
+				mes "único que partilhamos.^000000";
 				next;
-				mes "^D43D1AI still remember the clear chimes";
-				mes "Of the Prontera Church Bells";
-				mes "The ice cream we shared in Morroc,";
-				mes "Being chased by bats";
-				mes "In Payon dungeon.^000000";
+				mes "^D43D1ALembro-me ainda dos carrilhões desobstruídos";
+				mes "Dos sinos da Igreja de Prontera";
+				mes "Do sorvete à dois em Morroc,";
+				mes "Sendo perseguidos por morcegos";
+				mes "Na caverna de Payon.^000000";
 				next;
-				mes "^D43D1AGazing together at";
-				mes "Comodo's fireworks";
-				mes "Snuggles under the";
-				mes "Gently falling Lutie";
-				mes "Snowflakes...^000000";
+				mes "^D43D1AOlhando juntos os";
+				mes "fogos de artifício de Comodo";
+				mes "Ursos embaixo dos";
+				mes "Flocos de neve gentis";
+				mes "de Lutie...^000000";
 				next;
-				mes "^D43D1AYour beautiful soul";
-				mes "Will be with Odin.";
-				mes "When the day";
-				mes "Of the dusk comes,";
-				mes "A brand new place";
-				mes "Will be before your eyes.^000000";
+				mes "^D43D1ASua bela alma";
+				mes "Será como Odin.";
+				mes "Quando o dia";
+				mes "Do crepúsculo vem,";
+				mes "Um novo lugar";
+				mes "Aparecerá diante de seus olhos.^000000";
 				next;
-				mes "^D43D1AI will remember you forever.";
-				mes "Forget me not, call my name.";
-				mes "I'll hear you, and look to the skies.^000000";
+				mes "^D43D1AVou lembrar-lhe eternamente.";
+				mes "Não esqueçam de mim, chame meu nome.";
+				mes "Vou te ouvir, e olhe para o céu.^000000";
 				next;
 				mes "[Jorti]";
-				mes "Ah, Uncle Kino, isn't this the song my mom always sang? Sing more songs, please! Please~!";
+				mes "Ah, Tio Kino, não é essa a música que minha mãe cantava sempre? Cante mais canções, por favor! Por favor!";
 				next;
-				mes "[Kino Kitty]";
-				mes "You're right...";
-				mes "She always used to sing this song... ^333333*Cough*^000000 There are always people waiting for their beloved to return...";
+				mes "[Gato Kino]";
+				mes "Você tem razão...";
+				mes "Ela sempre cantava essa música... ^333333*Cof*^000000 Sempre há pessoas à espera do regresso da pessoa amada...";
 				next;
-				mes "[Kino Kitty]";
-				mes "If you have someone who you've left behind, someone that is waiting for you, make sure you come back to that person. You'll regret it if you don't.";
+				mes "[Gato Kino]";
+				mes "Se tiver alguém que você deixou para trás, alguém esperando por você, verifique se você voltará para aquela pessoa. Você se arrependerá se não voltar.";
 				close;
 
 			} else {
-				mes "[Kino Kitty]";
-				mes "You want to";
-				mes "listen to a story?";
-				mes "Mmm, let me think...";
+				mes "[Gato Kino]";
+				mes "Pretende ouvir";
+				mes "uma história?";
+				mes "Hmm, deixe-me pensar...";
 				next;
-				mes "[Kino Kitty]";
-				mes "When you go venture Southwest from Morroc, you will arrive at Fortress Sandarman. Did you know that the fortress is built on a sand hill, which serves as a natural defense?";
+				mes "[Gato Kino]";
+				mes "Quando você for a Sudoeste de Morroc, chegará a Fortaleza Sandarman. Você sabia que a fortaleza é construída sobre uma colina de areia, que funciona como uma defesa natural?";
 				next;
-				mes "[Kino Kitty]";
-				mes "When you go South of Sandarman, you will see Paros Lighthouse. East from the Lighthouse, you will see Kokomo Beach. North of the beach is Papuchica Forest.";
+				mes "[Gato Kino]";
+				mes "Quando você for para o Sul de Sandarman, você verá o Farol Paros. A leste do Farol, verá a Praia Kokomo. A norte da praia verá a Floresta Papuchica.";
 				next;
-				mes "[Kino Kitty]";
-				mes "I'm not boring you, am I? I just wanted to tell you about the village of Umbala, which is above that last place I was telling you about. Have you ever been there?";
+				mes "[Gato Kino]";
+				mes "Eu não estou sendo chato com você, estou? Eu só queria te falar sobre a aldeia de Umbala, que está acima desse último lugar que te falei. Alguma vez você já esteve lá?'";
 				next;
-				mes "[Kino Kitty]";
-				mes "Umbala itself is a pretty interesting place. But I'm really interested in this giant tree in Umbala. I've heard that it leads to Niffheim...";
+				mes "[Gato Kino]";
+				mes "Umbala em si é um local bastante interessante. Mas eu estou realmente interessado nesta árvore gigante em Umbala. Ouvi dizer que ele leva para Niflheim...";
 				next;
-				mes "[Kino Kitty]";
-				mes "I wonder...";
-				mes "Could that tree be Yggdrasil? Is it possible that I could meet her in the Niffheim, realm of the dead?";
+				mes "[Gato Kino]";
+				mes "Me pergunto...";
+				mes "Que tipo de árvore é a Yggdrasil? Será possível eu encontrar ela em Niflheim, o reino dos mortos?";
 				close;
 			}
+
 		case 2:
-			mes "[Kino Kitty]";
-			mes "Oh... Well, I have a chronic disease so I can't speak out loud. I, um, even cough up a little blood. But aside from that, I'm perfectly healthy.";
+			mes "[Gato Kino]";
+			mes "Ah... Bem, eu tenho uma doença crônica, portanto não posso falar alto. Eu, tusso até mesmo um pouco de sangue. Mas, além disso, estou perfeitamente saudável.";
 			next;
-			mes "^3355FFA look of bitterness momentarily flashed across Kino Kitty's face. He then adjusted his guitar strings and began to play, humming a low tune.^000000";
+			mes "^3355FFUm olhar de amargura momentaneamente aparece na face de Gato Kino. Ele então ajusta as cordas de seu violão e começa a tocar, cantarolando uma melodia baixa.^000000";
 			soundeffect "humming.wav",0;
 			close;
+
 		case 3:
-			mes "[Kino Kitty]";
+			mes "[Gato Kino]";
 			mes "Hmm...?";
-			mes "I wish everyone in the world were as kind and honest as you. If that were the case, there'd be no selfish fights. Hahahahaha~";
+			mes "Queria que todas as pessoas do mundo fossem tão gentis e honestas como você. Se fosse esse o caso, aí não ia haveria brigas egoístas. *Hahahahaha*";
 			close;
 		}
 
 	} else if (gef_bard_q > 12 && gef_bard_q < 16) {
-		mes "[Kino Kitty]";
-		mes "Errende must be waiting for you. Although others would be in anguish if they were made to wait, and people like Errende and me wouldn't mind, it's still more polite to hurry when you can.";
+		mes "[Gato Kino]";
+		mes "Errante deve estar esperando por você. Embora outros estivessem angustiados se ficassem esperando, o povo como Errante é mais delicado com pressa quanto pode.";
 		close;
 
 	} else if (gef_bard_q == 12) {
-		mes "[Kino Kitty]";
-		mes "I guess you've met Mr. Sketzi.";
-		mes "By the way, why do you have that look on your face? Didn't find what you were looking for? Haha, would you show me your left hand?";
+		mes "[Gato Kino]";
+		mes "Acho que você conhece o Sr. Sketzi";
+		mes "Dessa forma, porque você tem que olhar na cara? Não encontrou o que queria? Haha, ia me mostrar a mão esquerda?";
 		next;
 
-		if(select("Here you go.:Um... No!")==1) {
-			mes "[Kino Kitty]";
-			mes "Well, while you were gone,";
-			mes "I remembered the original lyrics to the song. I guess they really are important.";
+		if (select("Aqui você vai.:Hm... Não!")==1) {
+			mes "[Gato Kino]";
+			mes "Bem, enquanto você estava desaparecido,";
+			mes "Eu lembrava a letra original da canção. Acho que elas são realmente importantes.";
 			next;
-			mes "[Kino Kitty]";
-			mes "Here, let me give you a letter with the lyrics to Errende. I should also give you my seal so that Errende will know it's me. You don't mind, do you?";
+			mes "[Gato Kino]";
+			mes "Aqui, deixe-me dar-lhe uma carta com as letras para Errante. Eu devia dar-lhe também o meu selo de modo que Errante saiba que ele está comigo. Você não se importa, não é?";
 			next;
 
-			switch(select("Yes, I mind!:No, I don't mind.")) {
+			switch(select("Sim, me importo!:Não, não me importo.")) {
 
 			case 1:
-				mes "[Kino Kitty]";
-				mes "Ah, right.";
-				mes "You already have a seal marked by Errende. Oh well, if you don't want it, what can I do?";
+				mes "[Gato Kino]";
+				mes "Ah, certo.";
+				mes "Você já tem um selo marcado por Errante. Ah sim, se você não quer, o que posso fazer?";
 				gef_bard_q = 13;
 				close;
 			case 2:
-				mes "[Kino Kitty]";
-				mes "Now, let's see...";
-				mes "How is it supposed to go?";
+				mes "[Gato Kino]";
+				mes "Vamos ver...";
+				mes "Como que começa?";
 				mes "...Lu lu lu...";
 				mes "...La la la...";
 				next;
-				mes "^D43D1AAt One, I fall in love.";
-				mes "At Two, you give me your smile.";
-				mes "At Three, I adore your touch.";
-				mes "At Four, a tender kiss.";
-				mes "At Five, we change our minds.";
-				mes "A petal scatters through the air.^000000";
+				mes "^D43D1AEm um, eu fico apaixonado.";
+				mes "Em dois, você me mostra um sorriso.";
+				mes "Em três, eu adoro seu toque.";
+				mes "Em quatro, um beijo macio.";
+				mes "Em cinco, vamos mudar nossas mentes.";
+				mes "Uma pétala cai pelo ar.^000000";
 				next;
-				mes "^D43D1AAt Six, I fall in love~";
-				mes "At Seven, you fall in love~";
-				mes "At Eight, we're both in love.";
-				mes "At Nine, you know my heart.";
-				mes "At Ten, I know you've";
-				mes "been waiting for me.^000000";
+				mes "^D43D1AEm seis, eu fico apaixonado.";
+				mes "Em sete, você se apaixona.";
+				mes "Em oito, estamos ambos no amor.";
+				mes "Em nove, você conhece meu coração.";
+				mes "Em dez, eu sei que você";
+				mes "está esperando por mim.^000000";
 				next;
-				mes "^D43D1AAt Eleven, a precious";
-				mes "Whisper: 'Will you marry me?'";
-				mes "At Twelve, our two hearts";
-				mes "Are one. 12 petals, our";
-				mes "Love finally blossoms.^000000";
+				mes "^D43D1AEm onze, um sussurro";
+				mes "precioso: 'Você quer casar comigo?'";
+				mes "Em doze, os nossos dois corações";
+				mes "são um. 12 pétalas, o nosso";
+				mes "Amor finalmente floresce.^000000";
 				next;
 				specialeffect2 EF_POISONREACT2;
-				mes "^3355FFAfter the song, Kino smiles at you. You feel a sharp pain on your wrist. On the spot where the silver crescent was, you see a tiny black cross.^000000";
+				mes "^3355FFApós a canção, Kino sorri para você. Você sente uma dor aguda em seu pulso. No local onde a prata foi crescente, você verá uma pequena cruz preta.^000000";
 				next;
-				mes "[Kino Kitty]";
-				mes "So, how do you like it? Well, I'm certain that Errende will love it for sure. Hahahahaha~ ^333333*Cough Cough*^000000";
+				mes "[Gato Kino]";
+				mes "Então, como você gosta? Bem, estou certo de que Errante vai amar, com certeza. *Hahahahaha* ^333333*Cof Cof*^000000";
 				next;
-				mes "[Kino Kitty]";
-				mes "I want to apologize.";
-				mes "I didn't mean to make you wait, but I just remembered the old lyrics to the song. Now, hurry to Errende, I'm sure he's waiting.";
+				mes "[Gato Kino]";
+				mes "Quero pedir desculpas.";
+				mes "Eu não queria fazer você esperar, mas eu só lembrava a letra para a canção antiga. Agora, vai até Errante, ele deve estar a te esperar.";
 				next;
-				mes "^3355FFKino Kitty hands you a letter that is labeled 'Dear Errende'";
-				mes "on the front.^000000";
-				gef_bard_q = 14;
+				mes "^3355FFGato Kino lhe dá em mãos uma carta com o escrito 'Caro Errante'";
+				mes "na frente.^000000";
+				set gef_bard_q,14;
 				close;
 			}
 		} else {
-			mes "[Kino Kitty]";
+			mes "[Gato Kino]";
 			mes "Hmmm...?";
-			mes "There's no reason to be scared.";
-			mes "I mean, I won't bite or anything.";
+			mes "Não há razão para ter medo.";
+			mes "Quer dizer, eu nem mordo.";
 			close;
 		}
 
 	} else if (gef_bard_q == 10) {
-		mes "[Kino Kitty]";
-		mes "Didn't you leave already?";
-		mes "I'm sure you can find the lyrics in a bookstore in Juno.";
+		mes "[Gato Kino]";
+		mes "Você já não saiu?";
+		mes "Tenho certeza que você pode encontrar as letras em uma livraria em Juno.";
 		next;
-		mes "[Kino Kitty]";
-		mes "Well, I'm sure Errende knows more about bookstores, so he can probably tell you where to look in Juno. Why don't you ask Errende?";
+		mes "[Gato Kino]";
+		mes "Bem, tenho certeza de que Errante sabe mais sobre livrarias, de forma que ele possa dizer-lhe para onde olhar em Juno. Por que não pergunta a ele?";
 		next;
-		mes "[Kino Kitty]";
-		mes "If you don't mind, please come again and listen to this poor Bard's songs. I'll prepare a song just for you.";
+		mes "[Gato Kino]";
+		mes "Se você não se importar, entre novamente e escute as músicas deste pobre bardo. Vou preparar uma canção especialmente para você.";
 		next;
-		mes "[Kino Kitty]";
-		mes "Don't worry about my health. I'm a Bard at heart, and I can't help but sing for my audience.";
+		mes "[Gato Kino]";
+		mes "Não se preocupe com a minha saúde. Eu sou um bardo de coração, e não posso deixar de cantar para meu público-alvo.";
 		next;
-		mes "[Kino Kitty]";
-		mes "Also, I'd like to thank you for helping Errende. He may be a little whiny, but he's a good person.";
+		mes "[Gato Kino]";
+		mes "Além disso, eu gostaria de agradecer por ajudar Errante. Ele pode ser um pouco desafinado, mas ele é uma boa pessoa.";
 		close;
 
 	} else if (gef_bard_q == 11) {
-		mes "[Kino Kitty]";
-		mes "A silver seal...?";
-		mes "Well, welcome to the wanderer's club. I must say, the silver crescent suits you.";
+		mes "[Gato Kino]";
+		mes "Um selo prata?";
+		mes "Bem-vindo ao clube dos nômades. Devo dizer, onde a prata veste você.";
 		next;
-		mes "[Kino Kitty]";
-		mes "If you have that seal, Mr. Sketzi will permit you to read his books full of Norse songs.";
+		mes "[Gato Kino]";
+		mes "Se você tem esse selo, o Sr. Sketzi irá permitir que você leia seus livros cheio de canções escandinavas.";
 		close;
 
 	} else if (gef_bard_q > 19 && gef_bard_q < 28) {
-		mes "[Kino Kitty]";
-		mes "What business";
-		mes "do you have with me,";
-		mes "my friend?";
+		mes "[Gato Kino]";
+		mes "Que negócio";
+		mes "você tem comigo,";
+		mes "meu amigo?";
 		next;
 		if (gef_bard_q == 24) {
-			mes "^3355FFYou gave candy to the crying little girl, and relate the problem with the lyrics to Kino Kitty.^000000";
+			mes "^3355FFVocê deu o doce para a pequena menina, que estava chorando e relaciona o problema com a letra de Gato Kino.^000000";
 			next;
-			mes "[Kino Kitty]";
+			mes "[Gato Kino]";
 			mes "Hmm...";
-			mes "I'm insulted that Errende does not like the words I wrote for 'At One, I Fall in Love.' But, I suppose he is a romantic at heart.";
+			mes "Estou ofendido porque Errante não gostou das palavras que escrevi para 'Em um, eu fico apaixonado'. Mas, eu suponho que ele é um romântico de coração.";
 			next;
 			mes "[" + @name$ + "]";
-			mes "So...";
-			mes "Do you know the";
-			mes "original words";
-			mes "for the song?";
+			mes "Então...";
+			mes "você conhece a";
+			mes "letra original";
+			mes "dessa canção?";
 			next;
-			mes "[Kino Kitty]";
-			mes "The original lyrics were horrible. There's not enough room in my mind to remember so romantic nonsense. ^333333*Cries*...^000000";
+			mes "[Gato Kino]";
+			mes "As letras originais eram horríveis. Não há espaço suficiente na minha mente para lembre-se tão romântico disparate. ^333333*Lágrimas*...^000000";
 			next;
-			mes "[Kino Kitty]";
-			mes "Romance is for foolish dreamers!";
-			mes "I refuse to sing or even remember such vapid lyrics!";
+			mes "[Gato Kino]";
+			mes "Romance é para tolos sonhadores!";
+			mes "Recuso-me a cantar, quanto mais lembrar dessa letra sem graça!";
 			next;
 			mes "[Jorti]";
-			mes "U-uncle Kino";
-			mes "You're scaring me.";
-			mes "Please don't yell!";
-			mes "It makes me want";
-			mes "to cry...";
+			mes "T-tio Kino";
+			mes "Você está me assustando.";
+			mes "Por favor, não grite!";
+			mes "Faz-me ter vontade";
+			mes "de chorar...";
 			next;
-			mes "[Kino Kitty]";
-			mes "Oh...";
-			mes "I'm sorry, princess.";
-			mes "It won't happen again.";
-			mes "Your Unclde Kino will";
-			mes "try to be good";
-			mes "from now on.";
+			mes "[Gato Kino]";
+			mes "Ah...";
+			mes "Desculpe, princesa.";
+			mes "Isso não acontecerá novamente.";
+			mes "Seu tio Kino vai";
+			mes "tentar ser bom";
+			mes "a partir de agora.";
 			next;
-			mes "[Kino Kitty]";
+			mes "[Gato Kino]";
 			mes "*Sigh...*";
-			mes "Alright, listen.";
+			mes "Tudo bem, escute.";
 			next;
-			mes "[Kino Kitty]";
-			mes "You'll need an old book of edda lyrics for the original words to the song. All the new books no longer contain the original version.";
+			mes "[Gato Kino]";
+			mes "Você precisará de um livro antigo das letras de Edda para achar as letrar originais dessa canção. Todos os livros novos não contêm a versão original.";
 			next;
-			mes "[Kino Kitty]";
-			mes "I wonder...";
-			mes "How did Errende happen to know the original lyrics? In any case, I'm sorry about all this. I suppose I'm a little jaded.";
+			mes "[Gato Kino]";
+			mes "Me pergunto...";
+			mes "Como Errante conhece as letras originais? Em todo caso, sinto muito por tudo isso. Devo estar um pouco cansado.";
 			next;
-			mes "[Kino Kitty]";
-			mes "You know, maybe you should go to Juno. There's a small book store on the book street, and you can probably find the song in that store.";
+			mes "[Gato Kino]";
+			mes "Sabe, talvez você deva ir para Juno. Há uma pequena livraria na Rua do Livro e você provavelmente poderá encontrar a canção nessa loja.";
 			next;
-			mes "[Kino Kitty]";
-			mes "^333333^333333*Cough Cough*^000000^000000";
-			mes "Wh-why do I have to suffer? Are my final days as a Bard on this earth soon approaching? I feel so pathetic...";
-			gef_bard_q = 10;
+			mes "[Gato Kino]";
+			mes "^333333^333333*Cof Cof*^000000^000000";
+			mes "Po-porque tenho que sofrer? Será os meus últimos dias como bardo nessa terra se aproximando? Sinto-me tão patético...";
+			set gef_bard_q,10;
 			close;
 		} else {
-			switch(select("Tell me a story.:Sing a song.:Nothing.")) {
+			switch(select("Conte uma história.:Toque uma canção.:Não faça nada.")) {
+
 			case 1:
-				mes "[Kino Kitty]";
-				mes "A story? Mmmm...";
-				mes "My throat hurts,";
-				mes "but if you listen,";
-				mes "I will do my best";
-				mes "to relate a tale.";
+				mes "[Gato Kino]";
+				mes "Uma história? Hmmm...";
+				mes "Minha garganta dói,";
+				mes "mas, se você escutar,";
+				mes "farei o meu melhor";
+				mes "para relatar um conto.";
 				next;
-				mes "[Kino Kitty]";
-				mes "Do you know how Baldur, son of Odin, died? There is a story involving his obsessive mother";
-				mes "and the wicked god, Loki.";
+				mes "[Gato Kino]";
+				mes "Sabes como Baldur, filho de Odin, morreu? Há uma história que envolve sua obsessiva mãe";
+				mes "e o ímpio deus Loki.";
 				next;
-				mes "[Kino Kitty]";
-				mes "One night, Baldur had a nightmare where he was cast into the pit of Hell. Upon hearing of this, Baldur's mother Frigg was stricken with panic.";
+				mes "[Gato Kino]";
+				mes "Uma noite, Baldur teve um pesadelo onde ele foi colocado sobre o buraco do inferno. Após ele ter contado esse sonho, a mãe dele, Fricca, entrou em pânico.";
 				next;
-				mes "[Kino Kitty]";
-				mes "To prevent tragedy from befalling her son, she made every single object on earth to agree to an oath where they would not harm Baldur.";
+				mes "[Gato Kino]";
+				mes "Para impedir que a tragédia acontecesse com seu filho, ela tornou cada único objeto na Terra a concordar com um juramento que não iriam prejudicar Baldur.";
 				next;
-				mes "[Kino Kitty]";
-				mes "^333333*Cough Cough*^000000 And they all got together to ^333333*Wheeeeze*^000000 celebr--^333333^333333*Cough*^000000^000000...";
+				mes "[Gato Kino]";
+				mes "^333333*Cof Cof*^000000 E todos se uniram para ^333333*Wheeeeze*^000000 celebr--^333333^333333*Cof*^000000^000000...";
 				next;
 				mes "[Jorti]";
-				mes "Uncle Kino...?";
-				mes "Are you okay?....?";
+				mes "Tio Kino?";
+				mes "Você está bem?";
 				next;
-				mes "[Kino Kitty]";
+				mes "[Gato Kino]";
 				mes "...Hah...";
 				mes "...Hah...";
-				mes "I'm sorry, but I don't think I can speak for much longer.";
+				mes "Desculpe, mas creio que não poderei falar por muito tempo.";
 				close;
 			case 2:
-				mes "[Kino Kitty]";
-				mes "Sorry, but I don't feel like singing at the moment. I hope you understand. I want to sing the last song of my life for Jorti...";
+				mes "[Gato Kino]";
+				mes "Desculpe, não me sinto com forças para cantar nesse momento. Espero que compreendam. Quero cantar a última música da minha vida para Jorti...";
 				close;
 			case 3:
-				mes "[Kino Kitty]";
-				mes "You have no";
-				mes "business with me?";
-				mes "What a shame.";
+				mes "[Gato Kino]";
+				mes "Você não tem";
+				mes "nenhum negócio comigo?";
+				mes "Que lástima.";
 				close;
 			}
 		}
 
 	} else {
-		mes "^D43D1AEven in the sandy wind,";
-		mes "Even in the pouring rain,";
-		mes "Even in the falling snow,";
-		mes "I know it's you~^000000";
+		mes "^D43D1AMesmo depois de um vento arenoso,";
+		mes "Mesmo na copiosa chuva,";
+		mes "Mesmo na queda de neve,";
+		mes "Sei que é você.^000000";
 		next;
-		mes "[Mysterious Bard]";
+		mes "[Bardo Misterioso]";
 		mes "...";
 		next;
-		mes "[Mysterious Bard]";
+		mes "[Bardo Misterioso]";
 		mes "...";
 		mes "......";
 		next;
-		mes "[Mysterious Bard]";
-		mes "My apologies,";
-		mes "^333333*Cough*^000000 but this is";
-		mes "a private performance";
-		mes "for my little";
-		mes "princess.";
+		mes "[Bardo Misterioso]";
+		mes "Minhas desculpas,";
+		mes "^333333*Cof*^000000 mas esta é";
+		mes "uma performance privada";
+		mes "pra minha pequena";
+		mes "princesa.";
 		next;
 
-		if(select("Um, was that a love song?:I'm sorry for interrupting you.")==1) {
-			mes "[Mysterious Bard]";
-			mes "A...";
-			mes "Love song?!";
+		if (select("Hm, era uma canção de amor?:Desculpe-me por interromper-lhe.")==1) {
+			mes "[Bardo Misterioso]";
+			mes "Uma...";
+			mes "Canção de amor?";
 			next;
-			mes "[Mysterious Bard]";
-			mes "Love songs are for fools who have never known true love, or never had their hearts broken. Happy songs are fine, but I refuse to sing nonsense!";
+			mes "[Bardo Misterioso]";
+			mes "Canções de amor são para tolos que nunca conheceram o verdadeiro amor, ou nunca tiveram seus corações partidos. Canções felizes são ótimas, mas me recuso a tocar disparates!";
 			next;
 			mes "[Jorti]";
 			mes "Waaaah~!";
-			mes "Uncle Kino,";
-			mes "I'm scared!";
-			mes "I wanna see";
-			mes "my mommy...!";
-			mes "*Cries*";
+			mes "Tio Kino,";
+			mes "Estou com medo!";
+			mes "Eu quero ver";
+			mes "a minha mãe!";
+			mes "*Lágrimas*";
 			next;
-			mes "[Mysterious Bard]";
-			mes "There, there,";
-			mes "princess. Don't cry.";
-			mes "Everything's okay.";
+			mes "[Bardo Misterioso]";
+			mes "Vá, vá,";
+			mes "princesa. Não chore.";
+			mes "Está tudo bem.";
 			next;
-			mes "[Mysterious Bard]";
+			mes "[Bardo Misterioso]";
 			if (BaseClass == Job_Swordman) {
-				mes "There's no reason to be scared. The scary people with swords only use them on monsters, okay?";
+				mes "Não há nenhuma razão para ter medo. Pessoas assustadoras com espadas só usam-nas em monstros, ok?";
 			} else if (BaseClass == Job_Acolyte) {
-				mes "You don't need to be scared, that person is a servant of God, okay?";
+				mes "Você não precisa ter medo, essa pessoa é um servo de Deus, ok?";
 			} else if (Class == Job_Thief || Class == Job_Rogue) {
-				mes "There's no reason to be afraid of this riffraff, your Uncle Kino is here, okay?";
+				mes "Não há nenhuma razão para ter medo deste mundo dos mortos, seu tio Kino está aqui, ok?";
 			} else if (BaseClass == Job_Assassin) {
-				mes "There's no reason to be afraid. I know that person looks scary, but you're a good girl, so you'll be okay.";
+				mes "Não há nenhuma razão para ter medo. Sei que esta pessoa parece assustadora, mas você é uma boa menina, então você vai ficar bem.";
 			} else if (BaseClass == Job_Blacksmith) {
-				mes "There's no reason to be scared, honey. It's just a Blacksmith.";
+				mes "Não há nenhuma razão para ter medo, querida. É apenas um ferreiro.";
 			} else {
-				mes "There's no reason to be scared. See...? That person won't hurt you.";
+				mes "Não há nenhuma razão para ter medo. Vê.? Essa pessoa não vai te machucar.";
 			}
 			next;
 			mes "[" + @name$ + "]";
-			mes "Um...";
-			mes "^333333(Wasn't the little girl";
-			mes "scared by your outburst...?)^000000";
+			mes "Hm...";
+			mes "^333333(Não foi a menina assustada";
+			mes "pelo seu afloramento ...?)^000000";
 			close;
 		} else {
 			if (gef_bard_q == 2) {
-				mes "[Mysterious Bard]";
-				mes "You're such a kind, young person. I will remember your name. I would much appreciate it if you would also remember mine.";
+				mes "[Bardo Misterioso]";
+				mes "És uma pessoa jovem. Vou lembrar de seu nome. Gostaria muito que você me lembrasse também o meu.";
 				next;
-				mes "[Mysterious Bard]";
-				mes "I am known as Kino Kitty. I am a wandering poet who wishes to rediscover wishes and dreams.";
+				mes "[Bardo Misterioso]";
+				mes "Sou conhecido como Gato Kino. Sou um poeta errante, que deseja reencontrar desejos e sonhos.";
 				next;
-				mes "[Kino Kitty]";
-				mes "When next we meet, I will tell you what I have heard and experienced. That is, I am willing to spend my time with you.";
+				mes "[Gato Kino]";
+				mes "Quando nos encontrarmos novamente, vou te contar o que ouvi e experiementei. Ou seja, estou disposto a gastar o meu tempo com você.";
 				gef_bard_q = 22;
 				close;
 
 			} else if (gef_bard_q == 3) {
-				mes "[Mysterious Bard]";
-				mes "You're such a kind, young person. I will remember your name. I would much appreciate it if you would also remember mine.";
+				mes "[Bardo Misterioso]";
+				mes "És uma pessoa jovem. Vou lembrar de seu nome. Gostaria muito que você me lembrasse também o meu.";
 				next;
-				mes "[Mysterious Bard]";
-				mes "I am known as Kino Kitty. I am a wandering poet who wishes to rediscover wishes and dreams.";
+				mes "[Bardo Misterioso]";
+				mes "Sou conhecido como Gato Kino. Sou um poeta errante, que deseja reencontrar desejos e sonhos.";
 				next;
-				mes "[Kino Kitty]";
-				mes "When next we meet, I will tell you what I have heard and experienced. That is, I am willing to spend my time with you.";
+				mes "[Gato Kino]";
+				mes "Quando nos encontrarmos novamente, vou te contar o que ouvi e experiementei. Ou seja, estou disposto a gastar o meu tempo com você.";
 				gef_bard_q = 23;
 				close;
 
 			} else if (gef_bard_q == 4) {
-				mes "[Mysterious Bard]";
-				mes "Oh, you're most admirable. You truly do respect Bards, don't you?";
+				mes "[Bardo Misterioso]";
+				mes "Ah, você é muito admirável. Você realmente respeita os bardos, não é?";
 				next;
-				mes "[Mysterious Bard]";
-				mes "Now that I think about it, are you look for anything, or is there a reason you wish to speak to me?";
+				mes "[Bardo Misterioso]";
+				mes "Agora que pensei nisso, se você olhar para alguma coisa, ou se há uma razão para você querer falar comigo?";
 				next;
 
-				if(select("I'm looking for Kino Kitty...:Nothing, really.")==1) {
-					mes "[Kino Kitty]";
-					mes "How do you";
-					mes "know my name?";
-					mes "Ah, I'm flattered";
-					mes "that my reputation";
-					mes "precedes me.";
+				if (select("Estou procurando Gato Kino...:Não há nada mesmo.")==1) {
+					mes "[Gato Kino]";
+					mes "Como você";
+					mes "sabe meu nome?";
+					mes "Ah, estou lisonjeado";
+					mes "que a minha reputação";
+					mes "me precede.";
 					next;
-					mes "^3355FFYou give some candy to the crying girl and relate your tale regarding the lyrics for the song 'At One, I Fall in Love.'^000000";
+					mes "^3355FFVocê dá um doce para a menina que está chorando e relata o seu conto no que se refere à letra para a canção 'Em um, eu fico apaixonado'.^000000";
 					next;
-					mes "[Kino Kitty]";
+					mes "[Gato Kino]";
 					mes "Hmm...";
-					mes "I'm insulted that Errende does not like the words I wrote for 'At One, I Fall in Love.' But, I suppose he is a romantic at heart.";
+					mes "Estou ofendido porque Errante não gostou das palavras que escrevi para 'Em um, eu fico apaixonado'. Mas, eu suponho que ele é um romântico de coração.";
 					next;
 					mes "[" + @name$ + "]";
-					mes "So...";
-					mes "Do you know the";
-					mes "original words";
-					mes "for the song?";
+					mes "Então...";
+					mes "você conhece a";
+					mes "letra original";
+					mes "dessa canção?";
 					next;
-					mes "[Kino Kitty]";
-					mes "The original lyrics were horrible. There's not enough room in my mind to remember so romantic nonsense. ^333333*Cries*...^000000";
+					mes "[Gato Kino]";
+					mes "As letras originais eram horríveis. Não há espaço suficiente na minha mente para lembre-se tão romântico disparate. ^333333*Lágrimas*...^000000";
 					next;
-					mes "[Kino Kitty]";
-					mes "Romance is for foolish dreamers! I refuse to sing or even remember such vapid lyrics!";
+					mes "[Gato Kino]";
+					mes "Romance é para tolos sonhadores! Recuso-me a cantar, quanto mais lembrar dessa letra sem graça!";
 					next;
 					mes "[Jorti]";
-					mes "U-uncle Kino";
-					mes "You're scaring me.";
-					mes "Please don't yell!";
-					mes "It makes me want";
-					mes "to cry...";
+					mes "T-tio Kino";
+					mes "Você está me assustando.";
+					mes "Por favor, não grite!";
+					mes "Faz-me ter vontade";
+					mes "de chorar...";
 					next;
-					mes "[Kino Kitty]";
-					mes "Oh...";
-					mes "I'm sorry, princess. It won't happen again. Your Unclde Kino will try to be good from now on.";
+					mes "[Gato Kino]";
+					mes "Ah...";
+					mes "Desculpe, princesa. Isso não acontecerá novamente. Seu tio Kino vai tentar ser bom a partir de agora.";
 					next;
-					mes "[Kino Kitty]";
+					mes "[Gato Kino]";
 					mes "*Sigh...*";
-					mes "Alright, listen.";
+					mes "Tudo bem, escute.";
 					next;
-					mes "[Kino Kitty]";
-					mes "You'll need an old book of edda lyrics for the original words to the song. All the new books no longer contain the original version.";
+					mes "[Gato Kino]";
+					mes "Você precisará de um livro antigo das letras de Letras de Odes para achar as letrar originais dessa canção. Todos os livros novos não contêm a versão original.";
 					next;
-					mes "[Kino Kitty]";
-					mes "I wonder...";
-					mes "How did Errende happen to know the original lyrics? In any case, I'm sorry about all this. I supposed I'm a little jaded.";
+					mes "[Gato Kino]";
+					mes "Me pergunto...";
+					mes "Como Errante conhece as letras originais? Em todo caso, sinto muito por tudo isso. Devo estar um pouco cansado.";
 					next;
-					mes "[Kino Kitty]";
-					mes "You know, maybe you should go to Juno. There's a small book store on the book street, and you can probably find the song in that store.";
+					mes "[Gato Kino]";
+					mes "Sabe, talvez você deva ir para Juno. Há uma pequena livraria na Rua do Livro, e você provavelmente poderá encontrar a canção nessa loja.";
 					next;
-					mes "[Kino Kitty]";
-					mes "^333333^333333*Cough Cough*^000000^000000";
-					mes "Wh-why do I have to suffer? Are my final days as a Bard on this earth soon approaching? I feel so pathetic...";
+					mes "[Gato Kino]";
+					mes "^333333^333333*Cof Cof*^000000^000000";
+					mes "Po-porque tenho que sofrer? Será os meus últimos dias como bardo nessa terra se aproximando? Sinto-me tão patético...";
 					gef_bard_q = 10;
 					close;
 
 				} else {
-					mes "[Mysterious Bard]";
-					mes "Really now?";
-					mes "That's strange.";
-					mes "You adventurers are always one some kind of adventure, aren't you? I mean, that's the very definition of the word.";
+					mes "[Bardo Misterioso]";
+					mes "Realmente, e agora?";
+					mes "É estranho.";
+					mes "Vocês, aventureiros, são do tipo que gosta de aventura sempre, não? Quer dizer, essa é a própria definição da palavra.";
 					close;
 				}
 
 			} else {
 				if (Sex) {
-					mes "[Kino Kitty]";
-					mes "You're such a nice young man. I will remember your name. I would much appreciate it if you would also remember mine.";
+					mes "[Gato Kino]";
+					mes "És uma pessoa jovem. Vou lembrar de seu nome. Gostaria muito que você me lembrasse também o meu.";
 					next;
-					mes "[Mysterious Bard]";
-					mes "I am known as Kino Kitty. I am a wandering poet who wishes to rediscover wishes and dreams.";
+					mes "[Bardo Misterioso]";
+					mes "Sou conhecido como Gato Kino. Sou um poeta errante, que deseja reencontrar desejos e sonhos.";
 					next;
-					mes "[Kino Kitty]";
-					mes "When next we meet, I will tell you what I have heard and experienced. That is, I am willing to spend my time with you.";
+					mes "[Gato Kino]";
+					mes "Quando nos encontrarmos novamente, vou te contar o que ouvi e experiementei. Ou seja, estou disposto a gastar o meu tempo com você.";
 					gef_bard_q = 20;
 					close;
 
 				} else {
-					mes "[Mysterious Bard]";
-					mes "Ah, it is a privilege to meet a noble woman such as yourself. By your leave, I shall give you my name.";
+					mes "[Bardo Misterioso]";
+					mes "Ah, é um privilégio satisfazer uma mulher nobre, como você. Com sua licença, vou dar-lhe o meu nome.";
 					next;
-					mes "[Mysterious Bard]";
-					mes "My lady, fair as wisteria, whose beauty rivals that of the goddess Freya, let me introduce myself as the poor poet who wanders the earth, Kino Kitty. I hope you remember me.";
+					mes "[Bardo Misterioso]";
+					mes "Minha senhora, justa como glicínias, cuja beleza dos seus rivais da deusa Freya, deixe-me apresentar-me como o pobre poeta que vagueia pela terra, Gato Kino. Eu espero que você se lembre de mim.";
 					gef_bard_q = 20;
 					close;
 				}
@@ -2053,693 +2018,695 @@ morocc,134,111,3	script	Bard#3	2_M_BARD_ORIENT,{
 	}
 }
 
-morocc,132,111,3	script	Little Girl#Jorti	4_F_KID2,{
+morocc,132,111,3	script	Pequena Garota#Jorti	4_F_KID2,{
 	if (gef_bard_q > 9 && gef_bard_q < 30) {
 		mes "[Jorti]";
-		mes "Jorti tries not to cry anymore because it hurts Uncle Kino and then he coughs up more blood.";
+		mes "Jorti tenta parar de chorar porque isso dói no Tio Kino e, em seguida, ele tosse mais sangue.";
 		next;
 		mes "[Jorti]";
-		mes "I miss my mommy a lot, but I'm worried, it makes Uncle Kino worry a lot too.";
+		mes "Sinto muita falta de minha mãe, mas estou preocupada, e isso faz com que Tio Kino se preocupe muito também.";
 		next;
 		mes "[Jorti]";
-		mes "I don't see my mommy and daddy aren't here anymore, and I don't want Uncle Jorti to go away either.";
+		mes "Eu não vejo meu pai e minha mãe não estão mais aqui, e não quero que o tio Kino vá embora, pra longe.";
 		next;
 		mes "[Jorti]";
-		mes "Um, I don't remember my daddy, but mommy lives far away, somewhere near the sky. That's what Uncle Kino says.";
+		mes "Hum, eu não lembro o meu pai, mas minha mãe vive longe, bem perto do céu. Isso é o que diz o tio Kino.";
 		next;
 		mes "[Jorti]";
-		mes "U-Uncle Kino says we can't go see her yet because there are no flying boats yet...";
+		mes "T-tio Kino diz que não podemos ir vê-la porque ainda não há barcos que voem...";
 		close;
 
 	} else if (gef_bard_q == 30) {
 		mes "[Jorti]";
 		mes "La la la...";
 		mes "La la la...";
-		mes "Jorti doesn't cry anymore!";
-		mes "Jorti is going to enjoy Uncle Kino's songs and stories for as long as she can!";
+		mes "Jorti, não chores mais!";
+		mes "Jorti está indo desfrutar das canções e histórias do Tio Kino durante o tempo que ela conseguir!";
 		next;
 		mes "[Jorti]";
-		mes "The songs Uncle Kino sings are ones that my mommy used to sing. She's not here, but maybe we can visit her someday!";
+		mes "As canções que o tio Kino canta são aquelas que a minha mãe cantava. Ela não está aqui, mas talvez a gente possa visitá-la algum dia!";
 		next;
 		mes "[Jorti]";
-		mes "Hey... The shiny black cross on your hand means you're a friend of Uncle Kino's. So that means, you're my friend too!";
+		mes "Ei... A brilhante cruz preta em sua mão significa que você é um amigo do Tio Kino. Então isso quer dizer que você é meu amigo também!";
 		close;
 
 	} else if (gef_bard_q > 30) {
 		mes "[Jorti]";
-		mes "Jorti tries not to cry anymore because it hurts Uncle Kino and then he coughs up more blood.";
-		mes "I miss my mommy a lot, but when I'm worried, it makes Uncle Kino worry a lot too.";
+		mes "Jorti tenta parar de chorar porque isso dói no Tio Kino e, em seguida, ele tosse mais sangue.";
+		mes "Sinto muita falta de minha mãe, mas estou preocupada, e isso faz com que Tio Kino se preocupe muito também.";
 		next;
 		mes "[Jorti]";
-		mes "My mommy and daddy aren't here anymore, and I don't want Uncle Jorti to go away either.";
+		mes "Sinto muita falta de minha mãe, mas estou preocupada, e isso faz com que Tio Kino se preocupe muito também.";
 		next;
 		mes "[Jorti]";
-		mes "Um, I don't remember my daddy, but mommy lives far away, somewhere near the sky. That's what Uncle Kino says.";
+		mes "Hum, eu não lembro o meu pai, mas minha mãe vive longe, bem perto do céu. Isso é o que diz o tio Kino.";
 		next;
 		mes "[Jorti]";
-		mes "U-Uncle Kino says we can't go see her yet because there are no flying boats yet...";
+		mes "T-tio Kino diz que não podemos ir vê-la porque ainda não há barcos que voem...";
 		close;
 
 	} else {
-		mes "[Mysterious Bard]";
-		mes "Even in the sandy wind,";
-		mes "Even in the pouring rain,";
-		mes "Even in the falling snow,";
-		mes "I know it's--";
+		mes "[Bardo Misterioso]";
+		mes "Mesmo depois de um vento arenoso,";
+		mes "Mesmo na copiosa chuva,";
+		mes "Mesmo na queda de neve,";
+		mes "Sei que...";
 		mes "........";
 		next;
 		mes "[Jorti]";
-		mes "Uncle...?";
-		mes "Are you okay?";
+		mes "Tio...?";
+		mes "Você está bem?";
 		next;
-		mes "[Mysterious Bard]";
+		mes "[Bardo Misterioso]";
 		mes "Hmmm...";
-		mes "I'm sorry, but this is a private performance. This song is only intended for my little Jorti.";
+		mes "Minhas desculpas, mas esta é uma performance privada. Essa canção é somente pra minha pequena princesa, Jorti.";
 		close;
 	}
 }
 
-yuno_in01,172,100,3	script	Old Man#bq1	4_M_05,{
+yuno_in01,172,100,3	script	Velho Homem#bq1	4_M_05,{
 	if (gef_bard_q > 11 && gef_bard_q < 20) {
 		mes "[Sketzi Bundin]";
-		mes "Well, did you find what you were seeking for? Although all we have are old, dusty books, I hope you come by to visit. And please give my regards to your Bard friends.";
+		mes "Bem, você encontrou o que estava procurando? Embora todos os livros que temos sejam antigos, empoeirados, espero que tenha encontrado. E, por favor, dê meus cumprimentos aos seus amigos bardos.";
 		close;
 
 	} else if (gef_bard_q == 30) {
 		mes "[Sketzi Bundin]";
-		mes "Interesting...";
-		mes "You have a black cross seal on your hand. Is Kitty still around? I'm glad to see he's still alive. If you're a friend of his, then you are most welcome here.";
+		mes "Interessante...";
+		mes "Você tem uma cruz preta em sua mão. Gato ainda está por aí? Estou contente por ver que ele ainda está vivo. Se ele é um amigo seu, então você é muito bem-vindo aqui.";
 		close;
 
 	} else if (gef_bard_q == 31) {
 		mes "[Sketzi Bundin]";
-		mes "Well, well, well. You're here again. So, what kind of books are you seeking today? Of course, all we have are old, dusty tomes full of eddas. Hahahaha~";
+		mes "Ora, ora, ora. Bem, bem, bem. Você aqui outra vez. Assim, que tipo de livros você está procurando hoje? Naturalmente, todos que nós temos são velhos, tomos empoeirados cheios de Odes. Hahahaha";
 		close;
 
 	} else if (gef_bard_q == 11) {
 		mes "[Sketzi Bundin]";
-		mes "Welcome.";
-		mes "You must be looking for something special. Well, we have almost every Norse poem, or 'edda.' This is the only place where you can find those kinds of old songs.";
+		mes "Bem-vindo.";
+		mes "Você deve estar procurando algo especial. Bem, temos quase todos os poemas escandinavos ou 'Odes'. Este é o único lugar onde você pode encontrar estes tipos de canções antigas.";
 		next;
 		mes "[Sketzi Bundin]";
-		mes "However, I cannot show these fragile books to just anybody. For the sake of preservation, I can only show these works to preferred customers.";
+		mes "No entanto, não posso mostrá-los para ninguém esses frágeis livros. Por razões de preservação, só posso mostrar esses trabalhos para clientes preferenciais.";
 		next;
 
-		if(select("Show him your left hand.:Show him your right hand.")==1) {
+		if (select("Mostra-lhe a mão esquerda.:Mostra-lhe a mão direita.")==1) {
 			mes "[Sketzi Bundin]";
-			mes "Ah~! You must be the friend of a high ranking Bard! I see, I see. You must be a friend of Minty Errende.";
+			mes "Ah! Você deve ser o amigo bardo do alto escalão! Eu vejo, eu vejo. Você deve ser um amigo de Errante Menta.";
 			next;
 			mes "[Sketzi Bundin]";
-			mes "So, what is it that you're looking for? Well, I suppose I don't really need to ask that. Hahahaha~";
+			mes "Então, o que é que você está procurando? Bem, eu suponho que realmente não precisaria perguntar isso. Hahahaha";
 			next;
 			mes "[Sketzi Bundin]";
-			mes "Please...";
-			mes "Take your time.";
-			mes "I hope you find";
-			mes "what you're";
-			mes "looking for.";
+			mes "Por favor...";
+			mes "Use o seu tempo.";
+			mes "Espero encontrar";
+			mes "o que você";
+			mes "está procurando.";
 			gef_bard_q = 12;
 			close;
 
 		} else {
 			mes "[Sketzi Bundin]";
-			mes "Let's see... Okay.";
-			mes "Well, your heartbeat is a little faster than normal. You might want to look into that. You know, for the sake of your health?";
+			mes "Deixe-me ver... Okay.";
+			mes "Bem, seu batimento cardíaco é um pouco mais rápido que o normal. Você deve ver isso, quem sabe, para o bem da sua saúde?";
 			next;
 			mes "[Sketzi Bundin]";
-			mes "You're not looking for any medical or health related books, are you? I'm sorry, but we don't carry any of those.";
+			mes "Você não está procurando por qualquer livro médico ou relacionado à saúde, naõ é? Desculpe, mas nós não temos nenhum destes.";
 			close;
 		}
 	} else {
 		mes "[Sketzi Bundin]";
-		mes "Welcome.";
-		mes "You must be looking for something special and rare. But we only carry one kind of book around here.";
+		mes "Bem-vindo.";
+		mes "Você deve estar procurando algo de especial e raro. Mas você só transportar uma espécie de livro por aqui.";
 		next;
 		mes "[Sketzi Bundin]";
-		mes "If you're looking for monster information, why don't you check the Pronrera Library or the Monster Museum here in Juno?";
+		mes "Se você estiver procurando informações sobre monstros, por que você não verifica  na Biblioteca de Prontera ou o Museu do Monstro, aqui em Juno?";
 		close;
 	}
 }
 
-yuno_in01,163,101,0	script	Old Book#bq	HIDDEN_NPC,{
+yuno_in01,163,101,0	script	Livro Velho#bq	HIDDEN_NPC,{
 	@name$ = strcharinfo(0);
 	if ((gef_bard_q > 11) && (gef_bard_q < 14)) {
 		if (!rand(5)) {
-			mes "^3355FFYou opened the book. There's a crisp brittleness to the pages, and the letters are faded and barely readable. You can't even identify the author's name.^000000";
+			mes "^3355FFVocê abriu o livro. Há uma fragilidade para passar as páginas, bem como as letras estão desbotadas e pouco legíveis. Você não consegue sequer identificar o nome do autor.^000000";
 			next;
-			mes "[Collection of Eddas]";
-			mes "This is a love song. Everyone suffers from unrequited love at least once in their lifetime.";
+			mes "[Coleção de Odes]";
+			mes "Esta é uma canção de amor. Todo mundo sofre de amor não correspondido, pelo menos uma vez na vida.";
 			next;
-			mes "[Collection of Eddas]";
-			mes "At One, I fall in love.";
-			mes "At Two, you give me your smile.";
-			mes "At Three, I adore your touch.";
-			mes "At Four, a tender kiss...";
+			mes "[Coleção de Odes]";
+			mes "Em um, eu fico apaixonado.";
+			mes "Em dois, você me mostra um sorriso.";
+			mes "Em três, eu adoro seu toque.";
+			mes "Em quatro, um beijo macio.";
 			next;
-			mes "[Collection of Eddas]";
-			mes "At Five, we change our minds.";
-			mes "A petal scatters through the air.";
-			mes "At Six, I fall in love~";
-			mes "At Seven, you fall in love...";
+			mes "[Coleção de Odes]";
+			mes "Em cinco, vamos mudar nossas mentes.";
+			mes "Uma pétala cai pelo ar.";
+			mes "Em seis, eu fico apaixonado.";
+			mes "Em sete, você se apaixona.";
 			next;
 			mes "[" + @name$ + "]";
-			mes "I think this is it...!";
-			mes "I better write it down.";
+			mes "Acho que é isso!";
+			mes "É melhor eu anotá-la.";
 			next;
-			mes "[Collection of Eddas]";
-			mes "At Eight, we're both in love.";
-			mes "At Nine, you know my heart.";
-			mes "At Ten, I know you've";
-			mes "been waiting for me.";
+			mes "[Coleção de Odes]";
+			mes "Em oito, estamos ambos no amor.";
+			mes "Em nove, você conhece meu coração.";
+			mes "Em dez, eu sei que você";
+			mes "está esperando por mim.";
 			next;
-			mes "[Collection of Eddas]";
-			mes "At Eleven, a precious";
-			mes "Whisper: 'Will you marry me?'";
-			mes "At Twelve, our two hearts";
-			mes "Are one. 12 petals, our";
-			mes "Love finally blossoms.";
+			mes "[Coleção de Odes]";
+			mes "Em onze, um sussurro";
+			mes "precioso: 'Você quer casar comigo?'";
+			mes "Em doze, os nossos dois corações";
+			mes "são um. 12 pétalas, o nosso";
+			mes "Amor finalmente floresce.";
 			next;
-			mes "^3355FFYou copy down the final lines, and keep them in a note inside your pocket.";
+			mes "^3355FFVocê anota as linhas finais e mantêm em uma nota dentro do seu bolso.^000000";
 			gef_bard_q = 15;
 			close;
 
 		} else {
 			mes "[" + @name$ + "]";
-			mes "*Sigh* I can barely read this book. Maybe I should try flipping through another one.";
+			mes "*Sigh* Eu mal posso ler este livro. Talvez eu deva tentar atravessando outro por cima.";
 			close;
 		}
 
 	} else {
 		mes "[Sketzi Bundin]";
-		mes "I'm sorry, but that book is too fragile for handling. Only special customers can peruse these books.";
+		mes "Desculpe, mas esse livro é frágil demais para a manipulação. Apenas clientes especiais podem folhear esses livros.";
 		close;
 	}
 }
 
 
-yuno_in01,173,96,0	script	Luke's Songs Vol.1	HIDDEN_NPC,{
+yuno_in01,173,96,0	script	Canções de Luke Vol.1	HIDDEN_NPC,{
 	if (gef_bard_q > 11) {
 		mes "[Preface]";
-		mes "I, Luke of Izlude, greatest of Bards in my time, leave the lyrics of my essential songs for posterity.";
+		mes "Eu, Luke de Izlude, o maior dos bardos do meu tempo, deixo as letras das minhas canções essenciais para a posteridade.";
 		mes " ";
-		mes "Contents";
+		mes "Sumário";
 		next;
 
-		switch(select("Wedding Song:Life is a Water Mill:We")) {
+		switch(select("Canção do Casamento:A vida é um moinho de água:Nós")) {
 
 		case 1:
-			mes "[Wedding Song]";
-			mes "Prontera Sanctuary";
-			mes "Is where all are heading";
-			mes "To celebrate your union";
-			mes "At your most happy wedding.";
+			mes "[Canção do Casamento]";
+			mes "Santuário de Prontera";
+			mes "É onde está todo mundo";
+			mes "Para festejar a união";
+			mes "no seu casamento feliz.";
 			next;
-			mes "[Wedding Song]";
-			mes "With joy I strum my Lute";
-			mes "As that is my trade";
-			mes "To bring cheerful song";
-			mes "To your wedding parade.";
+			mes "[Canção do Casamento]";
+			mes "Com alegria eu arranho meu alaúde";
+			mes "Como esse é o meu comércio";
+			mes "Trazer uma canção alegre";
+			mes "Para seu casamento.";
 			next;
-			mes "[Wedding Song]";
-			mes "For my songs, pay me";
-			mes "Not Zeny or Gold,";
-			mes "But the smile of the";
-			mes "Bride, if I may";
-			mes "be so bold.";
+			mes "[Canção do Casamento]";
+			mes "Para minhas canções, pagam-me";
+			mes "Não Zeny ou ouro,";
+			mes "Mas o sorriso da";
+			mes "Noiva, se me permitem";
+			mes "ser tão ousado.";
 			next;
-			mes "[Wedding Song]";
-			mes "The glistening eyes";
-			mes "Of a beautiful lass";
-			mes "Those lustrous locks";
-			mes "And that firm, supple--";
+			mes "[Canção do Casamento]";
+			mes "Os olhos brilhantes";
+			mes "de uma bela moça";
+			mes "Aquelas fechaduras acetinadas";
+			mes "E essa empresa...";
 			next;
-			mes "[Wedding Song]";
-			mes "Forgive me, groom!";
-			mes "But she's just so beautiful!";
-			mes "May your union be blessed!";
-			mes "Er, may your wife be dutiful.";
+			mes "[Canção do Casamento]";
+			mes "Perdoe-me, noivo!";
+			mes "Mas ela é tão linda! ";
+			mes "Que a vossa união seja abençoada! ";
+			mes "Er, faça sua esposa ser obediente.";
 			next;
-			mes "[Luke's Note]";
-			mes "This song is about a certain Bard who was invited to a wedding ceremony and could not resist the bride's beauty. He ended up singing a song of seduction.";
+			mes "[Notas de Luke]";
+			mes "Esta canção é sobre um certo bardo, que foi convidado para uma cerimônia de casamento e que não pôde resistir à beleza da noiva. Ele acabou cantando a noiva.";
 			next;
-			mes "[Luke's Note]";
-			mes "The lyrics, of course, are fictional, and are in no way anecdotal.";
+			mes "[Notas de Luke]";
+			mes "As letras, claro, são fictícias e não são anedóticas.";
 			close;
 		case 2:
-			mes "[Life is a Water Mill]";
-			mes "I chased after fame.";
-			mes "It eluded me.";
-			mes "I ran after happiness";
-			mes "But never caught it.";
+			mes "[A vida é um moinho de água]";
+			mes "Eu persegui a fama.";
+			mes "Ela me iludiu.";
+			mes "Corri depois da felicidade";
+			mes "Mas nunca peguei ela.";
 			next;
-			mes "[Life is a Water Mill]";
-			mes "But tomorrow will still";
-			mes "Be there, I'm sure.";
-			mes "Like the Water Mill";
-			mes "In Al De Baran";
-			mes "Which turns as";
-			mes "Life goes on.";
+			mes "[A vida é um moinho de água]";
+			mes "Mas o amanhã ainda será";
+			mes "será, tenho certeza.";
+			mes "Como o moinho de água";
+			mes "em Al de Baran";
+			mes "Que transforma";
+			mes " e a vida continua.";
 			next;
-			mes "[Life is a Water Mill]";
-			mes "Cheer up! Life goes on.";
-			mes "As surely as the Water";
-			mes "Mill turns, tomorrow";
-			mes "Will come.";
+			mes "[A vida é um moinho de água]";
+			mes "Anima-te! a vida continua.";
+			mes "De certo como a água";
+			mes "ao moinho retorna, amanhã";
+			mes "virá.";
 			next;
-			mes "[Luke's Note]";
-			mes "This song was";
-			mes "made to give comfort";
-			mes "to people in despair.";
+			mes "[Notas de Luke]";
+			mes "Esta canção foi";
+			mes "feita pra confortar";
+			mes "pessoas em desespero.";
 			close;
+
 		case 3:
-			mes "[We]";
-			mes "A good Bard sings";
-			mes "To please his listener.";
-			mes "So do not expect a sad song";
-			mes "That deepens your anguish.";
+			mes "[Nós]";
+			mes "Um bom bardo canta";
+			mes "para agradar seus ouvintes.";
+			mes "Então, não espere uma canção triste";
+			mes "isso aumenta a sua angústia.";
 			next;
-			mes "[We]";
-			mes "A good Dancer dances";
-			mes "To please her audience.";
-			mes "Shall we dance together?";
-			mes "Just hold my hands.";
-			mes "La la la~ La la la~";
+			mes "[Nós]";
+			mes "Uma boa Odalisca dança";
+			mes "Para agradar seu público-alvo.";
+			mes "Vamos dançar juntos?";
+			mes "Basta segurar a minha mão.";
+			mes "*La la la* *La la la*";
 			next;
-			mes "[We]";
-			mes "Towner: 'Then why the hell do you guys make discords sometimes?!'";
-			mes "Bard: 'Well... Nobody's perfect!";
+			mes "[Nós]";
+			mes "Morador: 'Então porque as vezes vocês brigam?!'";
+			mes "Bardo: 'Bem... ninguém é perfeito!'";
 			next;
-			mes "[Luke's Note]";
-			mes "This song is good to be sung during festivals, as the intentional discord encourages the audience to participate. Aside from that, this song is pretty meaningless.";
+			mes "[Notas de Luke]";
+			mes "Esta música é boa para ser cantada durante festas, pois a discórdia intencional incentiva o público a participar. Fora isso, esta canção tem um significado bonito.";
 			close;
 		}
 
 	} else {
 		mes "[Sketzi Bundin]";
-		mes "I'm sorry, but that book is not available for public exhibition.";
+		mes "Desculpe, mas esse livro não está disponível para exibição pública.";
 		close;
 	}
 }
 
-yuno_in01,173,94,0	script	Battle Songs	HIDDEN_NPC,{
+yuno_in01,173,94,0	script	Canções de Batalha	HIDDEN_NPC,{
 	if (gef_bard_q > 11) {
-		mes "[Drumming in the battlefield]";
-		mes "This song was written to give courage to soldiers on the battlefield.";
+		mes "[Tambores no Campo de Batalha]";
+		mes "Esta canção foi escrita para dar coragem aos soldados no campo de batalha.";
 		next;
-		mes "[Drumming in the battlefield]";
-		mes "The sounds of galloping";
-		mes "Echo in the distance.";
-		mes "A cloud of hazy dust";
+		mes "[Tambores no Campo de Batalha]";
+		mes "Os sons do galope";
+		mes "Ecoam à distância.";
+		mes "Uma nuvem nebulosa de poeira";
 		next;
-		mes "[Drumming in the battlefield]";
-		mes "Fills the setting sun.";
-		mes "Thousands of eyes open";
-		mes "Torches on the castle";
-		mes "Flare like thousands of Ifrits.";
+		mes "[Tambores no Campo de Batalha]";
+		mes "Preenche o sol poente";
+		mes "Milhares de olhos abertos";
+		mes "Tochas no castelo";
+		mes "Chamas como milhares de Ifrits.";
 		next;
-		mes "[Drumming in the battlefield]";
-		mes "Hear the throbbing of my heart,";
-		mes "The blood flowing in my veins.";
-		mes "Feeling the heaviness of my armor.";
-		mes "The enemy has appeared before us.";
+		mes "[Tambores no Campo de Batalha]";
+		mes "Escute meu coração latejante,";
+		mes "O sangue flui nas minhas veias.";
+		mes "Sentido o peso da minha armadura.";
+		mes "O inimigo tem aparecido antes de nós.";
 		next;
-		mes "[Drumming in the battlefield]";
-		mes "Beat the drums hard, harder!";
-		mes "Courage, soldiers, march forward!";
-		mes "Shout loud, soldiers, louder!";
-		mes "Today will never come back!";
+		mes "[Tambores no Campo de Batalha]";
+		mes "Toque forte os tambores, mais forte!";
+		mes "Coragem, soldados, marchem pra frente!";
+		mes "Gritem alto, soldados, mais alto!";
+		mes "Hoje nunca vai voltar!";
 		next;
-		mes "[Drumming in the battlefield]";
-		mes "Stun the sky";
-		mes "Provoke the earth,";
-		mes "I feel my heartbeat again.";
-		mes "Blow the bugle to";
-		mes "Sway the fortress.";
-		mes "Today will never come back!";
+		mes "[Tambores no Campo de Batalha]";
+		mes "Atordoar o céu";
+		mes "Provocar a terra.";
+		mes "Sinto novamente meu coração.";
+		mes "Toquem as cornetas para";
+		mes "Balançar a fortaleza.";
+		mes "Hoje nunca vai voltar!";
 		close;
 
 	} else {
 		mes "[Sketzi Bundin]";
-		mes "I'm sorry, but that book is not available for public exhibition.";
+		mes "Desculpe, mas esse livro não está disponível para exibição pública.";
 		close;
 	}
 }
 
 
-yuno_in01,173,92,0	script	Apple of Idun	HIDDEN_NPC,{
+yuno_in01,173,92,0	script	Maçãs de Idun	HIDDEN_NPC,{
 	if (gef_bard_q > 11) {
-		mes "[Apple of Idun]";
-		mes "This song praises the golden apples of the goddess Idun. These were the source of the God's power, as it prevented them from growing old.";
+		mes "[Maçãs de Idun]";
+		mes "Esta canção elogia as maçãs de ouro da deusa Idun. Estes foram a fonte do poder do deuses, uma vez que os impediu de envelhecer.";
 		next;
-		mes "[Apple of Idun]";
-		mes "Every god never grows old";
-		mes "Because of beautiful";
-		mes "Goddess, Idun.";
-		mes "Keeper of the apples of youth";
-		mes "Goddess of immortality.";
+		mes "[Maçãs de Idun]";
+		mes "Todo deus nunca cresce velho";
+		mes "Por causa da bela";
+		mes "Deusa, Idun.";
+		mes "Guardiã das maçãs da juventude";
+		mes "Deusa da imortalidade.";
 		next;
-		mes "[Apple of Idun]";
-		mes "Every god never grows old.";
-		mes "Idun, the wife of Bragi,";
-		mes "Idun, Odin's daughter in law~";
-		mes "The apples she keeps";
-		mes "In her basket.";
+		mes "[Maçãs de Idun]";
+		mes "Todo deus nunca cresce velho.";
+		mes "Idun, a esposa de Bragi,";
+		mes "Idun, a filha de Odin na lei.";
+		mes "As maçãs ela mantém";
+		mes "Na sua cesta.";
 		next;
-		mes "[Apple of Idun]";
-		mes "Without Idun,";
-		mes "Every god would";
-		mes "have succumbed to age.";
+		mes "[Maçãs de Idun]";
+		mes "Sem Idun,";
+		mes "Todo deus";
+		mes "sucumbiria à idade.";
 		next;
-		mes "[Apple of Idun]";
-		mes "Even Thor, the strongest of gods,";
-		mes "would grow frail, Megingjard would";
-		mes "slip from his waist, and Mjolnir";
-		mes "would never fly again.";
+		mes "[Maçãs de Idun]";
+		mes "Mesmo Thor, o mais forte dos deuses,";
+		mes "teria um crescimento débil, Megingjard";
+		mes "ia escorregar de sua cintura, e Mjölnir";
+		mes "nunca iria voar novamente.";
 		next;
-		mes "[Apple of Idun]";
-		mes "Without Idun,";
-		mes "Every god would";
-		mes "have succumbed to age.";
-		mes "Loki was careless once,";
-		mes "and made her lost to the gods.";
-		mes "Loki was forced to get her back.";
+		mes "[Maçãs de Idun]";
+		mes "Sem Idun,";
+		mes "Todo deus";
+		mes "sucumbiria à idade.";
+		mes "Loki foi negligente uma só vez,";
+		mes "e fez com que perdesse para os deuses.";
+		mes "Ele foi obrigado a levá-la de volta.";
 		next;
-		mes "[Apple of Idun]";
-		mes "My goddess stands";
-		mes "In the field of Asgard";
-		mes "She hands me fruit from heaven.";
-		mes "You will be loved by every god...";
-		mes "You will be blessed";
-		mes "By every god...";
+		mes "[Maçãs de Idun]";
+		mes "A minha deusa vive";
+		mes "No campo de Asgard";
+		mes "Ela me dá frutos do céu.";
+		mes "~Você será amada por todos os deuses...";
+		mes "Você será abençoada";
+		mes "Por cada deus...~";
 		next;
-		mes "[Apple of Idun]";
-		mes "If you share the";
-		mes "Apple of youth with me";
-		mes "Even a bite of it with";
-		mes "This poor poet.";
+		mes "[Maçãs de Idun]";
+		mes "Se você compartilha a";
+		mes "Maçã da juventude comigo,";
+		mes "Mesmo sendo uma mordida";
+		mes "Com este pobre poeta.";
 		next;
-		mes "[Apple of Idun]";
-		mes "You will be loved by every god...";
-		mes "You will be blessed";
-		mes "By every god...";
+		mes "[Maçãs de Idun]";
+		mes "Você será amada por todos os deuses...";
+		mes "Você será abençoada";
+		mes "Por cada deus...";
 		close;
 
 	} else {
 		mes "[Sketzi Bundin]";
-		mes "I'm sorry, but that book is not available for public exhibition.";
+		mes "Desculpe, mas esse livro não está disponível para exibição pública.";
 		close;
 	}
 }
 
-payon,181,172,3	script	Bard#4	1_M_BARD,{
+payon,181,172,3	script	Bardo#4	1_M_BARD,{
 	@name$ = strcharinfo(0);
 	if (gef_bard_q == 2 || gef_bard_q == 22) {
-		mes "[Gunther Doubleharmony]";
-		mes "Hahaha~!";
-		mes "Listen, listen!";
+		mes "[Gunther]";
+		mes "Hahaha";
+		mes "Escute, escute!";
 		next;
-		mes "[Gunther Doubleharmony]";
-		mes "I was told this song from one of my friends about this Merchant who lives in Payon and everyone loves this song, especially because I'm singing it and you know that...";
+		mes "[Gunther]";
+		mes "Foi-me dito esta canção por um dos meus amigos sobre este Mercador, que vive em Payon e todo mundo adora essa música, especialmente porque eu estou cantando e você sabe disso...";
 		next;
 		mes "[" + @name$ + "]";
-		mes "Excuse me.";
-		mes "Are you...";
-		mes "Gunther Doubleharmony?";
+		mes "Com licença.";
+		mes "Você é...";
+		mes "Gunther?";
 		next;
-		mes "[Gunther Doubleharmony]";
-		mes "...the Merchant was so poor he didn't even have--eh? Oh yeah, right. That's me. What's up?";
+		mes "[Gunther]";
+		mes "... o mercador era tão pobre que não tinha sequer... ? Ah sim, certo. Isso é comigo. O que está acontecendo?";
 		next;
-		mes "^3355FFYou explain that you have come to him, seeking lost song lyrics.^000000";
+		mes "^3355FFVocê explica a ele que está buscando a letra perdida da canção.^000000";
 		next;
-		mes "[Gunther Doubleharmony]";
-		mes "Ahhhhhhh, I see.";
-		mes "Now, what was the";
-		mes "name of the song again?";
+		mes "[Gunther]";
+		mes "Ahhhhhhh, eu vejo.";
+		mes "Agora, qual foi";
+		mes "o nome da canção que você disse?";
 		next;
-		input .@inputstr$;
-		if (.@inputstr$ == "At One, I Fall in Love") {
-			mes "[Gunther Doubleharmony]";
-			mes "Ah~ that song...?";
-			mes "By the way, who asked you";
-			mes "to find out about the song?";
+		input @inputstr$;
+		if (@inputstr$ == "Em um, eu fico apaixonado") {
+			mes "[Gunther]";
+			mes "Ah... essa canção?";
+			mes "Pelo jeito que falas, quem te pediu";
+			mes "pra achar informações sobre essa canção?";
 			next;
-			input .@inputstr$;
-			if (.@inputstr$ == "Minty Errende") {
-				mes "[Gunther Doubleharmony]";
-				mes "Yes, that's my friend! Minty Errende! We used to so close to each other, so I'll write every word of the song for my friend Minty Errende, so turn around please!";
+			input @inputstr$;
+			if (@inputstr$ == "Errante Menta") {
+				mes "[Gunther]";
+				mes "Sim, é meu amigo! Errante Menta! Nós eramos muito próximos... então eu vou escrever cada palavra dessa canção para meu amigo Errante Menta.";
 				next;
-				mes "^3355FFGunther furiously scribbled something upon your back.^000000";
+				mes "^3355FFGunther rascunha algo furiosamente em suas costas.^000000";
 				next;
-				mes "[Gunther Doubleharmony]";
-				mes "There you go! Now you can go back to Minty Errende and show him your back and he will see what I wrote and then remember the lyrics!";
+				mes "[Gunther]";
+				mes "Agora vá! Agora você pode voltar para Errante Menta e mostrar-lhe as costas e ele vai ver o que eu escrevi e, em seguida, se lembrará da letra!";
 				if (gef_bard_q == 2) gef_bard_q = 3;
 				if (gef_bard_q == 22) gef_bard_q = 23;
 				close;
 
 			} else {
-				mes "[Gunther Doubleharmony]";
-				mes "No no no, I don't know anyone with that name, so you better go and check the name of the person asking again, okay?";
+				mes "[Gunther]";
+				mes "Não, não, não, eu não conheço ninguém com esse nome, então é melhor você ir e verificar o nome da pessoa que solicita de novo, ok?";
 				close;
 			}
 
 		} else {
-			mes "[Gunther Doubleharmony]";
-			mes "No no no no, I don't know any song with that title, it might not even exist, so you should go and check the name of the song again and tell me, okay?";
+			mes "[Gunther]";
+			mes "Não, não, não, não, eu não conheço nenhuma canção com esse título, ele pode até não existir, então você deve ir e verificar o nome da canção de novo e me dizer, ok?";
 			close;
 		}
 
 	} else if (gef_bard_q == 6 || gef_bard_q == 26) {
-		mes "[Gunther Doubleharmony]";
-		mes "You came back again!";
-		mes "Huh, the song I wrote on your back? Hold on, hold on, let me think let me--ah, right, I got it!";
+		mes "[Gunther]";
+		mes "Você retornou!";
+		mes "Huh, a canção que escrevi sobre suas costas? Calma, calma, deixe-me pensar.. Ah, certo, eu tenho!";
 		next;
-		mes "[Gunther Doubleharmony]";
-		mes "The words I wrote down on your back were written by Mr. Kitty, my idol, my hero! That song is the art of ^228B22Kino Kitty^000000!";
+		mes "[Gunther]";
+		mes "As palavras que escrevi sobre as suas costas eram da autoria do Sr. Gato, meu ídolo, meu herói! Essa música é a arte de Gato Kino.";
 		next;
-		mes "[Gunther Doubleharmony]";
-		mes "I wish that someday I could be as great a Bard as him!";
+		mes "[Gunther]";
+		mes "Gostaria de um dia ser um grande bardo como ele!";
 		close;
 
 	} else {
-		mes "[Gunther Doubleharmony]";
-		mes "Hahaha~!";
-		mes "Listen, listen!";
+		mes "[Gunther]";
+		mes "Hahaha";
+		mes "Escute, escute!";
 		next;
-		mes "[Gunther Doubleharmony]";
-		mes "I was told this song from one of my friends about this Merchant who lives in Payon and everyone loves this song, especially because I'm singing it and you know that...";
+		mes "[Gunther]";
+		mes "Foi-me dito esta canção por um dos meus amigos sobre este Mercador, que vive em Payon e todo mundo adora essa música, especialmente porque eu estou cantando e você sabe disso...";
 		next;
-		mes "[Gunther Doubleharmony]";
-		mes "Oh, right...!";
-		mes "Do you wanna listen";
-		mes "to my song or a story?";
-		mes "I know you want to!";
-		mes "Right, right?";
+		mes "[Gunther]";
+		mes "Ah, certo!";
+		mes "Você quer ouvir";
+		mes "a minha música ou uma história?";
+		mes "Eu sei o que você quer!";
+		mes "Certo?";
 		next;
 
-		if(select("Show some interest.:Ignore him.")==1) {
-			mes "[Gunther Doubleharmony]";
-			mes "Yay~! I knew it!";
-			mes "So you wanna hear";
-			mes "a song or a story?";
+		if (select("Mostrar algum interesse.:Ignorar ele.")==1) {
+			mes "[Gunther]";
+			mes "Há! Eu já sabia!";
+			mes "Então você quer ouvir";
+			mes "uma canção ou uma história?";
 			next;
-			switch(select("A song:A story:Maybe some other time")) {
+			switch(select("Uma canção:Uma história:Talvez outra hora")) {
 			case 1:
 				switch(rand(1,3)) {
 				case 1:
-					mes "[Gunther Doubleharmony]";
-					mes "Gunther sings!";
-					mes "Gunther dances!";
-					mes "The tile of this song is~";
-					mes "'The Rich Mr. Kim~!'";
+					mes "[Gunther]";
+					mes "Gunther canta!";
+					mes "Gunther dança!";
+					mes "O nome dessa canção é:";
+					mes "'O rico Sr. Kim'";
 					next;
-					mes "^228B22Merchant of Payon";
-					mes "So poooooooor~";
-					mes "No money for armor";
-					mes "No money to make.";
+					mes "^228B22Mercador de Payon";
+					mes "Tão poooooobre";
+					mes "Sem dinheiro pra armadura";
+					mes "Sem dinheiro pra fazer nada.";
 					next;
-					mes "^228B22Sold the";
-					mes "Cotton Shirt";
-					mes "Off his back";
-					mes "No pity he'll take.^000000";
+					mes "^228B22Vendeu sua";
+					mes "Camisa de Algodão";
+					mes "Sua costas ficaram à mostra...";
+					mes "Sem pena alguma.^000000";
 					next;
-					mes "^228B22First he only sold Red Pots";
-					mes "At first, he only sold red pots.";
-					mes "Then he moved up to Carrots, whoohoo~";
-					mes "He could afford new armor";
-					mes "and even wear it,";
-					mes "whoohoo~^000000";
+					mes "^228B22Primeiro ele só vendeu Poções Vermelhas";
+					mes "Na primeira, só vendeu poções vermelhas.";
+					mes "Então ele começou a vender Cenouras, *uau*";
+					mes "Ele poderia comprar uma nova armadura";
+					mes "e até mesmo vestí-la.";
+					mes "*UAU*^000000";
 					next;
-					mes "^228B22But one day, he was scammed";
-					mes "Scammed by a wicked guild.";
-					mes "Made poor once again.";
-					mes "He decided to go to Ant Hell";
-					mes "Right there";
-					mes "And right then.";
+					mes "^228B22Mas um dia, ele estava sonegando";
+					mes "Sonegando por uma guilda de ímpios.";
+					mes "Virando pobre outra vez.";
+					mes "Ele decidiu ir até o Formigueiro Infernal";
+					mes "Bem ali";
+					mes "E então à direita.";
 					next;
-					mes "^228B22Bats, Dwarves, Eggs, Ants!";
-					mes "He battled them all~";
-					mes "Worm Peelings, Jellopy!";
-					mes "He gathered loot great and small.";
+					mes "^228B22Morcegos, Anões, ovos, Formigas!";
+					mes "Ele lutou contra todos.";
+					mes "Pele de verme, Jellopy!";
+					mes "Ele reuniu grandes e pequenos despojos.^000000";
 					next;
-					mes "^228B22Then the glorious day came";
-					mes "When he found a valuable card";
-					mes "That'd bring great wealth to his naaaame~^000000";
+					mes "^228B22Em seguida, veio o glorioso dia";
+					mes "Quando ele encontrou um cartão valioso";
+					mes "Que iria trazer grande riqueza para seu nome.^000000";
 					next;
-					mes "^228B22But he kept it dear to him";
-					mes "To remember his times of";
-					mes "working so hard.";
-					mes "He never sold it, never sold";
-					mes "his precious card~^000000";
+					mes "^228B22Mas ele o manteve caro,";
+					mes "para lembrar dos tempos que";
+					mes "trabalhava tão duro.";
+					mes "Ele nunca vendeu, nunca vendeu";
+					mes "o precioso cartão.^000000";
 					next;
-					mes "[Gunther Doubleharmony]";
-					mes "That's a very old story about rich Mr. Kim, and his rise from rags to riches to rags to riches. Is it true or is it fiction? Oh, please don't ask me! I've no clue!";
+					mes "[Gunther]";
+					mes "Essa é uma velha história sobre o rico Sr. Kim e sua ascensão a partir de trapos até riquezas, e depois para trapos, até a riqueza novamente. É verdade ou é ficção? Ah, por favor, não me pergunte! Eu não sei!";
 					close;
 
 				case 2:
-					mes "[Gunther Doubleharmony]";
-					mes "*Ahem*";
-					mes "Gunther sings ";
-					mes "of Yggdrasil~";
+					mes "[Gunther]";
+					mes "*Caham*";
+					mes "Gunther canta";
+					mes "de Yggdrasil.";
 					next;
-					mes "^228B22Evergreen Yggdrasil~";
-					mes "Giant ashen tree";
-					mes "reaching for the sky.";
-					mes "Crystal, morning dew";
-					mes "From its leaves";
-					mes "Formed Urd's Pond.^000000";
+					mes "^228B22Sempre verde Yggdrasil...";
+					mes "Árvore gigante pálida";
+					mes "Chegando no céu.";
+					mes "Cristal, orvalho matinal";
+					mes "de suas folhas.";
+					mes "Formando o largo de Urd.^000000";
 					next;
-					mes "^228B22Three wise girls.";
-					mes "Seated beneath its boughs.";
-					mes "Urd of the past,";
-					mes "Belldandy of the present";
-					mes "Skuld the future.^000000";
+					mes "^228B22Três garotas sábias";
+					mes "Sentadas sobre seus ramos.";
+					mes "Urd do passado,";
+					mes "Belldandy do presente,";
+					mes "Skuld do futuro.^000000";
 					next;
-					mes "^228B22Spinning, weaving";
-					mes "Threads of destiny.";
-					mes "Evergreen Yggdrasil~";
-					mes "Giant ashen tree";
-					mes "reaching for the sky.";
-					mes "Its roots soaked with tears.^000000";
+					mes "^228B22Fiação, tecelagem...";
+					mes "Linhas do destino";
+					mes "Sempre verde Yggdrasil...";
+					mes "Árvore gigante pálida";
+					mes "Chegando no céu.";
+					mes "Suas raízes molhado com lágrimas.^000000";
 					next;
-					mes "^228B22Death in Hvergelmir.";
-					mes "An evil dragon";
-					mes "Burning its roots";
-					mes "With eternal flame.";
-					mes "The evil dragon Nidhogg";
-					mes "Living between Yggdrasil";
-					mes "and Niffheim.^000000";
+					mes "^228B22Morte em Hvergelmir.";
+					mes "Um malvado dragão";
+					mes "Queimando suas raízes";
+					mes "Com a chama eterna.";
+					mes "O malvado dragão Nidhogg";
+					mes "Vivendo entre Yggdrasil ";
+					mes "e Niflheim.^000000";
 					next;
-					mes "^228B22Evergreen Yggdrasil~";
-					mes "Giant ashen tree";
-					mes "reaching for the sky.";
-					mes "Wisdom in its roots";
-					mes "Roots reaching";
-					mes "Mimir's pond.^000000";
+					mes "^228B22Sempre verde Yggdrasil...";
+					mes "Árvore gigante pálida";
+					mes "Chegando no céu.";
+					mes "Sabedoria em suas raízes";
+					mes "Raízes atingindo";
+					mes "o lago de Mimir.^000000";
 					next;
-					mes "^228B22Guarded by a wise giant.";
-					mes "Odin sacrificed one";
-					mes "of his eyes for the wisdom.";
-					mes "Heimdall's horn hidden";
-					mes "In Yggdrasil's roots";
-					mes "Will sound one last time";
-					mes "Signaling Ragnarok.^000000";
+					mes "^228B22Guardada por um sábio gigante.";
+					mes "Odin sacrificou um";
+					mes "dos seus olhos para a sabedoria.";
+					mes "Chifre de Heimdall está oculto";
+					mes "Na raiz da Yggdrasil";
+					mes "Irá soar uma última vez";
+					mes "Sinalizando Ragnarok.^000000";
 					next;
-					mes "[Gunther Doubleharmony]";
-					mes "This is a very old story...";
-					mes "Is it truth or fiction? But please don't ask me, I have no idea~!";
+					mes "[Gunther]";
+					mes "Essa é uma história muito velha...";
+					mes "É verdade ou é ficção? Ah, por favor, não me pergunte! Eu não sei!";
 					close;
 
 				case 3:
-					mes "[Gunther Doubleharmony]";
-					mes "I will sing one of Luke's songs, you know, Luke, one of the greatest Bards of his time? But I changed the words a little bit.";
+					mes "[Gunther]";
+					mes "Vou cantar uma das canções de Luke, você sabe, Luke, um dos maiores bardos do seu tempo? Mas eu mudei um pouco as palavras.";
 					next;
-					mes "^228B22I found it in a drawer.";
-					mes "Old, worn letters";
-					mes "Forming elaborate words.";
-					mes "Sincere reflection";
-					mes "Of a sincere mind.^000000";
+					mes "^228B22Encontrei em uma gaveta.";
+					mes "Velhas, desgastadas letras";
+					mes "Formando elaboradas palavras.";
+					mes "Sincera reflexão";
+					mes "de uma sincera opinião.^000000";
 					next;
-					mes "^228B22I found it in a drawer.";
-					mes "Was I really like that once?";
-					mes "Was I really that childish?";
-					mes "My memories are tarnished.";
+					mes "^228B22Encontrei em uma gaveta.";
+					mes "Sou eu realmente como aquele que fui?";
+					mes "Sou eu realmente um crianção?";
+					mes "Minhas memórias estão manchadas.";
 					next;
-					mes "^228B22I found it in a drawer.";
-					mes "Love I had forgotten.";
-					mes "She never got this letter.";
-					mes "But both of us were too shy.";
+					mes "^228B22Encontrei em uma gaveta.";
+					mes "Havia esquecido do amor.";
+					mes "Ela nunca recebeu essa carta.";
+					mes "Mas nós dois eramos tímidos.";
 					next;
-					mes "^228B22I found it in a drawer.";
-					mes "Love I had forgotten.";
-					mes "I never gave her this letter.";
-					mes "But both of us were too proud.";
+					mes "^228B22Encontrei em uma gaveta.";
+					mes "Havia esquecido do amor.";
+					mes "Eu nunca lhe dei essa carta.";
+					mes "Mas nós dois estávamos orgulhosos de si mesmos.";
 					next;
-					mes "[Gunther Doubleharmony]";
-					mes "Do you have anyone in mind? Do you? If you ever write a love letter, you must send it and express yourself.";
+					mes "[Gunther]";
+					mes "Você tem alguém em mente? Conhece? Se você escrever uma carta de amor, você deve enviá-la e manifestar-se.";
 					next;
-					mes "[Gunther Doubleharmony]";
-					mes "If you've written love letters that you'll never send, throw them away. Throw your goddamn pride away.";
+					mes "[Gunther]";
+					mes "Caso você tenha escrito cartas de amor que você nunca enviou, jogue-as fora. Mande seu maldito orgulho pra longe.";
 					close;
 				}
 
 			case 2:
 				switch(rand(1,3)) {
 				case 1:
-					mes "[Gunther Doubleharmony]";
-					mes "Um, have you ever";
-					mes "tasted Comodo cheese?";
+					mes "[Gunther]";
+					mes "Hm, você já";
+					mes "provou o queijo de Comodo?";
 					next;
-					mes "[Gunther Doubleharmony]";
-					mes "You can only taste it in Comodo, but you need to have a good strong stomach to digest it. Oh! And the cheese has a secret!";
+					mes "[Gunther]";
+					mes "Você só pode experimentá-lo em Comodo, mas é necessário que você tenha um estômago forte para digeri-lo. Oh! E o queijo tem um segredo!";
 					next;
-					mes "[Gunther Doubleharmony]";
-					mes "You ^228B22might^000000 be invulnerable to the power of the doomed swords, which come from the other world, if you eat it!";
+					mes "[Gunther]";
+					mes "Você ^228B22pode^000000 se tornar invulnerável ao poder das espadas condenadas, que vêm do outro mundo, se você come esse queijo!";
 					next;
-					mes "[Gunther Doubleharmony]";
-					mes "Why don't you go taste it if you haven't yet? I tried to taste it once. It was kind of yummy, but then I fainted. Hahahaha~!";
+					mes "[Gunther]";
+					mes "Por que você não vai experimentá-lo? Eu tentei experimentá-lo uma vez. Era gostoso, mas ai eu desmaiei. Hahahaha!";
 					close;
 
 				case 2:
-					mes "[Gunther Doubleharmony]";
-					mes "I was passing Prontera the other day at the place where it used to be the Swordman training ground.";
+					mes "[Gunther]";
+					mes "Eu estava passando por Prontera no outro dia no lugar onde costumava ser o terreno de formação de Espadachins.";
 					next;
-					mes "[Gunther Doubleharmony]";
-					mes "I saw some kid training really really hard and he didn't notice me watching him, so I guess he was really really serious!";
+					mes "[Gunther]";
+					mes "Eu vi um garoto em um treino realmente muito difícil e ele não percebeu quando estava o vendo, então eu acho que era realmente muito grave!";
 					next;
-					mes "[Gunther Doubleharmony]";
-					mes "He looked like he wanted to be a professional Swordman, but he was also giving his gear away to other Novices.";
+					mes "[Gunther]";
+					mes "Ele olhou como quem queria ser um Espadachim profissional, mas ele estava dando também distância aos principiantes.";
 					next;
-					mes "[Gunther Doubleharmony]";
-					mes "I got bored watching him do the same thing over and over and over again, but I think the Monster Research Organization would like him if I introduced him.";
+					mes "[Gunther]";
+					mes "Fiquei entediado assistindo-lhe fazer a mesma coisa uma e outra e outra vez, mas acho que a Organização de Estudo do Monstro gostaria que ele se apresentasse.";
 					close;
 
 				case 3:
-					mes "[Gunther Doubleharmony]";
-					mes "Have you ever been in Lutie,";
-					mes "land of year round snow?";
+					mes "[Gunther]";
+					mes "Alguma vez já estiveste em Lutie,";
+					mes "terra onde cai neve o ano inteiro?";
 					next;
-					mes "[Gunther Doubleharmony]";
-					mes "There is a snowman named";
-					mes "SnowySnow and if you met him, you'd know all sorts of things about him like he can talk! It's so strange and mysterious~!";
+					mes "[Gunther]";
+					mes "Existe um boneco de neve";
+					mes "e se você conhecê-lo, você sabe todos os tipos de coisas sobre ele como se ele conseguisse falar! É tão estranho e misterioso !";
 					next;
-					mes "[Gunther Doubleharmony]";
-					mes "He has a mysterious bag where endless gifts come out, and he's got a mysterious past involving some colder town and something about a nasty witch.";
+					mes "[Gunther]";
+					mes "Ele tem uma misteriosa sacola onde saem infinitas prendas e ele tem um passado misterioso que envolve algumas cidades mais frias e alguma coisa sobre uma bruxa desagradável.";
 					next;
-					mes "[Gunther Doubleharmony]";
-					mes "But it's okay because he was rescued by some Alchemist and came back to life, but you should go to Lutie if you wanna know more about him, okay?";
+					mes "[Gunther]";
+					mes "Mas ele está bem, porque ele foi resgatado por algum alquimista e voltou à vida, mas você deve ir para Lutie se você quiser saber mais sobre ele, ok?";
 					close;
 				}
+
 			case 3:
-				mes "[Gunther Doubleharmony]";
-				mes "You're gonna leave right now and not even listen to me a little bit? Okay, I'm cool, but promise you'll come back and listen to just one of my songs, okay?";
+				mes "[Gunther]";
+				mes "Você vai sair agora e nem sequer me escutou um pouquinho? Ok, eu tô legal, mas prometa voltar, ai você apenas uma das minhas canções, ok?";
 				close;
 			}
 		} else {
 			mes "[" + @name$ + "]";
 			mes "...";
 			next;
-			mes "[Gunther Doubleharmony]";
-			mes "Wow, you're ignoring me, huh? Alright, that's fine by me! Unless you have some kind of problem where you can't talk, then I'm really really sorry.";
+			mes "[Gunther]";
+			mes "Uau, você está me ignorando, hein? Tudo bem, tudo bem por mim! A menos que você tenha algum tipo de problema em que você não pode falar, então estou realmente muito triste.";
 			close;
 		}
 
@@ -2747,188 +2714,188 @@ payon,181,172,3	script	Bard#4	1_M_BARD,{
 
 }
 
-yuno_in04,20,123,7	script	Representative#bq	4_F_SISTER,{
+yuno_in04,20,123,7	script	Representante#bq	4_F_SISTER,{
 //set @check = GetGlobalVar "040708_god2"
 	mes "[Marlin Putiur]";
 	if (god_brising == 3) {
-		mes "Welcome to the";
-		mes "Monster Research";
-		mes "Organization.";
+		mes "Bem-vindo a";
+		mes "Organização de Pesquisa";
+		mes "de Monstros.";
 		next;
 		mes "[Marlin Putiur]";
-		mes "We are researching monsters based upon information from adventurers in order to efficiently cope with monsters out in the wild.";
+		mes "Nós estamos pesquisando monstros baseado em informações de aventureiros a fim de lidar eficientemente com monstros no estado selvagem.";
 		next;
 		mes "[Marlin Putiur]";
-		mes "We're accepting any kind of information related to monsters,";
-		mes "so if you have any news or info, please don't hesitate to submit it to me.";
+		mes "Nós estamos aceitando qualquer tipo de informação relacionada com monstros,";
+		mes "então se você tiver qualquer novidade ou informação, por favor não hesite em dizer-me.";
 		next;
 		mes "[Marlin Putiur]";
-		mes "You can use the report documentation form in";
-		mes "this room at your convenience.";
+		mes "Você pode usar o formulário de relatório";
+		mes "neste quarto a sua conveniência.";
 		next;
 		mes "[Marlin Putiur]";
 		mes "Eh...?";
-		mes "Did you just say";
-		mes "you're looking for";
-		mes "someone? Well...";
+		mes "Você acabou de dizer";
+		mes "que você está procurando";
+		mes "alguém? Bem...";
 		next;
 		mes "[Marlin Putiur]";
-		mes "Well, if he's a registered";
-		mes "member of this organization,";
-		mes "I can help you.";
+		mes "Bem, se ele é um membro";
+		mes "registrado desta organização,";
+		mes "eu posso lhe ajudar.";
 		next;
 		mes "[Marlin Putiur]";
-		mes "What was the name?";
+		mes "Qual era o nome?";
 		mes "Hermite Charles...?";
 		next;
 		mes "[Marlin Putiur]";
-		mes "Oh, I found him.";
-		mes "Errr, but he didn't submit all of the required information when he applied for membership...";
+		mes "Oh, Eu o achei.";
+		mes "Errr, mas ele não enviou todas as informações requeridas quando ele pediu a adesão...";
 		next;
 		mes "[Marlin Putiur]";
-		mes "Oh. He's a Rogue.";
-		mes "Well, that explains everything. Anyway, did you want to see all";
-		mes "the information we have?";
+		mes "Oh. Ele é um Arruaceiro.";
+		mes "Bem, isto explica tudo. De qualquer maneira, você quer ver todas";
+		mes "as informações que nós temos?";
 		next;
-		mes "^3355FFMarlin shows you";
-		mes "the membership";
-		mes "application card.^000000";
+		mes "^3355FFMarlin mostrou a você";
+		mes "o cartão de";
+		mes "adesão do membro.^000000";
 		next;
-		mes "[Membership Card]";
-		mes "Name: Hermite Charles";
-		mes "Job: Rogue";
-		mes "Sex: Rogue";
-		mes "Address: Yo Mama Street, Prontera";
-		next;
-		mes "[Marlin Putiur]";
-		mes "Unfortunately, we don't have any more information. But I hope this will be helpful to you in some way.";
+		mes "[Cartão de Membro]";
+		mes "Nome: Hermite Charles";
+		mes "Profissão: Arruaceiro";
+		mes "Sexo: Masculino";
+		mes "Endereço: Rua Yo Mama, Prontera";
 		next;
 		mes "[Marlin Putiur]";
-		mes "Still, it may be a good idea to visit the Rogue Guild. Perhaps";
-		mes "they can help you.";
+		mes "Infelizmente, nós não temos nenhuma outra informação. Mas eu espero que isso seja útil para você de alguma maneira.";
+		next;
+		mes "[Marlin Putiur]";
+		mes "Ainda, pode ser uma boa idéia visitar a Guilda de Arruaceiros. Talvez";
+		mes "eles possam lhe ajudar.";
 		close;
 	}
 
-	mes "Welcome to the";
-	mes "Monster Research";
-	mes "Organization.";
+	mes "Bem-vindo a";
+	mes "Organização de Pesquisa";
+	mes "de Monstros.";
 	next;
 	mes "[Marlin Putiur]";
-	mes "We are researching monsters based on information from adventurers in order to efficiently cope with monsters out in the wild.";
-	next;
-	mes "[Marlin Putiur]";
-	mes "We're accepting any kind of information related to monsters, so if you have any news or info, please don't hesitate to submit it to me.";
-	next;
-	mes "[Marlin Putiur]";
-	mes "You can use the report documentation form in this room at your convenience.";
+		mes "Nós estamos pesquisando monstros baseado em informações de aventureiros a fim de lidar eficientemente com monstros no estado selvagem.";
+		next;
+		mes "[Marlin Putiur]";
+		mes "Nós estamos aceitando qualquer tipo de informação relacionada com monstros, então se você tiver qualquer novidade ou informação, por favor não hesite em dizer-me.";
+		next;
+		mes "[Marlin Putiur]";
+		mes "Você pode usar o formulário de relatório neste quarto a sua conveniência.";
 	if (gef_bard_q == 4 || gef_bard_q == 24) {
 		next;
 		mes "[Marlin Putiur]";
 		mes "Hmmm?";
-		mes "Adventurers of this organization? Ah, you say you're looking for a Bard?";
-		next;
-		mes "[Marlin Putuir]";
-		mes "Yes, we have a few Bard members who regularly send us information related to monsters.";
+		mes "Aventureiros desta organização? Ah, você falou que está procurando por um Bardo?";
 		next;
 		mes "[Marlin Putiur]";
-		mes "I also hear the Bards have been helping scholars instill bulletin boards in fields which indicate the location for new adventurers. Would you let me know the full name of the person you're looking for?";
+		mes "Sim, nós temos alguns membros Bardos que nos mandam regularmente informações de monstros.";
 		next;
-		input .@inputstr$;
-		if (.@inputstr$ == "Minty Errende") {
+		mes "[Marlin Putiur]";
+		mes "Eu também ouvi dizer que os Bardos estão ajudando estudiosos a infiltrar quadro de avisos nos campos o qual indica a localização de novos aventureiros. Poderia me informar o nome completo da pessoa que você está procurando?";
+		next;
+		input @inputstr$;
+		if (@inputstr$ == "Errante Menta") {
 			mes "[Marlin Putiur]";
-			mes "Minty Errende...";
-			mes "Oh yes, I remember him. He told me a while ago that he's heading South, and that he's staying in Geffen now.";
+			mes "Minty Errante...";
+			mes "Oh sim, eu lembro dele. Ele me disse há pouco que está na posição Sul e que está hospedado em Geffen agora.";
 			next;
 			mes "[Marlin Putiur]";
-			mes "He's a very kind, friendly person. Errende's always doing his best to provide us with the information we need. When you get a chance, would you please give him my regards?";
+			mes "Ele é um tipo de pessoa muito amigável. Errante sempre faz o seu melhor para nos fornecer as informações que precisamos. Quando você tiver uma oportunidade, você poderia por favor dar-lhe minhas considerações?";
 			close;
 
-		} else if (.@inputstr$ == "Kino Kitty") {
+		} else if (@inputstr$ == "Gato Kino") {
 			mes "[Marlin Putiur]";
-			mes "Kino Kitty, Kino Kitty... Oh, here we are. He sent us a letter that says, 'I will stay in the desert until I find my real self.'";
+			mes "Gato Kino, Gato Kino... Oh, aqui estamos nós. Ele nos enviou uma carta que diz, 'Eu vou ficar no deserto até encontrar meu verdadeiro eu.";
 			next;
 			mes "[Marlin Putiur]";
-			mes "He doesn't seem healthy, but I guess he's still traveling. Trying seeking him out in Morroc, and give my regards to him if you get the chance.";
+			mes "Ele não parecia saudável, mas parece que ele ainda está viajando. Tente achá-lo e afastá-lo de Morroc e dê minhas considerações a ele se você tiver a chance.";
 			close;
 
-		} else if (.@inputstr$ == "Gunther Doubleharmony") {
+		} else if (@inputstr$ == "Gunther") {
 			mes "[Marlin Putiur]";
-			mes "Ah, are you a friend of Gunther's? Haha, he's a very funny guy, if a little excitable. Let's see, Gunther, Gunther...";
+			mes "Ah, você é um amigo de Gunther? Haha, ele é um garoto muito engraçado, só um pouco emotivo. Deixe-me ver, Gunther, Gunther...";
 			next;
 			mes "[Marlin Putiur]";
-			mes "Ah, it says here that he wanted to look around Payon and Alberta. So he'll be at one of those places. I'm sorry I can't be more specific.";
+			mes "Ah, aqui diz que ele queria dar uma olhada em Payon e Alberta. Então ele vai estar em um desses lugares. Eu sinto muito, não posso ser mais específica.";
 			close;
 
 		} else {
 			mes "[Marlin Putiur]";
-			mes " " + .@inputstr$ + "...?";
+			mes " " + @inputstr$ + "...?";
 			mes "Ummm hmm...";
-			mes "I'm sorry, but we don't have any records for that person.";
+			mes "Desculpe, mas não temos nenhum registro dessa pessoa.";
 			close;
 		}
 
 	} else {
 		next;
 		mes "[Marlin Putiur]";
-		mes "We are endeavoring to research monsters in this world with the intent to aid each and every adventurer on their journeys.";
+		mes "Nós estamos investigando monstros neste mundo no intento de ajudar os aventureiros em suas jornadas.";
 		close;
 	}
 }
 
-yuno_in04,33,119,3	script	Adventurer#1	4_M_ROGUE,{
+yuno_in04,33,119,3	script	Aventureiro#1	4_M_ROGUE,{
 	mes "...";
 	next;
 	mes "...";
 	mes ".......";
 	next;
-	mes "^3355FF*Scribble Scribble*^000000";
+	mes "^3355FF*Rabisca Rabisca*^000000";
 	next;
-	mes "[Energetic Young Man]";
+	mes "[Jovem Dinâmico]";
 	mes "Err...?";
-	mes "What is it?";
+	mes "O que é isto?";
 	next;
 	if (!Sex) {
 		emotion e_heh;
-		mes "[Energetic Young Man]";
+		mes "[Jovem Dinâmico]";
 		mes "Oh...!";
-		mes "A beautiful,";
-		mes "young lady~!";
+		mes "Uma linda,";
+		mes "mocinha~!";
 		next;
-		mes "[Energetic Young Man]";
-		mes "Hello there~";
-		mes "My name is Pane.";
-		mes "May I ask yours?";
+		mes "[Jovem Dinâmico]";
+		mes "Olá aí~";
+		mes "Meu nome é Pane.";
+		mes "Posso perguntar o seu?";
 		@name$ = strcharinfo(0);
-		input .@inputstr$;
+		input @inputstr$;
 		next;
-		mes "[Energetic Young Man]";
+		mes "[Jovem Dinâmico]";
 		mes "Oh...";
-		mes "" +.@inputstr$+ "...";
-		if (@name$ == .@inputstr$) {
+		mes "" +@inputstr$+ "...";
+		if (@name$ == @inputstr$) {
 			next;
-			mes "[Energetic Young Man]";
-			mes "^FF6699"+.@inputstr$+"!";
-			mes "Such a wonderful name!";
+			mes "[Jovem Dinâmico]";
+			mes "^FF6699"+@inputstr$+"!";
+			mes "Um nome maravilhoso!";
 			next;
-			mes "[Energetic Young Man]";
-			mes "I shall remember your name, my lady. Oh, but I'm so sorry. I'm kind of busy right now. Would you come back later? I'll do my best to please you next time.";
+			mes "[Jovem Dinâmico]";
+			mes "Irei lembrar de seu nome, minha senhora. Oh, mas eu sinto muito. Eu estou muito ocupado agora. Você poderia voltar mais tarde? Farei o meu melhor para agradá-la na próxima vez.";
 			emotion e_kis;
 			close;
 
 		} else {
-			mes "That's your name?";
+			mes "Esse é o seu nome?";
 			next;
-			mes "[Energetic Young Man]";
-			mes "Eh, whatever. Oh, but I'm so sorry. I'm kind of busy right now. Would you come back later? I'll do my best to please you next time.";
+			mes "[Jovem Dinâmico]";
+			mes "Eh, que seja. Oh, mas eu sinto muito. Eu estou muito ocupado agora. Você poderia voltar mais tarde? Farei o meu melhor para agradá-la na próxima vez.";
 			emotion e_heh;
 			close;
 		}
 
 	} else {
-		mes "[Energetic Young Man]";
-		mes "What, man...!";
-		mes "Leave me alone.";
-		mes "Can't you see I'm busy?";
+		mes "[Jovem Dinâmico]";
+		mes "O quê, cara...!";
+		mes "Deixe-me sozinho.";
+		mes "Não está vendo que estou ocupado?";
 		close;
 	}
 }

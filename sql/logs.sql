@@ -79,7 +79,7 @@ CREATE TABLE IF NOT EXISTS `card_log` (
   `ItemID` int(11) unsigned NOT NULL DEFAULT '0',
   `ItemName` varchar(50) NOT NULL DEFAULT '',
   `ItemSerial` bigint(20) unsigned NOT NULL DEFAULT '0',
-  `Type` enum('Insert','Removed') NOT NULL DEFAULT 'Insert',
+  `Type` enum('Insert','Removed','Removed_Fail') NOT NULL DEFAULT 'Insert',
   `Slot` smallint(1) NOT NULL DEFAULT '0',
   `Card_ID` int(11) unsigned NOT NULL DEFAULT '0',
   `CardName` varchar(24) NOT NULL DEFAULT '',

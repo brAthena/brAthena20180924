@@ -24,7 +24,7 @@
 // |		- Orce                                                     |
 // |                                                                   |
 // |---- Versão atual--------------------------------------------------|
-// |        - 1.5                                                      |
+// |        - 1.6                                                      |
 // |---- Descrição: ---------------------------------------------------|
 // | Um controlador para Guerra do Emperium projetado para             |
 // | simplicidade e facilidade de uso.                                 |
@@ -56,6 +56,11 @@ function Disp_Owner; function Add_Zero;
 OnInit:
 
 // |-----------------------------------------------------------
+// | definições do comando para chamar o NPC
+// |-----------------------------------------------------------
+	bindatcmd "woeconfig", "WOE_CONTROL::OnMenu";
+
+// |-----------------------------------------------------------
 // | definições de configuração.
 // |-----------------------------------------------------------
 
@@ -82,7 +87,8 @@ OnInit:
 // |     - Se Guild Master de está habilitado (opção 4), esse recurso não é utilizado.
 // |-----------------------------------------------------------
 
-	// Combine values as needed (e.g. 1|8 = 1+8 = 9).
+	// Combine valores conforme necessário (ex. 1|8 = 1+8 = 9).
+	// Neste ex esta configurado para ativar o sistema e fazer verificação de IP.
 	set .Options, 1|8;
 
 	// Recompensas por castelo.
@@ -104,9 +110,9 @@ OnInit:
 	setarray .EndLabel$[0],"ar01","ar02","ar03","ar04","ar05","sc01","sc02","sc03","sc04","sc05";
 	setarray .Days$[0],"Domingo","Segunda-Feira","Terça-Feira","Quarta-feira","Quinta-Feira","Sexta-Feira","Sábado";
 	setarray .Regions$[0],"Prontera","Payon","Geffen","Aldebaran","Arunafeltz","Schwaltzvalt";
-	setarray .Map$[0],"prt_gld","pay_gld","gef_fild13","alde_gld","aru_gld","sch_gld";
-	setarray .MapX[0],134,240,153,111,208,121,295,317,140,204,214,308,143,193,305,48, 95,142,239,264,158,83, 68,299,292,293,288, 97,137, 71;
-	setarray .MapY[0], 65,128,137,240,240,233,116,293,160,266, 75,240,240,278, 87,83,249, 85,242, 90,272,47,155,345,107,100,252,196, 90,315;
+	setarray .map$[0],"prt_gld","pay_gld","gef_fild13","alde_gld","aru_gld","sch_gld";
+	setarray .mapx[0],134,240,153,111,208,121,295,317,140,204,214,308,143,193,305,48, 95,142,239,264,158,83, 68,299,292,293,288, 97,137, 71;
+	setarray .mapy[0], 65,128,137,240,240,233,116,293,160,266, 75,240,240,278, 87,83,249, 85,242, 90,272,47,155,345,107,100,252,196, 90,315;
 
 // |-----------------------------------------------------------
 
@@ -157,7 +163,7 @@ OnMinute00:
 							donpcevent "Agit#"+.Castles$[.@j]+"::OnAgitEnd";
 							killmonster .Castles$[.@j], "Agit#"+.Castles$[.@j]+"::OnAgitBreak";
 						} else {
-							donpcevent "Manager#"+.Castles$[.@j]+"::OnAgitEnd2";
+							donpcevent "Gerenciador#"+.Castles$[.@j]+"::OnAgitEnd2";
 							killmonster .Castles$[.@j], "Steward#"+.EndLabel$[.@j-20]+"::OnStartArena";
 						}
 					}
@@ -255,7 +261,7 @@ while(1) {
 		}
 	}
 	next;
-	switch(select(""+((.CastleWarp || .Active[1])?"Ir para os castelo":"")+":Conferir Horários:Verificar castelos:"+((getgmlevel()<.GMAccess || !getgmlevel())?"":"Configurar Castelos")+":^777777Cancelar^000000")) {
+	switch(select(""+((.CastleWarp || .Active[1])?"Ir para os castelo":"")+":Conferir Horários:Verificar castelos:"+((getgroupid()<.GMAccess || !getgroupid())?"":"Configurar Castelos")+":^777777Cancelar^000000")) {
 	case 1:
 		if (.CastleWarp) set .@clr$,"^0055FF";
 		set .@menu$,"";
@@ -272,7 +278,7 @@ while(1) {
 			set .@menu$, .@menu$+":";
 		}
 		set .@j, select(.@menu$)-1;
-		warp .Map$[.@i],.MapX[(.@i*5)+.@j],.MapY[(.@i*5)+.@j];
+		warp .map$[.@i],.mapx[(.@i*5)+.@j],.mapy[(.@i*5)+.@j];
 		close;
 	case 2:
 		mes "[Schedule]";
@@ -296,7 +302,7 @@ while(1) {
 			mes "> ^FF0000"+.Regions$[.@i]+"^000000";
 			for(set .@j,.@k; .@j<(.@k+5); set .@j,.@j+1) {
 				set .@t, getcastledata(.Castles$[.@j],1);
-				mes "  ~ "+getcastlename(.Castles$[.@j])+": "+((.@t)?"^0055FF"+getguildname(.@t):"^777777unoccupied")+"^000000";
+				mes "  ~ "+getcastlename(.Castles$[.@j])+": "+((.@t)?"^0055FF"+getguildname(.@t):"^777777Desocupado")+"^000000";
 			}
 			if (.@i < 5) mes " ";
 		}

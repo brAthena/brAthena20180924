@@ -1,15 +1,24 @@
-//===== Hercules Script ======================================
-//= Mercenary related NPCs
-//===== By: ==================================================
-//= Daegaladh
-//===== Current Version: =====================================
-//= 1.0
-//===== Description: =========================================
-//= Sells Lancer, Sword, and Archer mercenaries,
-//= along with related mercenary items.
-//===== Additional Comments: =================================
-//= 1.0 First version. [Daegaladh]
-//============================================================
+//    ________________________________________________________
+//   /                                                        \
+//   |       _           _   _   _                            |
+//   |      | |__  _ __ / \ | |_| |__   ___ _ __   __ _       |
+//   |      | '_ \| '__/ _ \| __| '_ \ / _ \ '_ \ / _` |      |
+//   |      | |_) | | / ___ \ |_| | | |  __/ | | | (_| |      |
+//   |      |_.__/|_|/_/   \_\__|_| |_|\___|_| |_|\__,_|      |
+//   |                                                        |
+//   |                    brAthena Script                     |
+//   |--------------------------------------------------------|
+//   | Nome do Script:  aluguel_de_mercenarios.txt            |
+//   |--------------------------------------------------------|
+//   | Criado por: eA/rA/Herc/brA Dev. Team                   |
+//   |--------------------------------------------------------|
+//   | Versões eA/rA/Herc/brA: 1.1/1.1/1.1/1.0                |
+//   |--------------------------------------------------------|
+//   | Changelog:                                             |
+//   | 1.0 Cabeçalho brAthena [Axl]                           |
+//   |--------------------------------------------------------|
+//   | - Anotações                                            |
+//   \________________________________________________________/
 
-izlude,47,139,5	duplicate(Mercenary Manager#main)	Mercenary Manager#Sword	4_M_JOB_KNIGHT2
-izlude,56,139,4	duplicate(MercMerchant)	Mercenary Merchant#Sword	4_F_HUWOMAN
+izlude,47,139,5	duplicate(Locador de Mercenários#Espadachims)	Locador de Mercenários	4_M_JOB_KNIGHT2
+izlude,56,139,4	duplicate(Artigos para Mercenários#Espadachims)	Artigos para Mercenários	4_F_HUWOMAN

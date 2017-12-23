@@ -8,82 +8,82 @@
 //   |                                                        |
 //   |                    brAthena Script                     |
 //   |--------------------------------------------------------|
-//   | Nome do Script:  sumo_sacerdote.txt                    |
+//   | Nome do Script: Quest para se tornar Sumo-Sacerdote    |
 //   |--------------------------------------------------------|
-//   | Criado por: eA/rA/Herc/brA Dev. Team                   |
+//   | Criado por: eA/rA/brA Dev. Team                        |
 //   |--------------------------------------------------------|
-//   | Versões eA/rA/Herc/brA: 1.3/1.3/1.3/1.0                |
+//   | Versões eA/rA/brA: 1.3/1.3/1.1                         |
 //   |--------------------------------------------------------|
-//   | Descrição: Quest da classe Sumo Sacerdote.             |
+//   | Descrição: Mudança de Classe para Sumo-Sacerdote.      |
 //   |--------------------------------------------------------|
 //   | Changelog:                                             |
-//   | 1.0 Cabeçalho brAthena [Axl]                           |
+//   | 1.0 Criado Cabeçalho [Megasantos]                      |
+//   | 1.1 Tradução PT-BR [Holy]                              |
 //   |--------------------------------------------------------|
 //   | - Anotações                                            |
 //   \________________________________________________________/
 
-valkyrie,44,42,5	script	High Priest#Valkyrie	1_M_PASTOR,{
+valkyrie,44,42,5	script	Sumo-Sacerdote#Valquíria	1_M_PASTOR,{
 	if (ADVJOB == 0 || Upper != 1) {
 		.@karma_d = rand(1,10);
 		if (.@karma_d > 4) {
-			mes "[High Priest]";
-			mes "Congratulations.";
-			mes "Honor to the warriors!";
+			mes "[Sumo-Sacerdote]";
+			mes "Parabéns.";
+			mes "Honre os guerreiros!";
 			close;
 		}
-		mes "[High Priest]";
-		mes "Through the power";
-		mes "of holiness, may we";
-		mes "find peace, strength";
-		mes "and protection. Deliver";
-		mes "us from the forces of evil...";
+		mes "[Sumo-Sacerdote]";
+		mes "Através do poder";
+		mes "da santidade, nós podemos";
+		mes "encontrar paz, força";
+		mes "e proteção. Livra-nos";
+		mes "das forças do mal...";
 		close;
-	}
-	else if (ADVJOB == Job_High_Priest && Class == Job_Acolyte_High && JobLevel > 39) {
-		mes "[High Priest]";
-		mes "Our world is in";
-		mes "need of people of";
-		mes "talent and conviction.";
-		mes "Please continue your";
-		mes "good works as an even";
-		mes "greater hero of holiness...";
+	} else if (ADVJOB == Job_High_Priest && Class == Job_Acolyte_High && JobLevel > 39) {
+		mes "[Sumo-Sacerdote]";
+		mes "Nosso mundo está";
+		mes "precisando de pessoas com";
+		mes "talento e convicção.";
+		mes "Por favor continue com";
+		mes "seu bom trabalho assim como um";
+		mes "grande herói da santidade...";
 		next;
-		mes "[High Priest]";
-		mes "Would you like";
-		mes "to become a High Priest?";
+		mes "[Sumo-Sacerdote]";
+		mes "Você deseja se";
+		mes "tornar um Sumo-Sacerdote?";
 		next;
-		if (select("No.:Yes.") == 1) {
-			mes "[High Priest]";
-			mes "When you're ready,";
-			mes "feel free to come back.";
-			mes "Honor to the warriors!";
+		if (select("Não.:Sim.") == 1) {
+			mes "[Sumo-Sacerdote]";
+			mes "Quando estiver pronto,";
+			mes "sinta-se a vontade para voltar.";
+			mes "Honre os guerreiros!";
 			close;
 		}
 		if (SkillPoint) {
-			mes "[High Priest]";
-			mes "It is still possible for you to learn more skills. Please use";
-			mes "all of your remaining Skill Points before returning to me.";
+			mes "[Sumo-Sacerdote]";
+			mes "Ainda é possível que você aprenda mais habilidades. Por favor, use";
+			mes "todos os seus Pontos de Habilidades antes de voltar a falar comigo.";
 			close;
 		}
 		jobchange Job_High_Priest;
 		ADVJOB = 0;
-		mes "[High Priest]";
-		mes "Congratulations.";
-		mes "As a High Priest,";
-		mes "I hope you will guide";
-		mes "others upon the path";
-		mes "to holiness...";
+		mes "[Sumo-Sacerdote]";
+		mes "Parabéns.";
+		mes "Como um Sumo-Sacerdote,";
+		mes "eu acredito que você irá guiar";
+		mes "outros para o caminho";
+		mes "da santidade...";
 		close;
 	}
-	mes "[High Priest]";
-	mes "Welcome";
-	mes "to Valhalla,";
-	mes "the Hall of Honor.";
+	mes "[Sumo-Sacerdote]";
+	mes "Bem-vindo";
+	mes "a Valhalla,";
+	mes "o Salão de Honras.";
 	next;
-	mes "[High Priest]";
-	mes "Please make";
-	mes "yourself comfortable";
-	mes "while you are here.";
-	mes "Honor to the warriors!";
+	mes "[Sumo-Sacerdote]";
+	mes "Por favor, sinta-se";
+	mes "confortável enquanto";
+	mes "você estiver aqui.";
+	mes "Honre os guerreiros.";
 	close;
 }

@@ -12954,9 +12954,7 @@ void status_read_job_db_sub(int idx, const char *name, config_setting_t *jdb)
 		{ "GrenadeLauncher", W_GRENADE },
 		{ "FuumaShuriken", W_HUUMA },
 		{ "TwoHandRod", W_2HSTAFF },
-#ifdef RENEWAL_ASPD
 		{ "Shield", MAX_WEAPON_TYPE }
-#endif
 	};
 
 	if ((temp = libconfig->setting_get_member(jdb, "Inherit"))) {

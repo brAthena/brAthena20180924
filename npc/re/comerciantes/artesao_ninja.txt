@@ -9,170 +9,172 @@
 //===== Additional Comments: ================================= 
 //= 1.0 Official Conversion. [Dastgir]
 //============================================================ 
-que_ng,21,72,6	script	Master Craftsman Gyo#arm	4_M_RASWORD,{
+que_ng,21,72,6	script	Mestre Artesão Gyo#arm	4_M_RASWORD,{
 	mes "[Gyo]";
-	mes "How would you define victory?";
-	mes "To fell the enemy...";
-	mes "However, the most important thing is...";
-	mes "Never to fall yourself!";
+	mes "Como você definiria a vitória?";
+	mes "A queda de um inimigo...";
+	mes "No entanto, o mais importante é...";
+	mes "Nunca se deixar ser derrubado!";
 	next;
 	mes "[Gyo]";
-	mes "For that, you must better protect yourself.";
-	mes "You cannot protect 'others' while you hinder your 'own' protection.";
+	mes "Para isso, você deve se proteger melhor.";
+	mes "Você não pode proteger os 'outros' enquanto você impede a sua 'própria' proteção.";
 	next;
-	if (select("Combine armor.:End conversation.") == 2) {
+	if (select("Criar Armaduras.:Finalizar Conversa.") == 2) {
 		mes "[Gyo]";
-		mes "Prudence is also an important virtue in battle.";
+		mes "A prudência é também uma virtude importante na batalha.";
 		close;
 	}
-	switch (select("Wolf Armguard:Crescent Armguard:Ninja Scale Armor:Shadow King's Armor:Quit.")) {
+	switch (select("Proteção de Braço do Lobo:Proteção de Braço da Lua Crescente:Armadura de Escamas do Ninja:Armadura do Rei das Sombras:Sair.")) {
 		case 1:
 			mes "[Gyo]";
-			mes "Wolf Armguard... One beastly piece of armor.";
+			mes "Proteção de Braço do Lobo... Um pedaço da Armadura das Bestas.";
 			next;
 			callsub L_Menu,Wolf_Armguard;
 			close;
 		case 2:
 			mes "[Gyo]";
-			mes "Crescent Armguard... A thing of beauty and strength... With none the lesser.";
+			mes "Proteção de Braço da Lua Crescente... Belo e forte... Como nenhum outro.";
 			next;
 			callsub L_Menu,Crescent_Armguard;
 			close;
 		case 3:
 			mes "[Gyo]";
-			mes "Ninja Scale Armor... It's said that a legendary Ninja once wore it.";
+			mes "Armadura de Escamas do Ninja... Dizem que um lendário Ninja a usou uma vez.";
 			next;
 			callsub L_Menu,Ninja_Scale_Armor;
 			close;
 		case 4:
 			mes "[Gyo]";
-			mes "Shadow King's Armor... It was made to protect others.";
+			mes "Armadura do Rei das Sombras... Ela foi feito para proteger os outros.";
 			next;
 			callsub L_Menu,Tenebris_Latitantes;
 			close;
 		case 5:
 			mes "[Gyo]";
-			mes "Looks like you need more time to decide.";
+			mes "Parece que você precisa de mais tempo para se decidir.";
 			close;
 	}
 		
 L_Menu:
 	.@item_make = getarg(0);
 	while(1){
-		switch(select("Check Ingredients.:Check Stats.:Combine.:Quit.")){
+		switch(select("Itens Necessários.:Verificar Atributos.:Criar.:Sair.")){
 			case 1:
 				mes "[Gyo]";
-				mes "To make a ^ff0000"+getitemname(.@item_make)+", "+callsub(L_Ingredients,.@item_make)+".^000000";
+				mes "Para fazer uma ^ff0000"+getitemname(.@item_make)+", "+callsub(L_Ingredients,.@item_make)+".^000000";
 				if (.@item_make==Wolf_Armguard)
-					mes "Can you feel it? The throbbing of the wolf blood¡¦";
+					mes "Pode sentir isso? O palpitar do sangue de lobo!!";
 				else if (.@item_make==Crescent_Armguard)
-					mes "A crescent as beautiful and clear as a crystal will be engraved on it.";
+					mes "Uma lua crescente bonita e clara como um cristal será gravado nela.";
 				else if (.@item_make==Ninja_Scale_Armor)
-					mes "You can feel its legendary powers.";
+					mes "Você pode sentir seus poderes lendários.";
 				else if (.@item_make==Tenebris_Latitantes)
-					mes "With the darkness it erases existence itself...";
+					mes "Com a escuridão ela apaga a própria existência...";
 				break;
 			case 2:
 				mes "["+ getitemname(getarg(0)) +"]";
 				if (.@item_make == Wolf_Armguard){
-					mes "Chance to have 5 sec. of ATK +100, FLEE -50 upon melee attack.";
-					mes "Shield Type, Defense 45, Slot 1";
-					mes "Required Level 100, Ninja Type Only";
+					mes "ATQ +100 e Esquiva -50 por 5 segundos ao atacar fisicamente a curta distância.";
+					mes "Tipo: Escudo, Defesa: 70, Slots: 1";
+					mes "Nível Necessário: 100, Classes: Ninja e evoluções";
 				}
 				else if (.@item_make == Crescent_Armguard){
-					mes "Decreases post skill delay for 2% for every enhancement.";
-      				mes "Shield Type, Defense 70, Slot 1";
-      				mes "Required Level 100, Ninja Type Only";
+					mes "Reduz o tempo entre habilidades em 2% por nível de refinamento.";
+      				mes "Tipo: Escudo, Defesa: 45, Slots: 1";
+      				mes "Nível Necessário: 100, Classes: Ninja e evoluções";
 				}
 				else if (.@item_make == Ninja_Scale_Armor){
-      				mes "MHP+15%, MSP-30%.";
-      				mes "Armor Type, Defense 90, Slot 1";
-      				mes "Required Level 100, Ninja Type Only";
+      				mes "HP máximo +15%, SP máximo -30%.";
+					mes "ATQ +10% e FOR +2 adicionais quando usado em conjunto com a Proteção de Braço do Lobo.";
+      				mes "Tipo: Armadura, Defesa: 90, Slots: 1";
+      				mes "Nível Necessário: 100, Classes: Ninja e evoluções";
 				}
 				else if (.@item_make == Tenebris_Latitantes){
-					mes "Chance to activate Lvl. 1 Illusion - Shadow when attacked by melee attacks.";
-      				mes "Armor Type, Defense 60, Slot 1";
-      				mes "Required Level 100, Ninja Type Only";
+					mes "AGI +1. Ao sofrer um ataque corporal, há a chance de conjurar Genjutsu: Clone das Sombras Nv. 1.";
+					mes "Esquiva +10 quando usado em conjunto com a Proteção de Braço da Lua Crescente.";
+      				mes "Tipo: Armadura, Defesa: 60, Slots: 1";
+      				mes "Nível Necessário: 100, Classes: Ninja e evoluções";
 				}
 				break;
 			case 3:
 				mes "[Gyo]";
-        		mes "Make sure that ^ff0000you have the correct ingredients and equipment at hand.^000000";
-        		mes "No use crying over it later.";
+        		mes "Certifique-se de que ^ff0000você tenha os ingredientes e equipamentos corretos em mãos.^000000";
+        		mes "Não adianta chorar se algo der errado mais tarde.";
         		next;
-        		if (select("Combine.:Quit.") == 2) {
+        		if (select("Criar.:Sair.") == 2) {
 					mes "[Gyo]";
-					mes "Looks like you need more time to decide.";
+					mes "Parece que você precisa de mais tempo para decidir.";
 					close;
 				}
                 if (checkweight(1201,1) == 0 || (MaxWeight - Weight) < 2000) {
-					mes "- Hold on!! -";
-					mes "- You cannot receive items -";
-					mes "- because you carry too much. -";
-					mes "- Please try again -";
-					mes "- after lightening your burden. -";
+					mes "- Espere ai!! -";
+					mes "- Você não pode receber mais itens -";
+					mes "- Porque você já está com o inventório cheio. -";
+					mes "- Por favor, tente novamente -";
+					mes "- Depois de guardar algumas coisas. -";
 					close;
                 }
 				mes "[Gyo]";
 				switch(.@item_make){
-					case 2172:	//Wolf_Armguard
+					case 2172:	//Proteção_de_Braço_do_Lobo
 						if (countitem(Fox_Armguard) && countitem(Wolf_Blood) > 9) {
-							delitem Fox_Armguard,1; //Fox_Armguard
-							delitem Wolf_Blood,10; //Wolf_Blood
-							getitem Wolf_Armguard,1; //Wolf_Armguard
-							mes "Can you feel the wolfish instinct?";
-							mes "Wild, but beautiful¡¦";
+							delitem Fox_Armguard,1; //Proteção_de_Braço_da_Raposa
+							delitem Wolf_Blood,10; //Sangue_de_Lobo
+							getitem Wolf_Armguard,1; //Proteção_de_Braço_do_Lobo
+							mes "Você pode sentir o instinto do lobo?";
+							mes "Selvagem, mas bonito!!";
 						}
 						else {
-							mes "You don't have enough ingredients.";
-							mes "Look again......";
+							mes "Você não possui todos os itens necessários.";
+							mes "Olhe o seu inventório novamente......";
 						}
 						break;
-					case 2173: //Crescent_Armguard
+					case 2173: //Proteção_de_Braço_da_Lua_Crescente
 						if (countitem(Fox_Armguard) && countitem(Fragment_Of_Crystal) > 99) {
-							 delitem Fox_Armguard,1; //Fox_Armguard
-							 delitem Fragment_Of_Crystal,100; //Fragment_Of_Crystal
-							 getitem Crescent_Armguard,1; //Crescent_Armguard
-							 mes "B-e-a-utiful......";
-							 mes "Feel the overwhelming magic within.";
+							 delitem Fox_Armguard,1; //Proteção_de_Braço_da_Raposa
+							 delitem Fragment_Of_Crystal,100; //Fragmento_de_Cristal
+							 getitem Crescent_Armguard,1; //Proteção_de_Braço_da_Lua_Crescente
+							 mes "L-i-n-do......";
+							 mes "Sinta a magia esmagadora dentro de você.";
 						 }
 						 else {
-							mes "You don't have enough ingredients.";
-							mes "Look again......";
+							mes "Você não possui todos os itens necessários.";
+							mes "Olhe o seu inventório novamente......";
 						 }
 						 break;
-					case 15054:	//Ninja_Scale_Armor
+					case 15054:	//Armadura_de_Escamas_do_Ninja
 						if (countitem(Scale_Of_Red_Dragon) > 29 && countitem(Ice_Scale) > 29 && countitem(Dark_Red_Scale) > 29) {
-							delitem Scale_Of_Red_Dragon,30; //Scale_Of_Red_Dragon
-							delitem Ice_Scale,30; //Ice_Scale
-							delitem Dark_Red_Scale,30; //Dark_Red_Scale
-							getitem Ninja_Scale_Armor,1; //Ninja_Scale_Armor
-							mes "This armor holds a legend...";
-							mes "Though I don't believe in them...";
+							delitem Scale_Of_Red_Dragon,30; //Escama_de_Dragão_de_Fogo
+							delitem Ice_Scale,30; //Escama_de_Gelo
+							delitem Dark_Red_Scale,30; //Escama_Vermelha-Escura
+							getitem Ninja_Scale_Armor,1; //Armadura_de_Escamas_do_Ninja
+							mes "Existe uma lenda por trás dessa armadura...";
+							mes "Embora eu não acredite nela...";
 						}
 						else {
-							mes "You don't have enough ingredients.";
-							mes "Look again......";
+							mes "Você não possui todos os itens necessários.";
+							mes "Olhe o seu inventório novamente......";
 						}
 						break;
-					case 15055:	//Tenebris_Latitantes
+					case 15055:	//Armadura_do_Rei_das_Sombras
 						if (countitem(Special_Ninja_Suit_) && countitem(Piece_Of_Darkness) > 9) {
-							delitem Special_Ninja_Suit_,1; //Special_Ninja_Suit_
-							delitem Piece_Of_Darkness,10; //Piece_Of_Darkness
-							getitem Tenebris_Latitantes,1; //Tenebris_Latitantes
-							mes "How about it?";
-							mes "It looks like two sets of them, doesn't it?";
+							delitem Special_Ninja_Suit_,1; //Indumentária_Ninja_Especial
+							delitem Piece_Of_Darkness,10; //Fragmento_Sombrio
+							getitem Tenebris_Latitantes,1; //Armadura_do_Rei_das_Sombras
+							mes "Que tal?";
+							mes "Parece que são dois conjuntos dela, não é?";
 						}
 						else {
-							mes "You don't have enough ingredients.";
-							mes "Look again......";
+							mes "Você não possui todos os itens necessários.";
+							mes "Olhe o seu inventório novamente......";
 						}
 						break;
 				}
 				close;
 			case 4:
 				mes "[Gyo]";
-				mes "Looks like you need more time to decide.";
+				mes "Parece que você precisa de mais tempo para decidir.";
 				close;
 		}
 		next;
@@ -180,158 +182,158 @@ L_Menu:
 	
 L_Ingredients:
 	switch(getarg(0)){
-		case 2172:	//Wolf_Armguard
-			return "you need 1 Fox Armguard and 10 Blood of Wolf";
-		case 2173: //Crescent_Armguard
-			return "you need 1 Fox Armguard and 100 Crystal Fragments";
-		case 15054:	//Ninja_Scale_Armor
-			return "you need 30 Fire Dragon Scales, 30 Ice Scales and 30 Darkred Scale Pieces";
-		case 15055: //Tenebris_Latitantes
-			return "you'll need a Special Ninja Suit with a slot and 10 Dark Pieces";
+		case 2172:	//Proteção_de_Braço_do_Lobo
+			return "Você precisa de 1x Proteção de Braço da Raposa e 10x Sangue de Lobo";
+		case 2173: //Proteção_de_Braço_da_Lua_Crescente
+			return "Você precisa de 1x Proteção de Braço da Raposa e 100x Fragmento de Cristal";
+		case 15054:	//Armadura_de_Escamas_do_Ninja
+			return "Você precisa de 30x Escama de Dragão de Fogo, 30x Escama de Gelo e 30x Fragmento Sombrio";
+		case 15055: //Armadura_do_Rei_das_Sombras
+			return "Você precisa de 1x Indumentária Ninja Especial [1] e 10x Fragmento Sombrio";
 	}
 	end;
 	
 }
 
-que_ng,23,70,6	script	Master Craftsman Ki#weap	4_DST_SOLDIER,{
+que_ng,23,70,6	script	Mestre Artesão Ki#weap	4_DST_SOLDIER,{
 	mes "[Ki]";
-	mes "To attack is the best means of defense.";
-	mes "A powerful weapon will make you truly complete.";
+	mes "Atacar é o melhor meio de defesa.";
+	mes "Uma arma poderosa fará você realmente completo.";
 	next;
 	mes "[Ki]";
-	mes "Of course, it would be better to have something special at hand.";
+	mes "Claro, seria melhor ter algo especial à mão.";
 	next;
-	if (select("Combine weapon.:End conversation.") == 2) {
+	if (select("Criar Armas.:Encerrar Conversa.") == 2) {
 		mes "[Ki]";
-		mes "Being too careful could sometimes be lethal.";
+		mes "Ser cuidadoso de mais às vezes pode ser letal.";
 		close;
 	}
-	switch (select("Raksasa Dagger:Mikatsuki:Petal Shuriken:Quit.")) {
+	switch (select("Adaga Raksasa:Mikatsuki:Shuriken de Pétalas:Sair.")) {
 		case 1:
 			mes "[Ki]";
-			mes "Raksasa Dagger can only be used after plenty of training.";
+			mes "A Adaga Raksasa só pode ser usada após muito treinamento.";
 			next;
 			callsub L_Menu,Raksasa_Dagger;
 			close;
 		case 2:
 			mes "[Ki]";
-			mes "Mikatsuki... A beautiful curve like the crescent moon...";
-			mes "There aren't many who can make them.";
+			mes "Mikatsuki... Uma curva bonita como a lua crescente...";
+			mes "Não há muitos que possam usa-la.";
 			next;
 			callsub L_Menu,Mikatsuki;
 			close;
 		case 3:
 			mes "[Ki]";
-			mes "Petal Shuriken... Have you every seen petals swirl?";
+			mes "Shuriken de Pétalas... Você já viu as pétalas em um redemoinho?";
 			next;
 			callsub L_Menu,Huuma_Swirling_Petal;
 			close;
 		case 4:
 			mes "[Ki]";
-			mes "Think carefully~~";
+			mes "Pense com cuidado~~";
 			close;
 	}
 		
 L_Menu:
 	.@item_make = getarg(0);
 	while(1){
-		switch(select("Check Ingredients.:Check Stats.:Combine.:Quit.")){
+		switch(select("Itens Necessários.:Verificar Atributos.:Criar.:Sair.")){
 			case 1:
 				mes "[Ki]";
-				mes "To make a ^ff0000"+getitemname(.@item_make)+", "+callsub(L_Ingredients,.@item_make)+".^000000";
+				mes "Para fazer uma ^ff0000"+getitemname(.@item_make)+", "+callsub(L_Ingredients,.@item_make)+".^000000";
 				if (.@item_make==Raksasa_Dagger)
-					mes "The garnet gives the Raksasa Dagger its unique color.";
+					mes "A granada dá a Adaga Raksasa uma cor única.";
 				else if (.@item_make==Mikatsuki)
-					mes "The opal is what gives off the translucent glow.";
+					mes "O opala é o que emite o brilho translúcido da Mikatsuki.";
 				else if (.@item_make==Huuma_Swirling_Petal)
-					mes "It may seem like too many shurikens are needed... But it is essential for the beautiful fluttering effect.";
+					mes "Pode parecer como muitos shurikens... Mas possui um efeito único e lindo.";
 				break;
 			case 2:
 				mes "["+ getitemname(getarg(0)) +"]";
 				if (.@item_make == Raksasa_Dagger){
-					mes "INT+3 MATK+100.";
-      				mes "Dagger Type, ATK 120, Slot 1";
-      				mes "Required Level 110, Ninja Type Only";
+					mes "INT +3, ATQM +100.";
+      				mes "Tipo: Adaga, Ataque: 120, Slots: 1";
+      				mes "Nível Necessário: 110, Classes: Ninja e evoluções";
 				}
 				else if (.@item_make == Mikatsuki){
-					mes "MATK + 120, Fluctuated Casting and SP use decreased by 5% upon skill use.";
-      				mes "Dagger Type, ATK 50, Weapon Lvl. 4";
-      				mes "Slot 1";
-      				mes "Required Level 100, Ninja Type Only";
+					mes "ATQM +120, Reduz em 5% o consumo de SP e Diminui um pouco do tempo de conjuração variável.";
+      				mes "Tipo: Adaga, Ataque: 50, Nível da Arma: 4";
+      				mes "Slots: 1";
+      				mes "Nível Necessário: 100, Classes: Ninja e evoluções";
 				}
 				else if (.@item_make == Huuma_Swirling_Petal){
-      				mes "MATK + 50, Petal Shuriken  skill damage increased by 20%.";
-      				mes "Shuriken Type, ATK 150";
-      				mes "Weapon Lvl. 3, Slot 2";
-      				mes "Required Level 110, Ninja Type Only";
+      				mes "ATQM +50, Aumenta o dano da habilidade Turbilhão de Pétalas em 20%.";
+      				mes "Tipo: Shuriken Huuma, Ataque: 150";
+      				mes "Nível da Arma: 3, Slots: 2";
+      				mes "Nível Necessário: 110, Classes: Ninja e evoluções";
 				}
 				break;
 			case 3:
 				mes "[Ki]";
-        		mes "Make sure that ^ff0000you have the correct ingredients and equipment at hand.^000000";
-        		mes "No use crying over it later.";
+        		mes "Certifique-se de que ^ff0000ter os itens necessários em mãos.^000000";
+        		mes "E não venha chorar depois.";
         		next;
-        		if (select("Combine.:Quit.") == 2) {
+        		if (select("Criar.:Sair.") == 2) {
 					mes "[Ki]";
-					mes "Think carefully~~";
+					mes "Pense com cuidado~~";
 					close;
 				}
                 if (checkweight(1201,1) == 0 || (MaxWeight - Weight) < 2000) {
-					mes "- Hold on!! -";
-					mes "- You cannot receive items -";
-					mes "- because you carry too much. -";
-					mes "- Please try again -";
-					mes "- after lightening your burden. -";
+					mes "- Espere ai!! -";
+					mes "- Você não pode receber mais itens -";
+					mes "- pois já possui muitos em seu inventório. -";
+					mes "- Por favor, tente novamente -";
+					mes "- depois de guardar alguns deles. -";
 					close;
                 }
 				mes "[Ki]";
 				switch(.@item_make){
-					case 13076:	//Raksasa_Dagger
+					case 13076:	//Adaga_Raksasa
 						 if (countitem(Murasame_) && countitem(Dark_Red_Jewel)) {
-                                delitem Murasame_,1; //Murasame_
-                                delitem Dark_Red_Jewel,1; //Dark_Red_Jewel
-                                getitem Raksasa_Dagger,1; //Raksasa_Dagger
+                                delitem Murasame_,1; //Murasame
+                                delitem Dark_Red_Jewel,1; //Granada
+                                getitem Raksasa_Dagger,1; //Adaga_Raksasa
                                 mes "Oh yes...";
                                 mes "It is a beautiful glow...";
                             }
                             else {
-                            	mes "Hmm... You do not have enough to make a Raksasa Dagger.";
-                            	mes "Why don't you check again?";
-                            	mes "Some just can't give up what they hold.";
+                            	mes "Hmm... Você não tem o suficiente para fazer uma Adaga Raksasa.";
+                            	mes "Por que você não verifica o inventório novamente?";
+                            	mes "Alguns simplesmente não podem desistir do que possuem.";
                             }
 						break;
 					case 13078: //Mikatsuki
 						 if (countitem(Hakujin_) && countitem(White_Jewel)) {
-                                delitem Hakujin_,1; //Hakujin_
-                                delitem White_Jewel,1; //White_Jewel
+                                delitem Hakujin_,1; //Hakujin
+                                delitem White_Jewel,1; //Opala
                                 getitem Mikatsuki,1; //Mikatsuki
-                                mes "Splendid¡¦";
-                                mes "It is always mesmerizing to look upon such a beautiful weapon¡¦";
+                                mes "Esplendido!!";
+                                mes "É sempre hipnotizante olhar para uma arma tão bonita!!";
                             }
                             else {
-                                mes "Hmm... You do not have enough to make a Mikatsuki.";
-                                mes "Why don't you check again?";
-                                mes "Some just can't give up what they hold.";
+                                mes "Hmm... Você não tem o suficiente para fazer uma Mikatsuki.";
+                            	mes "Por que você não verifica o inventório novamente?";
+                            	mes "Alguns simplesmente não podem desistir do que possuem.";
                             }
 						 break;
-					case 13313:	//Huuma_Swirling_Petal
+					case 13313:	//Shuriken_de_Pétalas
 						 if (countitem(Huuma_Calm_Mind) && countitem(Broken_Shuriken) > 99) {
-                                delitem Huuma_Calm_Mind,1; //Huuma_Calm_Mind
-                                delitem Broken_Shuriken,100; //Broken_Shuriken
-                                getitem Huuma_Swirling_Petal,1; //Huuma_Swirling_Petal
-                                mes "Swirling Petal!!";
+                                delitem Huuma_Calm_Mind,1; //Huuma_da_Calmaria
+                                delitem Broken_Shuriken,100; //Shuriken_Despedaçado
+                                getitem Huuma_Swirling_Petal,1; //Shuriken_de_Pétalas
+                                mes "Rodopio das Pétalas!!";
                             }
                             else {
-                                mes "Hmm... You do not have enough to make Petal Shurikens.";
-                                mes "Why don't you check again?";
-                                mes "Some just can't give up what they hold.";
+                                mes "Hmm... Você não tem o suficiente para fazer uma Mikatsuki.";
+                            	mes "Por que você não verifica o inventório novamente?";
+                            	mes "Alguns simplesmente não podem desistir do que possuem.";
                             }
 						break;
 				}
 				close;
 			case 4:
 				mes "[Ki]";
-				mes "Looks like you need more time to decide.";
+				mes "Parece que você precisa de mais tempo para decidir.";
 				close;
 		}
 		next;
@@ -339,12 +341,12 @@ L_Menu:
 	
 L_Ingredients:
 	switch(getarg(0)){
-		case 13076:	//Raksasa_Dagger
-			return "you need 1 Murasame with 2 sockets and 1 Garnet";
+		case 13076:	//Adaga_Raksasa
+			return "Você precisa de 1x Murasame [2] e 1x Granada";
 		case 13078: //Mikatsuki
-			return "you need a Hakujin with a Slot and an Opal";
-		case 13313:	//Huuma_Swirling_Petal
-			return "you need one Huuma Calm Mind Shuriken and 100 Broken Shurikens";
+			return "Você precisa de 1x Hakujin [1] e 1x Opala";
+		case 13313:	//Shuriken_de_Pétalas
+			return "Você precisa de 1x Huuma da Calmaria e 100x Shuriken Despedaçado";
 	}
 	end;
 	

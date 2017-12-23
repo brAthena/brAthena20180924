@@ -11234,6 +11234,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 				clif->slide(src,x,y);
 			}
 			status_change_end(src, SC_HIDING, INVALID_TIMER);
+			clif->skill_poseffect(src,skill_id,skill_lv,x,y,tick);
 			break;
 
 		case SU_LOPE:

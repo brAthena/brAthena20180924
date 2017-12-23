@@ -1,215 +1,225 @@
-//===== Hercules Script ======================================
-//= Quest NPCs related to Lutie
-//===== By: ==================================================
-//= TonyMan & Samuray22
-//===== Current Version: =====================================
-//= 1.3b
-//===== Description: =========================================
-//= Blush, Cake Hat, Candle, Chef Hat, Raccoon Hat, Rainbow Eggshell,
-//= Spore Hat, Wonder Nutshell Quests
-//===== Additional Comments: =================================
-//= 1.1 Optimized [Lupus]
-//= 1.2 Fixed Chef Hat items [Lupus]
-//= 1.3 Update NPC to the Official One. [Samuray22]
-//= 1.3a Changed item names to item IDs. [Samuray22]
-//= 1.3b Removed a scrap " left in a delitem. [L0ne_W0lf]
-//= 1.4 Updated NPCs once again. [L0ne_W0lf]
-//============================================================
+//    ________________________________________________________
+//   /                                                        \
+//   |       _           _   _   _                            |
+//   |      | |__  _ __ / \ | |_| |__   ___ _ __   __ _       |
+//   |      | '_ \| '__/ _ \| __| '_ \ / _ \ '_ \ / _` |      |
+//   |      | |_) | | / ___ \ |_| | | |  __/ | | | (_| |      |
+//   |      |_.__/|_|/_/   \_\__|_| |_|\___|_| |_|\__,_|      |
+//   |                                                        |
+//   |                    brAthena Script                     |
+//   |--------------------------------------------------------|
+//   | Nome do Script: Quests Lutie                           |
+//   |--------------------------------------------------------|
+//   | Criado por: eA/rA/brA Dev. Team                        |
+//   |--------------------------------------------------------|
+//   | Versões eA/rA/brA: 1.4/1.4/1.1                         |
+//   |--------------------------------------------------------|
+//   | Descrição: Quests dos itens para cabeça 'Chapéu de     |
+//   | Fumacento', 'Chapéu de Esporo', 'Casca de Noz',        |
+//   | 'Casca de Ovo Colorida', 'Candura', 'Mestre-Cuca',     |
+//   | 'Chapéu de Bolo' e 'Vela'.                             |
+//   |--------------------------------------------------------|
+//   | Changelog:                                             |
+//   | 1.0 Cabeçalho Criado [Holy]                            |
+//   | 1.1 Script Traduzido [Barsaglini]                      |
+//   |--------------------------------------------------------|
+//   | - Anotações                                            |
+//   \________________________________________________________/
 
-xmas,117,295,4	script	Vending Machine Man	4_M_BIBI,{
+xmas,117,295,4	script	Homem da Máquina de Vender	4_M_BIBI,{
 	mes "[Titicupe]";
 	mes "Hmm...?";
-	mes "I, Titicupe, esteemed manager of the Toy Factory and genius inventor, has done it again! I've just created the world's most sophisticated vending machine!";
+	mes "Eu, Titicupe, estimado gerente da Fábrica de Brinquedos e genial inventor, fiz isso de novo!! Acabei de criar a mais sofisticada máquina de vendas do mundo!";
 	next;
-	switch(select("Talk to him about the Vending Machine:Items in the Vending Machine:Stop talking")) {
+	switch(select("Falar com ele sobre a máquina de vendas.:Itens na máquina de vendas.:Parar de falar.")) {
 	case 1:
 		mes "[Titicupe]";
-		mes "Can you see the little snowman to the left side of me? Can you? If you look at his mouth closely, you'll see that it's been built quite largely. You might say, a bit too large for normal purposes...";
+		mes "Você consegue ver o pequeno Boneco de Neve do meu lado esquerdo? Você consegue? Se você olhar para sua boca de perto, você verá que ela foi construída totalmente em grande escala. E é aí que você diz, isso está grande demais para fins normais...";
 		next;
 		mes "[Titicupe]";
-		mes "You see, that snowman is actually an amazing vending machine that I invented out of my blood, sweat, tears and snow.";
+		mes "Você vê, que o Boneco de Neve é na verdade uma máquina de venda incrível que eu inventei de meu sangue, suor, lágrimas e muita neve!";
 		next;
 		mes "[Titicupe]";
-		mes "You can put all sorts of things inside its mouth, and if you insert the right items, you'll get some hats in return...";
+		mes "Você pode colocar todos os tipos de coisas dentro da sua boca, e se você inserir os itens certos, você terá alguns chapéus em troca...";
 		next;
 		mes "[Titicupe]";
-		mes "Fashionable hats that you've always dreamed of wearing...! Bwahahahaha~!";
+		mes "Chapéus da moda que você sempre sonhou em vestir...! Bwahahahaha~!";
 		next;
 		mes "[Titicupe]";
-		mes "Oh, this creation of mine is so magnificent!";
+		mes "Oh, essa minha criação é tão magnífica!";
 		emotion e_kis2;
 		next;
 		mes "[Titicupe]";
-		mes "And the headgears--! I... I can't contain myself!";
+		mes "E os Chapéus--! Eu... Eu não posso me conter!";
 		next;
-		mes "^3355FFToy factory manager Titicupe jumps and convulses with joy. Clearly he's insane, but it may be possible that he may be brilliant.^000000";
+		mes "^3355FF*O Gerente da Fábrica de Brinquedos Titicupe saltou e se agitou com alegria. Claramente, ele é insano, mas pode ser possível o fato de que ele possa ser brilhante.*^000000";
 		emotion e_gasp;
 		close;
 	case 2:
 		mes "[Titicupe]";
-		mes "Oh right! You need to know what kind of items to put into the Vending Machine to get what you want, yes? Go ahead... Ask me~";
+		mes "Certo! Você precisa saber que tipo de itens devem ser colocados na máquina de vendas para obter o que deseja, não é? Vá em frente... Pergunte-me~";
 		emotion e_ic;
 		next;
-		switch(select("Raccoon Hat:Spore Hat:Wonder Nutshell:Ranbow Eggshell:Blush:Chef Hat:Candle:Cake Hat:End Conversation")) {
+		switch(select("Chapéu de Fumacento.:Chapéu de Esporo.:Casca de Noz.:Casca de Ovo Colorida.:Candura.:Mestre-Cuca.:Vela.:Chapéu de Bolo.:Fim da Conversa.")) {
 		case 1:
 			mes "[Titicupe]";
-			mes "Raccoon Hat?";
-			mes "1 Kitty Band";
-			mes "20 Dragon Scale";
-			mes "200 Tough Scalelike Stem";
-			mes "300 Sea-otter Fur";
+			mes "Chapéu de Fumacento?";
+			mes "1 Orelha de Gato,";
+			mes "20 Escamas de Dragão,";
+			mes "200 Pedaços de Escama Dura,";
+			mes "300 Peles de Lontra.";
 			break;
 		case 2:
 			mes "[Titicupe]";
-			mes "Spore Hat?";
-			mes "850 Poison Spore";
-			mes "300 Burnt Tree";
-			mes "1 Tongue";
+			mes "Chapéu de Esporo?";
+			mes "850 Esporos Venenosos,";
+			mes "300 Madeiras Queimadas,";
+			mes "1 Língua.";
 			break;
 		case 3:
 			mes "[Titicupe]";
-			mes "Wonder Nutshell?";
-			mes "1 Nut Shell";
-			mes "500 Wing of Dragonfly";
+			mes "Casca de Noz?";
+			mes "1 Casca de Maça,";
+			mes "500 Asas de Libélulas.";
 			break;
 		case 4:
 			mes "[Titicupe]";
-			mes "Rainbow Eggshell?";
-			mes "1 Egg Shell";
-			mes "1 Cobaltblue Dyestuffs";
-			mes "50 Claw of Desert Wolf";
+			mes "Casca de Ovo Colorida?";
+			mes "1 Casca de Ovo,";
+			mes "1 Tintura Azul,";
+			mes "50 Garras de Lobo do Deserto.";
 			break;
 		case 5:
 			mes "[Titicupe]";
-			mes "Blush?!";
-			mes "You!";
-			mes "You know something...";
-			mes "Heh heh~ Anyway";
-			mes "100 Alice's Apron";
+			mes "Candura?!";
+			mes "Você!";
+			mes "Você sabe alguma coisa...";
+			mes "Heh heh~ De qualquer maneira";
+			mes "100 Aventais de Alice!";
 			break;
 		case 6:
 			mes "[Titicupe]";
-			mes "Chef Hat?";
-			mes "120 Piece of Cake";
-			mes "1 White Dyestuffs";
-			mes "330 Feather";
-			mes "450 Dragon Scale";
+			mes "Mestre-Cuca?";
+			mes "120 Pedaços de Bolo,";
+			mes "1 Tintura Branca,";
+			mes "330 Plumas,";
+			mes "450 Escamas de Dragão.";
 			break;
 		case 7:
 			mes "[Titicupe]";
-			mes "Candle?";
-			mes "1 Bomb Wick";
-			mes "50 Matchstick";
-			mes "100 Royal Jelly";
+			mes "Vela?";
+			mes "1 Pavio,";
+			mes "50 Palitos de Fósforo,";
+			mes "100 Geléias Reais.";
 			break;
 		case 8:
 			mes "[Titicupe]";
-			mes "Cake Hat?";
-			mes "10 Candy";
-			mes "5 Candy Cane";
-			mes "15 Well-baked Cookie";
-			mes "20 Piece Of Cake";
-			mes "10 Steel";
+			mes "Chapéu de Bolo?";
+			mes "10 Balas,";
+			mes "5 Bengalas Doce,";
+			mes "15 Biscoitos de Gengibre,";
+			mes "20 Pedaços de Bolo,";
+			mes "10 Aços.";
 			break;
 		case 9:
 			mes "[Titicupe]";
-			mes "Ask me anytime. Those kinds of questions are no problem for geniuses like me!";
+			mes "Pergunte-me a qualquer hora. Esses tipos de perguntas não são problema para gênios como eu!";
 		}
 		next;
 		mes "[Titicupe]";
-		mes "So happy!!";
-		mes "I'm a genius~!";
-		mes "Ho ho ho";
-		mes "Ho ho ho ho!";
+		mes "Tão feliz!!";
+		mes "Eu sou um gênio~!";
+		mes "Ho~ho~ho";
+		mes "Ho~ho~ho~ho!";
 		close;
 	case 3:
 		mes "[Titicupe]";
-		mes "Sometimes, I can't believe how magnificent this invention of mine is...!";
+		mes "Às vezes, eu não posso acreditar o quão magnífica esta minha invenção é...!";
 		next;
 		mes "[Titicupe]";
-		mes "I...";
-		mes "I love you";
-		mes "Mister Snowman";
-		mes "Vending Machine.";
+		mes "Eu...";
+		mes "Eu te amo";
+		mes "Senhor Boneco de Neve...";
+		mes "Máquina de Vendas.";
 		emotion e_kis2;
 		next;
-		mes "^3355FFToy factory manager Titicupe begins to jump around and emit screams of unbridled ecstacy. At this point, it's not difficult to doubt his sanity, as well as his genius.";
+		mes "^3355FF*O Gerente da Fábrica de Brinquedos Titicupe começa a pular e emitir gritos de êxtase descontrolados. Neste ponto, não é difícil duvidar de sua sanidade, bem como algo sobre o seu gênio.*";
 		close;
 	}
 }
 
-xmas,115,297,4	script	Vending Machine	HIDDEN_NPC,{
+xmas,115,297,4	script	Máquina de Vender	HIDDEN_NPC,{
 	mes "[Audi]";
-	mes "^555555Exciting item vending machine. Invented by great Titicupe. Select the desired item and place required items into snowmouth receptacle.^000000";
+	mes "^555555Excitante item Máquina de Vendas. Inventado pelo grande Titicupe. Selecione os itens desejados e coloque os itens exigidos na boca do Boneco de Neve.^000000";
 	next;
-	switch(select("^FF3355Notice (Must Read)^000000:Raccoon Hat:Spore Hat:Wonder Nutshell:Rainbow Eggshell:Blush:Chef Hat:Candle:Cake Hat:Cancel")) {
+	switch(select("^FF3355Aviso (Leia).^000000:Chapéu de Fumacento.:Chapéu de Esporo.:Casca de Noz.:Casca de Ovo Colorida.:Candura.:Mestre-Cuca.:Vela.:Chapéu de Bolo.:Cancelar.")) {
 	case 1:
 		mes "[Audi]";
-		mes "Hi~ !";
-		mes "I need to tell you one important thing. This vending machine is not equipped to differentiate between special items and ordinary items.";
+		mes "Oi~ !";
+		mes "Eu preciso te dizer uma coisa importante. Esta Máquina de Vendas não é equipada para diferenciar os itens especiais e itens comuns.";
 		next;
 		mes "[Audi]";
-		mes "So if you use an item that has been ^FF3355upgraded, or has a card compounded to it^000000, any cards or upgrades will be lost in creating the new item.";
+		mes "Então, se você usar um item que tenham sido ^FF3355aperfeiçoados, ou com uma estejam com uma carta equipada^000000, todas as cartas e os aperfeiçoamentos serão perdidos na criação do novo item.";
 		next;
 		mes "[Audi]";
-		mes "So when you try to exchange and generate items, please put all the valuable items you won't be using into the Kafra Storage.";
+		mes "Então, quando você tenta trocar e gerar itens, por favor, coloque todos os itens valiosos que você não vai usar no Armazém da Kafra.";
 		next;
 		mes "[Audi]";
-		mes "Please keep this in mind because this Vending Machine does not provide any returns, refunds or exchanges.";
+		mes "Por favor, mantenha isso em mente, porque esta Máquina de Vendas não fornece quaisquer devoluções, reembolsos ou trocas.";
 		next;
 		mes "[Audi]";
-		mes "Have a great time!";
-		mes "Thank you!";
+		mes "Tenha um ótimo dia!";
+		mes "Obrigado!";
 		close;
 	case 2:
 		if ((countitem(2213) > 0) && (countitem(1036) > 19) && (countitem(7012) > 199) && (countitem(7065) > 299)) {
-			mes "^3355FFYou gingerly place the items into the snowman's mouth.^000000";
+			mes "^3355FF*Você cautelosamente coloca os itens na boca do Boneco de Neve...*^000000";
 			next;
-			delitem 2213,1;  //Cat_Hairband
-			delitem 1036,20;  //Dragon_Scale
-			delitem 7012,200;  //Tough_Scalelike_Stem
-			delitem 7065,300;  //Sea_Otter_Leather
+			delitem 2213,1;    // Orelha de Gato
+			delitem 1036,20;   // Escama de Dragão
+			delitem 7012,200;  // Pedaço de Escama Dura
+			delitem 7065,300;  // Pele de Lontra
 			emotion e_oh;
 			mes "^3355FF*Vroooooom~~*";
 			mes "*Bzzzzzt*";
 			mes "*choogachooga*";
 			mes "*Kapang!*^000000";
-			getitem 5033,1; // Smokie_Hat
+			getitem 5033,1;    // Chapéu de Fumacento
 			next;
 			mes "[Audi]";
-			mes "^555555Thank you for coming by.";
-			mes "Please come again!";
-			mes "Oh, and tell a friend!^000000";
+			mes "^555555Obrigado por vir.";
+			mes "Por favor, volte novamente!";
+			mes "Oh, e conte isso a um amigo!^000000";
 			close;
 		}
 		break;
 	case 3:
 		if ((countitem(7033) > 849) && (countitem(7068) > 299) && (countitem(1015) > 0)) {
-			mes "^3355FFYou gingerly place the items into the snowman's mouth.^000000";
+			mes "^3355FF*Você cautelosamente coloca os itens na boca do Boneco de Neve...*^000000";
 			next;
-			delitem 7033,850;  //Poison_Spore
-			delitem 7068,300;  //Burn_Tree
-			delitem 1015,1;  //Thin_N'_Long_Tongue
+			delitem 7033,850;  // Esporo Venenoso
+			delitem 7068,300;  // Madeira Queimada
+			delitem 1015,1;    // Língua
 			emotion e_oh;
 			mes "^3355FF*Vroooooom~~*";
 			mes "*Bzzzzzt*";
 			mes "*choogachooga*";
 			mes "*Kapang!*";
 			mes "*Wek Wek*^000000";
-			getitem 5029,1; // Spore_Hat
+			getitem 5029,1;    // Chapéu de Esporo
 			next;
-			mes "^555555Thank you for coming by.";
-			mes "Please come again!";
-			mes "Oh, and tell a friend!^000000";
+			mes "^555555Obrigado por vir.";
+			mes "Por favor, volte novamente!";
+			mes "Oh, e conte isso a um amigo!^000000";
 			close;
 		}
 		break;
 	case 4:
 		if ((countitem(5037) > 0) && (countitem(7064) > 499)) {
-			mes "^3355FFYou gingerly place the items into the snowman's mouth.^000000";
+			mes "^3355FF*Você cautelosamente coloca os itens na boca do Boneco de Neve...*^000000";
 			next;
-			delitem 5037,1;  //Fruit_Shell
-			delitem 7064,500;  //Dragon_Fly_Wing
+			delitem 5037,1;    // Casca de Maçã
+			delitem 7064,500;  // Asas de Libélula
 			mes "^3355FF*Vroooooom~~*";
 			mes "*Bzzzzzt*";
 			mes "*choogachooga*";
@@ -217,22 +227,22 @@ xmas,115,297,4	script	Vending Machine	HIDDEN_NPC,{
 			mes "*BeepBoopBeepBoop*";
 			mes "*Beeeeeeoop*^000000";
 			emotion e_oh;
-			getitem 5050,1; // Mystery_Fruit_Shell
+			getitem 5050,1;    // Casca de Noz
 			next;
 			mes "[Audi]";
-			mes "^555555Thank you for coming by.";
-			mes "Please come again!";
-			mes "Oh, and tell a friend!^000000";
+			mes "^555555Obrigado por vir.";
+			mes "Por favor, volte novamente!";
+			mes "Oh, e conte isso a um amigo!^000000";
 			close;
 		}
 		break;
 	case 5:
-		if ((countitem(5015) > 0) && (countitem(978) > 0) && (countitem(7030) > 49)){
+		if ((countitem(5015) > 0) && (countitem(978) > 0) && (countitem(7030) > 49)){ 
 			mes "^3355FFYou gingerly place the items into the snowman's mouth.^000000";
 			next;
-			delitem 5015,1;  //Egg_Shell
-			delitem 978,1;  //Cobaltblue_Dyestuffs
-			delitem 7030,50;  //Claw_Of_Desert_Wolf
+			delitem 5015,1;  // Casca de Ovo
+			delitem 978,1;   // Tintura Azul
+			delitem 7030,50; // Garra de Lobo do Deserto
 			emotion e_oh;
 			mes "^3355FF*Vroooooom~~*";
 			mes "*Bzzzzzt*";
@@ -241,17 +251,17 @@ xmas,115,297,4	script	Vending Machine	HIDDEN_NPC,{
 			getitem 5039,1; // Mottled_Egg_Shell
 			next;
 			mes "[Audi]";
-			mes "^555555Thank you for coming by.";
-			mes "Please come again!";
-			mes "Oh, and tell a friend!^000000";
+			mes "^555555Obrigado por vir.";
+			mes "Por favor, volte novamente!";
+			mes "Oh, e conte isso a um amigo!^000000";
 			close;
 		}
 		break;
 	case 6:
 		if (countitem(7047) > 99) {
-			mes "^3355FFYou gingerly place all 100 Aprons into the snowman's mouth.^000000";
+			mes "^3355FF*Você cautelosamente coloca os itens na boca do Boneco de Neve...*^000000";
 			next;
-			delitem 7047,100;  //Alice's_Apron
+			delitem 7047,100;  // Avental de Alice
 			emotion e_oh;
 			mes "^3355FF*Vroooooom~~*";
 			mes "*Bzzzzzt*";
@@ -261,45 +271,45 @@ xmas,115,297,4	script	Vending Machine	HIDDEN_NPC,{
 			mes "*Chaaawah!*^000000";
 			getitem 5040,1; // Blush
 			mes "[Audi]";
-			mes "^555555Thank you for coming by.";
-			mes "Please come again!";
-			mes "Oh, and tell a friend!^000000";
+			mes "^555555Obrigado por vir.";
+			mes "Por favor, volte novamente!";
+			mes "Oh, e conte isso a um amigo!^000000";
 			next;
 			mes "[Titicupe]";
-			mes "You got Blush?! Huh. I guess you really like looking glamourous~! I bet you really appreciate my genius now, huh?";
+			mes "Você fez a Candura?! Huh. Eu acho que você realmente parece estar glamuroso~! Eu aposto que você realmente aprecia o meu gênio agora, hein?";
 			close;
 		}
 		break;
 	case 7:
 		if ((countitem(539) > 119) && (countitem(982) > 0) && (countitem(949) > 329) && (countitem(1036) > 449)) {
-			mes "^3355FFYou gingerly place the items into the snowman's mouth.^000000";
+			mes "^3355FF*Você cautelosamente coloca os itens na boca do Boneco de Neve...*^000000";
 			next;
-			delitem 539,120;  //Piece_Of_Cake
-			delitem 982,1;  //White_Dyestuffs
-			delitem 949,330;  //Feather
-			delitem 1036,450;  //Dragon_Scale
+			delitem 539,120;  // Pedaço de Bolo
+			delitem 982,1;    // Tintura Branca
+			delitem 949,330;  // Pluma
+			delitem 1036,450; // Escama de Dragão
 			emotion e_oh;
 			mes "^3355FF*Vroooooom~~*";
 			mes "*Bzzzzzt*";
 			mes "*choogachooga*";
 			mes "*Kapang!*";
 			mes "*Muuuuuuugeeee*^000000";
-			getitem 5026,1; // Hat_Of_Cook
+			getitem 5026,1; // Mestre-Cuca
 			next;
 			mes "[Audi]";
-			mes "^555555Thank you for coming by.";
-			mes "Please come again!";
-			mes "Oh, and tell a friend!^000000";
+			mes "^555555Obrigado por vir.";
+			mes "Por favor, volte novamente!";
+			mes "Oh, e conte isso a um amigo!^000000";
 			close;
 		}
 		break;
 	case 8:
 		if ((countitem(2279) > 0) && (countitem(7035) > 49) && (countitem(526) > 99)) {
-			mes "^3355FFYou gingerly place the items into the snowman's mouth.^000000";
+			mes "^Você cautelosamente coloca os itens na boca do Boneco de Neve.^000000";
 			next;
-			delitem 2279,1;  //Bomb_Wick
-			delitem 7035,50;  //Matchstick
-			delitem 526,100;  //Royal_Jelly
+			delitem 2279,1;   // Pavio
+			delitem 7035,50;  // Palito de Fósforo
+			delitem 526,100;  // Geléia Real
 			emotion e_oh;
 			mes "^3355FF*Vroooooom~~*";
 			mes "*Bzzzzzt*";
@@ -308,49 +318,49 @@ xmas,115,297,4	script	Vending Machine	HIDDEN_NPC,{
 			getitem 5028,1; // Candle
 			next;
 			mes "[Audi]";
-			mes "^555555Thank you for coming by.";
-			mes "Please come again!";
-			mes "Oh, and tell a friend!^000000";
+			mes "^555555Obrigado por vir.";
+			mes "Por favor, volte novamente!";
+			mes "Oh, e conte isso a um amigo!^000000";
 			close;
 		}
 		break;
 	case 9:
-		if ((countitem(529) > 9) && (countitem(530) > 4) && (countitem(538) > 14) && (countitem(539) > 19) && (countitem(999) > 9)) {
-			mes "^3355FFYou gingerly place the items into the snowman's mouth.^000000";
+		if ((countitem(529) > 9) && (countitem(530) > 4) && (countitem(538) > 14) && (countitem(539) > 19) && (countitem(999) > 9)) { 
+			mes "^3355FFVocê cautelosamente coloca os itens na boca do Boneco de Neve.^000000";
 			next;
-			delitem 529,10;  //Candy
-			delitem 530,5;  //Candy_Striper
-			delitem 538,15;  //Well_Baked_Cookie
-			delitem 539,20;  //Piece_Of_Cake
-			delitem 999,10;  //Steel
+			delitem 529,10;  // Bala
+			delitem 530,5;   // Bengala Doce
+			delitem 538,15;  // Biscoito de Gengibre
+			delitem 539,20;  // Pedaço de Bolo
+			delitem 999,10;  // Aço
 			emotion e_oh;
 			mes "^3355FF*Vroooooom~~*";
 			mes "*Bzzzzzt*";
 			mes "*choogachooga*";
 			mes "*Kapang!*^000000";
-			getitem 5024,1; // Hat_Of_Cake
+			getitem 5024,1;  // Chapéu de Bolo
 			next;
 			mes "[Audi]";
-			mes "^555555Thank you for coming by.";
-			mes "Please come again!";
-			mes "Oh, and tell a friend!^000000";
+			mes "^555555Obrigado por vir.";
+			mes "Por favor, volte novamente!";
+			mes "Oh, e conte isso a um amigo!^000000";
 			close;
 		}
 		break;
 	case 10:
 		mes "[Audi]";
-		mes "^555555Please...";
-		mes "Insert...";
-		mes "Items.^000000";
+		mes "^555555Por favor...";
+		mes "Insira...";
+		mes "Itens.^000000";
 		close;
 	}
 	emotion e_X;
 	mes "[Audi]";
-	mes "^555555Error Error!";
-	mes "Incorrect items!^000000";
+	mes "^555555Erro Erro!";
+	mes "Itens incorretos!^000000";
 	next;
 	mes "[Titicupe]";
-	mes "I...";
-	mes "I guess a lot of people would do anything to get their hands on some Blush.";
+	mes "Eu...";
+	mes "Eu acho que muitas pessoas fariam qualquer coisa para ter em suas mãos algumas Canduras. Haha!";
 	close;
 }

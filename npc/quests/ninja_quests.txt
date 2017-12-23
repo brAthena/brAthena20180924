@@ -1,137 +1,144 @@
-//===== Hercules Script ======================================
-//= Ninja Equipment Quests
-//===== By: ==================================================
-//= Playtester
-//===== Current Version: =====================================
-//= 1.2a
-//===== Description: =========================================
-//= Quests for Ninja weapons and armor.
-//===== Additional Comments: =================================
-//= 1.0 Ninja Arm Guards only yet [Playtester]
-//= 1.1 Added Kaibara [Playtester]
-//= 1.2 Added Tetsu [Playtester]
-//= 1.2a Kagerou/Oboro support (BaseJob -> BaseClass) [Euphy]
-//============================================================
+//    ________________________________________________________
+//   /                                                        \
+//   |       _           _   _   _                            |
+//   |      | |__  _ __ / \ | |_| |__   ___ _ __   __ _       |
+//   |      | '_ \| '__/ _ \| __| '_ \ / _ \ '_ \ / _` |      |
+//   |      | |_) | | / ___ \ |_| | | |  __/ | | | (_| |      |
+//   |      |_.__/|_|/_/   \_\__|_| |_|\___|_| |_|\__,_|      |
+//   |                                                        |
+//   |                    brAthena Script                     |
+//   |--------------------------------------------------------|
+//   | Nome do Script:  ninja_quests.txt                      |
+//   |--------------------------------------------------------|
+//   | Criado por: eA/rA/Herc/brA Dev. Team                   |
+//   |--------------------------------------------------------|
+//   | Versões eA/rA/Herc/brA: 1.1/1.1/1.1/1.0                |
+//   |--------------------------------------------------------|
+//   | Changelog:                                             |
+//   | 1.0 Cabeçalho brAthena [Axl]                           |
+//   |--------------------------------------------------------|
+//   | - Anotações                                            |
+//   \________________________________________________________/
 
 que_ng,28,50,3	script	Boshuu	4_M_SEAMAN,{
 
 	if (BaseClass != Job_Ninja){
 		mes "[Boshuu]";
-		mes "I'm the best craftsman out of what people call the Three Craftsmen of Ninja Tools.";
-		mes "They call me Murata Boshuu.";
+		mes "Sou o melhor artesão de todos, as pessoas me chamam os Três Artesãos de Ferramentas Ninja.";
+		mes "Eles me chamam de Murata Boshuu.";
 		next;
 		mes "[Boshuu]";
-		mes "I know how to create any armor and shield of the eastern world, and my shields are considered the best there is.";
+		mes "Sei como criar qualquer tipo de armadura e escudo do mundo oriental, meus escudos são considerados o melhor que há.";
 		next;
 		mes "[Boshuu]";
-		mes "But seeing how you are an outsider...";
-		mes "Looks like I have no business with you.";
+		mes "Estou vendo como você é uma pessoa de fora...";
+		mes "Parece que não tenho nenhum negócio com você.";
 		mes "Ehem~";
 		close;
 	}
 	if (BaseLevel < 20){
 		mes "[Boshuu]";
-		mes "I make the best shields for Ninjas of all ages,";
-		mes "But even I have some minimum requirements";
+		mes "Eu faço os melhores escudos para Ninjas de todas as idades,";
+		mes "mas até eu devo ter alguns requisitos mínimos.";
 		next;
 		mes "[Boshuu]";
-		mes "It looks like what you need isn't a shield, but more levels.";
-		mes "Come back after you've grown a bit more.";
+		mes "Parece que você não precisa de um escudo, mas sim aumentar seu nivel.";
+		mes "Volte depois de ter upado um pouco mais.";
 		close;
 	}
 	if (countitem(2102) < 1 && !(MISC_QUEST & 2048)){
 		mes "[Boshuu]";
-		mes "I'm the best craftsman out of what people call the Three Craftsmen of Ninja Tools.";
-		mes "They call me Murata Boshuu.";
+		mes "Sou o melhor artesão de todos, as pessoas me chamam os Três Artesãos de Ferramentas Ninja.";
+		mes "Eles me chamam de Murata Boshuu.";
 		next;
 		mes "[Boshuu]";
-		mes "They say it's three craftsmen, but the other two are probably scammers.";
-		mes "There's not a single craftsman better than I for ninjas in this world.";
+		mes "Eles dizem que são três artesãos, mas os outros dois são provavelmente golpistas.";
+		mes "Não há um único artesão melhor do que eu para ninjas neste mundo.";
 		next;
 		mes "[Boshuu]";
-		mes "I know how to make all the eastern armor and shield.";
+		mes "Eu sei como fazer toda a armadura e escudo do oriente.";
 		next;
 		mes "[Boshuu]";
-		mes "Because the armor I'd create was so superior and defensive, when two people battle wearing armor made by me, no one can win!";
+		mes "Toda armadura que eu criava era tão superior e defensiva, que quando duas pessoas vestiam a armadura feita por mim, ninguém poderia ganhar!";
 		next;
 		mes "[Boshuu]";
-		mes "For that reason, I no longer make any armor.";
-		mes "I'm only collecting armors nowadays, just to make sure my skills do not go to waste..";
+		mes "Por essa razão, não faço mais nenhum tipo de armadura.";
+		mes "Estou apenas coletando armaduras hoje em dia, só para ter certeza que minhas habilidades não irão ser desperdiçadas...";
 		next;
 		mes "[Boshuu]";
-		mes "But I feel so bored nowadays.";
+		mes "Mas me sinto tão entediado hoje em dia.";
 		next;
 		mes "[Boshuu]";
-		mes "Now that I only collect armor, I feel like the creative flame within me is dying out.";
+		mes "Agora que só coleto armaduras, sinto que a chama criativa dentro de mim está morrendo.";
 		next;
 		mes "[Boshuu]";
-		mes "From what I heard, there's an armor overseas which I haven't even heard of.";
-		mes "It was called a... hmm.. what was it called?";
+		mes "Pelo que eu ouvi, há uma armadura no exterior, desconhecida pra mim.";
+		mes "Ela era chamada de... hmm.. qual era mesmo o nome?";
 		next;
 		mes "[Boshuu]";
-		mes "^ff0000Guard[1]^000000? Well, it's a name like that.";
-		mes "I wish to see the real thing myself.";
+		mes "^ff0000Guard[1]^000000? Bem, é um nome como esse.";
+		mes "Gostaria de realmente ver isso.";
 		next;
 		mes "[Boshuu]";
-		mes "But obviously, it's probably worthless compared to the armor I make.";
+		mes "Mas seria óbvio e provavelmente inutil comparar com a armadura que faço.";
 		next;
 		mes "[Boshuu]";
-		mes "Do me a favor and I'll make you something special.";
+		mes "Faça-me um favor, vou lhe fazer um pedido especial.";
 		next;
 		mes "[Boshuu]";
-		mes "I'm not sure what I'll do, but I get the feeling I'll feel inspired once I see that armor.";
-		mes "How 'bout it~ Will you find me a ^ff0000Guard[1]^000000?";
+		mes "Não tenho certeza do que vou fazer, mas creio de que vou me sentir inspirado, assim que ver a armadura.";
+		mes "Que tal 'você for encontrar um ^ff0000Guarda[1]^000000?";
 		next;
-		if(select("Hmm.. I don't feel like it.:Very well.") == 1){
+		if(select("Humm.. Não tenho a menor vontade.:Muito bem.") == 1){
 			mes "[Boshuu]";
-			mes "Ah~ What a shame..";
-			mes "You're missing out on an opportunity to get your hands on something made by a genius craftsman like myself...";
+			mes "Ah! Que vergonha..";
+			mes "Você está perdendo a oportunidade de ter em suas mãos algo feito por um artesão genial como eu...";
 			close;
 		}else{
 			mes "[Boshuu]";
-			mes "Oh, Very well.";
-			mes "Get a move on.";
-			mes "Find the shield called ^ff0000Guard[1]^000000 and bring it to me.";
+			mes "Ah, muito bem.";
+			mes "Trate de se mecher.";
+			mes "Encontre o escudo chamado ^ff0000Vembrassa[1]^000000 e traga-o para mim.";
 			ninbo = 1;
 			close;
 		}
 	}
 	if (ninbo == 1){
 		mes "[Boshuu]";
-		mes "Oh.. so did you bring it?";
-		mes "Show it to me...";
+		mes "Oh .. Então você trouxe?";
+		mes "Mostre-me...";
 		mes "Hmmmmm...";
 		next;
 		mes "[Boshuu]";
-		mes "Oh~ ! I see, it's even possible to slot armor!";
+		mes "Oh! Estou vendo, é mesmo possível uma armadura com slot!";
 		next;
 		mes "[Boshuu]";
-		mes "Ahh, Now I'm just itching to imitating this armor and making a slot on other armors.";
+		mes "Ahh, estou ansioso para imitar essa armadura, colocando um slot nas outros armaduras.";
 		next;
 		mes "[Boshuu]";
-		mes "If you have a regular non-slotted Arm Guard and a slotted Guard, I'll make the non-slotted one slotted at the cost of 10,000 Zeny.";
+		mes "Se você tem uma Proteção de Braço regular sem slot e uma Vembrassa encaixados, posso colocar um slot ao custo de 10,000 Zeny.";
 		next;
 		mes "[Boshuu]";
-		mes "How 'bout it? Want to try?";
+		mes "Que tal isso? Quer tentar?";
 		next;
 		if(select("No thanks.:Ok, sounds good.") == 1){
 			mes "[Boshuu]";
-			mes "Hmm, Ok.";
-			mes "I'm so grateful that I was able to see such a rare thing from overseas.";
-			mes "Thanks for everything.";
+			mes "Humm, Ok.";
+			mes "Sou tão grato que fui capaz de ver uma coisa tão rara do exterior.";
+			mes "Obrigado por tudo.";
 			ninbo = 0;
 			close;
 		}else{
 			mes "[Boshuu]";
 			mes "Oh ok.";
-			mes "I can't wait to begin.";
-			mes "If you bring me 1 Arm Guard";
-			mes "1 Slotted Guard, and";
+			mes "Mal posso esperar para começar.";
+			mes "Se você me trouxer uma Proteção de Braço";
+			mes "1 Vembrassa com slot, e";
 			mes "10,000 Zeny..";
 			next;
 			mes "[Boshuu]";
-			mes "Then I'll slot your slotless Arm Guard.";
-			mes "Come back when you have all the required materials.";
+			mes "Então eu farei uma Proteção de Braço com Slot.";
+			mes "Volte quando tiver todos os materiais necessários.";
 			ninbo = 2;
 			close;
 		}
@@ -139,36 +146,36 @@ que_ng,28,50,3	script	Boshuu	4_M_SEAMAN,{
 	else if (ninbo == 2){
 		if (countitem(2102) < 1 || countitem(2117) < 1){
 			mes "[Boshuu]";
-			mes "Hmm... It looks like you didn't bring me enough materials.";
-			mes "In order to create a Slotted Arm Guard, I need 1 Slotted Guard";
-			mes "1 Arm Guard, and 10,000 Zeny";
-			mes "Come back when you're sure you have everything.";
+			mes "Humm...  Parece que você não me trouxe materiais suficientes.";
+			mes "para criar uma Proteção de Braço com Slot, precisarei de 1 Vembrassa com slot";
+			mes "1 Proteção de Braço, e 10,000 Zeny";
+			mes "Volte quando tiver todos os materiais necessários.";
 			close;
 		}
 		if (Zeny < 10000){
 			mes "[Boshuu]";
-			mes "Hmm.. You brought plenty of materials, but you're short on zeny.";
+			mes "Humm.. Você trouxe todos os materiais necessários, mas está faltando zeny.";
 			next;
 			mes "[Boshuu]";
-			mes "In order to create a Slotted Arm Guard, I need 1 Guard[1]";
-			mes "1 Arm Guard, and 10,000 Zeny.";
-			mes "Come back when you're sure you have everything.";
+			mes "para criar uma Proteção de Braço com Slot, precisarei de 1 Vembrassa com slot";
+			mes "1 Proteção de Braço,e 10,000 Zeny.";
+			mes "Volte quando tiver todos os materiais necessários.";
 			close;
 		}
 		mes "[Boshuu]";
-		mes "Oh, I see you're back with all the required materials.";
-		mes "But before I start, I must ask you one more time.";
-		mes "Do you want to give me the materials you've brought and receive a Slotted Arm Guard instead?";
+		mes "Ohh, vejo que você está de volta com todos os materiais necessários.";
+		mes "Mas antes de começar, devo perguntar mais uma vez.";
+		mes "Você quer me dar os materiais que me trouxe e receber uma Proteção de Braço com Slot?";
 		next;
-		if(select("No:Yes") == 1){
+		if(select("Não:Sim") == 1){
 			mes "[Boshuu]";
 			mes "Ok";
-			mes "Well, if you make up your mind again, come and see me.";
+			mes "Bem, se você mudar de idéia, venha me ver.";
 			close;
 		}else{
 			mes "[Boshuu]";
-			mes "All right!";
-			mes "This should only take a second";
+			mes "Tudo bem!";
+			mes "Isto deve levar apenas um segundo";
 			mes "Bang Clang~  Bang Clang~";
 			next;
 			if(countitem(2102) < 1 || countitem(2117) < 1 || Zeny < 10000){
@@ -176,9 +183,9 @@ que_ng,28,50,3	script	Boshuu	4_M_SEAMAN,{
 				close;
 			}
 			mes "[Boshuu]";
-			mes "Here, it's finally complete.";
-			mes "I present to you a Slotted Arm Guard.";
-			mes "Come and find me whenever you're ready to request more.";
+			mes "Aqui, está finalmente completa.";
+			mes "Apresento a vocês uma Proteção de Braço com Slot.";
+			mes "Venha me procurar sempre que estiver precisando de algo mais.";
 			delitem 2102,1;
 			delitem 2117,1;
 			Zeny -= 10000;
@@ -191,62 +198,61 @@ que_ng,28,50,3	script	Boshuu	4_M_SEAMAN,{
 	else if (MISC_QUEST & 2048){
 		ninbo = 0;
 		mes "[Boshuu]";
-		mes "Oh~ I see you've come back.";
-		mes "Is it because you need another slotted Arm Guard?";
+		mes "Oh! Vejo que você voltou.";
+		mes "Será que é porque está precisando de outra Proteção de Braço com Slot?";
 		next;
-		if(select("Nope, not really.:Yes, make me another one.") == 1){
+		if(select("Não, não realmente.:Yes, Sim, faça-me um outro.") == 1){
 			mes "[Boshuu]";
-			mes "Hmmph~ You sure a weird one.";
-			mes "Well, I'll see you later~";
+			mes "Hmmph! Você tem certeza de um estranho.";
+			mes "Bem, te vejo mais tarde!";
 			close;
 		}else{
 			if (countitem(2102) < 1 || countitem(2117) < 1){
 				mes "[Boshuu]";
-				mes "Hmm... It looks like you didn't bring me enough materials.";
-				mes "In order to make a Slotted Arm Guard,";
-				mes "I need 1 Slotted Guard";
-				mes "1 Arm Guard, and";
+				mes "Hmm... Parece que você não me trouxe materiais suficientes.";
+				mes "para criar uma Proteção de Braço com Slot,";
+				mes "precisarei de 1 Vembrassa com slot";
+				mes "1 Proteção de Braço, e";
 				mes "10,000 Zeny.";
-				mes "Come back when you're sure you have everything.";
+				mes "Volte quando tiver todos os materiais necessários.";
 				close;
 			}
 			if (Zeny < 10000){
 				mes "[Boshuu]";
-				mes "Hmm.. You brought plenty of materials, but you're short on zeny.";
+				mes "Hmm.. Você trouxe todos os materiais necessários, mas está faltando zeny.";
 				next;
 				mes "[Boshuu]";
-				mes "In order to create one Slotted Arm Guard,";
-				mes "I need 1 Slotted Guard, 1 Arm Guard, and 10,000 Zeny.";
-				mes "Come back when you're sure you have everything.";
+				mes "para criar uma Proteção de Braço com Slot, precisarei de 1 Vembrassa com slot";
+				mes "1 Proteção de Braço,e 10,000 Zeny.";
+				mes "Volte quando tiver todos os materiais necessários.";
 				close;
 			}
 			mes "[Boshuu]";
-			mes "Oh, You've brought me the needed materials.";
-			mes "Before I begin, let me ask one final time...";
-			mes "Will you give me the materials you've gathered, and in turn, receive a slotted Arm Guard?";
+			mes "Oh, vejo que você está de volta com todos os materiais necessários.";
+			mes "Mas antes de começar, devo perguntar mais uma vez.";
+			mes "Você quer me dar os materiais que me trouxe e receber uma Proteção de Braço com Slot?";
 			next;
-			if(select("No:Yes") == 1){
+			if(select("Não:Sim") == 1){
 				mes "[Boshuu]";
 				mes "Ok";
-				mes "If you ever make up your mind";
-				mes "come and find me again.";
+				mes "Bem, se você mudar de idéia, venha me ver.";
 				close;
 			}else{
 				mes "[Boshuu]";
-				mes "All right!";
-				mes "This should only take a second";
+				mes "Tudo bem!";
+				mes "Isto deve levar apenas um segundo";
 				mes "Bang Clang ~Bang Clang ~";
 				next;
 				mes "[Boshuu]";
-				mes "Here, it's finally complete.";
-				mes "I present to you a Slotted Arm Guard.";
+				mes "Aqui, está finalmente completa.";
+				mes "Apresento a vocês uma Proteção de Braço com Slot.";
 				next;
 				if(countitem(2102) < 1 || countitem(2117) < 1 || Zeny < 10000){
 					mes "HACK DETECTED";
 					close;
 				}
 				mes "[Boshuu]";
-				mes "If you ever want to ask me to make you more items, feel free to come back anytime.";
+				mes "Venha me procurar sempre que estiver precisando de algo mais.";
 				delitem 2102,1;
 				delitem 2117,1;
 				Zeny -= 10000;
@@ -258,87 +264,85 @@ que_ng,28,50,3	script	Boshuu	4_M_SEAMAN,{
 	else{
 		ninbo = 0;
 		mes "[Boshuu]";
-		mes "Oh~ You~!";
-		mes "Is what you have there the shield from overseas called a Guard? Let me take a look.";
+		mes "Oh~ Você~!";
+		mes "Você tem o escudo de outro país chamado Vembrassa? Deixe-me dar uma olhada.";
 		next;
 		mes "[Boshuu]";
-		mes "Unbelievable!! It is~!";
-		mes "If all shields had a slot, they could become more effective than ever.";
-		mes "How is it that I've only realised this now?";
+		mes "Inacreditável!! É isso!";
+		mes "Se todos os escudos tivessem um slot, eles poderiam tornar-se mais eficaz do que nunca.";
+		mes "Como é que eu só percebi isso agora?";
 		next;
 		mes "[Boshuu]";
-		mes "I'm the best out of the three craftsmen of Ninja tools called Murata Boshuu.";
-		mes "I know how to create all the armor and shields of the eastern world.";
+		mes "Sou o melhor dos três artesãos de ferramentas Ninja chamado Murata Boshuu.";
+		mes "Eu sei como criar todas as armaduras e escudos do mundo oriental.";
 		next;
 		mes "[Boshuu]";
-		mes "But because the armor I would create was so refined and high in defense, when people wearing my armor would fight again each other, neither side could win.";
+		mes "Mas por causa a armadura que eu iria criar, era tão refinada e de grande defesa, quando as pessoas vestiam minha armadura, lutariam um contra o outro, nenhum dos lados poderia ganhar.";
 		next;
 		mes "[Boshuu]";
-		mes "For that reason, I no longer make shields and armor.";
+		mes "Por essa razão, já não faço mais escudos e armaduras.";
 		next;
 		mes "[Boshuu]";
-		mes "Nowadays, all I do is collect shields and armor.";
+		mes "Hoje em dia, tudo que faço é recolher escudos e armaduras.";
 		next;
 		mes "[Boshuu]";
-		mes "But life is kind of boring without crafting things.";
+		mes "Mas a vida fica meio chata sem a elaboração de coisas.";
 		next;
 		mes "[Boshuu]";
-		mes "Since all I do is collect now, I feel like the creative spirit within me is disappearing.";
+		mes "Desde que só tenho feito recolher coisas, sinto que o espírito criativo dentro de mim está desaparecendo.";
 		next;
 		mes "[Boshuu]";
-		mes "But at the sight of your shield, I feel like my sleeping spirit of creativity has awoken.";
+		mes "Mas com a visão do seu escudo, sinto que o meu espírito adormecido da criatividade está despertando.";
 		next;
 		mes "[Boshuu]";
-		mes "I you want to, bring me an Arm Guard, a Slotted Guard, and 10,000 Zeny, and I'll make you a Slotted Arm Guard.";
-		mes "How 'bout it? Would you like to obtain a Slotted Arm Guard?";
+		mes "Se quiser, traga-me uma Proteção de Braço, uma Vembrassa com slot, e 10,000 Zeny, então eu farei pra vcê uma Proteção de Braço com slot.";
+		mes "Que tal isso? Gostaria de obter uma Proteção de Braço com slot?";
 		next;
-		if(select("No, I'd rather not.:Yes~!! Please make it for me!") == 1){
+		if(select("Não, eu prefiro não fazer.:Sim! Por favor, faça isso por mim!") == 1){
 			mes "[Boshuu]";
-			mes "Hmm, is that so?";
-			mes "What a shame...";
-			mes "Well, if you change your mind later, come back and see me.";
+			mes "Hmm,  é mesmo?";
+			mes "Que vergonha...";
+			mes "Bem, se você mudar de idéia, voltar e me procure.";
 			close;
 		}else{
 			if (countitem(2102) < 1 || countitem(2117) < 1){
 				mes "[Boshuu]";
-				mes "Hmm... It looks like you didn't bring me enough materials.";
-				next;
-				mes "[Boshuu]";
-				mes "In order to make a Slotted Arm Guard,";
-				mes "I need 1 Slotted Guard";
-				mes "1 Arm Guard, and";
+				mes "Hmm... Parece que você não me trouxe materiais suficientes.";
+				mes "para criar uma Proteção de Braço com Slot,";
+				mes "precisarei de 1 Vembrassa com slot";
+				mes "1 Proteção de Braço, e";
 				mes "10,000 Zeny.";
-				mes "Come back when you're sure you have everything.";
+				mes "Volte quando tiver todos os materiais necessários.";
 				close;
 			}
 			if (Zeny < 10000){
 				mes "[Boshuu]";
-				mes "Hmm.. You brought plenty of materials, but you're short on zeny.";
+				mes "Hmm.. Você trouxe todos os materiais necessários, mas está faltando zeny.";
 				next;
 				mes "[Boshuu]";
-				mes "In order to make a Slotted Arm Guard,";
-				mes "I need 1 Slotted Guard";
-				mes "1 Arm Guard, and";
+				mes "para criar uma Proteção de Braço com Slot,";
+				mes "precisarei de 1 Vembrassa com slot";
+				mes "1 Proteção de Braço, e";
 				mes "10,000 Zeny.";
-				mes "Come back when you're sure you have everything.";
+				mes "Volte quando tiver todos os materiais necessários.";
 				close;
 			}
 			mes "[Boshuu]";
-			mes "Oh, You've brought me the needed materials.";
-			mes "Before I begin, let me ask one final time...";
-			mes "Will you give me the materials you've gathered,";
-			mes "and in turn, receive a Slotted Arm Guard?";
+			mes "Oh, vejo que você está de volta com todos os materiais.";
+			mes "Mas antes de começar, devo perguntar mais uma vez...";
+			mes "Você quer me dar os materiais que me trouxe,";
+			mes "e receber uma Proteção de Braço com Slot?";
 			next;
 			if(select("No:Yes") == 1){
 				mes "[Boshuu]";
 				mes "Ok";
-				mes "If you ever make up your mind";
-				mes "come and find me again.";
+				mes "Bem, se você mudar de idéia,";
+				mes "venha me ver novamente.";
 				close;
 			}else{
 				mes "[Boshuu]";
-				mes "All right!";
-				mes "This should only take a second";
+				mes "Tudo bem!";
+				mes "Isto deve levar apenas um segundo";
 				mes "Bang Clang ~Bang Clang ~";
 				next;
 				if(countitem(2102) < 1 || countitem(2117) < 1 || Zeny < 10000){
@@ -346,9 +350,9 @@ que_ng,28,50,3	script	Boshuu	4_M_SEAMAN,{
 					close;
 				}
 				mes "[Boshuu]";
-				mes "Here, it's finally complete.";
-				mes "I present to you a Slotted Arm Guard.";
-				mes "If you ever want to ask me to make you more items, feel free to come back anytime.";
+				mes "Aqui, está finalmente completa.";
+				mes "Apresento a vocês uma Proteção de Braço com Slot.";
+				mes "Venha me procurar sempre que estiver precisando de algo mais.";
 				delitem 2102,1;
 				delitem 2117,1;
 				Zeny -= 10000;
@@ -364,104 +368,104 @@ que_ng,28,45,3	script	Basshu	4_M_04,{
 
 	if(BaseClass != Job_Ninja){
 		mes "[Basshu]";
-		mes "I am one of the brothers of the three brothers in charge of crafting shields in the east named Murata Basshu";
+		mes "Eu sou um dos três irmãos responsáveis pela elaboração de Blindagens Orientais chamado Murata Basshu";
 		next;
 		mes "[Basshu]";
-		mes "People normally call us the Three Craftsmen, but the other two craftsmen are my brothers.";
+		mes "As pessoas normalmente chamam-nos de os três artesãos, e os outros dois artesãos são meus irmãos.";
 		next;
 		mes "[Basshu]";
-		mes "But It looks like you're not my usual customer type, so I cannot make you any shields.";
-		mes "Sorry.";
+		mes "Mas parece que você não é meu tipo de cliente habitual, então não posso lhe fazer quaisquer escudo.";
+		mes "Desculpe.";
 		close;
 	}
 	if(BaseLevel < 50){
 		mes "[Basshu]";
-		mes "I am one of the brothers of the three brothers in charge of crafting shields in the east named Murata Basshu";
+		mes "Eu sou um dos três irmãos responsáveis pela elaboração de Blindagens Orientais chamado Murata Basshu";
 		next;
 		mes "[Basshu]";
-		mes "Unfortunately, many of my shields have minimum requirements, and I'm afraid you would not meet them.";
+		mes "Infelizmente, muitos dos meus escudos possuem requisitos mínimos, tenho medo que você não consiga encontrá-los.";
 		next;
 		mes "[Basshu]";
-		mes "Come back when you're stronger.";
+		mes "Volte quando você ficar mais forte.";
 		close;
 	}
 	if (countitem(2107) < 1 && !(MISC_QUEST & 4096)){
 		mes "[Basshu]";
-		mes "I am one of the brothers of the three craftsmen in charge of crafting shields in the east named Murata Basshu";
+		mes "Eu sou um dos três irmãos responsáveis pela elaboração de Blindagens Orientais chamado Murata Basshu";
 		next;
 		mes "[Basshu]";
-		mes "We are called the Three Craftsmen, but the other two craftsmen are my brothers.";
-		mes "I've learned my craft by sneaking looks over my brothers, so my skill is a little less than them, but many people praise me highly.";
+		mes "Somos conhecidos como os três artesãos, e os outros dois artesãos são meus irmãos.";
+		mes "aprendi meu ofício me esgueirando, olhando meus irmãos, por isso a minha habilidade é menor do que a deles, mas muitas pessoas me elogiam bastante.";
 		next;
 		mes "[Basshu]";
-		mes "As of now, I've given up making shields and am currently running an antique shop for shields.";
-		mes "I'm researching to see if shields can be enchanted with magic.";
+		mes "Desde já, desisti de fazer escudos e estou atualmente trabalhando em uma loja de antiguidades de escudos.";
+		mes "Estou pesquisando para ver se os escudos podem ser encantadas com a magia.";
 		next;
 		mes "[Basshu]";
-		mes "Do you happen to know a shield called the Mirror shield from overseas?";
-		mes "I'd love to see that item, but I can't get my hands on one.";
+		mes "Por acaso você conhece um escudo de outro país chamado Escudo Espelhado?";
+		mes "Eu adoraria ver esse item, mas não consigo colocar minhas mãos em um.";
 		next;
 		mes "[Basshu]";
-		mes "It'd help me greatly if I could see that shield up close.";
-		mes "Can you help me?";
+		mes "Ajudar muito se eu pudesse ver que o escudo de perto.";
+		mes "Você pode me ajudar?";
 		next;
-		if(select("Hmm...I don't feel like it.:Very well.") == 1){
+		if(select("Hmm...Não sinto isso.:Muito bem.") == 1){
 			mes "[Basshu]";
-			mes "Ah~ I guess it was an impossible request.";
-			mes "I'm sorry.";
-			mes "If you ever find a Mirror shield and want to get rid of it, please come and see me.";
+			mes "Ah! Creio ter sido um pedido impossível.";
+			mes "Sinto muito.";
+			mes "Se você pudesse realmente encontrar um Escudo Espelhado, eu teria algumas idéias muito boas.";
 			close;
 		}else{
 			mes "[Basshu]";
-			mes "Oh, thank you.";
-			mes "If you could really find me a Mirror Shield, I might get some really good ideas.";
+			mes "Oh, muito obrigado.";
+			mes "Se você pudesse realmente encontrar um Escudo Espelhado, eu teria algumas idéias muito boas.";
 			ninbot = 1;
 			close;
 		}
 	}
 	if (ninbot == 1){
 		mes "[Basshu]";
-		mes "Oh. You have it?";
-		mes "Let me see...";
+		mes "Oh.  Você tem um?";
+		mes "Deixe-me ver...";
 		mes "Hmm ...";
 		next;
 		mes "[Basshu]";
-		mes "Oh! That's it! This proves it's not impossible to make a shield resistant to magical attacks.";
-		mes "Whew...";
+		mes "Oh! É isso! Isso prova que não é impossível fazer uma blindagem resistente a ataques mágicos.";
+		mes "Ufa...";
 		next;
 		mes "[Basshu]";
-		mes "This sure gets me excited.";
-		mes "If you have a normal Arm Guard, bring me your Arm Guard, and...";
+		mes "Esta certeza me deixa animado.";
+		mes "Se você tiver uma Proteção de Braço, traga-o para mim, e tambem...";
 		next;
 		mes "[Basshu]";
-		mes "1 Mirror Shield, and";
-		mes "20,000 Zeny, and I'll improve your Arm Guard into an Improved Arm Guard.";
+		mes "1 Escudo Espelhado, e";
+		mes "20,000 Zeny, eu irei aperfeiçoar sua Proteção de Braço.";
 		next;
 		mes "[Basshu]";
-		mes "How about it? Would you like that?";
+		mes "Como será? Gostaria que eu fizesse?";
 		next;
-		if(select("No, I wouldn't.:Yes, I would.") == 1){
+		if(select("Não, não quero que faça.:Sim, gostaria disso.") == 1){
 			mes "[Basshu]";
-			mes "Hmm, Very Well.";
-			mes "I'm so grateful you showed me that rare shield from overseas.";
+			mes "Hmm, muito bem.";
+			mes "Sou muito grato por ter me mostrado o escudo raro de outro país.";
 			next;
 			mes "[Basshu]";
-			mes "Thanks for everything.";
+			mes "Obrigado por tudo.";
 			ninbot = 0;
 			close;
 		}else{
 			mes "[Basshu]";
-			mes "Very Well.";
-			mes "I'm looking forward to this.";
+			mes "Muito bem.";
+			mes "Estou ancioso por isso.";
 			next;
 			mes "[Basshu]";
-			mes "Bring me 1 Arm Guard,";
-			mes "1 Mirror Shield, and";
+			mes "Traga-me uma Proteção de Braço,";
+			mes "1 Escudo Espelhado, e";
 			mes "20,000 Zeny,";
-			mes "and I'll make you an Improved Arm Guard.";
+			mes "eu irei aperfeiçoar sua Proteção de Braço.";
 			next;
 			mes "[Basshu]";
-			mes "Come and see me when you have everything ready.";
+			mes "Venha me ver quando estiver tudo pronto.";
 			ninbot = 2;
 			close;
 		}
@@ -469,45 +473,45 @@ que_ng,28,45,3	script	Basshu	4_M_04,{
 	else if (ninbot == 2){
 		if(countitem(2107) < 1 || countitem(2117) < 1){
 			mes "[Basshu]";
-			mes "Hmm.. It looks like there aren't enough materials.";
-			mes "For an Improved Arm Guard, I require...";
-			mes "1 Mirror Shield, 1 Arm Guard";
-			mes "and 20,000 Zeny.";
-			mes "Come again when you have these materials.";
+			mes "Humm.. Parece que você não tem material suficiente.";
+			mes "Para que eu faça uma Proteção de Braço Aperfeiçoada, precisarei de...";
+			mes "1 Escudo Espelhado, 1 Proteção de Braço";
+			mes "e 20,000 Zeny.";
+			mes "Volte novamente quando tiver esses materiais.";
 			close;
 		}
 		if(Zeny < 20000){
 			mes "[Basshu]";
-			mes "Hmm.. You brought plenty of materials, but you're short on zeny.";
-			mes "In order to create an Improved Arm Guard, I require...";
-			mes "1 Mirror Shield, 1 Arm Guard";
-			mes "and 20,000 Zeny.";
-			mes "Come again when you have these materials.";
+			mes "Humm.. Você trouxe todos os materiais, mas não tem zeny suficiente.";
+			mes "Para que eu faça uma Proteção de Braço Aperfeiçoada, precisarei de...";
+			mes "1 Escudo Espelhado, 1 Proteção de Braço";
+			mes "e 20,000 Zeny.";
+			mes "Volte novamente quando tiver esses materiais.";
 			close;
 		}
 		mes "[Basshu]";
-		mes "The proper ingredients";
-		mes "have been gathered.";
-		mes "Before I begin,";
-		mes "I'll ask one last time.";
+		mes "Os ítens adequados";
+		mes "foram reclhidos.";
+		mes "Antes de começar,";
+		mes "vou perguntar mais uma vez.";
 		next;
 		mes "[Basshu]";
-		mes "In trade of the magical defence of the Arm Guard increasing, the shield's ability to block physical attacks may inevitably decrease.";
+		mes "Em troca da defesa mágica da Proteção de Braço Aperfeiçoada, a capacidade do escudo para bloquear ataques físicos pode inevitavelmente diminuir.";
 		next;
 		mes "[Basshu]";
-		mes "Will you give me the materials you've gathered";
-		mes "and in trade, receive an Improved Arm Guard?";
+		mes "Você me dará o material que você recolheu";
+		mes "e em troca, vai receber uma Proteção de Braço Aperfeiçoada?";
 		next;
-		if(select("No:Yes") == 1){
+		if(select("Não:Sim") == 1){
 			mes "[Basshu]";
-			mes "Very Well.";
-			mes "If you ever make up your mind";
-			mes "come and find me again.";
+			mes "Muito Bem.";
+			mes "Caso resolva mudar de idéia";
+			mes "volte a me procurar novamente.";
 			close;
 		}else{
 			mes "[Basshu]";
-			mes "Hmm~ Well then~";
-			mes "Shall we begin?";
+			mes "Hmm! Bem então.";
+			mes "Vamos começar?";
 			mes "Bang Clang ~Bang Clang ~";
 			mes "Sweep Sweep~ Saw Saw~";
 			next;
@@ -516,9 +520,9 @@ que_ng,28,45,3	script	Basshu	4_M_04,{
 				close;
 			}
 			mes "[Basshu]";
-			mes "Here it is -- it's complete.";
-			mes "I've made you an Improved Arm Guard.";
-			mes "If you ever want me to create more items, come and ask me anytime.";
+			mes "Aqui está -- ele está completo.";
+			mes "Fiz pra você uma Proteção de Braço Aperfeiçoada.";
+			mes "Venha me procurar sempre que estiver precisando de algo mais.";
 			delitem 2107,1;
 			delitem 2117,1;
 			Zeny -= 20000;
@@ -531,67 +535,67 @@ que_ng,28,45,3	script	Basshu	4_M_04,{
 	else if (MISC_QUEST & 4096){
 		ninbot = 0;
 		mes "[Basshu]";
-		mes "Oh~ I see you've come back.";
-		mes "Are you here because you need an Improved Arm Guard?";
+		mes "Oh! Vejo que você voltou.";
+		mes "Você está aqui porque precisa de uma Proteção de Braço Aperfeiçoada?";
 		next;
-		if(select("Nope, not really.:Yes, make me another one.") == 1){
+		if(select("Não, não realmente.:Sim, faça-me um outra.") == 1){
 			mes "[Basshu]";
-			mes "Aha~ I see~.";
-			mes "Come back and talk to me anytime.";
+			mes "Aha! Compreendo!.";
+			mes "Venha falar comigo a qualquer hora.";
 			close;
 		}else{
 			if(countitem(2107) < 1 || countitem(2117) < 1){
 				mes "[Basshu]";
-				mes "Hmm.. It looks like there aren't enough materials.";
-				mes "In order to make an Improved Arm Guard, I require...";
-				mes "1 Mirror Shield, 1 Arm Guard,";
-				mes "And 20,000 Zeny.";
-				mes "Come again when you have these materials.";
+				mes "Hmm.. Parece que você não tem material suficiente.";
+				mes "Para que eu faça uma Proteção de Braço Aperfeiçoada, precisarei de...";
+				mes "1 Escudo Espelhado, 1 Proteção de Braço";
+				mes "e 20,000 Zeny.";
+				mes "Volte novamente quando tiver esses materiais.";
 				close;
 			}
 			if(Zeny < 20000){
 				mes "[Basshu]";
-				mes "Hmm.. You brought plenty of materials, but you're short on zeny.";
-				mes "In order to make an Improved Arm Guard, I require...";
-				mes "1 Mirror Shield, 1 Arm Guard,";
-				mes "and 20,000 Zeny.";
-				mes "Come again when you have these materials.";
+				mes "Hmm.. Você trouxe todos os materiais, mas não tem zeny suficiente.";
+				mes "Para que eu faça uma Proteção de Braço Aperfeiçoada, precisarei de...";
+				mes "1 Escudo Espelhado, 1 Proteção de Braço";
+				mes "e 20,000 Zeny.";
+				mes "Volte novamente quando tiver esses materiais.";
 				close;
 			}
 			mes "[Basshu]";
-			mes "Looks like you brought me the correct ingredients.";
-			mes "Before I begin,";
-			mes "I'll ask one last time.";
+			mes "Parece que você me trouxe os ingredientes corretos.";
+			mes "Antes de começar,";
+			mes "Vou perguntar mais uma vez.";
 			next;
 			mes "[Basshu]";
-			mes "In trade of the magical defence of the Arm Guard increasing, the shield's ability to block physical attacks may inevitably decrease.";
+			mes "Em troca da defesa mágica da Proteção de Braço Aperfeiçoada, a capacidade do escudo para bloquear ataques físicos pode inevitavelmente diminuir.";
 			next;
 			mes "[Basshu]";
-			mes "Will you give me the materials you've gathered to receive an Improved Arm Guard?";
+			mes "Você me dará o material que você recolheu e em troca, vai receber uma Proteção de Braço Aperfeiçoada?";
 			next;
-			if(select("No:Yes") == 1){
+			if(select("Não:Sim") == 1){
 				mes "[Basshu]";
-				mes "Very Well.";
-				mes "If you make up your mind";
-				mes "come and find me again.";
+				mes "Muito Bem.";
+				mes "Caso resolva mudar de idéia";
+				mes "volte a me procurar novamente.";
 				close;
 			}else{
 				mes "[Basshu]";
-				mes "Hmm~ Well then~";
-				mes "Shall we begin?";
+				mes "Hmm! Bem então.";
+				mes "Vamos começar?";
 				mes "Bang Clang ~Bang Clang ~";
 				mes "Sweep Sweep~ Saw Saw~";
 				next;
 				mes "[Basshu]";
-				mes "Here it is -- it's complete.";
-				mes "I've made you an Improved Arm Guard";
+				mes "Aqui está -- ele está completo.";
+				mes "Fiz pra você uma Proteção de Braço Aperfeiçoada";
 				next;
 				if(countitem(2107) < 1 || countitem(2117) < 1 || Zeny < 20000){
 					mes "HACK DETECTED";
 					close;
 				}
 				mes "[Basshu]";
-				mes "If you ever want me to create more items, come and ask me anytime.";
+				mes "Venha me procurar sempre que estiver precisando de algo mais.";
 				delitem 2107,1;
 				delitem 2117,1;
 				Zeny -= 20000;
@@ -603,92 +607,92 @@ que_ng,28,45,3	script	Basshu	4_M_04,{
 	else{
 		ninbot = 0;
 		mes "[Basshu]";
-		mes "Why~ That's~!";
-		mes "Is what you have there that shield which is called a 'Mirror Shield' overseas?";
+		mes "O que! é isso aí!";
+		mes "Por acaso você conhece um escudo de outro país chamado 'Escudo Espelhado'?";
 		next;
 		mes "[Basshu]";
-		mes "Excuse me, but may I take a look?";
+		mes "Desculpe-me, mas posso dar uma olhada?";
 		next;
 		mes "[Basshu]";
-		mes "I knew it!! It is a Mirror Shield~!";
-		mes "There must be a way any shield can posess magical powers!!";
+		mes "Eu sabia! É um Escudo Espelhado!";
+		mes "Deveria haver uma maneira de deixar qualquer escudo blindado com poderes mágicos!!";
 		next;
 		mes "[Basshu]";
-		mes "Shields could be much more useful than now.";
-		mes "Why didn't I think of this before?";
+		mes "Blindados eles poderiam ser muito mais úteis do que agora.";
+		mes "Por que eu não pensei nisso antes?";
 		next;
 		mes "[Basshu]";
-		mes "I have two brothers, and together we are the Three Craftsmen of the East.";
-		mes "I learned my crafting skill by watching my older brothers.";
+		mes "Eu tenho dois irmãos e, juntos, somos os três Artesãos do Oriente.";
+		mes "aprendi minhas habilidades em artesanato observando meus irmãos mais velhos.";
 		next;
 		mes "[Basshu]";
-		mes "Due to that, my skill is not as good as theirs, but many people say I am skilled...";
+		mes "Devido a isso, minhas habilidades não são tão boas quanto as deles, mas muitas pessoas dizem que eu sou habilidoso...";
 		next;
 		mes "[Basshu]";
-		mes "As of now, I have also given up making shields and am currently running an antique shop for shields.";
+		mes "A partir de agora, deram-se escudos para fazer e atualmente estou trabalhando em uma loja de antiguidades de escudos.";
 		next;
 		mes "[Basshu]";
-		mes "I'm researching to see if shields can be enchanted with magic.";
+		mes "Estou pesquisando para ver se os escudos podem ser encantados com magia.";
 		next;
 		mes "[Basshu]";
-		mes "Therefore, I wanted to get an idea of how magic works on shields by studying a shield from overseas called the Mirror Shield, but I couldn't get my hands on one.";
-		mes "What stress that had caused me.";
+		mes "Portanto, eu queria ter uma idéia de como a magia funciona em escudos, estudando um escudo de outro país chamado Escudo Espelhado, mas eu adoraria ter um desses em minhas mãos.";
+		mes "O estresse que tinha me causado.";
 		next;
 		mes "[Basshu]";
-		mes "But luckily, you, a traveller, happened to have a mirror shield, and now I feel my creative spirit burning lively inside.";
+		mes "Mas, felizmente, você, um viajante, passou a ter um Escudo Espelhado, e agora sinto meu espírito criativo animado, queimando dentro de mim.";
 		next;
 		mes "[Basshu]";
-		mes "If you want, I will make you an Improved Arm Guard if you bring me 1 Arm Guard, 1 Mirror Shield, And 20,000 Zeny.";
-		mes "Would you like to try using one?";
+		mes "Se você quiser, posso fazer uma Proteção de Braço Aperfeiçoada, se me trouxer 1 Proteção de Braço, 1 Escudo Espelhado, e 20,000 Zeny.";
+		mes "Gostaria de tentar obte um?";
 		next;
-		if(select("No, I don't wanna!:Yeah~!! Hurry and make it for me!") == 1){
+		if(select("Não, eu não quero!:Sim! Apresse-se em fazer isso por mim!") == 1){
 			mes "[Basshu]";
-			mes "Hmm, is that so.";
-			mes "What a shame.";
-			mes "Come and find me if you change your mind.";
+			mes "Humm, então é isso.";
+			mes "Que vergonha.";
+			mes "Venha me procurar, caso mude de idéia.";
 			close;
 		}else{
 			if(countitem(2107) < 1 || countitem(2117) < 1){
 				mes "[Basshu]";
-				mes "Hmm.. It looks like there aren't enough materials.";
-				mes "In order to create an Improved Arm Guard, I require...";
-				mes "1 Mirror Shield, 1 Arm Guard";
-				mes "And 20,000 Zeny";
-				mes "Come again when you have these materials.";
+				mes "Hmm.. Parece que você não tem material suficiente.";
+				mes "Para que eu faça uma Proteção de Braço Aperfeiçoada, precisarei de...";
+				mes "1 Escudo Espelhado, 1 Proteção de Braço";
+				mes "e 20,000 Zeny.";
+				mes "Volte novamente quando tiver esses materiais.";
 				close;
 			}
 			if(Zeny < 20000){
 				mes "[Basshu]";
-				mes "Hmm.. You brought plenty of materials, but you're short on zeny.";
-				mes "In order to make an Improved Arm Guard, I require...";
-				mes "1 Mirror Shield, 1 Arm Guard,";
-				mes "And 20,000 Zeny.";
-				mes "Come again when you have these materials.";
+				mes "Hmm.. Você trouxe todos os materiais, mas não tem zeny suficiente.";
+				mes "Para que eu faça uma Proteção de Braço Aperfeiçoada, precisarei de...";
+				mes "1 Escudo Espelhado, 1 Proteção de Braço";
+				mes "e 20,000 Zeny.";
+				mes "Volte novamente quando tiver esses materiais.";
 				close;
 			}
 			mes "[Basshu]";
-			mes "The proper ingredients";
-			mes "have been gathered.";
-			mes "Before I begin,";
-			mes "I'll ask one last time.";
+			mes "Os ítens adequados";
+			mes "foram recolhidos.";
+			mes "Antes de começar,";
+			mes "vou perguntar mais uma vez.";
 			next;
 			mes "[Basshu]";
-			mes "In trade of the magical defence of the Arm Guard increasing, the shield's ability to block physical attacks may inevitably decrease.";
+			mes "Em troca da defesa mágica da Proteção de Braço Aperfeiçoada, a capacidade do escudo para bloquear ataques físicos pode inevitavelmente diminuir.";
 			next;
 			mes "[Basshu]";
-			mes "Will you give me the materials you've gathered";
-			mes "to receive an Improved Arm Guard?";
+			mes "Você me dará o material que recolheu";
+			mes "e em troca, vai receber uma Proteção de Braço Aperfeiçoada?";
 			next;
 			if(select("No:Yes") == 1){
 				mes "[Basshu]";
-				mes "Very Well.";
-				mes "If you ever make up your mind";
-				mes "come and find me again.";
+				mes "Muito Bem.";
+				mes "Caso resolva mudar de idéia";
+				mes "volte a me procurar novamente.";
 				close;
 			}else{
 				mes "[Basshu]";
-				mes "Hmm~ Well then~";
-				mes "Shall we begin?";
+				mes "Humm! Bem então.";
+				mes "Vamos começar?";
 				mes "Bang Clang ~Bang Clang ~";
 				mes "Sweep Sweep~ Saw Saw~";
 				next;
@@ -697,9 +701,9 @@ que_ng,28,45,3	script	Basshu	4_M_04,{
 					close;
 				}
 				mes "[Basshu]";
-				mes "Here it is -- it's complete.";
-				mes "I've made you an Improved Arm Guard";
-				mes "If you ever want me to create more items, come and ask me anytime.";
+				mes "Aqui está -- ele está completo.";
+				mes "Fiz pra você uma Proteção de Braço Aperfeiçoada.";
+				mes "Venha me procurar sempre que estiver precisando de algo mais.";
 				delitem 2107,1;
 				delitem 2117,1;
 				Zeny -= 20000;
@@ -714,83 +718,83 @@ que_ng,28,45,3	script	Basshu	4_M_04,{
 que_ng,27,18,3	script	Toshu	4_M_SEAMAN,{
 	if(BaseClass != Job_Ninja){
 		mes "[Toshu]";
-		mes "How are you~";
-		mes "My young friend~";
-		mes "I am one of the three brothers of the eastern world who craft armor. The name is Murata Toshu.";
+		mes "Como vai";
+		mes "meu jovem amigo?";
+		mes "Eu sou um dos três irmãos que fabricam armaduras do mundo oriental. O nome é Murata Toshu.";
 		next;
 		mes "[Toshu]";
-		mes "I've learned how to slot things from a land overseas.";
-		mes "I'm thinking about earning some money using this ability.";
+		mes "Aprendi como fazer entalhes em outra terra no exterior.";
+		mes "Estou pensando em ganhar algum dinheiro usando esta habilidade.";
 		next;
 		mes "[Toshu]";
-		mes "But you don't seem like the kind of customer which I can do business with...";
+		mes "Mas você não parece o tipo de cliente com que eu posso fazer negócios...";
 		close;
 	}
 	mes "[Toshu]";
-	mes "How are you, my young friend~";
-	mes "I'm the middle brother of the three brothers in charge of crafting shields in the east.";
-	mes "They call me Murata Toshu.";
+	mes "Como vai, meu jovem amigo?";
+	mes "Eu sou um dos três irmãos responsáveis pela elaboração de Blindagens Orientais.";
+	mes "Me chamam Murata Toshu.";
 	next;
 	mes "[Toshu]";
-	mes "I learned how to slot things from overseas, so I'm thinking about earning some money with that ability part time.";
+	mes "Aprendi como colocar slot em outros países, então estou pensando em ganhar algum dinheiro por um tempo, com minhas habilidade.";
 	next;
 	mes "[Toshu]";
-	mes "If you want, I can create a Slotted Improved Arm Guard if you bring me";
-	mes "1 Improved Arm Guard, 1 Slotted Buckler";
-	mes "and 40,000 Zeny.";
+	mes "Se quiser, eu posso criar uma Proteção de Braço Aperfeiçoada com Slot, deverá me trazer";
+	mes "1 Proteção de Braço Aperfeiçoada, 1 Broquel com Slot";
+	mes "e 40,000 Zeny.";
 	next;
 	mes "[Toshu]";
-	mes "By the way, I'm sorry to say this, but there's a chance I might break your materials and fail slotting the Improved Arm Guard, so you might want to think about it.";
-	mes "How 'bout it? Do we have a deal?";
+	mes "A propósito, sinto muito dizer isso, mas há uma chance de que falhe e quebre o seu material, sem colocar um slot na Proteção de Braço Aperfeiçoada, de modo que você pode querer pensar sobre isso.";
+	mes "Que tal isso? Não temos um acordo?";
 	next;
-	if(select("No. I don't want to do this.:Yes! Let's do this!") == 1){
+	if(select("Não, eu não quero fazer isso.:Sim. Vamos fazer isso!") == 1){
 		mes "[Toshu]";
 		mes "Ok.";
-		mes "Of course, the shields are important to you.";
-		mes "If you decide to go foward with this afterwards, come and find me.";
+		mes "É claro, os escudos são importantes pra você.";
+		mes "Se você decidir ir pra frente com isso, volte a me procurar.";
 		close;
 	}else{
 		if(countitem(2104) < 1 || countitem(2119) < 1){
 			mes "[Toshu]";
-			mes "It doesn't look like you brought me enough materials.";
-			mes "The required materials are 1 Slotted Buckler";
-			mes "1 Improved Arm Guard, and";
+			mes "Parece que você não tem material suficiente.";
+			mes "Os materiais necessários são 1 Broquel com Slot";
+			mes "1 Proteção de Braço Aperfeiçoada, e";
 			mes "40,000 Zeny.";
-			mes "You must bring me the right number of materials and Zeny.";
-			mes "Don't forget that.";
+			mes "Você deve trazer a quantidade certa de materiais e Zeny.";
+			mes "Não se esqueça disso.";
 			close;
 		}
 		if(Zeny < 40000){
 			mes "[Toshu]";
-			mes "It looks like you brought the right amount of materials.";
-			mes "However.. you didn't bring enough Zeny.";
-			mes "The required materials are 1 Slotted Buckler";
-			mes "1 Improved Arm Guard, and 40,000 Zeny.";
-			mes "You must bring me the right number of materials and Zeny.";
-			mes "Don't forget that.";
+			mes "Parece que você trouxe a quantidade certa de materiais.";
+			mes "No entanto... você não trouxe Zeny o suficiente.";
+			mes "Os materiais necessários são 1 Broquel com Slot";
+			mes "1 Proteção de Braço Aperfeiçoada, e 40,000 Zeny.";
+			mes "Você deve trazer a quantidade certa de materiais e Zeny.";
+			mes "Não se esqueça disso.";
 			close;
 		}
 		mes "[Toshu]";
-		mes "Hmm. materials and zeny checked!";
-		mes "Time to begin my part.";
-		mes "Just to warn you..";
+		mes "Humm.  materiais e zeny verificados!";
+		mes "Hora de começar a minha parte.";
+		mes "Só para avisá-lo...";
 		next;
 		mes "[Toshu]";
-		mes "While I am in production, I may fail to create your gear, so you may want to think it over.";
+		mes "Enquanto estou em produção, posso falhar em criar sua arte, talvez você queira pensar sobre isso.";
 		next;
 		mes "[Toshu]";
-		mes "Do you want me to produce your gear, even if there's a chance I may fail?";
+		mes "Você quer que eu produza sua arte, mesmo tendo uma chance de falhar?";
 		next;
-		if(select("I think I better back off. Sob..:Yes! Let's try anyway!") == 1){
+		if(select("Eu acho que é melhor recuar:Sim. Vamos tentar de qualquer maneira!") == 1){
 			mes "[Toshu]";
 			mes "Ok.";
-			mes "Well, come back later when you've got the guts to try.";
+			mes "Bem, volte mais tarde quando tiver coragem de tentar.";
 			mes "Erherherherher~";
 			close;
 		}else{
 			mes "[Toshu]";
-			mes "OK! I have your order!";
-			mes "Just wait 3 seconds!!";
+			mes "OK! Aqui está sua encomenda!";
+			mes "Apenas aguarde 3 segundos!!";
 			mes "Clink Clank~!Clink Clank~!!";
 			mes "Sweep Sweep~ Saw Saw~";
 			next;
@@ -807,34 +811,34 @@ que_ng,27,18,3	script	Toshu	4_M_SEAMAN,{
 					getitem 12043,1;
 					mes "[Toshu]";
 					mes "Aaah!!!";
-					mes "Ah.. this";
-					mes "is bad news.";
-					mes "Slotting the shield has failed";
-					mes "as I feared.";
-					mes "I'm very sorry about this.";
-					mes "Eat this and cheer up.";
+					mes "Ah.. esta";
+					mes "é uma má notícia.";
+					mes "Falhei ao colocar um slot";
+					mes "como eu temia.";
+					mes "Sinto muito sobre isso.";
+					mes "Coma isso e alegre-se.";
 					close;
 					break;
 				case 2:
 					getitem 12043,1;
 					mes "[Toshu]";
 					mes "Aaah!!!";
-					mes "Ah.. this";
-					mes "is bad news.";
-					mes "Slotting the shield has failed";
-					mes "as I feared.";
-					mes "I'm very sorry about this.";
-					mes "Eat this and cheer up.";
+					mes "Ah.. esta";
+					mes "é uma má notícia.";
+					mes "Falhei ao colocar um slot";
+					mes "como eu temia.";
+					mes "Sinto muito sobre isso.";
+					mes "Coma isso e alegre-se.";
 					close;
 					break;
 				default:
 					getitem 2120,1;
 					mes "[Toshu]";
-					mes "Hmm~~ Looks like everything went all right.";
-					mes "Here is your completed Slotted";
-					mes "Improved Arm Guard.";
-					mes "I was nervous that it might fail, but hey, there's a reason why I'm called a Craftsman, right?";
-					mes "If you need me again, come and seek me.";
+					mes "Humm! Parece que tudo correu bem.";
+					mes "Aqui está concluída a sua";
+					mes "Proteção de Braço Aperfeiçoada.";
+					mes "Eu estava nervoso pois poderia falhar, mas exite uma razão pela qual sou chamado de um artesão, certo?";
+					mes "Se precisar de mim novamente, venha me procurar.";
 					close;
 					break;
 			}
@@ -846,59 +850,59 @@ que_ng,72,34,3	script	Craftsman Kaibara	4_M_EINOLD,{
 
 	if (BaseClass != Job_Ninja){
 		mes "[Kaibara]";
-		mes "I am a Craftsman called Kaibara";
-		mes "I create weapons for Ninjas.";
-		mes "However, It doesn't look like you are a ninja.";
+		mes "Eu sou um artesão chamado Kaibara.";
+		mes "Crio armas para Ninjas.";
+		mes "No entanto, me parece com você não é um ninja.";
 		next;
 		mes "[Kaibara]";
-		mes "Even if I created a sword for you, I doubt you would be able to appreciate it. What a shame...";
+		mes "Mesmo se eu criasse uma espada pra você, duvido que seria capaz de apreciá-la. Que vergonha...";
 		close;
 	}
 	mes "[Kaibara]";
-	mes "I am the last Craftsman who knows how to make a sword out of a Black Dragon's scales. They call me Kaibara.";
-	mes "You look like a Ninja.";
-	mes "If you're interested, take a look at my goods while you decide what you want.";
+	mes "Sou o último artesão que sabe como fazer uma espada das escamas de um dragão negro. Eles me chamam de Kaibara.";
+	mes "Você parece um Ninja.";
+	mes "Se estiver interessado, dê uma olhada em minhas mercadorias enquanto decide o que quer.";
 	next;
-	switch(select("Gokurin:Jitte:Ashura[3]:Murasame:Hakujin:Cancel")){
+	switch(select("Gokurin:Jitte:Ashura[3]:Murasame:Hakujin:Cancelar")){
 		case 1:
 			mes "[Kaibara]";
-			mes "Hmm~ I see you've picked the Gokurin.";
-			mes "Gokurin is made with various materials, one of them being Dragon's Scale.";
+			mes "Humm! Eu vejo que você escolheu o Gokurin.";
+			mes "Gokurin é feito com vários materiais, sendo um deles, Pele de Dragão.";
 			next;
 			mes "[Kaibara]";
-			mes "The required material for this sword is 400 Dragon Scales,";
-			mes "5 Oridecons, and 30 Dragon Skins.";
-			mes "and 200,000 Zeny.";
-			mes "Do you want me to create this item for you?";
+			mes "Os materiais necessários para esta espada são 400 Escamas de Dragão,";
+			mes "5 Oridecons, and 30 Peles de Dragão.";
+			mes "e 200,000 Zeny.";
+			mes "Quer que eu crie este artigo pra você?";
 			next;
-			if(select("No thanks. It's too expensive.:Yes! I want one!") == 1){
+			if(select("Não, obrigado. É muito caro.:Sim! Eu quero um!") == 1){
 				mes "[Kaibara]";
-				mes "Hrm. I understand. These are materials that are difficult to attain...";
-				mes "If you ever happen to gather all these materials one day, feel free to come back.";
+				mes "Hrm. Entendo. Estes materiais são difíceis de conseguir...";
+				mes "Se acontecer de ter conseguido todos esses materiais algum dia, sinta-se livre para voltar.";
 				close;
 			}else{
 				if(countitem(1036) < 400 || countitem(984) < 5 || countitem(7123) < 30){
 					mes "[Kaibara]";
-					mes "It looks like there are not enough ingredients for me to make you a Gokurin.";
+					mes "Parece que não há ítens suficientes para fazer um Gokurin.";
 					next;
 					mes "[Kaibara]";
-					mes "In order to make the Gokurin,";
-					mes "I require ^ff0000 400 Dragon's Scale,^000000";
-					mes "^ff00005 Oridecons^000000, ^ff000030 Dragon Skins^000000";
-					mes "and ^ff0000200000 Zeny^000000.";
-					mes "Make sure you have those items when you return to me.";
+					mes "Para fazer um Gokurin,";
+					mes "precisarei de ^ff0000 400 Escamas de Dragão,^000000";
+					mes "^ff00005 Oridecons^000000, ^ff000030 Peles de Dragão^000000";
+					mes "e ^ff0000200000 Zeny^000000.";
+					mes "Verifique se tem todos esses itens quando for voltar.";
 					close;
 				}
 				if(Zeny < 200000){
 					mes "[Kaibara]";
-					mes "Hmm, it looks like you have enough materials, but you're short on Zeny.";
+					mes "Hmm, parece que você tem todos os materiais, mas não tem zeny suficiente.";
 					next;
 					mes "[Kaibara]";
-					mes "In order to make the Gokurin,";
-					mes "I require ^ff0000 400 Dragon Scales,^000000";
-					mes "^ff00005 Oridecons^000000, ^ff000030 Dragon Skins^000000";
-					mes "and ^ff0000200,000 Zeny^000000.";
-					mes "Make sure you have those items when you return to me.";
+					mes "Para fazer um Gokurin,";
+					mes "precisarei de ^ff0000 400 Escamas de Dragão,^000000";
+					mes "^ff00005 Oridecons^000000, ^ff000030 Peles de Dragão^000000";
+					mes "e ^ff0000200,000 Zeny^000000.";
+					mes "Verifique se tem todos esses itens quando for voltar.";
 					close;
 				}
 				delitem 1036,400;
@@ -907,50 +911,50 @@ que_ng,72,34,3	script	Craftsman Kaibara	4_M_EINOLD,{
 				Zeny -= 200000;
 				getitem 13006,1;
 				mes "[Kaibara]";
-				mes "Hmm, looks good.";
-				mes "I've checked your ingredients and fees.";
-				mes "Here is your completed Gokurin.";
+				mes "Hmm, parece bom.";
+				mes "Eu chequei seus itens e taxas.";
+				mes "Aqui está seu Gokurin completo.";
 				close;
 			}
 			break;
 		case 2:
 			mes "[Kaibara]";
-			mes "Hmm~ You've picked the ^ff0000Jitte^000000.";
-			mes "This sword has a legend that the more enemies you slay with it, the stronger it gets.";
+			mes "Humm! Você escolheu um ^ff0000Jitte^000000.";
+			mes "Esta espada tem uma lenda, de que quanto mais inimigos você matar com ela, o mais forte fica.";
 			next;
 			mes "[Kaibara]";
-			mes "The required materials are 30 Steel, one Old Hilt";
-			mes "and 20,000 Zeny.";
-			mes "Do you want me to create this item for you?";
+			mes "Os materiais necessários são 30 Aços, 1 Bainha Velha";
+			mes "e 20,000 Zeny.";
+			mes "Gostaria que eu fizesse esse ítem pra você?";
 			next;
-			if(select("No thanks. It's too expensive.:Yes! I want one!") == 1){
+			if(select("Não, obrigado. É muito caro.:Sim! Eu quero um!") == 1){
 				mes "[Kaibara]";
-				mes "Hrm. I understand. These are materials that are difficult to attain...";
-				mes "If you ever happen to gather all these materials one day, feel free to come back.";
+				mes "Hrm. Entendo. Estes materiais são difíceis de conseguir...";
+				mes "Se acontecer de ter conseguido todos esses materiais algum dia, sinta-se livre para voltar.";
 				close;
 			}else{
 				if(countitem(999) < 30 || countitem(7022) < 1){
 					mes "[Kaibara]";
-					mes "It looks like you need more materials before I can make you a Jitte.";
+					mes "Parece que não há ítens suficientes para fazer uma Jitte.";
 					next;
 					mes "[Kaibara]";
-					mes "In order to create a Jitte, I require";
-					mes "^ff000030 Steel^000000, ";
-					mes "^f00001 Old Hilt^000000,";
-					mes "and ^ff000020,000 Zeny^000000.";
-					mes "Remember these needed materials, and come back after you're positive you have them all.";
+					mes "Para criar uma Jitte, precisarei de";
+					mes "^ff000030 Aços^000000, ";
+					mes "^f00001 Bainha Velha^000000,";
+					mes "e ^ff000020,000 Zeny^000000.";
+					mes "Lembre-se de todos os materiais necessários, e volte quando tiver certeza de tê-los todos.";
 					close;
 				}
 				if(Zeny < 20000){
 					mes "[Kaibara]";
-					mes "Hmm.. You brought plenty of materials, but you're short on zeny.";
+					mes "Hmm.. Você trouxe todos os materiais necessários, mas está faltando zeny.";
 					next;
 					mes "[Kaibara]";
-					mes "In order to create the Jitte, I require";
-					mes "^ff000030 Steel,^000000";
-					mes "^f00001 Old Hilt^000000,";
-					mes "and ^ff000020,000 Zeny^000000.";
-					mes "Remember these needed materials, and come back after you're positive you have them all.";
+					mes "para criar um Jitte, precisarei de";
+					mes "^ff000030 Aços,^000000";
+					mes "^f00001 Bainha Velha^000000,";
+					mes "e ^ff000020,000 Zeny^000000.";
+					mes "Lembre-se de todos os materiais necessários, e volte quando tiver certeza de tê-los todos.";
 					close;
 				}
 				delitem 999,30;
@@ -958,47 +962,47 @@ que_ng,72,34,3	script	Craftsman Kaibara	4_M_EINOLD,{
 				Zeny -= 20000;
 				getitem 13007,1;
 				mes "[Kaibara]";
-				mes "Hmm, very well.";
-				mes "I've checked your ingredients and fees.";
-				mes "Here is your completed Jitte.";
+				mes "Humm, muito bem.";
+				mes "Eu chequei seus itens e taxas.";
+				mes "Aqui é o seu Jitte concluído.";
 				close;
 			}
 			break;
 		case 3:
 			mes "[Kaibara]";
-			mes "Hmm~ You've chose the ^ff0000Ashura[3]^000000.";
-			mes "In order to create an Ashura[3], I require ";
-			mes "25 Steel, 5 Worn-out Magic Scrolls";
-			mes "And 32,000 Zeny.";
-			mes "Do you want me to create this item for you?";
+			mes "Humm! Você escolheu o ^ff0000Ashura[3]^000000.";
+			mes "Para  criar um Ashura[3], precisarei de";
+			mes "25 Aços, 5 Pergaminhos Antigos";
+			mes "e 32,000 Zeny.";
+			mes "Gostaria que eu fizesse esse ítem pra você?";
 			next;
-			if(select("No thanks. It's too expensive.:Yes! I want one!") == 1){
+			if(select("Não, obrigado. É muito caro.:Sim! Eu quero um!") == 1){
 				mes "[Kaibara]";
-				mes "Hrm. I understand. These are materials that are difficult to attain...";
-				mes "If you ever happen to gather all these materials one day, feel free to come back.";
+				mes "Hrm. Entendo. Estes materiais são difíceis de conseguir...";
+				mes "Se acontecer de ter conseguido todos esses materiais algum dia, sinta-se livre para voltar.";
 				close;
 			}else{
 				if(countitem(999) < 25 || countitem(7099) < 5){
 					mes "[Kaibara]";
-					mes "It looks like you don't have all the materials I need to create an Ashura[3] for you.";
+					mes "Parece que você não tem material que preciso para criar seu Ashura[3].";
 					next;
 					mes "[Kaibara]";
-					mes "I require ^ff000025 Steel,^000000";
-					mes "^ff0000Five Worn-out Magic Scrolls,^000000";
-					mes "and ^ff0000 32,000 Zeny^000000 in order to create an Ashura[3].";
-					mes "Remember these needed materials, and come back after you're positive you have them all.";
+					mes "Precisarei de ^ff000025 Aços,^000000";
+					mes "^ff00005 Pergaminhos Antigos,^000000";
+					mes "e ^ff0000 32,000 Zeny^000000 a fim de criar um Ashura[3].";
+					mes "Lembre-se de todos os materiais necessários, e volte quando tiver certeza de tê-los todos.";
 					close;
 				}
 				if(Zeny < 32000){
 					mes "[Kaibara]";
-					mes "Hmm.. You brought plenty of materials, but you're short on zeny.";
+					mes "Humm... Você trouxe todos os materiais necessários, mas está faltando zeny.";
 					next;
 					mes "[Kaibara]";
-					mes "In order to create an Ashura[3], I require the following materials - ";
-					mes "^ff000025 Steel,^000000";
-					mes "^ff00005 Worn-out Magic Scrolls^000000,";
-					mes "and ^ff0000 32,000 Zeny^000000";
-					mes "Remember these needed materials, and come back after you're positive you have them all.";
+					mes "Para  criar um Ashura[3], precisarei dos seguintes materiais - ";
+					mes "^ff000025 Aços,^000000";
+					mes "^ff00005 Pergaminhos Antigos^000000,";
+					mes "e ^ff0000 32,000 Zeny^000000";
+					mes "Lembre-se de todos os materiais necessários, e volte quando tiver certeza de tê-los todos.";
 					close;
 				}
 				delitem 999,25;
@@ -1006,48 +1010,48 @@ que_ng,72,34,3	script	Craftsman Kaibara	4_M_EINOLD,{
 				Zeny -= 32000;
 				getitem 13011,1;
 				mes "[Kaibara]";
-				mes "Hmm, very well.";
-				mes "I've checked your ingredients and fees.";
-				mes "Here is your completed Ashura[3].";
+				mes "Hmm, muito bem.";
+				mes "Eu chequei seus itens e taxas.";
+				mes "Aqui é o seu Ashura[3] concluído.";
 				close;
 			}
 			break;
 		case 4:
 			mes "[Kaibara]";
-			mes "Hmm~ You've chose the ^ff0000Murasame^000000.";
-			mes "To create the Murasame, I require";
-			mes "30 Steel, 10 Aquamarines";
-			mes "And 48,000 Zeny.";
-			mes "Do you want me to create this item for you?";
+			mes "Humm! Você escolheu o ^ff0000Murasame^000000.";
+			mes "Para  criar um Murasame, precisarei de";
+			mes "30 Aços, 10 Aquamarines";
+			mes "e 48,000 Zeny.";
+			mes "Gostaria que eu fizesse esse ítem pra você?";
 			next;
-			if(select("No thanks. It's too expensive.:Yes! I want one!") == 1){
+			if(select("Não, obrigado. É muito caro.:Sim! Eu quero um!") == 1){
 				mes "[Kaibara]";
-				mes "Hrm. I understand. These are materials that are difficult to attain...";
-				mes "If you ever happen to gather all these materials one day, feel free to come back.";
+				mes "Hrm. Entendo. Estes materiais são difíceis de conseguir...";
+				mes "Se acontecer de ter conseguido todos esses materiais algum dia, sinta-se livre para voltar.";
 				close;
 			}else{
 				if(countitem(999) < 30 || countitem(720) < 10){
 					mes "[Kaibara]";
-					mes "It looks like your short on materials for me to create you a Murasame.";
+					mes "Parece que você não tem material que preciso para criar seu Murasame.";
 					next;
 					mes "[Kaibara]";
-					mes "I require ^ff000030 Steel^000000, ";
+					mes "Preciso de ^ff000030 Aços^000000, ";
 					mes "^ff000010 Aquamarines^000000,";
-					mes "and ^ff000048,000 Zeny^000000";
-					mes "in order to create a Murasame.";
-					mes "Remember these needed materials, and come back after you're positive you have them all.";
+					mes "e ^ff000048,000 Zeny^000000";
+					mes "para criar um Murasame.";
+					mes "Lembre-se de todos os materiais necessários, e volte quando tiver certeza de tê-los todos.";
 					close;
 				}
 				if(Zeny < 48000){
 					mes "[Kaibara]";
-					mes "Hmm.. You brought plenty of materials, but you're short on zeny.";
+					mes "Humm... Você trouxe todos os materiais necessários, mas está faltando zeny.";
 					next;
 					mes "[Kaibara]";
-					mes "In order to create a Murasame, I require..";
-					mes "^ff000030 Steel^000000, ";
+					mes "Para  criar um Murasame, precisarei de...";
+					mes "^ff000030 Aços^000000, ";
 					mes "^ff000010 Aquamarines^000000,";
-					mes "and ^ff000048,000 Zeny^000000.";
-					mes "Remember these needed materials, and come back after you're positive you have them all.";
+					mes "e ^ff000048,000 Zeny^000000.";
+					mes "Lembre-se de todos os materiais necessários, e volte quando tiver certeza de tê-los todos.";
 					close;
 				}
 				delitem 999,30;
@@ -1055,49 +1059,49 @@ que_ng,72,34,3	script	Craftsman Kaibara	4_M_EINOLD,{
 				Zeny -= 48000;
 				getitem 13012,1;
 				mes "[Kaibara]";
-				mes "Hmm, very well.";
-				mes "I've checked your ingredients and fees.";
-				mes "Here is your completed Murasame.";
+				mes "Hmm, muito bem.";
+				mes "Eu chequei seus itens e taxas.";
+				mes "Aqui é o seu Murasame completo.";
 				close;
 			}
 			break;
 		case 5:
 			mes "[Kaibara]";
-			mes "Hmm~ You've chose the ^ff0000Hakujin^000000.";
-			mes "In order to create a Hakujin, I require...";
-			mes "500 Skel-Bones, 5 Pearls";
-			mes "10 Level 3 Heal Scrolls";
-			mes "and 120,000 Zeny.";
-			mes "Do you want me to create this item for you?";
+			mes "Humm! Você escolheu o ^ff0000Hakujin^000000.";
+			mes "Para  criar um Hakujin, precisarei de...";
+			mes "500 Ossos, 5 Pérolas";
+			mes "10 Pergaminhos de Cura Nível 3";
+			mes "e 120,000 Zeny.";
+			mes "Gostaria que eu fizesse esse ítem pra você?";
 			next;
-			if(select("No thanks. It's too expensive.:Yes! I want one!") == 1){
+			if(select("Não, obrigado. É muito caro.:Sim! Eu quero um!") == 1){
 				mes "[Kaibara]";
-				mes "Hrm. I understand. These are materials that are difficult to attain...";
-				mes "If you ever happen to gather all these materials one day, feel free to come back.";
+				mes "Hrm. Entendo. Estes materiais são difíceis de conseguir...";
+				mes "Se acontecer de ter conseguido todos esses materiais algum dia, sinta-se livre para voltar.";
 				close;
 			}else{
 				if(countitem(932) < 500 || countitem(12001) < 10 || countitem(722) < 5){
 					mes "[Kaibara]";
-					mes "It looks like you're short on raw materials for me to be able to make you a Hakujin.";
+					mes "Parece que você não tem material suficiente que preciso para criar seu Hakujin.";
 					next;
 					mes "[Kaibara]";
-					mes "In order to create a Hakujin, I require...";
-					mes "500 Skel-Bones, 5 Pearls";
-					mes "10 Level 3 Heal Scrolls";
-					mes "and 120,000 Zeny.";
-					mes "Remember these needed materials, and come back after you're positive you have them all.";
+					mes "Para criar um Hakujin, precisarei de...";
+					mes "500 Ossos, 5 Pérolas";
+					mes "10 Pergaminhos de Cura Nível 3";
+					mes "e 120,000 Zeny.";
+					mes "Lembre-se de todos os materiais necessários, e volte quando tiver certeza de tê-los todos.";
 					close;
 				}
 				if(Zeny < 120000){
 					mes "[Kaibara]";
-					mes "Hmm.. You brought plenty of materials, but you're short on zeny.";
+					mes "Humm... Você trouxe todos os materiais necessários, mas está faltando zeny.";
 					next;
 					mes "[Kaibara]";
-					mes "In order to create a Hakujin, I require...";
-					mes "500 Skel-Bones, 5 Pearls";
-					mes "10 Level 3 Heal Scrolls";
-					mes "and 120,000 Zeny.";
-					mes "Remember these needed materials, and come back after you're positive you have them all.";
+					mes "Para criar um Hakujin, precisarei de...";
+					mes "500 Ossos, 5 Pérolas";
+					mes "10 Pergaminhos de Cura Nível 3";
+					mes "e 120,000 Zeny.";
+					mes "Lembre-se de todos os materiais necessários, e volte quando tiver certeza de tê-los todos.";
 					close;
 				}
 				delitem 932,500;
@@ -1106,16 +1110,16 @@ que_ng,72,34,3	script	Craftsman Kaibara	4_M_EINOLD,{
 				Zeny -= 120000;
 				getitem 13014,1;
 				mes "[Kaibara]";
-				mes "Hmm, very well.";
-				mes "I've double checked the materials and Zeny you've brought.";
-				mes "Here is your completed Hakujin.";
+				mes "Hmm, muito bem.";
+				mes "Eu chequei seus itens e taxas.";
+				mes "Aqui é o seu Hakujin completo.";
 				close;
 			}
 			break;
 		default:
 			mes "[Kaibara]";
-			mes "Hmm, Very well.";
-			mes "Come and look for me again.";
+			mes "Humm, muit bem.";
+			mes "Venha me procurar novamente.";
 			close;
 			break;
 	}
@@ -1125,236 +1129,236 @@ que_ng,22,62,3	script	Tetsu	4_M_SEAMAN,{
 
 	mes "[Tetsu]";
 	if(BaseClass != Job_Ninja){
-		mes "I'm The Craftman of Fuuma Ninjas called Tetsu.";
+		mes "Eu sou o Artesão dos Ninjas de Fuuma, me chamo Tetsu.";
 		next;
 		mes "[Tetsu]";
-		mes "My living is getting tough because of my gambling, so I've started to make weapons part time.";
+		mes "Minha vida está ficando difícil, porque causa do jogo, então comecei a fazer armas em tempo parcial.";
 		next;
 		mes "[Tetsu]";
-		mes "However, it looks like you're not a ninja.";
-		mes "There's no point of me explaining any further then.";
+		mes "No entanto, parece que você não é um ninja.";
+		mes "Não há nenhuma razão para ficar me dando qualquer explicações.";
 		next;
 		mes "[Tetsu]";
-		mes "Perhaps when I have some money to spare, we could play a game of Mah-jong together.";
+		mes "Quem sabe quando eu tiver algum dinheiro sobrando, poderemos jogar um jogo Mah-jong together.";
 		close;
 	}
-	mes "I am the Craftman of the Fuuma Ninja. I am called Tetsu.";
+	mes "Eu sou o Artesão dos Ninjas de Fuuma, me chamo Tetsu.";
 	next;
 	mes "[Tetsu]";
-	mes "Things have become tough for me due to my habit of gambling... So, here I am making weapons again, at long last.";
+	mes "As coisas tornaram-se difíceis pra mim devido ao meu hábito de jogo... Então, aqui estou eu de novo fabricando armas, finalmente.";
 	next;
 	mes "[Tetsu]";
-	mes "I may not look it, but if it's about any items related to Fuuma, there's none who come close to my craftsmenship.";
-	mes "Well, look around, look around.";
+	mes "Não posso olhar, mas se for sobre todos os itens relacionados com a Fuuma, nenhuma expedição chegou até mim.";
+	mes "Bem, olhe ao redor, olhe ao redor.";
 	next;
 	switch (select("Fuuma Shuriken Beneki","Fuuma Shuriken Daisharin","Fuuma Shuriken Daisharin[4]","Fuuma Shuriken Rekka","Cancel")) {
 	case 1: // Beneki
-		mes "[Tetsu]";
-		mes "Hmm~ You've chose the ^ff0000Fuuma Beneki^000000.";
-		mes "In order to make the Fuuma Beneki, I need";
-		mes "50 Steel, 20 Harpy Feather";
-		mes "5 Oridecon, and 90,000 Zeny.";
-		mes "Do you want me to create this item for you?";
-		next;
-		if (select("Well .. erm .. it's kind of pricey.","Yes! Make it for me!") != 2) {
+	mes "[Tetsu]";
+	mes "Humm! Você escolheu o ^ff0000Shuriken Alado Huuma^000000.";
+	mes "Para  criar um Shuriken Alado Huuma, precisarei de";
+	mes "50 Aços, 20 Penas de Harpia";
+	mes "5 Oridecon, e 90,000 Zeny.";
+	mes "Gostaria que eu fizesse esse ítem pra você?";
+	next;
+	if (select("Bem .. erm .. está meio caro.","Sim! Faça isso por mim!") != 2) {
 			break;
 		}
 
-		if(countitem(999)<50 || countitem(7115)<20 || countitem(984)<5){
-			mes "[Tetsu]";
-			mes "It looks like you haven't brought me enough materials to make you a Fuuma Shuriken Beneki.";
-			next;
-			mes "[Tetsu]";
-			mes "In order to create a Fuuma shuriken Beneki, I require...";
-			mes "^ff000050 Steel,^000000";
-			mes "^ff000020 Harpy Feathers^000000,";
-			mes "^ff00005 Oridecons^000000,";
-			mes "and ^ff000090,000 Zeny^000000.";
-			mes "Remember these needed materials, and come back after you're positive you have them all.";
-			close;
-		}
-		if(Zeny < 90000){
-			mes "[Tetsu]";
-			mes "Hmm.. You brought plenty of materials, but you're short on zeny.";
-			next;
-			mes "[Tetsu]";
-			mes "In order to create a Fuuma Shuriken Beneki, I require...";
-			mes "^ff000050 Steel,^000000";
-			mes "^ff000020 Harpy Feathers^000000,";
-			mes "^ff00005 Oridecons^000000,";
-			mes "and ^ff000090,000 Zeny^000000.";
-			mes "Remember these needed materials, and come back after you're positive you have them all.";
-			close;
-		}
-		delitem 999,50;
-		delitem 7115,20;
-		delitem 984,5;
+	if(countitem(999)<50 || countitem(7115)<20 || countitem(984)<5){
+		mes "[Tetsu]";
+		mes "Parece que você não tem material suficiente que preciso para criar sua Shuriken Alado Huuma.";
+		next;
+		mes "[Tetsu]";
+		mes "Para  criar um Shuriken Alado Huuma, precisarei de...";
+		mes "^ff000050 Aços,^000000";
+		mes "^ff000020 Penas de Harpia^000000,";
+		mes "^ff00005 Oridecons^000000,";
+		mes "e ^ff000090,000 Zeny^000000.";
+		mes "Lembre-se de todos os materiais necessários, e volte quando tiver certeza de tê-los todos.";
+		close;
+	}
+	if(Zeny < 90000){
+		mes "[Tetsu]";
+		mes "Humm... Você trouxe todos os materiais necessários, mas está faltando zeny.";
+		next;
+		mes "[Tetsu]";
+		mes "Para criar um Shuriken Alado Huuma, precisarei de...";
+		mes "^ff000050 Aços,^000000";
+		mes "^ff000020 Penas de Harpia^000000,";
+		mes "^ff00005 Oridecons^000000,";
+		mes "e ^ff000090,000 Zeny^000000.";
+		mes "Lembre-se de todos os materiais necessários, e volte quando tiver certeza de tê-los todos.";
+		close;
+	}
+	delitem 999,50;
+	delitem 7115,20;
+	delitem 984,5;
 		Zeny -= 90000;
-		getitem 13300,1;
-		mes "[Tetsu]";
-		mes "Hmm, very well.";
-		mes "Looks like you've brought me the correct amount of materials and Zeny";
-		mes "Here is your completed Fuuma Shuriken Beneki";
-		close;
+	getitem 13300,1;
+	mes "[Tetsu]";
+	mes "Humm, muito bem.";
+	mes "Parece que você me trouxe a quantidade correta de ítens e Zeny";
+	mes "Aqui está seu Shuriken Alado Huuma";
+	close;
 	case 2: // Daisharin
-		mes "[Tetsu]";
-		mes "Hmm~ I see you've chose the ^ff0000Fuuma Shuriken Daisharin^000000.";
-		mes "In order to create Fuuma Shuriken Daisharin, I require...";
-		mes "30 Steel, 100 Tassels";
-		mes "2 Oridecons, and 40,000 Zeny.";
-		mes "Do you want me to create this item for you?";
-		next;
-		if (select("Well .. erm .. it's kind of pricey.","Yes! Make it for me!") != 2) {
+	mes "[Tetsu]";
+	mes "Humm! Vejo que escolheu o ^ff0000Shuriken Roda-Gigante Huuma^000000.";
+	mes "Para criar um Shuriken Roda-Gigante Huuma, precisarei de...";
+	mes "30 Aços, 100 Fitilhos";
+	mes "2 Oridecons, and 40,000 Zeny.";
+	mes "Gostaria que eu fizesse esse ítem pra você?";
+	next;
+	if (select("Bem .. erm .. está meio caro.","Sim! Faça isso por mim!") != 2) {
 			break;
 		}
 
-		if(countitem(999)<30 || countitem(7301)<100 || countitem(984)<2){
-			mes "[Tetsu]";
-			mes "It looks like you haven't brought me enough materials to make you a Fuuma Shuriken Daisharin.";
-			next;
-			mes "[Tetsu]";
-			mes "Fuuma Shuriken Daisharin, I require...";
-			mes "^ff000030 Steel^000000, ";
-			mes "^ff0000100 Tassels^000000,";
-			mes "^ff00002 Oridecons^000000,";
-			mes "and ^ff000040,000 Zeny^000000.";
-			mes "Remember these needed materials, and come back after you're positive you have them all.";
-			close;
-		}
-		if(Zeny < 40000){
-			mes "[Tetsu]";
-			mes "Hmm.. You brought plenty of materials, but you're short on zeny.";
-			next;
-			mes "[Tetsu]";
-			mes "Fuuma Shuriken Daisharin, I require...";
-			mes "^ff000030 Steel^000000, ";
-			mes "^ff0000100 Tassels^000000,";
-			mes "^ff00002 Oridecons^000000,";
-			mes "and ^ff000040,000 Zeny^000000.";
-			mes "Remember these needed materials, and come back after you're positive you have them all.";
-			close;
-		}
-		delitem 999,30;
-		delitem 7301,100;
-		delitem 984,2;
-		Zeny -= 40000;
-		getitem 13301,1;
+	if(countitem(999)<30 || countitem(7301)<100 || countitem(984)<2){
 		mes "[Tetsu]";
-		mes "Hmm, very well.";
-		mes "Looks like you've brought me the correct amount of materials and Zeny";
-		mes "Here is your completed Fuuma Shuriken Daisharin";
+		mes "Parece que você não tem material suficiente que preciso para criar sua Shuriken Roda-Gigante Huuma.";
+		next;
+		mes "[Tetsu]";
+		mes "Shuriken Roda-Gigante Huuma, precisarei de...";
+		mes "^ff000030 Aços^000000, ";
+		mes "^ff0000100 Fitilhos^000000,";
+		mes "^ff00002 Oridecons^000000,";
+		mes "e ^ff000040,000 Zeny^000000.";
+		mes "Lembre-se de todos os materiais necessários, e volte quando tiver certeza de tê-los todos.";
 		close;
+	}
+	if(Zeny < 40000){
+		mes "[Tetsu]";
+		mes "Humm... Você trouxe todos os materiais necessários, mas está faltando zeny.";
+		next;
+		mes "[Tetsu]";
+		mes "Shuriken Roda-Gigante Huuma, precisarei de...";
+		mes "^ff000030 Aços^000000, ";
+		mes "^ff0000100 Fitilhos^000000,";
+		mes "^ff00002 Oridecons^000000,";
+		mes "e ^ff000040,000 Zeny^000000.";
+		mes "Lembre-se de todos os materiais necessários, e volte quando tiver certeza de tê-los todos.";
+		close;
+	}
+	delitem 999,30;
+	delitem 7301,100;
+	delitem 984,2;
+		Zeny -= 40000;
+	getitem 13301,1;
+	mes "[Tetsu]";
+	mes "Hmm, very well.";
+	mes "Parece que você me trouxe a quantidade correta de ítens e Zeny";
+	mes "Aqui está sua Shuriken Roda-Gigante Huuma ";
+	close;
 	case 3: // Daisharin[4]
-		mes "[Tetsu]";
-		mes "Hmm~ I see you've chose the ^ff0000Fuuma Shuriken Daisharin[4]^000000.";
-		mes "In order to create Fuuma Shuriken Daisharin[4], I require...";
-		mes "20 Cracked Diamonds, 1 Fuuma Shuriken Daisharin";
-		mes "3 Oridecons, and 40,000 Zeny.";
-		mes "Do you want me to create this item for you?";
-		next;
-		mes "[Tetsu]";
-		mes "And in case you don't know...";
-		mes "In the process of slotting a weapon, your weapon will lose any refine points and slotted cards, if any.";
-		mes "Think this over with caution, and then decide if you really want to do this or not.";
-		next;
-		if (select("No thanks.. It's a little pricey..","Yes! Make it for me!") != 2) {
+	mes "[Tetsu]";
+	mes "Humm! Vejo que escolheu a ^ff0000Shuriken Roda-Gigante Huuma[4]^000000.";
+	mes "Para criar uma Shuriken Roda-Gigante Huuma[4], precisarei de...";
+	mes "20 Diamantes Rachados, 1 Shuriken Roda-Gigante Huuma";
+	mes "3 Oridecons, e 40,000 Zeny.";
+	mes "Gostaria que eu fizesse esse ítem pra você?";
+	next;
+	mes "[Tetsu]";
+	mes "E no caso de você não saber...";
+	mes "No processo de colocar um slot em uma arma, ela perderá pontos de refinamento e cartas no slot, se for o caso.";
+	mes "Pense sobre isso com cautela, e então decida se realmente quer fazer isso ou não.";
+	next;
+	if (select("Não, obrigado.. Está um pouco caro.."," Sim! Faça isso por mim!") != 2) {
 			break;
 		}
 
-		if(countitem(733)<20 || countitem(13301)<1 || countitem(984)<3){
-			mes "[Tetsu]";
-			mes "It looks like you haven't brought me enough materials to make you a Fuuma Shuriken Daisharin[4].";
-			next;
-			mes "[Tetsu]";
-			mes "In order to create a Fuuma Shuriken Daisharin[4], I require...";
-			mes "^ff000020 Cracked Diamonds^000000,";
-			mes "^ff00003 Oridecons^000000,";
-			mes "1 Fuuma Shuriken Daisharin, and";
-			mes "^ff000040,000 Zeny^000000.";
-			mes "Remember these needed materials, and come back after you're positive you have them all.";
-			close;
-		}
-		if(Zeny < 40000){
-			mes "[Tetsu]";
-			mes "Hmm.. You brought plenty of materials, but you're short on zeny.";
-			next;
-			mes "[Tetsu]";
-			mes "In order to create a Fuuma Shuriken Daisharin[4], I require...";
-			mes "^ff000020 Cracked Diamonds^000000,";
-			mes "^ff00003 Oridecons^000000,";
-			mes "1 Fuuma Shuriken Daisharin, and";
-			mes "^ff000040,000 Zeny^000000.";
-			mes "Remember these needed materials, and come back after you're positive you have them all.";
-			close;
-		}
-		delitem 733,20;
-		delitem 984,3;
+	if(countitem(733)<20 || countitem(13301)<1 || countitem(984)<3){
+		mes "[Tetsu]";
+		mes "Parece que você não tem material suficiente que preciso para criar sua Shuriken Roda-Gigante Huuma[4].";
+		next;
+		mes "[Tetsu]";
+		mes "Para  criar uma Shuriken Roda-Gigante Huuma[4], precisarei de...";
+		mes "^ff000020 Diamantes Rachados^000000,";
+		mes "^ff00003 Oridecons^000000,";
+		mes "1 Shuriken Roda-Gigante Huuma, e";
+		mes "^ff000040,000 Zeny^000000.";
+		mes "Lembre-se de todos os materiais necessários, e volte quando tiver certeza de tê-los todos.";
+		close;
+	}
+	if(Zeny < 40000){
+		mes "[Tetsu]";
+		mes "Humm... Você trouxe todos os materiais necessários, mas está faltando zeny.";
+		next;
+		mes "[Tetsu]";
+		mes "Para  criar uma Shuriken Roda-Gigante Huuma[4], precisarei de...";
+		mes "^ff000020 Diamantes Rachados^000000,";
+		mes "^ff00003 Oridecons^000000,";
+		mes "1 Shuriken Roda-Gigante Huuma, e";
+		mes "^ff000040,000 Zeny^000000.";
+		mes "Lembre-se de todos os materiais necessários, e volte quando tiver certeza de tê-los todos.";
+		close;
+	}
+	delitem 733,20;
+	delitem 984,3;
 		Zeny -= 40000;
-		delitem 13301,1;
-		getitem 13302,1;
-		mes "[Tetsu]";
-		mes "Hmm, very well.";
-		mes "Looks like you've brought me the correct amount of materials and Zeny";
-		mes "Here is your completed Fuuma Shuriken Daisharin[4].";
-		close;
+	delitem 13301,1;
+	getitem 13302,1;
+	mes "[Tetsu]";
+	mes "Humm, muito bem.";
+	mes "Parece que você me trouxe a quantidade correta de ítens e Zeny";
+	mes "Aqui está sua Shuriken Roda-Gigante Huuma[4].";
+	close;
 	case 4: // Rekka
-		mes "[Tetsu]";
-		mes "Hmm~ I see you've chose the ^ff0000Fuuma Shuriken Rekka^000000.";
-		mes "In order to create a Fuuma Shuriken Rekka, I require";
-		mes "50 Steel, 100 Live Coal";
-		mes "100 Burning Hearts, 50 Burning Stones";
-		mes "and 78,000 Zeny.";
-		mes "Do you want me to create this item for you?";
-		next;
-		if (select("Well .. erm .. it's kind of pricey","Yes! Make it for me!") != 2) {
+	mes "[Tetsu]";
+	mes "Humm! Vejo que escolheu a ^ff0000Shuriken de Fogo Huuma^000000.";
+	mes "Para criar uma Shuriken de Fogo Huuma, precisarei de";
+	mes "50 Aços, 100 Lenha em Brasa";
+	mes "100 Coração Incandescente, 50 Pedras de Fogo";
+	mes "e 78,000 Zeny.";
+	mes "Gostaria que eu fizesse esse ítem pra você?";
+	next;
+	if (select("Não, obrigado.. Está um pouco caro.."," Sim! Faça isso por mim!") != 2) {
 			break;
 		}
 
-		if(countitem(999)<50 || countitem(7098)<100 || countitem(7097)<100 || countitem(7521)<50){
-			mes "[Tetsu]";
-			mes "It looks like you haven't brought me enough materials to make you a Fuuma Shuriken Rekka.";
-			next;
-			mes "[Tetsu]";
-			mes "In order to create a Fuuma Shuriken Rekka, I require...";
-			mes "^ff000050 Steel^000000,^ff000050 Burning Stones^000000,";
-			mes "^ff0000100 Burning Hearts^000000,^ff0000100 Live Coal^000000,";
-			mes "and ^ff000078,000 Zeny^000000";
-			mes "Remember these needed materials, and come back after you're positive you have them all.";
-			close;
-		}
-		if(Zeny < 78000){
-			mes "[Tetsu]";
-			mes "Hmm.. You brought plenty of materials, but you're short on zeny.";
-			next;
-			mes "[Tetsu]";
-			mes "In order to create a Fuuma Shuriken Rekka, I require...";
-			mes "^ff000050 Steel^000000,^ff000050 Burning Stones^000000,";
-			mes "^ff0000100 Burning Hearts^000000,^ff0000100 Live Coal^000000,";
-			mes "and ^ff000078,000 Zeny^000000";
-			mes "Remember these needed materials, and come back after you're positive you have them all.";
-			close;
-		}
-		delitem 999,50;
-		delitem 7098,100;
-		delitem 7097,100;
-		delitem 7521,50;
+	if(countitem(999)<50 || countitem(7098)<100 || countitem(7097)<100 || countitem(7521)<50){
+		mes "[Tetsu]";
+		mes "Parece que você não tem material suficiente que preciso para criar sua Shuriken de Fogo Huuma.";
+		next;
+		mes "[Tetsu]";
+		mes "Para criar uma Shuriken de Fogo Huuma, precisarei de...";
+		mes "^ff000050 Aços^000000,^ff000050 Lenha em Brasa^000000,";
+		mes "^ff0000100 Coração Incandescente^000000,^ff0000100 Pedras de Fogo^000000,";
+		mes "e ^ff000078,000 Zeny^000000";
+		mes "Lembre-se de todos os materiais necessários, e volte quando tiver certeza de tê-los todos.";
+		close;
+	}
+	if(Zeny < 78000){
+		mes "[Tetsu]";
+		mes "Humm... Você trouxe todos os materiais necessários, mas está faltando zeny.";
+		next;
+		mes "[Tetsu]";
+		mes "Para criar uma Shuriken de Fogo Huuma, precisarei de...";
+		mes "^ff000050 Aços^000000,^ff000050 Lenha em Brasa^000000,";
+		mes "^ff0000100 Coração Incandescente^000000,^ff0000100 Pedras de Fogo^000000,";
+		mes "e ^ff000078,000 Zeny^000000";
+		mes "Lembre-se de todos os materiais necessários, e volte quando tiver certeza de tê-los todos.";
+		close;
+	}
+	delitem 999,50;
+	delitem 7098,100;
+	delitem 7097,100;
+	delitem 7521,50;
 		Zeny -= 78000;
-		getitem 13303,1;
-		mes "[Tetsu]";
-		mes "Hmm, very well.";
-		mes "Looks like you've brought me the correct amount of materials and Zeny";
-		mes "Here is your completed Fuuma Shuriken Rekka.";
-		close;
+	getitem 13303,1;
+	mes "[Tetsu]";
+	mes "Humm, muito bem.";
+	mes "Parece que você me trouxe a quantidade correta de ítens e Zeny";
+	mes "Aqui está sua Shuriken de Fogo Huuma.";
+	close;
 	default: // Cancel
-		mes "[Tetsu]";
-		mes "What a shame.";
-		mes "I wanted to show you the weapons I put my heart and soul into making them.";
-		mes "If you ever have second thoughts, it's never too late to come back and ask.";
-		close;
+	mes "[Tetsu]";
+	mes "Humm. O custo para criar este item é o muito alto...";
+	mes "Se acontecer de ter conseguido todos esses materiais algum dia, sinta-se livre para voltar.";
+	close;
 	}
 	// It's kind of pricey
 	mes "[Tetsu]";
-	mes "Hmm. The cost to create this item is kind of expensive...";
-	mes "All right. If you do gather all the required materials one day, come back and see me.";
+	mes "Que vergonha.";
+	mes "Eu queria mostrar-lhe as armas, eu coloquei meu coração e alma para fazê-las.";
+	mes "Se algum dia tiver dúvidas, nunca será tarde demais para voltar e pedir.";
 	close;
 }

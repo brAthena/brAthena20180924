@@ -1,166 +1,130 @@
-//===== Hercules Script ======================================
-//= Quest NPCs related to Morroc
-//===== By: ==================================================
-//= kobra_k88
-//===== Current Version: =====================================
-//= 3.2
-//===== Description: =========================================
-//= [Official Conversion]
-//= - Stop Post
-//= - Binoculars Quest
-//= - Assassin Pub NPCs/supporting quest NPCS. [Disabled]
-//= - Resurrection of Satan Morroc
-//= - The Crow of the Fate
-//= - Succession of the Prince
-//===== Additional Comments: =================================
-//= 1.1 Fixed exploits [Lupus]
-//= 1.2 Added Dandelion's Request / Morroc Invasion quest. [SinSloth]
-//= 1.3 Updated dialogs from Binoculars Quest. [Samuray22]
-//= 1.3a added GM lvl check as in other invansion quests [Lupus]
-//= 1.4 Fixed a small bug in Dandelion's Request. [SinSloth]
-//= 1.5 Fixed a little bug with "Job_Alchemist" changed to "Job_Alchem". [Samuray22]
-//= 1.6 Fixed a nasty bug in last part of the quest. [SinSloth]
-//= 1.6a replaced item "names" with item id. [Lupus]
-//= 1.7 Fixed a bug with XP rewards. [SinSloth]
-//= 1.8 Fixed a bug which prevented reset of events. [SinSloth]
-//= 1.9 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
-//= 2.0 Fixed bad NPC header data to comply with rev. 11603. [L0ne_W0lf]
-//= 2.0a Corrected a Typo error ";;". [Samuray22]
-//= 2.1 Assassins will now get their request item. (bugreport:1220) [L0ne_W0lf]
-//= 2.2 Updated Binocular and Stop Post quests. [L0ne_W0lf]
-//= 2.3 Replaced effect numerics with constants. [Samuray22]
-//= 2.4 Implemented Ep. 12.1 Continental Guard Quest. [L0ne_W0lf]
-//=     Moved Dandelion's Request to a it's own file.
-//=     Added support NPCs required to finish Gaebolg quest.
-//= 2.5 Fixed Group of Evil never re-enabling. [L0ne_W0lf]
-//= 2.6 Added quest log commands for Resurrection of Satan Morroc. [L0ne_W0lf]
-//=     Added the two remaining episode 12.1 quests.
-//=     Updated Satan Morroc Quest to allow peopel who have
-//=     finished it to return to the previous map.
-//= 2.7 Corrected weight checks, they only check for inventory slots. [L0ne_W0lf]
-//= 2.8 Disabled Assassin bar pub NPCs, as they are included in the 13.1 quests file. [L0ne_W0lf]
-//= 2.9 Fixed player dying/logging out during conversation could prevent
-//=     summoning of Satan Morroc until server reboot. [Gepard]
-//= 3.0 Updated RE/Pre-RE EXP. [Euphy]
-//= 3.1 Updated to match the latest official scripts. [Euphy]
-//= 3.2 Added GM management NPC and variable $@re_moc_time$. [Euphy]
-//============================================================
+//    ________________________________________________________
+//   /                                                        \
+//   |       _           _   _   _                            |
+//   |      | |__  _ __ / \ | |_| |__   ___ _ __   __ _       |
+//   |      | '_ \| '__/ _ \| __| '_ \ / _ \ '_ \ / _` |      |
+//   |      | |_) | | / ___ \ |_| | | |  __/ | | | (_| |      |
+//   |      |_.__/|_|/_/   \_\__|_| |_|\___|_| |_|\__,_|      |
+//   |                                                        |
+//   |                    brAthena Script                     |
+//   |--------------------------------------------------------|
+//   | Nome do Script:  quests_morocc.txt                     |
+//   |--------------------------------------------------------|
+//   | Criado por: eA/rA/Herc/brA Dev. Team                   |
+//   |--------------------------------------------------------|
+//   | Versões eA/rA/Herc/brA: 1.1/1.1/1.1/1.0                |
+//   |--------------------------------------------------------|
+//   | Changelog:                                             |
+//   | 1.0 Cabeçalho brAthena [Axl]                           |
+//   |--------------------------------------------------------|
+//   | - Anotações                                            |
+//   \________________________________________________________/
 
 // Stop Post Quest
 // ============================================================
 moc_ruins,113,181,4	script	William	4_M_ORIENT02,{
 	mes "[William]";
-	mes "Welcome to";
-	mes "MacMillan's ^3355FFPost^000000 Workshop.";
+	mes "Bem vindo a famosa loja de ^3355FF'Placa de PARE...'^000000 a casa dos MacWillian's.";
 	next;
 	mes "[William]";
-	mes "My family, the MacMillan Clan, has been producing Professional Traffic Signal Posts for more than 250 years. Nowadays, we are booking Special Orders for our unique ornament, ^3355FFStop Post^000000.";
+	mes "Já ouviu falar da nossa família?.. Nós produzimos sinais de trânsito a mais de 250 anos.";
+	mes "E eu tenho recebido muitos pedidos de ^3355FF'Placas de PARE'^000000 recentemente ;]";
 	next;
-	switch(select("Could I order one ^3355FFStop Post^000000?:Nah...")) {
-	case 1:
+	menu "Eu quero uma ^3355FF'Placa de PARE'^000000!",M_Order, "Não estou interessado.",M_End;
+
+	M_Order:
 		mes "[William]";
-		mes "This unique ornament, ^3355FFStop Post^000000, is a traffic signal on the road, and doubles as a hair ornament! This, we solemnly promise on the strength of a 100-year guarantee.";
+		mes "A ^3355FF'Placa de PARE'^000000 cabe confortavelmente na cabeça das pessoas.";
+		mes "Não é somente um acessório interessante, como também está na moda.";
 		next;
 		mes "[William]";
-		mes "To produce a ^3355FFStop Post^000000, we need ^3355FF91100 Zeny^000000, ^3355FF50 Trunk^000000 and ^3355FF1 Black Dyestuffs^000000.";
+		mes "Eu garanto que a nossa ^3355FF'Placa de PARE'^000000 dura bem mais que 100 anos, ou então não me chamo MacWillian!!";
 		next;
-		if ((countitem(1019) > 49) && (countitem(983) > 0) && (Zeny > 91099)) {
-			delitem 1019,50;  //Wooden_Block
-			delitem 983,1;  //Black_Dyestuffs
-			Zeny -= 91100;
-			mes "[William]";
-			mes "Here you are~!";
-			mes "This ^3355FFStop Post^000000 has";
-			mes "been especially made";
-			mes "just for you!";
-			mes "Thank you for stopping by!";
-			mes "...Get the joke?";
-			getitem 2272,1; // Stop_Post
-			close;
-		}
-		else {
-			mes "[William]";
-			mes "So...";
-			mes "When you get those items, swing on by and we'll give you a Stop Post.";
-			close;
-		}
-	case 2:
 		mes "[William]";
-		mes "Anyway, thank you for coming by 'MacMillan's Workshop.' But think about buying something next time, will ya?";
+		mes "Para produzir a ^3355FF'Placa de PARE'^000000, você precisa:";
+		mes "^3355FF91100 Zeny,";
+		mes "50 Troncos,";
+		mes "e 1 Tintura Preta^000000.";
+		next;
+		if((countitem(1019) >= 50) && (countitem(983) >= 1) && (Zeny >= 91100)) goto sL_GetPost;
+		mes "[William]";
+		mes "Você não tem os itens necessários, volte mais tarde. ";
 		close;
-	}
+
+		sL_GetPost:
+			mes "[William]";
+			mes "Aqui está a ^3355FF'Placa de PARE '^000000! Obrigado.";
+			getitem 2272,1;
+			delitem 1019,50;
+			delitem 983,1;
+			set Zeny, Zeny - 91100;
+			emotion 15;
+			close;
+
+	M_End:
+		mes "[William]";
+		mes "Obrigado por parar na casa dos MacWillian's, até mais. ";
+		close;
 }
 
 // Binoculars Quest
 // ============================================================
 moc_ruins,118,176,4	script	Alchemist	1_M_WIZARD,{
 	mes "[Marius]";
-	mes "Howdy, new customer!!";
-	mes "I know what you're gonna talk about. You want the Magic Glasses from me, riiiiight?";
+	mes "Ha! Ha! Ha!! Outro cliente... Espera!!! Eu sei o que vai dizer.......Você quer os binóculos, certo?";
 	next;
-	switch(select("What is that?:Manufacture:Ignore him")) {
-	case 1:
+	menu "Binóculos?",M_What, "Fazer binóculos.",M_Make, "Cancelar.",M_End;
+
+	M_What:
 		mes "[Marius]";
-		mes "Hmm~!";
-		mes "Well, the official name for them is ^3355FFBinoculars^000000! An optical device that works like a pair of field glasses, they're designed for simultaneous use by both eyes!";
+		mes "É chamado realmente de ^3355FF'Binóculos'^000000! É um dispositivo óptico para enxergar distânte, e não para algo de perto.";
 		next;
 		mes "[Marius]";
-		mes "They're made up of two small telescopes joined with a single focusing device. You can arrange the lenses to produce stereoscopic vision.";
+		mes "Você ve, são duas lentes colocadas na frente dos seus olhos.. e seu cérebro interpreta a imagem.. blah blah blah..";
 		next;
 		mes "[Marius]";
-		mes "So?";
-		mes "Ain't that";
-		mes "something, huh?";
-		mes "Muhahahahahaha!";
-		mes ". . . . .";
+		mes "Você não parece interessado em o que eu tenho em dizer...! Você não acredita?? Estou dizendo a verdade!";
+		emotion 20;
 		next;
 		mes "[Marius]";
-		mes "Hm? You don't seem to";
-		mes "believe what I just said?";
-		mes "Oh c'mon, jerk. It's real!!";
+		mes "Para você fazer os ^3355FF'Binóculos'^000000, você precisa:";
+		mes "^3355FF50,000 Zeny,";
+		mes "100 Aços,";
+		mes "e 1 Quatro Olhos^000000.";
 		next;
 		mes "[Marius]";
-		mes "I will let you";
-		mes "know the items I need...";
-		mes "1 ^3355FFGeek Glasses^000000! 100 ^3355FFSteel^000000!";
-		mes "And ^3355FF50000 Zeny^000000!";
+		mes "Aff! Oh cara, não..... Um! O que eu estava falando é realmente verdade ....!!!";
 		close;
-	case 2:
-		if ((countitem(2243) > 0) && (countitem(999) > 99) && (Zeny > 49999)) {
-			mes "[Marius]";
-			mes "Perfect, perfect !";
-			mes "Now my masterpiece will be complete!";
-			mes "Muhahahaha !";
-			next;
-			delitem 2243,1;  //Spinning_Eyes
-			delitem 999,100;  //Steel
-			Zeny -= 50000;
-			mes "[Marius]";
-			mes "Here you are!";
-			mes "Binoculars !";
-			getitem 2296,1; // Binoculars
-			next;
-			mes "[Marius]";
-			mes "Just remember...";
-			mes "Don't peep at something you shouldn't look at. Well, at least try not to.";
-			close;
-		}
-		else {
-			mes "[Marius]";
-			mes "Argggghhhhhhh!!";
-			mes "You didn't bring";
-			mes "enough items!!!!";
-			mes "How dare you";
-			mes "disgrace me!!!";
-			mes "Baaaadddd !!";
-			close;
-		}
-	case 3:
+
+	M_Make:
 		mes "[Marius]";
-		mes "Hey you~!";
-		mes "Now you're in front of Marius, an Alchemist among Alchemists. Ignoring me, eh? Come on, I'll beat your ass!";
+		if((countitem(2243) < 1) || (countitem(999) < 100) || (Zeny < 50000)) goto sL_NotEnuf;
+		mes "Bommm! Você apreciará definitivamente um par destes";
+		next;
+		mes "[Marius]";
+		mes "Aqui está os binóculos !";
+		getitem 2296,1;
+		delitem 2243,1;
+		delitem 999,100;
+		set Zeny, Zeny - 50000;
+		next;
+		mes "[Marius]";
+		mes "Mas antes que você saia e use-os, eu tenho algo a lhe dizer......";
+		if(Sex==0) mes "NÃO USE-OS PARA SE APROVEITAR DE OUTROS!";
+		if(Sex==1) mes "Cuidado para onde você olha.... você pode ver o que não quer.......";
 		close;
-	}
+
+		sL_NotEnuf:
+			mes "Argggghhhhhhh !! Você não tem os itens necessários!! Você precisa de:";
+			mes "^3355FF1 Quatro Olhos, 50,000 Zeny and 100 Aços^000000.";
+			emotion 6;
+			close;
+
+	M_End:
+		mes "[Marius]";
+		mes "Ei você! Você está falando com o mais famoso mestre em ótica do mundo! Não deve me ignorar!";
+		emotion 23;
+		close;
 }
 
 // Morroc Assassin Guild Bar [Disabled]
@@ -5540,7 +5504,7 @@ prt_castle,339,202,3	script	Prince#urgen	4_M_4THPRIN1,{
 				mes "shouldn't bear stuff like that sometimes.";
 				next;
 				mes "[Urugen]";
-				mes "I became timid, gradually, in phases. I feel awe from men and women both, regardless of sexuality.";
+				mes "I became timid, gradually, in phases. I feel awe from men and women both, regardless of Sexuality.";
 				.@p_a = 1;
 				next;
 				break;

@@ -1,155 +1,142 @@
-//    ________________________________________________________
-//   /                                                        \
-//   |       _           _   _   _                            |
-//   |      | |__  _ __ / \ | |_| |__   ___ _ __   __ _       |
-//   |      | '_ \| '__/ _ \| __| '_ \ / _ \ '_ \ / _` |      |
-//   |      | |_) | | / ___ \ |_| | | |  __/ | | | (_| |      |
-//   |      |_.__/|_|/_/   \_\__|_| |_|\___|_| |_|\__,_|      |
-//   |                                                        |
-//   |                    brAthena Script                     |
-//   |--------------------------------------------------------|
-//   | Nome do Script:  bardo.txt                             |
-//   |--------------------------------------------------------|
-//   | Criado por: eA/rA/Herc/brA Dev. Team                   |
-//   |--------------------------------------------------------|
-//   | Versões eA/rA/Herc/brA: 2.6/2.6/2.6/1.0                |
-//   |--------------------------------------------------------|
-//   | Descrição: Quest da classe Bardo.                      |
-//   |--------------------------------------------------------|
-//   | Changelog:                                             |
-//   | 1.0 Cabeçalho brAthena [Axl]                           |
-//   |--------------------------------------------------------|
-//   | - Anotações                                            |
-//   \________________________________________________________/
+//  ________________________________________________________
+// /                                                        \
+// |       _           _   _   _                            |
+// |      | |__  _ __ / \ | |_| |__   ___ _ __   __ _       |
+// |      | '_ \| '__/ _ \| __| '_ \ / _ \ '_ \ / _` |      |
+// |      | |_) | | / ___ \ |_| | | |  __/ | | | (_| |      |
+// |      |_.__/|_|/_/   \_\__|_| |_|\___|_| |_|\__,_|      |
+// |                                                        |
+// |                    brAthena Script                     |
+// |--------------------------------------------------------|
+// | Nome do Script: Quest do Bardo                 	    |
+// |--------------------------------------------------------|
+// | Criado por: eA/brA Dev. Team                           |
+// |--------------------------------------------------------|
+// | Versões eA/brA: 2.6/1.2                                |
+// |--------------------------------------------------------|
+// | Descrição: Mudança de Classe para Bardo                |
+// |--------------------------------------------------------|
+// | Changelog:               	                            |
+// | 1.0 Script Traduzido [Molini]                          |
+// | 1.1 Otimização [Wolf]                                  |
+// | 1.2 Otimizações no npc [Wolf]                          |
+// \________________________________________________________/
 
 // Ayealo
 //============================================================
 comodo,226,123,5	script	Wandering Bard	2_M_BARD_ORIENT,{
 	if(Upper == 1) {
 		mes "[Lalo]";
-		mes "Chosen ones who are destined to become Gods";
-		mes "are so many in this era";
-		mes "but they never realise their fate while alive.";
-		mes "They end up to become ordinary men...";
+		mes "Os escolhidos que estão destinados a se tornar Deuses são tantos nesta época";
+		mes "mas nunca se dão conta de seu destino, enquanto vivo.";
+		mes "Eles acabam se tornando homens comuns...";
 		next;
 		mes "[Lalo]";
-		mes "Wind and Clouds, please send this message to them,";
-		mes "who pursue food, clothing, shelter and wealth.";
-		mes "Tell them they are wasting their time...";
-		mes "Tell them they forget the most important goal of the life...";
+		mes "Vento e as nuvens, enviem esta mensagem para eles,";
+		mes "que buscam alimentos, roupas, abrigo e riqueza.";
+		mes "Diga a eles que estão perdendo seu tempo...";
+		mes "Diga a eles que esqueceram o négocio mais importante de sua vida...";
 		close2;
 		cutin "job_bard_aiolo01",255;
 		end;
-	}
-	else if(BaseJob != Job_Archer) {
+	} else if(BaseJob != Job_Archer) {
 		if(BaseJob == Job_Bard) {
 			mes "[Lalo]";
-			mes "Ooh hey! How's your singing these days?";
-			mes "I wonder if your voice got any better.";
+			mes "Ooh hey! Como esta seu canto estes dias?";
+			mes "Eu me pergunto se sua voz vai ficar melhor.";
 			next;
 			mes "[Lalo]";
-			mes "You don't forget to spread good news in each town, right?";
-			mes "And don't forget to learn new songs, too...";
+			mes "Você não se esqueça de espalhar notícias boas em cada cidade, certo?";
+			mes "E não se esqueça de aprender novas músicas, também...";
 			next;
 			mes "[Lalo]";
-			mes "Never forget to have a positive attitude and the meaning of joy.";
-			mes "Our songs are supposed to deliver happiness and joy to everyone.";
-		}
-		else if(Class == Job_Novice) {
+			mes "Nunca se esqueça de ter uma atitude positiva e o sentido de alegria.";
+			mes "Nossas músicas devem entregar felicidade e alegria para todos.";
+		} else if(Class == Job_Novice) {
 			cutin "job_bard_aiolo01",2;
 			mes "[Lalo]";
-			mes "The sadness that overcomes my heart.. ";
-			mes "It will not reside..";
-			mes "Is this the reason behind my troubles,";
-			mes "is this why I am weak,";
-			mes "This must be why I cannot seem to forget you...";
+			mes "A tristeza que supera o meu coração... ";
+			mes "Não residirá...";
+			mes "É esta a razão por trás de meus problemas,";
+			mes "é por isso que eu sou fraco,";
+			mes "isso deve ser porque eu não consigo te esquecer...";
 			next;
 			mes "[Lalo]";
-			mes "Oh, sorry. I didn't see you because I was concentrating on writing some lyrics.";
-			mes "Do you want to listen to my songs? Shall I sing a song for you?";
+			mes "Ah, desculpe. Eu não vi você, porque eu estava concentrado em escrever algumas letras.";
+			mes "Você quer ouvir minhas músicas? Devo cantar uma canção para você?";
 			next;
 			mes "[Lalo]";
-			mes "Heh... try asking someone else.";
-			mes "I'm trying to compose a new song.";
-		}
-		else {
+			mes "Hehe... tente perguntar a alguém.";
+			mes "Estou tentando compor uma nova canção.";
+		} else {
 			cutin "job_bard_aiolo01",2;
 			mes "[Lalo]";
-			mes "Lalala, lalala. Beautiful Comodo.";
-			mes "Always full of happy moments~";
+			mes "Lalala, lalala..";
+			mes "Sempre cheio de momentos felizes";
 			next;
 			mes "[Lalo]";
-			if (Sex) {
-				mes "Forget about your worries~";
-				mes "And enjoy everything~";
-			}
-			else mes "Cute lady, shall we dance~";
-			mes "Youth never repeats itself~";
+			mes ""+((Sex)?"Esqueça suas preocupações, e desfrute de tudo.":"Moça linda, vamos dançar! A juventude nunca se repete.")+"";
 		}
 		close2;
 		cutin "job_bard_aiolo01",255;
 		end;
-	}
-	else if(BARD_Q == 0) {
+	} else if(BARD_Q == 0) {
 		cutin "job_bard_aiolo01",2;
 		mes "[Lalo]";
-		if (Sex) mes "Hi! Delightful Archer.";
-		else mes "Hello! Beautiful Archer Lady.";
-		mes "How can a wanderer like me help you?";
+		mes "Olá! "+((Sex)?"Arqueiro.":"Linda Arqueira.")+"";
+		mes "Como pode um vagabundo como eu ajudá-lo?";
 		next;
-		switch(select("You have a nice voice.:Could you sing for me, please?:Nothing.")) {
+		switch(select("Você tem uma voz linda.:Poderia cantar para mim, por favor?:Nada.")) {
 		case 1:
 			mes "[Lalo]";
-			mes "Hahaha! Of course!";
-			mes "if you sing with a happy heart, your voice always gets better.";
+			mes "Hahaha! Claro!";
+			mes "se você cantar com o coração feliz, sua voz sempre fica melhor.";
 			next;
 			mes "[Lalo]";
-			mes "But, to Bards your voice is your life.";
-			mes "Sometimes your voice will go, but you must be careful.";
+			mes "Mas, para Bardos sua voz é a sua vida.";
+			mes "Às vezes, sua voz vai, mas você deve ter cuidado.";
 			break;
-
 		case 2:
 			mes "[Lalo]";
-			mes "A song... let's see.";
-			mes "Ok, I got one...";
+			mes "Uma música... vamos ver...";
+			mes "Ok...";
 			next;
 			mes "[Lalo]";
 			mes "I'll sing.. Drums of War.";
 			mes "*ehem...*cough...gag..mememememe...";
 			mes "1, 2, 3, 4...";
 			next;
-			mes "^000088The sound of horses galloping over the horizon";
-			mes "The dust that covers the distant sun";
-			mes "When thousands of eyes open in the night sky";
-			mes "The castle's fire will burn with power.^000000";
+			mes "^000088O som dos cavalos galopando ao longo do horizonte";
+			mes "O pó que cobre o sol distante";
+			mes "Quando milhares de olhos abertos no céu à noite";
+			mes "O incêndio do castelo vai queimar com o poder.^000000";
 			next;
-			mes "^000088I can hear.. the beating of my heart.";
-			mes "I can feel.. the blood rushing through my veins.";
-			mes ".. and the weight of my armor.";
-			mes "I can see.. my enemies.^000000";
+			mes "^000088Eu posso ouvir... o bater do meu coração.";
+			mes "Eu posso sentir... o sangue correndo nas minhas veias.";
+			mes "...e o peso da minha armadura.";
+			mes "Eu posso ver... meus inimigos.^000000";
 			next;
-			mes "^000088Louder, louder louder..";
-			mes "Give strength to the warriors!";
-			mes "Higher, higher, higher..";
-			mes "This day will never come again!^000000";
+			mes "^000088Mais alto, mais alto mais alto...";
+			mes "Dê força aos guerreiros!";
+			mes "Mais alto, mais alto, mais alto...";
+			mes "Este dia não voltará jamais!^000000";
 			next;
-			mes "^000088Shake the sky and roar through the land.";
-			mes "Make my heart pound again!";
-			mes "Let the trumpets sound, and castle walls ring.";
-			mes "This moment will never come again!^000000";
+			mes "^000088Agite o céu e rugido pela terra..";
+			mes "Faça meu coração bater novamente!";
+			mes "Deixe soar o som das trombetas, e as muralhas do castelo do anel.";
+			mes "Este momento não voltará jamais!^000000";
 			next;
 			mes "[Lalo]";
-			mes "Hmm... that's always a good song to sing.";
-			mes "How was it? Don't you think it's a nice song?";
+			mes "Hmm... sempre tem alguma boa música para se cantar.";
+			mes "Como foi isso? Você não acha que é uma música legal?";
 			next;
-			if (select("Yes, it was very nice.:No, not really...") == 1) {
+			if (select("Sim, foi ótima.:Não, na verdade não...") == 1) {
 				mes "[Lalo]";
-				mes "Thanks! if you enjoyed my song, it makes me happy, too.";
+				mes "Obrigado! Se você gostou de minha música, ela me faz feliz também.";
 				next;
 				if (Sex == 1 && JobLevel > 39) {
 					mes "[Lalo]";
-					mes "It would be nice if more people went around and sang...";
-					mes "Well, it's quite ok as it is now... hmmhmm.";
+					mes "Seria bom se mais pessoas andassem e cantassem...";
 					BARD_Q = 1;
 					setquest 3000;
 					close2;
@@ -157,56 +144,53 @@ comodo,226,123,5	script	Wandering Bard	2_M_BARD_ORIENT,{
 					end;
 				}
 				mes "[Lalo]";
-				mes "if you ever want to hear my song again, just ask.";
+				mes "Se você quiser ouvir a minha música de novo, é só pedir.";
 				close2;
 				cutin "job_bard_aiolo01",255;
 				end;
 			}
 			cutin "job_bard_aiolo02",2;
 			mes "[Lalo]";
-			mes "Hmm... Did I lose my senses, I'll have to try harder.";
-			mes "Anyways.. Thanks for listening.";
+			mes "Hmm... Eu perdi meus sentidos, eu vou ter que treinar mais.";
+			mes "De qualquer forma... Obrigado por ouvir.";
 			break;
-
 		case 3:
 			cutin "job_bard_aiolo02",2;
 			mes "[Lalo]";
-			mes "Oy, not requesting a song when you run into a Bard isn't very polite.";
-			mes "Well... can't help it since you look like you're in a hurry anyways.";
+			mes "Bem... não poderei ajudá-lo desde que você olha como você está em uma pressa de qualquer maneira.";
 			next;
 			mes "[Lalo]";
-			mes "Hunting is good... but you can't forget to relax once in a while.";
-			mes "Youth is short and won't come again once it passes by..";
+			mes "A caça é bom... mas você não pode esquecer de relaxar de vez em quando.";
+			mes "Juventude é curta e não volta, uma vez que passa...";
 			break;
 		}
 		close2;
 		cutin "job_bard_aiolo02",255;
 		end;
-	}
-	else if(BARD_Q == 1) {
+	} else if(BARD_Q == 1) {
 		cutin "job_bard_aiolo01",2;
 		mes "[Lalo]";
-		mes "Hey there Archer fellow.";
-		mes "How can a wanderer like me help you?";
+		mes "Olá colega Arqueiro.";
+		mes "Como pode um vagabundo como eu ajudá-lo?";
 		next;
-		switch(select("You have a nice voice.:Could you sing for me, please?:Nothing.")) {
+		switch(select("Você tem uma voz linda.:Poderia cantar para mim, por favor?:Nada.")) {
 		case 1:
 			mes "[Lalo]";
-			mes "Hoho, your voice is rather nice as well?";
-			mes "Ever think about singing?";
+			mes "Hoho, sua voz é bastante agradável?";
+			mes "Já pensou em cantar?";
 			next;
-			if (select("Of course!:I can't quite possibly...") == 1) {
+			if (select("Claro!:Eu não posso exatamente...") == 1) {
 				mes "[Lalo]";
-				mes "Haha, nice attitude. You have to be like that to become a Bard.";
-				mes "I'll help you become a Bard then.";
+				mes "Haha, atitude legal. Você tem que ser assim para se tornar um Bardo.";
+				mes "Eu vou ajudá-lo a se tornar um bardo então.";
 				next;
 				mes "[Lalo]";
-				mes "But before that... do you think you can bring me a Flower?";
-				mes "I need to smell the scent of a Flower to feel like teaching.";
+				mes "Mas antes... você pode me trazer uma flor?";
+				mes "Eu preciso sentir o cheiro de uma flor para sentir como vou ensinar.";
 				next;
 				mes "[Lalo]";
-				mes "It doesn't really matter which Flower, but try to bring one that I like.";
-				mes "And don't just buy any random Flower, ok?";
+				mes "Realmente não importa qual flor, mas tentar trazer um que de seu gosto.";
+				mes "E não basta comprar qualquer flor, ok?";
 				BARD_Q = 2;
 				changequest 3000,3001;
 				close2;
@@ -214,184 +198,169 @@ comodo,226,123,5	script	Wandering Bard	2_M_BARD_ORIENT,{
 				end;
 			}
 			mes "[Lalo]";
-			mes "Haha, what a timid one.";
-			mes "Don't think so little of yourself.";
+			mes "Haha, que tímido.";
+			mes "Não ache tão pouco de si mesmo.";
 			next;
 			mes "[Lalo]";
-			mes "You have plenty of talent.";
-			mes "Come again if you change your mind.";
+			mes "Você tem muito talento.";
+			mes "Venha novamente, se você mudar de idéia.";
 			break;
-
 		case 2:
 			mes "[Lalo]";
-			mes "Hmm... seems like you have some singing talents?";
-			mes "Don't just request songs.. singing to others is quite fun, too.";
+			mes "Hmm... Parece que você tem algum talento cantando?";
+			mes "Não basta pedir músicas... cantar para os outros é muito divertido, muito.";
 			next;
 			mes "[Lalo]";
-			mes "Try enjoying your life as a Bard.";
-			mes "You go from town to town, singing to the people. Doesn't it sound great?";
+			mes "Tente apreciar sua vida como um Bardo.";
+			mes "Você vai de cidade em cidade, cantando para o povo. Não parece tão bom?";
 			break;
-
 		case 3:
 			mes "[Lalo]";
-			mes "Hmm... I'm not sure what's what, but enjoy life.";
-			mes "You look too uptight.";
+			mes "Hmm... Não tenho a certeza o quê é, mas aproveite a vida.";
+			mes "Você parece muito tenso.";
 			next;
 			mes "[Lalo]";
-			mes "Well then~ Have a great time~";
+			mes "Bem, então. Tenha um bom dia!";
 			break;
 		}
 		close2;
 		cutin "job_bard_aiolo01",255;
 		end;
-	}
-	else if(BARD_Q == 2) {
+	} else if(BARD_Q == 2) {
 		cutin "job_bard_aiolo01",2;
 		mes "[Lalo]";
-		mes "Welcome! Archer friend.";
-		mes "Did you bring a Flower? Let me see.";
+		mes "Olá colega Arqueiro.";
+		mes "Você trouxe uma flor? Deixe-me ver.";
 		next;
 		mes "[Lalo]";
 		//Good Flowers
 		if (countitem(629) > 0) {
-			mes "Ooh! It's a Singing Flower!";
-			mes "It's full of my memories...";
+			mes "Ooh! É uma Flor Cantante!";
+			mes "É cheio de lembranças...";
 			next;
 			delitem 629,1; //Singing Flower
 			mes "[Lalo]";
-			mes "My friend Tchaikovsky used to like it.";
-			mes "I wonder what he's doing now...";
-		}
-		else if(countitem(703) > 0) {
-			mes "Aah... the cute Hinelle...";
-			mes "It doesn't have a scent but it's a very moderate cute flower.";
+			mes "Meu amigo Tchaikovsky gostava dela...";
+			mes "Eu me pergunto o que ele está fazendo agora...";
+		} else if(countitem(703) > 0) {
+			mes "Aah... tão linda Hinalle...";
+			mes "Ela não tem um cheiro, mas é uma flor muito bonita.";
 			next;
 			delitem 703,1; //Hinalle
 			mes "[Lalo]";
-			mes "The leaves gave me strength when I used to fall.";
-			mes "I really like this flower, thank you.";
-		}
-		else if(countitem(704) > 0) {
-			mes "Aloe... This is a rare flower.";
-			mes "How'd you get it? Rather skilled, eh?";
+			mes "As folhas me deram força quando eu costumava cair.";
+			mes "Eu gosto muito desta flor, obrigado.";
+		} else if(countitem(704) > 0) {
+			mes "Aloés... uma flor rara.";
+			mes "Como você conseguiu isso?";
 			next;
 			delitem 704,1; //Aloe
 			mes "[Lalo]";
-			mes "The leaves are good and Aloe Vera is delicious, too..";
-			mes "but it's defnitely the most beautiful when it's a flower.";
-		}
-		else if(countitem(708) > 0) {
-			mes "Ment... You can forget about all your hardships with one of these.";
-			mes "Nice to see it in such a long time!";
+			mes "As folhas são boas e Aloe Vera é uma delícia, também...";
+			mes "mas é definitivamente mais bonita quando é uma flor.";
+		} else if(countitem(708) > 0) {
+			mes "Menta... Você pode esquecer todos os seus sofrimentos com um desses.";
+			mes "Prazer em vê-la em tão tempo!";
 			next;
 			delitem 708,1; //Ment
 			mes "[Lalo]";
-			mes "I heard you can make Anodyne with it...";
-			mes "But that would be a slight waste.. thanks!";
-		}
-		else if(countitem(709) > 0) {
-			mes "Ooh, isn't this an Izidor?";
-			mes "It's a dangerous yet beautiful flower...";
+			mes "Ouvi dizer o que você pode fazer com ela...";
+			mes "Mas isso seria uma perda... obrigado!";
+		} else if(countitem(709) > 0) {
+			mes "Ooh, não é uma Izidor?";
+			mes "É uma flor bonita mas perigosa...";
 			next;
 			delitem 709,1; //Izidor
 			mes "[Lalo]";
-			mes "The deep purple charms a person.. ";
-			mes "Thank you, I really like this flower.";
-		}
-		else if(countitem(748) > 0) {
-			mes "Ooh, a Witherless Rose. The strong flower that doesn't wither.";
-			mes "Great to give to a girlfriend.";
+			mes "Obrigado, eu realmente gostei desta flor.";
+		} else if(countitem(748) > 0) {
+			mes "Ooh, uma Rosa Eterna. A flor forte, que não cai.";
+			mes "Ótimo para dar a uma namorada.";
 			next;
 			delitem 748,1; //Witherless_Rose
 			mes "[Lalo]";
-			mes "I wonder if it would be ok for a wanderer like me to accept it.";
-			mes "Haha, it should be ok.. right?";
-		}
-		else if(countitem(749) > 0 ) {
-			mes "Frozen Rose... you can't really call this a flower,";
-			mes "But it is still beautiful... a clear Rose.";
+			mes "Eu me pergunto se estaria tudo bem para um andarilho como eu a aceitá-la.";
+			mes "Haha, tudo deve estar bem... certo?";
+		} else if(countitem(749) > 0 ) {
+			mes "Rosa de Gelo... você não pode realmente chamar isso de uma flor,";
+			mes "Mas ainda é bonita ... uma rosa claro.";
 			next;
 			delitem 749,1; //Frozen_Rose
 			mes "[Lalo]";
-			mes "You can call it a flower even though it doesn't have a scent anymore.";
-			mes "Then I'll greatly take this.";
-		}
-		else if(countitem(710) > 0) {
-			mes "Oh, isn't this an Illusion Flower!?";
-			mes "Wow, how did you obtain such a rare flower!!";
+			mes "Você pode chamá-la de flor, mesmo que não tenha um cheiro.";
+			mes "Então eu vou aproveitar.";
+		} else if(countitem(710) > 0) {
+			mes "Oh, não é a Flor das Ilusões!?";
+			mes "Uau, como você obteve uma flor tão rara!";
 			next;
 			delitem 710,1; //Illusion_Flower
 			mes "[Lalo]";
-			mes "Than you very much, aah... I feel like heaven is in front of my eyes.";
-			mes "What a wonderful feeling! I'm really happy!";
-		}
-		//Bad Flowers
-		else if(countitem(712) > 0) {
+			mes "Muito obrigado, ahh ... Eu me sinto como o céu está na frente dos meus olhos.";
+			mes "Que sensação maravilhosa! Estou muito feliz!";
+		} else if(countitem(712) > 0) {
 			cutin "job_bard_aiolo02",2;
-			mes "Eh? This is just a normal flower.";
-			mes "I like it... but it's not enough.";
+			mes "É apenas uma flor normal.";
+			mes "Eu gostei... mas não é suficiente.";
 			next;
 			mes "[Lalo]";
-			mes "You can get this flower from the girl in Prontera.";
-			mes "Please bring me a different flower.";
+			mes "Você pode obter essa flor de uma menina em Prontera.";
+			mes "Por favor, me traga uma flor diferente.";
 			close2;
 			cutin "job_bard_aiolo02",255;
 			end;
-		}
-		else if(countitem(744) > 0) {
-			mes "Oh no, you brought a Bouquet?";
-			mes "You can't bring me something like this.";
+		} else if(countitem(744) > 0) {
+			mes "Ah, não, você trouxe um Buquê?";
+			mes "Você não pode me trazer algo como isto.";
 			next;
 			mes "[Lalo]";
-			mes "Go give this to a graduating Sage or something.";
-			mes "Since it's great as that kind of gift... Bring a different flower.";
+			mes "Vai dar de presente para um Sábio ou algo assim.";
+			mes "Uma vez que é grande como esse tipo de presente... Traga uma flor diferente.";
 			close2;
 			cutin "job_bard_aiolo01",255;
 			end;
 		}
 		else if(countitem(745) > 0) {
 			cutin "job_bard_aiolo02",2;
-			mes "Oy oy... did you go to a wedding or something?";
-			mes "What do you expect a guy to do with a Wedding Bouquet?";
+			mes "Ahh não... você foi em um casamento ou algo assim?";
+			mes "O que você espera que um cara faça com um Buquê de Casamento?";
 			next;
 			mes "[Lalo]";
-			mes "It's not me. Go give it to a lady or something.";
-			mes "This isn't the type of flower I wanted.";
+			mes "Não a mim. Vai dar a uma mulher ou algo assim.";
+			mes "Este não é o tipo de flor que eu queria.";
 			close2;
 			cutin "job_bard_aiolo02",255;
 			end;
-		}
-		else if(countitem(2207) > 0) {
-			mes "Mmm... a Fancy Flower.";
-			mes "It's nice... but this isn't good enough.";
+		} else if(countitem(2207) > 0) {
+			mes "Hmm... uma Florzinha.";
+			mes "É bonita... mas isso não é bom o suficiente.";
 			next;
 			mes "[Lalo]";
-			mes "I like flowers that have a scent and are beautiful.";
-			mes "I don't like fake flowers that go on top of heads.";
+			mes "Eu gosto de flores que têm um cheiro e são lindas.";
+			mes "Eu não gosto de flores falsas que vão em cima da cabeça.";
 			close2;
 			cutin "job_bard_aiolo01",255;
 			end;
 		}
 		else if(countitem(1032) > 0) {
 			cutin "job_bard_aiolo02",2;
-			mes "...Agh, why'd you bring such a hideous thing?";
-			mes "Are you thinking at all?";
+			mes "...Aaah, porque você tinha que trazer uma coisa tão horrível?";
+			mes "O que você estava pensando?";
 			next;
 			mes "[Lalo]";
-			mes "if you were trying to be funny, it was a good attempt...";
-			mes "but bring a normal flower now.";
+			mes "Se você estava tentando ser engraçado, foi uma boa tentativa...";
+			mes "mas me traga uma flor normal agora.";
 			close2;
 			cutin "job_bard_aiolo02",255;
 			end;
 		}
 		else {
 			cutin "job_bard_aiolo02",2;
-			mes "Hmm? What... you didnt' bring anything.";
-			mes "Didn't I ask you to bring a flower?";
+			mes "Humm? Que... você não trouxe nada.";
+			mes "Não pedi para você me trazer uma flor?";
 			next;
 			mes "[Lalo]";
-			mes "Well... if you want to learn on your own, then so be it.";
-			mes "Anyone can just go out and sing.";
+			mes "Bem... Se você quer aprender por conta própria, então que assim seja.";
+			mes "Qualquer pessoa pode simplesmente sair e cantar.";
 			close2;
 			cutin "job_bard_aiolo02",255;
 			end;
@@ -399,46 +368,46 @@ comodo,226,123,5	script	Wandering Bard	2_M_BARD_ORIENT,{
 		next;
 		cutin "job_bard_aiolo01",2;
 		mes "[Lalo]";
-		mes "As I promised, I'll help you become a Bard.";
-		mes "But it's not easy my friend. Haha!";
+		mes "Como eu prometi, eu vou ajudá-lo a se tornar um Bardo.";
+		mes "Mas não é fácil meu amigo. Haha!";
 		next;
 		mes "[Lalo]";
-		mes "It is important to get to know a lot of people to learn how to sing.";
-		mes "You must also keep up with all the things going on in different villages...";
+		mes "É importante conhecer um monte de gente para aprender a cantar.";
+		mes "Você também deve manter-se com todas as coisas que estão acontecendo em diferentes aldeias...";
 		next;
 		mes "[Lalo]";
-		mes "There's a talking snowman in a town called Lutie.";
-		mes "Go there and bring back a present.";
+		mes "Há um boneco de neve que fala em uma cidade chamada Lutie.";
+		mes "Vá até lá e me traga um presente.";
 		next;
 		BARD_Q = 3;
 		changequest 3001,3002;
 		xmas_npc = 1;
 		mes "[Lalo]";
-		mes "if you become friends with ^008800Jack Frost^000000, you will receive something.";
-		mes "And also talk to the townspeople while you're at it...";
+		mes "se você se tornar amigo do ^008800Jack Frost^000000, você ganhará algo.";
+		mes "e também converse com as pessoas da cidade, também...";
 		close2;
 		cutin "job_bard_aiolo01",255;
 		end;
 	}
 	else if ((BARD_Q >= 3) || (BARD_Q <= 5)) {
 		if (BARD_Q == 3) {
-			if(xmas_npc > 10) { //this var is set in lutie.txt
+			if(xmas_npc > 10) { //this var is set in LUTIE.TXT
 				cutin "job_bard_aiolo01",2;
 				mes "[Lalo]";
-				mes "How was the trip? Did you meet a lot of people?";
-				mes "You should have been able to learn something more important than a gift.";
+				mes "Como foi a viagem? Você conheceu muitas pessoas?";
+				mes "Você poderia ter aprendindo algo mais importante que um dom.";
 				next;
 				mes "[Lalo]";
-				mes "Then, do you want to try singing...?";
-				mes "I'll sing a short melody...";
-				mes "and you try after.";
+				mes "Então, você quer tentar cantar...?";
+				mes "Eu vou cantar uma melodia curta...";
+				mes "e você tenta depois.";
 				if (!questprogress(3003)) {
 					changequest 3002,3003;
 				}
 				next;
 				mes "[Lalo]";
-				mes "Here I go.";
-				mes "Ehem *clears throat*";
+				mes "La vamos nós.";
+				mes "Ehem *limpa a garganta*";
 				mes "1, 2, 3, 4";
 				next;
 			}
@@ -446,12 +415,12 @@ comodo,226,123,5	script	Wandering Bard	2_M_BARD_ORIENT,{
 				cutin "job_bard_aiolo01",2;
 				xmas_npc = 1;
 				mes "[Lalo]";
-				mes "Eh, you still haven't become his friend?";
-				mes "Talking will not be enough.";
+				mes "Eh, você ainda não se tornou seu amigo?";
+				mes "Falar não será suficiente.";
 				next;
 				mes "[Lalo]";
-				mes "if you become friends with ^008800Jack Frost^000000, you will receive something.";
-				mes "And talk with the village people, too...";
+				mes "se você se tornar amigo do ^008800Jack Frost^000000, você ganhará algo.";
+				mes "e também converse com as pessoas da cidade, também...";
 				close2;
 				cutin "job_bard_aiolo01",255;
 				end;
@@ -460,15 +429,15 @@ comodo,226,123,5	script	Wandering Bard	2_M_BARD_ORIENT,{
 		else if (BARD_Q == 4) {
 			cutin "job_bard_aiolo01",2;
 			mes "[Lalo]";
-			mes "Hmm... this time you can do better, right?";
-			mes "Let's try again, you can do it.";
+			mes "Hmm... agora você consegue fazer melhor, certo?";
+			mes "Vamos tentar de novo, você consegue.";
 			next;
 			mes "[Lalo]";
-			mes "I'll sing one part...";
-			mes "and you try it after.";
+			mes "Eu vou cantar uma parte...";
+			mes "e você tenta depois.";
 			next;
 			mes "[Lalo]";
-			mes "Here we go.";
+			mes "La vamos nós.";
 			mes "*Ehem*";
 			mes "1, 2, 3, 4";
 			next;
@@ -476,350 +445,350 @@ comodo,226,123,5	script	Wandering Bard	2_M_BARD_ORIENT,{
 		if (BARD_Q != 5) {
 			.@bard_s = rand(1,5);
 			if (.@bard_s == 1) {
-				mes "^3377FFThere was a man^000000";
-				mes "who was said to be immortal.";
-				mes "His name Jichfreid,";
-				mes "Son of the hero Jichmunt.";
-				mes "The evil giant Papner,";
-				mes "Turned into a dragon and ate him.";
+				mes "^3377FFHavia um homem^000000";
+				mes "que dizia ser imortal.";
+				mes "Seu nome era Jichfreid,";
+				mes "Filho do herói Jichmunt.";
+				mes "O gigante malvado Papner,";
+				mes "Se transformou em um dragão e o comeu.";
 				next;
 				input .@Song$;
-				if (.@Song$ != "There was a man")
+				if (.@Song$ != "Havia um homem")
 					.@w_point += 1;
 
-				mes "^3377FFThere was a man";
-				mes "who was said to be immortal.^000000";
-				mes "His name Jichfreid,";
-				mes "Son of the hero Jichmunt.";
-				mes "The evil giant Papner,";
-				mes "Turned into a dragon and ate him.";
+				mes "^3377FFHavia um homem^000000";
+				mes "que dizia ser imortal.";
+				mes "Seu nome era Jichfreid,";
+				mes "Filho do herói Jichmunt.";
+				mes "O gigante malvado Papner,";
+				mes "Se transformou em um dragão e o comeu.";
 				next;
 				input .@Song$;
-				if (.@Song$ != "who was said to be immortal.")
+				if (.@Song$ != "que dizia ser imortal.")
 					.@w_point += 1;
 
-				mes "^3377FFThere was a man";
-				mes "who was said to be immortal.";
-				mes "His name Jichfreid,^000000";
-				mes "Son of the hero Jichmunt.";
-				mes "The evil giant Papner,";
-				mes "Turned into a dragon and ate him.";
+				mes "^3377FFHavia um homem^000000";
+				mes "que dizia ser imortal.";
+				mes "Seu nome era Jichfreid,";
+				mes "Filho do herói Jichmunt.";
+				mes "O gigante malvado Papner,";
+				mes "Se transformou em um dragão e o comeu.";
 				next;
 				input .@Song$;
-				if (.@Song$ != "His name Jichfreid,")
+				if (.@Song$ != "Seu nome era Jichfreid,")
 					.@w_point += 1;
 
-				mes "^3377FFThere was a man";
-				mes "who was said to be immortal.";
-				mes "His name Jichfreid,";
-				mes "Son of the hero Jichmunt.^000000";
-				mes "The evil giant Papner,";
-				mes "Turned into a dragon and ate him.";
+				mes "^3377FFHavia um homem^000000";
+				mes "que dizia ser imortal.";
+				mes "Seu nome era Jichfreid,";
+				mes "Filho do herói Jichmunt.";
+				mes "O gigante malvado Papner,";
+				mes "Se transformou em um dragão e o comeu.";
 				next;
 				input .@Song$;
-				if (.@Song$ != "Son of the hero Jichmunt.")
+				if (.@Song$ != "Filho do herói Jichmunt.")
 					.@w_point += 1;
 
-				mes "^3377FFThere was a man";
-				mes "who was said to be immortal.";
-				mes "His name Jichfreid,";
-				mes "Son of the hero Jichmunt.";
-				mes "The evil giant Papner,^000000";
-				mes "Turned into a dragon and ate him.";
+				mes "^3377FFHavia um homem^000000";
+				mes "que dizia ser imortal.";
+				mes "Seu nome era Jichfreid,";
+				mes "Filho do herói Jichmunt.";
+				mes "O gigante malígno Papner,";
+				mes "Se transformou em um dragão e o comeu.";
 				next;
 				input .@Song$;
-				if (.@Song$ != "The evil giant Papner,")
+				if (.@Song$ != "O gigante malígno Papner,")
 					.@w_point += 1;
 
-				mes "^3377FFThere was a man";
-				mes "who was said to be immortal.";
-				mes "His name Jichfreid,";
-				mes "Son of the hero Jichmunt.";
-				mes "The evil giant Papner,";
-				mes "Turned into a dragon and ate him.^000000";
+				mes "^3377FFHavia um homem^000000";
+				mes "que dizia ser imortal.";
+				mes "Seu nome era Jichfreid,";
+				mes "Filho do herói Jichmunt.";
+				mes "O gigante malvado Papner,";
+				mes "Se transformou em um dragão e o comeu.";
 				next;
 				input .@Song$;
-				if (.@Song$ != "Turned into a dragon and ate him.")
+				if (.@Song$ != "Se transformou em um dragão e o comeu.")
 					.@w_point += 1;
 			}
 			else if (.@bard_s == 2) {
-				mes "^3377FFA Merchant without money or equipment,^000000";
-				mes "a Merchant that couldn't sell anything.";
-				mes "But he was too proud to beg.";
-				mes "So he gathered some money selling items.";
-				mes "At first he only sold Red Potions.";
-				mes "Some say he sold Sweet Potatoes, too.";
+				mes "^3377FFUm Mercador sem dinheiro ou equipamento,^000000";
+				mes "um Mercador que não podia vender nada.";
+				mes "Mas ele era muito orgulhoso para mendigar.";
+				mes "Então ele conseguiu algum dinheiro vendendo itens.";
+				mes "No começo, ele só vendeu Poções Vermelhas.";
+				mes "Alguns dizem que ele vendeu Batatas Doce também.";
 				next;
 				input .@Song$;
-				if (.@Song$ != "A Merchant without money or equipment,")
+				if (.@Song$ != "Um Mercador sem dinheiro ou equipamento,")
 					.@w_point += 1;
 
-				mes "^3377FFA Merchant without money or equipment,";
-				mes "a Merchant that couldn't sell anything.^000000";
-				mes "But he was too proud to beg.";
-				mes "So he gathered some money selling items.";
-				mes "At first he only sold Red Potions.";
-				mes "Some say he sold Sweet Potatoes, too.";
+				mes "^3377FFUm Mercador sem dinheiro ou equipamento,^000000";
+				mes "um Mercador que não podia vender nada.";
+				mes "Mas ele era muito orgulhoso para mendigar.";
+				mes "Então ele conseguiu algum dinheiro vendendo itens.";
+				mes "No começo, ele só vendeu Poções Vermelhas.";
+				mes "Alguns dizem que ele vendeu Batatas Doce também.";
 				next;
 				input .@Song$;
-				if (.@Song$ != "a Merchant that couldn't sell anything.")
+				if (.@Song$ != "um Mercador que não podia vender nada.")
 					.@w_point += 1;
 
-				mes "^3377FFA Merchant without money or equipment,";
-				mes "a Merchant that couldn't sell anything.";
-				mes "But he was too proud to beg.^000000";
-				mes "So he gathered some money selling items.";
-				mes "At first he only sold Red Potions.";
-				mes "Some say he sold Sweet Potatoes, too.";
+				mes "^3377FFUm Mercador sem dinheiro ou equipamento,^000000";
+				mes "um Mercador que não podia vender nada.";
+				mes "Mas ele era muito orgulhoso para mendigar.";
+				mes "Então ele conseguiu algum dinheiro vendendo itens.";
+				mes "No começo, ele só vendeu Poções Vermelhas.";
+				mes "Alguns dizem que ele vendeu Batatas Doce também.";
 				next;
 				input .@Song$;
-				if (.@Song$ != "But he was too proud to beg.")
+				if (.@Song$ != "Mas ele era muito orgulhoso para mendigar.")
 					.@w_point += 1;
 
-				mes "^3377FFA Merchant without money or equipment,";
-				mes "a Merchant that couldn't sell anything.";
-				mes "But he was too proud to beg.";
-				mes "So he gathered some money selling items.^000000";
-				mes "At first he only sold Red Potions.";
-				mes "Some say he sold Sweet Potatoes, too.";
+				mes "^3377FFUm Mercador sem dinheiro ou equipamento,^000000";
+				mes "um Mercador que não podia vender nada.";
+				mes "Mas ele era muito orgulhoso para mendigar.";
+				mes "Então ele conseguiu algum dinheiro vendendo itens.";
+				mes "No começo, ele só vendeu Poções Vermelhas.";
+				mes "Alguns dizem que ele vendeu Batatas Doce também.";
 				next;
 				input .@Song$;
-				if (.@Song$ != "So he gathered some money selling items.")
+				if (.@Song$ != "Então ele conseguiu algum dinheiro vendendo itens.")
 					.@w_point += 1;
 
-				mes "^3377FFA Merchant without money or equipment,";
-				mes "a Merchant that couldn't sell anything.";
-				mes "But he was too proud to beg.";
-				mes "So he gathered some money selling items.";
-				mes "At first he only sold Red Potions.^000000";
-				mes "Some say he sold Sweet Potatoes, too.";
+				mes "^3377FFUm Mercador sem dinheiro ou equipamento,^000000";
+				mes "um Mercador que não podia vender nada.";
+				mes "Mas ele era muito orgulhoso para mendigar.";
+				mes "Então ele conseguiu algum dinheiro vendendo itens.";
+				mes "No começo, ele só vendeu Poções Vermelhas.";
+				mes "Alguns dizem que ele vendeu Batatas Doce também.";
 				next;
 				input .@Song$;
-				if (.@Song$ != "At first he only sold Red Potions.")
+				if (.@Song$ != "No começo, ele só vendeu Poções Vermelhas.")
 					.@w_point += 1;
 
-				mes "^3377FFA Merchant without money or equipment,";
-				mes "a Merchant that couldn't sell anything.";
-				mes "But he was too proud to beg.";
-				mes "So he gathered some money selling items.";
-				mes "At first he only sold Red Potions.";
-				mes "Some say he sold Sweet Potatoes, too.^000000";
+				mes "^3377FFUm Mercador sem dinheiro ou equipamento,^000000";
+				mes "um Mercador que não podia vender nada.";
+				mes "Mas ele era muito orgulhoso para mendigar.";
+				mes "Então ele conseguiu algum dinheiro vendendo itens.";
+				mes "No começo, ele só vendeu Poções Vermelhas.";
+				mes "Alguns dizem que ele vendeu Batatas Doce também.";
 				next;
 				input .@Song$;
-				if (.@Song$ != "Some say he sold Sweet Potatoes, too.")
+				if (.@Song$ != "Alguns dizem que ele vendeu Batatas Doce também.")
 					.@w_point += 1;
 			}
 			else if (.@bard_s == 3) {
-				mes "^3377FFAll Gods never age.^000000";
-				mes "The ever so Beautiful Goddess Eden,";
-				mes "Beautiful and graceful Goddess Eden,";
-				mes "Odin's daughter-in-law and Bragi's wife.";
-				mes "Her sweet apples in her basket,";
-				mes "All thanks to her sweet apples.";
+				mes "^3377FFTodos os deuses nunca envelhecem.^000000";
+				mes "A sempre tão bela Idun,";
+				mes "Bela e graciosa Idun,";
+				mes "Nora de Odin e esposa de Bragi.";
+				mes "Suas doces maçãs em sua cesta,";
+				mes "Tudo graças a suas doces maçãs.";
 				next;
 				input .@Song$;
-				if (.@Song$ != "All Gods never age.")
+				if (.@Song$ != "Todos os deuses nunca envelhecem.")
 					.@w_point += 1;
 
-				mes "^3377FFAll Gods never age.";
-				mes "The ever so Beautiful Goddess Eden,^000000";
-				mes "Beautiful and graceful Goddess Eden,";
-				mes "Odin's daughter-in-law and Bragi's wife.";
-				mes "Her sweet apples in her basket,";
-				mes "All thanks to her sweet apples.";
+				mes "^3377FFTodos os deuses nunca envelhecem.";
+				mes "A sempre tão bela Idun,^000000";
+				mes "Bela e graciosa Idun,";
+				mes "Nora de Odin e esposa de Bragi.";
+				mes "Suas doces maçãs em sua cesta,";
+				mes "Tudo graças a suas doces maçãs.";
 				next;
 				input .@Song$;
-				if (.@Song$ != "The ever so Beautiful Goddess Eden,")
+				if (.@Song$ != "A sempre tão bela Idun,")
 					.@w_point += 1;
 
-				mes "^3377FFAll Gods never age.";
-				mes "The ever so Beautiful Goddess Eden,";
-				mes "Beautiful and graceful Goddess Eden,^000000";
-				mes "Odin's daughter-in-law and Bragi's wife.";
-				mes "Her sweet apples in her basket,";
-				mes "All thanks to her sweet apples.";
+				mes "^3377FFTodos os deuses nunca envelhecem.";
+				mes "A sempre tão bela Idun,";
+				mes "Bela e graciosa Idun,^000000";
+				mes "Nora de Odin e esposa de Bragi.";
+				mes "Suas doces maçãs em sua cesta,";
+				mes "Tudo graças a suas doces maçãs.";
 				next;
 				input .@Song$;
-				if (.@Song$ != "Beautiful and graceful Goddess Eden,")
+				if (.@Song$ != "Bela e graciosa Idun,")
 					.@w_point += 1;
 
-				mes "^3377FFAll Gods never age.";
-				mes "The ever so Beautiful Goddess Eden,";
-				mes "Beautiful and graceful Goddess Eden,";
-				mes "Odin's daughter-in-law and Bragi's wife.^000000";
-				mes "Her sweet apples in her basket,";
-				mes "All thanks to her sweet apples.";
+				mes "^3377FFTodos os deuses nunca envelhecem.";
+				mes "A sempre tão bela Idun,";
+				mes "Bela e graciosa Idun,";
+				mes "Nora de Odin e esposa de Bragi.^000000";
+				mes "Suas doces maçãs em sua cesta,";
+				mes "Tudo graças a suas doces maçãs.";
 				next;
 				input .@Song$;
-				if (.@Song$ != "Odin's daughter-in-law and Bragi's wife.")
+				if (.@Song$ != "Nora de Odin e esposa de Bragi.")
 					.@w_point += 1;
 
-				mes "^3377FFAll Gods never age.";
-				mes "The ever so Beautiful Goddess Eden,";
-				mes "Beautiful and graceful Goddess Eden,";
-				mes "Odin's daughter-in-law and Bragi's wife.";
-				mes "Her sweet apples in her basket,^000000";
-				mes "All thanks to her sweet apples.";
+				mes "^3377FFTodos os deuses nunca envelhecem.";
+				mes "A sempre tão bela Idun,";
+				mes "Bela e graciosa Idun,";
+				mes "Nora de Odin e esposa de Bragi.";
+				mes "Suas doces maçãs em sua cesta,^000000";
+				mes "Tudo graças a suas doces maçãs.";
 				next;
 				input .@Song$;
-				if (.@Song$ != "Her sweet apples in her basket,")
+				if (.@Song$ != "Suas doces maçãs em sua cesta,")
 					.@w_point += 1;
 
-				mes "^3377FFAll Gods never age.";
-				mes "The ever so Beautiful Goddess Eden,";
-				mes "Beautiful and graceful Goddess Eden,";
-				mes "Odin's daughter-in-law and Bragi's wife.";
-				mes "Her sweet apples in her basket,";
-				mes "All thanks to her sweet apples.^000000";
+				mes "^3377FFTodos os deuses nunca envelhecem.";
+				mes "A sempre tão bela Idun,";
+				mes "Bela e graciosa Idun,";
+				mes "Nora de Odin e esposa de Bragi.";
+				mes "Suas doces maçãs em sua cesta,";
+				mes "Tudo graças a suas doces maçãs.^000000";
 				next;
 				input .@Song$;
-				if (.@Song$ != "All thanks to her sweet apples.")
+				if (.@Song$ != "Tudo graças a suas doces maçãs.")
 					.@w_point += 1;
 			}
 			else if (.@bard_s == 4) {
 				mes "^3377FFBragi, Bragi,^000000";
-				mes "Forever call the poets name.";
-				mes "My songs are his breath,";
-				mes "My mind is his will,";
-				mes "All wandering poets are his people,";
-				mes "And all praise shall go to him.";
+				mes "Eternamente chame o nome do poeta.";
+				mes "Minhas canções são sua respiração,";
+				mes "Minha mente é a sua vontade,";
+				mes "Todos os poetas errantes são o seu povo,";
+				mes "E todo o louvor deve ir até ele.";
 				next;
 				input .@Song$;
 				if (.@Song$ != "Bragi, Bragi,")
 					.@w_point += 1;
 
 				mes "^3377FFBragi, Bragi,";
-				mes "Forever call the poets name.^000000";
-				mes "My songs are his breath,";
-				mes "My mind is his will,";
-				mes "All wandering poets are his people,";
-				mes "And all praise shall go to him.";
+				mes "Eternamente chame o nome do poeta.^000000";
+				mes "Minhas canções são sua respiração,";
+				mes "Minha mente é a sua vontade,";
+				mes "Todos os poetas errantes são o seu povo,";
+				mes "E todo o louvor deve ir até ele.";
 				next;
 				input .@Song$;
-				if (.@Song$ != "Forever call the poets name.")
+				if (.@Song$ != "Eternamente chame o nome do poeta.")
 					.@w_point += 1;
 
 				mes "^3377FFBragi, Bragi,";
-				mes "Forever call the poets name.";
-				mes "My songs are his breath,^000000";
-				mes "My mind is his will,";
-				mes "All wandering poets are his people,";
-				mes "And all praise shall go to him.";
+				mes "Eternamente chame o nome do poeta.";
+				mes "Minhas canções são sua respiração,^000000";
+				mes "Minha mente é a sua vontade,";
+				mes "Todos os poetas errantes são o seu povo,";
+				mes "E todo o louvor deve ir até ele.";
 				next;
 				input .@Song$;
-				if (.@Song$ != "My songs are his breath,")
+				if (.@Song$ != "Minhas canções são sua respiração,")
 					.@w_point += 1;
 
 				mes "^3377FFBragi, Bragi,";
-				mes "Forever call the poets name.";
-				mes "My songs are his breath,";
-				mes "My mind is his will,^000000";
-				mes "All wandering poets are his people,";
-				mes "And all praise shall go to him.";
+				mes "Eternamente chame o nome do poeta.";
+				mes "Minhas canções são sua respiração,";
+				mes "Minha mente é a sua vontade,^000000";
+				mes "Todos os poetas errantes são o seu povo,";
+				mes "E todo o louvor deve ir até ele.";
 				next;
 				input .@Song$;
-				if (.@Song$ != "My mind is his will,")
+				if (.@Song$ != "Minha mente é a sua vontade,")
 					.@w_point += 1;
 
 				mes "^3377FFBragi, Bragi,";
-				mes "Forever call the poets name.";
-				mes "My songs are his breath,";
-				mes "My mind is his will,";
-				mes "All wandering poets are his people,^000000";
-				mes "And all praise shall go to him.";
+				mes "Eternamente chame o nome do poeta.";
+				mes "Minhas canções são sua respiração,";
+				mes "Minha mente é a sua vontade,";
+				mes "Todos os poetas errantes são o seu povo,^000000";
+				mes "E todo o louvor deve ir até ele.";
 				next;
 				input .@Song$;
-				if (.@Song$ != "All wandering poets are his people,")
+				if (.@Song$ != "Todos os poetas errantes são o seu povo,")
 					.@w_point += 1;
 
 				mes "^3377FFBragi, Bragi,";
-				mes "Forever call the poets name.";
-				mes "My songs are his breath,";
-				mes "My mind is his will,";
-				mes "All wandering poets are his people,";
-				mes "And all praise shall go to him.^000000";
+				mes "Eternamente chame o nome do poeta.";
+				mes "Minhas canções são sua respiração,";
+				mes "Minha mente é a sua vontade,";
+				mes "Todos os poetas errantes são o seu povo,";
+				mes "E todo o louvor deve ir até ele.^000000";
 				next;
 				input .@Song$;
-				if (.@Song$ != "And all praise shall go to him.")
+				if (.@Song$ != "E todo o louvor deve ir até ele.")
 					.@w_point += 1;
 			}
 			else {
-				mes "^3377FFLouder, louder, louder.^000000";
-				mes "Give strength to the warriors!";
-				mes "Shake the sky and roar through the land.";
-				mes "Make my heart pound again!";
-				mes "Let the castle walls ring.";
-				mes "This day will never come again!";
+				mes "^3377FFMais alto, mais alto, mais alto.^000000";
+				mes "Dê força aos guerreiros!";
+				mes "Agite o céu e ruja pela terra.";
+				mes "Faça meu coração bater denovo!";
+				mes "Deixe as muralhas do castelo ressoarem.";
+				mes "Esse dia nunca vai voltar!";
 				next;
 				input .@Song$;
-				if (.@Song$ != "Louder, louder, louder.")
+				if (.@Song$ != "Mais alto, mais alto, mais alto.")
 					.@w_point += 1;
 
-				mes "^3377FFLouder, louder, louder.";
-				mes "Give strength to the warriors!^000000";
-				mes "Shake the sky and roar through the land.";
-				mes "Make my heart pound again!";
-				mes "Let the castle walls ring.";
-				mes "This day will never come again!";
+				mes "^3377FFMais alto, mais alto, mais alto.";
+				mes "Dê força aos guerreiros!^000000";
+				mes "Agite o céu e ruja pela terra.";
+				mes "Faça meu coração bater denovo!";
+				mes "Deixe as muralhas do castelo ressoarem.";
+				mes "Esse dia nunca vai voltar!";
 				next;
 				input .@Song$;
-				if (.@Song$ != "Give strength to the warriors!")
+				if (.@Song$ != "Dê força aos guerreiros!")
 					.@w_point += 1;
 
-				mes "^3377FFLouder, louder, louder.";
-				mes "Give strength to the warriors!";
-				mes "Shake the sky and roar through the land.^000000";
-				mes "Make my heart pound again!";
-				mes "Let the castle walls ring.";
-				mes "This day will never come again!";
+				mes "^3377FFMais alto, mais alto, mais alto.";
+				mes "Dê força aos guerreiros!";
+				mes "Agite o céu e ruja pela terra.^000000";
+				mes "Faça meu coração bater denovo!";
+				mes "Deixe as muralhas do castelo ressoarem.";
+				mes "Esse dia nunca vai voltar!";
 				next;
 				input .@Song$;
-				if (.@Song$ != "Shake the sky and roar through the land.")
+				if (.@Song$ != "Agite o céu e ruja pela terra.")
 					.@w_point += 1;
 
-				mes "^3377FFLouder, louder, louder.";
-				mes "Give strength to the warriors!";
-				mes "Shake the sky and roar through the land.";
-				mes "Make my heart pound again!^000000";
-				mes "Let the castle walls ring.";
-				mes "This day will never come again!";
+				mes "^3377FFMais alto, mais alto, mais alto.";
+				mes "Dê força aos guerreiros!";
+				mes "Agite o céu e ruja pela terra.";
+				mes "Faça meu coração bater denovo!^000000";
+				mes "Deixe as muralhas do castelo ressoarem.";
+				mes "Esse dia nunca vai voltar!";
 				next;
 				input .@Song$;
-				if (.@Song$ != "Make my heart pound again!")
+				if (.@Song$ != "Faça meu coração bater denovo!")
 					.@w_point += 1;
 
-				mes "^3377FFLouder, louder, louder.";
-				mes "Give strength to the warriors!";
-				mes "Shake the sky and roar through the land.";
-				mes "Make my heart pound again!";
-				mes "Let the castle walls ring.^000000";
-				mes "This day will never come again!";
+				mes "^3377FFMais alto, mais alto, mais alto.";
+				mes "Dê força aos guerreiros!";
+				mes "Agite o céu e ruja pela terra.";
+				mes "Faça meu coração bater denovo!";
+				mes "Deixe as muralhas do castelo ressoarem.^000000";
+				mes "Esse dia nunca vai voltar!";
 				next;
 				input .@Song$;
-				if (.@Song$ != "Let the castle walls ring.")
+				if (.@Song$ != "Deixe as muralhas do castelo ressoarem.")
 					.@w_point += 1;
 
-				mes "^3377FFLouder, louder, louder.";
-				mes "Give strength to the warriors!";
-				mes "Shake the sky and roar through the land.";
-				mes "Make my heart pound again!";
-				mes "Let the castle walls ring.";
-				mes "This day will never come again!^000000";
+				mes "^3377FFMais alto, mais alto, mais alto.";
+				mes "Dê força aos guerreiros!";
+				mes "Agite o céu e ruja pela terra.";
+				mes "Faça meu coração bater denovo!";
+				mes "Deixe as muralhas do castelo ressoarem.";
+				mes "Esse dia nunca vai voltar!^000000";
 				next;
 				input .@Song$;
-				if (.@Song$ != "This day will never come again!")
+				if (.@Song$ != "Esse dia nunca vai voltar!")
 					.@w_point += 1;
 			}
 
 			if (.@w_point) {
 				cutin "job_bard_aiolo02",2;
 				mes "[Lalo]";
-				mes "Oy, You got the lyrics wrong!";
-				mes "Can't you even sing along..?";
+				mes "Ohh, Você tem errou a letra!";
+				mes "Será que você não consegue cantar junto...?";
 				next;
 				mes "[Lalo]";
-				mes "Your pronunciation is very unclear.";
-				mes "Do a better job next time.";
+				mes "Sua pronúncia é muito ruim.";
+				mes "Fazer um trabalho melhor na próxima vez.";
 				close2;
 				cutin "job_bard_aiolo02",255;
 				end;
@@ -829,30 +798,30 @@ comodo,226,123,5	script	Wandering Bard	2_M_BARD_ORIENT,{
 			next;
 			BARD_Q = 5;
 			mes "[Lalo]";
-			mes "Wonderful! Finished it in one try!";
-			mes "You can become a great Bard. ";
+			mes "Maravilhoso! Conseguiu uma tentativa!";
+			mes "Você pode se tornar um grande bardo. ";
 			next;
 			mes "[Lalo]";
-			mes "Mmm... So you will not become a Bard.";
-			mes "But I want to give you a souvenir...";
+			mes "Hmm... Então você não vai se tornar um Bardo.";
+			mes "Mas eu quero dar-lhe uma lembrança...";
 			next;
 			mes "[Lalo]";
-			mes "Do you want to just change jobs now?";
-			mes "Or do you want a present.";
+			mes "Você quer apenas mudar de emprego agora?";
+			mes "ou você quer um presente?";
 			next;
-			.@selection = select("Just change my job please.:I'd be thankful for a present.");
+			.@selection = select("Basta alterar o meu trabalho por favor.:Ficaria grato por um presente.");
 		}
 		if ((.@selection == 1) || (BARD_Q == 5)) {
 			if(SkillPoint) {
 				cutin "job_bard_aiolo01",2;
 				mes "[Lalo]";
-				mes "Ah... Everything is good, but you still have some skill points left.";
-				mes "Go learn the rest of the skills and come back.";
+				mes "Ah...Tudo bom, mas você ainda tem algumas Skill Points sobrando.";
+				mes "Vai aprender o resto das habilidades e volte aqui.";
 				next;
 				mes "[Lalo]";
-				mes "And I am going to give you a small present...";
-				mes "So bring some trunks.";
-				mes "It doesn't matter what kind, as long as they are 60 of the same kind...";
+				mes "Eu vou te dar um pequeno presente...";
+				mes "Então traga alguns troncos.";
+				mes "Não importa o tipo, desde que seja 60 da mesma...";
 				close2;
 				cutin "job_bard_aiolo01",255;
 				end;
@@ -869,21 +838,20 @@ comodo,226,123,5	script	Wandering Bard	2_M_BARD_ORIENT,{
 					}
 					cutin "job_bard_aiolo01",2;
 					mes "[Lalo]";
-					mes "Mmm? Seems like you haven't prepared all trunks the yet? ";
-					mes "Do you want to just change jobs anyways?";
+					mes "Hmm? Parece que você não trouxe ainda a todos os troncos? ";
+					mes "Você quer apenas mudar de qualquer maneira?";
 					next;
-					if (select("Yes, just change my job already.:No, I'll go prepare them.") == 2)
-						break;
+					if (select("Sim, basta alterar o meu trabalho já.:Não, vou taze-los.") == 2) break;
 				default:
 					completequest 3003;
 					callfunc "Job_Change",Job_Bard;
 					callfunc "F_ClearJobVar";		//clears all job variables for the current player
 					mes "[Lalo]";
-					mes "Very well! Hope you sing happy enjoyable songs.";
-					mes "Live like the wind and the clouds!";
+					mes "Muito bem! Espero que você cante feliz, algumas canções agradáveis.";
+					mes "Viva como o vento e as nuvens!";
 					next;
 					mes "[Lalo]";
-					mes "See you again next time!";
+					mes "Até a próxima!";
 					close2;
 					cutin "job_bard_aiolo01",255;
 					end;
@@ -892,12 +860,12 @@ comodo,226,123,5	script	Wandering Bard	2_M_BARD_ORIENT,{
 		}
 		changequest 3003,3004;
 		mes "[Lalo]";
-		mes "Hmm... very well, bring some trunks.";
-		mes "It doesn't matter what kind, as long as they are 60 of the same kind...";
+		mes "Hmm... muito bem, traga alguns troncos.";
+		mes "Não importa o tipo, desde que seja 60 da mesma...";
 		next;
 		mes "[Lalo]";
-		mes "I will give you a gift once you bring them.";
-		mes "Have a safe trip.";
+		mes "Vou lhe dar um presente uma vez que você traga os troncos.";
+		mes "Tenha uma viagem segura.";
 		close2;
 		cutin "job_bard_aiolo01",255;
 		end;
@@ -910,41 +878,27 @@ comodo,226,123,5	script	Wandering Bard	2_M_BARD_ORIENT,{
 	end;
 
 S_ChangeJob:
-	completequest 3004;
-	callfunc "Job_Change",Job_Bard;
-	callfunc "F_ClearJobVar";
-	mes "[Lalo]";
-	mes "Good job. I will make you a job change souvenir with this.";
-	mes "Wait just a moment.";
-	next;
-	mes "[Lalo]";
-	mes "^3355FFScrape Scrape Tang Tang^000000";
-	mes "^3355FFSqueak Squeak Scratch Scratch^000000";
-	delitem getarg(0),60;
-	getitem getarg(1),1;
-	next;
-	mes "[Lalo]";
-	mes "Here you go, a souvenir. It is useful when you sing.";
-	mes "Hope you sing happy songs.";
-	next;
-	mes "[Lalo]";
-	mes "See you next time!";
-	close2;
-	cutin "job_bard_aiolo01",255;
-	end;
+		completequest 3004;
+		callfunc "Job_Change",Job_Bard;
+		callfunc "F_ClearJobVar";
+		mes "[Lalo]";
+		mes "Bom trabalho.";
+		mes "Só espere um momento.";
+		next;
+		mes "[Lalo]";
+		mes "^3355FFScrape Scrape Tang Tang^000000";
+		mes "^3355FFSqueak Squeak Scratch Scratch^000000";
+		delitem getarg(0),60;
+		getitem getarg(1),1;
+		next;
+		mes "[Lalo]";
+		mes "Aqui está, uma lembrança. É útil quando você canta.";
+		mes "Espero que você cante canções felizes.";
+		next;
+		mes "[Lalo]";
+		mes "Até a próxima!";
+		close2;
+		cutin "job_bard_aiolo01",255;
+		end;
 }
 
-//============================================================
-// Old changelog
-//============================================================
-//= 07/06/05 : Added 1st Version. [Muad_Dib]
-//= Converted to rAthena format by Dr.Evil
-//= Info about gifts and other info --> http://www.ragnainfo.net/forums/viewtopic.php?t=51467&start=0
-//= 1.1 Optimized, changed some stuff, fixed some bugs [Lupus]
-//= 1.1a minor song test fix [Lupus]
-//= 1.2 Fixed wrong item ID, added missing commands [Lupus]
-//= 1.3 Updated flower sub-quest according to official [Lupus]
-//= 1.4 Changed priority for the gifts. Now you can win the 1st
-//=     prize, too. Added Izidor flower [Lupus]
-//= 2.0 Changed numbers to constants. [Vicious]
-//============================================================

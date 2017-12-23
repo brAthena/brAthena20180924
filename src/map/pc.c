@@ -4217,6 +4217,8 @@ bool pc_can_insert_card_into(struct map_session_data* sd, int idx_card, int idx_
 		return false; // only weapons and armor are allowed
 	if (sd->status.inventory[idx_equip].identify == 0)
 		return false; // target must be identified
+	if (sd->status.inventory[idx_equip].expire_time > 0)
+		return false;	// Impede que uma carta seja equipa em um item de aluguel	
 	if (itemdb_isspecial(sd->status.inventory[idx_equip].card[0]))
 		return false; // card slots reserved for other purposes
 	if (sd->status.inventory[idx_equip].equip != 0)
@@ -4742,7 +4744,7 @@ int pc_dropitem(struct map_session_data *sd,int n,int amount)
 	}
 		
 	if( map->list[sd->bl.m].flag.nodrop
-		|| battle_config.nodrop_in_town && map->list[sd->bl.m].flag.town ) { // Configuração para impedir drop de itens dentro de mapas com o flag 'town'. [CarlosHenrq]
+		|| (battle_config.nodrop_in_town && map->list[sd->bl.m].flag.town) ) { // Configuração para impedir drop de itens dentro de mapas com o flag 'town'. [CarlosHenrq]
 		clif->message (sd->fd, msg_sd(sd,271));
 		return 0; //Can't drop items in nodrop mapflag maps.
 	}

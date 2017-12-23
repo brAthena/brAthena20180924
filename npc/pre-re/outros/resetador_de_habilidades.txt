@@ -13,129 +13,84 @@
 //= 1.0 First version. [L0ne_W0lf]
 //============================================================
 
-prontera,146,232,4	script	Hypnotist#2	4_F_TELEPORTER,{
-	mes "[Hypnotist]";
-	mes "Greetings, adventurer.";
-	mes "I'm a member of the Hypnotist";
-	mes "Academy sent here to Prontera";
-	mes "to provide Skill Reset services";
-	mes "to certain First Class characters for a really good price: free!";
+prontera,146,232,4	script	Hipnotizadora#2	4_F_TELEPORTER,{
+	mes "[Hipnotizadora]";
+	mes "Olá, aventureiro!";
+	mes "Fui mandada pela Academia de Hipnotismo";
+	mes "para ajudar os iniciantes que se arrependem de não terem aprendido suas habilidades do jeito que gostariam.";
 	next;
-	mes "[Hypnotist]";
-	mes "Although I offer unlimited";
-	mes "skill resets for now, I have";
-	mes "two conditions that must be";
-	mes "fulfilled. First, you must be";
-	mes "lower than ^FF0000Base Level 40^000000.";
+	mes "[Hipnotizadora]";
+	mes "Se seu Nível de Base não for maior que 40, e se você estiver numa Classe 1-1, como:";
+	mes "Espadachim, Noviço, Mago, Gatuno, Arqueiro, Mercador, Taekwon, Ninja ou Justiceiro.";
+	mes "Então você pode usufruir de meu Serviço de Redistribuição de Pontos de Habilidades.";
 	next;
-	mes "[Hypnotist]";
-	mes "Second, you must be a";
-	mes "^FF0000Swordman, Acolyte, Mage,";
-	mes "Thief, Archer, Merchant,";
-	mes "Taekwon Boy, Taekwon Girl, Gunslinger and Ninja^000000";
-	mes "Job character to qualify.";
-	mes "Now, do you have any questions?";
+	mes "[Hipnotizadora]";
+	mes "Desde que você atenda a essas condições, poderei prestar meu Serviço de Redistribuição de Pontos de Habilidade";
+	mes "sem qualquer limitação. Agora, que tal isso?";
 	next;
-	switch(select("Skill Reset?:I want a Skill Reset:Nothing")) {
+	switch(select("Redistribuição de Pontos de Habilidade?:^FF0000Redistribuir os Pontos de Habilidade^000000:Cancelar")) {
 
 	case 1:
-		mes "[Hypnotist]";
-		mes "Skill Resets allow adventuers";
-		mes "to redistribute their Skill";
-		mes "Points if they are unhappy";
-		mes "with their current skills.";
+		mes "[Hipnotizadora]";
+		mes "A Redistribuição de Pontos de Habilidade dá outra chance aos aventureiros de distribuir seus Pontos.";
+		mes "Se não estiver satisfeito com suas habilidades atuais, então você pode usufruir meu serviço.";
 		next;
-		mes "[Hypnotist]";
-		mes "Before proceeding with";
-		mes "a Skill Reset, you must";
-		mes "reduce all of the weight";
-		mes "of all carried items on your";
-		mes "character to 0. You can put";
-		mes "extra items in Kafra Storage.";
+		mes "[Hipnotizadora]";
+		mes "Lembre-se que só é possível redistribuir seus pontos de Habilidade se não estiver carregando nenhum item com você.";
+		mes "Por favor, antes use o serviço de Armazenagem Kafra para reduzir seu peso.";
 		next;
-		mes "[Hypnotist]";
-		mes "Ah, it's also important";
-		mes "to remove your ^FF0000Pushcart^000000";
-		mes "if you have one equipped.";
-		mes "Otherwise, hypnosis won't";
-		mes "work, or will backfire...";
+		mes "[Hipnotizadora]";
+		mes "Ah, e se por acaso você estiver equipado com um ^FF0000Carrinho^000000, livre-se deles antes.";
+		mes "Esse item costuma interferir na hipnose por alguma razão estranha e inexplicável.";
 		close;
 
 	case 2:
-		mes "[Hypnotist]";
-		mes "Are you sure that you";
-		mes "want to proceed with";
-		mes "my ^FF0000Skill Reset^000000 service?";
+		mes "[Hipnotizadora]";
+		mes "Então, você já decidiu que quer ^FF0000Redistribuir os Pontos de Habilidade^000000.";
+		mes "Podemos continuar?";
 		next;
-		if (select("Yes:Cancel") == 1) {
+		if (select("Sim:Não") == 1) {
 			if (BaseLevel > 40) {
-				mes "[Hypnotist]";
-				mes "I'm sorry, but characters";
-				mes "with Base Levels higher";
-				mes "than 40 are ineligible for the";
-				mes "Skill Reset service I provide.";
+				mes "[Hipnotizadora]";
+				mes "Lamento, mas personagens com o Nível de Base maior que 40 são inelegíveis para";
+				mes "que eu possa redistribuir os Pontos de Habilidades.";
 				close;
 			}
 			if ((Class > 0 && Class < 7 && Upper == 0) || (Class == Job_Gunslinger) || (Class == Job_Ninja) || (Class == Job_Taekwon)) {
 				if (checkcart()) {
-					mes "[Hypnotist]";
-					mes "Oh! Please remove your";
-					mes "Pushcart before proceeding";
-					mes "with the Skill Reset service.";
-					mes "Thanks for cooperating~";
+					mes "[Hipnotizadora]";
+					mes "Oh! Remova o seu carrinho antes de restribuir os seus pontos de habilidades.";
+					mes "Obrigado por colaborar!";
 					close;
 				}
 				if (Weight) {
-					mes "[Hypnotist]";
-					mes "If you're here for my Skill";
-					mes "Reset service, please";
-					mes "remember that you can't";
-					mes "reset your skills until the";
-					mes "^FF0000weight of your carried items in";
-					mes "your Inventory is reduced to 0^000000.";
-					next;
-					mes "[Hypnotist]";
-					mes "Why don't you place your";
-					mes "things into the Kafra Storage";
-					mes "for now? That way, you can";
-					mes "safely keep all of your goods.";
+					mes "[Hipnotizadora]";
+					mes "Ah, você poderia reduzir o peso que está carregando em seu iventário para ^FF00000^00000?";
+					mes "Desculpe, mas não vou poder redistribuir seus pontos de Habilidade de outra forma...";
 					close;
 				}
-				mes "[Hypnotist]";
-				mes "Thank you for using";
-				mes "my Skill Redistribution";
-				mes "services. Oh, and best";
-				mes "of luck to you on your";
-				mes "travels, adventurer.";
+				mes "[Hipnotizadora]";
+				mes "Obrigado por você usar os meus serviços de redistribuição de Pontos de Habilidades.";
+				mes "Oh, e muita sorte para você em suas viagens, aventureiro.";
 				resetskill;
 				close;
 			}
-			mes "[Hypnotist]";
-			mes "I'm sorry, but your";
-			mes "Job Class doesn't qualify";
-			mes "for the Skill Reset service";
-			mes "that I provide. I can only";
-			mes "offer Skill Resets to the";
-			mes "following Jobs...";
-			next;
-			mes "[Hypnotist]";
-			mes "^FF0000Swordman, Acolyte,";
-			mes "Mage, Thief, Archer,";
-			mes "Merchant, Taekwon";
-			mes "Boy, Taekwon Girl, Gunslinger and Ninja^000000.";
+			mes "[Hipnotizadora]";
+			mes "Desculpe, mas sua Classe não está apta para o Serviço de Redistribuição de Pontos de Habilidade.";
+			mes "Posso redistribuir os pontos apenas para:";
+			mes "Espadachins, Noviços, Magos, Gatunos, Arqueiros, Mercadores, Taekwon, Ninjas ou Justiceiros.";
+			mes "Ou seja, Classes 1-1.";
 			close;
 		}
-		mes "[Hypnotist]";
-		mes "Thank you, and good";
-		mes "luck on your adventures.";
-		mes "Please travel in safety~";
+		mes "[Hipnotizadora]";
+		mes "Muito obrigado, e boa sorte em suas aventuras.";
+		mes "Bem, então tome cuidado. Não seria nada bom se machucar por aí.";
 		close;
 
 	case 3:
-		mes "[Hypnotist]";
-		mes "Thank you, and good";
-		mes "luck on your adventures.";
-		mes "Please travel in safety~";
+		mes "[Hipnotizadora]";
+		mes "Muito obrigado, e boa sorte em suas aventuras.";
+		mes "Bem, então tome cuidado. Não seria nada bom se machucar por aí.";
 		close;
 	}
 

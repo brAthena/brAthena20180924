@@ -1,16 +1,24 @@
-//===== Hercules Script ======================================
-//= Valentine's Day Event (2012)
-//===== By: ==================================================
-//= Rikimaru
-//===== Current Version: =====================================
-//= 1.1
-//===== Description: =========================================
-//= The full Valentine's Day NPCs of the Valentine's Day
-//= Event 2012 (account-based).
-//===== Additional Comments: =================================
-//= 1.0 First version. [Rikimaru]
-//= 1.1 Standardized and fixed. [Euphy]
-//============================================================
+//    ________________________________________________________
+//   /                                                        \
+//   |       _           _   _   _                            |
+//   |      | |__  _ __ / \ | |_| |__   ___ _ __   __ _       |
+//   |      | '_ \| '__/ _ \| __| '_ \ / _ \ '_ \ / _` |      |
+//   |      | |_) | | / ___ \ |_| | | |  __/ | | | (_| |      |
+//   |      |_.__/|_|/_/   \_\__|_| |_|\___|_| |_|\__,_|      |
+//   |                                                        |
+//   |                    brAthena Script                     |
+//   |--------------------------------------------------------|
+//   | Nome do Script:  dia_dos_namorados_2012.txt            |
+//   |--------------------------------------------------------|
+//   | Criado por: eA/rA/Herc/brA Dev. Team                   |
+//   |--------------------------------------------------------|
+//   | Versões eA/rA/Herc/brA: 1.1/1.1/1.1/1.0                |
+//   |--------------------------------------------------------|
+//   | Changelog:                                             |
+//   | 1.0 Cabeçalho brAthena [Axl]                           |
+//   |--------------------------------------------------------|
+//   | - Anotações                                            |
+//   \________________________________________________________/
 
 mosk_in,21,246,5	script	Pinkamenia	1_F_LIBRARYGIRL,{
 	.@n$ = "^0000FF[Pinkamenia]^000000";
@@ -19,78 +27,78 @@ mosk_in,21,246,5	script	Pinkamenia	1_F_LIBRARYGIRL,{
 		setarray .@SweetsID[0],538,558,539,573,559,560,12062,596,597,12414,12319;
 		setarray .@SweetsCost[0],1,2,5,10,10,10,15,15,15,20,20;
 		mes .@n$;
-		mes "Hello "+strcharinfo(0)+", do";
-		mes "you want to buy some items?";
-		mes "You'll have to give me Love";
-		mes "Flowers for them, of course!";
+		mes "Olá "+strcharinfo(0)+" !";
+		mes "Você deseja comprar alguns itens?";
+		mes "Mais antes, você terá de me dar amor";
+		mes "Traga-me Flores do Amor, é claro!";
 		next;
-		if(select("Yes, sure!","No, never mind.") == 2) close;
+		if(select("Sim, com certeza!","Não, não importa.") == 2) close;
 		next;
 		mes .@n$;
-		mes "Select an item.";
-		mes "The amount of Love Flowers you'll need is in brackets.";
+		mes "Selecione um item.";
+		mes "A quantidade de Flores do Amor que você precisa está entre parênteses.";
 		for(.@i = 0; .@i < getarraysize(.@SweetsID); ++.@i)
 			.@menu$ += "^00AA00["+.@SweetsCost[.@i]+"]^000000 "+getitemname(.@SweetsID[.@i])+":";
 		next;
 		.@choice = select(.@menu$)-1;
 		mes .@n$;
 		if (countitem(.@LFlowerID) < .@SweetsCost[.@choice]) {
-			mes "You'll need more Love Flowers if you want that!";
+			mes "Você vai precisar de mais Flores do amor se você quer isso!";
 			close;
 		}
-		mes "Are you sure you want to trade ^00aa00"+.@SweetsCost[.@choice]+"x Love Flower ^000000 for ^0055FF"+getitemname(.@SweetsID[.@choice])+"^000000?";
-		if(select("No, I've changed my mind.:Yes, trade!") == 1) close;
+		mes "Você tem certeza que quer trocar ^00aa00"+.@SweetsCost[.@choice]+"x Flor do Amor ^000000 por ^0055FF"+getitemname(.@SweetsID[.@choice])+"^000000?";
+		if(select("Não, eu mudei de idéia.:Sim, Trade!") == 1) close;
 		.@new = .@LFlowerID - .@SweetsCost[.@choice];
 		if (.@new < 0) .@new = 0;
 		delitem .@LFlowerID, .@SweetsCost[.@choice];
 		getitem .@SweetsID[.@choice],1;
-		mes "Have fun with your item!";
+		mes "Divirta-se com o seu ITEM!";
 		close;
 	} else if (#V_QUE12==2) {
 		mes .@n$;
 		if (countitem(7864) < 15) {
-			mes "You have to bring me 15 Love Flowers!";
+			mes "Você tem que me trazer 15 Flores do amor!";
 			close;
 		}
-		mes "Thank you so much for";
-		mes "getting our Flowers back!";
+		mes "Muito obrigado por";
+		mes "Me tazer essas Flores do Amor.";
 		delitem 7864,15;
 		next;
 		mes .@n$;
-		mes "Take this as a little";
-		mes "'thank you'.";
+		mes "Leve isso como um pouco";
+		mes "de meu Obrigado eterno.";
 		getexp 500000,400000;
 		getitem 617,1;
 		getitem 12319,2;
 		next;
 		mes .@n$;
-		mes "If you get more Love";
-		mes "Flowers, you can exchange";
-		mes "them for some sweets here.";
-		mes "See you soon!";
+		mes "Se você receber mais amor";
+		mes "Flores, você pode trocar";
+		mes "Los para alguns doces aqui.";
+		mes "Vejo você em breve!";
 		#V_QUE12 = 3;
 		close;
 	} else if (#V_QUE12==1) {
 		mes .@n$;
-		mes "Please bring a +8 Cake Hat";
-		mes "to the Baker Extraordinaire";
-		mes "standing next to me!";
+		mes "Por favor, traga um Cake Hat [+8]";
+		mes "Ao Extraordinaire Baker";
+		mes "Ao meu lado!";
 		close;
 	} else if (BaseLevel >= 45) {
 		mes .@n$;
-		mes "Hello "+strcharinfo(0)+", it's";
-		mes "Valentine's Day and we";
-		mes "love to deliver sweet";
+		mes "Olá "+strcharinfo(0)+", é";
+		mes "Dia dos Namorados e nós";
+		mes "Gostamos de entregar doce";
 		mes "chocolates.";
 		next;
 		mes .@n$;
-		mes "Our problem is that we";
-		mes "need a strong person";
-		mes "like you who could help";
-		mes "us, but first you'll have";
-		mes "to bring a +8 Cake Hat";
-		mes "to the Baker Extraordinaire, who";
-		mes "is standing right next to me!";
+		mes "Nosso problema é que nós";
+		mes "Precisamos de uma pessoa forte";
+		mes "Como você, que poderia ajudar.";
+		mes "Mas primeiro você terá";
+		mes "Que me trazer um Cake Hat [+8]";
+		mes "Para Baker Extraordinário, que";
+		mes "Está de pé ao meu lado!";
 		#V_QUE12 = 1;
 		close;
 	}
@@ -104,53 +112,53 @@ OnInit:
 	end;
 }
 
-mosk_in,21,244,3	script	Baker Extraordinaire	4_M_NOVELIST,{
-	.@n$ = "^0000FF[Baker Extraordinaire]^000000";
+mosk_in,21,244,3	script	Baker Extraordinário	4_M_NOVELIST,{
+	.@n$ = "^0000FF[Baker Extraordinário]^000000";
 	if(#V_QUE12==3) {
 		mes .@n$;
-		mes "Exchange your Love Flowers with Pinkamenia!";
+		mes "Troque suas Flores do Amor com Pinkamenia!";
 		close;
 	} else if(#V_QUE12==2) {
 		mes .@n$;
-		mes "Bring 15 Love Flowers to Pinkamenia!";
+		mes "Traga 15 Flores do Amor para Pinkamenia!";
 		close;
 	} else if(#V_QUE12==1) {
 		mes .@n$;
 		if (getequipid(1) == 5024 && getequiprefinerycnt(1) >= 8) {
-			mes "Ah, so Pinkamenia told you";
-			mes "to bring me the +8 Cake";
-			mes "Hat. Now I'm going";
-			mes "to exchange your +8 Cake";
-			mes "Hat for another Cake Hat.";
+			mes "Ah, então Pinkamenia disse";
+			mes "Para me trazer o Chapéu de Bolo [+8]";
+			mes "Agora eu vou";
+			mes "Trocar seu Chapéu de Bolo";
+			mes "Para outro Chapéu!";
 			next;
 			mes .@n$;
 			delitem 5024,1;
 			getitem 5105,1;
 			equip 5105;
-			mes "Now, if you wear the";
-			mes "new Cake Hat, there";
-			mes "is a chance that";
-			mes "Demi-Human Monsters will";
-			mes "drop a Love Flower!";
+			mes "Agora, se você usar o";
+			mes "novo Chapéu de Bolo, há";
+			mes "Uma chance de que";
+			mes "Monstros Demi-humanos";
+			mes "Dropem Flores do Amor!";
 			next;
 			mes .@n$;
-			mes "The mobs stole our Flowers,";
-			mes "which we need to create ";
-			mes "our chocolates. Now get";
-			mes "15 Love Flowers and bring";
-			mes "them to Pinkamenia!";
+			mes "Os mobs roubaram nossas Flores,";
+			mes "que é preciso para criar";
+			mes "nossos chocolates. agora saia.";
+			mes "Drop 15 Flores do Amor";
+			mes "E Leve até Pinkamenia!";
 			#V_QUE12 = 2;
 			close;
 		} else {
-			mes "Sorry, but where is your";
-			mes "+8 Cake Hat? Bring";
-			mes "it to me, and remember";
-			mes "to have it equipped!";
+			mes "Desculpe, mas onde está o seu";
+			mes "Chapéu de Bolo [+8] ?";
+			mes "Lembre-se";
+			mes "Precisa te-lo equipado.!";
 			close;
 		}
 	} else {
 		mes .@n$;
-		mes "Hello, "+strcharinfo(0)+"!";
+		mes "Olá, "+strcharinfo(0)+"!";
 		close;
 	}
 }

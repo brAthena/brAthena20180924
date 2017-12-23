@@ -168,6 +168,7 @@ struct chrif_interface {
 	void (*ask_mac_ban) (const char* mac, int minute);
 	void (*ask_mac_unban) (const char* mac);
 	void (*ask_mac_response) (int fd);
+	int (*foreach_mac) (struct map_session_data* sd, va_list ap);
 };
 
 struct chrif_interface *chrif;

@@ -7343,6 +7343,117 @@ BUILDIN(rentitem) {
 }
 
 /*==========================================
+ * rentitem2 <Item_ID>,<time>, <identify>,<refine>,
+ <attribute>,<card1>,<card2>,<card3>,<card4>;
+ 
+ * rentitem2 "<Item_Name>",<time>, <identify>,<refine>,
+ <attribute>,<card1>,<card2>,<card3>,<card4>;
+  *------------------------------------------*/
+BUILDIN(rentitem2) {
+	struct map_session_data *sd;
+	struct script_data *data;
+	struct item it;
+	int seconds;
+	int nameid = 0, flag;
+	int iden,ref,attr,c1,c2,c3,c4;
+
+	data = script_getdata(st,2);
+	script->get_val(st,data);
+
+	if( (sd = script->rid2sd(st)) == NULL )
+		return true;
+
+	if( data_isstring(data) )
+	{
+		const char *name = script->conv_str(st,data);
+		struct item_data *itd = itemdb->search_name(name);
+		if( itd == NULL )
+		{
+			ShowError("buildin_rentitem2: Nonexistant item %s requested.\n", name);
+			return false;
+		}
+		nameid = itd->nameid;
+	}
+	else if( data_isint(data) )
+	{
+		nameid = script->conv_num(st,data);
+		if( nameid <= 0 || !itemdb->exists(nameid) )
+		{
+			ShowError("buildin_rentitem2: Nonexistant item %d requested.\n", nameid);
+			return false;
+		}
+	}
+	else
+	{
+		ShowError("buildin_rentitem2: invalid data type for argument #1 (%d).\n", data->type);
+		return false;
+	}
+
+	seconds = script_getnum(st,3);
+	iden=script_getnum(st,4);
+	ref=script_getnum(st,5);
+	attr=script_getnum(st,6);
+	c1=(short)script_getnum(st,7);
+	c2=(short)script_getnum(st,8);
+	c3=(short)script_getnum(st,9);
+	c4=(short)script_getnum(st,10);
+	
+	memset(&it, 0, sizeof(it));
+	it.nameid = nameid;
+	it.identify = iden;
+	it.refine=ref;
+	it.attribute=attr;
+	it.card[0]=(short)c1;
+	it.card[1]=(short)c2;
+	it.card[2]=(short)c3;
+	it.card[3]=(short)c4;
+	it.expire_time = (unsigned int)(time(NULL) + seconds);
+
+	if( (flag = pc->additem(sd, &it, 1)) )
+	{
+		clif->additem(sd, 0, 0, flag);
+		return false;
+	}
+	else logs->item_getrem(1, sd, &it, 1, "Script");
+	
+	return true;
+}
+
+/*==========================================
+ * getequipexpiretick(<equipment slot>)
+ *------------------------------------------*/
+BUILDIN(getequipexpiretick) {
+	int i, num;
+	TBL_PC* sd;
+
+	sd = script->rid2sd(st);
+	if( sd == NULL )
+		return true;
+
+	num = script_getnum(st,2) - 1;
+	if( num < 0 || num >= ARRAYLENGTH(script->equip) )
+	{
+		script_pushint(st,-1);
+		return true;
+	}
+
+	// get inventory position of item
+	i = pc->checkequip(sd,script->equip[num]);
+	if( i < 0 )
+	{
+		script_pushint(st,-1);
+		return true;
+	}
+	
+	if( sd->inventory_data[i] != 0 && sd->status.inventory[i].expire_time)
+		script_pushint(st, (unsigned int)(sd->status.inventory[i].expire_time - time(NULL)) );
+	else
+		script_pushint(st,0);
+
+	return true;
+}
+
+/*==========================================
  * gets an item with someone's name inscribed [Skotlex]
  * getinscribeditem item_num, character_name
  * Returned Qty is always 1, only works on equip-able
@@ -12404,7 +12515,7 @@ BUILDIN(successremovecards)
 				clif->additem(sd,0,0,flag);
 				map->addflooritem(&sd->bl, &item_tmp, 1, sd->bl.m, sd->bl.x, sd->bl.y, 0, 0, 0, 0);
 			}
-			else logs->card(sd, c, "Rem", &sd->status.inventory[i]);
+			else logs->card(sd, c, "Removed", &sd->status.inventory[i]);
 		}
 	}
 
@@ -12512,7 +12623,7 @@ BUILDIN(failedremovecards)
 				clif->additem(sd,0,0,flag);
 				map->addflooritem(&sd->bl, &item_tmp, 1, sd->bl.m, sd->bl.x, sd->bl.y, 0, 0, 0, 0);
 			}
-			else logs->item_getrem(1, sd, &item_tmp, 1, "C_Rem");
+			else logs->item_getrem(1, sd, &item_tmp, 1, "Removed_Fail");
 		}
 		clif->misceffect(&sd->bl,2);
 	}
@@ -17034,6 +17145,81 @@ BUILDIN(getvariableofnpc)
 	return true;
 }
 
+/**
+ * Obtem a variavel de conta ou de personagem permanente.
+ * getvar (<#variavel>,<account_id>);
+ * getvar (<variavel>,<char_id>);
+ */
+BUILDIN(getvar) {
+	struct map_session_data *sd;
+	struct script_data *data = NULL;
+	const char *name = NULL;
+	bool string = false;
+
+	data = script_getdata(st, 2);
+	if (!data_isreference(data)) {
+		ShowError("buildin_getvar: Nao é uma variavel.\n");
+		script->reportdata(data);
+		script_pushnil(st);
+		st->state = END;
+		return false;
+	}
+
+	name = reference_getname(data);
+	string = (name[strlen(name) - 1] == '$' ) ? true : false;
+
+	if (reference_toparam(data)) {
+		ShowError("buildin_getvar: '%s' e um parametro - por faovr use readparam.\n", name);
+		script->reportdata(data);
+		script_pushnil(st);
+		st->state = END;
+		return false;
+	}
+
+	if (name[0] == '@' || name[0] == '.' || name[0] == '$' || name[0] == '\'') { // Not a PC variable
+		ShowError("buildin_getvar: Variavel invalida.\n");
+		script->reportdata(data);
+		script_pushnil(st);
+		st->state = END;
+		return false;
+	}
+
+	switch( name[0] )
+	{
+		case '#':
+				sd = map->id2sd(script_getnum(st, 3));
+				if(sd == NULL)
+				{
+					ShowWarning("buildin_getvar: Conta nao encontrada!\n");
+					script->reportfunc(st);
+					script_pushnil(st);
+					return false;
+				}
+				if(string) {					
+					script_pushconststr(st, pc_readaccountregstr(sd,script->add_str(name)));
+				} else {
+					script_pushint(st, pc_readaccountreg(sd,script->add_str(name)));
+				}
+					break;
+		default:
+				sd = map->charid2sd(script_getnum(st, 3));
+				if(sd == NULL)
+				{
+					ShowWarning("buildin_getvar: Jogador nao encontrado!\n");
+					script->reportfunc(st);
+					script_pushnil(st);
+					return false;
+				}
+				if(string) {
+					script_pushconststr(st, pc_readglobalreg_str(sd,script->add_str(name)));
+				} else {
+					script_pushint(st, pc_readglobalreg(sd,script->add_str(name)));
+				}
+				break;
+	}
+	return true;
+}
+
 /// Opens a warp portal.
 /// Has no "portal opening" effect/sound, it opens the portal immediately.
 ///
@@ -18573,6 +18759,61 @@ BUILDIN(getcharmac)
 	}
 
 	script_pushstrcopy(st, sd->mac_address);
+	return true;
+}
+
+/*==========================================
+ * Obtem a quantidade de monstros vivos em um mapa. [ Orce ]
+ * os paramtros podem ser:
+ *
+ * - Retorna a quantidade de monstros de todo o servidor
+ * getmobalive(<nod_id>);
+ * - Retorna a quantidade de monstros de uma mapa.
+ * getmobalive(<mob_id>,<"mapname">);
+ *------------------------------------------*/
+BUILDIN(getmobalive)
+{
+	int mob_id;
+	struct s_mapiterator *it;
+	const struct mob_data *md = NULL;
+	int number = 0;
+	int m = 0;
+	
+	mob_id = script_getnum(st,2);
+
+	if (!mob->db_checkid(mob_id)) {
+		ShowError("buildin_getmobalive: ID %i inexistente.\n", mob_id);
+		return false;
+	}
+		
+	
+	if(script_hasdata(st,3))
+	{
+		const char *mapname = script_getstr(st,3);
+		
+		if ((m = map->mapname2mapid(mapname)) < 0) {
+			ShowError("buildin_getmobalive: Mapa %s inexistente.\n", mapname);
+			script_pushnil(st);
+			return false;
+		}
+	}
+	
+	it = mapit_geteachmob();
+	for (md = BL_UCCAST(BL_MOB, mapit->first(it)); mapit->exists(it); md = BL_UCCAST(BL_MOB, mapit->next(it))) {
+	
+	if(script_hasdata(st,3))
+	{
+		if (md->bl.m != m)
+			continue;
+	}
+		if( mob_id != -1 && md->class_ != mob_id )
+			continue;
+		
+		++number;
+	}
+	
+	script_pushint(st, number);
+	mapit->free(it);	
 	return true;
 }
 
@@ -21127,6 +21368,8 @@ void script_parse_builtin(void) {
 		BUILDIN_DEF(getelementofarray,"ri"),
 		BUILDIN_DEF(getitem,"vi?"),
 		BUILDIN_DEF(rentitem,"vi"),
+		BUILDIN_DEF(rentitem2,"viiiiiiii"),
+		BUILDIN_DEF(getequipexpiretick,"i"),		
 		BUILDIN_DEF(getitem2,"viiiiiiii?"),
 		BUILDIN_DEF(getnameditem,"vv"),
 		BUILDIN_DEF2(grouprandomitem,"groupranditem","i"),
@@ -21453,6 +21696,7 @@ void script_parse_builtin(void) {
 		BUILDIN_DEF(sleep2,"i"),
 		BUILDIN_DEF(awake,"s"),
 		BUILDIN_DEF(getvariableofnpc,"rs"),
+		BUILDIN_DEF(getvar,"vi"),
 		BUILDIN_DEF(warpportal,"iisii"),
 		BUILDIN_DEF2(homunculus_evolution,"homevolution",""), //[orn]
 		BUILDIN_DEF2(homunculus_mutate,"hommutate","?"),
@@ -21539,6 +21783,7 @@ void script_parse_builtin(void) {
 		 * brAthena
 		 */
 		BUILDIN_DEF(getcharmac, "?"),
+		BUILDIN_DEF(getmobalive,"i?"),
 
 		BUILDIN_DEF(is_function,"s"),
 		BUILDIN_DEF(freeloop,"i"),

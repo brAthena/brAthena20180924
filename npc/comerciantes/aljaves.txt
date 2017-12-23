@@ -25,30 +25,30 @@
 payon_in01,5,134,5	script	Inventor Jaax	4_M_ORIENT02,{
 	if (checkweight(1201,1) == 0 || MaxWeight - Weight < 2000) {
 		mes "[Inventor Jaax]";
-		mes "Hey, you're carrying";
-		mes "way too much stuff. Why don't you stash it away in Kafra Storage? We can talk after you do that, right?";
+		mes "Ei, você está carregando";
+		mes "muita coisa. Por que não usa o Armazém das Kafras? Podemos conversar depois de fazer isso, certo?";
 		close;
 	}
 	mes "[Inventor Jaax]";
-	mes "My name is Jaxx.";
-	mes "Without ego, I can";
-	mes "say that I am perhaps the";
-	mes "^663300greatest inventor of our time^000000.";
+	mes "Meu nome é Jaax.";
+	mes "Sem ego, eu posso";
+	mes "Dizer que eu sou talvez o";
+	mes "^663300Maior inventor do nosso tempo^000000.";
 	next;
 	mes "[Inventor Jaxx]";
-	mes "This time, I've";
-	mes "created something";
-	mes "truly extraordinary. I call them... ^663300Magic Quivers^000000 !! This will be remembered in history as an";
-	mes "arrow revolution!";
+	mes "Desta vez, eu";
+	mes "criei uma coisa";
+	mes "Verdadeiramente extraordinária. Elas se chamam... ^663300Aljaves Mágicas^000000 !! Isso será lembrado na história como a";
+	mes "revolução das flechas!";
 	emotion e_no1;
 	next;
 	mes "[Inventor Jaax]";
-	mes "I've studied magic and quivers for years, working night and day until I finally figured how to condense arrows with magic! With magic quivers, you'll be carrying more arrows, but with less weight!";
+	mes "Eu estudei magia e aljaves durante anos, trabalhando noite e dia até que eu finalmente descobri como condensar flechas com magia! Com Aljave Mágica, você podera carregar mais flechas, e ter menos peso!";
 	next;
 	mes "[Inventor Jaax]";
-	mes "Would you like to try using one of my arrow quivers? I have no doubt that someone like you can appreciate my genius!";
+	mes "Gostaria de tentar usar uma de minhas criações especiais? Não tenho dúvidas de que alguém como você pode apreciar a minha inteligência!";
 	next;
-	switch(select("Quiver:Iron Arrow Quiver:Steel Arrow Quiver:Oridecon Arrow Quiver:Fire Arrow Quiver:Silver Arrow Quiver:Wind Arrow Quiver:Stone Arrow Quiver:Crystal Arrow Quiver:Shadow Arrow Quiver:Immaterial Arrow Quiver:Rusty Arrow Quiver")) {
+	switch(select("Aljave:Aljave de Flechas de Ferro:Aljave de Flechas de Aço:Aljave de Flechas de Oridecon:Aljave de Flechas de Fogo:Aljave de Flechas de Prata:Aljave de Flechas de Vento:Aljave de Flechas de Pedra:Aljave de Flechas de Cristal:Aljave de Flechas de Sombra:Aljave de Flechas Imateriais:Aljave de Flechas Enferrujadas")) {
 	case 1: callsub S_BuyQuiver,1750,500,500,12004;
 	case 2: callsub S_BuyQuiver,1770,500,500,12005;
 	case 3: callsub S_BuyQuiver,1753,500,500,12006;
@@ -62,108 +62,108 @@ payon_in01,5,134,5	script	Inventor Jaax	4_M_ORIENT02,{
 	case 11: callsub S_BuyQuiver,1757,500,500,12014;
 	case 12: callsub S_BuyQuiver,1762,500,500,12015;
 	}
-	//This doesn't seem to be accessable...
+	//Essa parte não é ser acessível...
 	//mes "[Inventor Jaax]";
-	//mes "Is there";
-	//mes "anything you want?";
+	//mes "Aqui está";
+	//mes "leve quantas puder.";
 	//close;
 
 S_BuyQuiver:
 	if (countitem(getarg(0)) >= getarg(1)) {
 		mes "[Inventor Jaax]";
-		mes "Excellent!";
-		mes "Are you carrying any Arrows with you? I'll provide you with a quiver that can carry "+getarg(1)+" of your "+getitemname(getarg(0))+"s for only ^FF3131"+getarg(2)+" Zeny^000000.";
+		mes "Excelente!";
+		mes "Você está carregando alguma Flecha com você? Eu vou lhe fornecer um aljave que pode transportar "+getarg(1)+" de suas "+getitemname(getarg(0))+"s por apenas ^FF3131"+getarg(2)+" Zenys^000000.";
 		next;
-		switch(select("Store as many Arrows in quivers as possible:Purchase 1 quiver:Cancel")) {
+		switch(select("Crie quantas aljaves puder:Comprar 1 aljave:Cancelar")) {
 		case 1:
 			.@arrows = countitem(getarg(0));
 			.@quiver = .@arrows / getarg(1);
 			.@arrows_used = .@quiver * getarg(1);
 			.@arrow_zeny01 = .@quiver * getarg(2);
-			mes "Number of";
-			mes "Arrows: ^3131FF"+.@arrows+" ^000000";
-			mes "Maximum Number";
-			mes "of Purchasable";
-			mes "Quivers: ^3131FF"+.@quiver+" ^000000";
-			mes "Zeny required: ^3131FF"+.@arrow_zeny01+" Zeny^000000";
+			mes "Número de";
+			mes "Flechas: ^3131FF"+.@arrows+" ^000000";
+			mes "Número máximo";
+			mes "de Aljaves";
+			mes "Adquirivel: ^3131FF"+.@quiver+" ^000000";
+			mes "Zenys necessários: ^3131FF"+.@arrow_zeny01+" Zenys^000000";
 			next;
 			mes "[Inventor Jaax]";
-			mes "Would you like to";
-			mes "buy as many Quivers";
-			mes "as you can for the Arrows";
-			mes "you are currently carrying?";
+			mes "Você gostaria de";
+			mes "Comprar o máximo de aljaves";
+			mes "possiveis com o número de flechas que";
+			mes "Você está atualmente carregando?";
 			next;
-			if (select("Yes:Cancel") == 1) {
+			if (select("Sim:Cancelar") == 1) {
 				if (.@arrow_zeny01 < Zeny) {
 					mes "[Inventor Jaax]";
-					mes "There you go!";
-					mes "Just remember, ^FF0000you won't be able to use the Quiver when your carried weight is 90% of your maximum weight limit^000000.";
+					mes "Ai está!";
+					mes "Apenas lembre-se, ^FF0000Você não será capaz de usar o Aljave quando seu peso se tornar 90% do seu limite máximo^000000.";
 					Zeny -= .@arrow_zeny01;
-					delitem getarg(0),.@arrows_used; //Arrow
-					getitem getarg(3),.@quiver; //Quiver
+					delitem getarg(0),.@arrows_used; //Flecha
+					getitem getarg(3),.@quiver; //Aljave
 					next;
 					mes "[Inventor Jaax]";
-					mes "So...";
-					mes "Just keep track";
-					mes "of how much you're";
-					mes "carrying from time";
-					mes "to time and you should";
-					mes "be alright.";
+					mes "Então...";
+					mes "Apenas mantenha o controle";
+					mes "do número de aljaves";
+					mes "que você está carregando";
+					mes "que você deve";
+					mes "ficar bem.";
 					close;
 				}
 				else {
 					mes "[Inventor Jaax]";
-					mes "I'm sorry, but you don't have enough Zeny. I can't just give these away after working years";
-					mes "to develop this revolutionary technology!";
+					mes "Desculpe, mas você não tem Zeny suficiente. Eu não posso apenas dar estes maravilhosos materiais depois de anos de trabalho";
+					mes "Para desenvolver esta revolucionária tecnologia!";
 					close;
 				}
 			}
 			mes "[Inventor Jaax]";
-			mes "You changed your mind?";
-			mes "When the glory of owning";
-			mes "a quiver is so close?";
+			mes "Você mudou de idéia?";
+			mes "Quando a glória de possuir";
+			mes "Uma aljava dessas está tão perto não é mesmo?";
 			close;
 		case 2:
 			if (Zeny > getarg(2)) {
 				mes "[Inventor Jaax]";
-				mes "There you go!";
-				mes "Just remember, ^FF0000you won't be able to use the Quiver when your carried weight is 90% of your maximum weight limit^000000.";
+				mes "Ai está!";
+				mes "Apenas lembre-se, ^FF0000Você não será capaz de usar o Aljave quando seu peso se tornar 90% do seu limite máximo^000000.";
 				Zeny -= getarg(2);
-				delitem getarg(0),getarg(1); //Arrow
-				getitem getarg(3),1; //Quiver
+				delitem getarg(0),getarg(1); //Flecha
+				getitem getarg(3),1; //Aljave
 				next;
 				mes "[Inventor Jaax]";
-				mes "So...";
-				mes "Just keep track";
-				mes "of how much you're";
-				mes "carrying from time";
-				mes "to time and you should";
-				mes "be alright.";
+				mes "Então...";
+				mes "Apenas mantenha o controle";
+				mes "do número de aljaves";
+				mes "que você está carregando";
+				mes "que você deve";
+				mes "ficar bem.";
 				close;
 			}
 			else {
 				mes "[Inventor Jaax]";
-				mes "You don't even";
-				mes "have "+getarg(2)+" Zeny?";
-				mes "I'm so sorry. I had no";
-				mes "idea that you were so...";
-				mes "^333333Destitute^000000.";
+				mes "Você nem mesmo";
+				mes "possui "+getarg(2)+" Zenys?";
+				mes "Eu sinto muito. Eu não tenho";
+				mes "idéia do que dizer nessa situação...";
+				mes "^333333Pobre^000000.";
 				close;
 			}
 		case 3:
 			mes "[Inventor Jaax]";
-			mes "What...?";
-			mes "Do you not see that this invention can forever change the way Arrows are carried?! The future is now!";
+			mes "O que...?";
+			mes "Você não vê que esta invenção pode mudar para sempre a maneira que as flechas são carregadas ?! O futuro é agora!";
 			close;
 		}
 	}
 	else {
 		mes "[Inventor Jaax]";
-		mes "You can carry a maximum of "+getarg(1)+" Arrows within this quiver. It was made using my secret method,";
-		mes "so the total weight of the Arrows and Quiver is less than carrying the Arrows alone.";
+		mes "Você pode levar o máximo de "+getarg(1)+" Flechas dentro desta aljave. Foi feito usando meu método secreto,";
+		mes "assim que o peso total das flechas é bem diminuido.";
 		next;
 		mes "[Inventor Jaax]";
-		mes "It's a miracle of science! One that you can experience for yourself if you bring me at least "+getarg(1)+" Arrows and "+getarg(2)+" Zeny for each Quiver.";
+		mes "É um milagre da ciência! Um que você pode experimentar por si mesmo se você me trazer pelo menos "+getarg(1)+" Flechas e "+getarg(2)+" Zenys Para cada Aljave que criarei.";
 		close;
 	}
 }
