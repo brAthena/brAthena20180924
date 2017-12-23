@@ -35,6 +35,7 @@
 #include "common/cbasetypes.h"
 #include "common/ers.h" // struct eri
 #include "common/mmo.h" // JOB_*, MAX_FAME_LIST, struct fame_list, struct mmo_charstatus, NEW_CARTS
+#include "config/brathena.h"
 
 /**
  * Defines
@@ -598,6 +599,8 @@ END_ZEROED_BLOCK;
 		bool ok;
 		int price, points;
 	} trader;
+	
+	int vip_timer;
 };
 
 #define EQP_WEAPON EQP_HAND_R
@@ -673,6 +676,13 @@ END_ZEROED_BLOCK;
 //Weapon check considering dual wielding.
 #define pc_check_weapontype(sd, type) ((type)&((sd)->status.weapon < MAX_WEAPON_TYPE? \
 	1<<(sd)->status.weapon:(1<<(sd)->weapontype1)|(1<<(sd)->weapontype2)|(1<<(sd)->status.weapon)))
+
+//----------------------------------
+// Sistema Vip [Shiraz / brAthena]
+// Macros e Funções
+//----------------------------------
+// Verifica se o jogador é vip.
+#define pc_isvip(sd) ((sd->group_id==level_vip))
 
 // clientside display macros (values to the left/right of the "+")
 #ifdef RENEWAL
@@ -1109,6 +1119,9 @@ END_ZEROED_BLOCK; /* End */
 	// Configuração para bloquear jogadores de abrir chat/loja próximos uns aos outros. [CarlosHenrq]
 	int (*vending_chat_count_near) (struct map_session_data* sd);
 	bool (*too_many_vending_chat_near) (struct map_session_data* sd);
+	int (*check_time_vip) (int tid, int64 tick, int id, intptr_t data);
+	int (*add_time_vip) (struct map_session_data *sd, int type[4]);
+	void (*show_time_vip) (struct map_session_data *sd);	
 };
 
 struct pc_interface *pc;

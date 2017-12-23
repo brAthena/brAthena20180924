@@ -1494,7 +1494,7 @@ bool login_parse_client_login(int fd, struct login_session_data* sd, const char 
 	int result;
 	uint16 command = RFIFOW(fd,0);
 	bool israwpass = (command==0x0064 || command==0x0277 || command==0x02b0 || command == 0x0825);
-
+	
 	// Shinryo: For the time being, just use token as password.
 	if(command == 0x0825)
 	{
@@ -1534,6 +1534,14 @@ bool login_parse_client_login(int fd, struct login_session_data* sd, const char 
 		}
 	}
 	RFIFOSKIP(fd,RFIFOREST(fd)); // assume no other packet was sent
+
+	// [CarlosHenrq] Se estiver configurado para forçar o pacote de mac_address
+	// e não receber o mesmo, nega a conexão.
+	if(login->config->mac_force_packet && command != 0x0825)
+	{
+		login->auth_failed(sd, 3); // send "rejected from server"
+		return true;
+	}
 
 	sd->clienttype = clienttype;
 	sd->version = version;

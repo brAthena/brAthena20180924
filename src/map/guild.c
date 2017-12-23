@@ -1575,7 +1575,7 @@ int guild_reply_reqalliance(struct map_session_data *sd,int account_id,int flag)
 int guild_delalliance(struct map_session_data *sd,int guild_id,int flag) {
 	nullpo_ret(sd);
 
-	if(map->agit_flag || map->agit2_flag) {
+	if(alliance_in_woe && (map->agit_flag || map->agit2_flag) ) {
 		// Disable alliance breaking during woe [Valaris]
 		clif->message(sd->fd,msg_sd(sd,877)); //"Alliances cannot be broken during Guild Wars!"
 		return 0;
@@ -1826,7 +1826,7 @@ int guild_gm_change(int guild_id, struct map_session_data *sd)
 		return 0;
 
 	//Notify servers that master has changed.
-	intif->guild_change_gm(guild_id, sd->status.name, strlen(sd->status.name)+1);
+	intif->guild_change_gm(guild_id, sd->status.name, (int)strlen(sd->status.name)+1);
 	return 1;
 }
 

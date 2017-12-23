@@ -125,14 +125,6 @@
 //Official Limit: 2.1b ( the var that stores the money doesn't go much higher than this by default )
 #define MAX_BANK_ZENY INT_MAX
 
-// Nível Max. Global (Base)
-// [CarlosHenrq, 2016-10-27] 175 somente quando em execução no modo renewal.
-#ifdef RENEWAL
-	#define MAX_LEVEL 175
-#else
-	#define MAX_LEVEL 99
-#endif
-
 #define MAX_FAME 1000000000
 #define MAX_CART 100
 #define MAX_SKILL 1510

@@ -10,15 +10,15 @@
 //= Fixed 'close' issues. [Joseph]
 //============================================================
 
-prontera,124,201,1	script	Universal Rental NPC	4_F_JOB_BLACKSMITH,{
-	/* TODO: This can be optimized with just setmount(), as it can
-		 auto-detect the proper mount for the class/skills. */
+prontera,124,201,1	script	Garota Negociante	4_F_JOB_BLACKSMITH,{
+	/* FAZER: Isso pode ser otimizado com apenas o setmount(), já que ele pode
+Auto-detectar a necessidade adequada de cada classe/habilidade. */
 	if (hascashmount()) {
-		message strcharinfo(0),"You must first remove your mount.";
+		message strcharinfo(0),"Primeiramente você deve remover a sua montaria.";
 		end;
 	} else if ((eaclass()&EAJ_THIRDMASK) == EAJ_RANGER && !countitem(Wolf's_Flute)) {
 		if (!checkfalcon() && getskilllv(HT_FALCON) && !checkwug()) {
-			if (select(" ~ Falcon: ~ Warg") == 1)
+			if (select(" ~ Falcão: ~ Worg") == 1)
 				setfalcon;
 			else
 				getitem Wolf's_Flute, 1;
@@ -29,7 +29,7 @@ prontera,124,201,1	script	Universal Rental NPC	4_F_JOB_BLACKSMITH,{
 		}
 	} else if ((eaclass()&EAJ_THIRDMASK) == EAJ_MECHANIC && !checkcart() && getskilllv(MC_PUSHCART)) {
 		if (!checkmount() != MOUNT_MADO && getskilllv(NC_MADOLICENCE)) {
-			if (select(" ~ Cart: ~ Mado") == 1) {
+			if (select(" ~ Carrinho: ~ M.E.C.H.A") == 1) {
 				setcart;
 			} else {
 				setmount(MOUNT_MADO);
@@ -44,11 +44,11 @@ prontera,124,201,1	script	Universal Rental NPC	4_F_JOB_BLACKSMITH,{
 	} else if (!checkfalcon() && getskilllv(HT_FALCON) && !checkwug()) {
 		setfalcon;
 	} else if (checkmount() != MOUNT_PECO && getskilllv(KN_RIDING)) {
-		setmount; // Peco or Dragon
+		setmount; // Peco ou Dragão
 	} else if (checkmount() != MOUNT_MADO && getskilllv(NC_MADOLICENCE)) {
 		setmount(MOUNT_MADO);
 	} else {
-		message strcharinfo(0),"You do not meet requirements to rent.";
+		message strcharinfo(0),"Você não tem o necessário para utilizar meus serviços.";
 		end;
 	}
 	specialeffect2 EF_TEIHIT3;

@@ -1,30 +1,30 @@
-//===== Hercules Script ======================================
-//= Hugel Bingo script
-//===== By: ==================================================
-//= SinSloth
-//===== Current Version: =====================================
-//= 1.9
-//===== Description: =========================================
-//= Hugel Bingo game
-//===== Additional Comments: =================================
-//= 1.0 First version. Please report bugs you find out. [SinSloth]
-//= 1.1 Fixed a minor bug. [SinSloth]
-//= 1.2 Added some Bingo Staff NPCs. [SinSloth]
-//= 1.3 Fixed a bug where an AFK-player wasn't warped out of the game,
-//=     preventing players from launching another. [SinSloth]
-//= 1.4 Fixed a minor bug added in the last revision. [SinSloth]
-//= 1.5 Applied a fix to players locations which were not rotating properly. [SinSloth]
-//= 1.6 Removed nescesity to win to proceed with quest [Yommy]
-//= 1.7 Replaced effect numerics with constants. [Samuray22]
-//= 1.8 Updated 'waitingroom' to support required zeny/lvl. [Kisuka]
-//= 1.9 Some optimization/standardization. [Euphy]
-//============================================================
+//    ________________________________________________________
+//   /                                                        \
+//   |       _           _   _   _                            |
+//   |      | |__  _ __ / \ | |_| |__   ___ _ __   __ _       |
+//   |      | '_ \| '__/ _ \| __| '_ \ / _ \ '_ \ / _` |      |
+//   |      | |_) | | / ___ \ |_| | | |  __/ | | | (_| |      |
+//   |      |_.__/|_|/_/   \_\__|_| |_|\___|_| |_|\__,_|      |
+//   |                                                        |
+//   |                    brAthena Script                     |
+//   |--------------------------------------------------------|
+//   | Nome do Script:  bingo_hugel.txt                       |
+//   |--------------------------------------------------------|
+//   | Criado por: eA/rA/Herc/brA Dev. Team                   |
+//   |--------------------------------------------------------|
+//   | Versões eA/rA/Herc/brA: 1.1/1.1/1.1/1.0                |
+//   |--------------------------------------------------------|
+//   | Changelog:                                             |
+//   | 1.0 Cabeçalho brAthena [Axl]                           |
+//   |--------------------------------------------------------|
+//   | - Anotações                                            |
+//   \________________________________________________________/
 
-que_bingo,48,84,5	script	Bingo Waiting Room	4_F_TELEPORTER,{
+que_bingo,48,84,5	script	Sala de Espera do Bingo	4_F_TELEPORTER,{
 	end;
 
 OnInit:
-	waitingroom "Bingo Waiting Room - 5 People",50,"Bingo Waiting Room::OnWarp",5,1000;
+	waitingroom "Sala de espera do Bingo - 5 Pessoas",50,"Sala de Espera do Bingo::OnWarp",5,1000;
 	end;
 
 OnWarp:
@@ -83,10 +83,10 @@ OnTouch:
 L_Fill:
 	@bingo_fill = callfunc("Func_Bingo",@bingo_case);
 	if (!@bingo_fill) {
-		mes "The numbers you have entered";
-  		mes "exceed the limit, or you have";
-		mes "already entered these numbers.";
-		mes "Please enter your numbers again.";
+		mes "O número que você digitou";
+  		mes "excede o limite, ou você já";
+		mes "digitou esses números.";
+		mes "Por favor digite novamente.";
 		next;
 	} else if (@bingo_fill) {
 		if(@bingoplate[25] < 10) @bingo_e5$ = "0"+@bingoplate[25]+""; else @bingo_e5$ = @bingoplate[25];
@@ -124,23 +124,23 @@ OnEnter:
 	end;
 
 OnTimer1000:
-	mapannounce "que_bingo","Eukran: Hello, everyone! I'm Eukran, your Bingo Guide~",1,0xFFAB54;
+	mapannounce "que_bingo","Eukran: Olá, todos vocês! Eu sou Eukran, o seu guia do bingo",1,0xFFAB54;
 	end;
 
 OnTimer6000:
-	mapannounce "que_bingo","Eukran: Game participants, please enter the Warp Portal at the bottom of your screen and choose a Bingo Plate by entering a number.",1,0xFFAB54;
+	mapannounce "que_bingo","Eukran: Os participantes do jogo, por favor entrem no portal e escolham uma placa de bingo digitando um número.",1,0xFFAB54;
 	end;
 
 OnTimer11000:
-	mapannounce "que_bingo","Eukran: All participants must choose their Bingo Plates within 3 minutes, or the game will be canceled.",1,0xFFAB54;
+	mapannounce "que_bingo","Eukran: Todos os participantes devem escolher suas placas de bingo em 3 minutos, ou o jogo será cancelado.",1,0xFFAB54;
 	end;
 
 OnTimer192000:
-	mapannounce "que_bingo","Eukran: Please enter a number in 5 seconds, or the game will be canceled.",1,0xFFAB54;
+	mapannounce "que_bingo","Eukran: Por favor digite o número em 5 segundos, ou o jogo será cancelado.",1,0xFFAB54;
 	end;
 
 OnTimer200000:
-	mapannounce "que_bingo","Eukran: I'm sorry, but the game has been canceled. Please come again and enjoy a game of Bingo with us!",1,0xFFAB54;
+	mapannounce "que_bingo","Eukran: Sinto muito, mas o jogo foi cancelado. Por favor venha novamente para participar do nosso bingo!",1,0xFFAB54;
 	end;
 
 OnTimer202000:
@@ -161,7 +161,7 @@ OnTimer204000:
 	disablenpc "out3#bingo";
 	$@hu_bingoa = 0;
 	$@hu_bingob = 0;
-	donpcevent "Bingo Waiting Room::OnStart";
+	donpcevent "Sala de Espera do Bingo::OnStart";
 	end;
 }
 
@@ -176,7 +176,7 @@ OnStart:
 	end;
 
 OnTimer2000:
-	mapannounce "que_bingo","Eukran: Great, everyone seems to be ready~",1,0xFFAB54;
+	mapannounce "que_bingo","Eukran: Ótimo, todos parecem estar prontos!",1,0xFFAB54;
 	disablenpc "plate1#bingo";
 	disablenpc "plate2#bingo";
 	disablenpc "plate3#bingo";
@@ -185,7 +185,7 @@ OnTimer2000:
 	end;
 
 OnTimer5000:
-	mapannounce "que_bingo","Eukran: Now, let the game begin!",1,0xFFAB54;
+	mapannounce "que_bingo","Eukran: Agora, vamos começar o jogo!",1,0xFFAB54;
 	setarray $@bingoarray[0],1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25;
 	.@max_index = 24;
 	for(.@i = 0; .@i < 25; ++.@i) {
@@ -197,7 +197,7 @@ OnTimer5000:
 	end;
 
 OnTimer8000:
-	mapannounce "que_bingo","Eukran: I'll announce the Bingo Numbers. If you get 5 lines by matching 5 Bingo Numbers in a straight line on your Bingo Plate, yell out ''Bingo'' to win~",1,0xFFAB54;
+	mapannounce "que_bingo","Eukran: Eu vou anunciar os números do bingo. Você possui 5 linhas e precisa marcar 5 números em uma linha reta para vencer o Bingo, você precisa gritar ''Bingo'' para vencer!",1,0xFFAB54;
 	end;
 
 OnTimer10000:
@@ -260,19 +260,19 @@ OnTimer340000:
 	end;
 
 OnTimer440000:
-	mapannounce "que_bingo","Eukran: I've announced all of the selected numbers, but I haven't heard anyone yell ''Bingo.''",1,0xFFAB54;
+	mapannounce "que_bingo","Eukran: Eu anunciei todos os números selecionados, mas eu não ouvi ninguém gritar ''Bingo.''",1,0xFFAB54;
 	end;
 
 OnTimer445000:
-	mapannounce "que_bingo","Eukran: I'll give you all 10 seconds to check if any of you have won. If no one can yell ''Bingo'' in 10 seconds, this game will end without a winner.",1,0xFFAB54;
+	mapannounce "que_bingo","Eukran: Vou dar mais 10 segundos para vocês verificarem se alguém venceu. Se ninguém gritar ''Bingo'' em 10 segundos, o jogo será terminado sem um vencedor.",1,0xFFAB54;
 	end;
 
 OnTimer460000:
-	mapannounce "que_bingo","Eukran: I'm sorry, but this game has ended without a winner. Thanks for playing, everyone~",1,0xFFAB54;
+	mapannounce "que_bingo","Eukran: Sinto muito, mas este jogo terminou sem um vencedor. Obrigado a todos pela participação!",1,0xFFAB54;
 	donpcevent "1a#bingo::OnInit";
 	areawarp "que_bingo",44,115,54,126,"que_bingo",40,121;
 	$@hu_bingoa = 0;
-	donpcevent "Bingo Waiting Room::OnStart";
+	donpcevent "Sala de Espera do Bingo::OnStart";
 	end;
 }
 
@@ -455,17 +455,17 @@ OnTouch:
 	mes "["+@bingo_c1$+"] ["+@bingo_c2$+"] ["+@bingo_c3$+"] ["+@bingo_c4$+"] ["+@bingo_c5$+"]";
 	mes "["+@bingo_d1$+"] ["+@bingo_d2$+"] ["+@bingo_d3$+"] ["+@bingo_d4$+"] ["+@bingo_d5$+"]";
 	mes "["+@bingo_e1$+"] ["+@bingo_e2$+"] ["+@bingo_e3$+"] ["+@bingo_e4$+"] ["+@bingo_e5$+"]";
-	mes "[Currently Finished Lines - "+@bingowin+" ]";
+	mes "[Linhas completadas corretamente - "+@bingowin+" ]";
 	if ($@bingoresult > 15) {
 		if (@bingowin > 4) {
 			next;
-			mes "We just have made 5 lines!";
-			mes "Say ^ff0000Bingo^000000!";
-			mes "W-we just matched";
-			mes "5 numbers in a row!";
-			mes "Quickly, say ''^FF0000Bingo^000000!''";
-			mes "Remember, you'll only";
-			mes "have one chance to say it!";
+			mes "Nós só te demos 5 linhas!";
+			mes "Grite ^ff0000Bingo^000000!";
+			mes "Se você marcar";
+			mes "5 números em uma linha!";
+			mes "Seja rápido, e diga ''^FF0000Bingo^000000!''";
+			mes "Lembre-se, você só tem uma";
+			mes "chance de dizer isso!";
 			input @bingoyell$;
 			if (@bingoyell$ == "Bingo") {
 				if ($@hu_bingoa == 5) {
@@ -477,20 +477,20 @@ OnTouch:
 
 				} else if ($@hu_bingoa == 6) {
 					next;
-					mes "Oh no! I'm sorry, but";
-					mes "someone already yelled";
-					mes "''bingo'' before you did.";
-					mes "I'm sorry, but you missed";
-					mes "your chance! Better luck,";
-					mes "next time, alright?";
+					mes "Oh não! Eu sinto muito, mas";
+					mes "alguém já gritou";
+					mes "''bingo'' antes de você.";
+					mes "Sinto muito, mas você perdeu";
+					mes "sua chance! Mais sorte,";
+					mes "na próxima, tudo bem?";
 					close;
 				}
 			} else {
 				next;
-				mes "I'm sorry, but you";
-				mes "said it wrong. Next time,";
-				mes "make sure that you yell";
-				mes "out the word, ''^FF0000Bingo^000000,'' okay?";
+				mes "Sinto muito, mas você";
+				mes "disse errado. Da próxima vez,";
+				mes "tenha certeza de que gritou a";
+				mes "palavra, ''^FF0000Bingo^000000,'' ok?";
 				close;
 			}
 		}
@@ -662,22 +662,22 @@ OnTouch:
 	end;
 
 OnTimer1000:
-	mapannounce "que_bingo","Eukran: Wow, Bingo! It's Bingo!",1,0xFFAB54;
+	mapannounce "que_bingo","Eukran: Uau, Bingo! É Bingo!",1,0xFFAB54;
 	end;
 
 OnTimer5000:
-	mapannounce "que_bingo","Eukran: "+$@bingowinner$+" has said Bingo!",1,0xFFAB54;
+	mapannounce "que_bingo","Eukran: "+$@bingowinner$+" disse Bingo!",1,0xFFAB54;
 	end;
 
 OnTimer10000:
 	if ($@bingoresult == 16)
-		mapannounce "que_bingo","Eukran: Congratulations, "+$@bingowinner$+"! You will be rewarded with 50 Marvelous Medals.",1,0xFFAB54;
+		mapannounce "que_bingo","Eukran: Parabéns, "+$@bingowinner$+"! Sua recompensa são estas 50 Medalhas Maravilhosas.",1,0xFFAB54;
 	else
-		mapannounce "que_bingo","Eukran: Congratulations, "+$@bingowinner$+"! You will be rewarded with 1 Marvelous Medal.",1,0xFFAB54;
+		mapannounce "que_bingo","Eukran: Parabéns, "+$@bingowinner$+"! você será recompensado com 1 Medalha Maravilhosa.",1,0xFFAB54;
 	end;
 
 OnTimer15000:
-	mapannounce "que_bingo","Eukran: Thank you all for participating in the game. See you next time!",1,0xFFAB54;
+	mapannounce "que_bingo","Eukran: Obrigado a todos pela participação. Vejo vocês novamente!",1,0xFFAB54;
 	end;
 
 OnTimer20000:
@@ -714,7 +714,7 @@ OnTimer5000:
 	disablenpc "end1e#bingo";
 	areawarp "que_bingo",44,115,54,126,"que_bingo",40,121;
 	$@hu_bingoa = 0;
-	donpcevent "Bingo Waiting Room::OnStart";
+	donpcevent "Sala de Espera do Bingo::OnStart";
 	end;
 }
 
@@ -862,7 +862,7 @@ function	script	Func_BingoResult	{
 	else if (getarg(0) == 2 || getarg(0) == 22) .@str$ = "nd";
 	else if (getarg(0) == 3 || getarg(0) == 23) .@str$ = "rd";
 	else .@str$ = "th";
-	mapannounce "que_bingo","Eukran: The "+getarg(0)+.@str$+" number is "+$bingo[getarg(0) -1]+". Please check your Bingo Plate.",4,0xFFAB54;
+	mapannounce "que_bingo","Eukran: The "+getarg(0)+.@str$+" número do bingo é "+$bingo[getarg(0) -1]+". Por favor verifique sua tabela.",4,0xFFAB54;
 	enablenpc ""+getarg(0)+"a#bingo";
 	enablenpc ""+getarg(0)+"b#bingo";
 	enablenpc ""+getarg(0)+"c#bingo";
@@ -872,100 +872,101 @@ function	script	Func_BingoResult	{
 	end;
 }
 
-que_bingo,49,31,4	script	Arcade Helper#1	1_M_01,{
-	mes "[Helper]";
-	mes "If you'd like to play";
-	mes "a game of bingo, then";
-	mes "please proceed this way.";
+que_bingo,49,31,4	script	Ajudante#1	1_M_01,{
+	mes "[Ajudante]";
+	mes "Se você quiser participar";
+	mes "de um jogo de bingo, siga";
+	mes "os passos corretamente.";
 	close;
 }
-que_bingo,42,31,4	duplicate(Arcade Helper#1)	Arcade Helper#2	1_F_01
 
-que_bingo,54,17,5	script	Arcade Owner	4_M_05,{
-	mes "[Arcade Owner]";
-	mes "Welcome to the";
-	mes "Bingo Game Arcade.";
-	mes "Care to play a game of";
-	mes "bingo? If you have any";
-	mes "questions, feel free to ask.";
+que_bingo,42,31,4	duplicate(Ajudante#1)	Ajudante#2	1_F_01
+
+que_bingo,54,17,5	script	Chefe de Mesa	4_M_05,{
+	mes "[Chefe de Mesa]";
+	mes "Bem-vindo ao";
+	mes "Bingo.";
+	mes "O que é preciso para participar do";
+	mes "bingo? Se você tiver qualquer";
+	mes "dúvida, sinta-se a vontade para perguntar.";
 	next;
-	switch(select("Rules for Bingo:Bingo Room:Marvelous Medals")) {
+	switch(select("Regras do Bingo:Sala do Bingo:Medalhas Maravilhosas")) {
 	case 1:
-		mes "[Arcade Owner]";
-		mes "The rules for playing bingo";
-		mes "are simple. First, take a board";
-		mes "with 25 boxes organized so that";
-		mes "there are five rows and five";
-		mes "columns. Then, number the";
-		mes "boxes in any order you like.";
+		mes "[Chefe de Mesa]";
+		mes "As regras para jogar Bingo";
+		mes "são simples. Primeiro, escolha uma tabela";
+		mes "que contém 25 números organizados";
+		mes "de modo que existem 5 linhas e 5 colunas.";
+		mes "Em seguida, númere a tabela";
+		mes "na ordem que preferir.";
 		next;
-		mes "[Arcade Owner]";
-		mes "Of course, you must use";
-		mes "the numbers 1 through 25.";
-		mes "When everyone's bingo board";
-		mes "is ready, the game will begin.";
-		mes "Our game coordinator will call out a number from 1 to 25 at random.";
+		mes "[Chefe de Mesa]";
+		mes "É claro, você deve usar";
+		mes "os número de 1 a 25.";
+		mes "Quando todos os jogadores do bingo";
+		mes "estiverem prontos, o jogo terá início.";
+		mes "O nosso coordenador vai dizer os número de 1 a 25 em ordem aleatória.";
 		next;
-		mes "[Arcade Owner]";
-		mes "Each time the coordinator";
-		mes "calls out a number, make sure";
-		mes "that you mark the corresponding";
-		mes "numbered square on your bingo";
-		mes "board. Now, these are the";
-		mes "conditions for winning...";
+		mes "[Chefe de Mesa]";
+		mes "Cada vez que o coordenador";
+		mes "dizer um número, certifique-se";
+		mes "de que você está marcando o";
+		mes "número correspondente em sua tabela";
+		mes "de bingo. Agora, vamos as";
+		mes "condições para vencer...";
 		next;
-		mes "[Arcade Owner]";
-		mes "If you can make a line of";
-		mes "5 squares in a row, horizontally, vertically, or diagonally, using";
-		mes "the numbers called out by the";
-		mes "coordinator, you quickly yell";
-		mes "the word, ''Bingo.''";
+		mes "[Chefe de Mesa]";
+		mes "Se você marcar uma linha";
+		mes "de 5 quadrados em uma fileira, horizontal, vertical, ou diagonal, usando";
+		mes "os números ditos pelo";
+		mes "coordenador, você deve gritar";
+		mes "a palavra, ''Bingo.''";
 		next;
-		mes "[Arcade Owner]";
-		mes "If you are the first to yell";
-		mes "the word, ''Bingo,'' you'll";
-		mes "win! But if someone beats you";
-		mes "to it, then it can't be helped.";
-		mes "Anyway, it costs 1,000 zeny";
-		mes "to play each bingo game~";
+		mes "[Chefe de Mesa]";
+		mes "Se você for o primeiro a gritar";
+		mes "a palavra , ''Bingo,'' você";
+		mes "vence! Mas se alguém fizer isso antes";
+		mes "de você, você não poderá mais ser ajudado.";
+		mes "De toda forma, o custo é de 1,000 zeny";
+		mes "para participar do Bingo!";
 		close;
 	case 2:
-		mes "[Arcade Owner]";
-		mes "Ah, if you want to join a";
-		mes "bingo game, enter the right";
-		mes "door. There must be at least";
-		mes "5 people to play a game, so";
-		mes "you may need to wait until";
-		mes "that requirement is fulfilled.";
+		mes "[Chefe de Mesa]";
+		mes "Ah, se você quiser juntar-se";
+		mes "ao bingo, entre na porta";
+		mes "a direita. É preciso de pelo menos";
+		mes "5 pessoa para jogar, então";
+		mes "você pode acabar tendo de esperar";
+		mes "até que tenhamos todos os jogadores.";
 		next;
-		mes "[Arcade Owner]";
-		mes "If you just want to";
-		mes "watch the bingo game,";
-		mes "then you may enter the";
-		mes "left door as a spectator";
-		mes "in the Bingo Room.";
+		mes "[Chefe de Mesa]";
+		mes "Se você quiser apenas";
+		mes "assistir ao jogo,";
+		mes "então você pode entrar";
+		mes "na porta a esquerda";
+		mes "como um expectador.";
 		close;
 	case 3:
-		mes "[Arcade Owner]";
-		mes "When you win a bingo";
-		mes "game, you will be rewarded";
-		mes "with ''Marvelous Medals,''";
-		mes "which can only be used within";
-		mes "this arcade. You also can't^FFFFFF ^000000 trade medals with other players.";
+		mes "[Chefe de Mesa]";
+		mes "quando você ganha um jogo";
+		mes "de bingo, você vai ser recompensado";
+		mes "com ''Medalhas Maravilhosas'',";
+		mes "a qual só pode ser usada nesse";
+		mes "jogo. Você também não pode trocar essas medalhas com outros jogadores.";
 		next;
-		mes "[Arcade Owner]";
-		mes "You usually get 1 Marvelous";
-		mes "Medal for winning a bingo game,";
-		mes "but you can win 50 at one time";
-		mes "under special conditions. You";
-		mes "can also play Monster Racing";
-		mes "games to win more medals.";
+		mes "[Chefe de Mesa]";
+		mes "Você geralmente recebe 1 Medalha Maravilhosa";
+		mes "ao ganhar o jogo,";
+		mes "mas você pode ganhar 50 de uma vez";
+		mes "sob condições especiais. Você";
+		mes "também pode jogar Corrida de Monstros";
+		mes "para obter mais medalhas.";
 		next;
-		mes "[Arcade Owner]";
-		mes "Collect as many Marvelous";
-		mes "Medals as you can, and trade";
-		mes "them for products in the Monster^FFFFFF ^000000 Racing Arena. I hear there's also";
-		mes "a place in Einbroch where you can^FFFFFF ^000000 use them, but I wouldn't know.";
+		mes "[Chefe de Mesa]";
+		mes "Junte o máximo de Medalhas";
+		mes "Maravilhosas que puder, e troque-as";
+		mes "por prêmios na arena da Corrida de Monstros. Eu ouvi dizer também";
+		mes "que há um lugar em Einbroch onde você também pode usá-las, mas eu não sei onde é.";
 		close;
 	}
 }

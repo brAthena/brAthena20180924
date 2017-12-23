@@ -3694,6 +3694,8 @@ int skill_timerskill(int tid, int64 tick, int id, intptr_t data) {
 					}
 					FALLTHROUGH
 				}
+					skill->attack(skl->type,src,src,target,skl->skill_id,skl->skill_lv,tick,skl->flag);
+					break;				
 				case RL_SLUGSHOT:
 					if (target->type == BL_PC)
 						sc_start(src, target, SC_SITDOWN_FORCE, 100, skl->skill_lv, skill_get_time(skl->skill_id, skl->skill_lv));
@@ -11232,6 +11234,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 				clif->slide(src,x,y);
 			}
 			status_change_end(src, SC_HIDING, INVALID_TIMER);
+			clif->skill_poseffect(src,skill_id,skill_lv,x,y,tick);
 			break;
 
 		case SU_LOPE:

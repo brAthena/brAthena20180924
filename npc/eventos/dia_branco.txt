@@ -1,132 +1,122 @@
-//===== Hercules Script ======================================
-//= White Day Event Script
-//===== By: ==================================================
-//= 1.0a Muad_Dib (Prometheus Project)
-//===== Current Version: =====================================
-//= 1.0a
-//===== Description: =========================================
-//= Sells candy, candy cane and well baked cookie.
-//===== Additional Comments: =================================
-//= 07/06/05 : Added 1st Version. [Muad_Dib]
-//= Converted to rAthena format by Dr.Evil
-//============================================================
+//    ________________________________________________________
+//   /                                                        \
+//   |       _           _   _   _                            |
+//   |      | |__  _ __ / \ | |_| |__   ___ _ __   __ _       |
+//   |      | '_ \| '__/ _ \| __| '_ \ / _ \ '_ \ / _` |      |
+//   |      | |_) | | / ___ \ |_| | | |  __/ | | | (_| |      |
+//   |      |_.__/|_|/_/   \_\__|_| |_|\___|_| |_|\__,_|      |
+//   |                                                        |
+//   |                    brAthena Script                     |
+//   |--------------------------------------------------------|
+//   | Nome do Script:  dia_branco.txt                        |
+//   |--------------------------------------------------------|
+//   | Criado por: eA/rA/Herc/brA Dev. Team                   |
+//   |--------------------------------------------------------|
+//   | Versões eA/rA/Herc/brA: 1.1/1.1/1.1/1.0                |
+//   |--------------------------------------------------------|
+//   | Changelog:                                             |
+//   | 1.0 Cabeçalho brAthena [Axl]                           |
+//   |--------------------------------------------------------|
+//   | - Anotações                                            |
+//   \________________________________________________________/
 
-alberta,188,64,4	script	Sugar	4_F_02,{
-	mes "[Sugar]";
-	mes "Welcome!";
-	mes "How delicious are sweets?";
-	mes "My teacher.........";
-	mes "The sweets craftsman of ARUBERUTA";
-	mes "There are sweets that is built hard.";
+alberta,188,64,4	script	Açucar	4_F_02,{
+	mes "[Açúcar]";
+	mes "Bem-vindo!";
+	mes "Como são deliciosos os doces!";
+	mes "Meu professor...";
+	mes "o doceiro de ARUBERUTA.";
+	mes "Há doces difíceis de se fazer.";
 	next;
-	mes "[Sugar]";
-	mes "It was given by the darling person.";
-	mes "In return of the present ....";
-	mes "heartfelt like";
-	mes "the sweetness of the present some how.";
+	mes "[Açúcar]";
+	mes "Isto foi dado por uma pessoa querida.";
+	mes "Em troca do presente...";
+	mes "sincero como a doçura";
+	mes "de alguns presentes.";
 	next;
-	switch (select("Please give me!","I don't need it.","The teacher.")) {
-	case 1: // Please give me
-		mes "[Sugar]";
-		mes "Yes!";
-		mes "Select from menu here.";
-		mes "Since there is a limitation in numbers";
-		mes "Not more than ^ff0000 5 pieces^000000.";
-		mes "are allowed to carry out?";
+	switch(select("Por favor me dê!","Eu não preciso disso.","O professor.")) {
+	case 1:
+		mes "[Açúcar]";
+		mes "Sim!";
+		mes "Selecione no menu abaixo.";
+		mes "Uma vez que existe um limitação,";
+		mes "não escolha mais do que ^ff00005 unidades^000000.";
+		mes "Qual vai querer?";
 		next;
-		switch (select("Candy","Candy Cane","Well baked cookie")) {
-		case 1: // Candy
-			mes "[Sugar]";
-			mes "It is a candy, and the price is";
-			mes "3000 Zeny each.";
-			mes "How many do you like to purchase?";
-			next;
-			callsub(S_Purchase, 3000, Candy);
+		switch(select("Bala","Bengala Doce","Biscoito de Gengibre")) {
+		case 1:
+			set .@maplePrice,3000;
+			set .@mapleItemID,529;
 			break;
-		case 2: // Candy Cane
-			mes "[Sugar]";
-			mes "It is a candy cane, and the price is";
-			mes "4000 Zeny each.";
-			mes "How many do you like to purchase?";
-			next;
-			callsub(S_Purchase, 4000, Candy_Striper);
+		case 2:
+			set .@maplePrice,4000;
+			set .@mapleItemID,530;
 			break;
-		case 3: // Well baked cookie
-			mes "[Sugar]";
-			mes "It is a well baked cookie, and the price is";
-			mes "2000 Zeny each.";
-			mes "How many do you like to purchase?";
-			next;
-			callsub(S_Purchase, 2000, Well_Baked_Cookie);
+		case 3:
+			set .@maplePrice,2000;
+			set .@mapleItemID,538; 
 			break;
 		}
-		break;
-	case 3: // The teacher
-		mes "[Sugar]";
-		mes "Yes";
-		mes "The teacher of mine";
-		mes "is Mr. Kuberu, a sweets craftsman.";
-		mes "Making sweets under two persons.";
-		mes "which is allowed to self-train.";
+		mes "[Açúcar]";
+		mes "O preço é de";
+		mes .@maplePrice + " Zeny cada.";
+		mes "Quantos você deseja comprar?";
 		next;
-		mes "[Sugar]";
-		mes "Although selling is seemingly to carried out ....";
-		mes "Where he is now?";
-		mes "Which I don't know.";
+		input .@maplenum;
+		if (.@maplenum > 5) {
+			mes "[Açúcar]";
+			mes "???";
+			mes "você parece ser surdo.";
+			mes "Vou lhe dizer mais uma vez!";
+			mes "você só pode comprar";
+			mes "^ff00005^000000 de cada vez.";
+			close;
+		}
+		if (.@maplenum <= 0) {
+			mes "[Açúcar]";
+			mes "Realmente... você pode recusar...";
+			mes "Se você mudar de idéia,";
+			mes "estarei aqui.";
+			mes "Tenha um bom dia!";
+			close;
+		}
+		set .@maplePriceT,.@maplePrice*.@maplenum;
+		if (Zeny < .@maplePriceT) {
+			mes "[Açúcar]";
+			mes "???";
+			mes "Hmm me parece que você não tem dinheiro";
+			mes "suficiente para fazer a compra.";
+			mes "Vou lhe pedir para que verifique seu dinheiro.";
+			close;
+		}
+		set Zeny,Zeny-.@maplePriceT;
+		getitem .@mapleItemID,.@maplenum;
+		mes "[Açúcar]";
+		mes "Obrigado!!!";
+		mes "Estes doces são realmente deliciosos.";
+		mes "Uma vez que meu professor de doces é o Nº 1 do mundo!";
+		mes "Embora você possa comer sozinho,";
+		mes "não coma muito ou vai ficar gordo.";
+		mes "Por favor, tome cuidado!!!";
 		close;
-	case 2: // I don't need it
-		break;
-	}
-	mes "[Sugar]";
-	mes "Really .... You might regret it..";
-	mes "If you change your mind.";
-	mes "I am just here ok.";
-	mes "Have a nice day!";
-	close;
-
-/**
- * Attempts to purchase an item, after asking the desired quantity.
- *
- * Arguments:
- * 0 : price
- * 1 : item ID
- *
- * Returns on user cancel. Closes on successful purchase or error.
- */
-S_Purchase:
-	.@price = getarg(0);
-	.@item_id = getarg(1);
-	while (true) {
-		input .@amount;
-		if (.@amount <= 5)
-			break;
-		mes "[Sugar]";
-		mes "???";
-		mes "You seem to have a failure on hearing.";
-		mes "I will tell you once again?";
-		mes "You can only purchase";
-		mes "^ff0000 5 pieces^000000 at once.";
+	case 2:
+		mes "[Açúcar]";
+		mes "Realmente... você pode recusar...";
+		mes "Se você mudar de idéia,";
+		mes "estarei aqui.";
+		mes "Tenha um bom dia!";
+		close;
+	case 3:
+		mes "[Açúcar]";
+		mes "Sim";
+		mes "O meu professor é";
+		mes "o Sr. Kuberu, um doceiro.";
+		mes "Ele cria doces com duas pessoas";
+		mes "que estão lá para aprender.";
 		next;
-	}
-	if (.@amount == 0) // Cancel
-		return;
-	.@totalPrice = .@price * .@amount;
-	if (Zeny < .@totalPrice) {
-		mes "[Sugar]";
-		mes "???";
-		mes "Hmmm it seems you don't have enough money";
-		mes "to make that purchase.";
-		mes "I will ask you to check your money first.";
+		mes "[Açúcar]";
+		mes "Onde ele está agora?";
+		mes "Eu não sei.";
 		close;
 	}
-	Zeny -= .@totalPrice;
-	getitem .@item_id, .@amount;
-	mes "[Sugar]";
-	mes "Thank you!!!";
-	mes "These sweets are really delicious.";
-	mes "Since my teacher of sweet is the No.1 teacher's in world!";
-	mes "Although you may eat by yourself";
-	mes "don't eat so much or you'll grow fat.";
-	mes "Please take care!!!";
-	close;
 }

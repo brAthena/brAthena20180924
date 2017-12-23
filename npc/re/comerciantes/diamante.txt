@@ -1,5 +1,5 @@
 //===== Hercules Script ======================================
-//= Rare Diamond Merchant
+//= Negociante de Diamantes
 //===== By: ==================================================
 //= Z3R0
 //===== Current Version: =====================================
@@ -16,118 +16,118 @@
 //= 1.5 Added This Version History (#15429)
 //============================================================
 
--	script	RareDiamondMerchant	1_M_MERCHANT,{
+-	script	NegociantedeDiamantes	1_M_MERCHANT,{
 
-	.@npc$ = "[Rare Diamond Merchant]";
+	.@npc$ = "[Negociante de Diamantes]";
 
 	mes .@npc$;
-	mes "Ladies and Gentlemen! ! !";
-	mes "You've heard rumors but you've never once seen with your own eyes";
-	mes "the world's rarest diamond!";
-	mes "The ^FF82FF'17 Carat Diamond'^000000 is currently on sale for a cheap price!!";
-	mes "If valuable diamonds interest you then listen up!";
+	mes "Senhoras e Senhores! ! !";
+	mes "Vocês já devem ter ouvido rumores, mas nunca viram com seus próprios olhos";
+	mes "O diamante mais raro do mundo!";
+	mes "O ^FF82FF'Diamante de 17 Quilates'^000000 Está atualmente sendo vendido!!";
+	mes "Se diamantes valiosos interessa a você, ouça com atenção!";
 	next;
 	
 	mes .@npc$;
-	mes "You can give the diamond as a gift to your lover.";
-	mes "The receiver of the ^FF82FF'17 Carat Diamond'^000000 will cherish it";
-	mes "and treasure you in their heart.";
+	mes "Você pode da-lo de presente para o seu amor.";
+	mes "A pessoa que receber o ^FF82FF'Diamante de 17 Quilates'^000000 certamente irá apreciar";
+	mes "este tesouro com todo o seu coração.";
 	emotion e_loud;
 	next;
 	
 	mes .@npc$;
-	mes "What? You don't have a lover?";
-	mes "You can still just hang on to it for yourself.";
-	mes "The enchanting aura of the ^FF82FF'17 Carat Diamond'^000000 is likely";
-	mes "to bring love into your life.";
+	mes "O que? Você não tem um amor?";
+	mes "Ainda sim, você pode apreciá-lo por conta própria.";
+	mes "A aura encantadora do ^FF82FF'Diamante de 17 Quilates'^000000 é maravilhosa";
+	mes "para trazer a pessoa amada a sua vida.";
 	next;
 	
 	mes .@npc$;
-	mes "Known as the captivating diamond of diamonds...";
-	mes "It is the ^FF82FF'17 Carat Diamond'^000000!";
+	mes "Conhecido como o diamante dos diamantes...";
+	mes "Esté é o ^FF82FF'Diamante de 17 Quilates'^000000!";
 	next;
 
-	.@menu$ = "^FF82FF'17 Carat Diamond'^000000?";
+	.@menu$ = "^FF82FF'Diamante de 17 Quilates'^000000?";
 	if (countitem(6024))
-		.@menu$ += ":Exchange my 17 Carat Diamond for zeny...";
+		.@menu$ += ":Trocar Diamante de 17 Quilates por Zenys...";
 
 	switch(select(.@menu$)) {
 	case 1:
 		mes .@npc$;
-		mes "Yes!";
-		mes "Hehe, the ^FF82FF'17 Carat Diamond'^000000 you see right now";
-		mes "is one of the highest quality 17 carat diamonds.";
-		mes "Comparing it to any pea-sized, colorless rock you may have";
-		mes "dug up from Morroc is unspeakable!";
+		mes "Sim!";
+		mes "Hehe, Aqui está veja o ^FF82FF'Diamante de 17 Quilates'^000000.";
+		mes "É um dos diamantes de maior qualidade do mundo.";
+		mes "O melhor dos melhores... Comparado com qualquer mini-rocha incolor que você pode achar";
+		mes "até no de Morroc!";
 		emotion e_omg;
 		next;
 		
 		mes .@npc$;
-		mes "Some claim that this is the very same diamond";
-		mes "that was seen by Kachua in Comodo!";
+		mes "Alguns afirmam que este é o mesmo diamante";
+		mes "que foi usado por Kachua em Comodo!";
 		next;
 		
-		if (select("End Conversation:How much is it?") == 1) {
+		if (select("Encerrar Conversa:Quanto ele custa?") == 1) {
 			mes .@npc$;
-			mes "It's rather inexpensive!";
-			mes "If you're interested, talk to me any time!";
+			mes "É bastante barato!";
+			mes "Se você estiver interessado, fale comigo a qualquer momento!";
 			close;
 		}
 		
 		mes .@npc$;
-		mes "Of course! The most important thing is price!";
-		mes "As I've said earlier, the ^FF82FF'17 Carat Diamond'^000000 has been";
-		mes "appraised as a 17 carat diamond.";
-		mes "There aren't many like it in the world.";
+		mes "Claro! A coisa mais importante é o preço!";
+		mes "Como eu disse anteriormente, o ^FF82FF'Diamante de 17 Quilates'^000000 foi";
+		mes "avaliado como uma super rocha rara.";
+		mes "Não há muitos como ela no mundo.";
 		next;
 		
 		mes .@npc$;
-		mes "The price is a mere 500 million zeny!";
-		mes "There is also a 1,000,000z service fee.";
-		mes "Compared to the quality of the diamond";
-		mes "this is a small price to pay.";
+		mes "O preço é de apenas 500 milhões de zeny!";
+		mes "Há também uma taxa de serviço de 1.000.000z.";
+		mes "Em comparação com a qualidade do diamante";
+		mes "este é um pequeno preço a se pagar.";
 		next;
 		
-		if (select("^828282It's too expensive.^000000:I'll buy it.") == 1) {
+		if (select("^828282É muito caro.^000000:Vou comprá-lo.") == 1) {
 			mes .@npc$;
-			mes "To say that a diamond such as the";
-			mes "^FF82FF'17 Carat Diamond'^000000 is too expensive, ";
-			mes "you leave me speechless.";
+			mes "Dizer que um diamante como o";
+			mes "^FF82FF'Diamante de 17 Quilates'^000000 é muito caro, ";
+			mes "Você me deixa sem palavras.";
 			close;
 		}
 		
 		mes .@npc$;
-		mes "OOOH! I knew from the moment I saw you that you were the rightful";
-		mes "owner of this wonderful diamond.";
-		mes "I'm glad I wasn't wrong!";
-		mes "I believe this diamond will suit you quite well.";
-		mes "All I need from you is to complete this contract.";
+		mes "OOOH! Eu sabia desde o momento em que te vi que você era o legítimo";
+		mes "proprietário deste maravilhoso diamante.";
+		mes "Estou feliz por não estar errado!";
+		mes "Eu acredito que este diamante irá cair muito bem em você.";
+		mes "Tudo que eu preciso de é concluir este contrato.";
 		next;
 		
 		while(1) {
-			if (select("^B9062FI will sign the contract.^000000:^828282Nevermind, I changed my mind.^000000") == 2) {
+			if (select("^B9062FOk, assinarei o contrato.^000000:^828282Deixa pra lá, mudei de idéia.^000000") == 2) {
 				mes .@npc$;
-				mes "I see, that's too bad..";
+				mes "Entendo, isso é muito ruim...";
 				close;
 			}
 			
 			mes .@npc$;
-			mes "What is your name?";
+			mes "Como você se chama?";
 			next;
 			
 			mes "[" + strcharinfo(0) + "]";
-			mes "My name is " + strcharinfo(0) + ".";
+			mes "Eu me chamo " + strcharinfo(0) + ".";
 			next;
 
 			mes .@npc$;
-			mes "Alright then, please sign here.";
+			mes "Tudo bem, assine aqui por favor.";
 			next;
 			
 			input .@charname$;
 			if (.@charname$ == strcharinfo(0)) {
 				mes .@npc$;
-				mes "Okay, good.";
-				mes "All that is left now is payment.";
+				mes "Ok, bom.";
+				mes "Tudo o que resta é pagamento.";
 				next;
 				
 				if (Zeny >= 501000000) {
@@ -136,88 +136,88 @@
 					next;
 					
 					mes .@npc$;
-					mes "Calculating the price and service fee..";
-					mes "501,000,000 zeny.";
-					mes "Amount has been confirmed.";
+					mes "Cálculando o preço junto a taxa de serviço..";
+					mes "501,000,000 zenys.";
+					mes "O valor foi confirmado.";
 					emotion e_loud;
 					Zeny -= 501000000;
 					getitem 6024, 1;
 					next;
 
 					mes .@npc$;
-					mes "You may exchange the diamond back for zeny at any time.";
-					mes "However, there will be a 1,000,000z service fee.";
-					mes "Thank you for your business.";
+					mes "Você pode trocar o diamante comigo de volta a qualquer momento.";
+					mes "No entanto, haverá uma taxa de serviço de 1.000.000z.";
+					mes "Agradeço pelos seus serviços.";
 					emotion e_thx;
 					close;
 				}
 				else {
 					mes .@npc$;
 					mes "Hm?";
-					mes "I'm sorry, but you don't have sufficient funds.";
-					mes "Including the service fee, a total of 501,000,000z is required.";
-					mes "Please check your zeny balance and try again.";
+					mes "Sinto muito, mas você não tem dinheiro o suficientes.";
+					mes "Incluindo a taxa de serviço, um total de 501.000.000z é necessário para essa negociação.";
+					mes "Verifique seu saldo de zeny e volte aqui quando puder.";
 					emotion e_hmm;
 					close;
 				}
 			}
 			else {
 				mes .@npc$;
-				mes "Is this really your signature?";
-				mes "Will sign again to confirm?";
+				mes "Esta é realmente sua assinatura?";
+				mes "Pode assinar novamente para confirmar?";
 				next;
 			}
 		}
 	case 2:
 		mes .@npc$;
-		mes "AAH. You would like to exchange your ^FF82FF'17 Carat Diamond'^000000 for zeny?";
+		mes "AAH. Você gostaria de trocar o seu ^FF82FF'Diamante de 17 Quilatos'^000000 por zenys?";
 		emotion e_gasp;
 		next;
-		if (select("Yes:No") == 2) {
+		if (select("Sim:Não") == 2) {
 			mes .@npc$;
-			mes "Then, what is it you desire?..";
+			mes "Então, o que você deseja?..";
 			mes ". . . . . ....";
 			emotion e_dots;
 			close;
 		}
 
 		mes .@npc$;
-		mes "I see. After I receive your signature, ";
-		mes "You must offer your ^FF82FF'17 Carat Diamond'^000000.";
-		mes "Also don't forget there is a 1,000,000z service fee!";
+		mes "Entendo. Depois de receber a sua assinatura, ";
+		mes "Você deve devolver o seu ^FF82FF'Diamante de 17 Quilates'^000000.";
+		mes "Também não se esqueça que há uma taxa de serviço 1.000.000z!";
 		next;
 		
 		mes .@npc$;
-		mes "What is your name?";
+		mes "Como você se chama?";
 		next;
 		
 		mes "[" + strcharinfo(0) + "]";
-		mes "My name is " + strcharinfo(0) + ".";
+		mes "Eu me chamo " + strcharinfo(0) + ".";
 		next;
 		
 		mes .@npc$;
-		mes "Alright then, please sign here.";
+		mes "Tudo bem, assine aqui.";
 		next;
 		
 		while (1) {
-			if (select("Sign:Don't Sign") == 2) {
+			if (select("Assinar:Não Assinar") == 2) {
 				mes .@npc$;
-				mes "The trade cannot be completed without your signature.";
+				mes "A negociação não pode ser concluída sem a sua assinatura.";
 				close;
 			}
 			
 			input .@charname$;
 			if (.@charname$ == strcharinfo(0)) {
 				mes .@npc$;
-				mes "Your signature has been received.";
-				mes "I will now take your ^FF82FF'17 Carat Diamond'^000000..";
-				mes "You will receive ^0000FF499,000,000z^000000 afterwards.";
+				mes "Recebi a sua assinatura.";
+				mes "Agora só lhe resta me entregar o seu ^FF82FF'Diamante de 17 Quilates'^000000..";
+				mes "Para você receber os seus ^0000FF499,000,000z^000000 de volta.";
 				next;
 				
 				mes .@npc$;
-				mes "Thank you for your business.";
-				mes "Whenever you need a ^FF82FF'17 Carat Diamond'^000000,";
-				mes "come back anytime with 500 million zeny.";
+				mes "Agradeço pelos seus serviços.";
+				mes "Sempre que precisar de um ^FF82FF'Diamante de 17 Quilates'^000000,";
+				mes "é só voltar com 500 milhões de zenys em mãos.";
 				emotion e_thx;
 				delitem 6024, 1;
 				Zeny += 499000000;
@@ -225,18 +225,18 @@
 			}
 			else {
 				mes .@npc$;
-				mes "Is this really your signature?";
-				mes "Will sign again to confirm?";
+				mes "Esta é realmente sua assinatura?";
+				mes "Pode assinar novamente para confirmar?";
 				next;
 			}
 		}
 	}
 }
 
-prontera,165,89,6	duplicate(RareDiamondMerchant)	Rare Diamond Merchant#1	1_M_MERCHANT
-geffen,106,63,6	duplicate(RareDiamondMerchant)	Rare Diamond Merchant#2	1_M_MERCHANT
-morocc,146,100,6	duplicate(RareDiamondMerchant)	Rare Diamond Merchant#3	1_M_MERCHANT
-alberta,129,60,6	duplicate(RareDiamondMerchant)	Rare Diamond Merchant#4	1_M_MERCHANT
-lighthalzen,163,65,6	duplicate(RareDiamondMerchant)	Rare Diamond Merchant#5	1_M_MERCHANT
-rachel,106,142,6	duplicate(RareDiamondMerchant)	Rare Diamond Merchant#6	1_M_MERCHANT
-payon,180,130,6	duplicate(RareDiamondMerchant)	Rare Diamond Merchant#7	1_M_MERCHANT
+prontera,165,89,6	duplicate(NegociantedeDiamantes)	Negociante de Diamantes#1	1_M_MERCHANT
+geffen,106,63,6	duplicate(NegociantedeDiamantes)	Negociante de Diamantes#2	1_M_MERCHANT
+morocc,146,100,6	duplicate(NegociantedeDiamantes)	Negociante de Diamantes#3	1_M_MERCHANT
+alberta,129,60,6	duplicate(NegociantedeDiamantes)	Negociante de Diamantes#4	1_M_MERCHANT
+lighthalzen,163,65,6	duplicate(NegociantedeDiamantes)	Negociante de Diamantes#5	1_M_MERCHANT
+rachel,106,142,6	duplicate(NegociantedeDiamantes)	Negociante de Diamantes#6	1_M_MERCHANT
+payon,180,130,6	duplicate(NegociantedeDiamantes)	Negociante de Diamantes#7	1_M_MERCHANT

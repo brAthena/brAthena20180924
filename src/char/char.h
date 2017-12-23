@@ -277,6 +277,11 @@ struct char_interface {
 	void (*sql_config_read) (const char* cfgName);
 	void (*config_dispatch) (char *w1, char *w2);
 	int (*config_read) (const char* cfgName);
+
+	// Pacotes para tratamento de mac-address. [CarlosHenrq]
+	void (*parse_frommap_macban) (int); 		// 0x27f0
+	void (*parse_frommap_macunban) (int);		// 0x27f1
+	void (*parse_fromlogin_macresponse) (int);	// 0x27f2
 };
 
 #ifdef BRATHENA_CORE

@@ -1,40 +1,34 @@
-//===== Hercules Script ======================================
-//= Advanced Refiner
-//===== By: ==================================================
-//= L0ne_W0lf
-//===== Current Version: =====================================
-//= 1.5
-//===== Description: =========================================
-//= [Official Conversion]
-//= Refiner that uses Enriched ores to increase upgrade success.
-//= After a conversation with Doddler, it's been established that
-//= the advanced refiner works similar the the "Bubble Gum" item.
-//= The success percentage is not "increased" however, if it fails
-//= You get a second try. This tries twice at the same time,
-//= effectively giving you a re-roll on your attempt.
-//= - Dialog is only partly official to iRO.
-//= - Uses the iRO position for this NPC.
-//===== Additional Comments: =================================
-//= 1.0 First Version. [L0ne_W0lf]
-//= 1.1 Fixed a weird carriage return. o_o [L0ne_W0lf]
-//= 1.2 Optimizing refine method [Zephyrus]
-//= 1.3 Typo fixes [Yommy]
-//= 1.4 Removed unnecessary dialogs [Zephyrus]
-//= 1.4a Added 'disable_items' command. [Euphy]
-//= 1.4b Fixed coordinates. [Euphy]
-//= 1.5 Some official script updates. [Euphy]
-//============================================================
+//    ________________________________________________________
+//   /                                                        \
+//   |       _           _   _   _                            |
+//   |      | |__  _ __ / \ | |_| |__   ___ _ __   __ _       |
+//   |      | '_ \| '__/ _ \| __| '_ \ / _ \ '_ \ / _` |      |
+//   |      | |_) | | / ___ \ |_| | | |  __/ | | | (_| |      |
+//   |      |_.__/|_|/_/   \_\__|_| |_|\___|_| |_|\__,_|      |
+//   |                                                        |
+//   |                    brAthena Script                     |
+//   |--------------------------------------------------------|
+//   | Nome do Script:  refinador_avancado.txt                |
+//   |--------------------------------------------------------|
+//   | Criado por: eA/rA/Herc/brA Dev. Team                   |
+//   |--------------------------------------------------------|
+//   | Versões eA/rA/Herc/brA: 1.1/1.1/1.1/1.0                |
+//   |--------------------------------------------------------|
+//   | Changelog:                                             |
+//   | 1.0 Cabeçalho brAthena [Axl]                           |
+//   |--------------------------------------------------------|
+//   | - Anotações                                            |
+//   \________________________________________________________/
 
 payon,157,146,6	script	Suhnbi#cash	4_M_03,{
 	disable_items;
 	mes "[Suhnbi]";
-	mes "I am the Armsmith";
-	mes "I can refine all kinds of weapons,";
-	mes "armor and equipment, so let me";
-	mes "know what you want to refine.";
+	mes "Eu sou o Refinador";
+	mes "Eu posso refinar todos os tipos de armas,";
+	mes "armaduras e equipamentos, então deixe-me";
+	mes "sabe o que quer para refinar.";
 	next;
-
-	setarray .@position$[1], "Head","Body","Left hand","Right hand","Robe","Shoes","Accessory 1","Accessory 2","Head 2","Head 3";
+	setarray .@position$[1], "Cabeça","Corpo","Mão Esquerda","Mão Direita","Manto","Sapatos","Acessorio 1","Acessorio 2","Cabeça 2","Cabeça 3";
 	.@menu$ = "";
 	for(.@i = 1; .@i<=10; ++.@i) {
 		if (getequipisequiped(.@i)) {
@@ -45,7 +39,7 @@ payon,157,146,6	script	Suhnbi#cash	4_M_03,{
 	}
 	if (.@equipped == 0) {
 		mes "[Suhnbi]";
-		mes "I don't think I can refine any items you have...";
+		mes "Eu não acho que eu possa aperfeiçoar todos estes itens.";
 		close;
 	}
 	.@part = select(.@menu$);
@@ -54,12 +48,12 @@ payon,157,146,6	script	Suhnbi#cash	4_M_03,{
 		close;
 	if (!getequipisenableref(.@part)) {
 		mes "[Suhnbi]";
-		mes "Go find another Blacksmith. You can't refine this thing.";
+		mes "Vá encontrar outro Ferreiro. Eu não posso aperfeiçoar isto.";
 		close;
 	}
 	if (getequiprefinerycnt(.@part) >= 10) {
 		mes "[Suhnbi]";
-		mes "Hmm... someone perfected this already. I don't think I can work on it further.";
+		mes "Hmm ... alguém já aperfeiçoou isto. Eu não posso aperfeiçoá-lo mais.";
 		close;
 	}
 
@@ -81,7 +75,7 @@ payon,157,146,6	script	Suhnbi#cash	4_M_03,{
 		emotion e_no1;
 		mes "[Suhnbi]";
 		mes "There you go! It's done.";
-		mes "It's been a while since I've made such a fine "+((getequipweaponlv(.@part))?"weapon":"armor")+". You must be happy because it has become stronger!";
+		mes "Faz muito tempo desde que eu fiz uma "+((getequipweaponlv(.@part))?"Arma":"Armadura")+" tão forte. Bem você deve estar feliz, porque se tornou mais forte!";
 		close;
 	}
 	failedrefitem .@part;
@@ -94,53 +88,54 @@ payon,157,146,6	script	Suhnbi#cash	4_M_03,{
 	mes "...";
 	mes ".....";
 	mes ".......Huhuhuhuhu~";
-	mes "........It was your choice and my ability, no regret.";
+	mes "........	Foi sua escolha e minha capacidade, não me arrependo.";
 	close;
 
 S_RefineValidate:
 	mes "[Suhnbi]";
 	if (getarg(0))
-		mes "You want to refine a level " + getarg(0) + " weapon?";
-	mes "To refine that, you'll need to have one ^ff9999" + getitemname(getarg(1)) + "^000000 and " + getarg(2) + " zeny.";
-	mes "Would you like to continue?";
+		mes "Você deseja Refinar 1 Nível da arma " + getarg(0) + "?";
+	mes "Para refinar isso eu preciso de um ^ff9999" + getitemname(getarg(1)) + "^000000 e " + getarg(2) + " zeny.";
+	mes "Você deseja continuar?";
 	next;
-	if(select("Yes:No") == 1) {
+	if(select("Sim:Não") == 1) {
 		if (getequippercentrefinery(getarg(3)) < 100) {
 			if (getarg(0)) {
 				mes "[Suhnbi]";
 				mes "Wow!!";
-				mes "This weapon probably";
-				mes "looks like it's been refined...";
-				mes "many times...";
-				mes "It may break if";
-				mes "you refine it again.";
+				mes "Esta arma, provavelmente";
+				mes "parece que foi refinada...";
+				mes "muitas vezes	...";
+				mes "ele pode quebra se";
+				mes "for refinado novamente.";
 				next;
-				mes "And if it breaks,";
-				mes "you can't use it anymore!";
-				mes "All the cards in it and the properties ^ff0000will be lost^000000!";
-				mes "^ff0000Besides, the equipment will break!^000000";
-				mes "Are you sure you still want to continue?";
+				mes "E se ela quebrar,";
+				mes "você não poderá usá-la mais!";
+				mes "Todas a cartas e propriedades do equipamento";
+				mes "^ff0000serão perdidas^000000!!";
+				mes "^ff0000 além disso, o equipamento vai quebrar!^000000";
+				mes "Tem certeza que ainda quer continuar?";
 				next;
-				if(select("Yes:No") == 2) {
+				if(select("Sim:Não") == 2) {
 					mes "[Suhnbi]";
-					mes "Good.";
-					mes "Because if the weapon breaks from unreasonable refining, then I get a bad mood, too.";
+					mes "Bem..";
+					mes "Porque, se a arma quebrar da refinação razoável, ficarei de mau humor, também.";
 					close;
 				}
 			} else {
 				mes "[Suhnbi]";
-				mes "Giggle. Giggle. Oh, you have guts, daring to refine this.";
-				mes "You know it's pretty risky, don't you?";
+				mes "Giggle. Giggle. Oh, você tem coragem e ousadia para refina-lo.";
+				mes "Você sabe que é muito arriscado, não é?";
 				next;
-				mes "If your defensive equipment is broken, you'll never be able to use it again.";
-				mes "Even your cards and your modifications will ^ff0000completely disappear^000000.";
+				mes "Se o seu equipamento defensivo é quebrado, você nunca vai ser capaz de usá-lo novamente.";
+				mes "Até mesmo suas cartas e modificações ^ff0000desaparecerão completamente^000000.";
 				//mes "Everything will disappear. As in... GONE!";
-				mes "Do you really wish to continue?";
+				mes "Você realmente deseja continuar?";
 				next;
-				if(select("Yes:No") == 2) {
+				if(select("Sim:Não") == 2) {
 					mes "[Suhnbi]";
-					mes "What nonsense. You waste my precious time.";
-					mes "Get lost, punk.";
+					mes "Que absurdo. Você perder meu precioso tempo.";
+					mes "Cai fora, punk.";
 					close;
 				}
 			}
@@ -152,10 +147,10 @@ S_RefineValidate:
 		}
 		mes "[Suhnbi]";
 		mes "Are these all you have?";
-		mes "I'm very sorry, but I can't do anything without all the materials. Besides, I deserve some payments for my work, don't I?";
+		mes "Sinto muito, mas eu não posso fazer nada sem todos os materiais. Além disso, eu mereço alguns pagamentos pelo meu trabalho, não é?";
 		close;
 	}
 	mes "[Suhnbi]";
-	mes "I can't help it even if you're not happy about it...";
+	mes "Não posso ajudá-lo, mesmo se você não estiver feliz com isso ...";
 	close;
 }

@@ -43,12 +43,6 @@
 #define MAX_SPIRITCHARM 10
 
 /**
- * when enabled, reflect damage doesn't bypass devotion (and thus damage is passed to crusader)
- * uncomment to enable
- **/
-//#define DEVOTION_REFLECT_DAMAGE
-
-/**
  * No settings past this point
  **/
 

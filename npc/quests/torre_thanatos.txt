@@ -1,234 +1,242 @@
-//===== Hercules Script ======================================
-//= Thanatos Tower Quest
-//===== By: ==================================================
-//= Muad_Dib
-//===== Current Version: =====================================
-//= 1.1a
-//===== Description: =========================================
-//= [Official Conversion]
-//= Episode 13.1 Thanatos Tower quest.
-//===== Additional Comments: =================================
-//= 1.0 Adapted from official release. [Euphy]
-//= 1.0a Added 'npcskill' command. [Euphy]
-//= 1.1 Kagerou/Oboro support (Class -> BaseClass) [Euphy]
-//============================================================
+//    ________________________________________________________
+//   /                                                        \
+//   |       _           _   _   _                            |
+//   |      | |__  _ __ / \ | |_| |__   ___ _ __   __ _       |
+//   |      | '_ \| '__/ _ \| __| '_ \ / _ \ '_ \ / _` |      |
+//   |      | |_) | | / ___ \ |_| | | |  __/ | | | (_| |      |
+//   |      |_.__/|_|/_/   \_\__|_| |_|\___|_| |_|\__,_|      |
+//   |                                                        |
+//   |                    brAthena Script                     |
+//   |--------------------------------------------------------|
+//   | Nome do Script: torre_thanatos.txt                     |
+//   |--------------------------------------------------------|
+//   | Criado por: eA/rA/brA Dev. Team                        |
+//   |--------------------------------------------------------|
+//   | Versões eA/rA/brA: 2.1/1.0a/1.0                        |
+//   |--------------------------------------------------------|
+//   | Descrição: Quest da Torre Thanatos.                    |
+//   |--------------------------------------------------------|
+//   | Changelog:                                             |
+//   | 1.0 Criado Cabeçalho [Megasantos]                      |
+//   |--------------------------------------------------------|
+//   | - Anotações                                            |
+//   \________________________________________________________/
 
-hu_fild01,140,163,5	script	Tower Keeper	4_M_EIN_SOLDIER,3,3,{
+hu_fild01,140,163,5	script	Gerente da Torre	4_M_EIN_SOLDIER,3,3,{
 	mes "[Gatei]";
-	mes "Greetings, adventurer.";
-	mes "I am Gatei Knumm, keeper";
-	mes "of this Thanatos Tower.";
-	mes "How may I help you?";
+	mes "Saudações, aventureiro.";
+	mes "Meu nome é Gatei Knumm, guardião";
+	mes "da Torre de Thanatos.";
+	mes "Em que posso ajudar?";
 	next;
-	switch(select("Thanatos Tower?:Entrance Fee?:Enter the tower:Cancel")) {
+	switch(select("Torre de Thanatos:Taxa de entrada?:Entrar na torre:Cancelar")) {
 	case 1:
 		mes "[Gatei]";
-		mes "Yes, the tower in front";
-		mes "of you was an ancient ruins";
-		mes "that got its name from a word";
-		mes "written on a stone plate found";
-		mes "inside. Today, this place is";
-		mes "a popular tourist attraction.";
+		mes "Sim, a torre à sua frente";
+		mes "era uma ruína antiga";
+		mes "que recebeu seu nome de uma palavra";
+		mes "talhada em uma placa de pedra encontrada";
+		mes "em seu interior. Hoje em dia este lugar";
+		mes "é uma popular atração turística.";
 		next;
 		mes "[Gatei]";
-		mes "This tower grew in popularity";
-		mes "for adventurers when the";
-		mes "Rekenber Corporation began";
-		mes "tower reconstruction efforts.";
-		mes "The 1st and 2nd floors are now";
-		mes "repaired and free of monsters.";
+		mes "A torre ganhou mais popularidade";
+		mes "entre os aventureiros quando a ";
+		mes "Corporação Rekenber começou";
+		mes "sua reconstrução.";
+		mes "O primeiro e o segundo andar estão agora";
+		mes "reparados e sem monstros.";
 		next;
 		mes "[Gatei]";
-		mes "However, reconstruction of";
-		mes "the 3rd and higher floors is";
-		mes "incomplete. Those levels are";
-		mes "still infested with monsters, so we're contracting temp workers";
-		mes "to exterminate all of them.";
+		mes "Mas a reconstrução do";
+		mes "terceiro andar ainda está ";
+		mes "incompleta. Este andar ainda";
+		mes "está cheio de monstros, portanto estamos contratando trabalhadores temporários";
+		mes "para exterminarem todas estas criaturas.";
 		next;
 		mes "[Gatei]";
-		mes "If you're interested in";
-		mes "temporary contract work,";
-		mes "or would like to know about";
-		mes "this place in detail, please";
-		mes "ask one of the guides inside.";
-		mes "Thank you and enjoy your visit~";
+		mes "Você estaria interessado em";
+		mes "um trabalho temporário,";
+		mes "ou gostaria de saber mais sobre";
+		mes "este lugar, por favor";
+		mes "pergunte a algum guia lá dentro sobre alguma destas coisas.";
+		mes "Obrigado e aproveite bem sua visita!";
 		close;
 	case 2:
 		mes "[Gatei]";
-		mes "Everyone is welcome to";
-		mes "enjoy Thanatos Tower.";
-		mes "Only the 1st and 2nd floors";
-		mes "are open to the public at";
-		mes "this time. The entrance fee";
-		mes "is 5,000 zeny per person.";
+		mes "Todos são bem-vindos";
+		mes "na Torre de Thanatos.";
+		mes "Apenas o primeiro e o segundo andar";
+		mes "estão abertos ao público";
+		mes "por enquanto. A taxa de entrada";
+		mes "é de 5000 zenys por pessoa.";
 		next;
 		mes "[Gatei]";
-		mes "5,000 zeny may seem a little";
-		mes "steep for a tourist attraction,";
-		mes "but trust me, this tower provides a very unique experience. Also,";
-		mes "our loyal customers and contract workers get a special discount~";
+		mes "5000 zenys parece ser um preço um pouco salgado";
+		mes "para uma atração turística,";
+		mes "mas confie em mim, esta torre lhe dará uma experiência única na vida.";
+		mes "Inclusive, nossos clientes e trabalhadores contratados têm um desconto especial!";
 		close;
 	case 3:
 		mes "[Gatei]";
-		mes "Would you like to";
-		mes "enter Thanatos Tower?";
-		mes "The entry fee is ^FF00005,000 zeny^000000.";
+		mes "Gostaria de";
+		mes "entrar na Torre de Thanatos?";
+		mes "A taxa de entrada é de ^FF00005000 zenys^000000.";
 		next;
-		switch(select("Enter:Maybe next time.")) {
+		switch(select("Entrar:Quem sabe da próxima vez.")) {
 		case 1:
 			if (thana_tower > 0) {
 				mes "[Gatei]";
 				mes "Oh, "+strcharinfo(0)+"!";
-				mes "Welcome back! Since you've";
-				mes "got a temporary Rekenber";
-				mes "work contract, your entrance";
-				mes "fee is only 3,000 zeny.";
+				mes "Bem-vindo de volta! Como você já ";
+				mes "pegou sua vaga como";
+				mes "trabalhador temporário, sua taxa";
+				mes "de entrada é de 3000 zenys.";
 				next;
-				switch(select("Enter:No, thanks.")) {
+				switch(select("Entrar:Não, obrigado.")) {
 				case 1:
 					if (Zeny > 2999) {
 						mes "[Gatei]";
-						mes "Thank you, and";
-						mes "please keep up the";
-						mes "good work. Ah, and don't";
-						mes "forget: safety first when";
-						mes "you fight those monsters!";
-						Zeny -= 3000;
+						mes "Obrigado, e ";
+						mes "continue com o ";
+						mes "bom trabalho. E não";
+						mes "se esqueça: segurança em primeiro lugar quando";
+						mes "estiver lutando com aqueles monstros!";
+						set Zeny, Zeny - 3000;
 						close2;
 						warp "tha_scene01",131,220;
 						end;
 					}
 					mes "[Gatei]";
-					mes "Oh, I'm sorry...";
-					mes "But you don't seem to";
-					mes "have enough zeny. Oh well,";
-					mes "just come back again later~";
+					mes "Oh, desculpe...";
+					mes "Parece que você não";
+					mes "tem zenys suficientes. Bem,";
+					mes "volte mais tarde!";
 					close;
 				case 2:
 					mes "[Gatei]";
-					mes "You must be busy, then.";
-					mes "Well, not to worry, we'll";
-					mes "always be here. Farewell~";
+					mes "Você deve estar ocupado, então.";
+					mes "Bem, não se preocupe, nós vamos";
+					mes "estar sempre aqui. Até logo~";
 					close;
 				}
 			}
 			if (Zeny > 4999) {
 				mes "[Gatei]";
-				mes "Ah, I've received your";
-				mes "entrance fee. Thank you";
-				mes "very much. Now, I hope";
-				mes "you enjoy your visit";
-				mes "to Thanatos Tower~";
+				mes "Ah, recebi sua";
+				mes "taxa de entrada. Muito";
+				mes "obrigado. Bem, espero que";
+				mes "tenha aproveitado sua visita";
+				mes "à Torre de Thanatos!";
 				close2;
 				Zeny -= 5000;
 				warp "tha_scene01",131,220;
 				end;
 			}
 			mes "[Gatei]";
-			mes "Well...";
-			mes "Hm. I'm sorry, but you";
-			mes "don't seem to have enough";
-			mes "zeny for the entrance fee.";
-			mes "Please come back later...";
+			mes "Oh, desculpe...";
+			mes "Parece que você não";
+			mes "tem zenys suficientes. Bem,";
+			mes "volte mais tarde!";
 			close;
 		case 2:
 			mes "[Gatei]";
-			mes "Very well. Please come";
-			mes "and visit us again here";
-			mes "in Thanatos Tower.";
+			mes "Muito bem. Por favor";
+			mes "volte a nos visitar mais vezes";
+			mes "aqui na Torre de Thanatos.";
 			close;
 		}
 	case 4:
 		mes "[Gatei]";
-		mes "Hmm? Very well.";
-		mes "But if you wish to visit";
-		mes "this Thanatos Tower, please";
-		mes "do not hesitate to ask me.";
-		mes "Thank you and have a nice day.";
+		mes "Hmm? Muito bem.";
+		mes "Mas se você deseja visitar";
+		mes "a Torre de Thanatos, por favor";
+		mes "não hesite em me perguntar.";
+		mes "Obrigado e tenha um ótimo dia.";
 		close;
 	}
 
 OnTouch:
-	mes "[Tower Keeper]";
-	mes "Excuse me, but you cannot";
-	mes "enter. This place is under";
-	mes "the Rekenber Corporation's";
-	mes "administration, and this area";
-	mes "is restricted to all those";
-	mes "without authorization.";
+	mes "[Gatei]";
+	mes "Desculpe-me, mas você não pode";
+	mes "entrar. Este lugar pertece";
+	mes "a Administração da Corporação";
+	mes "Rekenber, e essa área é";
+	mes "restrita para os que";
+	mes "não possuem autorização.";
 	close;
 }
 
-tha_t01,149,78,4	script	Guide	4_F_01,{
+tha_t01,149,78,4	script	Guia	4_F_01,{
 	if (thana_tower == 0) {
 		mes "[Ditze]";
-		mes "Welcome to Thanatos Tower.";
-		mes "The tower's reconstruction is";
-		mes "a Rekenber Corporation project,";
-		mes "and the 1st and 2nd floors are";
-		mes "now open to the public. So";
-		mes "how may I help you today?";
+		mes "Bem-vindo à Torre de Thanatos.";
+		mes "A reconstrução da torre é ";
+		mes "um projeto da Corporação Rekenber,";
+		mes "e apenas o primeiro e segundo andar";
+		mes "estão abertos para o público. Então,";
+		mes "como posso lhe ajudar hoje?";
 		next;
-		switch(select("Tower Information:Temporary Work Contract:Cancel")) {
+		switch(select("Informação sobre a torre:Contrato de trabalho temporário:Cancelar")) {
 		case 1:
 			mes "[Ditze]";
-			mes "When this tower was built,";
-			mes "who built it, and its purpose";
-			mes "are all mysteries. There are";
-			mes "many rumors about it being a";
-			mes "Mage lab, a hero's momunent,";
-			mes "or a demon fortress...";
+			mes "Quando essa torre foi construída,";
+			mes "quem a construiu, e seu propósito";
+			mes "eram um mistério. Existem";
+			mes "muitos rumores sobre a torre ser um";
+			mes "Laboratório, um monumento a heróis";
+			mes "ou um forte de demônios...";
 			next;
 			mes "[Ditze]";
-			mes "The Rekenber Corporation has";
-			mes "been researching the origin of";
-			mes "this tower, but has not yet been able to confirm anything. Although";
-			mes "we've lost many researchers to the tower monsters, we won't give up!";
+			mes "A Corporação Rekenber vem";
+			mes "pesquisando a origem desta";
+			mes "torre, mas por enquanto ainda não acho nenhuma pista que realmente confirmasse algo. Mesmo";
+			mes "tendo perdido muitas pesquisas para os monstros da torre, nós não desistiremos!";
 			next;
 			mes "[Ditze]";
-			mes "Rekenber is convinced that this";
-			mes "tower holds many secrets, and";
-			mes "successfully reconstructed the";
-			mes "first 2 floors of this tower in";
-			mes "the pursuit of this knowledge.";
+			mes "Rekenber está convencido de que esta";
+			mes "torre guarda muitos segredos, e";
+			mes "está, com sucesso, reconstruindo";
+			mes "os primeiros 2 andares em busca de mais";
+			mes "e mais conhecimento.";
 			next;
 			mes "[Ditze]";
-			mes "Currently, we are focused on";
-			mes "reconstructing the tower's 3rd";
-			mes "and 4th floors. Luckily, many";
-			mes "adventurers are exterminating";
-			mes "the monsters on those floors, working under temporary contracts.";
+			mes "No momento, estamos concentrados na";
+			mes "reconstrução do terceiro e";
+			mes "quarto andar da torre. Com sorte, muitos";
+			mes "aventureiros estão exterminando";
+			mes "diversos monstros nesses andares, trabalhando como funcionários temporários.";
 			next;
 			mes "[Ditze]";
-			mes "At this rate, we expect";
-			mes "to complete reconstruction";
-			mes "of the 3rd and 4th floors in";
-			mes "the near future, bringing us";
-			mes "closer to our goal of opening all 12 floors of Thanatos Tower.";
+			mes "Estamos esperando";
+			mes "que a reconstrução completa";
+			mes "do terceiro e quarto andar esteja pronta";
+			mes "em um futuro próximo, nos trazendo";
+			mes "mais perto de nosso objetivo de abrir para visitação todos os 12 andares da Torre de Thanatos.";
 			next;
-			switch(select("Tower Monsters?:Temp Contract Work?:......")) {
+			switch(select("Monstros da torre?:Contrato temporário de trabalho?:......")) {
 			case 1:
 				mes "[Ditze]";
-				mes "Yes, when we began";
-				mes "reconstruction of the";
-				mes "Thanatos Tower, these";
-				mes "monsters that look like angels";
-				mes "just appeared out of nowhere";
-				mes "to attack all the workers.";
+				mes "Sim, quando nós começamos";
+				mes "a reconstrução da";
+				mes "Torre de Thanatos, estes";
+				mes "monstros que se pareciam com anjos";
+				mes "apareceram do nada";
+				mes "para atacar a todos os trabalhadores.";
 				next;
 				mes "[Ditze]";
-				mes "At first, witnesses thought";
-				mes "that these monsters might";
-				mes "be, you know, actual angels.";
-				mes "But if they were, why were they";
-				mes "attacking for no reason?";
+				mes "O que primeiro veio em nossas cabeças";
+				mes "era que estes monstros talvez fossem...";
+				mes "você sabe... anjos de verdade.";
+				mes "Mas se eles realmente fossem, por que estariam";
+				mes "nos atacando sem motivo algum?";
 				next;
 				mes "[Ditze]";
-				mes "Anyway, we asked the Juno ";
-				mes "Sage Academy to investigate";
-				mes "them, and they confirmed that";
-				mes "these angelic creatures are true monsters--their resemblance to";
-				mes "angels is merely coincidence.";
+				mes "Pedimos à Academia ";
+				mes "de Sábios de Juno para investigar,";
+				mes "e eles confirmaram que ";
+				mes "estas criaturas angelicais eram monstros de verdade; a aparência deles lembrar";
+				mes "anjos era apenas uma coincidência.";
 				close;
 			case 2:
 				mes "[Ditze]";
@@ -248,12 +256,12 @@ tha_t01,149,78,4	script	Guide	4_F_01,{
 				goto L_Contract;
 			case 3:
 				mes "[Ditze]";
-				mes "To develop the floors above";
-				mes "the 2nd floor, we're going to";
-				mes "need as many temp contract";
-				mes "workers as we can hire. Why";
-				mes "don't you consider working";
-				mes "for us under a temp contract?";
+				mes "Para liberar os andares acima";
+				mes "do segundo, nós estamos contratando";
+				mes "o máximo de trabalhadores temporários";
+				mes "que conseguirmos. Por que";
+				mes "você não considera a possibilidade";
+				mes "de trabalhar para nós?";
 				close;
 			}
 		case 2:
@@ -274,346 +282,341 @@ tha_t01,149,78,4	script	Guide	4_F_01,{
 			goto L_Contract;
 		case 3:
 			mes "[Ditze]";
-			mes "Well, if you have any";
-			mes "questions, feel free to";
-			mes "ask me later. My name is";
-			mes "Ditze Lappa. Have a good day!";
+			mes "Bem, se você tiver alguma";
+			mes "questão, fique à vontade para";
+			mes "perguntar para mim. Meu nome é ";
+			mes "Ditze Lappa. Tenha um bom dia.";
 			close;
 		}
 	}
 	mes "[Ditze]";
-	mes "For more detailed information";
-	mes "about monster exterminations,";
-	mes "please ask the 2nd Floor Guide";
-	mes "and the Guide next to me. Well,";
-	mes "we hope you enjoy your experience working with Rekenber Corporation~";
+	mes "Para informações mais detalhadas";
+	mes "sobre o extermínio de monstros,";
+	mes "por favor, pergunte ao Guia do 2º andar";
+	mes "e ao Guia ao meu lado. Bom,";
+	mes "esperamos que você aproveite sua experiência trabalhando para a Corporação Rekenber!";
 	close;
 
 L_Contract:
-	switch(select("Maybe next time:Sure, I'd like to work for you.")) {
+		switch(select("Quem sabe da próxima vez.","Claro, eu gostaria de trabalhar para vocês.")) {
 	case 1:
 		mes "[Ditze]";
-		mes "Well, alright.";
-		mes "But come and talk to";
-		mes "me as soon as you decide";
-		mes "that you want to help with";
-		mes "the tower reconstruction by";
-		mes "working for Rekenber.";
+		mes "Certo, certo.";
+		mes "Então venha falar comigo";
+		mes "assim que você se decidir";
+		mes "se deseja nos ajudar com";
+		mes "a reconstrucão da torre,";
+		mes "trabalhando para a Rekenber.";
 		close;
 	case 2:
 		mes "[Ditze]";
-		mes "That's great!";
-		mes "Would you please fill";
-		mes "out this employment";
-		mes "agreement first? Let's";
-		mes "see. Your name is...";
-		mes strcharinfo(0) + ", right?";
+		mes "Isso é ótimo!";
+		mes "Você poderia, por favor, preencher";
+		mes "este formulário de";
+		mes "contratação antes? Vamos";
+		mes "ver. Seu nome é...";
+		mes ""+strcharinfo(0)+", certo?";
 		next;
-		select("Yes");
+		select("Sim");
 		mes "[Ditze]";
-		mes "Alright, please read";
-		mes "this agreement carefully.";
-		mes "If you agree with all of";
-		mes "the conditions, go ahead";
-		mes "and just sign the bottom.";
+		mes "Certo, por favor leia";
+		mes "o contrato com muita atenção.";
+		mes "Se você concordar com todas as";
+		mes "condições, vá em frente";
+		mes "e assine embaixo.";
 		next;
-		mes "^3355FFDitze hands you the";
-		mes "Employment Agreement";
-		mes "document for you to read.^000000";
+		mes "^3355FFDitze entregará ";
+		mes "o Contrato de Trabalho";
+		mes "para você dar uma lida.^000000";
 		next;
-		mes "- Employment Agreement -";
+		mes "- Contrato de Trabalho -";
 		mes " ";
-		mes "1. This employment agreement";
-		mes "is effective between Rekenber";
-		mes "Corporation (''Employer'') and "+strcharinfo(0)+"(''Employee'').";
-		mes "1-1. This employment agreement";
-		mes "is classified as a Mercernary";
-		mes "contract between both parties.";
-		mes "2. The terms of this contract";
-		mes "immediately take effect once";
-		mes "it is signed by both parties";
-		mes "(Employer and Employee).";
-		mes "3. When the Employee performs";
-		mes "a mission, the mission results";
-		mes "must be verified with acceptible physical proof that must be";
-		mes "presented to the Employer.";
-		mes "3-1. Please refer to Section";
-		mes "7A for examples of acceptible";
-		mes "proof of monster extermination.";
-		mes "3-2. Acceptible proof is";
-		mes "determined and defined by a";
-		mes "representative of the Employer.";
-		mes "4. Employer will allot rewards";
-		mes "to Employees after receiving";
-		mes "extermination proof.";
-		mes "4-1. Possible rewards for";
-		mes "monster exterminations may";
-		mes "include the following.";
+		mes "1. O Contrato de Trabalho";
+		mes "é efetivado entre a Corporação";
+		mes "Rekenber (''Contratador'') e  "+strcharinfo(0)+"(''Funcionário'').";
+		mes "1-1. Este contrato de trabalho";
+		mes "é classificado como uma Troca";
+		mes "de Interesses entre os dois lados.";
+		mes "2. Os termos deste contrato";
+		mes "têm efeito imediatamente";
+		mes "quando assinado por ambas as partes";
+		mes "(Contratador e Empregado).";
+		mes "3. Quando o Empregado executa";
+		mes "uma missão, ele será avaliado";
+		mes "com um teste físico que será ";
+		mes "apresentado pelo Contratador.";
+		mes "3-1. Por favor, verifique a seção";
+		mes "7A para exemplos de testes";
+		mes "de extermínio de monstros.";
+		mes "3-2. O teste disponibilizado";
+		mes "pelo Contratador será definido e ";
+		mes "determinado pelo mesmo.";
+		mes "4. O contratador dará recompensas";
+		mes "ao empregado após receber";
+		mes "o certificado de extermínio.";
+		mes "4-1. Possíveis recompensas para";
+		mes "o extermínio de monstros podem";
+		mes "ser uma das listadas abaixo.";
 		mes ".................................................";
 		mes ".................................................";
 		mes ".................................................";
 		mes ".................................................";
 		mes ".................................................";
-		mes "13. This contract's terms are";
-		mes "only applicable witin Thanatos";
-		mes "Tower.";
-		mes "14. Employees will receive";
-		mes "a discount on the Entry Fee";
-		mes "to the Thanatos Tower.";
+		mes "13. Os termos deste contrato se";
+		mes "aplicam apenas ao que envolver a";
+		mes "Torre de Thanatos.";
+		mes "14. Empregados receberão um";
+		mes "desconto na taxa de entrada";
+		mes "para a Torre de Thanatos!";
 		mes " ";
 		mes " ";
 		mes " ";
-		mes "Employer Signature____________";
-		mes "Employee Signature____________";
+		mes "Assinatura do Contratador____________";
+		mes "Assinatura do Empregado____________";
 		next;
-		switch(select("Sign:Don't Sign")) {
+		switch(select("Assinar:Não assinar")) {
 		case 1:
-			mes "^3355FFYou sign two copies of the";
-			mes "Employment Agreement.^000000";
+			mes "^3355FFVocê assinou as duas cópias do";
+			mes "Contrato de Trabalho.^000000";
 			next;
 			mes "[Ditze]";
-			mes "Thank you. Now, you are";
-			mes "an official employee of the";
-			mes "Rekenber Corporation! Well,";
-			mes "within the limits of this tower";
-			mes "anyway. This contract doesn't";
-			mes "apply outside of this place.";
+			mes "Obrigado. Agora você ";
+			mes "é um empregado oficial da";
+			mes "Corporação Rekenber! Bem,";
+			mes "dentro dos limites da torre";
+			mes "obviamente. Este contrato não se";
+			mes "aplica a nada que não aconteça na região da torre.";
 			next;
 			mes "[Ditze]";
-			mes "From now on, you can talk";
-			mes "to the 2nd Floor Guide to";
-			mes "enter the 3rd Floor. If you";
-			mes "have any mission reward";
-			mes "questions, please ask ^3355FFLiei^000000.";
+			mes "De agora e diante, você pode falar";
+			mes "com o Guia do 2º Andar para";
+			mes "entrar no 3º Andar. Se tiver";
+			mes "alguma questão sobre recompensa de alguma";
+			mes "missão, por favor, fale com ^3355FFLiei^000000.";
 			next;
 			mes "[Ditze]";
-			mes "If you want to check";
-			mes "more information about";
-			mes "your work, please talk";
-			mes "to the 2nd Floor Guide.";
-			mes "Thank you, and welcome";
-			mes "to the Rekenber Corporation~";
-			thana_tower = 1;
+			mes "Se você quiser obter";
+			mes "mais informações sobre";
+			mes "seu trabalho, por favor";
+			mes "fale com o Guia do 2º Andar.";
+			mes "Obrigado, e bem-vindo";
+			mes "à Corporação Rekenber!";
+			set thana_tower, 1;
 			close;
 		case 2:
 			mes "[Ditze]";
-			mes "Oh? Was there an article";
-			mes "within the contract that you";
-			mes "disagreed with? Hm. Well,";
-			mes "that's fine. But if you change";
-			mes "your mind, please come back";
-			mes "and ask me anytime. Thank you~";
+			mes "Oh?! Existe uma cláusula";
+			mes "no contrato com a qual você ";
+			mes "não concorda? Hm. Tudo";
+			mes "bem. Mas, se você mudar";
+			mes "de idéia, por favor volte";
+			mes "e fale comigo. Obrigado...";
 			close;
 		}
 	}
 }
 
-tha_t01,140,78,4	script	Guide#reward	4_F_ZONDAGIRL,{
+tha_t01,140,78,4	script	Guia#premio	4_F_ZONDAGIRL,{
 	mes "[Liei]";
 	if (thana_tower == 0) {
-		mes "Good day, I'm";
-		mes "Liei Kuniziet of the";
-		mes "Employee Mission";
-		mes "Reward Department";
-		mes "here in Thanatos Tower.";
+		mes "Bom dia, meu nome é ";
+		mes "Liei Kuniziet do";
+		mes "Departamento de";
+		mes "Recompensas dos Empregados";
+		mes "da Torre de Thanatos.";
 		next;
-		switch(select("Employee's mission reward?:Keep up the good work.")) {
+		switch(select("Recompensa dos empregados?:Continue com o bom trabalho.")) {
 		case 1:
 			mes "[Liei]";
-			mes "Currently, Rekenber Corporation";
-			mes "is contracting temp employees";
-			mes "to develop the higher levels";
-			mes "of Thanatos Tower. If you'd";
-			mes "like to apply, please ask";
-			mes "Ditze right next to me.";
+			mes "Atualmente, a Corporação Rekenber";
+			mes "está contratando trabalhadores temporários";
+			mes "para liberar o acesso a todos os andares";
+			mes "da Torre de Thanatos. Se quiser";
+			mes "se inscrever, por favor pergunte ao";
+			mes "Ditze bem aqui do meu lado.";
 			close;
 		case 2:
 			mes "[Liei]";
-			mes "Thank you. Ah, and I hope";
-			mes "that you enjoy your visit";
-			mes "here to Thanatos Tower.";
+			mes "Obrigada. Espero que você ";
+			mes "aproveite sua visita";
+			mes "na Torre de Thanatos.";
 			close;
 		}
 	}
-	mes "Ah, hello~";
-	mes "How may I help you?";
+	mes "Ah, olá!";
+	mes "Em que posso ajudar?";
 	next;
-	if(select("Reward:Nothing") == 2) {
+	if (select("Recompensa:Nada") == 2) {
 		mes "[Liei]";
-		mes "Alright, then.";
-		mes "Please do your best";
-		mes "to exterminate the";
-		mes "monsters that infest";
-		mes "the higher floors of";
-		mes "the Thanatos Tower~";
+		mes "Por favor, dê o melhor de si";
+		mes "para exterminar";
+		mes "os monstros que infestam";
+		mes "os andares mais altos da";
+		mes "Torre de Thanatos!";
 		close;
 	}
 	mes "[Liei]";
-	mes "You're "+strcharinfo(0)+", yes?";
-	mes "Let me check our temp";
-	mes "employee records for--ah.";
-	mes "Here it is. Alright, so would";
-	mes "you please tell me what kind";
-	mes "of mission proof you brought?";
+	mes "Seu nome é "+strcharinfo(0)+", certo?";
+	mes "Deixe-me checar seus dados";
+	mes "de trabalhador temporário...";
+	mes "Ah! Aqui está. Certo, você ";
+	mes "pode, por favor, me contar qual";
+	mes "o tipo de item que você trouxe?";
 	next;
 	setarray .@items[1],7435,7440,7441,7442;
-	.@i = select("Golden Ornament:Red Feather:Blue Feather:Cursed Seal");
+	.@i = select("Ornamento Dourado:Pluma Vermelha:Pluma Azul:Selo Amaldiçoado");
 	mes "[Liei]";
 	if (!countitem(.@items[.@i])) {
-		mes "I'm sorry, but you are not";
-		mes "carrying any "+getitemname(.@items[.@i])+"s.";
-		mes "Please check your inventory";
-		mes "one more time, and then come";
-		mes "to me to redeem your items";
-		mes "for a reward later, alright?";
+		mes "Sinto muito, mas você não";
+		mes "está carregando nenhum "+callfunc("F_GetPlural",getitemname(.@items[.@i]))+".";
+		mes "Por favor, verifique seu inventário";
+		mes "mais uma vez, e então";
+		mes "volte para pegar seus itens";
+		mes "de recompensa, certo?";
 		close;
 	}
-	mes "The reward for each";
-	mes getitemname(.@items[.@i])+" is...";
+	mes "A recompensa será:";
+	mes getitemname(.@items[.@i])+"...";
 	mes " ";
-	mes "1,000 zeny";
-	//mes "2,000 EXP";
+	mes "1,000 zenys";
+	//mes "2,000 pontos de experiência";
 	next;
 	.@zeny_tt = (countitem(.@items[.@i]) * 1000);
 	//.@exp_tt = (countitem(.@items[.@i]) * 2000);
 	mes "[Liei]";
-	mes countitem(.@items[.@i])+" "+getitemname(.@items[.@i])+"s, then";
-	mes "you will receive a total of...";
+	mes callfunc("F_InsertPlural",countitem(.@items[.@i]),getitemname(.@items[.@i]))+", then";
+	mes "receberá um total de...";
 	mes " ";
 	mes ""+.@zeny_tt+" zeny";
 	//mes ""+.@exp_tt+" EXP";
 	next;
 	mes "[Liei]";
-	mes "Would you like to exchange";
-	mes "all of your "+getitemname(.@items[.@i])+"s";
-	mes "for your reward right now?";
+	mes "Gostaria de trocar";
+	mes "todas as suas "+callfunc("F_GetPlural",getitemname(.@items[.@i]));
+	mes "pela sua recompensa agora?";
 	next;
-	switch(select("Yes:No")) {
+	switch(select("Sim:Não")) {
 		case 1:
 			mes "[Liei]";
-			mes "Great! Here is your";
-			mes .@zeny_tt+" zeny. Thank you,";
+			mes "Ótimo! Aqui estão seus";
+			mes .@zeny_tt+" zeny. Obrigado,";
 			//mes .@exp_tt+" EXP. Thank you,";
-			mes "and please keep up";
-			mes "the good work~";
+			mes "e, por favor, continue";
+			mes "com o bom trabalho!";
 			delitem .@items[.@i], countitem(.@items[.@i]);
 			Zeny += .@zeny_tt;
 			//getexp .@exp_tt,0;
 			close;
 		case 2:
 			mes "[Liei]";
-			mes "Sure, no problem.";
-			mes "Just come back and";
-			mes "talk to me whenever";
-			mes "you want to receive";
-			mes "your reward, alright?";
+			mes "Claro, sem problemas.";
+			mes "Apenas volte aqui e";
+			mes "fale comigo";
+			mes "quando quiser receber";
+			mes "sua recompensa, certo?";
 			close;
 	}
 }
 
-tha_t02,231,161,5	script	Entrance Guide	4_M_ZONDAMAN,{
+tha_t02,231,161,5	script	Guia da Entrada	4_M_ZONDAMAN,{
 	mes "[Burled]";
 	if (thana_tower == 0) {
-		mes "You are in front of the entrance to the 3rd Floor. Only contracted";
-		mes "temp employees are authorized";
-		mes "to enter that area. For Rekenber temp contract information, please";
-		mes "speak to the 2nd Floor Guide.";
+		mes "Você está frente à entrada para o 3º Andar. Apenas empregados";
+		mes "contratados estão autorizados";
+		mes "a entrar nesta área. Para informações sobre contrato com a Corporação Rekenber, por favor";
+		mes "fale com o Guia do 2º Andar.";
 		close;
 	}
 	mes "This is the path to the 3rd floor.";
 	mes "Only the contracted staff are allowed to enter.";
 	mes "How can I help you?";
 	next;
-	switch(select("Let me go to 3rd floor.:Tower Information.:Start a conversation.")) {
+	switch(select("Entrar no 3º Andar.:Tower Information.:Start a conversation.")) {
 	case 1:
 		mes "[Burled]";
-		mes "Oh, alright. Let me";
-		mes "check and see if you're";
-		mes "on our temp list. Hmmm...";
-		mes "Ah, you're "+strcharinfo(0)+", right?";
+		mes "Ah, certo. Deixe-me checar";
+		mes "se você está na nossa";
+		mes "lista de empregados. Humm....";
+		mes "Ah, seu nome é "+strcharinfo(0)+", certo?";
 		next;
 		mes "[Burled]";
 		if (getareausers("tha_t02",226,156,236,166) < 5) {
-			mes "First, we need to wait until";
-			mes "at least 5 temps are gathered";
-			mes "to form a work group. Right";
-			mes "now, there are a total of";
-			mes getareausers("tha_t02",226,156,236,166)+ " temp workers waiting to";
-			mes "enter the 3rd Floor.";
+			mes "Primeiro, precisamos esperar pelo menos";
+			mes "5 empregados se reunirem aqui";
+			mes "para formar um grPara Cimao de trabalho. Certo,";
+			mes "até o momento temos um total de";
+			mes ""+ .@thana_level2 +" empregados esperando";
+			mes "para entrar no 3º Andar.";
 			next;
 			mes "[Burled]";
-			mes "If you can, try to get";
-			mes "your friends to help you";
-			mes "by coming near me. Please";
-			mes "understand that we have this";
-			mes "temp worker group requirement";
-			mes "for various safety reasons.";
+			mes "Se você puder, junte";
+			mes "seus amigos perto de mim";
+			mes "para eles te ajudarem. Por favor,";
+			mes "entenda que precisamos esperar";
+			mes "que se formem estes grPara Cimaos de trabalho para";
+			mes "preencher diversas regras de segurança.";
 			close;
 		}
-		mes "Great, you're just";
-		mes "in time. We just met";
-		mes "the minimum 5 temp group";
-		mes "requirement, so we'll open";
-		mes "the gate to the 3rd Floor soon.";
+		mes "Ótimo, você chegou";
+		mes "bem na hora. Acabo de atingir";
+		mes "o mínimo de 5 empregados";
+		mes "para formar um grPara Cimao, então vou abrir";
+		mes "os portões para o 3º Andar em diante.";
 		next;
 		mes "[Burled]";
-		mes "The gate to the 3rd Floor";
-		mes "will close shortly, so enter it";
-		mes "as soon as you can. We have";
-		mes "to close it quickly because we";
-		mes "can't have the tower monsters";
-		mes "entering the lower floors...";
+		mes "Os portões para o 3º Andar";
+		mes "se fecharão em breve, entre";
+		mes "o mais rápido que puder. Nós temos que";
+		mes "fechá-los rápido por causa";
+		mes "dos monstros, eles não podem invadir";
+		mes "os 1º e 2º andares...";
 		if (thana_tower > 3) {
 			next;
-			mes "^4d4dffBurled is smiling lightly so that only I notice.";
-			mes "I nod, then watch him open the gate.^000000";
+			mes "^4d4dffBurled está com um leve sorriso no rosto.";
+			mes "Balança a cabeça e logo abre o portão.^000000";
 		}
 		close2;
 		donpcevent "3rdf_warp#tt::OnEnable";
 		end;
 	case 2:
 		mes "[Burled]";
-		mes "This gate is the only passage";
-		mes "that connects to the 3rd Floor.";
-		mes "After the 4th Floor, passages";
-		mes "between floors only travel one";
-		mes "way, meaning you can't exit the";
-		mes "same way you that you entered.";
+		mes "Este portão é a única passagem";
+		mes "que nos conecta ao 3º andar.";
+		mes "Depois do 4º andar, as passagens";
+		mes "entre os andares é de apenas uma";
+		mes "direção, ou seja, você não poderá sair pelo";
+		mes "mesmo caminho que entrou.";
 		next;
 		mes "[Burled]";
-		mes "You see, there's a strange";
-		mes "power that affects the 5th";
-		mes "Floor, and all floors above,";
-		mes "which doesn't allow people to";
-		mes "backtrack through the passage in which they entered the floor.";
+		mes "Você pode perceber que existe uma energia";
+		mes "estranha que afeta do 5º ";
+		mes "andar em diante e";
+		mes "que não permite que as pessoas";
+		mes "voltem pela passagem pela qual entraram.";
 		next;
 		mes "[Burled]";
-		mes "So if you ascend past the";
-		mes "4th Floor, please be careful";
-		mes "and make sure that you find";
-		mes "a way to get back.";
+		mes "Se você passar do";
+		mes "4º Andar, tenha cuidado";
+		mes "e tenha certeza de que vai achar";
+		mes "o caminho de volta. Além disso os";
+		mes "monstros são cada vez";
+		mes "mais fortes conforme você vai subindo a torre...";
 		next;
 		mes "[Burled]";
-		mes "The top is the 12th floor,";
-		mes "and the monsters grow more powerful";
-		mes "as you ascend the tower.";
-		mes "The geographical features also change considerably.";
-		next;
-		mes "[Burled]";
-		mes "Because the higher levels are";
-		mes "too dangerous, we only open the";
-		mes "3rd Floor Gate when 5 or more";
-		mes "are gathered here. Therefore,";
-		mes "you may need to wait if less";
-		mes "than 5 temps have gathered.";
+		mes "Por conta dos andares mais altos";
+		mes "serem muito perigosos, nós apenas";
+		mes "abrimos os portões para o 3º Andar quando";
+		mes "juntamos 5 empregados aqui. Portanto,";
+		mes "você precisa esperar se";
+		mes "não houver número suficiente de empregados.";
 		close;
 	case 3:
 		if (thana_tower < 3) {
 			mes "[Burled]";
 			mes "...?";
-			mes "Do you have any questions?";
+			mes "Você tem alguma dúvida?";
 			next;
-			if(select("About the development.:The relationship of Cool Event Corporation and Rekenber Corporation.:Nope.") == 3) {
+			if (select("About the development.:The relationship of Cool Event Corporation and Rekenber Corporation.:Nope.") == 3) {
 				mes "[Burled]";
 				mes "Take care.";
 				close;
@@ -2116,9 +2119,9 @@ OnTouch:
 
 	specialeffect EF_GUMGANG;
 	if ($@thana_summon2 > 3) {
-		mes "^3355FFYou cannot approach";
-		mes "the crest because it is";
-		mes "generating intense heat.^000000";
+		mes "^3355FFVocê não pode se aproximar";
+		mes "do emblema por ele estar";
+		mes "emanando um calor intenso.^000000";
 		close;
 	}
 	mes "The seal seems to be dormant.";
@@ -2128,10 +2131,10 @@ OnTouch:
 	input .@inputstr$;
 	.@exact_tt$ = "Fragment of "+.@j$;
 	if (countitem(.@i[0]) > 0 && .@exact_tt$ == .@inputstr$) {
-		mes "^3355FFYou insert the";
+		mes "^3355FFVocê inseriu o";
 		mes .@exact_tt$;
-		mes "into the crest, causing";
-		mes "its glow to intensify.^000000";
+		mes "no emblema, causando";
+		mes "um forte brilho.^000000";
 		close2;
 		hideonnpc strnpcinfo(0);
 		.hide |= (1<<.@seal);
@@ -2147,9 +2150,9 @@ OnTouch:
 		mapannounce "thana_boss",.@str$,bc_map,"0x7b68ee"; //FW_NORMAL 12 0 0
 		end;
 	}
-	mes "^3355FFThat action had no";
-	mes "effect. You'll have to";
-	mes "try something else.^000000";
+	mes "^3355FFEsta ação não surtiu";
+	mes "efeito. Você terá que";
+	mes "tentar outra coisa.^000000";
 	close;
 
 OnMyMobDead:

@@ -1,318 +1,327 @@
-//===== Hercules Script ======================================
-//= Dancer Skills Quests
-//===== By: ==================================================
-//= Lupus, Reddozen
-//===== Current Version: =====================================
-//= 1.5
-//===== Description: =========================================
-//= [Official Conversion]
-//= Quests for skills: Charming Wink
-//===== Additional Comments: =================================
-//= 1.4 Rescripted to Aegis 10.3 stadards. [L0ne_W0lf]
-//= 1.4a Changed NPC location [Yommy]
-//= 1.5 Replaced effect numerics with constants. [L0ne_W0lf]
-//============================================================
+//    ________________________________________________________
+//   /                                                        \
+//   |       _           _   _   _                            |
+//   |      | |__  _ __ / \ | |_| |__   ___ _ __   __ _       |
+//   |      | '_ \| '__/ _ \| __| '_ \ / _ \ '_ \ / _` |      |
+//   |      | |_) | | / ___ \ |_| | | |  __/ | | | (_| |      |
+//   |      |_.__/|_|/_/   \_\__|_| |_|\___|_| |_|\__,_|      |
+//   |                                                        |
+//   |                    brAthena Script                     |
+//   |--------------------------------------------------------|
+//   | Nome do Script: Quest Habilidades de Platina: Odalisca |
+//   |--------------------------------------------------------|
+//   | Criado por: eA/rA/brA Dev. Team                        |
+//   |--------------------------------------------------------|
+//   | Versões eA/rA/brA: 1.3b/1.5/1.2                        |
+//   |--------------------------------------------------------|
+//   | Descrição: Quest da habilidade Piscadela               |
+//   |--------------------------------------------------------|
+//   | Changelog:                                             |
+//   | 1.0 Cabeçalho Criado [Holy]                            |
+//   | 1.1 Tradução PT-BR [~Zangetsu]                         |
+//   | 1.2 Revisão [Gordis]                                   |
+//   |--------------------------------------------------------|
+//   | - Anotações                                            |
+//   \________________________________________________________/
 
 comodo,204,172,5	script	Canell#qsk_dan01	4_F_07,{
 	if (BaseJob == Job_Dancer && JobLevel > 39) {
 		if (DANCER_SK == 0) {
 			mes "[Canell]";
-			mes "It's well known that we must";
-			mes "be beautiful to captivate those";
-			mes "who watch us dance. But to rely";
-			mes "on just our outward appearance";
-			mes "is a ghastly waste of our full";
-			mes "potential as performers.";
+			mes "Todas sabemos que devemos";
+			mes "ser bonitas para cativar quem quer";
+			mes "que nos veja dançar. Mas, apostar tudo";
+			mes "apenas em nossa aparência exterior";
+			mes "é um desperdício medonho de nosso grande";
+			mes "potencial como artistas.";
 			next;
 			mes "[Canell]";
-			mes "Yes, I can tell that you";
-			mes "don't quite understand that";
-			mes "the correct frame of mind is";
-			mes "an essential element to true";
-			mes "beauty. Now tell me, are you";
-			mes "confident in your dancing...?";
+			mes "Sim, eu posso dizer que você";
+			mes "não entende muito bem que";
+			mes "a auto-estima";
+			mes "um elemento essencial para a verdadeira";
+			mes "beleza. Agora me diga, você está";
+			mes "confiante em sua dança...?";
 			next;
-			if (select("Of course, old crone!:I... I'm not sure...") == 1) {
+			if (select("Claro, coroa velha!:E-Eu não tenho certeza ...") == 1) {
 				mes "[Canell]";
-				mes "Ho-ho~ I believe you've";
-				mes "confused confidence with";
-				mes "arrogance! The naive cannot";
-				mes "tell there's a vitally important distinction between the two.";
-				mes "Now... Prepare for punishment!";
+				mes "Ha-ha~ eu acredito que você";
+				mes "confundiu confiança com";
+				mes "arrogância! Aquele que é ingênuo não é capaz de";
+				mes "dizer que há uma distinção de vital importância entre os dois.";
+				mes "Agora... Prepare-se para a punição!";
 				next;
 				mes "["+ strcharinfo(0) +"]";
-				mes "Ow...!";
-				mes "Th-that whip!";
-				mes "I-i-it huuuurts!";
+				mes "Aii...!";
+				mes "O ch-chicote!";
+				mes "E-E-Ele dóóóói!";
 				specialeffect2 EF_HIT2;
 				percentheal -5,0;
 				close;
 			}
 			mes "[Canell]";
-			mes "Awareness of your own flaws";
-			mes "and faults is the first crucial";
-			mes "step towards improvement.";
-			mes "Yet your obvious neglect of";
-			mes "your gift of dancing is...";
-			mes "grounds for punishment!";
+			mes "Estar consciente de seus próprios defeitos";
+			mes "e falhas é uma etapa crucial";
+			mes "para alcançar a perfeição.";
+			mes "No entanto, a sua total negligência de";
+			mes "seu dom de dançar é...";
+			mes "motivo para a punição!";
 			next;
 			mes "["+ strcharinfo(0) +"]";
-			mes "What the...? Ack!";
-			mes "S-stop wh-whipping";
-			mes "me! It... It stiiings!";
+			mes "Mas o que...? Ahh!";
+			mes "P-pare de Ch-chicoteaaar!!!";
+			mes "E... Ele fuuura!!";
 			specialeffect2 EF_HIT2;
 			percentheal -10,0;
 			next;
 			mes "[Canell]";
-			mes "Ho-ho~! Fortunately for";
-			mes "you, I will teach you what";
-			mes "you must learn to rise above";
-			mes "your current limitations. When";
-			mes "I'm finished with you, angels and demons won't resist your charms~";
+			mes "Ha-ha ~! Felizmente, eu vou te ensinar o que";
+			mes "você deve saber para erguer-se diante";
+			mes "suas limitações atuais. Quando";
+			mes "eu terminar com você, anjos e demônios resistirão aos seus encantos~";
 			next;
-			if (select("No way, you're not teaching me!:Alright, I'll see what I can learn.") == 1) {
+			if (select("De jeito nenhum, você não vai me ensinar nada!:Tudo bem, vou ver o que posso aprender.") == 1) {
 				mes "[Canell]";
-				mes "So... You still haven't";
-				mes "mastered the fine art of";
-				mes "exuding charm and humility!";
-				mes "There must be consequences";
-				mes "for this blatant affront to our";
-				mes "profession! Prepare yourself!";
+				mes "Então... Você ainda não tem";
+				mes "o domínio da refinada arte de";
+				mes "exalar charme e humildade!";
+				mes "Haverão consequências";
+				mes "para esta brusca afronta à nossa";
+				mes "profissão! Prepare-se!";
 				next;
 				mes "["+ strcharinfo(0) +"]";
-				mes "Nooooo--!";
-				mes "Not that whip";
-				mes "again! Arrgh, it's--";
-				mes "It hurts so much!";
+				mes "Nãoooo--!";
+				mes "Não o chicote";
+				mes "de novo! Arrgh, é terrível!!";
+				mes "Dói muuuito!";
 				specialeffect2 EF_HIT2;
 				percentheal -10,0;
 				close;
 			}
 			mes "[Canell]";
-			mes "Ho-ho~ It's good that you";
-			mes "recognize that you have much";
-			mes "to learn. Well, let's not waste";
-			mes "any time. Your first lesson will^FFFFFF ^000000 be on image training and self";
-			mes "visualization. Now, for that...";
+			mes "Ha-ha ~ É bom que você";
+			mes "reconhece que ainda tem muito mais";
+			mes "para aprender. Bem, não vamos ficar perdendo";
+			mes "tempo. Sua primeira lição será ^FF0000Treinamento de imagem e";
+			mes "visualização própria.^000000 Agora, para isso...";
 			next;
 			mes "[Canell]";
-			mes "...You must bring";
-			mes "me ^FF00001 Crystal Mirror^000000!";
-			mes "This tool is imperative";
-			mes "to the lesson, so fetch it";
-			mes "and bring it to me quickly!";
+			mes "...Você deve me trazer";
+			mes "^FF00001 Espelho de Cristal^000000!";
+			mes "Esta ferramenta é importantíssima";
+			mes "para realizar a lição, então vá buscá-la";
+			mes "e traga para mim o mais rápido possível!";
 			DANCER_SK = 1;
 			close;
 		}
 		else if (DANCER_SK == 1) {
 			if (countitem(747) > 0) {
 				mes "[Canell]";
-				mes "Finally, you've come";
-				mes "with the mirror. Now,";
-				mes "look deeply and scrutinize";
-				mes "your reflection. Gaze upon";
-				mes "each blemish and fault, each";
-				mes "charming trait of your face.";
+				mes "Finalmente, você chegou";
+				mes "com o espelho. agora,";
+				mes "olhe profundamente e analize";
+				mes "seu reflexo. Observe";
+				mes "cada defeito e falha, cada";
+				mes "traço encantador do seu rosto.";
 				next;
 				mes "[Canell]";
-				mes "No face is perfect, but";
-				mes "know that your face is yours";
-				mes "alone, and that it is what gives you a beauty that can be no";
-				mes "one else's. Now, repeat";
-				mes "these truisms after me...";
+				mes "Nenhum rosto é perfeito, mas";
+				mes "saiba que seu rosto é único,";
+				mes "e que é isso que lhe dá uma beleza que não pode ser encontrada em";
+				mes "uma outra pessoa. Agora, repita";
+				mes "este mantra depois de mim...";
 				next;
 				mes "[Canell]";
-				mes "''I am beautiful...";
-				mes "I am irresistable...''";
+				mes "''Eu sou bonita...";
+				mes "Eu sou irresistível...''";
 				next;
 				mes "["+ strcharinfo(0) +"]";
-				mes "I am beautiful...";
-				mes "I am irresistable...";
+				mes "Eu sou bonita...";
+				mes "Eu sou irresistível...";
 				next;
-				mes "[Intoxicated Canell]";
-				mes "Louder!";
-				mes "More feeling!";
-				mes "''I am beautiful!";
-				mes "I am irresistable!";
-				mes "I am the most attractive";
-				mes "woman in the whole world!''";
+				mes "[Canell Confiante]";
+				mes "Mais alto!";
+				mes "Mais sentimento!";
+				mes "''Eu sou bonita!";
+				mes "Eu sou irresistível!";
+				mes "Eu sou a mais atraente";
+				mes "mulher em todo o mundo!''";
 				next;
 				mes "["+ strcharinfo(0) +"]";
-				mes "I am beautiful!";
-				mes "I am irresistable!";
-				mes "I am the most attractive";
-				mes "woman in the whole world!";
+				mes "Eu sou bonita!";
+				mes "Eu sou irresistível!";
+				mes "Eu sou o mais atraente";
+				mes "mulher em todo o mundo!!!!";
 				specialeffect2 EF_FLASHER;
 				next;
-				mes "^3355FFYour self esteem has";
-				mes "sky rocketed. Fortunately,";
-				mes "you've managed to avoid";
-				mes "becoming a prima donna.^000000";
-				delitem 747,1; //Crystal_Mirror
+				mes "^3355FFSua auto-estima disparou para os céus";
+				mes "como um foguete. Felizmente,";
+				mes "você conseguiu evitar";
+				mes "de se tornar uma prima donna.^000000";
+				delitem 747,1; // Espelho de Cristal
 				DANCER_SK = 2;
 				close;
 			}
 			else {
-				mes "[Frustrated Canell]";
-				mes "Did I tell you to come";
-				mes "back here without bringing";
-				mes "^FF00001 Crystal Mirror^000000!? Now go";
-				mes "and get it before I find";
-				mes "reason to punish you!";
+				mes "[Canell Frustrada]";
+				mes "Eu disse para só";
+				mes "voltar aqui com o";
+				mes "^FF00001 Espelho de Cristal^000000 em mãos! Agora vá";
+				mes "e traga-o antes de eu decidir";
+				mes "puni-la severamente!";
 				specialeffect EF_CLAYMORE;
 				close;
 			}
 		}
 		else if (DANCER_SK == 2) {
 			mes "[Canell]";
-			mes "Yes, the first and most";
-			mes "important step to becoming";
-			mes "beautiful is to realize and";
-			mes "accept your gorgeousness.";
-			mes "Confidence first, then beauty.";
-			mes "Never the other way around.";
+			mes "Sim, o primeiro e o mais";
+			mes "importante passo para se tornar";
+			mes "bonita é perceber e";
+			mes "aceitar o seu resplendor.";
+			mes "Confiança em primeiro lugar, só então a beleza.";
+			mes "Nunca o contrário.";
 			next;
 			mes "[Canell]";
-			mes "Now that you've established";
-			mes "the proper attitude on beauty,";
-			mes "it's time for you to learn an";
-			mes "advanced technique of- shall";
-			mes "we say- enticement. I know an";
-			mes "expert that I highly recommend.";
+			mes "Agora que você já demonstrou";
+			mes "a forma correta de exalar beleza,";
+			mes "é hora de você aprender uma";
+			mes "técnica avançada de";
+			mes "digamos... Sedução. Eu conheço uma";
+			mes "especialista para te recomendar.";
 			next;
 			mes "[Canell]";
-			mes "Go and find my sister";
-			mes "in Prontera Chruch. If you";
-			mes "mention me by name, she";
-			mes "should be willing to teach";
-			mes "you. I'd do it myself, but I need to enjoy my new Crystal Mirror~";
+			mes "Vá e encontre minha irmã";
+			mes "na Catedral de Prontera. Se você";
+			mes "mencionar meu nome, ela";
+			mes "ficará feliz em lhe ensinar.";
+			mes "Faria isso eu mesma, mas preciso aproveitar meu novo Espelho de Cristal~";
 			next;
-			mes "^3355FFIt figures that she'd";
-			mes "keep your mirror.^000000";
+			mes "^3355FFParece que ela";
+			mes "ficará com seu espelho...^000000";
 			emotion e_ag,1;
 			DANCER_SK = 3;
 			close;
 		}
 		else if (DANCER_SK > 2 && DANCER_SK < 7) {
 			mes "[Canell]";
-			mes "Ah, such a glamorous";
-			mes "face and figure. My";
-			mes "beauty is incompara--";
-			mes "Oh! It's you. So did my";
-			mes "sister in Prontera Church";
-			mes "teach you anything yet?";
+			mes "Ah, quanto glamur...";
+			mes "este rostinho é tão lindo e fofo.";
+			mes "Minha beleza é incomparável...";
+			mes "Ah! É você. Então a minha";
+			mes "irmã da Catedral de Prontera";
+			mes "já ensinou-lhe alguma coisa?";
 			emotion e_go;
 			close;
 		}
 		else if (DANCER_SK == 7) {
 			mes "[Canell]";
-			mes "Ah, so were you";
-			mes "able to find Aelle?";
-			mes "Were you able to learn";
-			mes "anything from her?";
+			mes "Ah, então você já";
+			mes "conseguiu encontrar Aelle?";
+			mes "Você conseguiu aprender";
+			mes "algo com ela?";
 			next;
 			mes "["+ strcharinfo(0) +"]";
-			mes "Actually, I only learned";
-			mes "about winks, but not so";
-			mes "much as how to do them.";
-			mes "She... She got drunk and";
-			mes "couldn't teach me more.";
+			mes "Na verdade, eu só aprendi";
+			mes "sobre piscadelas, mas não ao ponto";
+			mes "de fazê-las.";
+			mes "Ela... Ela ficou bêbada e";
+			mes "não conseguiu me ensinar mais.";
 			next;
 			mes "[Canell]";
-			mes "Oh, I should have known";
-			mes "this would happen. Oh,";
-			mes "well, I guess there's no way";
-			mes "around it now. But you should";
-			mes "know that gettng my sister";
-			mes "drunk... is punishable.";
+			mes "Ah, eu deveria ter imaginado que";
+			mes "isso ia acontecer. Ah,";
+			mes "bem, acho que não há nenhuma outra forma";
+			mes "de aprender sobre piscadelas. Mas você deve";
+			mes "saber que deixar a minha irmã";
+			mes "bêbada... é punível!";
 			next;
 			mes "[Canell]";
-			mes "Bam!";
+			mes "Paft!";
 			specialeffect2 EF_HIT2;
 			percentheal -5,0;
 			next;
 			mes "["+ strcharinfo(0) +"]";
 			mes "?!";
-			mes "What the";
-			mes "hell was that?";
+			mes "O-o que fo-foi isso?";
 			next;
 			mes "[Canell]";
-			mes "Now, a true Dancer should";
-			mes "be able to figure out the";
-			mes "secret to winking on her";
-			mes "own. But since I'm such";
-			mes "a kind woman, I will deign";
-			mes "to explain it to you. Ho-ho~";
+			mes "Agora, uma verdadeira dançarina deve";
+			mes "ser capaz de desvendar o";
+			mes "segredo da piscadela por si";
+			mes "própria. Mas como eu sou";
+			mes "uma mulher tão amável, eu vou tentar";
+			mes "explicar isso para você. Ha-ha ~ ";
 			next;
-			mes "^3355FFKind woman...?";
-			mes "But she just hit you!";
-			mes "Lightly, of course, but";
-			mes "still, a smack is a smack.^000000";
+			mes "^3355FFMulher amável...?";
+			mes "Mas ela acabou de bater em você!";
+			mes "Levemente, claro, mas";
+			mes "ainda assim, um tapa é um tapa. ^000000";
 			DANCER_SK = 8;
 			close;
 		}
 		else if (DANCER_SK == 8) {
 			mes "[Canell]";
-			mes "Alright, the secret to";
-			mes "proper winking is to allow";
-			mes "your eyelid to seductively";
-			mes "move to a natural rhythm.";
-			mes "Close your eye for a second,^FFFFFF ^000000 then open it slowly to this count.";
+			mes "Tudo bem, o segredo para a";
+			mes "piscadela perfeita é permitir que";
+			mes "sua pálpebra mova-se de forma sedutora e";
+			mes "num ritmo natural.";
+			mes "feche o olho por um segundo, em seguida, abra-o lentamente quando eu contar até três.";
 			next;
 			mes "[Canell]";
-			mes "Un, deux, trois~";
-			mes "Look at me, do it";
-			mes "like this. Un, deux, trois~";
-			mes "Now, let me see you try it.";
+			mes "um, dois, três ~ ";
+			mes "olhe para mim, tente fazer igual.";
+			mes "Assim! Um, dois, três~";
+			mes "Agora deixe-me vê-la a tentar.";
 			emotion e_no1;
 			next;
-			switch(select("Un deux trois~-:Un, doux trois~:Un, deux, trois~")) {
+			switch(select("Um-dois-três~:Um, dois-três~:Um, dois, três~")) {
 			default:
 				mes "[Canell]";
-				mes "No, no!";
-				mes "That's wrong,";
-				mes "completely wrong!";
-				mes "Can't you do it right?!";
+				mes "Não, não!";
+				mes "Está errado,";
+				mes "completamente errado!";
+				mes "Você não consegue fazer isso direito?!";
 				next;
 				mes "["+ strcharinfo(0) +"]";
-				mes "O-ow!";
-				mes "P-please...!";
-				mes "Not the whip again!";
+				mes "A-aii!";
+				mes "P-por favor,...!";
+				mes "O chicote denovo nãaao!";
 				specialeffect2 EF_HIT2;
 				percentheal -5,0;
 				close;
 			case 3:
 				mes "["+ strcharinfo(0) +"]";
-				mes "Un, deux, trois~";
+				mes"Um, dois, três~";
 				emotion e_no1,1;
 				specialeffect2 EF_FLASHER;
 				next;
 				mes "[Canell]";
-				mes "Great, that's exactly";
-				mes "how you do it. Now,";
-				mes "don't forget, the elements";
-				mes "of rhythm and naturalness";
-				mes "are absolutely essential to";
-				mes "this technique of enticement.";
+				mes "Ótimo, é exatamente";
+				mes "assim que se faz. Agora, ";
+				mes "não se esqueça, que";
+				mes "ritmo e naturalidade";
+				mes "são absolutamente essenciais para";
+				mes "essa técnica de sedução.";
 				emotion e_kis;
 				next;
 				mes "[Canell]";
-				mes "Now that you've mastered";
-				mes "the art of winking, you.";
-				mes "should know that you cannot";
-				mes "allure those who are much";
-				mes "stronger than you. So your";
-				mes "winks won't work on everyone.";
+				mes "Agora que você já domina";
+				mes "a arte de piscadelas, você.";
+				mes "deve saber que você não pode";
+				mes "seduzir aqueles que são muito";
+				mes "mais fortes que você. Então suas ";
+				mes "piscadelas não funcionarão em todo mundo.";
 				next;
 				mes "[Canell]";
-				mes "Of course, my winks don't";
-				mes "have that drawback. Ho-ho~";
-				mes "Anyway, it's time for us to part now. I hope that you grow to";
-				mes "become a more glamorous and charming dancer in days to come.";
+				mes "Claro, minhas piscadelas não";
+				mes "tem essa restrição. Ha-ha ~ ";
+				mes "Enfim, é hora de partir. Espero que você cresça";
+				mes "e se torne uma dançarina mais fascinante e encantadora no futuro.";
 				emotion e_heh;
 				next;
-				mes "^3355FFYou have finally learned";
-				mes "the Charming Wink skill.^000000";
+				mes "^3355FFVocê finalmente aprendeu";
+				mes "a habilidade Piscadela.^000000";
 				DANCER_SK = 9;
 				specialeffect2 EF_ABSORBSPIRITS;
 				skill "DC_WINKCHARM",1,0;
@@ -322,41 +331,41 @@ comodo,204,172,5	script	Canell#qsk_dan01	4_F_07,{
 		else if (DANCER_SK > 8 && getskilllv("DC_WINKCHARM")) {
 			mes "[Canell]";
 			mes "Hm...?";
-			mes "Is there anything";
-			mes "more you wanted to";
-			mes "ask me? Ah, you must";
-			mes "be mesmerized by my";
-			mes "beauty, aren't you?";
+			mes "Há algo";
+			mes "que você gostaria";
+			mes "de me perguntar? Ah, você deve";
+			mes "estar hipnotizada pela minha";
+			mes "beleza, não é?";
 			emotion e_pif;
 			next;
 			mes "[Canell]";
-			mes "Oh, to be so beautiful";
-			mes "must be a sin! I should";
-			mes "work in Prontera Church,";
-			mes "just like my sister, to";
-			mes "pray for forgiveness~";
+			mes "Ah, ser tão bonita";
+			mes "deve ser um pecado! Eu deveria ir";
+			mes "para a Igreja de Prontera,";
+			mes "como minha irmã, para";
+			mes "orar por perdão ~";
 			close;
 		}
 
 		else if (DANCER_SK == 9 && getskilllv("DC_WINKCHARM") == 0) {
 			mes "[Canell]";
-			mes "Hm? Oh, I remember you!";
-			mes "A Gypsy now, I see~ That";
-			mes "look suits you. Now, I'm";
-			mes "sure you've forgotten a few";
-			mes "things since transcending,";
-			mes "am I right? Watch this wink...";
+			mes "Hm? Ah, eu lembro de você! ";
+			mes "Já é uma cigana agora, esse seu olhar";
+			mes "é inconfundível~. Agora, eu tenho";
+			mes "certeza você esqueceu alguns";
+			mes "truques quando transcendeu,";
+			mes "estou certa? Dê uma olhada nesta piscadela... ";
 			next;
 			mes "[Canell]";
-			mes "Remember now? It's all";
-			mes "in the natural, seductive";
-			mes "and rhythmic movement of";
-			mes "the eyelid. I hope you use";
-			mes "your Charming Wink to let";
-			mes "your inner beauty shine~";
+			mes "Lembra-se agora? Tudo consiste";
+			mes "no rítmo e no movimento natural";
+			mes " e sedutor da";
+			mes "pálpebra. Eu espero que você use";
+			mes "sua piscadela para";
+			mes "que sua beleza interior brilhe intensamente~";
 			next;
-			mes "^3355FFYou have learned the";
-			mes "Charming Wink skill.^000000";
+			mes "^3355FFVocê aprendeu a";
+			mes "habilidade Piscadela.^000000";
 			specialeffect2 EF_ABSORBSPIRITS;
 			skill "DC_WINKCHARM",1,0;
 			close;
@@ -364,35 +373,36 @@ comodo,204,172,5	script	Canell#qsk_dan01	4_F_07,{
 	}
 	else if (BaseJob == Job_Dancer && JobLevel < 40) {
 		mes "[Canell]";
-		mes "Oh, you're such an";
-		mes "adorable little girl! Ah,";
-		mes "I'm sorry, but when you";
-		mes "become a lady at, oh, I don't";
-		mes "know, Job Level 40, then I'll";
-		mes "be able to teach you something~";
+		mes "Oh, você é uma";
+		mes "menina adorável! Ah,";
+		mes "Sinto muito, mas só quando você";
+		mes "tornar-se uma senhora, ah, não sei...";
+		mes "Como quando atingir o nível 40,é que eu vou";
+		mes "poder te ensinar algo~";
 		close;
 	}
 
 	else if (BaseJob != Job_Dancer) {
 		if (Sex == 0) {
 			mes "[Canell]";
-			mes "Oh, what a cute";
-			mes "little girl~! Such";
-			mes "a chubby lil' belly,";
-			mes "so cuuuuuuuuuuute~";
+			mes "Ah, que bonitinha";
+			mes "esta jovem menina ~! E essa";
+			mes "barriguinha pequenina e gordinha";
+			mes "tão fofiiinha~";
+			mes "Dá vontade de apertar";
 			close;
 		}
 		else {
 			mes "[Canell]";
-			mes "Hey there,";
-			mes "handsome~";
-			mes "^333333*Wink~*^000000";
+			mes "Ei,";
+			mes "bonitão~";
+			mes "^333333*Piscadela~*^000000";
 			emotion e_kis;
 			specialeffect2 EF_VALLENTINE2;
 			next;
-			mes "^3355FFStrangely enough,";
-			mes "her wink has made";
-			mes "your heart throb.^000000";
+			mes "^3355FFEstranhamente,";
+			mes "a piscadela";
+			mes "fez o seu coração pulsar.^000000";
 			close;
 		}
 	}
@@ -402,218 +412,217 @@ prontera,183,333,1	script	Aelle#qsk_dan02	1_F_PRIEST,{
 	if (BaseJob == Job_Dancer) {
 		if (DANCER_SK == 3) {
 			mes "[Aelle]";
-			mes "Pssst, hey! I got";
-			mes "some cheap, but slightly";
-			mes "illegal, warps to the Orc";
-			mes "Dungeon, Glast Heim";
-			mes "and the Dead Pit. So";
-			mes "you want in on this?";
+			mes "Psssiu, ei! Eu tenho";
+			mes "algumas passagens,talvez";
+			mes "ilegais, para a Vila dos Orcs,";
+			mes "Glast Heim";
+			mes "e para Mina de Carvão.";
+			mes "Tá interessada?";
 			next;
 			mes "["+ strcharinfo(0) +"]";
-			mes "Actually, um, I'm here";
-			mes "to look for somebody.";
-			mes "You wouldn't happen";
-			mes "to know Canelle's";
-			mes "sister, would you?";
+			mes "Na verdade... Eu estou aqui";
+			mes "procurando por alguém.";
+			mes "Você não seria";
+			mes "a irmã de";
+			mes "Canelle?";
 			next;
 			mes "[Aelle]";
-			mes "Ah, so my stuck up";
-			mes "sister sent you, huh?";
-			mes "I should have known,";
-			mes "judging from your clothes.";
-			mes "So you want to become a";
-			mes "more alluring performer, eh?";
+			mes "Ah, então minha irmã tapada";
+			mes "mandou você vir, né?";
+			mes "Eu já deveria saber,";
+			mes "a julgar por suas roupas.";
+			mes "Então você quer se tornar uma";
+			mes "dançarina mais sedutora, não é?";
 			next;
 			mes "[Aelle]";
-			mes "Awww...";
-			mes "That's disappointing.";
-			mes "So... You didn't come";
-			mes "here to buy these warps?";
-			mes "You sure you don't want any?";
-			DANCER_SK = 4;
+			mes "Ahhh...";
+			mes "Que decepção.";
+			mes "Então... Você não veio";
+			mes "aqui para comprar essas passagens?";
+			mes "Tem certeza que você não quer?";
+			set DANCER_SK,4;
 			close;
 		}
 		else if (DANCER_SK == 4) {
 			mes "[Aelle]";
-			mes "Okay, okay...";
-			mes "So you came for me to";
-			mes "teach you some enticement";
-			mes "technique or something, right?";
-			mes "Huh. Well, this lecture I give?";
-			mes "It's long and complicated.";
+			mes "Ok, ok...";
+			mes "Então você veio aqui para";
+			mes "que eu te ensine algumas excitantes";
+			mes "técnicas de sedução, certo?";
+			mes "Bem, esta palestra que darei";
+			mes "será longa e complicada.";
 			next;
 			mes "[Aelle]";
-			mes "Talking and explaining";
-			mes "all of the intricate details";
-			mes "for so long will definitely";
-			mes "parch my throat. So first, you";
-			mes "gotta bring me a refreshing";
-			mes "drink before we can begin...";
+			mes "Falar e explicar";
+			mes "todos os detalhes complexos";
+			mes "por tanto tempo vai acabar";
+			mes "ressecando minha garganta. Então, primeiro, você";
+			mes "tem que me trazer uma bebida refrescante";
+			mes "antes que possamos começar...";
 			next;
 			mes "["+ strcharinfo(0) +"]";
-			mes "Oh... Okay.";
-			mes "Alright, I guess";
-			mes "I can spare a potion";
-			mes "or two, or maybe bring";
-			mes "back a bottle of juic--";
+			mes "Ah... certo.";
+			mes "Tudo bem, eu acho que";
+			mes "Posso lhe dar uma poção";
+			mes "ou duas, ou talvez trazer";
+			mes "uma garrafa de suco...";
 			next;
 			mes "[Aelle]";
-			mes "Whoa, whoa, none of";
-			mes "that junk! I want to";
-			mes "have a real drink.";
-			mes "You know, something";
-			mes "more... ^FF0000Alcohol^000000ic.";
+			mes "Ei, ei, nada disso!";
+			mes "Que porcaria! Eu quero";
+			mes "uma bebida de verdade.";
+			mes "Você sabe... Algo";
+			mes "mais... ^FF0000Alcoólico^000000.";
 			next;
 			mes "[Aelle]";
-			mes "Oh, and I need some";
-			mes "snacks to sustain all of";
-			mes "my teaching energy! Yeah,";
-			mes "some yummy fruit on a plate";
-			mes "and some cookies too!";
+			mes "Ah, e eu vou precisar de alguns";
+			mes "lanchinhos para me dar";
+			mes "energia suficiente para te ensinar! Sim,";
+			mes "algumas frutas saborosas em um belo prato de porcelana";
+			mes "e alguns biscoitos também!";
 			next;
 			mes "[Aelle]";
-			mes "Soooo, I wanna eat";
-			mes "^FF00001 Apple^000000, ^FF00003 Bananas^000000 and";
-			mes "^FF00005 Well-Baked Cookies^000000. Ah,";
-			mes "make sure you bring ^FF0000China^000000";
-			mes "to serve them on, and don't";
-			mes "forget the ^FF0000Alcohol^000000, okay?";
+			mes "Entãoooo, eu quero comer";
+			mes "^FF00001 Maçã^000000, ^FF00003 Bananas^000000 e";
+			mes "^FF00005 Biscoitos de Gengibre^000000. Ah,";
+			mes "certifique-se trazer o ^FF0000Prato de Porcelana^000000";
+			mes "para servi-los, e não";
+			mes "esqueça o^FF0000Álcool^000000, ok?";
 			next;
 			mes "[Aelle]";
-			mes "One last thing...!";
-			mes "Don't let anyone here";
-			mes "in the church know what";
-			mes "we're doing. I don't wanna";
-			mes "get in too much trouble!";
+			mes "Uma última coisa...!";
+			mes "Não deixe que ninguém daqui";
+			mes "da igreja saiba o que";
+			mes "estamos fazendo. Eu não quero";
+			mes "encrenca pro meu lado!";
 			DANCER_SK = 5;
 			close;
 		}
 		else if (DANCER_SK == 5) {
 			if (countitem(970) > 0 && countitem(512) > 0 && countitem(513) > 2 && countitem(538) > 4 && countitem(736) > 0) {
 				mes "[Aelle]";
-				mes "Great, you've brought";
-				mes "the food! It's a good thing";
-				mes "I'm famished because";
-				mes "I'm going to finish it all!";
+				mes "Ótimo, você trouxe";
+				mes "a comida! É bom mesmo";
+				mes "Por que eu estou morrendo de fome!";
+				mes "Eu vou devorar tudo!";
 				next;
-				mes "^3355FFAelle devoured the";
-				mes "food like a ravenous,";
-				mes "hungry beast that had";
-				mes "been deprived for too long.^000000";
-				next;
-				mes "[Aelle]";
-				mes "That was sooo good!";
-				mes "I haven't eaten so much";
-				mes "in such a long time! Then";
-				mes "again, you don't get many";
-				mes "chances to pig out in church.";
-				mes "Ah, that's right, the lesson!";
+				mes "^3355FFAelle  devorou a";
+				mes "comida como uma fera faminta,";
+				mes "que não comia há muito tempo.^000000";
 				next;
 				mes "[Aelle]";
-				mes "Now, the easiest, most";
-				mes "subtle and most appealing";
-				mes "gesture of all time is the";
-				mes "^FF0000wink^000000. It's saved me in times";
-				mes "of crisis, and mastering it";
-				mes "will enhance your charms.";
+				mes "Isso foi muuuito bom!";
+				mes "Eu não tinha comido tanto";
+				mes "em toda minha vida!";
+				mes "Afinal, não se tem muitas";
+				mes "chances se entupir de comida na igreja...";
+				mes "Ah, é verdade, a lição!";
 				next;
 				mes "[Aelle]";
-				mes "To the untrained eye,";
-				mes "the wink only looks like";
-				mes "a simple movement, right?";
-				mes "You close one eye, and then";
-				mes "you reopen that eye. But if";
-				mes "you do it right... If you...";
+				mes "Agora,o mais fácil, mais";
+				mes "sutil e mais atraente";
+				mes "gesto de todos os tempos é a";
+				mes "^FF0000Piscadela^000000. Ela me salvou em tempos";
+				mes "de crise, domina-la";
+				mes "irá aprimorar seus encantos.";
 				next;
 				mes "[Aelle]";
-				mes "Oh, it's been so long";
-				mes "since I've had so much";
-				mes "to drink! Ugh, f-feeling";
-				mes "kinda--anyway, j-just close";
-				mes "and yer-- ^333333*burp*^000000 winking";
-				mes "is so so so so eeeeeasy~";
+				mes "Para o olho destreinado,";
+				mes "a piscadela só parece";
+				mes "um movimento simples, certo?";
+				mes "Você fecha um olho, e então";
+				mes "você abre novamete. Mas se";
+				mes "você fizer corretamente... Se você...";
 				next;
-				mes "[Drunken Aelle]";
-				mes "Do it! Copy me as";
-				mes "I do it! Wink, j-just";
-				mes "like this, okay? Y' see?";
-				mes "^333333*Wiiiiiiiiiiiiiink*^000000";
+				mes "[Aelle]";
+				mes "Ah,faz tanto tempo";
+				mes "que eu não";
+				mes "bebo tanto! Ugh, estou me s-sentindo";
+				mes "meio t-tonta, b-basta fechar";
+				mes "e a-abrir ^333333*Arrroto*^000000 P-piscadela!";
+				mes "é tão tão tão tão fááááácil ~ ~";
+				next;
+				mes "[Aelle Embriagada]";
+				mes "Faça depois de mim!";
+				mes "Eu faço assim e... Piscadela! S-só";
+				mes "isso, ok? você entendeu?";
+				mes "^333333*Piiiiiiscadela*^000000";
 				emotion e_no1;
 				next;
 				mes "["+ strcharinfo(0) +"]";
-				mes "Wh-whoa...";
-				mes "That was...";
-				mes "It's so beautiful!";
-				mes "And all with just";
-				mes "a simple wink!";
+				mes "A-ahhhh...";
+				mes "Isso foi...";
+				mes "Tão lindo!";
+				mes "E tudo com apenas";
+				mes "uma simples piscadela!";
 				next;
-				mes "[Totally Drunk Aelle]";
-				mes "Y-yea... The...";
-				mes "The secret ish...";
-				mes "*Urp* It'sh in the--";
-				mes "Bwahahahaahah!";
-				mes "It's all spinning!";
+				mes "[Aelle Totalmente Bêbada]";
+				mes "S-sim... o...";
+				mes "O c-chegredo...";
+				mes "*Soluço* É na...";
+				mes "Haahahahaahah!";
+				mes "Está tudo girando!";
 				emotion e_heh;
 				next;
-				mes "^3355FFIn her drunken stupor,";
-				mes "Aelle pummels you with";
-				mes "her fists and laughs";
-				mes "maniacally to herself.^000000";
+				mes "^3355FFEm sua loucura causada pelo álcool,";
+				mes "Aelle te dá uma";
+				mes "bofetada e começa";
+				mes "a rir como uma maníaca.^000000";
 				percentheal -10,0;
 				specialeffect2 EF_HIT2;
 				emotion e_dots,1;
-				delitem 970,1; //Alchol
-				delitem 512,1; //Apple
+				delitem 970,1; //Álcool
+				delitem 512,1; //Maçã
 				delitem 513,3; //Banana
-				delitem 538,5; //Well_Baked_Cookie
-				delitem 736,1; //White_Platter
+				delitem 538,5; //Biscoito de Gengibre
+				delitem 736,1; //Prato de Porcelana
 				DANCER_SK = 6;
 				close;
 			}
 			else {
 				mes "[Aelle]";
-				mes "How can you expect";
-				mes "me to teach you anything";
-				mes "if I faint in the middle of";
-				mes "the lesson? That's right,";
-				mes "I'll need some nourishing,";
-				mes "yet delicious, snacks to eat~";
+				mes "Como você pode querer";
+				mes "que eu te ensine alguma coisa";
+				mes "se eu desmaiar no meio da";
+				mes "a lição? É isso mesmo,";
+				mes "Vou precisar de alguns nutritivos";
+				mes "e deliciosos petiscos para comer~";
 				next;
 				mes "[Aelle]";
-				mes "Soooo, I wanna eat";
-				mes "^FF00001 Apple^000000, ^FF00003 Bananas^000000 and";
-				mes "^FF00005 Well-Baked Cookies^000000. Ah,";
-				mes "make sure you bring ^FF0000China^000000";
-				mes "to serve them on, and don't";
-				mes "forget the ^FF0000Alcohol^000000, okay?";
+				mes "Entãoooo, eu quero comer";
+				mes "^FF00001 Maçã^000000, ^FF00003 Bananas^000000 e";
+				mes "^FF00005 Biscoitos de Gengibre^000000. Ah,";
+				mes "certifique-se trazer o ^FF0000Prato de Porcelana^000000";
+				mes "para servi-los, e não";
+				mes "esqueça o ^FF0000Álcool^000000, ok?";
 				close;
 			}
 		}
 		else if (DANCER_SK == 6) {
 			mes "["+ strcharinfo(0) +"]";
-			mes "You still haven't told";
-			mes "me the secret to making";
-			mes "a simple wink have so";
-			mes "much provocative charm.";
-			mes "I really need to--";
+			mes "Você ainda não me contou";
+			mes "o segredo para fazer";
+			mes "uma piscadela simples ser";
+			mes "tão charmosa e provocante.";
+			mes "Eu realmente preciso saber...";
 			next;
-			mes "[Totally Hammered Aelle]";
-			mes "ZzzZzz... Huh?";
-			mes "Yesh, I know, I'm...";
-			mes "I'm a geeenius, yeah...";
+			mes "[Aelle Totalmente Embreagada]";
+			mes "ZzzZzz... O que?";
+			mes "Sim, eu sei, eu sou ...";
+			mes "Eu sou um gêêênio, sim ...";
 			mes "...ZzzzZzzzZzZzzzZZZzz...";
 			next;
 			mes "["+ strcharinfo(0) +"]";
-			mes "W-wake up!";
-			mes "I went through";
-			mes "all this trouble to";
-			mes "learn this technique!";
+			mes "A-Acorda!";
+			mes "Eu passei por";
+			mes "muita coisa só pra";
+			mes "aprender esta técnica!";
 			next;
-			mes "[Annoyed Aelle]";
-			mes "SHADDUP!";
-			mes "I'M SHLEEEEEPY!";
-			mes "G-go away. Talk to";
-			mes "Canell, my sister...";
+			mes "[Aelle Irritada]";
+			mes "CALADAA!";
+			mes "Eu estou com CHOOOOOONO!";
+			mes "V-vá embora. fale com";
+			mes "Canell, minha irmã ...";
 			mes "...ZzzzzZzZZZzzzZZ....";
 			DANCER_SK = 7;
 			close2;
@@ -622,115 +631,102 @@ prontera,183,333,1	script	Aelle#qsk_dan02	1_F_PRIEST,{
 		}
 		else if (DANCER_SK > 6 && DANCER_SK < 8) {
 			mes "["+ strcharinfo(0) +"]";
-			mes "Aelle, I really";
-			mes "need you to teach";
-			mes "me everything else";
-			mes "I need to know about";
-			mes "winking and--";
+			mes "Aelle, eu realmente";
+			mes "preciso de você para me ensinar";
+			mes "tudo o que";
+			mes "Eu preciso saber sobre";
+			mes "piscadelas e...";
 			next;
 			mes "[Aelle]";
-			mes "^333333*Hiccup*^000000 Zzz--wha?";
-			mes "I need ta teach you";
-			mes "to go'way. Talk to my";
-			mes "sister, too tired now.";
-			mes "Go lemme alone girl!";
+			mes "^333333*Soluço*^000000 Zzz..O que?";
+			mes "Eu preciso te ensinar";
+			mes "a ir embora? Vá falar com a minha";
+			mes "irmã, estou muito cansada agora.";
+			mes "Vá, me deixe sozinha garota!";
 			close2;
 			warp "prontera",156,272;
 			end;
 		}
 		else if (DANCER_SK > 8) {
-			mes "[Sober Aelle]";
+			mes "[Aelle Sóbria]";
 			mes "Ohhh...";
-			mes "H-headache...";
+			mes "D-dor de cabeça...";
 			emotion e_an;
 			next;
 			mes "[Aelle]";
-			mes "Oh, wow, look at you!";
-			mes "I can tell that you've";
-			mes "become much more";
-			mes "beautiful. Yes, you're";
-			mes "more elegant and refined";
-			mes "than I can remember.";
+			mes "Ah, opa, olha só para você!";
+			mes "Eu posso dizer que você";
+			mes "se tornou muito mais";
+			mes "bonita. Sim, você está";
+			mes "mais elegante e refinada";
+			mes "do que me lembro.";
 			next;
 			mes "[Aelle]";
-			mes "Always believe in your";
-			mes "beauty, wield your charm";
-			mes "like a weapon... And anything";
-			mes "you desire in this world can";
-			mes "be yours! Bwahahahahaha!";
+			mes "Sempre acreditei na sua";
+			mes "beleza, use o seu charme";
+			mes "como uma arma... e tudo";
+			mes "que você desejar neste mundo pode";
+			mes "ser seu! Bwahahahahaha!";
 			close;
 		}
 		else {
 			mes "[Aelle]";
-			mes "Pssst, hey! I got";
-			mes "some cheap, but slightly";
-			mes "illegal, warps to the Orc";
-			mes "Dungeon, Glast Heim";
-			mes "and the Dead Pit. So";
-			mes "you want in on this?";
+			mes "Psssiu, ei! Eu tenho";
+			mes "algumas passagens,talvez";
+			mes "ilegais, para a Vila dos Orcs,";
+			mes "Glast Heim";
+			mes "e para Mina de Carvão.";
+			mes "Tem interesse?";
 			next;
 			mes "[??????]";
-			mes "Sister Aelle...";
-			mes "Are you still trying";
-			mes "to sell illegal warps";
-			mes "again? Sister Aelle?";
+			mes "Irmã Aelle...";
+			mes "Você ainda está tentando";
+			mes "vender passagens ilegais";
+			mes "denovo?";
 			next;
 			mes "[Aelle]";
-			mes "Oh crap, it's the pastor!";
-			mes "Shhh, if anybody asks you,";
-			mes "I wasn't doing anything!";
+			mes "Ah droga, é o pastor!";
+			mes "Shhh, se alguém lhe perguntar,";
+			mes "eu não estava fazendo nada!";
 			emotion e_omg;
 			next;
 			mes "[Aelle]";
-			mes "Thanks, hon...";
-			mes "I know you can";
-			mes "keep my contraband";
-			mes "our little secret. ^333333*Wink*^000000";
+			mes "Obrigada querida...";
+			mes "Eu sei que você pode";
+			mes "manter meu negócio";
+			mes "em segredo. ^333333*Piscadela*^000000";
 			emotion e_no1;
 			close;
 		}
 	}
 	else {
 		mes "[Aelle]";
-		mes "Pssst, hey! I got";
-		mes "some cheap, but slightly";
-		mes "illegal, warps to the Orc";
-		mes "Dungeon, Glast Heim";
-		mes "and the Dead Pit. So";
-		mes "you want in on this?";
+		mes "Psssiu, ei! Eu tenho";
+		mes "algumas passagens,talvez";
+		mes "ilegais, para a Vila dos Orcs,";
+		mes "Glast Heim";
+		mes "e para Mina de Carvão.";
+		mes "Tem interesse?";
 		next;
 		mes "[??????]";
-		mes "Sister Aelle...";
-		mes "Are you still trying";
-		mes "to sell illegal warps";
-		mes "again? Sister Aelle?";
+		mes "irmã Aelle...";
+		mes "Você ainda está tentando";
+		mes "vender passagens ilegais";
+		mes "novo?";
 		next;
 		mes "[Aelle]";
-		mes "Oh crap, it's the pastor!";
-		mes "Shhh, if anybody asks you,";
-		mes "I wasn't doing anything!";
+		mes "Ah droga, é o pastor!";
+		mes "Shhh, se alguém lhe perguntar,";
+		mes "eu não estava fazendo nada!";
 		emotion e_omg;
 		next;
 		mes "[Aelle]";
-		mes "Thanks, hon...";
-		mes "I know you can";
-		mes "keep my contraband";
-		mes "our little secret. ^333333*Wink*^000000";
+		mes "Obrigada querida...";
+		mes "Eu sei que você pode";
+		mes "manter meu negócio";
+		mes "em segredo. ^333333*Piscadela*^000000";
 		emotion e_no1;
 		close;
 	}
 }
 
-//============================================================
-// Old changelog
-//============================================================
-//= 1.0 for fully working skills only [Lupus]
-//= 1.1 Added more new skill quests for more classes [Lupus]
-//= Somehow eA engine doesn't let you keep learn't skill V_V'
-//= 1.2 Added to correct locations, correct NPC's, fixed
-//= some of the items required and made them into real
-//= quests. [Reddozen]
-//= 1.3 Fixed bugs and minor typos. Optimized [Lupus]
-//= 1.3a fixed an item ID typo, thx 2Spiritual Kid
-//= 1.3b Splitted into different files [DracoRPG]
-//============================================================

@@ -1,33 +1,36 @@
-//===== Hercules Script ======================================
-//= 2006 Halloween Event
-//===== By: ==================================================
-//= Brainstorm
-//===== Current Version: =====================================
-//= 1.4
-//===== Description: =========================================
-//= [Official Conversion]
-//= Event 1: Redeem "Pumpkin Mojo" for pumpkin headgear.
-//= Event 2: Create "Pumpkin Pie" item.
-//===== Additional Comments: =================================
-//= 1.0 First semi-working conversion. [Brainstorm]
-//= 1.1 Refined Brainstorm's conversion. [L0ne_W0lf]
-//= 1.1a Minor fixes. (Screwed up weight checks somehow) [L0ne_W0lf]
-//= 1.2 Added missing checkweights. [L0ne_W0lf]
-//= 1.3 Replaced effect numerics with constants. [L0ne_W0lf]
-//= 1.3a Replaced effect numerics with constants (1 was missed). [Samuray22]
-//= 1.4 Effects are now played by proper NPC. [L0ne_W0lf]
-//============================================================
+//  ________________________________________________________
+// /                                                        \
+// |       _           _   _   _                            |
+// |      | |__  _ __ / \ | |_| |__   ___ _ __   __ _       |
+// |      | '_ \| '__/ _ \| __| '_ \ / _ \ '_ \ / _` |      |
+// |      | |_) | | / ___ \ |_| | | |  __/ | | | (_| |      |
+// |      |_.__/|_|/_/   \_\__|_| |_|\___|_| |_|\__,_|      |
+// |                                                        |
+// |                    brAthena Script                     |
+// |--------------------------------------------------------|
+// | Nome do Script: 2006 Evento Halloween                  |
+// |--------------------------------------------------------|
+// | Criado por: eA/brA Dev. Team                           |
+// |--------------------------------------------------------|
+// | Versões eA/brA: 1.4/1.0                                |
+// |--------------------------------------------------------|
+// | Descrição:                                             |
+// |                                                        |
+// |--------------------------------------------------------|
+// | Changelog:               	                            |
+// | 1.0 Script Traduzido [Triborn]                         |
+// | - Anotações		                                    |
+// \________________________________________________________/
 
-// Pumpkin Mojo quest (Event 1)
-//============================================================
-prontera,162,69,5	script	Gloomy Jack#06_hw	JAKK,2,2,{
+// Quest Mojo de Abóbora (Evento 1)
+prontera,162,69,5	script	Triste Jack#06_hw	JAKK,2,2,{
 	end;
 
 OnTouch:
-	mes "[Cool Devi]";
-	mes "If you have something to say to him,";
-	mes "just talk to me.";
-	mes "You won't even understand what stupid pumkin headed Jack is saying.";
+	mes "[Devi Legal]";
+	mes "Se Você tem algo a lhe-dizer,";
+	mes "é só falar comigo.";
+	mes "Você não entenderá o que o cabeça de abóbora estúpida Jack está dizendo.";
 	close;
 
 OnEffect:
@@ -39,197 +42,197 @@ OnEffect2:
 	end;
 }
 
-prontera,164,69,3	script	Cool Devi#06_hw	4_DEVIRUCHI,{
+prontera,164,69,3	script	Devi Legal#06_hw	4_DEVIRUCHI,{
 	if (MaxWeight - Weight < 2000 || checkweight(1201,1) == 0) {
-		mes "^3355FFWait a second!";
-		mes "Right now, you're carrying";
-		mes "too many things with you.";
-		mes "Please come back after";
-		mes "using the Kafra Service";
-		mes "to store some of your items.^000000";
+		mes "^3355FFEspere um Segundo!";
+		mes "no momento, você está carregando";
+		mes "muitas coisas com você.";
+		mes "Por favor volte depois";
+		mes "utilize o Serviço da Kafra";
+		mes "para guardar alguns de seus itens.^000000";
 		close;
 	}
 	if (countitem(7609) > 0) {
-		mes "[Gloomy Jack]";
-		mes "Oh wait, is that a Pumpkin Mojo you are carrying?";
+		mes "[Triste Jack]";
+		mes "Ah espere, está carregando um Mojo de Abóbora?";
 		mes " ";
-		mes "[Cool Devi]";
-		mes "Says he.";
+		mes "[Devi Legal]";
+		mes "Ele disse.";
 		next;
-		mes "[Gloomy Jack]";
-		mes "Give it to me. I'll pay you back.";
+		mes "[Triste Jack]";
+		mes "Me dê de presente. Depois pago a você.";
 		mes " ";
-		mes "[Cool Devi]";
-		mes "Says he...";
-		mes "I just can guess what he will say next. So what do you say?";
+		mes "[Devi Legal]";
+		mes "Ele disse...";
+		mes "Eu só posso adivinhar o que ele vai dizer em seguida, então o que você vai dizer?";
 		next;
-		if (select("What will he say?:I also know about it.") == 1) {
+		if (select("O que ele vai dizer?:Eu Também sei disso.") == 1) {
 			mes "[" + strcharinfo(0) + "]";
-			mes "What will he say?";
+			mes "O que ele vai dizer?";
 			next;
-			mes "[Cool Devi]";
-			mes "Jack is not like others. He is halloween Jack.";
-			mes "but one day, he lost his Pumpkin Mojo and turned into depressed Jack..";
-			mes "Pumpkin Mojo was his all.";
+			mes "[Devi Legal]";
+			mes "Jack não é como os outros. Ele é o Jack do Halloween.";
+			mes "mais um dia, ele perdeu o Mojo de Abóbora e se transformou em um Jack depressivo..";
+			mes "O Mojo de Abóbora era tudo para ele.";
 			next;
-			mes "[Cool Devi]";
-			mes "Well, actually that's the main reason Jack came to town.";
-			mes "To find his Pumpkin Mojo. Most suspicious suspect is ^4d4dffDelightful Lude^000000, the one known as Halloween monster";
+			mes "[Devi Legal]";
+			mes "Bem, na verdade essa é a principal razão que trouxe Jack para a cidade.";
+			mes "Para encontrar seu Mojo de Abóbora. Desconfio que o maior suspeito é ^4d4dffLude Delicioso^000000, o monstro conhecido como Halloween";
 			next;
-			mes "[Cool Devi]";
-			mes "Why don't you give him back the 'Pumpkin Mojo'.";
-			mes "Don't worry he will compensate you.";
+			mes "[Devi Legal]";
+			mes "Por que você não entrega volta o Mojo de Abóbora.";
+			mes "Não se preocupe que ele irá compensá-lo.";
 			next;
 			mes "[" + strcharinfo(0) + "]";
-			mes "Compensate?With what?";
+			mes "Compensar?Com o quê?";
 			next;
-			mes "[Cool Devi]";
-			mes "If you bring ^4d4dff 1 Pumpkin Mojo^000000 and a pumpkin head that we gave out to you last year,";
-			mes "he will make it to ^00ff00the most fantastic pumpkin hat^000000.";
-			mes "Or if you don't have pumpkin head, you can just bring a ^3d3dff Pumpkin Mojo, a pumpkin, and a cap ^000000.";
+			mes "[Devi Legal]";
+			mes "Se você trouxer ^4d4dff 1 Mojo de Abóbora^000000 e uma cabeça de abóbora que demos para você no ano passado,";
+			mes "eu criarei isto ^00ff00O fantástico Chapéu de Abóbora^000000.";
+			mes "Ou se você não tem uma cabeça de abóbora, você pode apenas trazer um ^3d3dff Mojo de Abóbora, uma abóbora, e um boné ^000000.";
 			next;
-			mes "[Cool Devi]";
-			mes "Well, that Pumpkin Mojo is useless if you just carry it. ";
-			mes "Give it to Jack. Don't you feel pity for him?.";
+			mes "[Devi Legal]";
+			mes "Bem, esse Mojo de Abóbora é inútil se você apenas guardá-la. ";
+			mes "Entregue-o para Jack. Você não sente pena dele?.";
 			close;
 		}
-		mes "[Cool Devi]";
-		mes "Oh~Great.";
-		mes "Then, let me see what you got.";
+		mes "[Devi Legal]";
+		mes "Ótimo.";
+		mes "Então, deixe me ver o que você tem.";
 		next;
 		if ((countitem(7609) > 0) && (countitem(5134) > 0)) {
-			mes "[Gloomy Jack]";
-			mes "Oh, you brought the pumpkin head!";
-			mes "I'll make you to nicer one.";
+			mes "[Triste Jack]";
+			mes "Oh, você trouxe a cabeça de abóbora!";
+			mes "Eu vou fazer um mais agradável.";
 			mes " ";
-			mes "[Cool Devi]";
-			mes "says he.";
+			mes "[Devi Legal]";
+			mes "Ele disse.";
 			next;
-			if (select( "No, I'll come back later.:Oh, good. Make it now!") == 1) {
-				mes "[Gloomy Jack]";
-				mes "Huh?";
+			if (select( "Não, Eu voltarei mais tarde.:Ah, que bom. Faça isso agora!") == 1) {
+				mes "[Triste Jack]";
+				mes "Hã?";
 				mes " ";
-				mes "[Cool Devi]";
-				mes "What? Look at Jack. He has got so dissapointed.";
-				mes "Promise me to give the Pumpkin Mojo back to Jack later someday, will you?";
+				mes "[Devi Legal]";
+				mes "O quê? Olhe para o Jack. Ele ficou tão desapontado.";
+				mes "Me prometa que dará o Mojo de Abóbora de volta para o Jack algum dia, você promete?";
 				close;
 			}
-			mes "[Gloomy Jack]";
-			mes "Thanks for giving my thing back, I'll make your hat prettier.";
+			mes "[Triste Jack]";
+			mes "Obrigado por me dár de volta, eu vou fazer o chapéu mais bonito de todos.";
 			mes " ";
-			mes "[Cool Devi]";
-			mes "says he.";
+			mes "[Devi Legal]";
+			mes "Ele disse.";
 			next;
-			donpcevent "Gloomy Jack#06_hw::OnEffect";
+			donpcevent "Triste Jack#06_hw::OnEffect";
 			mes "[Excited Jack]";
 			mes "Lalala~ lalala~";
 			mes " ";
-			mes "(He starts singing. On a sudden, Jack's aura appeared.)";
+			mes "(Ele começa a cantar. De repente, a aura do Jack apareceu.)";
 			delitem 7609,1; //Pumpkin_Mojo
 			delitem 5134,1; //Pumpkin_Hat
 			getitem 5202,1; //Pumpkin_Hat_
 			next;
-			donpcevent "Gloomy Jack#06_hw::OnEffect2";
-			mes "[Gloomy Jack]";
-			mes "My aura is not like it used to be. Maybe I need more Pumpkin Mojo.";
+			donpcevent "Triste Jack#06_hw::OnEffect2";
+			mes "[Triste Jack]";
+			mes "Minha aura não é como costumava ser. Talvez eu precise de mais Mojo de Abóbora.";
 			mes " ";
-			mes "[Cool Devi]";
-			mes "says he...";
+			mes "[Devi Legal]";
+			mes "Ele disse...";
 			next;
-			mes "[Cool Devi]";
-			mes "Oh~poor Jack.";
-			mes "Well, someday he'll get back all his Pumpkin Mojo back.";
+			mes "[Devi Legal]";
+			mes "Oh~pobre Jack.";
+			mes "Bem, algum dia ele irá voltar com todos os Mojos de Abóbora carregando em suas costas.";
 			close;
 		}
 		else if ((countitem(7609) > 0) && (countitem(535) > 0) && (countitem(2226) > 0)) {
-			mes "[Gloomy Jack]";
-			mes "Wow!";
-			mes "I'll turn your hat to very cool one.";
+			mes "[Triste Jack]";
+			mes "Uau!";
+			mes "Vou transformar o seu chapéu em outro muito bacana.";
 			mes " ";
-			mes "[Cool Devi]";
-			mes "says he...";
+			mes "[Devi Legal]";
+			mes "ele disse...";
 			next;
-			if (select( "No, I'll come back later.:Oh,good. Make it now!") == 1) {
-				mes "[Gloomy Jack]";
-				mes "Huh?";
+			if (select( "Não, eu voltarei mais tarde.:Ah,que bom. Faça isso agora!") == 1) {
+				mes "[Triste Jack]";
+				mes "Hã?";
 				mes " ";
-				mes "[Cool Devi]";
-				mes "What? Look at Jack. He has got so dissapointed.";
-				mes "Promise me to give the Pumpkin Mojo back to Jack later someday,will you?";
+				mes "[Devi Legal]";
+				mes "O quê? Olhe para o Jack. Ele ficou tão desapontado.";
+				mes "Me prometa que dará o Mojo de Abóbora de volta para o Jack algum dia, você promete?";
 				close;
 			}
-			mes "[Gloomy Jack]";
-			mes "Thanks for giving my thing back, I'll make your hat prettier.";
+			mes "[Triste Jack]";
+			mes "Obrigado por me dár de volta, eu vou fazer o chapéu mais bonito de todos.";
 			mes " ";
-			mes "[Cool Devi]";
-			mes "says he.";
+			mes "[Devi Legal]";
+			mes "ele disse.";
 			next;
-			donpcevent "Gloomy Jack#06_hw::OnEffect";
-			mes "[Excited Jack]";
+			donpcevent "Triste Jack#06_hw::OnEffect";
+			mes "[Jack Excitado]";
 			mes "Lalala~ lalala~";
 			mes " ";
-			mes "(He starts singing. On a sudden, Jack's aura appeared.)";
+			mes "(Ele começa a cantar. De repente, a aura do Jack apareceu..)";
 			delitem 7609, 1;//Pumpkin_Mojo
 			delitem 535, 1;//Pumpkin
 			delitem 2226, 1;//Cap
 			getitem 5202, 1;//Pumpkin_Hat_
 			next;
-			donpcevent "Gloomy Jack#06_hw::OnEffect2";
-			mes "[Gloomy Jack]";
-			mes "My aura is not like it used to be. Maybe I need more Pumpkin Mojo.";
+			donpcevent "Triste Jack#06_hw::OnEffect2";
+			mes "[Triste Jack]";
+			mes "Minha aura não é como costumava ser. Talvez eu precise de mais Mojo de Abóbora.";
 			mes " ";
-			mes "[Cool Devi]";
-			mes "says he...";
+			mes "[Devi Legal]";
+			mes "ele disse...";
 			next;
-			mes "[Cool Devi]";
-			mes "Oh~poor Jack.";
-			mes "Well, someday he'll get back all his Pumpkin Mojo back.";
+			mes "[Devi Legal]";
+			mes "Oh~pobre Jack.";
+			mes "Bem, algum dia ele irá voltar com todos os Mojos de Abóbora carregando em suas costas.";
 			close;
 		}
 		else {
-			mes "[Cool Devi]";
-			mes "Hey,there. You don't seem to have all materials for the fantastic hat. ";
+			mes "[Devi Legal]";
+			mes "Ei, espere.Você não parece ter todos os materiais para o chapéu fantástico. ";
 			close;
 		}
 	}
 	else {
-		mes "[Gloomy Jack]";
-		mes "Hey,there. Why don't you come here and listen to my story.";
+		mes "[Triste Jack]";
+		mes "Ei,espere. Por que você não vem aqui e ouve minha história.";
 		mes " ";
-		mes "[Cool Devi]";
-		mes "Says he.";
+		mes "[Devi Legal]";
+		mes "Ele disse.";
 		next;
-		mes "[Gloomy Jack]";
-		mes "I used to be very famous. But now.....";
+		mes "[Triste Jack]";
+		mes "Eu costumava ser muito famoso. Mais agora.....";
 		mes " ";
-		mes "[Cool Devi]";
-		mes "Says he...";
-		mes "Well, I'll just tell you without translating.";
+		mes "[Devi Legal]";
+		mes "Ele disse...";
+		mes "Bem, vou apenas lhe-dizer sem traduzir.";
 		next;
-		mes "[Cool Devi]";
-		mes "Jack is not like others. He is halloween Jack.";
-		mes "but one day, he lost his Pumpkin Mojo and turned into depressed Jack..";
-		mes "Pumpkin Mojo was his all.";
+		mes "[Devi Legal]";
+		mes "Jack não é como os outros. Ele é o Jack do Halloween.";
+		mes "mais um dia, ele perdeu o Mojo de Abóbora e se transformou em um Jack depressivo..";
+		mes "O Mojo de Abóbora era tudo para ele.";
 		next;
-		mes "[Cool Devi]";
-		mes "Well, actually that's the main reason Jack came to town.";
-		mes "To find his Pumpkin Mojo. Most suspicious suspect is ^4d4dffDelightful Lude^000000, the one known as Halloween monster.";
+		mes "[Devi Legal]";
+		mes "Bem, na verdade essa é a principal razão que trouxe Jack para a cidade.";
+		mes "Para encontrar seu Mojo de Abóbora. Desconfio que o maior suspeito é ^4d4dffLude Delicioso^000000, o monstro conhecido como Halloween.";
 		next;
-		mes "[Cool Devi]";
-		mes "Why don't you give him back the 'Pumpkin Mojo'.";
-		mes "Don't worry he will compensate you.";
+		mes "[Devi Legal]";
+		mes "Por que você não entrega entrega de volta o Mojo de Abóbora.";
+		mes "Não se preocupe que ele irá compensá-lo.";
 		next;
 		mes "[" + strcharinfo(0) + "]";
-		mes "Compensate? With what?";
+		mes "Compensar?Com o quê";
 		next;
-		mes "[Cool Devi]";
-		mes "If you bring ^4d4dff 1 Pumpkin Mojo^000000 and a pumpkin head that we gave out to you last year,";
-		mes "he will make it to ^00ff00the most fantastic pumpkin hat^000000.";
-		mes "Or if you don't have pumpkin head, you can just bring a ^3d3dff Pumpkin Mojo, a pumpkin, and a cap ^000000.";
+		mes "[Devi Legal]";
+		mes "Se você trouxer ^4d4dff 1 Mojo de Abóbora^000000 e uma cabeça de abóbora que demos para você no ano passado,";
+		mes "eu criarei isto ^00ff00 O fantástico Chapéu de Abóbora ^000000.";
+		mes "Ou se você não tem uma cabeça de abóbora, você pode apenas trazer um ^3d3dff Mojo de Abóbora, uma abóbora, e um boné ^000000.";
 		next;
-		mes "[Cool Devi]";
-		mes "Well, that Pumpkin Mojo is useless if you just carry it. ";
-		mes "Give it to Jack. Don't you feel pity for him?.";
+		mes "[Devi Legal]";
+		mes "Bem, esse Mojo de Abóbora é inútil se você apenas guardá-la. ";
+		mes "Entregue-o para Jack. Você não sente pena dele??.";
 		close;
 	}
 }
@@ -237,84 +240,84 @@ prontera,164,69,3	script	Cool Devi#06_hw	4_DEVIRUCHI,{
 
 geffen,145,132,3	script	Hoirin#06_hw	4_F_NOVICE,{
 	if (MaxWeight - Weight < 2000 || checkweight(1201,1) == 0) {
-		mes "^3355FFWait a second!";
-		mes "Right now, you're carrying";
-		mes "too many things with you.";
-		mes "Please come back after";
-		mes "using the Kafra Service";
-		mes "to store some of your items.^000000";
+		mes "^3355FFEspere um Segundo!";
+		mes "No momento, você está carregando";
+		mes "muitas coisas com você.";
+		mes "Por favor volte depois";
+		mes "Por favor volte depois";
+		mes "para guardar alguns de seus itens.^000000";
 		close;
 	}
 	if (halloween < 100) {
 		mes "[Hoirin]";
-		mes "Pumpkin is the gift that God had sent us.";
-		mes "It provides good nutrition and helps you to stay healthy!";
+		mes "Abóbora é o presente que deus nos enviou.";
+		mes "Ela fornece uma boa nutrição e ajuda você a se manter saudável!";
 		mes "Bravo~bravo~!";
 		next;
 		mes "[Hoirin]";
-		mes "I, Hoirin have always thought about a ";
-		mes "way to eat pumpkin more deliciously.";
-		mes "But all of a sudden, I realized.";
+		mes "Eu, Hoirin sempre tive pensamentos sobre uma ";
+		mes "maneira de comer abóbora mais deliciosamente.";
+		mes "Mas de repente,eu percebi.";
 		next;
 		mes "[Hoirin]";
-		mes "If I have that! I can make best the Pumpkin pie!!!!!";
+		mes "Se eu quiser! Eu posso fazer a melhor torta de abóbora!!!!!";
 		next;
-		if (select( "What's that?:Ignore.") == 1) {
+		if (select( "O que é isso??:Ignorar.") == 1) {
 			mes "[Hoirin]";
-			mes "What's the first image you see when you think of pumpkin?";
-			mes "I see Jack! I think Jack is the most evolved form of pumpkin!";
-			mes "I wonder what does Jack have something special? Can you imagine?";
+			mes "Qual é a primeira imagem que você vê quando pensa em abóbora?";
+			mes "Eu vejo Jack! Eu acho que Jack é o mais evoluído tipo de abóbora!";
+			mes "Eu me pergunto o que faz Jack ter algo especial? Você pode imaginar?";
 			next;
 			mes "[Hoirin]";
-			mes "I always prefer unique pumpkin dish! Recently, I found out that there are many kinds of Jack in the world ";
-			mes "and the extreme class Jack has blue aura around his body!";
+			mes "Eu sempre prefiro prato de abóbora original! Recentemente, descobri que existem muitos tipos de Jack no mundo ";
+			mes "e a extrema classe Jack tem aura azul em volta de seu corpo!";
 			next;
 			mes "[Hoirin]";
-			mes "Guess what?! it was Halloween Jack!";
-			mes "Halloween Jack has somthing that is concentrated with pumpkin.";
-			mes "It is called ^4d4dffPumpkin Mojo^000000. Only if i have it, i can finish making my special pie.";
+			mes "Adivinhe?! ele foi o Halloween Jack!";
+			mes "Halloween Jack tem algo que se concentra com abóbora.";
+			mes "Isso é chamado de ^4d4dffMojo de Abóbora^000000. Só se eu o tiver, eu posso terminar de fazer minha torta especial.";
 			next;
 			mes "[Hoirin]";
-			mes "Bring me the ingredients!";
-			mes "I'll make you a very special pie right away!";
-			mes "You'll get addicted to it.";
-			mes "Don't be surprised after trying it.";
+			mes "Traga-me os ingredientes!";
+			mes "Eu vou fazer imediatamente uma torta muito especial para você!";
+			mes "Você vai ter viciado ele.";
+			mes "Não se surpreenda depois de tentar.";
 			next;
 			mes "[" + strcharinfo(0) + "]";
 			mes "......................";
-			mes "You seem to be such a passionate person.";
-			mes "So, what's the ingredient anyway.?";
+			mes "Você parece ser uma pessoa tão apaixonada.";
+			mes "Então, qual é o ingrediente?";
 			next;
 			mes "[Hoirin]";
-			mes "Good question!";
-			mes "To make my special Pumpkin pie, I need";
-			mes "^4d4dff 1 Pumpkin Mojo";
-			mes "2 Pumpkin";
-			mes "2 Egg^000000";
+			mes "Boa pergunta!";
+			mes "Para fazer minha torta de abóbora especial, eu preciso";
+			mes "^4d4dff 1 Mojo de Abóbora";
+			mes "2 Abóboras";
+			mes "2 Ovos^000000";
 			mes "";
 			next;
 			mes "[Hoirin]";
-			mes "Just Bring Pumpkin Mojo, Pumpkin, and a Egg.";
-			mes "Leave the rest for me..You'll get to try the best pumkin pie!";
+			mes "Traga apenas Mojo de abóbora, abóbora, e um ovo.";
+			mes "Deixe o resto para mim .. Você irá experimentar a torta de abóbora melhor!";
 			halloween = 100;
 			close;
 		}
 		mes "[Hoirin]";
-		mes "Hm..You'll regret it!";
-		mes "Hoirin's pumpkin pie is just so delicious.";
+		mes "Hm .. Você vai se arrepender!";
+		mes "Torta de abóbora de Hoirin é tão deliciosa.";
 		close;
 	}
 	else {
 		mes "[Hoirin]";
-		mes "So, did you bring all materials?";
-		mes "Were there anything hard to find?";
+		mes "Então, você trouxe todos os materiais?";
+		mes "Estava lá tudo que era difícil de encontrar?";
 		next;
-		switch(select( "I brought all ingredients.:How can I get eggs?:No,I'm just passing by.")) {
+		switch(select( "Eu trouxe todos os ingredientes.:Como posso conseguir ovos?:Não, estou só de passagem por aqui.")) {
 		case 1:
 			if ((countitem(7609) > 0) && (countitem(535) > 1) && (countitem(574) > 1)) {
 				mes "[Hoirin]";
-				mes "You are right!";
-				mes "You brought all things right. Give it to me!!";
+				mes "Você está certo!";
+				mes "Você trouxe todas as coisas certas. Entregue tudo a mim!!";
 				specialeffect2 EF_HIT1;
 				next;
 				specialeffect EF_PIERCESELF;
@@ -324,57 +327,57 @@ geffen,145,132,3	script	Hoirin#06_hw	4_F_NOVICE,{
 				next;
 				mes "[Hoirin]";
 				mes "Ta-da(h)!";
-				mes "Here it is~ help yourself.";
-				mes "It'll be good for your health. I added extra nutrient in it.";
-				delitem 7609,1; //Pumpkin_Mojo
-				delitem 535,2; //Pumpkin
-				delitem 574,2; //Egg
-				getitem 12192,1; //Pumpkin_Pie
+				mes "Aqui está~ajude-se.";
+				mes "Vai ser bom para sua saúde. Eu adicionei nutrientes extras nele.";
+				delitem 7609,1; //Mojo de Abóbora
+				delitem 535,2; //Abóbora
+				delitem 574,2; //Ovo
+				getitem 12192,1; //Torta de Abóbora
 				close;
 			}
 			else {
 				mes "[Hoirin]";
-				mes "No!! This is not enough. I need";
-				mes "^4d4dff 1 Pumpkin Mojo";
-				mes "2 Pumpkin";
-				mes "2 Egg^000000";
-				mes " at least.";
+				mes "Não!! Isso não é suficiente. Preciso de";
+				mes "^4d4dff 1 Mojo de Abóbora";
+				mes "2 Abóboras";
+				mes "2 Ovos^000000";
+				mes " pelo menos.";
 				close;
 			}
 		case 2:
 			if (halloween == 100) {
 				mes "[Hoirin]";
-				mes "Egg?";
-				mes "Well, actually I know someone who can help you.";
-				mes "There's a man who raise many chickens.";
+				mes "Ovos?";
+				mes "Bem, na verdade eu conheço alguém que pode ajudá-lo.";
+				mes "Há um homem que cria muitas galinhas.";
 				next;
 				mes "[Hoirin]";
-				mes "I can send you to where he is if you want.";
-				mes "^4d4dffBut only for once^000000.";
+				mes "Eu posso mandá-lo para onde ele está se você quiser.";
+				mes "^4d4dffMas apenas uma vez^000000.";
 				next;
-				if (select("Send me.:It's ok.") == 1) {
+				if (select("Mande-me para lá.:Está certo.") == 1) {
 					mes "[Hoirin]";
-					mes "Ok, go get the eggs.";
+					mes "Ok, vá buscar os ovos.";
 					halloween = 101;
 					close2;
 					warp "nif_fild01", 162, 113;
 					end;
 				}
 				mes "[Hoirin]";
-				mes "Do you think you can go without my help?!";
-				mes "Ok! go ahead.";
-				mes "Do you know where it is?";
+				mes "Você acha que você pode ir sem a minha ajuda?!";
+				mes "Ok! continue adiante.";
+				mes "Você sabe onde ele está?";
 				close;
 			}
 			else {
 				mes "[Hoirin]";
-				mes "if you go to ^4d4dfffarm of Skelington Town at Neiflheim^000000, you'll meet Chicken Masta. He raises chickens.";
+				mes "se você for a ^ 4d4dfffazenda de Skelington na cidade de Neiflheim ^ 000000, você vai conhecer Criadora de Galinhas. Ele cria galinhas.";
 				close;
 			}
 		case 3:
 			mes "[Hoirin]";
-			mes "Next time, don't forget to bring ";
-			mes "all the ingredients for pumpkin pie!";
+			mes "Da próxima vez, não se esqueça de trazer ";
+			mes "todos os ingredientes para torta de abóbora!";
 			close;
 		}
 	}
@@ -385,54 +388,54 @@ nif_in,18,34,5	script	Loli Ruri#06_hw	LOLI_RURI,2,2,{
 
 OnTouch:
 	mes "[Deviruchi]";
-	mes "Hey there, if you have something to say to Loli Ruri, talk to me.";
-	mes "She's not used to human language.";
+	mes "Ei, se você tem algo a dizer a Loli Ruri, fale comigo.";
+	mes "Ela não é utiliza a linguagem humana.";
 	close;
 }
 
 nif_in,19,32,3	script	Deviruchi#06_hw	4_DEVIRUCHI,{
 	if (MaxWeight - Weight < 2000 || checkweight(1201,1) == 0) {
-		mes "^3355FFWait a second!";
-		mes "Right now, you're carrying";
-		mes "too many things with you.";
-		mes "Please come back after";
-		mes "using the Kafra Service";
-		mes "to store some of your items.^000000";
+		mes "^3355FFEspere um Segundo!";
+		mes "No momento, você está carregando";
+		mes "muitas coisas com você.";
+		mes "Por favor volte depois";
+		mes "utilize o Serviço da Kafra";
+		mes "para guardar alguns de seus itens.^000000";
 		close;
 	}
 	mes "[Loli Ruri]";
-	mes "Devi~Where's the pumpkin pie?";
-	mes "Humans make them, don't they?";
-	mes "Do you have it then?";
+	mes "Devi~Onde está a torta de abóbora?";
+	mes "Será que os humanos,não fazem isso?";
+	mes "Você tem?";
 	mes " ";
 	mes "[Deviruchi]";
-	mes "Says she.";
+	mes "Ele disse.";
 	next;
 	mes "[Deviruchi]";
-	mes "If you have a pumpinkin pie, can I have one?";
-	mes "Cause we are the victim if Loli Ruri gets mad.";
+	mes "Se você tem uma torta de abóbora,eu poderei ter uma?";
+	mes "Porque nós somos a vítima, se Loli Ruri ficar brava.";
 	next;
 	mes "[Deviruchi]";
-	mes "Well I'm not saying that I want it for free.";
-	mes "Don't worry, I won't let you down.";
+	mes "Bem, eu não estou dizendo que eu quero isso de graça.";
+	mes "Não se preocupe, não vou te decepcionar.";
 	next;
-	switch(select( "Give him the pumpkin pie.:Do not give him the pumpkin pie.:Huh? What pumkin pie?")) {
+	switch(select( "Dar a torta de abóbora.:Não dar a torta de abóbora.:Hein? Que torta de abóbora?")) {
 	case 1:
 		if (countitem(12192) > 0) {
 			mes "[Loli Ruri]";
-			mes "Thanks for the pumkin pie!";
-			mes "Here, take this.";
+			mes "Obrigado pela torta de abóbora!";
+			mes "Aqui, pegue isso.";
 			mes " ";
 			mes "[Deviruchi]";
-			mes "Says she.";
+			mes "Ele disse.";
 			next;
 			mes "[Deviruchi]";
-			mes "As I promised, I'll give you something worth the pie.";
-			mes "Hang on....";
+			mes "Como eu prometi, eu vou lhe dar algo que vale a torta.";
+			mes "Pendure em....";
 			next;
 			mes "[Deviruchi]";
-			mes "Hmm...This would be good.";
-			mes "Here take this, and thanks again~";
+			mes "Hmm ... Isso seria bom.";
+			mes "Está aqui leve isso, e obrigado novamente~";
 			delitem 12192, 1;//Pumpkin_Pie
 			@hw_temp = rand(1,3);
 			if (@hw_temp == 2) getitem 12130,1; //Cookie_Bag
@@ -441,174 +444,174 @@ nif_in,19,32,3	script	Deviruchi#06_hw	4_DEVIRUCHI,{
 		}
 		else {
 			mes "[Loli Ruri]";
-			mes "Are you kidding me?";
-			mes "Where's the pumpkin pie! Don't try to lie to me!";
+			mes "Você está brincando comigo?";
+			mes "Onde está a torta de abóbora! Não tente mentir para mim!";
 			mes " ";
 			mes "[Deviruchi]";
-			mes "Say she..Seems like she's very angry...You are in trouble.";
+			mes "Ela disse .. Parece que está com muita raiva ... Você está com problemas.";
 			next;
 			mes "[Loli Ruri]";
-			mes "Devi!!!!!You are the one who told me that I can get the pumpkin pie if I stand here and wait.";
-			mes "Watch your back!";
+			mes "Devi !!!!! Você me disse que eu posso começar a torta de abóbora, se eu ficar aqui e esperar.";
+			mes "Tome cuidado!";
 			mes " ";
 			mes "[Deviruchi]";
-			mes "Says she..Huh?!!Me?!!";
+			mes "Ela disse .. Hein! Eu?!!";
 			next;
 			mes "[" + strcharinfo(0) + "]";
-			mes "Poor Devi~";
-			mes "You shouldn't have lied~";
-			mes "Wish you a luck.";
+			mes "Pobre Devi~";
+			mes "Você não deveria ter mentido~";
+			mes "Desejo-lhe sorte.";
 			close;
 		}
 	case 2:
 		mes "[Loli Ruri]";
-		mes "I want to eat pumpkin pie. Can I have one?Please~~~~";
+		mes "Eu quero comer torta de abóbora. Posso ficar com uma? Por favor~~~~";
 		mes " ";
 		mes "[Deviruchi]";
-		mes "Says he.....Give me if you have one.";
+		mes "Ela disse ..... Dá-me, se tiver uma.";
 		close;
 	case 3:
 		mes "[Deviruchi]";
-		mes "There's a man who makes a very special pumpkin pie.";
-		mes "No one can forget what it taste like.";
+		mes "Há um homem que faz uma torta de abóbora muito especial.";
+		mes "ninguém consegue esquecer seu gosto.";
 		next;
 		mes "[Deviruchi]";
-		mes "Lori Ruri is waiting here for someone who will get the pie for him.";
-		mes "Can you get her one?";
-		mes "I'll treat you back.";
+		mes "Lori Ruri está esperando aqui para alguém que vai receber o bolo para ele.";
+		mes "Você pode levar uma?";
+		mes "Vou tratá-lo de volta.";
 		close;
 	}
 }
 
-// Creation of Pumpkin Pie (Event 2)
+// Criação da Torta de Abóbora (Evento 2)
 //============================================================
-nif_fild01,165,115,3	script	Chicken Masta#06_hw	4_M_NFDEADMAN2,{
+nif_fild01,165,115,3	script	Criadora de Galinhas#06_hw	4_M_NFDEADMAN2,{
 	if (MaxWeight - Weight < 2000 || checkweight(1201,1) == 0) {
-		mes "^3355FFWait a second!";
-		mes "Right now, you're carrying";
-		mes "too many things with you.";
-		mes "Please come back after";
-		mes "using the Kafra Service";
-		mes "to store some of your items.^000000";
+		mes "^3355FFEspere um Segundo!";
+		mes "no momento, você está carregando";
+		mes "muitas coisas com você.";
+		mes "Por favor volte depois";
+		mes "utilize o Serviço da Kafra";
+		mes "para guardar alguns de seus itens.^000000";
 		close;
 	}
 	if (halloween == 101) {
-		mes "[Chicken Masta]";
-		mes "Where did the chicken have gone?!";
-		mes "Oh, hey stranger. How can I help you?";
+		mes "[Criadora de Galinhas]";
+		mes "Onde é que as galinhas foram?!";
+		mes "Oh, ei estranho. Posso ajudá-lo?";
 		next;
-		mes "[Chicken Masta]";
-		mes "This town is too dangerous for you to hang around.";
-		mes "You'd better go back to where you came from....";
+		mes "[Criadora de Galinhas]";
+		mes "Esta cidade é muito perigosa para que você fique por perto.";
+		mes "É melhor você voltar de onde veio....";
 		next;
-		mes "[Chicken Masta]";
-		mes "...Are you looking for eggs?";
-		mes "Recently, people are asking me for eggs to make some kind of pie....are you one of them?";
+		mes "[Criadora de Galinhas]";
+		mes "...Você está procurando ovos?";
+		mes "Recentemente, as pessoas estão me pedindo ovos para fazer algum tipo de torta .... você é uma delas?";
 		next;
-		if (select( "Actually, yes. I came here to get some eggs.:Nope.") == 1) {
-			mes "[Chicken Masta]";
-			mes "Ok. But some of my chickens ran away,";
-			mes "so I have no eggs much left.";
-			mes "1000 zeny for 2 eggs! how's that?";
+		if (select( "Na verdade, sim. Eu vim aqui para obter alguns ovos:. Não..") == 1) {
+			mes "[Criadora de Galinhas]";
+			mes "Ok. Mas algumas das minhas galinhas fugiram,";
+			mes "então eu não tenho muitos ovos guardados.";
+			mes "1000 zeny para 2 ovos! o que acha?";
 			next;
-			switch(select( "Ok,I'll take it.:I'll just buy one.:Whew~it's too expensive.")) {
+			switch(select( "Ok, eu vou levar:. Eu só vou comprar um:.É muito caro.")) {
 			case 1:
 				if (Zeny > 1999) {
-					mes "[Chicken Masta]";
-					mes "Thanks.";
-					mes "Here are the eggs.";
+					mes "[Criadora de Galinhas]";
+					mes "Obrigado.";
+					mes "Aqui estão seus ovos.";
 					Zeny -= 2000;
 					halloween = 102;
 					getitem 574,2; //Egg
 					close;
 				}
 				else {
-					mes "[Chicken Masta]";
-					mes "Hey this is not enough~";
-					mes "1000zeny per each, so if you buy two,that means 2000zeny.";
+					mes "[Criadora de Galinhas]";
+					mes "Ei isso não é o suficiente~";
+					mes "1000zenys por cada um, por isso, se você comprar dois, significa que precisará de 2000zenys.";
 					close;
 				}
 			case 2:
 				if (Zeny > 999) {
-					mes "[Chicken Masta]";
-					mes "Thanks.";
-					mes "Here are the eggs.";
+					mes "[Criadora de Galinhas]";
+					mes "Obrigado.";
+					mes "Aqui estão seus ovos.";
 					Zeny -= 1000;
 					halloween = 102;
 					getitem 574,1; //Egg
 					close;
 				}
 				else {
-					mes "[Chicken Masta]";
-					mes "You don't seem to have enough money...";
-					mes "It's 1000 zeny per each.";
+					mes "[Criadora de Galinhas]";
+					mes "Você não parece ter dinheiro suficiente..";
+					mes "São 1000 zeny por cada.";
 					close;
 				}
 			case 3:
-				mes "[Chicken Masta]";
-				mes "Well...I know it's liitle bit expensive but as I told you, my chickens ran away.";
-				mes "You have to understand.";
+				mes "[Criadora de Galinhas]";
+				mes "Bem ... eu sei que é um pouco caro, mas como eu disse, minhas galinhas fugiram.";
+				mes "Você tem que entender.";
 				close;
 			}
 		}
-		mes "[Chicken Masta]";
-		mes "Let me tell you just one thing!";
-		mes "If you don't want to die,";
-		mes "you'd better run away. It's too dangerous in here.";
+		mes "[Criadora de Galinhas]";
+		mes "Deixe-me dizer apenas uma coisa!";
+		mes "Se você não quer morrer,";
+		mes "é melhor fugir. É muito perigoso aqui.";
 		close;
 	}
 	else if (halloween == 102) {
-		mes "[Chicken Masta]";
-		mes "Do you need eggs?...";
-		mes "Then, help me first.";
-		mes "8 of my chickens ran away.";
-		mes "I just don't know where they are.";
+		mes "[Criadora de Galinhas]";
+		mes "Você precisa de ovos?...";
+		mes "Então, ajude-me primeiro.";
+		mes "8 de minhas galinhas fugiram.";
+		mes "Eu só não sei onde elas estão.";
 		next;
-		mes "[Chicken Masta]";
-		mes "I don't expect all chickens to come back home.";
-		mes "Only if you find me one of them, I'll sell three eggs for you.";
+		mes "[Criadora de Galinhas]";
+		mes "Eu não espero que todas as galinhas voltem para casa.";
+		mes "Só se você me encontrar uma delas, eu venderei três ovos para você.";
 		next;
-		mes "[Chicken Masta]";
-		mes "Isn't it a great deal?";
-		mes "Chickens must be around here somewhere.";
+		mes "[Criadora de Galinhas]";
+		mes "Não é um grande negócio";
+		mes "Os frangos devem estar aqui em algum lugar.";
 		next;
-		mes "[Chicken Masta]";
-		mes "You don't have to bring back chickens to me if you find one,";
-		mes "Just insert the word ^4d4dff'Return'^000000.";
+		mes "[Criadora de Galinhas]";
+		mes "Você não tem que trazer de volta todas as galinhas para mim, se você encontrar uma,";
+		mes "Basta inserir a palavra ^4d4dff'Retornar'^000000.";
 		mes ".........";
 		next;
-		mes "[Chicken Masta]";
-		mes "It's a spell to make chickens to go back home.";
+		mes "[Criadora de Galinhas]";
+		mes "É uma magia para fazer as galinhas voltarem para casa.";
 		mes ".........";
-		mes "Don't forget the word 'Return'!";
+		mes "Não se esqueça 'Retornar' a palavra!";
 		next;
-		mes "[Chicken Masta]";
-		mes "I hope you can find my chickens.";
+		mes "[Criadora de Galinhas]";
+		mes "Espero que você possa encontrar minhas galinhas.";
 		close;
 	}
 	else if (halloween == 103) {
-		mes "[Chicken Masta]";
-		mes "Oh, you came back. I've been waiting for you.";
-		mes "And thanks for the chickens you sent me.";
-		mes "They are saftly kept in the henhouse, in case of running away again.";
+		mes "[Criadora de Galinhas]";
+		mes "Oh, você voltou. Eu estive esperando por você.";
+		mes "E obrigado por as galinhas que você me mandou.";
+		mes "Elas serão mantidos em segurança no galinheiro, no caso de fugir novamente.";
 		next;
-		mes "[Chicken Masta]";
-		mes "I didn't forget what we have promised.";
-		mes "Tell me how many eggs you want.";
-		mes "It's 1000zeny per each.";
-		mes "And maximum 3 is all you can get.";
+		mes "[Criadora de Galinhas]";
+		mes "Eu não esqueci o que prometi.";
+		mes "Diga-me quantos ovos você quer.";
+		mes "São 1000zenys por cada.";
+		mes "O máximo são 3 é tudo que você pode obter.";
 		next;
 		while(1) {
 			input .@input;
 			if (.@input == 0) {
-				mes "[Chicken Masta]";
-				mes "You don't have to buy it, if you don't need it.";
+				mes "[Criadora de Galinhas]";
+				mes "Você não precisa comprar, se você não precisar deles.";
 				close;
 			}
 			else if (@input > 3) {
-				mes "[Chicken Masta]";
-				mes "What did I tell you.";
-				mes "I'm going to sell only three eggs.";
+				mes "[Criadora de Galinhas]";
+				mes "Só digo isso.";
+				mes "Vou vender apenas três ovos.";
 				next;
 			}
 			else
@@ -616,43 +619,43 @@ nif_fild01,165,115,3	script	Chicken Masta#06_hw	4_M_NFDEADMAN2,{
 		}
 		.@hw_egg = .@input * 1000;
 		if (Zeny < @hw_egg) {
-			mes "[Chicken Masta]";
-			mes "You don't seem to have enough zeny.";
+			mes "[Criadora de Galinhas]";
+			mes "Você não parece ter bastante de zenys necessários.";
 			close;
 		}
-		mes "[Chicken Masta]";
-		mes "Here you are.";
-		mes "But no more.";
-		mes "If you want more eggs, find me more chickens.";
+		mes "[Criadora de Galinhas]";
+		mes "Aqui está.";
+		mes "Apenas isso.";
+		mes "Se você quer mais ovos, encontre-me mais galinhas.";
 		Zeny -= @hw_egg;
 		getitem 574, @input;//Egg
 		halloween = 102;
 		close;
 	}
 	else {
-		mes "[Chicken Masta]";
-		mes "Where did the chicken have gone?!";
-		mes "Oh, hey stranger. How can I help you?";
+		mes "[Criadora de Galinhas]";
+		mes "Onde é que as galinhas foram?!";
+		mes "Oh, ei estranho. Posso ajudá-lo?";
 		next;
-		mes "[Chicken Masta]";
-		mes "This town is too dangerous for you to hang around.";
-		mes "You'd better go back to where you came from....";
+		mes "[Criadora de Galinhas]";
+		mes "Esta cidade é muito perigosa para que você fique por perto.";
+		mes "É melhor você voltar de onde veio....";
 		close;
 	}
 }
 
-nif_fild01,167,113,3	script	Masta's chicken#06_hw01	4_NFCOCK,{
-	mes "Drowsing chicken.";
+nif_fild01,167,113,3	script	Galinha de Masta#06_hw01	4_NFCOCK,{
+	mes "Galinha adormecida.";
 	close;
 }
 
 -	script	HwChicken::HwChicken	-1,{
 	if ((halloween == 102) || (halloween == 103)) {
-		mes "Oh, this must be Chicken Masta's chicken.";
-		mes "I should insert the magic word.";
+		mes "Oh, isso deve ser uma galinha da Criadora de Galinhas.";
+		mes "Você deve inserir a palavra mágica.";
 		next;
 		input .@inputstr$;
-		if( .@inputstr$ == "Return" ) {
+		if( .@inputstr$ == "Retornar" ) {
 			emotion e_omg;
 			specialeffect EF_TELEPORTATION;
 			mes "The magic spell has been casted.";
@@ -665,12 +668,12 @@ nif_fild01,167,113,3	script	Masta's chicken#06_hw01	4_NFCOCK,{
 		}
 		else {
 			mes "[" + strcharinfo(0) + "]";
-			mes "Hm...I must have misspelled.";
+			mes "Hm ... deve ter erros ortográficos.";
 			close;
 		}
 	}
 	else {
-		mes "Drowsing chicken.";
+		mes "Galinha adormecida.";
 		close;
 	}
 }
@@ -678,14 +681,14 @@ nif_fild01,167,113,3	script	Masta's chicken#06_hw01	4_NFCOCK,{
 -	script	HwChicken2::HwChicken2	-1,{
 	@egg_temp = rand(1,4);
 	if( @egg_temp == 3) {
-		mes "As soon as you got close to the chicken and touched it, it disappeared completely.";
-		mes "You got an 'egg' in the place where the chicken disappeared.";
+		mes "Assim que você chegou perto da galinha, ela desapareceu completamente.";
+		mes "Você tem um "ovo" no lugar onde a galinha desapareceu.";
 		disablenpc "Chicken#"+strnpcinfo(1);
 		getitem 574,1; //Egg
 		close;
 	}
 	else {
-		mes "As soon as you got close to the chicken and touched it, it disappeared completely.";
+		mes "Assim que você chegou perto da galinha, ela desapareceu completamente.";
 		disablenpc "Chicken#"+strnpcinfo(1);
 		close;
 	}
@@ -694,14 +697,14 @@ nif_fild01,167,113,3	script	Masta's chicken#06_hw01	4_NFCOCK,{
 -	script	HwChicken3::HwChicken3	-1,{
 	@egg_temp = rand(1,4);
 	if( @egg_temp == 3) {
-		mes "As soon as you got close to the chicken and touched it, it disappeared completely.";
-		mes "You got an 'egg' in the place where the chicken disappeared.";
+		mes "Assim que você chegou perto da galinha, ela desapareceu completamente.";
+		mes "Você tem um "ovo" no lugar onde a galinha desapareceu.";
 		disablenpc "Chicken#"+strnpcinfo(1);
 		getitem 574,1; //Egg
 		close;
 	}
 	else {
-		mes "As soon as you got close to the chicken and touched it, it disappeared completely.";
+		mes "Assim que você chegou perto da galinha, ela desapareceu completamente.";
 		disablenpc "Chicken#"+strnpcinfo(1);
 		close;
 	}
@@ -1031,31 +1034,31 @@ pay_fild08,155,358,3	duplicate(HwChicken3)	Chicken#06_hw_pf27	4_NFCOCK
 
 prontera,155,285,3	script	Familiar#06_hw01::HWFamiDup	4_NFBAT,{
 	mes "[Familiar]";
-	mes "Hello.";
-	mes "I'm Loli Ruri's faithful and cute Familiar.";
-	mes "Do you have an invitation from Loli Ruri?";
-	mes "That's a kind of^4d4dffa special ticket to Nifflheim^000000..";
+	mes "Olá.";
+	mes "Eu sou o Familiar bonito e fiel a Loli Ruri.";
+	mes "Você tem um convite da Loli Ruri?";
+	mes "Isso é uma espécie de^4d4dff bilhete especial para Nifflheim^000000..";
 	next;
-	if (select( "Yes, I do.:No, I don't.") == 1) {
+	if (select( "Sim, eu tenho.:Não, eu não tenho.") == 1) {
 		mes "[Familiar]";
-		mes "Do you want to go to Nifflheim?";
-		mes "It's available during Halloween.";
+		mes "Você quer ir para Nifflheim?";
+		mes "Ele está disponível durante o Halloween.";
 		next;
-		if (select( "Yes, I do:No, I don't.") == 1) {
+		if (select( "Sim, eu quero:Não, eu não quero.") == 1) {
 			if (countitem(7460) > 0) {
 				mes "[Familiar]";
-				mes "I checked your ticket.";
-				mes "You can go there now";
-				delitem 7460,1; //Nifl_Express_Ticket
+				mes "Eu verifiquei o seu bilhete.";
+				mes "Você pode ir lá agora";
+				delitem 7460,1; //Niflh_bilhete_expresso
 				close2;
 				warp "nif_in", 18, 20;
 				end;
 			}
 			else {
 				mes "[Familiar]";
-				mes "You're a liar.";
-				mes "You don't have the ticket!";
-				mes "I'll suck up all your blood, you liar!";
+				mes "Você é um mentiroso.";
+				mes "Você não tem o bilhete!";
+				mes "Eu vou sugar todo seu sangue, seu mentiroso!";
 				percentheal -20,0;
 				emotion e_omg,1;
 				close;
@@ -1063,13 +1066,13 @@ prontera,155,285,3	script	Familiar#06_hw01::HWFamiDup	4_NFBAT,{
 		}
 		mes "[Familiar]";
 		mes "Ok.";
-		mes "Actually, it's useless to have a special ticket to Nifflheim.";
+		mes "Na verdade, é inútil ter um bilhete especial para Nifflheim.";
 		close;
 	}
 	mes "[Familiar]";
 	mes "Ok.";
-	mes "If you want to ask something, give a piece of pumpkin pie to Loli Ruri.";
-	mes "He likes it.";
+	mes "Se você quiser perguntar alguma coisa, dê um pedaço de torta de abóbora para Loli Ruri.";
+	mes "Ela gosta.";
 	close;
 }
 payon,156,231,3	duplicate(HWFamiDup)	Familiar#06_hw02	4_NFBAT

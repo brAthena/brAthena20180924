@@ -28,10 +28,9 @@
 -	script	::PR_Officer_moscovia	-1,{
 	mes "[Relações Públicas]";
 	mes "Moscóvia! Você conhece Moscóvia?";
-	mes "O paraíso em meio ao mar sem fim... ";		
-	mes "Bem-vindo à Moscóvia.";
+	mes "O paraíso em meio ao mar sem fim!";
 	mes "Moscóvia é um lugar místico e de aventuras.";
-	next;	
+	next;
 	switch(select("Sobre Moscóvia...:Ir para Moscóvia.:Cancelar")) {
 		case 1:
 			mes "[Relações Públicas]";
@@ -57,7 +56,6 @@
 			mes "Eu garanto que vai ter uma ótima";
 			mes "viagem para Moscóvia!";
 			close;
-			
 		case 2:
 			mes "[Relações Públicas]";
 			mes "Certo então, vamos começar.";
@@ -80,7 +78,7 @@
 				mes "[Relações Públicas]";
 				mes "Desculpe, mas você não tem";
 				mes "zenys suficientes.";
-				mes " é preciso 10000 zenys ";
+				mes "é preciso 10000 zenys ";
 				mes "para ir até Moscóvia.";
 				mes "Muito obrigada.";
 				close;
@@ -101,7 +99,7 @@
 	}
 }
 
-moscovia,166,53,4	script	Relações Públicas#2	4_F_RUSWOMAN2,{
+moscovia,166,53,4	script	R. Públicas de Moscóvia#2	4_F_RUSWOMAN2,{
 	mes "[Relações Públicas]";
 	mes "E então, como foi a sua viagem?";
 	mes "Leva boas lembranças de Moscóvia?";
@@ -125,7 +123,6 @@ moscovia,166,53,4	script	Relações Públicas#2	4_F_RUSWOMAN2,{
 	end;
 }
 
-
 // Moscovia Palace :: mos_swan
 //============================================================
 moscovia,253,166,4	script	Soldado#mosk1	4_M_RUSKNIGHT,{
@@ -140,7 +137,6 @@ moscovia,253,166,4	script	Soldado#mosk1	4_M_RUSKNIGHT,{
 	mes "Por favor, fique quieto ou o Czar vai se irritar.";
 	close;
 }
-
 mosk_in,118,66,5	duplicate(MoscSoldier)	Soldado#mosk02	4_M_RUSKNIGHT
 mosk_in,133,110,3	duplicate(MoscSoldier)	Soldado#mosk03	4_M_RUSKNIGHT
 mosk_in,133,73,3	duplicate(MoscSoldier)	Soldado#mosk04	4_M_RUSKNIGHT

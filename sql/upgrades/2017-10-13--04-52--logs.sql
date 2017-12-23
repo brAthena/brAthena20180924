@@ -1,0 +1,1 @@
+ALTER TABLE `card_log` CHANGE `Type` `Type` ENUM('Insert','Removed','Removed_Fail') CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL DEFAULT 'Insert';

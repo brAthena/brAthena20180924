@@ -206,6 +206,26 @@ int mapif_parse_NameChangeRequest(int fd);
 struct mapif_interface mapif_s;
 struct mapif_interface *mapif;
 
+/**
+ * Faz o tratamento da resposta ao pedido de ban de mac-address. [CarlosHenrq]
+ *
+ * @param fd
+ * @param mac_address
+ * @param response
+ */
+void mapif_send_mac_response(int fd, const char* mac_address, int response)
+{
+	// Responde o pacote recebido para o char-server
+	WFIFOHEAD(fd, 24);
+	WFIFOW(fd,0) = 0x27f2;
+	memcpy(WFIFOP(fd,2), mac_address, MAC_LENGTH);
+	WFIFOL(fd, 20) = response;
+	WFIFOSET(fd, 24);
+}
+
+// for( i = 0; i < ARRAYLENGTH(chr->server); ++i )
+
+
 void mapif_defaults(void) {
 	mapif = &mapif_s;
 
@@ -375,4 +395,7 @@ void mapif_defaults(void) {
 	mapif->parse_RegistryRequest = mapif_parse_RegistryRequest;
 	mapif->namechange_ack = mapif_namechange_ack;
 	mapif->parse_NameChangeRequest = mapif_parse_NameChangeRequest;
+
+	// Pacotes para tratamento de mac-address. [CarlosHenrq]
+	mapif->send_mac_response = mapif_send_mac_response;
 }

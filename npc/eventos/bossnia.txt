@@ -1,34 +1,42 @@
-//===== Hercules Script ======================================
-//= Bossnia Warp NPCs
-//===== By: ==================================================
-//= Masao
-//===== Current Version: =====================================
-//= 1.2
-//===== Description: =========================================
-//= Bossnia MVP event.
-//===== Additional Comments: =================================
-//= 1.0 Converted from the official script.
-//= 1.1 Optimized. [Euphy]
-//= 1.2 Moved spawns and warps (by Masao) to this file. [Euphy]
-//============================================================
+//    ________________________________________________________
+//   /                                                        \
+//   |       _           _   _   _                            |
+//   |      | |__  _ __ / \ | |_| |__   ___ _ __   __ _       |
+//   |      | '_ \| '__/ _ \| __| '_ \ / _ \ '_ \ / _` |      |
+//   |      | |_) | | / ___ \ |_| | | |  __/ | | | (_| |      |
+//   |      |_.__/|_|/_/   \_\__|_| |_|\___|_| |_|\__,_|      |
+//   |                                                        |
+//   |                    brAthena Script                     |
+//   |--------------------------------------------------------|
+//   | Nome do Script:  bossnia.txt                           |
+//   |--------------------------------------------------------|
+//   | Criado por: eA/rA/Herc/brA Dev. Team                   |
+//   |--------------------------------------------------------|
+//   | Versões eA/rA/Herc/brA: 1.1/1.1/1.1/1.0                |
+//   |--------------------------------------------------------|
+//   | Changelog:                                             |
+//   | 1.0 Cabeçalho brAthena [Axl]                           |
+//   |--------------------------------------------------------|
+//   | - Anotações                                            |
+//   \________________________________________________________/
 
 // Entrance NPCs
 //============================================================
 prontera,132,125,4	script	Equipe Bossnia#1	4_M_PHILMAN,{
 	mes "[Riss]";
-	mes "OlÃ¡?";
+	mes "Olá?";
 	mes "Eu encontrei lugares lindos";
 	mes "enquanto viajava pelo mundo.";
 	mes "Eu sou um aventureiro.";
 	mes "Haha~";
 	next;
 	mes "[Riss]";
-	mes "O quÃª? Meu nome Ã©...";
-	mes "'Equipe Bossnia'?? NÃ£o nÃ£o...";
-	mes "Bem, meu nome nÃ£o Ã© tÃ£o importante.";
-	mes "VocÃª deve ser generoso as vezes.";
+	mes "O quê? Meu nome é...";
+	mes "'Equipe Bossnia'?? Não não...";
+	mes "Bem, meu nome não é tão importante.";
+	mes "Você deve ser generoso as vezes.";
 	mes "Sem tempo parar considerar aquelas coisas pequenas";
-	mes "quando vocÃª tem que se concentrar em coisas mais importantes.";
+	mes "quando você tem que se concentrar em coisas mais importantes.";
 	next;
 	mes "[Riss]";
 	mes "Hum... de qualquer forma, quero dizer algo...";
@@ -36,48 +44,48 @@ prontera,132,125,4	script	Equipe Bossnia#1	4_M_PHILMAN,{
 	mes "eu encontrei um muito assustador.";
 	next;
 	mes "[Riss]";
-	mes "Quase sempre que vocÃª chega em algum lugar,";
+	mes "Quase sempre que você chega em algum lugar,";
 	mes "existe um monstro mais forte e assustador que os demais.";
-	mes "NÃ£o Ã©?";
+	mes "Não é?";
 	next;
 	mes "[Riss]";
-	mes "Mas... lÃ¡...";
-	mes "Todos os monstros sÃ£o fortÃ­ssimos e assustadores...";
-	mes "Ã‰ um lugar realmente horripilante.";
+	mes "Mas... lá...";
+	mes "Todos os monstros são fortíssimos e assustadores...";
+	mes "É um lugar realmente horripilante.";
 	next;
 	mes "[Riss]";
 	mes "Se eu demorasse um pouco mais para reagir... apenas alguns segundos...";
 	mes "Eu acabaria sendo morto.";
 	next;
 	mes "[Riss]";
-	mes "O quÃª?";
-	mes "VocÃª quer ir lÃ¡?";
-	mes "Aaah cara~ vocÃª nÃ£o me entendeu.";
+	mes "O quê?";
+	mes "Você quer ir lá?";
+	mes "Aaah cara~ você não me entendeu.";
 	mes "Nesse lugar.......";
 	next;
 	mes "[Riss]";
-	mes "Err... VocÃª sabia?";
-	mes "Mesmo sabendo o que tem lÃ¡, vocÃª quer ingressar...";
-	mes "Bem, eu atÃ© posso te mandar pra lÃ¡.";
-	mes "Mas depois de chegar lÃ¡, nÃ£o guarde";
-	mes "mÃ¡goas de mim. Isso vai lhe custar 5,000 zeny.";
+	mes "Err... Você sabia?";
+	mes "Mesmo sabendo o que tem lá, você quer ingressar...";
+	mes "Bem, eu até posso te mandar pra lá.";
+	mes "Mas depois de chegar lá, não guarde";
+	mes "mágoas de mim. Isso vai lhe custar 5,000 zeny.";
 	next;
 	if (Zeny > 4999) {
 		mes "[Riss]";
-		mes "VocÃª realmente quer aceitar o desafio??";
+		mes "Você realmente quer aceitar o desafio??";
 		mes "Ok, apenas escolha seu caminho.";
 		next;
 		.@i = select("Primeiro","Segundo","Terceiro","Quarto");
 		mes "[Riss]";
 		mes "Se cuida, cara~";
-		mes "NÃ£o se magoe comigo.";
+		mes "Não se magoe comigo.";
 		close2;
 		Zeny -= 5000;
 		warp "bossnia_0"+.@i,rand(202,204),rand(202,204);
 		end;
 	}
 	mes "[Riss]";
-	mes "VocÃª nÃ£o tem zeny suficiente...";
+	mes "Você não tem zeny suficiente...";
 	mes "Volte quando possuir ao menos 5,000 zeny.";
 	close;
 }

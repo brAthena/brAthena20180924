@@ -1,242 +1,240 @@
-//    ________________________________________________________
-//   /                                                        \
-//   |       _           _   _   _                            |
-//   |      | |__  _ __ / \ | |_| |__   ___ _ __   __ _       |
-//   |      | '_ \| '__/ _ \| __| '_ \ / _ \ '_ \ / _` |      |
-//   |      | |_) | | / ___ \ |_| | | |  __/ | | | (_| |      |
-//   |      |_.__/|_|/_/   \_\__|_| |_|\___|_| |_|\__,_|      |
-//   |                                                        |
-//   |                    brAthena Script                     |
-//   |--------------------------------------------------------|
-//   | Nome do Script:  alquimista.txt                        |
-//   |--------------------------------------------------------|
-//   | Criado por: eA/rA/Herc/brA Dev. Team                   |
-//   |--------------------------------------------------------|
-//   | Versões eA/rA/Herc/brA: 3.1/3.1/3.1/1.0                |
-//   |--------------------------------------------------------|
-//   | Descrição: Quest da classe Alquimista.                 |
-//   |--------------------------------------------------------|
-//   | Changelog:                                             |
-//   | 1.0 Cabeçalho brAthena [Axl]                           |
-//   |--------------------------------------------------------|
-//   | - Anotações                                            |
-//   \________________________________________________________/
+//  ________________________________________________________
+// /                                                        \
+// |       _           _   _   _                            |
+// |      | |__  _ __ / \ | |_| |__   ___ _ __   __ _       |
+// |      | '_ \| '__/ _ \| __| '_ \ / _ \ '_ \ / _` |      |
+// |      | |_) | | / ___ \ |_| | | |  __/ | | | (_| |      |
+// |      |_.__/|_|/_/   \_\__|_| |_|\___|_| |_|\__,_|      |
+// |                                                        |
+// |                    brAthena Script                     |
+// |--------------------------------------------------------|
+// | Nome do Script: Quest do Alquimista                    |
+// |--------------------------------------------------------|
+// | Criado por: eA/brA Dev. Team                           |
+// |--------------------------------------------------------|
+// | Versões eA/brA: 3.0/1.2                                |
+// |--------------------------------------------------------|
+// | Descrição: Mudança de Classe para Alquimista           |
+// |--------------------------------------------------------|
+// | Changelog:               	                            |
+// | 1.0 Script Traduzido [Molini]                          |
+// | 1.1 Remoção de espaço [Wolf]                           |
+// | 1.2 Otimizações no npc [Wolf]                          |
+// \________________________________________________________/
 
-alde_alche,27,185,5	script	Alchemist Guildsman#am	4_F_ALCHE,{
+alde_alche,27,185,5	script	Alquimista da Guilda#am	4_F_ALCHE,{
 	mes "[Parmy Gianino]";
 	if (Upper == 1) {
-		mes "Welcome to the";
-		mes "Alchemist Unio--";
-		mes "I-Impossible! How c-can";
-		mes "something like this happen?";
+		mes "Seja bem vindo a";
+		mes "Guilda dos Alquimistas";
+		mes "I-Impossível! C-Como pode?";
+		mes "como isso aconteceu?";
 		next;
 		mes "[Parmy Gianino]";
-		mes "Wait, wait...";
-		mes "I'm sorry. I was confused,";
-		mes "that's all. You look just like";
-		mes "someone I used to know. ";
-		mes "Still, I get this weird";
-		mes "feeling about you...";
+		mes "Espere, espere...";
+		mes "Me desculpe. Eu estava confuso,";
+		mes "isso é tudo. Você parece";
+		mes "alguém que eu conheci... ";
+		mes "Mesmo assim, ainda tenho esse estranho";
+		mes "sentimento sbore você...";
 		close;
 	}
 	if (BaseJob != Job_Merchant) {
 		if (BaseJob == Job_Alchemist) {
-			mes "Welcome, " + strcharinfo(0) + ".";
-			mes "The Alchemist Union";
-			mes "is busy today, like always.";
+			mes "Bem vindo a, "+strcharinfo(0)+".";
+			mes "Guilda dos Alquimistas";
+			mes "estamos ocupados hoje, como sempre.";
 			next;
 			mes "[Parmy Gianino]";
-			mes "Everyone is busy with their";
-			mes "own research, but recently, some headway has been made in the field of biotechnology.";
+			mes "Todos estão ocupados com sua";
+			mes "própria pesquisa, mas recentemente, tivemos alguns progressos no campo da biotecnologia.";
 			next;
 			mes "[Parmy Gianino]";
-			mes "Everyone is hoping that the biotechnological studies will yield positive results. Speaking of which, I wonder how the Alchemists working on artificial life are doing...";
+			mes "Todos estão esperando que os estudos biotecnológicos produzirão resultados positivos. Falando nisso, eu me pergunto como que os Alquimistas trabalham em vida artificial estão fazendo isso...";
+			close;
+		} else if (BaseClass == Job_Novice) {
+			mes "Bem vindo a,";
+			mes "Guilda dos Alquimistas";
+			mes "Nõs estamos recrutanto";
+			mes "pessoas talentosas";
+			mes "com ideias inovadoras.";
+			next;
+			mes "[Parmy Gianino]";
+			mes "Se você estiver interessado em trabalhar com a química, visite-nos mais tarde, quando você se tornar mais experiente.";
+			next;
+			mes "[Parmy Gianino]";
+			mes "Mais uma coisa:";
+			mes "Você deve ter";
+			mes "conhecimento dos itens";
+			mes "como comerciante primeiro.";
 			close;
 		}
-		else if (BaseClass == Job_Novice) {
-			mes "Welcome to the";
-			mes "Alchemist Union.";
-			mes "We are recruiting";
-			mes "talented people";
-			mes "with novel ideas.";
-			next;
-			mes "[Parmy Gianino]";
-			mes "If you're interested in working with chemistry, visit us later when you become more knowledgable.";
-			next;
-			mes "[Parmy Gianino]";
-			mes "Just one thing:";
-			mes "You've got to have";
-			mes "knowledge of items";
-			mes "as a Merchant first.";
-			close;
-		}
-		mes "Welcome to the";
-		mes "Alchemist Union.";
-		mes "We are recruiting";
-		mes "talented people";
-		mes "with novel ideas.";
+		mes "Bem vindo a,";
+		mes "Guilda dos Alquimistas";
+		mes "Nós estamos recrutanto";
+		mes "pessoas talentosas";
+		mes "com ideias inovadoras.";
 		next;
 		mes "[Parmy Gianino]";
-		mes "If you know any exceptional Merchants, by all means, please refer them to us. Those types of people tend to have a talent for Alchemy and experimentation~";
+		mes "Se você conhece alguem comerciante excepcional, de todo jeito, por favor encaminhe-los a nós. Esses tipos de pessoas tendem a ter um talento para a química e experimentação.";
 		close;
 	}
 	if (ALCH_Q == 0) {
-		mes "Welcome to the";
-		mes "Alchemist Union.";
-		mes "How may I help you?";
+		mes "Bem vindo a,";
+		mes "Guilda dos Alquimistas";
+		mes "Como posso ajudar?";
 		next;
-		switch(select("I would like to learn about Alchemists.:I want to become an Alchemist.:Nothing.")) {
+		switch(select("Gostaria de saber mais sobre os Alquimistas.:Eu quero me tornar um Alquimista.:Nada.")) {
 		case 1:
 			mes "[Parmy Gianino]";
-			mes "Alchemists study and create new substances and items out of existing materials. Our knowledge allows us to change the properties of chemicals at the atomic level.";
+			mes "Os Alquimistas estudam e criam novas substâncias e itens de materiais existentes. Nossos conhecimentos nos permite alterar as propriedades dos produtos químicos em nível atômico.";
 			next;
 			mes "[Parmy Gianino]";
-			mes "Most people think our final goal";
-			mes "is to create gold, but that's not the entire truth. We also want to create things like medicines";
-			mes "and new materials.";
+			mes "Muitas pessoas acham que nosso objetivo final";
+			mes "é a criação de ouro, mas isso não é toda a verdade. Nós também queremos criar coisas, como medicamentos";
+			mes "e novos materiais.";
 			next;
 			mes "[Parmy Gianino]";
-			mes "A few of us research the";
-			mes "creation of life, although many of us consider that god's territory. That field is so complex, most of us deal with slightly less complicated projects anyway.";
+			mes "Alguns de nós procuramos a";
+			mes "criação da vida, embora muitos consideram que esse é o território de Deus. Esse campo é tão complexo, a maioria de nós lida com campos um pouco menos complicados.";
 			next;
 			mes "[Parmy Gianino]";
-			mes "If you are interested in becoming an Alchemist, I recommend that you first get a lot of experience as a Merchant. Being a Merchant is a great opportunity to learn about materials as you deal with them.";
+			mes "Se você estiver interessado em se tornar um Alquimista, nós recomendamos que você primeiro pegue bastante experiencia como comerciante. Ser um comerciante é uma grande oportunidade de aprender sobre materiais e como lidar com eles.";
 			next;
 			mes "[Parmy Gianino]";
-			mes "Whether or not you try to become";
-			mes "an Alchemist is your decision. The road to becoming an Alchemist is very challenging, and you'll need to focus on experimentation and research, instead of commerce.";
+			mes "Se vai ou não vai tentar se tornar";
+			mes "um Alquimista, é sua decisão. O caminho para se tornar um Alquimista é muito desafiador, e você precisará se concentrar em experimentação e pesquisa, em vez do comércio.";
 			close;
 		case 2:
 			mes "[Parmy Gianino]";
-			mes "Is that so?";
-			mes "Nice to meet you.";
-			mes "My name is Parmy Gianino";
-			mes "of the Alchemist Union.";
+			mes "É isso mesmo?";
+			mes "Prazer em te conhecer";
+			mes "Eu sou o Parmy Gianino";
+			mes "da Guilda dos Alquimistas.";
 			next;
 			mes "[Parmy Gianino]";
-			mes "If you join our Union and";
-			mes "complete the training, you";
-			mes "will be officially recognized";
-			mes "as an Alchemist and be able";
-			mes "to contribute to our research.";
+			mes "Se você entrar para a Guilda e";
+			mes "completar o treinamento, você";
+			mes "será oficialmente reconhecido";
+			mes "como um Alquimista e será capaz de";
+			mes "contribuir com nossa pesquisa.";
 			next;
 			mes "[Parmy Gianino]";
-			mes "But we don't accept everyone.";
-			mes "You must have a lot of tenacity";
-			mes "and sincere devotion in exploring";
-			mes "the various fields of science.";
+			mes "Mas não podemos aceitar todos.";
+			mes "você precisará ter muita persistência";
+			mes "e sincera devoção em explorar";
+			mes "os vários campos da ciência.";
 			next;
 			mes "[Parmy Gianino]";
-			mes "There are a couple";
-			mes "of requirements to join";
-			mes "the Alchemist Union, but";
-			mes "we'll discuss that";
-			mes "after you apply.";
+			mes "Há um par";
+			mes "de requerimentos para entrar";
+			mes "na Guilda dos Alquimistas, mas";
+			mes "mas nós iremos discutir isso";
+			mes "depois de você pedir.";
 			next;
 			mes "[Parmy Gianino]";
-			mes "Well then, would";
-			mes "you like to apply";
-			mes "for registration?";
+			mes "Pois bem,";
+			mes "gostaria de pedir";
+			mes "o registro?";
 			next;
 			if (select("I would like to apply.:I'll do it later.") == 1) {
 				if (JobLevel < 40) {
 					mes "[Parmy Gianino]";
 					mes "Hmmm...";
-					mes "Just a moment.";
-					mes "I'm sorry to say that";
-					mes "you're not experienced";
-					mes "enough as a Merchant to";
-					mes "join us right now.";
+					mes "Só um momento.";
+					mes "Lamento dizer que";
+					mes "você não tem experiência";
+					mes "suficiente como um comerciante para";
+					mes "unir-se a nós.";
 					next;
 					mes "[Parmy Gianino]";
-					mes "You must be at least";
-					mes "^551A8BJob Level 40^000000 to become";
-					mes "an Alchemist. Come back";
-					mes "later when you meet the";
-					mes "Job Level requirement, okay?";
+					mes "Você precisa pelo menos";
+					mes "^551A8BJob Level 40^000000 para se tornar";
+					mes "um Alquimista. Volte mais";
+					mes "tarde quando você alcançar o";
+					mes "Job Level requerido, ok?";
 					close;
 				}
 				mes "[Parmy Gianino]";
-				mes "Alright, your application has been accepted. Now, you must pay the 50,000 Zeny application fee and bring some items before you can begin your formal training.";
+				mes "Muito bem, seu pedido foi aceito. Agora, você precisa pagar os 50,000 Zeny da taxa de inscrição e trazer alguns itens antes de você começar sua formação.";
 				next;
 				mes "[Parmy Gianino]";
-				mes "But if you bring an ^551A8BOld Magic Book^000000 and ^551A8BHammer of Blacksmith^000000,";
-				mes "we will accept that as a substitute for the item requirement.";
+				mes "Mas se você levar um ^551A80Grimório Antigo^000000 e um ^551A8BMartelo de Ferreiro^000000,";
+				mes "vamos aceitar isso como um substituto para a exigência de item.";
 				next;
 				mes "[Parmy Gianino]";
-				mes "Now...";
-				mes "Please sign";
-				mes "the application.";
+				mes "Agora...";
+				mes "Por favor, assine";
+				mes "o pedido.";
 				next;
 				select(strcharinfo(0));
 				mes "[Parmy Gianino]";
-				mes "Good, good. Now, if you have";
-				mes "the Zeny for your application fee ready, I will tell you which items you will need to bring. Now, pay attention.";
+				mes "Bom, muito bom. Agora, se você tiver";
+				mes "Zeny da taxa de inscrição, vou te dizer quais os itens que você terá que trazer. Agora, preste atenção.";
 				next;
 				if (Zeny < 50000) {
 					mes "[Parmy Gianino]";
-					mes "Uh oh. You don't";
-					mes "seem to have enough Zeny.";
-					mes "Come back to me when you have 50,000 Zeny, otherwise we can't process your application.";
+					mes "Você não";
+					mes "tem Zeny suficiente.";
+					mes "Volte aqui quando você tiver 50.000 Zeny, caso contrário, não podemos processar seu pedido.";
 					close;
 				}
 				Zeny -= 50000;
 				mes "[Parmy Gianino]";
-				mes "Let's see.";
+				mes "Vamos ver.";
 				mes "" + strcharinfo(0);
-				mes "needs to bring...";
+				mes "você precisa trazer...";
 				switch(rand(1,3)) {
 				case 1:
 					ALCH_Q = 1;
 					setquest 2028;
-					mes "^551A8B7 Berserk Potions^000000.";
+					mes "^551A8B7 Poção Frenética^000000.";
 					break;
 				case 2:
 					ALCH_Q = 2;
 					setquest 2029;
-					mes "^551A8B100 Mini Furnaces^000000.";
+					mes "^551A8B100 Mini-Fornos^000000.";
 					break;
 				case 3:
 					ALCH_Q = 3;
 					setquest 2030;
-					mes "^551A8B7,500 Fire Arrows^000000.";
+					mes "^551A8B7,500 Flechas de Fogo^000000.";
 				}
 				next;
 				mes "[Parmy Gianino]";
-				mes "Once you've gathered";
-				mes "those items, come back";
-				mes "to me and your training";
-				mes "as an Alchemist will begin.";
-				mes "See you soon~";
+				mes "Depois de reunidos";
+				mes "os itens, volte";
+				mes "aqui e sua formação";
+				mes "como Alquimista começará.";
+				mes "Até logo";
 				close;
 			}
 			mes "[Parmy Gianino]";
-			mes "Talented Merchants";
-			mes "are always welcome here.";
-			mes "Please come back soon.";
+			mes "Comerciantes talentosos";
+			mes "são sempre bem vindos aqui.";
+			mes "Por favor, volte em breve.";
 			close;
 		case 3:
 			mes "[Parmy Gianino]";
-			mes "Umm...";
-			mes "Please let me know";
-			mes "if you need anything.";
+			mes "Hmm...";
+			mes "Por favor, me avise";
+			mes "se você precisar de algo.";
 			close;
 		}
-	}
-	else if (ALCH_Q >= 1 && ALCH_Q <= 3) {
+	} else if (ALCH_Q >= 1 && ALCH_Q <= 3) {
 		if (countitem(1006) > 0 && countitem(1005) > 0) {
-			mes "Well now~!";
-			mes "You've brought an";
-			mes "Old Magic Book and";
-			mes "a Hammer of Blacksmith.";
-			mes "We'll put these items";
-			mes "to good use.";
+			mes "Muito bem!";
+			mes "Você trouxe um";
+			mes "Grimório Antigo e";
+			mes "um Martelo de Ferreiro.";
+			mes "Vamos colocar esses itens para";
+			mes "uma boa utilização.";
 			next;
 			delitem 1006,1; //Old_Magic_Book
 			delitem 1005,1; //Hammer_Of_Blacksmith
 			mes "[Parmy Gianino]";
-			mes "Okay, now you need to learn";
-			mes "the basics to being an Alchemist and learn the procedures for mixing chemicals and medicines.";
+			mes "Ok, agora você precisa aprender";
+			mes "o básico para ser um Alquimista e aprender os procedimentos de misturar produtos químicos e medicamentos.";
 			ALCH_Q = 4;
 			if (questprogress(2028)) {
 				changequest 2028,2031;
@@ -249,27 +247,27 @@ alde_alche,27,185,5	script	Alchemist Guildsman#am	4_F_ALCHE,{
 			}
 			next;
 			mes "[Parmy Gianino]";
-			mes "But before all of that, you need to speak to Raspuchin. I'm not really sure what you'll be talking about with him...";
+			mes "Mas antes de tudo isso, você precisa falar com Raspuchin. Eu realmente não tenho certeza do que você vai estar falando com ele...";
 			next;
 			mes "[Parmy Gianino]";
-			mes "It shouldn't be anything extraordinary, but you're still required to speak to Raspuchin, since apparently he's a part of the Alchemist selection process.";
+			mes "Não deve ser nada de extraordinário, mas você ainda é obrigado a falar com Raspuchin, uma vez que aparentemente ele é uma parte do processo de seleção dos Alquimistas.";
 			close;
 		}
 		switch(ALCH_Q) {
-		case 1: setarray .@items[0],657,7; break;
-		case 2: setarray .@items[0],612,100; break;
-		case 3: setarray .@items[0],1752,7500; break;
+			case 1: setarray .@items[0],657,7; break;
+			case 2: setarray .@items[0],612,100; break;
+			case 3: setarray .@items[0],1752,7500; break;
 		}
 		if (countitem(.@items[0]) >= .@items[1]) {
-			mes "Seems like";
-			mes "you're all ready.";
-			mes "The Union will put";
-			mes "these items to good use.";
+			mes "Parece que";
+			mes "você está pronto.";
+			mes "A Guilda vai colocar";
+			mes "esses itens para uma boa utilização.";
 			next;
 			delitem .@items[0],.@items[1];
 			mes "[Parmy Gianino]";
-			mes "Okay, now you need to learn";
-			mes "the basics to being an Alchemist and learn the procedures for mixing chemicals and medicines.";
+			mes "Ok, agora você precisa aprender";
+			mes "o básico para ser um Alquimista e aprender os procedimentos de misturar produtos químicos e medicamentos.";
 			ALCH_Q = 4;
 			if (questprogress(2028)) {
 				changequest 2028,2031;
@@ -282,235 +280,225 @@ alde_alche,27,185,5	script	Alchemist Guildsman#am	4_F_ALCHE,{
 			}
 			next;
 			mes "[Parmy Gianino]";
-			mes "But before all of that, you need to speak to Raspuchin. I'm not really sure what you'll be talking about with him...";
+			mes "Mas antes de tudo isso, você precisa falar com Raspuchin. Eu realmente não tenho certeza do que você vai estar falando com ele...";
 			next;
 			mes "[Parmy Gianino]";
-			mes "It shouldn't be anything extraordinary, but you're still required to speak to Raspuchin, since apparently he's a part of the Alchemist selection process.";
+			mes "Não deve ser nada de extraordinário, mas você ainda é obrigado a falar com Raspuchin, uma vez que aparentemente ele é uma parte do processo de seleção dos Alquimistas.";
 			close;
 		}
-		mes "Aren't you ready?";
-		mes "Like I said before,";
-		mes "you must bring";
+		mes "Você não está pronto?";
+		mes "Como eu disse antes,";
+		mes "você deve trazer";
 		mes "^551A8B"+.@items[1]+" "+getitemname(.@items[0])+"s^000000.";
 		next;
 		mes "[Parmy Gianino]";
-		mes "Come back when you";
-		mes "have prepared the";
-		mes "required items.";
+		mes "Volte quando você";
+		mes "tiver preparado os";
+		mes "itens requeridos.";
 		close;
-	}
-	else if (ALCH_Q == 4) {
-		mes "Go and talk to";
+	} else if (ALCH_Q == 4) {
+		mes "Vá e fale com";
 		mes "Mr. Raspuchin.";
-		mes "He's involved in the";
-		mes "Alchemist selection process, whatever that might mean.";
+		mes "Ele está envolvido no";
+		mes "no processo de seleção dos Alquimistas, seja lá o que poderia significar";
 		next;
 		mes "[Parmy Gianino]";
-		mes "Hopefully, it";
-		mes "won't be too much of";
-		mes "a problem. I guess he'll just interview you, and ask you";
-		mes "some simple questions.";
+		mes "Esperamos que ele";
+		mes "não será um grande";
+		mes "problema. Eu acho que ele só vai te entrevistar, e perguntar-lhe";
+		mes "algumas perguntas simples.";
 		close;
-	}
-	else {
-		mes "Ah, I'm sorry, but";
-		mes "I'm busy right now~";
+	} else {
+		mes "Ah, me desculpe, mas";
+		mes "estou ocupado agora.";
 		next;
 		mes "[Parmy Gianino]";
-		mes "Why don't you ask";
-		mes "someone else if you're";
-		mes "not sure who to visit";
-		mes "next? Good luck~";
+		mes "Por que você não pergunta";
+		mes "a alguem se você não tiver";
+		mes "certeza de quem visitar na";
+		mes "próxima vez? Boa sorte!";
 		close;
 	}
 }
 
-alde_alche,175,107,3	script	Fastidious Alchemist#am	4_M_ALCHE_B,{
+alde_alche,175,107,3	script	Alquimista Minucioso#am	4_M_ALCHE_B,{
 	mes "[Raspuchin Gregory]";
 	if (BaseJob != Job_Merchant) {
 		if (BaseJob == Job_Alchemist) {
 			mes "Heeheehee";
-			mes "keheheh~!";
-			mes "Eh? What do you want?!";
+			mes "hehehehe!";
+			mes "Ahn? O que você quer?!";
 			next;
 			mes "[Raspuchin Gregory]";
-			mes "You're not here to steal my experimental results or plagiarize my work, are you? How dare you consider intellectual theft!";
+			mes "Você não está aqui para roubar os meus resultados experimentais ou de plagiar o meu trabalho, não é? Como você se atreve a considerar o roubo intelectual!";
 			next;
 			mes "[Raspuchin Gregory]";
-			mes "You're not, are you?";
-			mes "Well, as a colleague,";
-			mes "let me just warn you";
-			mes "that such tricks aren't";
-			mes "tolerated here in the";
-			mes "Alchemist Union!";
+			mes "Você não está, não é?";
+			mes "Bem, como um colega,";
+			mes "deixe-me avisá-lo";
+			mes "que esses truques não são";
+			mes "tolerado aqui no";
+			mes "Guilda dos Alquimistas!";
 			close;
-		}
-		else if (BaseClass == Job_Novice) {
+		} else if (BaseClass == Job_Novice) {
 			mes "Heeheehee";
-			mes "keheheh~!";
-			mes "How cute, you've come";
-			mes "all this way just to play...";
+			mes "hehehehe!";
+			mes "Que bonitinho, você veio";
+			mes "de tão longe só para jogar...";
 			next;
 			mes "[Raspuchin Gregory]";
-			mes "I'll let you";
-			mes "go this time...";
-			mes "But next time, don't";
-			mes "expect to leave so easily...";
+			mes "Eu vou deixar";
+			mes "você ir desta vez...";
+			mes "Mas da próxima vez, não espere";
+			mes "sair tão facilmente ..";
 			close;
-		}
-		else {
-			mes "What is it?!";
-			mes "You're curious as";
-			mes "to what I'm doing?";
+		} else {
+			mes "O que é isso??!";
+			mes "Você está curioso para saber";
+			mes "o que estou fazendo?";
 			next;
 			mes "[Raspuchin Gregory]";
 			mes "Heehee";
-			mes "keheheh~!";
-			mes "Why, I'm busy";
-			mes "researching,";
-			mes "of course!";
+			mes "hehehehe!";
+			mes "Por que, eu estou ocupado";
+			mes "pesquisando,";
+			mes "é claro!";
 			next;
 			mes "[Raspuchin Gregory]";
-			mes "Once this";
-			mes "potion is complete...";
-			mes "You can use it to take";
-			mes "over an entire nation!";
+			mes "Uma vez que esta";
+			mes "poção estiver completa...";
+			mes "Você pode usá-lo para assumir";
+			mes "uma nação inteira!";
 			next;
 			mes "[Raspuchin Gregory]";
 			mes "Hee hee hee!";
-			mes "Something this";
-			mes "dangerous has to";
-			mes "be kept a secret!";
-			mes "Understand?";
+			mes "Algo tão perigoso como isso";
+			mes "tem de ser ";
+			mes "mantido em segredo!";
+			mes "Entendeu?";
 			close;
 		}
 	}
 	if (ALCH_Q == 0) {
 		mes "Heeheehee";
-		mes "keheheh~!";
-		mes "What do you";
-		mes "want, kid?";
+		mes "hehehehe!";
+		mes "O que você";
+		mes "quer, criança?";
 		next;
 		mes "[Raspuchin Gregory]";
-		mes "A Merchant should go and set up shop and vend items. Why are you wandering in a place like this?";
+		mes "Um comerciante deve ir e abrir uma loja e vender itens. Por que você está andando em um lugar como este?";
 		next;
 		mes "[Raspuchin Gregory]";
-		mes "Heheheh~!";
-		mes "Go vend somwhere else!";
-		mes "And leave me to my";
-		mes "dark enterprise!";
+		mes "Hehehehe!";
+		mes "Vá vender em outro lugar!";
+		mes "e me deixe sozinho em meu";
+		mes "negócio sombrio!";
 		close;
-	}
-	else if (ALCH_Q >= 1 && ALCH_Q <= 3) {
+	} else if (ALCH_Q >= 1 && ALCH_Q <= 3) {
 		mes "Heeheehee";
-		mes "keheheh~!";
-		mes "What do you";
-		mes "want, kid?";
+		mes "hehehehe!";
+		mes "O que você";
+		mes "quer, criança?";
 		next;
 		mes "[Raspuchin Gregory]";
-		mes "What...?";
-		mes "Learn Alchemy?!";
-		mes "Don't even speak";
-		mes "such nonsense!";
+		mes "O que...?";
+		mes "Aprender alquimia?!";
+		mes "Nem ouse falar num";
+		mes "total absurdo!";
 		next;
 		mes "[Raspuchin Gregory]";
-		mes "Even if you tried studying for a thousand years, maybe even more, it'd be useless to you! Forget about it and just worry about your store!";
+		mes "Mesmo se você já tentou estudar por mil anos, talvez até mais, seria inútil a você! Esqueça isso e apenas se preocupar com sua loja!";
 		close;
-	}
-	else if ((ALCH_Q == 4) || (ALCH_Q == 5)) {
+	} else if ((ALCH_Q == 4) || (ALCH_Q == 5)) {
 		if (ALCH_Q == 4) {
 			mes "Heeheehee";
-			mes "keheheh~!";
-			mes "What do you";
-			mes "want, kid?";
+			mes "hehehehe!";
+			mes "O que você";
+			mes "quer, criança?";
 			next;
 			mes "[Raspuchin Gregory]";
-			mes "What...?";
-			mes "Join the Union!?";
-			mes "I don't like it...";
-			mes "I just don't...!";
+			mes "O que...?";
+			mes "Entrar na Guilda!?";
+			mes "Não gosto disso...";
+			mes "Eu apenas não...!";
 			next;
 			mes "[Raspuchin Gregory]";
-			mes "Nowadays, anyone thinks they can";
-			mes "be Alchemists just by knowing how to mix a few herbs. That's why my interview is necessary.";
+			mes "Hoje em dia, ninguém acha que eles podem";
+			mes "ser Alquimistas só por saber como misturar algumas ervas. É por isso que a minha entrevista é necessária.";
 			next;
 			mes "[Raspuchin Gregory]";
 			mes "Heeheehee";
-			mes "keheheh~!";
-			mes "I plan on weeding out all the dumb and incompetent, and chase them";
-			mes "all away! We don't need morons!";
+			mes "hehehehe!";
+			mes "Estou pensando em remover todos os burros e incompetentes, e persegui-los";
+			mes "Nós não precisamos de idiotas!";
 			next;
 			if (JobLevel == 50) {
 				mes "[Raspuchin Gregory]";
-				mes "Wait...";
-				mes "Maybe I've";
-				mes "misjudged you.";
+				mes "Espere...";
+				mes "Talvez eu tenha";
+				mes "julgado mal de você.";
 				if (Sex) {
-					mes "You might be a pretty boy,";
-					mes "but I can tell you're smart";
-					mes "from your eyes.";
+					mes "Você pode ser um menino bonito,";
+					mes "mas posso dizer que você é esperto";
+					mes "apenas olhando em seus olhos.";
+				} else {
+					mes "Hmm. Você é bem fofo,";
+					mes "mas posso dizer que você tem cérebro.";
 				}
-				else {
-					mes "Huh. You're a cutie alright,";
-					mes "but I can tell you've got brains.";
-				}
 				next;
 				mes "[Raspuchin Gregory]";
-				mes "You're not just some stupid kid.";
-				mes "I can tell youve gone through some rough times as a Merchant. Excellent. Keh heh heh~";
+				mes "Você não é apenas uma criança estúpida.";
+				mes "Posso dizer que você passou por alguns momentos difíceis como um comerciante. Excelente. Heh heh heh";
 				next;
 				mes "[Raspuchin Gregory]";
-				mes "Fine, just so we don't insult each other's intelligence, I'll just let you pass the interview.";
+				mes "Bom, só assim nós não iremos insultar a inteligência do outro, eu vou deixar você passar pela entrevista.";
 				next;
 				mes "[Raspuchin Gregory]";
-				mes "So hurry up, become an Alchemist, do some good research, and you might turn out to be of some help to me. Hahahahahaha~!";
+				mes "Então se apresse, se torne um Alquimista, faça alguma pesquisa boa, e você pode vir a ser de alguma ajuda para mim. Hahahahahaha!";
 				next;
 				mes "[Raspuchin Gregory]";
-				mes "Now go to Darwin!";
-				mes "He'll teach you how to do the experiments. Just tell him that";
-				mes "I sent you.";
+				mes "Agora vá para o Darwin!";
+				mes "Ele vai te ensinar como fazer os experimentos. Basta dizer-lhe que";
+				mes "eu enviei-lhe.";
 				ALCH_Q = 6;
-				changequest 2031,2032;
 				close;
-			}
-			else {
+			} else {
 				mes "[Raspuchin Gregory]";
-				mes "Surprised, are you?";
-				mes "Keheheh~ If you thought";
-				mes "becoming an Alchemist was";
-				mes "just a matter of changing";
-				mes "your clothes, then you're";
-				mes "sadly mistaken.";
+				mes "Surpreso, não é?";
+				mes "Hehehehe Se você pensou que";
+				mes "se tornar um Alquimista era";
+				mes "apenas uma questão de mudar";
+				mes "sua roupa, então você está";
+				mes "completamente enganado.";
 				next;
 				mes "[Raspuchin Gregory]";
-				mes "Now, try solving";
-				mes "all these problems.";
-				mes "Let's see how smart";
-				mes "really are.";
+				mes "Agora, tentar resolver";
+				mes "todos estes problemas.";
+				mes "Vamos ver o quão inteligente";
+				mes "você realmente é.";
 			}
-		}
-		else if (ALCH_Q == 5) {
-			mes "What...?!";
-			mes "You want to take";
-			mes "the test again?!";
-			mes "I thought I told";
-			mes "you to leave!";
+		} else if (ALCH_Q == 5) {
+			mes "O que...?!";
+			mes "Você quer fazer";
+			mes "o teste novamente?!";
+			mes "Eu pensei que eu lhe disse";
+			mes "para ir!";
 			next;
 			mes "[Raspuchin Gregory]";
-			mes "I don't like it...";
-			mes "I don't like this!";
+			mes "Eu não gosto disto...";
+			mes "Eu não gosto deste!";
 			next;
 			mes "[Raspuchin Gregory]";
-			mes "Fine...";
-			mes "I'll try to overlook your pitiful performance last time and give";
-			mes "you another chance. Don't screw";
-			mes "up again, got it?";
+			mes "Bem...";
+			mes "Eu vou tentar esquecer o seu desempenho lamentável da última vez e dar a você";
+			mes "outra chance. Não estrague";
+			mes "mais uma vez, entendido?";
 			next;
 			mes "[Raspuchin Gregory]";
-			mes "Now then,";
-			mes "give me all the";
-			mes "^551A8Bright^000000 answers";
-			mes "this time.";
+			mes "Agora,";
+			mes "me de todas as";
+			mes "respostas ^551A8Bcertas^000000";
+			mes "desta vez.";
 		}
 		next;
 		switch(rand(1,3)) {
@@ -546,38 +534,38 @@ alde_alche,175,107,3	script	Fastidious Alchemist#am	4_M_ALCHE_B,{
 			input .@input;
 			if (.@input != 742) .@w_point += 1;
 			mes "[Raspuchin Gregory]";
-			mes "How much do";
-			mes "12 Red Potions,";
-			mes "1 Butterfly Wing";
-			mes "and 5 Fly Wings cost";
-			mes "after a 24 % discount?";
+			mes "Quanto";
+			mes "12 Poções Vermelhas,";
+			mes "1 Asa de Borboleta";
+			mes "e 5 Asas de Mosca custam";
+			mes "depois de 24% de disconto?";
 			next;
 			input .@input;
 			if (.@input != 909) .@w_point += 1;
 			mes "[Raspuchin Gregory]";
-			mes "What is the";
-			mes "total weight of";
-			mes "3 Scimiters, 2 Helms";
-			mes "and 1 Long Coat?";
+			mes "Qual é o";
+			mes "peso total de";
+			mes "3 Cimitarras, 2 Elmos";
+			mes "e 1 Casaco?";
 			next;
 			input .@input;
 			if (.@input != 450) .@w_point += 1;
 			mes "[Raspuchin Gregory]";
-			mes "What is the";
-			mes "total defense of";
-			mes "a Biretta, Mantle,";
-			mes "Opera Mask, Ribbon,";
-			mes "Muffler, Boots, and";
-			mes "Ear Muffs?";
+			mes "Qual é a";
+			mes "defesa total de uma";
+			mes "Solidéu, Capote,";
+			mes "Máscara do Fantasma, Laço,";
+			mes "Sobrepeliz, Botas, e um";
+			mes "Aquecedor de Orelha?";
 			next;
 			input .@input;
 			if (.@input != 20) .@w_point += 1;
 			mes "[Raspuchin Gregory]";
-			mes "If you buy 5 Helms";
-			mes "with a 24 % discount";
-			mes "and sell it at 20";
-			mes "how much profit";
-			mes "do you earn?";
+			mes "Se você comprar 5 Elmos";
+			mes "com 24% de disconto";
+			mes "e vende por 20";
+			mes "quanto lucro";
+			mes "você teve?";
 			next;
 			input .@input;
 			if (.@input != 8800) .@w_point += 1;
@@ -619,39 +607,39 @@ alde_alche,175,107,3	script	Fastidious Alchemist#am	4_M_ALCHE_B,{
 			input .@input;
 			if (.@input != 742) .@w_point += 1;
 			mes "[Raspuchin Gregory]";
-			mes "What is the";
-			mes "total price of";
-			mes "15 Green Potions,";
-			mes "6 Magnifiers and";
-			mes "4 Traps after";
-			mes "a 24 % discount?";
+			mes "Qual é o";
+			mes "valor total de";
+			mes "15 Poções Verdes,";
+			mes "6 Lupas e";
+			mes "4 Armadilha depois";
+			mes "de 24% de disconto?";
 			next;
 			input .@input;
 			if (.@input != 934) .@w_point += 1;
 			mes "[Raspuchin Gregory]";
-			mes "What is the";
-			mes "total weight of";
-			mes "3 Ring Pommel Sabers,";
-			mes "4 Caps, and 2 Boots?";
+			mes "Qual é o";
+			mes "peso total de";
+			mes "3 Sabres de Impacto,";
+			mes "4 Bonés, e 2 Botas?";
 			next;
 			input .@input;
 			if (.@input != 550) .@w_point += 1;
 			mes "[Raspuchin Gregory]";
-			mes "What is the";
-			mes "total defense of";
-			mes "a Buckler, Long Coat,";
-			mes "Gas Mask, Big Ribbon,";
-			mes "Cute Ribbon, Sakkat,";
-			mes "and Glasses?";
+			mes "Qual é a";
+			mes "defesa total de um";
+			mes "Broquel, Casaco,";
+			mes "Mascara de Gás, Laço Grande,";
+			mes "Laço Meigo, Chapéu Chinês,";
+			mes "e Óculos?";
 			next;
 			input .@input;
 			if (.@input != 16) .@w_point += 1;
 			mes "[Raspuchin Gregory]";
-			mes "How much profit do you";
-			mes "make if you buy Tights";
-			mes "at a 24 % discount and";
-			mes "sell it at 20 % of";
-			mes "the normal price?";
+			mes "Quanto lucro você";
+			mes "faz se você comprar uma Malha";
+			mes "com 24% de disconto e";
+			mes "vender por 20% do";
+			mes "preço normal?";
 			next;
 			input .@input;
 			if (.@input != 8520) .@w_point += 1;
@@ -688,36 +676,36 @@ alde_alche,175,107,3	script	Fastidious Alchemist#am	4_M_ALCHE_B,{
 			input .@input;
 			if (.@input != 742) .@w_point += 1;
 			mes "[Raspuchin Gregory]";
-			mes "What is the";
-			mes "total cost of";
-			mes "6 Red Potions,";
-			mes "7 Green Potions,";
-			mes "and 8 Fly Wings";
-			mes "after a 24 % discount?";
+			mes "Qual é o";
+			mes "o preço total de";
+			mes "6 Poções Vermelhas,";
+			mes "7 Poções Verdes,";
+			mes "e 8 Asas de Moscas";
+			mes "depos de 24% de disconto?";
 			next;
 			input .@input;
 			if (.@input != 798) .@w_point += 1;
 			mes "[Raspuchin Gregory]";
-			mes "What is the";
-			mes "total weight of";
-			mes "2 Ring Pommel Sabers,";
-			mes "3 Caps, and 3 boots?";
+			mes "Qual é o";
+			mes "peso total de";
+			mes "2 Sabres de Impacto,";
+			mes "3 Bonés, ae 3 Botas?";
 			next;
 			input .@input;
 			if (.@input != 480) .@w_point += 1;
 			mes "[Raspuchin Gregory]";
-			mes "What is the";
-			mes "total defense of";
-			mes "a Mirror Shield, Mr. Smile, Leather Jacket, Silk Robe, Wedding Veil, Muffler, and Eye Patch?";
+			mes "Qual é a";
+			mes "defesa total de";
+			mes "um Escudo Espelhado, Máscara Feliz, Jaqueta de Couro, Manto de Seda, Véu de Noiva, Sobrepeliz, e um Tapa-Olho?";
 			next;
 			input .@input;
 			if (.@input != 12) .@w_point += 1;
 			mes "[Raspuchin Gregory]";
-			mes "If you buy 4 Padded Armors";
-			mes "at a 24% discount and sell";
-			mes "them at 20% of the original";
-			mes "price, how much profit would";
-			mes "you make from this sale?";
+			mes "Se você comprar 4 Armadura Acolchoada";
+			mes "com 24% de disconto e vender";
+			mes "elas por 20% do preço original,";
+			mes "quanto de lucro";
+			mes "você teve com essa venda?";
 			next;
 			input .@input;
 			if (.@input != 7680) .@w_point += 1;
@@ -725,125 +713,120 @@ alde_alche,175,107,3	script	Fastidious Alchemist#am	4_M_ALCHE_B,{
 		if (.@w_point == 0) {
 			mes "[Raspuchin Gregory]";
 			mes "Ooh...";
-			mes "Excellent! Great!";
-			mes "You got them all correct!?";
-			mes "Keheheh, I have no choice but to acknowledge you...";
+			mes "Excelente! Ótimo!";
+			mes "Você consiguiu acertar todas?";
+			mes "Hehehehe, Eu não tenho escolha, mas reconhecê-lo...";
 			next;
-		}
-		else if (.@w_point == 1) {
+		} else if (.@w_point == 1) {
 			mes "[Raspuchin Gregory]";
-			mes "You got one wrong!";
-			mes "But I'll let it slide.";
-			mes "You pass the interview!";
+			mes "Você tem uma errada!";
+			mes "Mas eu vou deixar passar.";
+			mes "Você passou na entrevista!";
 			next;
-		}
-		else if (.@w_point == 2 && ALCH_Q == 5) {
+		} else if (.@w_point == 2 && ALCH_Q == 5) {
 			mes "[Raspuchin Gregory]";
-			mes "You've got serious";
-			mes "weaknesses in math,";
-			mes "but I'll let you go this time...";
+			mes "Você tem graves";
+			mes "deficiências em matemática,";
+			mes "mas eu vou deixar você ir desta vez...";
 			next;
-		}
-		else {
+		} else {
 			ALCH_Q = 5;
 			mes "[Raspuchin Gregory]";
-			mes "Keheheh! Idiot!";
-			mes "Just listening to your";
-			mes "answers is making me feel";
-			mes "stupider! You might as well";
-			mes "have got them all wrong!";
+			mes "Hehehehe! Idiota!";
+			mes "Apenas de ouvir as suas respostas";
+			mes "me faz sentir";
+			mes "estúpido!! Você poderia muito bem";
+			mes "ter errado tudo!";
 			next;
 			mes "[Raspuchin Gregory]";
-			mes "How can a person that";
-			mes "can't even answer all of";
-			mes "these simple questions think";
-			mes "of becoming an Alchemist?!";
+			mes "Como pode uma pessoa que";
+			mes "nem sequer pode responder";
+			mes "a todas estas perguntas simples";
+			mes "pode pensar em ser um Alquimista?!";
 			next;
 			mes "[Raspuchin Gregory]";
 			mes "Hm...?";
-			mes "Did you get";
-			mes "any right?";
+			mes "Você acertou";
+			mes "alguma?";
 			next;
 			mes "[Raspuchin Gregory]";
-			mes "Fool! Even if you make one little mistake, everything goes wrong";
-			mes "in Alchemy! Now get out of here!";
-			mes "You make me sick!";
+			mes "Louco! Mesmo que você faça um pequeno erro, tudo dá errado";
+			mes "na Alquemia! Agora saia daqui!";
+			mes "Você me deixa doente!";
 			close;
 		}
 		mes "[Raspuchin Gregory]";
-		mes "So hurry up, become an Alchemist, do some good research, and you might turn out to be of some help to me. Hahahahahaha~!";
+		mes "Então se apresse, se torne um Alquimista, faça alguma pesquisa boa, e você pode vir a ser de alguma ajuda para mim. Hahahahahaha!";
 		next;
 		mes "[Raspuchin Gregory]";
-		mes "Now go to Darwin!";
-		mes "He'll teach you how to do the experiments. Just tell him that";
-		mes "I sent you.";
+		mes "Agora vá para o Darwin!";
+		mes "Ele vai te ensinar como fazer os experimentos. Basta dizer-lhe que";
+		mes "eu enviei-lhe.";
 		ALCH_Q = 6;
 		changequest 2031,2032;
 		close;
-	}
-	else if (ALCH_Q == 6) {
-		mes "What are you doing?";
-		mes "Go and find Darwin now.";
+	} else if (ALCH_Q == 6) {
+		mes "O que você está fazendo?";
+		mes "Vá e encontre Darwin agora.";
 		next;
 		mes "[Raspuchin Gregory]";
-		mes "Keheheheheheheheh~";
-		mes "Don't think this is the end of it!";
+		mes "Hehehehehehehehehe";
+		mes "Não ache que esse é o fim!";
 		close;
 	}
-	mes "Keheheheheheheheh~";
-	mes "Don't think this is the end of it!";
+	mes "Heheheheheheheheh~";
+	mes "Não ache que esse é o fim!";
 	close;
 }
 
-alde_alche,13,15,7	script	Studying Man#am	4_M_ALCHE_C,{
+alde_alche,13,15,7	script	Homen Estudioso#am	4_M_ALCHE_C,{
 	if (checkweight(1201,1) == 0) {
-		mes "- Wait a minute! -";
-		mes "- Currently you are carrying -";
-		mes "- too many items with you. -";
-		mes "- Please come back again -";
-		mes "- after you store some items into kafra storage. -";
+		mes "- Espere um minuto! -";
+		mes "- Atualmente você está carregando -";
+		mes "- muitos itens com você. -";
+		mes "- Por favor, volte -";
+		mes "- depois de armazenar alguns itens na kafra. -";
 		close;
 	}
 	mes "[Darwin]";
 	if (BaseJob != Job_Merchant) {
 		if (BaseJob == Job_Alchemist) {
 			mes "Ah...";
-			mes "You...";
-			mes "You've become";
-			mes "an Alchemist.";
+			mes "Você...";
+			mes "Você se tornou";
+			mes "um Alquimista.";
 			next;
 			mes "[Darwin]";
-			mes "Remember...";
-			mes "In your quest";
-			mes "to make your";
-			mes "dreams come true,";
-			mes "do not lose what";
-			mes "you cherish.";
+			mes "Lembre-se...";
+			mes "Em sua luta";
+			mes "para tornar seus";
+			mes "sonhos realidade,";
+			mes "não perca";
+			mes "o que você mais preza.";
 			next;
 			mes "[Darwin]";
 			mes "Ah...";
 			mes "Harmona...";
-			mes "My love...";
+			mes "Meu amor...";
 			close;
-		}
-		else {
-			mes "When you have";
-			mes "your dreams, you";
-			mes "have everything.";
-			mes "Without them, you have";
-			mes "nothing more to lose.";
+		} else {
+			mes "Quando você tem";
+			mes "seus sonhos, você";
+			mes "tem tudo.";
+			mes "Sem eles, você tem";
+			mes "mais nada a perder.";
 			next;
 			mes "[Darwin]";
-			mes "These cursed eyes...";
-			mes "They've lost sight of";
-			mes "my dreams a long time ago.";
+			mes "Esses malditos olhos...";
+			mes "Eles perderam de vista";
+			mes "meus sonhos há muito tempo.";
 			mes "Ha ha ha ha...";
 			next;
 			mes "[Darwin]";
-			mes "Does paradise";
-			mes "really exist...?";
-			mes "Not without my love...";
-			mes "Not without Harmona...";
+			mes "Será que o paraíso";
+			mes "realmente existe...?";
+			mes "Não sem meu amor...";
+			mes "Não sem a Harmona...";
 			close;
 		}
 	}
@@ -857,200 +840,198 @@ alde_alche,13,15,7	script	Studying Man#am	4_M_ALCHE_C,{
 		mes "[Darwin]";
 		mes "...";
 		mes "......";
-		mes "Who is it...?";
+		mes "Quem é...?";
 		next;
 		monster "alde_alche",13,15,"Wolf",1013,1;
 		killmonsterall "alde_alche";
 		mes "[Darwin]";
-		mes "A wolf?";
-		mes "Or a human?";
-		mes "You must be seeking";
-		mes "something, are you not?";
+		mes "Um lobo?";
+		mes "ou um ser humano?";
+		mes "Você deve estar buscando";
+		mes "alguma coisa, não é?";
 		next;
 		mes "[Darwin]";
-		mes "After all...";
-		mes "Everyone has desires";
-		mes "to fulfill. Be be careful.";
-		mes "Do not be like the wild";
-		mes "wolf drawn to the flowers.";
+		mes "Afinal de contas...";
+		mes "Todos temos desejos";
+		mes "a cumprir. Tenha cuidado.";
+		mes "Não seja como os lobos selvagens";
+		mes "atraídos para as flores.";
 		next;
 		mes "[Darwin]";
-		mes "In your efforts to gain something else, you may end up sacrificing something precious to you.";
+		mes "Em seus esforços para ganhar mais alguma coisa, você pode acabar sacrificando algo precioso para você.";
 		next;
 		mes "[Darwin]";
-		mes "Cultivating joy and happiness";
-		mes "is much like cultivating flowers.";
-		mes "If something is missing, the";
-		mes "flower will wilt away...";
+		mes "Cultivar a alegria e felicidade";
+		mes "é muito parecido com o cultivo de flores.";
+		mes "Se algo estiver faltando, a";
+		mes "flor murcha rapido...";
 		next;
 		mes "[Darwin]";
-		mes "What brings you";
-		mes "to this kind of place?";
+		mes "O que o trouxe";
+		mes "para esse tipo de lugar?";
 		next;
-		switch(select("I want to learn how to experiment.:Tell me more about flowers.:Nothing.")) {
+		switch(select("Eu quero aprender como fazer experimentação.:Conte-me mais sobre as flores.:Nada.")) {
 		case 1:
 			mes "[Darwin]";
-			mes "You wish to";
-			mes "learn Alchemy?";
-			mes "Everything I know,";
-			mes "I've learned for the";
-			mes "sake of making my";
-			mes "dream come true...";
+			mes "Deseja";
+			mes "aprender Alquemia?";
+			mes "Tudo que eu sei,";
+			mes "eu aprendi para a";
+			mes "questão de fazer o meu";
+			mes "sonho se tornar realidade...";
 			next;
 			mes "[Darwin]";
-			mes "I'll teach";
-			mes "you the basics...";
-			mes "But everything you";
-			mes "learn afterwards must";
-			mes "be directed through";
-			mes "your own motivations.";
+			mes "Eu vou te ensinar";
+			mes "o básico...";
+			mes "Mas tudo o que você";
+			mes "depois deve aprender";
+			mes "será orientada por";
+			mes "suas próprias motivações.";
 			next;
 			mes "[Darwin]";
-			mes "I will teach you";
-			mes "how to make simple";
-			mes "medicine. So please";
-			mes "bring the following";
-			mes "materials right away.";
+			mes "Eu vou te ensinar";
+			mes "como fazer";
+			mes "remédios simples. Então, por favor";
+			mes "traga os seguintes";
+			mes "materiais.";
 			next;
 			mes "[Darwin]";
-			mes "^551A8B3 Medicine Bowls^000000,";
-			mes "^551A8B3 Empty Bottles^000000,";
-			mes "^551A8B1 Red Herb^000000,";
-			mes "^551A8B1 Yellow Herb^000000 and";
-			mes "^551A8B1 White Herb^000000.";
+			mes "^551A8B3 Vasilha de Mistura^000000,";
+			mes "^551A8B3 Garrafa Vazia^000000,";
+			mes "^551A8B1 Erva Vermelha^000000,";
+			mes "^551A8B1 Erva Amarela^000000 and";
+			mes "^551A8B1 Erva Branca^000000.";
 			ALCH_Q = 7;
 			changequest 2032,2033;
 			next;
 			mes "[Darwin]";
-			mes "Once you have";
-			mes "prepared everything,";
-			mes "return to me.";
+			mes "Depois de você ter";
+			mes "tudo preparado,";
+			mes "volte aqui.";
 			close;
 		case 2:
 			mes "[Darwin]";
-			mes "Flowers...?";
-			mes "In the darkest";
-			mes "recesses of my mind,";
-			mes "there is a blossum";
-			mes "that I faintly remember...";
+			mes "Flores...?";
+			mes "Na escuridão";
+			mes "recessos da minha mente,";
+			mes "há uma flor";
+			mes "que eu me lembro vagamente...";
 			next;
 			mes "[Darwin]";
-			mes "For the one that";
-			mes "I love, I put all";
-			mes "of my efforts into";
-			mes "researching that one thing.";
+			mes "Para o que";
+			mes "eu amo, eu coloquei todos";
+			mes "os meus esforços em";
+			mes "na investigação de uma coisa.";
 			next;
 			mes "[Darwin]";
-			mes "I won't tell you the details,";
-			mes "but I was basically researching";
-			mes "the relationship between";
-			mes "wolves and flowers.";
+			mes "Eu não vou contar os detalhes,";
+			mes "mas eu estava pesquisando basicamente";
+			mes "a relação entre";
+			mes "lobos e flores.";
 			next;
 			mes "[Darwin]";
-			mes "But yes...";
-			mes "It was a flower.";
-			mes "With its shine, it was said";
-			mes "to let you see paradise.";
-			mes "The ^551A8BIllusion Flower^000000...";
+			mes "Mas sim...";
+			mes "Era uma flor.";
+			mes "Com o seu brilho, foi dito";
+			mes "para deixá-lo ver o paraíso.";
+			mes "A ^551A8BFlor das Ilusões^000000...";
 			next;
 			mes "[Darwin]";
-			mes "I even made";
-			mes "a Homunculus,";
-			mes "but no one believed that I could create new life from a flower...";
+			mes "Eu fiz mesmo";
+			mes "um Homunculus,";
+			mes "mas ninguém acreditou que eu poderia criar uma nova vida de uma flor...";
 			next;
 			mes "[Darwin]";
-			mes "Then...";
-			mes "Well, some other things happened, and now I have nothing left. Time no longer has any meaning for me.";
+			mes "Então...";
+			mes "Bem, algumas coisas aconteceram, e agora não tenho mais nada. O tempo já não tem qualquer significado para mim.";
 			next;
 			mes "[Darwin]";
 			mes "Ahh...";
 			mes "Harmona...";
-			mes "Where have you gone?";
-			mes "I hope you're in a field";
-			mes "of beautiful flowers...";
+			mes "Onde você foi?";
+			mes "Espero que você esteja em um campo";
+			mes "de flores bonitas...";
 			close;
 		case 3:
 			mes "[Darwin]";
-			mes "Consider what";
-			mes "is most precious";
-			mes "to you. It cannot";
-			mes "be protected if you";
-			mes "do not recognize it.";
+			mes "Considere o que";
+			mes "é mais precioso";
+			mes "para você. Ele não pode";
+			mes "ser protegido se você";
+			mes "você não reconhecê-lo.";
 			close;
 		}
-	}
-	else if (ALCH_Q == 7) {
+	} else if (ALCH_Q == 7) {
 		mes "...";
 		mes "......";
 		next;
 		mes "[Darwin]";
 		mes "...";
 		mes "......";
-		mes "Who is it...?";
+		mes "Quem é...?";
 		next;
 		mes "[Darwin]";
 		mes "Ah...";
-		mes "You are the one who";
-		mes "wishes to learn Alchemy.";
-		mes "Have you prepared everything?";
+		mes "Você é o único que";
+		mes "gostaria de saber Alquimia.";
+		mes "Você preparou tudo?";
 		next;
 		if (countitem(710) > 0) {
 			mes "[Darwin]";
-			mes "Wait.";
-			mes "That Illusion Flower.";
-			mes "How did you get that?";
+			mes "Espere.";
+			mes "Essa Flor das Ilusões.";
+			mes "Como você conseguiu isso?";
 			next;
 			mes "[Darwin]";
-			mes "Where did you find it?!";
-			mes "The flower that slowly";
-			mes "blooms under the";
-			mes "moonlight?";
-			mes "It's beautiful...!";
+			mes "Onde você encontrou isso?";
+			mes "A flor que desabrocha lentamente";
+			mes "sob o luar??";
+			mes "É lindo...!";
 			next;
 			mes "[Darwin]";
-			mes "Th-That flower...";
-			mes "Please let me see it.";
-			mes "The Illusion Flower!";
+			mes "A-Aquela flor...";
+			mes "Por favor, deixe-me vê-la.";
+			mes "Ah Flor das Ilusões!";
 			mes "Uwaaaaaaah!!";
 			next;
 			mes "[Darwin]";
-			mes "Would you be so kind";
-			mes "as to let me have this flower?";
-			mes "I'm sure that this is the Moonlight Flower that I've been seeking!";
+			mes "Poderia ter a gentileza";
+			mes "de deixar-me ter essa flor?";
+			mes "Tenho certeza de que esta é a Flor do Luar que eu estava procurando!";
 			next;
-			if (select("Sorry, I can't give it to you.:I brought it to give to you.") == 1) {
+			if (select("Desculpe, não posso dar a você.:Eu a trouxe para te dar.") == 1) {
 				mes "[Darwin]";
-				mes "I understand.";
-				mes "You can't give";
-				mes "such a precious";
-				mes "flower to just anyone.";
-				mes "Well... It's okay.";
+				mes "Entendo...";
+				mes "Você não pode dar";
+				mes "uma flor tão preciosa";
+				mes "para qualquer um.";
+				mes "Bem... Está tudo bem.";
 				next;
 				mes "[Darwin]";
-				mes "It just brought back old memories. I shouldn't have asked in the first place. In any case, please bring what is needed for the experiment.";
+				mes "Ele só trouxe de volta velhas lembranças. Eu não deveria ter perguntado em primeiro lugar. Em qualquer caso, por favor, traga o que é necessário para o experimento.";
 				next;
 				mes "[Darwin]";
-				mes "Please leave that flower";
-				mes "somewhere else. It brings";
-				mes "back too many memories...";
+				mes "Por favor, deixe essa flor";
+				mes "em outro lugar. Ela traz";
+				mes "de volta muitas memórias...";
 				close;
 			}
 			mes "[Darwin]";
-			mes "Are you";
-			mes "serious?!";
-			mes "Thank you!";
-			mes "Such a precious flower.";
-			mes "Ah, Harmona, my love...";
+			mes "Você está";
+			mes "falando sério?!";
+			mes "Muito obrigado!";
+			mes "Uma flor tão preciosa.";
+			mes "Ah, Harmona, meu amor...";
 			next;
 			mes "[Darwin]";
-			mes "Yes...";
-			mes "I shall repay you for this.";
-			mes "I shall plant all of my knowledge of Alchemy directly into your mind...";
+			mes "Sim...";
+			mes "Vou recompensá-lo por isso.";
+			mes "Vou plantar todo o meu conhecimento da Alquimia diretamente em sua mente...";
 			next;
 			mes "[Darwin]";
-			mes "Open your eyes wide,";
-			mes "and look into my eyes!!";
-			mes "Don't stop until the end!!";
+			mes "Abra bem os olhos,";
+			mes "e olhe nos meus olhos!";
+			mes "Não pare de olhar até o fim!";
 			next;
 			mes "Lorem ipsum dolor sit amet,";
 			next;
@@ -1090,30 +1071,28 @@ alde_alche,13,15,7	script	Studying Man#am	4_M_ALCHE_C,{
 			delitem 710,1; //Illusion_Flower
 			mes "[Darwin]";
 			mes "^666666*Gasp...*^000000";
-			mes "You are now";
-			mes "an Alchemist!!";
-			mes "Go to the Union";
-			mes "and cast away the last";
-			mes "vestiges of Merchant life!!";
+			mes "Você agora";
+			mes "é um Alquimista!!";
+			mes "Vá para a Guilda";
+			mes "e jogue fora todos ";
+			mes "últimos vestígios de vida de mercador!";
 			ALCH_Q = 40;
-			changequest 2033,2034;
 			close;
-		}
-		else if (countitem(7134) > 2 && countitem(713) > 2 && countitem(507) > 0 && countitem(508) > 0 && countitem(509) > 0) {
+		} else if (countitem(7134) > 2 && countitem(713) > 2 && countitem(507) > 0 && countitem(508) > 0 && countitem(509) > 0) {
 			mes "[Darwin]";
-			mes "Seems like you have everything ready. As promised, I will teach you how to make simple medicine.";
+			mes "Parece que você tem tudo pronto. Como prometido, eu vou te ensinar a fazer remédios simples.";
 			next;
 			mes "[Darwin]";
-			mes "First, prepare the Medicine Bowl. Then, you put the Herbs inside, like this, and slowly crush them.";
+			mes "Primeiro, prepare a Vasilha de Mistura. Então, você coloca as ervas dentro, como este, e, lentamente, esmagá-los.";
 			next;
 			mes "[Darwin]";
-			mes "Pour small amounts";
-			mes "of clean water and stir";
-			mes "the mixture until it thickens.";
-			mes "Afterwards, add some more Herbs.";
+			mes "Despeje pequenas quantidades";
+			mes "de água limpa e agite";
+			mes "a mistura até engrossar.";
+			mes "Em seguida, adicione um pouco mais de Ervas.";
 			next;
 			mes "[Darwin]";
-			mes "That's how you make it. If you think you have enough, gently pour the mixture into an empty bottle.";
+			mes "Isso é como você faz. Se você acha que tem o suficiente, delicadamente despeje a mistura em um frasco vazio.";
 			delitem 7134,3; //Medicine_Bowl
 			delitem 713,3; //Empty_Bottle
 			delitem 507,1; //Red_Herb
@@ -1121,36 +1100,36 @@ alde_alche,13,15,7	script	Studying Man#am	4_M_ALCHE_C,{
 			delitem 509,1; //White_Herb
 			next;
 			mes "[Darwin]";
-			mes "There you go,";
-			mes "it's complete.";
-			mes "Now, make some medicine";
-			mes "using the simple procedure";
-			mes "I just explained to you.";
-			.@w_point = 0;
+			mes "Lá vai você,";
+			mes "está completo.";
+			mes "Agora, faça algum medicamento";
+			mes "com o processo simples.";
+			mes "Eu acabei de explicar para você.";
+			set w_point,0;
 			next;
-			switch(select("Prepare the Medicine Bowl.:Put the Medicine Bowl on your head.:Kick the Medicine Bowl.")) {
+			switch(select("Prepare a Vasilha de Mistura.:Coloque a Vasilha de Mistura em sua cabeça.:Chute a Vasilha de Mistura.")) {
 			case 1:
 				break;
 			case 2:
 				++.@w_point;
 				mes "[Darwin]";
-				mes "What...?";
+				mes "O que...?";
 				next;
 				break;
 			case 3:
 				++.@w_point;
 				mes "[Darwin]";
-				mes "No!";
+				mes "Não!";
 				next;
 				break;
 			}
-			switch(select("Put some dirt in the Medicine Bowl.:Put some Herbs in the Medicine Bowl.:Put a Harp in the Medicine Bowl.")) {
+			switch(select("Ponha um pouco de sujeira na Vasilha de Mistura.:Ponha um pouco de ervas na Vasilha de Mistura.:Coloque uma Harpa na Vasilha de Misturas.")) {
 			case 1:
 				++.@w_point;
 				mes "[Darwin]";
 				mes "...Eh!?";
-				mes "That's not";
-				mes "medicine!";
+				mes "Isso não é";
+				mes "medicina!";
 				next;
 				break;
 			case 2:
@@ -1158,79 +1137,78 @@ alde_alche,13,15,7	script	Studying Man#am	4_M_ALCHE_C,{
 			case 3:
 				++.@w_point;
 				mes "[Darwin]";
-				mes "A Harp?";
-				mes "And how would";
-				mes "you do that?";
+				mes "Uma Harpa?";
+				mes "E como você";
+				mes "vai fazer isso?";
 				next;
 				break;
 			}
-			switch(select("Crush the Herbs.:Crush the Medicine Bowl.:Crush Darwin's foot.")) {
+			switch(select("Esmague as Ervas.:Esmague a Vasilha de Mistura.:Esmague os pés do Darwin.")) {
 			case 1:
 				break;
 			case 2:
 				++.@w_point;
 				mes "[Darwin]";
-				mes "Wh-What are";
-				mes "you doing!?";
+				mes "O que você está";
+				mes "fazendo!?";
 				next;
 				break;
 			case 3:
 				++.@w_point;
 				mes "[Darwin]";
-				mes "Agh...!";
-				mes "What do you";
-				mes "think you're";
-				mes "doing?!";
+				mes "Aaaai...!";
+				mes "O que você pensa";
+				mes "que está fazendo?";
 				next;
 				break;
 			}
-			switch(select("Spray clean water.:Drink clean water.:Pour clean water.")) {
+			switch(select("Borrifar água limpa.:Beber água limpa.:Despeje água limpa.")) {
 			case 1:
 				++.@w_point;
 				mes "[Darwin]";
-				mes "Huh?";
-				mes "What are you doing?";
+				mes "Hmm?";
+				mes "O que você está fazendo?";
 				next;
 				break;
 			case 2:
 				++.@w_point;
 				mes "[Darwin]";
-				mes "W-wait...";
-				mes "Are you";
-				mes "taking a break?";
+				mes "E-Espere...";
+				mes "Você está";
+				mes "dando um tempo?";
 				next;
 				break;
 			case 3:
 				break;
 			}
-			switch(select("Continue crushing the Herbs.:Continue eating the Herbs.:Continue dancing and singing.")) {
+			switch(select("Continue esmagando as ervas.:Continue comendo as ervas.:Continue dançando e cantando.")) {
 			case 1:
 				break;
 			case 2:
 				++.@w_point;
 				mes "[Darwin]";
-				mes "Eat the Herbs?";
-				mes "I think you need";
-				mes "to focus on the";
-				mes "task at hand...";
+				mes "Comer as Ervas?";
+				mes "Eu acho que você";
+				mes "precisa se concentrar";
+				mes "na tarefa...";
 				next;
 				break;
 			case 3:
 				++.@w_point;
 				mes "[Darwin]";
-				mes "Singing and";
-				mes "dancing? Alchemists";
-				mes "don't do that, have";
-				mes "you gone crazy?";
+				mes "Cantando e";
+				mes "dançando? Alquimistas";
+				mes "não fazem isso, você";
+				mes "ficou louco?";
 				next;
 				break;
 			}
-			switch(select("Put noodles in and fry it.:Pour it in an empty bottle.:Hold the Medicine Bowl and drink it.")) {
+			switch(select("Colocar macarrão e fritar.:Despeje-o em uma garrafa vazia.:Segurar a Vasilha de Mistura e beber")) {
 			case 1:
 				++.@w_point;
 				mes "[Darwin]";
-				mes "We're Alchemists,";
-				mes "not restaurant chefs.";
+				mes "Nós somos Alquimistas,";
+				mes "não chefes de restaurante.";
 				next;
 				break;
 			case 2:
@@ -1238,8 +1216,8 @@ alde_alche,13,15,7	script	Studying Man#am	4_M_ALCHE_C,{
 			case 3:
 				++.@w_point;
 				mes "[Darwin]";
-				mes "Huh...";
-				mes "Pretty sloppy...";
+				mes "Hhhm...";
+				mes "Muito desleixado...";
 				next;
 				break;
 			}
@@ -1249,199 +1227,174 @@ alde_alche,13,15,7	script	Studying Man#am	4_M_ALCHE_C,{
 				mes "......";
 				next;
 				mes "[Darwin]";
-				mes "You messed up the mixture";
-				mes "since you didn't follow the procedure! Get some more ingredients so you can try it";
-				mes "again until you get it right.";
+				mes "Você errou a mistura ";
+				mes "desde quando você não seguiu o procedimento!Obtenha mais alguns ingredientes para que você possa tentar novamente!";
 				close;
 			}
 			getitem 501,1; //Red_Potion
 			getitem 503,1; //Yellow_Potion
 			getitem 504,1; //White_Potion
 			mes "[Darwin]";
-			mes "Good job.";
-			mes "It came out pretty well considering it's your first time. Go ahead and keep the medicines that you've just made.";
+			mes "Bom trabalho.";
+			mes "Você se saiu muito bem, considerando que é sua primeira vez. Vá em frente e fique com os medicamentos que você acabou de fazer.";
 			ALCH_Q = 8;
 			changequest 2033,2035;
 			next;
 			mes "[Darwin]";
-			mes "Now, go into the next room";
-			mes "and speak to Van Helmont to";
-			mes "continue your training.";
+			mes "Agora, vá para a próxima sala e fale";
+			mes "com o Van Helmont para continuar a sua formação.";
 			next;
 			mes "[Darwin]";
-			mes "Never forget...";
-			mes "You must always protect";
-			mes "what is most precious to you.";
+			mes "Nunca esqueça...";
+			mes "Você deve sempre proteger";
+			mes "o que é mais precioso para você.";
+			close;
+		} else {
+			mes "[Darwin]";
+			mes "Esqueceu-se o";
+			mes "que você precisa trazer?";
+			mes "Deixe-me lembrá-lo novamente.";
+			mes "Você deve voltar com...";
+			next;
+			mes "[Darwin]";
+			mes "^551A8B3 Vasilha de Mistura^000000,";
+			mes "^551A8B3 Garrafa Vazia^000000,";
+			mes "^551A8B1 Erva Vermelha^000000,";
+			mes "^551A8B1 Erva Amarela^000000 and";
+			mes "^551A8B1 Erva Branca^000000.";
+			next;
+			mes "[Darwin]";
+			mes "Volte quando você estiver pronto.";
 			close;
 		}
-		else {
-			mes "[Darwin]";
-			mes "Have you forgotten";
-			mes "what you need to bring?";
-			mes "Let me remind you once";
-			mes "again. You must come";
-			mes "back with...";
-			next;
-			mes "[Darwin]";
-			mes "^551A8B3 Medicine Bowls^000000,";
-			mes "^551A8B3 Empty Bottle^000000,";
-			mes "^551A8B1 Red Herb^000000,";
-			mes "^551A8B1 Yellow Herb^000000 and";
-			mes "^551A8B1 White Herb^000000.";
-			next;
-			mes "[Darwin]";
-			mes "Come back";
-			mes "when you are";
-			mes "ready...";
-			close;
-		}
-	}
-	else if (ALCH_Q == 8) {
-		mes "I said to go";
-		mes "to Van Helmont.";
-		mes "I'd like to teach you";
-		mes "more, but I can't.";
+	} else if (ALCH_Q == 8) {
+		mes "Eu disse para ir para o Van Helmont.";
+		mes "Eu gostaria de ensinar-lhe mais, mas eu não posso.";
 		next;
 		mes "[Darwin]";
 		mes "Aah...";
-		mes "Harmona, my love.";
-		mes "I can't even see the flower anymore. My soul quietly";
-		mes "withers as well..";
+		mes "Harmona, meu amor.";
+		mes "Eu não posso nem ver a flor mais. Minha alma em silêncio murcha...";
 		close;
-	}
-	else if (ALCH_Q == 40) {
-		mes "I have already given you all of my knowledge and have nothing more";
-		mes "to teach you.";
+	} else if (ALCH_Q == 40) {
+		mes "Eu já lhe dei todo o meu conhecimento e não tenho mais nada para te ensinar.";
 		next;
 		mes "[Darwin]";
-		mes "Go to the second floor and talk to speak to our Union Leader. Once";
-		mes "you do that, your life as an Alchemist will begin.";
+		mes "Vá para o segundo andar e vpa falar com o Lider da Guild. Uma vez";
+		mes "que você fizer isso, sua vida como um Alquimista começará.";
 		close;
-	}
-	else {
-		mes "When you have";
-		mes "your dreams, you";
-		mes "have everything.";
-		mes "Without them, you have";
-		mes "nothing more to lose.";
+	} else {
+		mes "Quando você tem";
+		mes "seus sonhos, você";
+		mes "tem tudo.";
+		mes "Sem eles, você tem";
+		mes "mais nada a perder.";
 		next;
 		mes "[Darwin]";
-		mes "These cursed eyes...";
-		mes "They've lost sight of";
-		mes "my dreams a long time ago.";
+		mes "Esses malditos olhos...";
+		mes "Eles perderam de vista";
+		mes "meus sonhos há muito tempo.";
 		mes "Ha ha ha ha...";
 		next;
 		mes "[Darwin]";
-		mes "Does paradise";
-		mes "really exist...?";
-		mes "Not without my love...";
-		mes "Not without Harmona...";
+		mes "Será que o paraíso";
+		mes "realmente existe...?";
+		mes "Não sem meu amor...";
+		mes "Não sem a Harmona...";
 		close;
 	}
 }
 
-alde_alche,79,19,5	script	Experiment Expert#am	4_M_ALCHE_A,{
+alde_alche,79,19,5	script	Especialista#am	4_M_ALCHE_A,{
 	mes "[Van Helmont]";
 	if (BaseJob != Job_Merchant) {
 		if (BaseJob == Job_Alchemist) {
-			mes "What do you want?";
-			mes "I'm busy!! Don't";
-			mes "bother me and get";
-			mes "on your way.";
+			mes "O que você quer?";
+			mes "Estou ocupado!!";
+			mes "Não me encomode!!";
 			next;
 			mes "[Van Helmont]";
-			mes "Now, come on...";
-			mes "You'll never get";
-			mes "any research completed if you just slack off. Go out and learn all that you can.";
+			mes "Agora, vamos...";
+			mes "Você nunca vai chegar a qualquer pesquisa concluída se você só relaxar. Vá para fora e aprenda tudo o que puder.";
 			next;
 			mes "[Van Helmont]";
-			mes "Reading science journals and performing experiments. That's what Alchemy is all about. Now, let me get back to work!";
+			mes "Lendo revistas científicas e realização de experimentos. Isso é o que é Alquemia. Agora, deixe-me voltar ao trabalho!";
 			close;
-		}
-		else {
-			mes "Just a little...";
-			mes "A little bit more...";
-			mes "Nooo! Just a little";
-			mes "bit more and it";
-			mes "would've been done!";
+		} else {
+			mes "Só um pouco...";
+			mes "Um pouco mais...";
+			mes "Nããõ! Apenas um pouco mais e ela teria sido feito!";
 			next;
 			mes "[Van Helmont]";
-			mes "Why...?!";
-			mes "Why, another failure?!";
-			mes "My calculations were";
-			mes "all correct! W-Wait...!";
+			mes "Porque...?!";
+			mes "Porque, outro fracasso?!";
+			mes "Meus cálculos estavam todos corretos! E...Espere!";
 			next;
 			mes "[Van Helmont]";
-			mes "Perhaps, if I capacitated the thermal flux by using the neutronic gradient, it just might work...!";
+			mes "Talvez, se eu capacitar o fluxo térmico usando o gradiente neutrônicas, ele poderá funcionar...!";
 			close;
 		}
 	}
 	if (ALCH_Q == 8) {
-		mes "Arrrrgh...!";
-		mes "Why isn't this formula working? What's wrong? In theory, it's all correct, but there must be an error in the formula somewhere...";
+		mes "Aaaah...!";
+		mes "Por que esta fórmula não está funcionando? O que há de errado? Em teoria, está tudo correto, mas deve haver um erro na fórmula em algum lugar...";
 		next;
 		mes "[Van Helmont]";
-		mes "I pour it in here, and it should stop. Wait, this is the wrong solution! How could I make such";
-		mes "a dumb mistake?! When did these";
-		mes "get switched?!";
+		mes "Vou despeja-lo aqui, e ele deve parar. Espere, essa é a solução errada! Como eu poderia fazer um erro tão estúpido?";
+		mes "Quando é que esses encontros mudaram?";
 		next;
 		mes "[Van Helmont]";
-		mes "Okay, okay...";
-		mes "I just need to fix this part.";
-		mes "No need to start over. I just";
-		mes "need to fix it... But wait. Wait...";
+		mes "Ok, ok...";
+		mes "Eu só preciso corrigir essa parte.";
+		mes "Não há necessidade de começar de novo.";
+		mes "Eu só preciso corrigi-lo... Mas espere. Espere...";
 		next;
 		mes "[Van Helmont]";
 		mes ".................";
 		next;
 		mes "[Van Helmont]";
-		mes "Um...";
-		mes "Who are you?";
+		mes "Hmm...";
+		mes "Quem é você?";
 		next;
-		if (select("I want to become an Alchemist.:.......") == 2) {
+		if (select("Quero me tornar um Alquimista.:.......") == 2) {
 			mes "[Van Helmont]";
 			mes "Hmm...?";
-			mes "What, did you just want to watch? Fine, fine, but do it quietly and leave right when you're done.";
+			mes "O que, você só quer ver? Ótimo, ótimo, mas faça-o em silêncio e saia pela direita quando você estiver terminado.";
 			next;
 			mes "[Van Helmont]";
-			mes "Stay out of my way and don't go around touching stuff. There might be some volatile materials, so it'd be dangerous to have any accidents.";
+			mes "Fique fora do meu caminho e não saia por aí tocando coisas.De qualquer modo seria perigoso ter qualquer tipo de acidente.";
 			close;
 		}
 		mes "[Van Helmont]";
-		mes "You...?";
-		mes "An Alchemist?";
-		mes "What a funny Merchant.";
+		mes "Você...?";
+		mes "Um Alquimista?";
+		mes "Que comerciante engraçado.";
 		next;
 		mes "[Van Helmont]";
-		mes "Well, that's nice, but I have very urgent experiments that require";
-		mes "my attention, so don't get";
-		mes "in the way.";
+		mes "Bem, isso é bom, mas tenho experiências urgentes que requerem a minha atenção, então não fique no caminho.";
 		next;
-		if (select("Teach me something.:...") == 1) {
+		if (select("Me ensine algo.:...") == 1) {
 			mes "[Van Helmont]";
-			mes "Argh...!";
-			mes "Didn't I just tell you not to bother me? What's so hard to understand about that?";
+			mes "Aaah...!";
+			mes "Não disse para não me incomodar? O que é tão difícil de entender sobre isso?";
 			next;
 			mes "[Van Helmont]";
-			mes "Fine, fine. I'll give you an assignment. Learn something";
-			mes "new and come back. Let's see.";
-			mes "What would be good...";
+			mes "Ótimo, ótimo. Vou te dar uma atribuição.";
+			mes "Aprenda algo novo e volte. Ai vamos ver.";
+			mes "O que seria bom ..";
 			next;
 			mes "[Van Helmont]";
-			mes "Okay, I got it.";
-			mes "Go learn how to make";
-			mes "a Counteragent and Mixture";
-			mes "from Molgenstein.";
+			mes "Ok, Entendi";
+			mes "Vá aprender a fazer um Antígeno e Mistura de Molgenstein.";
 			next;
 			mes "[Van Helmont]";
-			mes "You don't need to bring anything. Just go watch him at work and have him tell you how he makes those solutions. Got it?";
+			mes "Você não precisa trazer nada. Basta ir vê-lo no trabalho e tê-lo dizer-lhe como ele faz essas soluções. Entendeu?";
 			next;
 			mes "[Van Helmont]";
-			ALCH_Q = 9;
+			set ALCH_Q,9;
 			changequest 2035,2036;
-			mes "Well then, see you later.";
-			mes "You'd better get going as";
-			mes "soon as you can.";
+			mes "Pois bem, vejo vocês mais tarde.";
+			mes "É melhor você ir logo.";
 			close;
 		}
 		mes "[Van Helmont]";
@@ -1456,24 +1409,21 @@ alde_alche,79,19,5	script	Experiment Expert#am	4_M_ALCHE_A,{
 		mes "......";
 		next;
 		mes "[Van Helmont]";
-		mes "So if I recalibrate the combustion rate of this compound, that should negate any cohesive tendencies in this particle flux...";
+		mes "Então, se eu calibrar a taxa de combustão desse composto, que deve negar qualquer tendências coesiva neste fluxo de partículas...";
 		next;
 		mes "[Van Helmont]";
-		mes "But what am I going to do";
-		mes "about all of this spontaneous";
-		mes "crystallization?! I can't very well remove this matrix, I need it for the catalyst to reach the triple point.";
+		mes "Mas o que vou fazer com toda essa cristalização espontânea?";
+		mes "Eu não posso remover essa matriz, eu preciso dele para o catalisador para atingir o ponto triplo.";
 		next;
 		mes "[Van Helmont]";
-		mes "Damn!";
-		mes "What am";
-		mes "I going to do?!";
+		mes "Merda!";
+		mes "O que eu vou fazer?";
 		close;
-	}
-	else if (ALCH_Q == 9) {
-		mes "Alright, if I make an incision here in the Tentacle, and add a Jellopy and Sticky Mucus solution into the... Where the hell did my Medicine Bowl go?";
+	} else if (ALCH_Q == 9) {
+		mes "Tudo bem, se eu fazer uma incisão aqui no Tentáculo, e adicionar um Jellopy e um Muco Pegajoso para dentro dos... Onde diabos minha Vasilha de Mistura está? ";
 		next;
 		mes "[Van Helmont]";
-		mes "Did I use them all at a time like this?! I wonder if Nicholas has any left. Ugh, what a pain. Wait. Wait a minute...";
+		mes "Eu iria usá-los todos em um momento como este? Ugh, que dor. Aguarde. Espere um minuto ...";
 		next;
 		mes "[Van Helmont]";
 		mes "...";
@@ -1481,166 +1431,139 @@ alde_alche,79,19,5	script	Experiment Expert#am	4_M_ALCHE_A,{
 		mes "[Van Helmont]";
 		mes "...";
 		mes "......";
-		mes "Who are you?";
+		mes "Quem é você?";
 		next;
-		if (select("I want to become an Alchemist?:.......") == 2) {
+		if (select("Quero me tornar um Alquimista?:.......") == 2) {
 			mes "[Van Helmont]";
 			mes "Hmm...?";
-			mes "What, did you just want to watch? Fine, fine, but do it quietly and leave right when you're done.";
+			mes "O que, você só quer ver? Ótimo, ótimo, mas faça-o em silêncio e saia pela direita quando você estiver terminado.";
 			next;
 			mes "[Van Helmont]";
-			mes "Stay out of my way and don't go around touching stuff. There might be some volatile materials, so it'd be dangerous to have any accidents.";
+			mes "Fique fora do meu caminho e não saia por aí tocando coisas.De qualquer modo seria perigoso ter qualquer tipo de acidente.";
 			close;
 		}
 		mes "[Van Helmont]";
-		mes "Ah, of course. The Merchant from before. So what did you learn from Molgenstein? I didn't just send you there for fun, you know.";
+		mes "Ah, claro. O comerciante de antes. Então o que você aprendeu com Molgenstein? Eu não só te enviar lá para se divertir, você sabe.";
 		next;
 		mes "[Van Helmont]";
-		mes "Let me ask you";
-		mes "some questions to";
-		mes "check what you've";
-		mes "learned.";
+		mes "Deixe-me fazer algumas perguntas para ver o que você aprendeu.";
 		next;
 		if(MISC_QUEST & 4) {
 			mes "[Van Helmont]";
-			mes "Which item is not";
-			mes "necessary to make";
-			mes "a Counteragent?";
+			mes "Qual item não é necessário fazer um Antígeno?";
 			next;
-			if (select("Karvodailnirol:Detrimindexta:Alcohol") != 1) .@w_point += 1;
+			if (select("Karvodailnirol:Detrimindexta:Alcool") != 1) .@w_point += 1;
 			mes "[Van Helmont]";
-			mes "What item is not";
-			mes "necessary to make";
-			mes "a Mixture?";
+			mes "Qual item não é necessário fazer uma Mistura??";
 			next;
-			if (select("Karvodailnirol:Detrimindexta:Alcohol") != 2) .@w_point += 1;
+			if (select("Karvodailnirol:Detrimindexta:Alcool") != 2) .@w_point += 1;
 			if (.@w_point > 0) {
 				mes "[Van Helmont]";
-				mes "Weren't you listening to Molgenstein at all? Maybe you";
-				mes "have to watch him make it again.";
+				mes "Você não estava ouvindo o Molgenstein?";
+				mes "Talvez você tem que ir vê-lo novamente...";
 				next;
 				mes "[Van Helmont]";
-				mes "If you can't tell the exact items that you need in an experiment,";
-				mes "you might end up hurting yourself!";
+				mes "Se você não pode dizer os itens exatos que você precisa em um experimento, pode acabar se machucando!";
 				close;
 			}
 			mes "[Van Helmont]";
-			mes "Good, you've learned well.";
-			mes "Okay, now you know something about experimentation. You're done here, so now I can continue with my experiments.";
+			mes "Bom, você aprendeu bem.";
+			mes "Ok, agora você sabe algo sobre a experimentação. Você terminou por aqui, então agora eu posso continuar com meus experimentos.";
 			next;
 			mes "[Van Helmont]";
-			mes "Go out and find the room next";
-			mes "to this one and talk to Nicholas. He'll continue your training.";
+			mes "Vá para fora e encontre a sala ao lado e fale com o Nicholas. Ele vai continuar a sua formação.";
 			next;
 			ALCH_Q = 20;
 			changequest 2036,2037;
 			mes "[Van Helmont]";
-			mes "What are you";
-			mes "still doing here?";
-			mes "Go! We both have";
-			mes "more important";
-			mes "things to do!";
+			mes "O que você";
+			mes "continua fazendo aqui?";
+			mes "Vá! Nós dois";
+			mes "temos coisas mais importantes para fazer!";
+			close;
+		} else {
+			mes "[Van Helmont]";
+			mes "Qual item você";
+			mes "precisa para fazer";
+			mes "um Antígeno?";
+			next;
+			select("Pluma:Muco Pegajoso:Sangue de Animal");
+			mes "[Van Helmont]";
+			mes "Qual item você";
+			mes "precisa para fazer";
+			mes "uma Místura?";
+			next;
+			select("Ração para Monstros:Lábios Fossilizados:Bandagem Estragada");
+			mes "[Van Helmont]";
+			mes "Seja honesto. Você não sabe, não é? Eu não disse para ir para Molgenstein e mandá-lo ensinar-lhe?";
+			next;
+			mes "[Van Helmont]";
+			mes "Nem pense em voltar, até você falar com ele! Agora, pare de me aborrecer e sair daqui!";
 			close;
 		}
-		else {
-			mes "[Van Helmont]";
-			mes "What item do";
-			mes "you need to make";
-			mes "a Counteragent?";
-			next;
-			select("Feather:Sticky Mucus:Animal Gore");
-			mes "[Van Helmont]";
-			mes "What item do";
-			mes "you need to make";
-			mes "a Mixture?";
-			next;
-			select("Monster Feed:Ancient Lips:Rotten Bandage");
-			mes "[Van Helmont]";
-			mes "Be honest. You don't know, do you?! Didn't I say to go to Molgenstein and have him teach you?!";
-			next;
-			mes "[Van Helmont]";
-			mes "Don't even think about coming back until you talk to him! Now stop bothering me and get out of here!";
-			close;
-		}
-	}
-	else if (ALCH_Q == 20) {
-		mes "What...?";
-		mes "I thought I told you to";
-		mes "talk to Nicholas next door?";
+	} else if (ALCH_Q == 20) {
+		mes "O que...?";
+		mes "Eu disse-lhe para ir falar com o Nicholas porta ao lado?";
 		next;
 		mes "[Van Helmont]";
-		mes "I need to continue my research,";
-		mes "and you need to finish becoming an Alchemist. Come on, get moving!";
+		mes "Preciso continuar minha pesquisa,";
+		mes "e você precisa tornar-se um Alquimista. Vamos, mexa-se!";
 		close;
-	}
-	else {
-		mes "Just a little...";
-		mes "A little bit more...";
-		mes "Nooo! Just a little";
-		mes "bit more and it";
-		mes "would've been done!";
+	} else {
+		mes "Só um pouco...";
+		mes "Um pouco mais...";
+		mes "Nããõ! Apenas um pouco mais e ela teria sido feito!";
 		next;
 		mes "[Van Helmont]";
-		mes "Why...?!";
-		mes "Why, another failure?!";
-		mes "My calculations were";
-		mes "all correct! Wait...";
+		mes "Porque...?!";
+		mes "Porque, outro fracasso?!";
+		mes "Meus cálculos estavam todos corretos! E...Espere!";
 		next;
 		mes "[Van Helmont]";
-		mes "Perhaps, if I capacitated the thermal flux by using the neutronic gradient, it just might work...";
+		mes "Talvez, se eu capacitar o fluxo térmico usando o gradiente neutrônicas, ele poderá funcionar...!";
 		close;
 	}
 }
 
-alde_alche,101,184,4	script	Master Alchemist#am	2_M_DYEINGER,{
+alde_alche,101,184,4	script	Mestre Alquimista#am	2_M_DYEINGER,{
 	cutin "job_alche_vincent",2;
 	mes "[Vincent Carsciallo]";
 	if (Upper == 1) {
-		mes "You have transcended...";
-		mes "Excellent, excellent.";
+		mes "Você transcendeu...";
+		mes "Excelente, excelente.";
 		next;
 		mes "[Vincent Carsciallo]";
-		mes "You don't belong here.";
-		mes "Go and explore the wide world, my friend.";
+		mes "Você não pertence aqui.";
+		mes "Vá e explore o mundo exterior, meu amigo.";
 		close2;
 		cutin "",255;
 		end;
 	}
 	if (BaseJob != Job_Merchant) {
 		if (BaseJob == Job_Alchemist) {
-			mes "Welcome!";
-			mes "So how is your";
-			mes "research coming along?";
+			mes "Bem vindo!";
+			mes "Então, como é que sua pesquisa está?";
 			next;
 			mes "[Vincent Carsciallo]";
-			mes "At times you get results that are unexpected from an experiment. Although these may be setbacks in your research, such results can also lead to new discoveries.";
+			mes "Às vezes, você obtém resultados que são inesperados de um experimento. Embora estes possam ser retrocessos em sua pesquisa, esses resultados também pode levar a novas descobertas.";
 			next;
 			mes "[Vincent Carsciallo]";
-			mes "If you discover something new,";
-			mes "come and tell us. Don't forget that we are all working together to unlock the mysteries of science!";
-		}
-		else if (BaseClass == Job_Novice) {
+			mes "Se você descobrir algo novo,";
+			mes "venha e diga-nos. Não se esqueça que estamos todos a trabalhar juntos para desvendar os mistérios da ciência!";
+		} else if (BaseClass == Job_Novice) {
 			mes "Hm...";
-			mes "A Novice?";
-			mes "You shouldn't be";
-			mes "playing in a place";
-			mes "like this.";
+			mes "Um Noviço?";
+			mes "Você não deveria estar brincando em um lugar como este.";
 			next;
 			mes "[Vincent Carsciallo]";
-			mes "There are a lot of volatile chemicals and dangerous";
-			mes "materials in this building. It'd be a lot better if you just played outside.";
-		}
-		else {
+			mes "Há uma grande quantidade de produtos químicos voláteis e outros materiais perigosos neste edifício. Seria muito melhor se você simplesmente brinque fora.";
+		} else {
 			mes "Hmm...?";
-			mes "What's an adventurer";
-			mes "doing here in the";
-			mes "Alchemist Union?";
+			mes "O que um aventureiro está fazendo aqui na";
+			mes "Guilda dos Alquimistas?";
 			next;
 			mes "[Vincent Carsciallo]";
-			mes "I'm afraid there's";
-			mes "not much we can offer";
-			mes "you here if you're not";
-			mes "a member of our Union.";
+			mes "Eu tenho medo, não há muito que podemos oferecer-lhe aqui se você não é um membro da nossa Guilda.";
 		}
 		close2;
 		cutin "",255;
@@ -1648,45 +1571,35 @@ alde_alche,101,184,4	script	Master Alchemist#am	2_M_DYEINGER,{
 	}
 	if (ALCH_Q == 0) {
 		mes "Hmm...?";
-		mes "A Merchant?";
-		mes "Are you interested";
-		mes "in learning Alchemy?";
+		mes "Um Mercador?";
+		mes "Você está enteressado em aprender Alquemia?";
 		next;
 		mes "[Vincent Carsciallo]";
-		mes "This is the Alchemist Union.";
-		mes "We research and experiment with many different substances in order to create new materials without using magic.";
+		mes "Aqui é a Guilda dos Alquimistas";
+		mes "Nós pesquisamos e experimentamos com muitas substâncias diferentes, a fim de criar novos materiais sem o uso de magia.";
 		next;
 		mes "[Vincent Carsciallo]";
-		mes "Someday, we hope to unlock";
-		mes "the secret of life, as well as the other mysteries of science.";
+		mes "Algum dia, esperamos descobrir o segredo da vida, assim como os outros mistérios da ciência.";
 		next;
 		mes "[Vincent Carsciallo]";
-		mes "After being traveling as a Merchant for a long time, you must have developed some scientific curiosity. If you'd like to learn Alchemy, why don't you try joining the Alchemist Union?";
+		mes "Depois de ser como um comerciante viajando por um longo tempo, você deve ter desenvolvido alguma curiosidade científica. Se você gostaria de aprender alquimia, por que não tentar entra na Guilda dos Alquimistas?";
 		close2;
 		cutin "",255;
 		end;
-	}
-	else if (ALCH_Q == 40) {
+	} else if (ALCH_Q == 40) {
 		if (JobLevel < 40) {
 			ALCH_Q = 0;
-			mes "Hmm...you don't seem to be qualified yet.";
-			mes "Remember, you must reach at least job level 40 to become an Alchemist.";
+			mes "Hmm... você não parece estar qualificado.";
+			mes "Lembre-se, você deve alcançar pelo menos o Job Level 40 para tornar-se um Alquimista.";
 			close2;
 			cutin "",255;
 			end;
 		}
 		if (SkillPoint) {
-			mes "Ah, you're almost";
-			mes "ready to become an";
-			mes "Alchemist, but you must";
-			mes "first allocate your unused";
-			mes "Skill Points.";
+			mes "Ah, você está quase pronto para se tornar um Alquimista, mas primeiro você deve colocar seus Skill Points.";
 			next;
 			mes "[Vincent Carsciallo]";
-			mes "Talk to me again";
-			mes "once you have spent";
-			mes "all of your extra";
-			mes "Skill Points.";
+			mes "Fale comigo de novo depois de ter gasto todos seus Skill Points.";
 			close2;
 			cutin "",255;
 			end;
@@ -1697,10 +1610,8 @@ alde_alche,101,184,4	script	Master Alchemist#am	2_M_DYEINGER,{
 		if (questprogress(2034)) {
 			changequest 2034,2040;
 		}
-		mes "Ah, well done.";
-		mes "I can see that you";
-		mes "have learned all of";
-		mes "the basics of Alchemy.";
+		mes "Ah, muito bem.";
+		mes "Eu posso ver que você aprendeu todos os princípios da Alquimia.";
 		next;
 		ALCH_Q = 0;
 		completequest 2040;
@@ -1708,110 +1619,79 @@ alde_alche,101,184,4	script	Master Alchemist#am	2_M_DYEINGER,{
 		callfunc "Job_Change",Job_Alchemist;
 		callfunc "F_ClearJobVar";
 		mes "[Vincent Carsciallo]";
-		mes "Henceforth, you are";
-		mes "now a member of our";
-		mes "illustrious Union.";
-		mes "I hope you learn a lot...";
+		mes "Daí em diante, você agora é um membro da nossa brilhante Guilda.";
+		mes "Eu espero que você aprenda muito...";
 		next;
 		if (.@jlevel == 50) {
 			getitem 7133,1; //Slim_Potion_Create_Book
 			mes "[Vincent Carsciallo]";
-			mes "Let me give you";
-			mes "something special.";
-			mes "You can use this to";
-			mes "begin your life";
-			mes "of research.";
+			mes "Deixe-me dar-lhe algo especial.";
+			mes "Você pode usar isso para começar sua vida na pesquisa.";
 		}
 		else {
 			switch(rand(1,6)) {
-			case 1:
-				getitem 7127,1; //Alcol_Create_Book
-				break;
-			case 2:
-				getitem 7128,1; //FireBottle_Create_Book
-				break;
-			case 3:
-				getitem 7129,1; //Acid_Create_Book
-				break;
-			case 4:
-				getitem 7130,1; //Plant_Create_Book
-				break;
-			case 5:
-				getitem 7131,1; //Mine_Create_Book
-				break;
-			case 6:
-				getitem 7144,1; //Normal_Potion_Book
+				case 1: getitem 7127,1; break; //Alcol_Create_Book
+				case 2: getitem 7128,1; break; //FireBottle_Create_Book
+				case 3: getitem 7129,1; break; //Acid_Create_Book
+				case 4: getitem 7130,1; break; //Plant_Create_Book
+				case 5: getitem 7131,1; break; //Mine_Create_Book
+				case 6: getitem 7144,1; //Normal_Potion_Book
 			}
 			mes "[Vincent Carsciallo]";
-			mes "And...";
-			mes "Here's a little";
-			mes "something to help";
-			mes "you begin your";
-			mes "research.";
+			mes "e...";
+			mes "Aqui está algo para ajudar você a começar a sua pesquisa.";
 		}
 		next;
 		mes "[Vincent Carsciallo]";
-		mes "I'll see";
-		mes "you later then...";
-		mes "Remember to carry";
-		mes "yourself with pride";
-		mes "as an Alchemist!";
+		mes "Vejo você mais tarde então...";
+		mes "Lembre-se de carregar com você o orgulho de ser um Alquimista!";
 		close2;
 		cutin "",255;
 		end;
-	}
-	else {
+	} else {
 		mes "Ah...";
-		mes "I believe you've";
-		mes "already registered";
-		mes "for training to become";
-		mes "an Alchemist.";
+		mes "Eu acredito que você já tenha se registrado para o treinamento para se tornar um alquimista.";
 		next;
 		mes "[Vincent Carsciallo]";
-		mes "Please listen to the";
-		mes "other Alchemists and follow their instructions carefully. You will learn much from them.";
+		mes "Por favor, escute os outros Alquimistas e siga as instruções cuidadosamente. Você vai aprender muito com eles.";
 		close2;
 		cutin "",255;
 		end;
 	}
 }
 
-alde_alche,145,19,1	script	Chief Researcher#am	1_M_LIBRARYMASTER,{
+alde_alche,145,19,1	script	Pesquisador Chefe#am	1_M_LIBRARYMASTER,{
 	if (checkweight(1201,1) == 0) {
-		mes "- Wait a minute! -";
-		mes "- Currently you are carrying -";
-		mes "- too many items with you. -";
-		mes "- Please come back again -";
-		mes "- after you store some items into kafra storage. -";
+		mes "- Espere um minuto! -";
+		mes "- Atualmente você está carregando -";
+		mes "- muitos itens com você. -";
+		mes "- Por favor, volte -";
+		mes "- depois de armazenar alguns itens na kafra. -";
 		close;
 	}
 	if (ALCH_Q > 19 && ALCH_Q < 22) {
 		if (ALCH_Q == 20) {
 			mes "[Nicholas Flamel]";
 			mes "Ooh...";
-			mes "You're the upstart";
-			mes "Merchant that wants";
-			mes "to become an Alchemist?";
+			mes "Você é o comerciante novato que quer se tornar um Alquimista?";
 			next;
 			mes "[Nicholas Flamel]";
-			mes "Not just anyone can become an Alchemist, you know. You've got to have motivation and clear goals and a strong sense of focus.";
+			mes "Não é qualquer um que pode se tornar um alquimista, você sabe. Você tem que ter motivação e metas claras e um forte senso de foco.";
 			next;
 			mes "[Nicholas Flamel]";
-			mes "Alchemists must memorize many chemical equations, scientific laws and a lot of other information. It's actually pretty tough.";
+			mes "Alquimistas deve memorizar muitas equações químicas, as leis científicas e um monte de outras informações. É realmente muito difícil.";
 			next;
 			mes "[Nicholas Flamel]";
-			mes "If you can't focus, you'll be confused later when you look at Alchemy charts. My test will judge your ability to do just that.";
+			mes "Se você não consegue focar, você vai ficar confundido mais tarde, quando você olhar para gráficos da Alquimia. Meu teste irá julgar a sua capacidade de fazer exatamente isso.";
 			next;
 		}
 		mes "[Nicholas Flamel]";
 		mes "Find the words scrambled";
-		mes "in the group of letters I give you. They can be made by using some";
-		mes "or all of the letters.";
+		mes "Encontre as palavras embaralhadas no grupo de cartas eu te dou. Elas podem ser feitas usando algumas";
+		mes "ou todas as letras.";
 		next;
 		mes "[Nicholas Flamel]";
-		mes "You pass if you";
-		mes "choose the word";
-		mes "that is ^551A8BIN^000000 the puzzle.";
+		mes "Você passa, se você escolher a palavra que ^551A8Bestá^000000.";
 		next;
 		switch(rand(1,3)) {
 		case 1:
@@ -1854,77 +1734,68 @@ alde_alche,145,19,1	script	Chief Researcher#am	1_M_LIBRARYMASTER,{
 			if (select("alberta:latifoliate:crimson:maple:evergreen") == 5) .@alch_t += 10;
 			mes "r o e h n r o m c a i n p t t";
 			next;
-			if (select("forgemerchant:potionmerchant:dcmerchant:vendingmerchant:battlemerchant") == 2) .@alch_t += 10;
+			if (select("forgemerchant:potionmerchant:dcmerchant:vendingmerchant:battlemerchant") == 2) set .@alch_t,.@alch_t+10;
 			break;
 		}
 		mes "[Nicholas Flamel]";
-		mes "Ah, you finished.";
-		mes "Now, let's see...";
+		mes "Ah, você terminou.";
+		mes "Agora, vamos ver...";
 		if (.@alch_t > 30) {
 			ALCH_Q = 22;
-			mes "Excellent job!";
+			mes "Excelente trabalho!";
 			next;
 			mes "[Nicholas Flamel]";
-			mes "Great, you found all of those hidden words. With that kind of concentration, you should have no problem memorizing information.";
+			mes "Ótimo, você encontrou todas as palavras escondidas. Com esse tipo de concentração, você deve ter nenhum problema memorizar informações.";
 			next;
 			mes "[Nicholas Flamel]";
-			mes "Come back in a little bit while";
-			mes "I prepare the next assignment";
-			mes "for your training.";
+			mes "Volte daqui a pouco quando eu preparar a próxima missão para a sua formação.";
 			next;
 			mes "[Nicholas Flamel]";
-			mes "Oh, and before you talk to";
-			mes "me again, make sure you have";
-			mes "^551A8Bplenty of room in your inventory^000000.";
+			mes "Ah, e antes de falar comigo de novo, verifique se você tem";
+			mes "^551A8Bespaço de sobra em seu inventário^000000.";
 			close;
-		}
-		else {
+		} else {
 			ALCH_Q = 21;
-			mes "^666666*Gasp!*^000000 H-horrible!";
+			mes "^666666*Gasp!*^000000 H-horrivel!";
 			next;
 			mes "[Nicholas Flamel]";
-			mes "Judging from these results, you obviously have a problem with concentrating.";
+			mes "Julgando por esses resultados, você obviamente tem um problema com a concentração.";
 			next;
 			mes "[Nicholas Flamel]";
-			mes "If you can't even solve these easy word puzzles, how can you keep track of your experiments and research?";
+			mes "Se você não consegue nem resolver os enigmas da palavra fácil, como você pode manter trilha de suas experiências e pesquisas?";
 			next;
 			mes "[Nicholas Flamel]";
-			mes "Why don't you relax";
-			mes "and rest a bit before";
-			mes "you take the test again?";
+			mes "Por que você não relaxar e descansa um pouco antes de fazer o teste novamente?";
 			close;
 
 		}
-	}
-	else if (ALCH_Q == 22) {
+	} else if (ALCH_Q == 22) {
 		if (MaxWeight - Weight < 1370) {
 			mes "[Nicholas Flamel]";
 			mes "Whoa...";
-			mes "You're carrying too much stuff! First, put some of your things in Kafra Storage.";
+			mes "Você está carregando muita coisa! Primeiro, coloque um pouco de suas coisas na Kafra.";
 			close;
 		}
 		mes "[Nicholas Flamel]";
-		mes "Alright...";
-		mes "For your next";
-		mes "assignment, you'll";
-		mes "need to travel to ^551A8BJuno^000000.";
+		mes "Muito bem...";
+		mes "Para que sua próxima missão, você precisará viajar para ^551A8BJuno^000000.";
 		next;
 		mes "[Nicholas Flamel]";
-		mes "There, you'll need to talk to ^551A8BBain^000000 and ^551A8BBajin^000000. Those two are doing Alchemy research with the Sages";
-		mes "in Juno. You'll learn something by assisting them with their project.";
+		mes "Lá, você vai precisar falar com o^551A8BBain^000000 e com o^551A8BBajin^000000. Esses dois estão fazendo pesquisas com os Sábios";
+		mes "em Juno. Você vai aprender alguma coisa, ajudando-os com o seu projeto.";
 		next;
 		mes "[Nicholas Flamel]";
-		mes "Come back here to me after you";
-		mes "help them out. They'll need all of these items to continue their experiments.";
+		mes "Volte aqui depois de você";
+		mes "ajudá-los. Eles vão precisar de todos estes itens para continuar seus experimentos.";
 		next;
 		ALCH_Q = 23;
 		changequest 2037,2038;
 		mes "[Nicholas Flamel]";
-		mes "1 Mixture,";
-		mes "5 Burnt Tree,";
-		mes "5 Fine Sand,";
-		mes "3 Rough Oridecon";
-		mes "and 3 Rough Elunium.";
+		mes "1 Mistura,";
+		mes "5 Madeira Queimada,";
+		mes "5 Areia Fina,";
+		mes "3 Minério de Oridecon";
+		mes "e 3 Minério de Elunium.";
 		getitem 974,1; //Mixture
 		getitem 7068,5; //Burn_Tree
 		getitem 7043,5; //Fine_Sand
@@ -1932,45 +1803,33 @@ alde_alche,145,19,1	script	Chief Researcher#am	1_M_LIBRARYMASTER,{
 		getitem 757,3; //Elunium_Stone
 		next;
 		mes "[Nicholas Flamel]";
-		mes "Alright.";
-		mes "Have a safe trip";
-		mes "and come back in";
-		mes "one piece.";
+		mes "Muito bem.";
+		mes "Tenha uma boa viagem e volte logo.";
 		close;
-	}
-	else if (ALCH_Q == 23) {
+	} else if (ALCH_Q == 23) {
 		mes "[Nicholas Flamel]";
-		mes "Didn't I say to";
-		mes "go to Juno and help";
-		mes "Bain and Bajin with";
-		mes "their Alchemy research?";
+		mes "Eu não te disse para ir para Juno e ajudar o Bain e Bajin com suas pesquisas?";
 		close;
-	}
-	else if (ALCH_Q == 24) {
+	} else if (ALCH_Q == 24) {
 		ALCH_Q = 40;
 		changequest 2038,2039;
 		mes "[Nicholas Flamel]";
-		mes "Ah, you're back!";
-		mes "I just got a message from Bain";
-		mes "and Bajin. They let me know that they were very happy with your assistance.";
+		mes "Ah, você está de volta!";
+		mes "Eu acabei de receber uma mensagem de Bain e Bajin. Eles me disseram que eles estão muito felizes com a sua ajuda.";
 		next;
 		mes "[Nicholas Flamel]";
-		mes "If you were good enough";
-		mes "to help out those brothers,";
-		mes "you definitely qualify to be";
-		mes "an Alchemist.";
+		mes "Se você fosse bom o suficiente para ajudar os irmãos,";
+		mes "você definitivamente seria qualificado para ser um Alquimista.";
 		next;
 		mes "[Nicholas Flamel]";
-		mes "Good work!";
-		mes "All you have to do now is speak to the Union Leader on the 2nd floor! Congratulations, you'll become an Alchemist very soon!";
+		mes "Bom trabalho!";
+		mes "Tudo que você tem a fazer agora é falar com o Líder da Guilda no 2 º andar! Parabéns, você vai se tornar um Alquimista muito em breve!";
 		close;
-	}
-	else if (ALCH_Q == 40 && BaseJob == Job_Merchant) {
+	} else if (ALCH_Q == 40 && BaseJob == Job_Merchant) {
 		mes "[Nicholas Flamel]";
-		mes "All you have to do now is speak to the Union Leader on the 2nd floor! Congratulations, you'll become an Alchemist very soon!";
+		mes "Tudo que você tem a fazer agora é falar com o Líder da Guilda no 2 º andar! Parabéns, você vai se tornar um Alquimista muito em breve!";
 		close;
-	}
-	else {
+	} else {
 		mes "[Nicholas Flamel]";
 		mes "Lorem ipsum dolor sit amet,";
 		mes "consectetuer adipiscing elit.";
@@ -1986,24 +1845,3 @@ alde_alche,145,19,1	script	Chief Researcher#am	1_M_LIBRARYMASTER,{
 	}
 }
 
-//============================================================
-// Old changelog
-//============================================================
-//= 1.0 Working.
-//=     npc/quests/counteragent_mixture.txt Also Needed
-//=     npc/quests/quests_yuno.txt Also Needed [Darkchild]
-//= 1.1 Fixed some minor bugs.  Optimized some lines. Re-organized the script a bit.
-//=     Giving Parmry NPC, Hammer and Old Book now waves the 50000 fee. (based of mRO website)
-//=     Having a joblvl of 50 allows you to skip Rasputin's test. (based of mRO website) [kobra_k88]
-//= 1.2 fixed a few typos (have to hunt more) [Lupus]
-//= 1.3 Added Baby Class Support [Lupus]
-//= 1.6 Added a func which prevent advanced classes passing
-//=     2nd Job Quests again. It also guides adv classes where
-//=     to go. [Lupus]
-//= 1.6a fixed some wrong answers, thanks to zlider for info [Lupus]
-//= 2.0 Changed numbers to constants. [Vicious]
-//= 2.2 Got rid of 'al_morgen' var. Now uses (MISC_QUEST & 4) [Lupus]
-//= 2.3 Optimized, changed job numbers to constants. Fixed some spelling [Lupus]
-//= 2.4 Added alternative prizes according to JobLevel [Lupus]
-//= 2.4a Fixed 2 wrong answers in Rasputin's test [Lupus]
-//============================================================
