@@ -1,119 +1,128 @@
-//===== Hercules Script ======================================
-//= Pile Bunker Quest
-//===== By: ==================================================
-//= JayPee Mateo
-//===== Current Version: =====================================
-//= 2.2
-//===== Description: =========================================
-//= 1.0 A Pile Bunker quest based on iRO WiKi. [JayPee Mateo]
-//= 2.0 Rewrited the Script a little so it looks a bit better. [Masao]
-//= 2.1 Switched to official script, coded by Gennosuke Kouga. [Euphy]
-//= 2.2 Updated to match the official script. [Euphy]
-//============================================================
+//    ________________________________________________________
+//   /                                                        \
+//   |       _           _   _   _                            |
+//   |      | |__  _ __ / \ | |_| |__   ___ _ __   __ _       |
+//   |      | '_ \| '__/ _ \| __| '_ \ / _ \ '_ \ / _` |      |
+//   |      | |_) | | / ___ \ |_| | | |  __/ | | | (_| |      |
+//   |      |_.__/|_|/_/   \_\__|_| |_|\___|_| |_|\__,_|      |
+//   |                                                        |
+//   |                    brAthena Script                     |
+//   |--------------------------------------------------------|
+//   | Nome do Script: bate_estacas.txt                       |
+//   |--------------------------------------------------------|
+//   | Criado por: Herc/brA Dev. Team                         |
+//   |--------------------------------------------------------|
+//   | Versões Herc/brA: ??/1.0                               |
+//   |--------------------------------------------------------|
+//   | Descrição: Quest Bate-Estacas                          |
+//   |--------------------------------------------------------|
+//   | Changelog:                                             |
+//   | 1.0 Cabeçalho brAthena e tradução. [Soulknown]         |
+//   |--------------------------------------------------------|
+//   | - Anotações                                            |
+//   \________________________________________________________/
 
-yuno,179,174,4	script	Gomer	4_M_REPAIR,{
+yuno,179,174,4	script	Bunz	4_M_REPAIR,{
 	if (checkweight(1201,1) == 0 || MaxWeight - Weight < 1000) {
-		mes "[Gomer]";
-		mes "You are carrying so much. Drop off some of your luggage and come back to me.";
+		mes "[Bunz]";
+		mes "Você está carregando tantos itens que fica difícil dar atenção a você. Retorne quando estiver mais leve.";
 		close;
 	}
 	if (countitem(1549)) {
-		mes "[Gomer]";
-		mes "So how's that Pilebuncker working out for you?";
+		mes "[Bunz]";
+		mes "Então, a barra de metal Bate-Estacas está superando suas expectativas?";
 		close;
 	}
 	if (Class != Job_Mechanic && Class != Job_Mechanic_T && Class != Job_Baby_Mechanic) {
-		mes "[Gomer]";
-		mes "I'm a retired Mechanic and I don't think I have any business with you.";
+		mes "[Bunz]";
+		mes "Eu sou um mecãnico aposentado e não tenho nada a tratar com você.";
 		close;
 	}
-	mes "[Gomer]";
-	mes "So? What does it feel like to be on a Madogear?";
-	mes "It's something that's not allowed for those who failed to seek out their own path.";
+	mes "[Bunz]";
+	mes "Oh! Qual a sensação de usar montarias? Apenas pessoas qualificadas podem usar.";
 	next;
-	mes "[Gomer]";
-	mes "Me? I retired a long time ago. Because I got into an accident... got badly hurt and won't be able to ride again. I am upset about it.";
+	mes "[Bunz]";
+	mes "Eu? Me retirei a um bom tempo desde que eu mesmo me machuquei... Por esse motivo, não posso montar em  mais nada, que droga...";
 	next;
-	mes "[Gomer]";
-	mes "So I've decided to stay here forging gears for Madogear.";
-	mes "Huh? I'm not saying I have any complaints about this work.";
+	mes "[Bunz]";
+	mes "Então comecei a fazer equipamentos para montarias.";
 	next;
-	mes "[Gomer]";
-	mes "Forced to do something you don't like, there is nothing more miserable than that.";
+	mes "[Bunz]";
+	mes "É um desperdício se você não faz o que gosta, não é mesmo? Não pode deixar passar! É a vida a ser vivida!";
 	next;
-	mes "[Gomer]";
-	mes "There are people who are happy just being props, you know, like being the wall for someone to lean on.";
+	mes "[Bunz]";
+	mes "Algumas pessoas não pensam dessa maneira.";
 	next;
-	mes "[Gomer]";
-	mes "That makes me feel good and I am about to make a new gear. I want you to help me. What do you say?";
+	mes "[Bunz]";
+	mes "Enfim...Me sinto tão bem que estava fazendo um novo equipamento. Por que não me ajuda?";
 	next;
-	switch(select("I am not that interested.:What are you going to make?:Where do you get the materials?:I brought the materials.")) {
+	switch(select("Não, estou de passagem.:O que você vai fazer?:Onde eu encontro os materiais?:Eu tenho os materiais.")) {
 	case 1:
-		mes "[Gomer]";
-		mes "Nothing I can do";
-		mes "about it then.";
-		mes "See you next time!";
+		mes "[Bunz]";
+		mes "Não há nada que você possa fazer para me ajudar?";
+		mes "Ah, então te vejo na próxima!";
 		close;
 	case 2:
-		mes "[Gomer]";
-		mes "Um, a huge metal stick that could smash an opponent in one hit!";
+		mes "[Bunz]";
+		mes "Hum, uma enorme barra de metal que poderia esmagar um oponente em um hit!";
 		next;
-		mes "[Gomer]";
-		mes "It doesn't look fancy, but I've designed a spring-loaded device to attack with great strength.";
+		mes "[Bunz]";
+		mes "Não parece fantástico? Mas projetei um dispositivo com molas que é capaz de atacar com grande força.";
 		next;
-		mes "[Gomer]";
-		mes "It's concealed, so when you find a chance, one shot could put an opponent in critical condition!";
-		mes "I can't wait to see it in action!";
+		mes "[Bunz]";
+		mes "Imagine que você esteja escondido, então, quando você tiver uma chance, um tiro é capaz de colocar um adversário em condições dolorosas!";
+		mes "Mal posso esperar para vê-lo em ação!";
 		next;
-		mes "[Gomer]";
-		mes "If you were to imagine how good this kind of weapon could be, I will make it come true.";
+		mes "[Bunz]";
+		mes "Se você imaginasse o quão bom este tipo de arma poderia ser, eu poderia tornar sua existência realidade.";
 		next;
-		mes "[Gomer]";
-		mes "Bring me 200 Steel, 30 Flexible Tubes, and 1 Brocca. I could make what I just described with those materials.";
+		mes "[Bunz]";
+		mes "Traga-me 200 Aços, 30 Tubos Flexíveis, e 1 Broca. Eu consigo fazê-la, basta me trazer os materiais necessários.";
 		close;
 	case 3:
-		mes "[Gomer]";
-		mes "You should be able get steel from many monsters like Kobolds.";
+		mes "[Bunz]";
+		mes "Você pode conseguir muitos Aços caçando Cobalds.";
 		next;
-		mes "[Gomer]";
-		mes "Flexible Tubes are more rare, dropped by Metalings around Einbroch and Lighthalzen.";
+		mes "[Bunz]";
+		mes "Os Tubos Flexíveis são mais raros, deixados pelos Metalings aos arredores de Einbroch e Lighthalzen.";
 		next;
-		mes "[Gomer]";
-		mes "Lastly, finding a Brocca is very hard, but you should be able to do something about it. Haha, go get it!";
+		mes "[Bunz]";
+		mes "Por fim, obter uma Broca não é tão fácil, mas acredito que você seja capaz de consegui-la. Haha, vá buscá-los! ";
 		close;
 	case 4:
 		if (countitem(999) < 200 || countitem(7325) < 30 || countitem(1415) < 1) {
-			mes "[Gomer]";
-			mes "You haven't brought all of the materials that I asked for.";
+			mes "[Bunz]";
+			mes "Você ainda não tem todos os materiais que eu pedi.";
 			next;
-			mes "[Gomer]";
-			mes "I have a habit of giving up what I've been making and trying to make new things when the inspiration comes up.";
-			mes "You'd better hurry!";
+			mes "[Bunz]";
+			mes "Tenho o hábito de desistir facilmente das coisas que começo a fazer, e volto a fazê-las somente quando estou inspirado.";
+			mes "É melhor você se apressar!";
 			close;
 		} else {
-			mes "[Gomer]";
-			mes "Oh, I've been waiting. You didn't come on time, so I was wondering if you forgot about it. Please wait there a little bit.";
+			mes "[Bunz]";
+			mes "Oh! Estava esperando por você. Por que demorou tanto? Pensei que tinha esquecido o caminho de volta~";
+			mes "Espere um momento.";
 			specialeffect EF_REPAIRWEAPON;
 			next;
-			mes "[Gomer]";
-			mes "It's done. What do you think? Not bad, eh? Although I made it myself, I have to say it's pretty decently done.";
+			mes "[Bunz]";
+			mes "está feita! O que você acha? Não é boa?? Não posso acreditar que realizei essa proeza!! Peso, Volume, revestimento, Cor... Tudo perfeito!!!";
 			next;
-			mes "[Gomer]";
-			mes "Combination of weight, volume and look at its color and gloss. It catches my heart!";
-			next;
-			mes "[Gomer]";
+			mes "[Bunz]";
 			mes "...........";
 			next;
-			mes "[Gomer]";
-			mes "Uh, with little improvement, it could be mass produced and delivered. I'm sure I can make more of these so I will give this one to you.";
+			mes "[Bunz]";
+			mes "............................... (um susto!)";
 			next;
-			mes "[Gomer]";
-			mes "Oh, and it turns out that I didn't need all that Steel after all. So here, take most of it back.";
-			delitem 999,50; //Steel
-			delitem 7325,30; //Tube
-			delitem 1415,1; //Skewer
-			getitem 1549,1; //Pilebuncker
-			getitem 1360,1; //Two_Handed_Axe
+			mes "[Bunz]";
+			mes "Uhumm, de qualquer maneira eu posso produzir outros pra você. Desde que me traga os materiais necessários.";
+			next;
+			mes "[Bunz]";
+			mes "Esse é um outro presente. Pra falar a verdade, sobrou um pouco do material e fiz esse outro... Pegue, são seus.";
+			delitem 999,50;   //Aço
+			delitem 7325,30;  //Tubo Flexível
+			delitem 1415,1;   //Broca
+			getitem 1549,1;   //Bate-Estacas
+			getitem 1360,1;   //Machado de Duas Mãos
 			close;
 		}
 	}

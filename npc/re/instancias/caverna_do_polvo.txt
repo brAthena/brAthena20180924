@@ -1,167 +1,160 @@
-//===== Hercules Script ======================================
-//= Octopus Cave
-//===== By: ==================================================
-//= Muad_Dib
-//===== Current Version: =====================================
-//= 1.1
-//===== Description: =========================================
-//= [Official Conversion]
-//= Defeat the Disgusting Octopus.
-//===== Additional Comments: =================================
-//= 1.0 First version. [Euphy]
-//= 1.1 Instance system rewrite. [Euphy]
-//============================================================
+//    ________________________________________________________
+//   /                                                        \
+//   |       _           _   _   _                            |
+//   |      | |__  _ __ / \ | |_| |__   ___ _ __   __ _       |
+//   |      | '_ \| '__/ _ \| __| '_ \ / _ \ '_ \ / _` |      |
+//   |      | |_) | | / ___ \ |_| | | |  __/ | | | (_| |      |
+//   |      |_.__/|_|/_/   \_\__|_| |_|\___|_| |_|\__,_|      |
+//   |                                                        |
+//   |                    brAthena Script                     |
+//   |--------------------------------------------------------|
+//   | Nome do Script: carvena_do_polvo.txt                   |
+//   |--------------------------------------------------------|
+//   | Criado por: Herc/brA Dev. Team                         |
+//   |--------------------------------------------------------|
+//   | Versões Herc/brA: 1.0/1.0                              |
+//   |--------------------------------------------------------|
+//   | Descrição: Caverna do Polvo                            |
+//   |--------------------------------------------------------|
+//   | Changelog:                                             |
+//   | 1.0 First version. [Euphy]                             |
+//   | 1.1 Instance system rewrite. [Euphy]                   |
+//   | 1.2 Cabeçalho brAthena e tradução. [SoulKnown]         |
+//   |--------------------------------------------------------|
+//   | - Anotações                                            |
+//   \________________________________________________________/
+
 
 1@cash	mapflag	src4instance
-//============================================================
 
-// Instance Creation
-//============================================================
-mal_dun01,151,235,5	script	Starfish	4_ASTER,{
+mal_dun01,151,235,5	script	Estrela do Mar	4_ASTER,{
 
 	.@party_id = getcharid(1);
-	.@md_name$ = "Octopus Cave";
+	.@md_name$ = "Caverna do Polvo";
 
 	if (!.@party_id) {
-		mes "[Starfish]";
-		mes "You alone is powerless, hehe!";
-		mes "Better get someone to help you out.";
-		mes "Make a party, and come back later.";
+		mes "[Estrela do Mar]";
+		mes "Você não terá forças sozinho, hehe";
+		mes "É melhor pedir ajuda a alguém.";
+		mes "Faça parte de um grupo, e retorne.";
 		close;
 	}
 	if (getcharid(0) != getpartyleader(.@party_id,2)) {
-		mes "[Starfish]";
-		mes "Where is your leader, hehe.";
-		mes "I don't talk to some random people.";
-		mes "Bring your boss to me.";
+		mes "[Estrela do Mar]";
+		mes "Onde está o seu líder, hehe.";
+		mes "Não posso falar com qualquer pessoa.";
+		mes "Traga o representante do grupo até mim.";
 		close;
 	}
-	mes "[Starfish]";
-	mes "I am guarding here, hehe!";
-	mes "It is just roughly blocked for now.";
-	mes "But someday this cave must be sealed forever, hehe!";
+	mes "[Estrela do Mar]";
+	mes "Estou protegendo aqui, hehe!";
+	mes "Por enquanto, está parcialmente bloqueada.";
+	mes "Mas, algum dia, essa caverna vai ser fechada para sempre, hehe!";
 	next;
 	while(1) {
-		switch(select("Ask what's going on.:Ask to open the gate.:Go to other location.")) {
+		switch(select("Perguntar o que está acontecendo.:Pedir para abrir o portão.:Ir para outro lugar.")) {
 		case 1:
-			mes "[Starfish]";
-			mes "Lately, our Starfish lady is";
-			mes "suffering with some issues, ooh ooh.";
-			mes "Something bad happen in this";
-			mes "peaceful place, hehe!";
+			mes "[Estrela do Mar]";
+			mes "Ultimamente, nossa Estrela do Mar está tendo alguns problemas, ooh ooh.";
+			mes "Algo sombrio anda acontecendo neste lugar que normalmente é tão tranquilo, hehe!";
 			next;
-			mes "[Starfish]";
-			mes "Weird looking limbs came out";
-			mes "from the hole there,";
-			mes "tried to kidnap our lady Starfish.";
+			mes "[Estrela do Mar]";
+			mes "Membros de uma organização secreta foram vistos saindo de um bueiro, e seguindo em direção à nossa senhora Estrela do Mar para sequestrá-la.";
 			mes "Ooh Ooh.";
 			next;
-			mes "[Starfish]";
-			mes "It seems those limbs belong to";
-			mes "that ugly octopus.";
-			mes "That monster should be taken care of,";
-			mes "but it's hard for ourselves only to make it happen, hehe.";
+			mes "[Estrela do Mar]";
+			mes "Tudo indica que esses membros pertencem a esse polvo pervertido.";
+			mes "Devemos ter muita cautela com esse monstro.";
 			next;
-			mes "[Starfish]";
-			mes "I want to find someone special,";
-			mes "and ask to punish this ugly octopus.";
-			mes "I hope this octopus won't ever";
-			mes "harass our lady, hehe.";
+			mes "[Estrela do Mar]";
+			mes "Desejo um dia encontrar alguém forte o bastante para combater este polvo pervertido.";
+			mes "Espero que esse polvo jamais consiga alcançar seu objetivo em raptar a nossa Estrela do Mar.";
 			next;
-			mes "[Starfish]";
-			mes "Go catch that octopus and stick it to this pick.";
-			mes "If you bring back the pick, I will";
-			mes "open this gate for a while.";
-			mes "You should challenge if you are interested, hehe.";
+			mes "[Estrela do Mar]";
+			mes "Precisamos que alguém vá em busca dele durante um certo período de tempo";
+			mes "e, traga-o preso no arpão.";
 			next;
 			break;
 		case 2:
 			.@playtime = questprogress(4197,PLAYTIME);
 			if (.@playtime == 1) {
-				mes "[Starfish]";
-				mes "Octopus is not around now, hehe.";
-				mes "Please come back later.";
+				mes "[Estrela do Mar]";
+				mes "O polvo não está aqui agora.";
+				mes "Por favor, retorne em outro momento.";
 				close;
 			}
 			if (.@playtime == 2) erasequest 4197;
 			if (countitem(6442)) {
 				.@instance = instance_create(.@md_name$,.@party_id);
 				if (.@instance < 0) {
-					mes "[Starfish]";
-					mes "Party name is... "+getpartyname(.@party_id)+".";
-					mes "Party leader is... "+strcharinfo(0)+".";
-					mes "^0000ff"+.@md_name$+"^000000, I cannot open now, hehe.";
-					mes "Now is not the time, please wait.";
+					mes "[Estrela do Mar]";
+					mes "Nome do Grupo: ["+getpartyname(.@party_id)+"].";
+					mes "Líder do Grupo: ["+strcharinfo(PC_NAME)+"].";
+					mes "^0000ff"+.@md_name$+"^000000, não pôde ser aberta agora.";
+					mes "Por favor, tente mais tarde.";
 					close;
 				}
 				if (instance_attachmap("1@cash",.@instance) == "") {
-					mes "^0000ff"+.@md_name$+"^000000 - Reservation Failed!";
+					mes "^0000ff"+.@md_name$+"^000000 - falha na reserva!";
 					instance_destroy(.@instance);
 					close;
 				}
 				instance_set_timeout 3600,300,.@instance;
 				instance_init(.@instance);
-				
-				mes "[Starfish]";
-				mes "I will open the gate for a while to ^0000ff"+.@md_name$+"^000000.";
-				mes "Please catch that pervert octopus,";
-				mes "and come back with it sticked to the pick, hehe.";
+
+				mes "[Estrela do Mar]";
+				mes "Vou abrir o portão por algum tempo ^0000ff"+.@md_name$+"^000000.";
+				mes "Por favor, pegue aquele polvo pervertido,";
+				mes "e volte com ele na ponta do seu arpão, hehe.";
 				close;
 			}
-			mes "[Starfish]";
-			mes "Prepare a pick first,";
-			mes "so you can thread that octopus";
-			mes "with that pick.";
-			mes "Then, I will let you in for a while, hehe.";
+			mes "[Estrela do Mar]";
+			mes "Você precisa se preparar primeiro, somente assim será capaz de enfrentá-lo";
+			mes "Então, deixarei você ir se aprontar, hehe.";
 			close;
 		case 3:
-			mes "[Starfish]";
-			mes "This is not a good location, check someplace else.";
+			mes "[Estrela do Mar]";
+			mes "Esta não é uma boa localização, confira outro lugar.";
 			close;
 		}
 	}
 }
 
-mal_dun01,153,237,5	script	Weird Entrance	CLEAR_NPC,{
-	mes "There is a strange entrance";
-	mes "blocked roughly with some boards.";
+mal_dun01,153,237,5	script	Entrada Estranha	CLEAR_NPC,{
+	mes "Tem uma entrada estranha";
+	mes "parcialmente bloqueada com algumas tábuas.";
 	next;
-	switch(select("Go in.:Stop.")) {
+	switch(select("Entrar.:Parar.")) {
 	case 1:
 		if (countitem(6442)) {
 			if (has_instance("1@cash") == "") {
 				if (questprogress(4197,PLAYTIME) == 1) {
-					mes "[Starfish]";
-					mes "Ah, now is not the time...";
-					mes "Would you come back later? Hehe.";
+					mes "[Estrela do Mar]";
+					mes "Ah, agora não é um momento apropriado.";
+					mes "Volte mais tarde, tudo bem? Hehe.";
 					close;
 				}
-				mes "[Starfish]";
-				mes "Shhh... Weird aura is";
-				mes "coming from that entrance.";
-				mes "Big trouble is waiting, if you go in now.";
+				mes "[Estrela do Mar]";
+				mes "Shhh... Uma aura estranha foi expelida dessa entrada.";
+				mes "Um grande desafio estará te aguardando se você entrar agora.";
 				close;
 			}
-			mapannounce "mal_dun01", getpartyname(getcharid(1))+" party's "+strcharinfo(0)+" member started to hunt the Octopus!",bc_map,"0x00ff99";
+			mapannounce "mal_dun01", strcharinfo(PC_NAME)+" do grupo "+getpartyname(getcharid(1))+" entrou na Caverna do Polvo e começou a caçar ao Polvo!",bc_map,"0x00ff99";
 			if (!questprogress(4197)) setquest 4197;
 			warp "1@cash",199,99;
 			end;
 		}
-		mes "[Starfish]";
-		mes "You should definitely prepare";
-		mes "hunting stick if you want to";
-		mes "punish the Octopus.";
-		mes "Or I will not let you in! Hehe.";
+		mes "[Estrela do Mar]";
+		mes "É necessário que você se organize antes de ir à caçar do polvo.";
+		mes "Senão, eu não posso deixá-lo passar! Hehe.";
 		close;
 	case 2:
-		mes "[Starfish]";
-		mes "Yes Yes, you better quit.";
+		mes "[Estrela do Mar]";
+		mes "Sim, sim, é melhor que você vá embora.";
 		close;
 	}
 }
 
-// Instance Scripts
-//============================================================
 1@cash,199,99,0	script	oct_enter	HIDDEN_WARP_NPC,4,4,{
 	end;
 OnTouch:
@@ -186,13 +179,13 @@ OnDisable:
 	disablenpc instance_npcname("oct_enter_broad");
 	end;
 OnTimer1000:
-	mapannounce instance_mapname("1@cash"),"Pervert Octopus : How dare you to come inside of my place!",bc_map,"0xFFFF00";
+	mapannounce instance_mapname("1@cash"),"Polvo pervertido: Como você ousa entrar na minha casa!",bc_map,"0xFFFF00";
 	end;
 OnTimer4000:
-	mapannounce instance_mapname("1@cash"),"Pervert Octopus : But I blocked all the cave gates!! There is nothing you can do!",bc_map,"0xFFFF00";
+	mapannounce instance_mapname("1@cash"),"Polvo pervertido: Mas eu bloqueei todos os portões da caverna! Não há nada que você possa fazer!",bc_map,"0xFFFF00";
 	end;
 OnTimer7000:
-	mapannounce instance_mapname("1@cash"),"Pervert Octopus : My juniors~ There is your toy! Play with it~ kakaka",bc_map,"0xFFFF00";
+	mapannounce instance_mapname("1@cash"),"Polvo pervertido: Meus jovens... Aqui está o brinquedo de vocês! Brinquem com ele... Hahaha.",bc_map,"0xFFFF00";
 	stopnpctimer;
 	donpcevent instance_npcname("oct_enter_broad")+"::OnDisable";
 	end;
@@ -210,10 +203,10 @@ OnEnable:
 	donpcevent instance_npcname("oct_foot3")+"::OnEnable";
 	donpcevent instance_npcname("oct_foot4")+"::OnEnable";
 	.@map$ = instance_mapname("1@cash");
-	monster .@map$,20,114,"Octopus Leg#1",2193,1,instance_npcname("oct_foot_4")+"::OnMyMobDead";
-	monster .@map$,88,190,"Octopus Leg#2",2193,1,instance_npcname("oct_foot_4")+"::OnMyMobDead";
-	monster .@map$,307,215,"Octopus Leg#3",2193,1,instance_npcname("oct_foot_4")+"::OnMyMobDead";
-	monster .@map$,372,131,"Octopus Leg#4",2193,1,instance_npcname("oct_foot_4")+"::OnMyMobDead";
+	monster .@map$,20,114,"Tentáculo de Polvo#1",MD_OCTOPUS_LEG,1,instance_npcname("oct_foot_4")+"::OnMyMobDead";
+	monster .@map$,88,190,"Tentáculo de Polvo#2",MD_OCTOPUS_LEG,1,instance_npcname("oct_foot_4")+"::OnMyMobDead";
+	monster .@map$,307,215,"Tentáculo de Polvo#3",MD_OCTOPUS_LEG,1,instance_npcname("oct_foot_4")+"::OnMyMobDead";
+	monster .@map$,372,131,"Tentáculo de Polvo#4",MD_OCTOPUS_LEG,1,instance_npcname("oct_foot_4")+"::OnMyMobDead";
 	end;
 OnDisable:
 	disablenpc instance_npcname("oct_foot_4");
@@ -222,12 +215,12 @@ OnMyMobDead:
 	.@map$ = instance_mapname("1@cash");
 	if (mobcount(.@map$,instance_npcname("oct_foot_4")+"::OnMyMobDead") < 1) {
 		donpcevent instance_npcname("oct_boss_con")+"::OnEnable";
-		mapannounce .@map$,"Hey you!! I'll personally take care of you all! Let's bring it on!",bc_map,"0x00ff99";
+		mapannounce .@map$,"Ei, vocês!!! Eu vou tomar conta de todos vocês pessoalmente! Vamos nessa!",bc_map,"0x00ff99";
 		enablenpc instance_npcname("oct_boss_warp");
 		instance_warpall .@map$,199,99;
 		end;
 	}
-	mapannounce .@map$,"Arrgg!! That hurts!!! I need another strategy...",bc_map,"0x00ff99";
+	mapannounce .@map$,"Arrgg!! Isso dói!!! Preciso de uma estratégia...",bc_map,"0x00ff99";
 	end;
 }
 
@@ -243,91 +236,91 @@ OnEnable:
 	.@map$ = instance_mapname("1@cash");
 	switch(.@i) {
 	case 1:
-		areamonster .@map$,34,96,38,100,"Octopus's Henchman",2192,3,.@label$;
-		areamonster .@map$,39,90,41,92,"Octopus's Henchman",2192,2,.@label$;
-		areamonster .@map$,38,76,40,78,"Octopus's Henchman",2192,2,.@label$;
-		areamonster .@map$,39,58,41,60,"Octopus's Henchman",2192,2,.@label$;
-		areamonster .@map$,50,38,56,44,"Octopus's Henchman",2192,5,.@label$;
-		areamonster .@map$,68,32,72,36,"Octopus's Henchman",2192,5,.@label$;
-		areamonster .@map$,83,26,85,28,"Octopus's Henchman",2192,2,.@label$;
-		areamonster .@map$,107,28,109,30,"Octopus's Henchman",2192,1,.@label$;
-		areamonster .@map$,123,28,125,30,"Octopus's Henchman",2192,2,.@label$;
-		areamonster .@map$,134,31,138,35,"Octopus's Henchman",2192,5,.@label$;
-		areamonster .@map$,142,39,146,43,"Octopus's Henchman",2192,2,.@label$;
+		areamonster .@map$,34,96,38,100,"Polvo Pequeno",MD_OCTOPUS,3,.@label$;
+		areamonster .@map$,39,90,41,92,"Polvo Pequeno",MD_OCTOPUS,2,.@label$;
+		areamonster .@map$,38,76,40,78,"Polvo Pequeno",MD_OCTOPUS,2,.@label$;
+		areamonster .@map$,39,58,41,60,"Polvo Pequeno",MD_OCTOPUS,2,.@label$;
+		areamonster .@map$,50,38,56,44,"Polvo Pequeno",MD_OCTOPUS,5,.@label$;
+		areamonster .@map$,68,32,72,36,"Polvo Pequeno",MD_OCTOPUS,5,.@label$;
+		areamonster .@map$,83,26,85,28,"Polvo Pequeno",MD_OCTOPUS,2,.@label$;
+		areamonster .@map$,107,28,109,30,"Polvo Pequeno",MD_OCTOPUS,1,.@label$;
+		areamonster .@map$,123,28,125,30,"Polvo Pequeno",MD_OCTOPUS,2,.@label$;
+		areamonster .@map$,134,31,138,35,"Polvo Pequeno",MD_OCTOPUS,5,.@label$;
+		areamonster .@map$,142,39,146,43,"Polvo Pequeno",MD_OCTOPUS,2,.@label$;
 		break;
 	case 2:
-		areamonster .@map$,139,113,143,117,"Octopus's Henchman",2192,5,.@label$;
-		areamonster .@map$,135,104,137,106,"Octopus's Henchman",2192,2,.@label$;
-		areamonster .@map$,123,93,127,97,"Octopus's Henchman",2192,3,.@label$;
-		areamonster .@map$,113,90,115,92,"Octopus's Henchman",2192,2,.@label$;
-		areamonster .@map$,103,89,105,91,"Octopus's Henchman",2192,2,.@label$;
-		areamonster .@map$,89,90,91,92,"Octopus's Henchman",2192,2,.@label$;
-		areamonster .@map$,74,104,76,106,"Octopus's Henchman",2192,2,.@label$;
-		areamonster .@map$,74,120,76,122,"Octopus's Henchman",2192,2,.@label$;
-		areamonster .@map$,83,131,87,135,"Octopus's Henchman",2192,3,.@label$;
-		areamonster .@map$,92,142,94,144,"Octopus's Henchman",2192,2,.@label$;
-		areamonster .@map$,98,159,100,161,"Octopus's Henchman",2192,2,.@label$;
-		areamonster .@map$,94,180,98,184,"Octopus's Henchman",2192,5,.@label$;
+		areamonster .@map$,139,113,143,117,"Polvo Pequeno",MD_OCTOPUS,5,.@label$;
+		areamonster .@map$,135,104,137,106,"Polvo Pequeno",MD_OCTOPUS,2,.@label$;
+		areamonster .@map$,123,93,127,97,"Polvo Pequeno",MD_OCTOPUS,3,.@label$;
+		areamonster .@map$,113,90,115,92,"Polvo Pequeno",MD_OCTOPUS,2,.@label$;
+		areamonster .@map$,103,89,105,91,"Polvo Pequeno",MD_OCTOPUS,2,.@label$;
+		areamonster .@map$,89,90,91,92,"Polvo Pequeno",MD_OCTOPUS,2,.@label$;
+		areamonster .@map$,74,104,76,106,"Polvo Pequeno",MD_OCTOPUS,2,.@label$;
+		areamonster .@map$,74,120,76,122,"Polvo Pequeno",MD_OCTOPUS,2,.@label$;
+		areamonster .@map$,83,131,87,135,"Polvo Pequeno",MD_OCTOPUS,3,.@label$;
+		areamonster .@map$,92,142,94,144,"Polvo Pequeno",MD_OCTOPUS,2,.@label$;
+		areamonster .@map$,98,159,100,161,"Polvo Pequeno",MD_OCTOPUS,2,.@label$;
+		areamonster .@map$,94,180,98,184,"Polvo Pequeno",MD_OCTOPUS,5,.@label$;
 		break;
 	case 3:
-		areamonster .@map$,299,209,303,213,"Octopus's Henchman",2192,3,.@label$;
-		areamonster .@map$,292,203,296,207,"Octopus's Henchman",2192,3,.@label$;
-		areamonster .@map$,291,186,293,188,"Octopus's Henchman",2192,2,.@label$;
-		areamonster .@map$,292,166,294,168,"Octopus's Henchman",2192,2,.@label$;
-		areamonster .@map$,293,151,295,153,"Octopus's Henchman",2192,2,.@label$;
-		areamonster .@map$,299,137,303,141,"Octopus's Henchman",2192,2,.@label$;
-		areamonster .@map$,300,123,304,127,"Octopus's Henchman",2192,2,.@label$;
-		areamonster .@map$,300,104,304,108,"Octopus's Henchman",2192,3,.@label$;
-		areamonster .@map$,279,101,281,103,"Octopus's Henchman",2192,2,.@label$;
-		monster .@map$,260,103,"Octopus's Henchman",2192,1,.@label$;
+		areamonster .@map$,299,209,303,213,"Polvo Pequeno",MD_OCTOPUS,3,.@label$;
+		areamonster .@map$,292,203,296,207,"Polvo Pequeno",MD_OCTOPUS,3,.@label$;
+		areamonster .@map$,291,186,293,188,"Polvo Pequeno",MD_OCTOPUS,2,.@label$;
+		areamonster .@map$,292,166,294,168,"Polvo Pequeno",MD_OCTOPUS,2,.@label$;
+		areamonster .@map$,293,151,295,153,"Polvo Pequeno",MD_OCTOPUS,2,.@label$;
+		areamonster .@map$,299,137,303,141,"Polvo Pequeno",MD_OCTOPUS,2,.@label$;
+		areamonster .@map$,300,123,304,127,"Polvo Pequeno",MD_OCTOPUS,2,.@label$;
+		areamonster .@map$,300,104,304,108,"Polvo Pequeno",MD_OCTOPUS,3,.@label$;
+		areamonster .@map$,279,101,281,103,"Polvo Pequeno",MD_OCTOPUS,2,.@label$;
+		monster .@map$,260,103,"Polvo Pequeno",MD_OCTOPUS,1,.@label$;
 		break;
 	case 4:
-		areamonster .@map$,363,123,367,127,"Octopus's Henchman",2192,2,.@label$;
-		areamonster .@map$,364,108,368,112,"Octopus's Henchman",2192,5,.@label$;
-		areamonster .@map$,363,93,367,97,"Octopus's Henchman",2192,3,.@label$;
-		areamonster .@map$,364,72,366,74,"Octopus's Henchman",2192,2,.@label$;
-		areamonster .@map$,364,58,366,60,"Octopus's Henchman",2192,2,.@label$;
-		areamonster .@map$,355,44,359,48,"Octopus's Henchman",2192,3,.@label$;
-		areamonster .@map$,346,36,350,40,"Octopus's Henchman",2192,3,.@label$;
-		areamonster .@map$,319,28,325,34,"Octopus's Henchman",2192,5,.@label$;
-		areamonster .@map$,305,27,307,29,"Octopus's Henchman",2192,2,.@label$;
-		areamonster .@map$,276,29,280,33,"Octopus's Henchman",2192,5,.@label$;
-		areamonster .@map$,258,37,262,41,"Octopus's Henchman",2192,2,.@label$;
+		areamonster .@map$,363,123,367,127,"Polvo Pequeno",MD_OCTOPUS,2,.@label$;
+		areamonster .@map$,364,108,368,112,"Polvo Pequeno",MD_OCTOPUS,5,.@label$;
+		areamonster .@map$,363,93,367,97,"Polvo Pequeno",MD_OCTOPUS,3,.@label$;
+		areamonster .@map$,364,72,366,74,"Polvo Pequeno",MD_OCTOPUS,2,.@label$;
+		areamonster .@map$,364,58,366,60,"Polvo Pequeno",MD_OCTOPUS,2,.@label$;
+		areamonster .@map$,355,44,359,48,"Polvo Pequeno",MD_OCTOPUS,3,.@label$;
+		areamonster .@map$,346,36,350,40,"Polvo Pequeno",MD_OCTOPUS,3,.@label$;
+		areamonster .@map$,319,28,325,34,"Polvo Pequeno",MD_OCTOPUS,5,.@label$;
+		areamonster .@map$,305,27,307,29,"Polvo Pequeno",MD_OCTOPUS,2,.@label$;
+		areamonster .@map$,276,29,280,33,"Polvo Pequeno",MD_OCTOPUS,5,.@label$;
+		areamonster .@map$,258,37,262,41,"Polvo Pequeno",MD_OCTOPUS,2,.@label$;
 		break;
 	}
 	end;
 OnDisable:
-	killmonster instance_mapname("1@cash"),instance_npcname(strnpcinfo(0))+"::OnMyMobDead"; // Not in official script.
+	killmonster instance_mapname("1@cash"),instance_npcname(strnpcinfo(0))+"::OnMyMobDead";
 	disablenpc instance_npcname(strnpcinfo(0));
 	end;
 OnTouch:
 	if (getd("."+strnpcinfo(0)+instance_id())) end;
 	setd "."+strnpcinfo(0)+instance_id(),1;
 	hideonnpc instance_npcname(strnpcinfo(0));
-	mapannounce instance_mapname("1@cash"),"Come out all my babies and help me out!",bc_map,"0xFFFF00";
+	mapannounce instance_mapname("1@cash"),"Saiam, meus bebês, venham me ajudar!",bc_map,"0xFFFF00";
 	initnpctimer;
 	end;
 OnTimer5000:
 	.@map$ = instance_mapname("1@cash");
-	mapannounce .@map$,"Let's give them a lesson!",bc_map,"0xFFFF00";
+	mapannounce .@map$,"Vamos ensinar uma lição a eles!",bc_map,"0xFFFF00";
 	.@label$ = instance_npcname(strnpcinfo(0))+"::OnMyMobDead";
 	.@i = atoi(charat(strnpcinfo(0),8));
 	switch(.@i) {
 	case 1:
-		areamonster .@map$,18,112,22,116,"Octopus's Henchman",2192,3,.@label$;
-		areamonster .@map$,18,112,22,116,"Octopus's Henchman",2192,3,.@label$;
+		areamonster .@map$,18,112,22,116,"Polvo Pequeno",MD_OCTOPUS,3,.@label$;
+		areamonster .@map$,18,112,22,116,"Polvo Pequeno",MD_OCTOPUS,3,.@label$;
 		break;
 	case 2:
-		areamonster .@map$,86,188,90,192,"Octopus's Henchman",2192,3,.@label$;
-		areamonster .@map$,96,98,100,102,"Octopus's Henchman",2192,3,.@label$;
+		areamonster .@map$,86,188,90,192,"Polvo Pequeno",MD_OCTOPUS,3,.@label$;
+		areamonster .@map$,96,98,100,102,"Polvo Pequeno",MD_OCTOPUS,3,.@label$;
 		break;
 	case 3:
-		areamonster .@map$,305,213,309,217,"Octopus's Henchman",2192,3,.@label$;
-		areamonster .@map$,305,213,309,217,"Octopus's Henchman",2192,3,.@label$;
+		areamonster .@map$,305,213,309,217,"Polvo Pequeno",MD_OCTOPUS,3,.@label$;
+		areamonster .@map$,305,213,309,217,"Polvo Pequeno",MD_OCTOPUS,3,.@label$;
 		break;
 	case 4:
-		areamonster .@map$,370,129,374,133,"Octopus's Henchman",2192,3,.@label$;
-		areamonster .@map$,370,129,374,133,"Octopus's Henchman",2192,3,.@label$;
+		areamonster .@map$,370,129,374,133,"Polvo Pequeno",MD_OCTOPUS,3,.@label$;
+		areamonster .@map$,370,129,374,133,"Polvo Pequeno",MD_OCTOPUS,3,.@label$;
 		break;
 	}
 	end;
@@ -341,7 +334,7 @@ OnTimer30000:
 OnMyMobDead:
 	.@map$ = instance_mapname("1@cash");
 	if (mobcount(.@map$,instance_npcname(strnpcinfo(0))+"::OnMyMobDead") < 1) {
-		mapannounce .@map$,"You hurt my babies!!? You'll have to pay for this!!!",bc_map,"0x00ff99";
+		mapannounce .@map$,"Você machucou os meus bebês! Vai ter que pagar por isso!",bc_map,"0x00ff99";
 		setd "."+strnpcinfo(0)+instance_id(),0;
 		stopnpctimer;
 		.@i = atoi(charat(strnpcinfo(0),8));
@@ -379,49 +372,49 @@ OnInstanceInit:
 OnEnable:
 	.@map$ = instance_mapname("1@cash");
 	enablenpc instance_npcname("oct_mob_con");
-	monster .@map$,32,94,"Hydra",1068,1;
-	monster .@map$,41,101,"Hydra",1068,1;
-	monster .@map$,35,78,"Hydra",1068,1;
-	monster .@map$,35,62,"Hydra",1068,1;
-	monster .@map$,49,54,"Hydra",1068,1;
-	monster .@map$,70,28,"Hydra",1068,1;
-	monster .@map$,83,22,"Hydra",1068,1;
-	monster .@map$,99,23,"Hydra",1068,1;
-	monster .@map$,115,23,"Hydra",1068,1;
-	monster .@map$,132,25,"Hydra",1068,1;
-	monster .@map$,100,185,"Hydra",1068,1;
-	monster .@map$,92,178,"Hydra",1068,1;
-	monster .@map$,92,162,"Hydra",1068,1;
-	monster .@map$,70,121,"Hydra",1068,1;
-	monster .@map$,70,105,"Hydra",1068,1;
-	monster .@map$,105,85,"Hydra",1068,1;
-	monster .@map$,121,84,"Hydra",1068,1;
-	monster .@map$,292,209,"Hydra",1068,1;
-	monster .@map$,303,206,"Hydra",1068,1;
-	monster .@map$,290,163,"Hydra",1068,1;
-	monster .@map$,299,150,"Hydra",1068,1;
-	monster .@map$,308,141,"Hydra",1068,1;
-	monster .@map$,308,125,"Hydra",1068,1;
-	monster .@map$,295,97,"Hydra",1068,1;
-	monster .@map$,279,97,"Hydra",1068,1;
-	monster .@map$,370,111,"Hydra",1068,1;
-	monster .@map$,370,110,"Hydra",1068,1;
-	monster .@map$,371,96,"Hydra",1068,1;
-	monster .@map$,371,80,"Hydra",1068,1;
-	monster .@map$,367,55,"Hydra",1068,1;
-	monster .@map$,343,29,"Hydra",1068,1;
-	monster .@map$,327,24,"Hydra",1068,1;
-	monster .@map$,311,22,"Hydra",1068,1;
-	monster .@map$,295,22,"Hydra",1068,1;
-	monster .@map$,279,22,"Hydra",1068,1;
-	areamonster .@map$,30,67,50,87,"Stapo",1784,1;
-	areamonster .@map$,102,19,122,39,"Stapo",1784,1;
-	areamonster .@map$,89,138,109,158,"Stapo",1784,1;
-	areamonster .@map$,112,83,132,103,"Stapo",1784,1;
-	areamonster .@map$,283,168,303,188,"Stapo",1784,1;
-	areamonster .@map$,292,97,312,117,"Stapo",1784,1;
-	areamonster .@map$,355,64,375,84,"Stapo",1784,1;
-	areamonster .@map$,317,17,337,37,"Stapo",1784,1;
+	monster .@map$,32,94,"Hidra",HYDRA,1;
+	monster .@map$,41,101,"Hidra",HYDRA,1;
+	monster .@map$,35,78,"Hidra",HYDRA,1;
+	monster .@map$,35,62,"Hidra",HYDRA,1;
+	monster .@map$,49,54,"Hidra",HYDRA,1;
+	monster .@map$,70,28,"Hidra",HYDRA,1;
+	monster .@map$,83,22,"Hidra",HYDRA,1;
+	monster .@map$,99,23,"Hidra",HYDRA,1;
+	monster .@map$,115,23,"Hidra",HYDRA,1;
+	monster .@map$,132,25,"Hidra",HYDRA,1;
+	monster .@map$,100,185,"Hidra",HYDRA,1;
+	monster .@map$,92,178,"Hidra",HYDRA,1;
+	monster .@map$,92,162,"Hidra",HYDRA,1;
+	monster .@map$,70,121,"Hidra",HYDRA,1;
+	monster .@map$,70,105,"Hidra",HYDRA,1;
+	monster .@map$,105,85,"Hidra",HYDRA,1;
+	monster .@map$,121,84,"Hidra",HYDRA,1;
+	monster .@map$,292,209,"Hidra",HYDRA,1;
+	monster .@map$,303,206,"Hidra",HYDRA,1;
+	monster .@map$,290,163,"Hidra",HYDRA,1;
+	monster .@map$,299,150,"Hidra",HYDRA,1;
+	monster .@map$,308,141,"Hidra",HYDRA,1;
+	monster .@map$,308,125,"Hidra",HYDRA,1;
+	monster .@map$,295,97,"Hidra",HYDRA,1;
+	monster .@map$,279,97,"Hidra",HYDRA,1;
+	monster .@map$,370,111,"Hidra",HYDRA,1;
+	monster .@map$,370,110,"Hidra",HYDRA,1;
+	monster .@map$,371,96,"Hidra",HYDRA,1;
+	monster .@map$,371,80,"Hidra",HYDRA,1;
+	monster .@map$,367,55,"Hidra",HYDRA,1;
+	monster .@map$,343,29,"Hidra",HYDRA,1;
+	monster .@map$,327,24,"Hidra",HYDRA,1;
+	monster .@map$,311,22,"Hidra",HYDRA,1;
+	monster .@map$,295,22,"Hidra",HYDRA,1;
+	monster .@map$,279,22,"Hidra",HYDRA,1;
+	areamonster .@map$,30,67,50,87,"Stapo",STAPO,1;
+	areamonster .@map$,102,19,122,39,"Stapo",STAPO,1;
+	areamonster .@map$,89,138,109,158,"Stapo",STAPO,1;
+	areamonster .@map$,112,83,132,103,"Stapo",STAPO,1;
+	areamonster .@map$,283,168,303,188,"Stapo",STAPO,1;
+	areamonster .@map$,292,97,312,117,"Stapo",STAPO,1;
+	areamonster .@map$,355,64,375,84,"Stapo",STAPO,1;
+	areamonster .@map$,317,17,337,37,"Stapo",STAPO,1;
 	donpcevent instance_npcname("oct_backattack1")+"::OnEnable";
 	donpcevent instance_npcname("oct_backattack2")+"::OnEnable";
 	donpcevent instance_npcname("oct_backattack3")+"::OnEnable";
@@ -440,14 +433,14 @@ OnInstanceInit:
 	end;
 OnTouch:
 	.@map$ = instance_mapname("1@cash");
-	monster .@map$,39,59,"Hydra",1068,1;
-	monster .@map$,40,59,"Hydra",1068,1;
-	monster .@map$,41,59,"Hydra",1068,1;
-	monster .@map$,47,50,"Hydra",1068,1;
-	monster .@map$,48,50,"Hydra",1068,1;
-	monster .@map$,49,50,"Hydra",1068,1;
-	monster .@map$,41,53,"Octopus's Henchman",2192,1;
-	mapannounce .@map$,"Don't let them break through, stop them!!!",bc_map,"0x00ff99";
+	monster .@map$,39,59,"Hidra",HYDRA,1;
+	monster .@map$,40,59,"Hidra",HYDRA,1;
+	monster .@map$,41,59,"Hidra",HYDRA,1;
+	monster .@map$,47,50,"Hidra",HYDRA,1;
+	monster .@map$,48,50,"Hidra",HYDRA,1;
+	monster .@map$,49,50,"Hidra",HYDRA,1;
+	monster .@map$,41,53,"Polvo Pequeno",MD_OCTOPUS,1;
+	mapannounce .@map$,"Não deixem que eles passem, impeça-os!!!",bc_map,"0x00ff99";
 	specialeffect EF_BASH;
 	disablenpc instance_npcname("oct_backattack1");
 	end;
@@ -466,29 +459,29 @@ OnTouch:
 	setd "."+instance_id(),1;
 	initnpctimer;
 	.@map$ = instance_mapname("1@cash");
-	monster .@map$,71,105,"Octopus's Henchman ",2192,1;
-	mapannounce .@map$,"Headquarters are empty, GO!!!",bc_map,"0x00ff99";
+	monster .@map$,71,105,"Polvo Pequeno",MD_OCTOPUS,1;
+	mapannounce .@map$,"O quartel-general está vázio, VÁ!!!",bc_map,"0x00ff99";
 	hideonnpc instance_npcname("oct_backattack2");
 	end;
 OnTimer2000:
 	.@map$ = instance_mapname("1@cash");
-	monster .@map$,71,105,"Octopus's Henchman ",2192,1;
-	mapannounce .@map$,"Run, RUN! Go, GO!!!",bc_map,"0x00ff99";
+	monster .@map$,71,105,"Polvo Pequeno",MD_OCTOPUS,1;
+	mapannounce .@map$,"Corra, CORRA! Vá, VÁ!!!",bc_map,"0x00ff99";
 	end;
 OnTimer4000:
 	.@map$ = instance_mapname("1@cash");
-	monster .@map$,71,105,"Octopus's Henchman ",2192,1;
-	mapannounce .@map$,"No time, come out fast!",bc_map,"0x00ff99";
+	monster .@map$,71,105,"Polvo Pequeno",MD_OCTOPUS,1;
+	mapannounce .@map$,"Não temos tempo, saia, rápido!",bc_map,"0x00ff99";
 	end;
 OnTimer6000:
 	.@map$ = instance_mapname("1@cash");
-	monster .@map$,71,105,"Octopus's Henchman ",2192,3;
-	mapannounce .@map$,"Let's take over the headquarters!!!",bc_map,"0x00ff99";
+	monster .@map$,71,105,"Polvo Pequeno",MD_OCTOPUS,3;
+	mapannounce .@map$,"Vamos tomar o quartel-general!!!",bc_map,"0x00ff99";
 	end;
 OnTimer8000:
 	.@map$ = instance_mapname("1@cash");
-	monster .@map$,71,105,"Octopus's Henchman ",2192,1;
-	mapannounce .@map$,"There is no time to lose, hurry up!!!",bc_map,"0x00ff99";
+	monster .@map$,71,105,"Polvo Pequeno",MD_OCTOPUS,1;
+	mapannounce .@map$,"Não temos tempo a perder, vamos logo!!!",bc_map,"0x00ff99";
 	stopnpctimer;
 	end;
 OnEnable:
@@ -505,17 +498,17 @@ OnTouch:
 	if (getd("."+instance_id())) end;
 	setd "."+instance_id(),1;
 	.@map$ = instance_mapname("1@cash");
-	monster .@map$,293,153,"Octopus's Henchman ",2192,1;
-	monster .@map$,294,152,"Octopus's Henchman ",2192,1;
-	monster .@map$,292,153,"Octopus's Henchman ",2192,1;
-	monster .@map$,293,151,"Octopus's Henchman ",2192,1;
-	monster .@map$,293,152,"Octopus's Henchman ?",2175,1;
-	mapannounce .@map$,"Kakaka! Suprised??!!",bc_map,"0x00ff99";
+	monster .@map$,293,153,"Polvo Pequeno",MD_OCTOPUS,1;
+	monster .@map$,294,152,"Polvo Pequeno",MD_OCTOPUS,1;
+	monster .@map$,292,153,"Polvo Pequeno",MD_OCTOPUS,1;
+	monster .@map$,293,151,"Polvo Pequeno",MD_OCTOPUS,1;
+	monster .@map$,293,152,"Lula Mercenária",MD_MARSE,1;
+	mapannounce .@map$,"Hahaha! Surpresos??!!",bc_map,"0x00ff99";
 	initnpctimer;
 	hideonnpc instance_npcname("oct_backattack3");
 	end;
 OnTimer5000:
-	mapannounce instance_mapname("1@cash"),"... Looks like we have a spy among us.",bc_map,"0x00ff99";
+	mapannounce instance_mapname("1@cash"),"... Parece que temos um espião entre nós.",bc_map,"0x00ff99";
 	stopnpctimer;
 	end;
 OnEnable:
@@ -532,28 +525,28 @@ OnTouch:
 	if (getd("."+instance_id())) end;
 	setd "."+instance_id(),1;
 	.@map$ = instance_mapname("1@cash");
-	monster .@map$,332,37,"Octopus's Henchman ",2192,1;
-	monster .@map$,332,36,"Octopus's Henchman ",2192,1;
-	monster .@map$,332,35,"Octopus's Henchman ",2192,1;
-	monster .@map$,332,34,"Octopus's Henchman ",2192,1;
-	monster .@map$,341,37,"Octopus's Henchman ",2192,1;
-	monster .@map$,341,36,"Octopus's Henchman ",2192,1;
-	monster .@map$,341,35,"Octopus's Henchman ",2192,1;
-	monster .@map$,341,34,"Octopus's Henchman ",2192,1;
-	monster .@map$,260,40,"Mercenary Squid",2175,1;
-	monster .@map$,260,41,"Mercenary Squid",2175,1;
-	monster .@map$,260,39,"Mercenary Squid",2175,1;
-	monster .@map$,259,40,"Mercenary Squid",2175,1;
-	monster .@map$,261,40,"Mercenary Squid",2175,1;
-	mapannounce .@map$,"What a successful pincer tactic! The enemy is strong! Let's not lose yourselves! Anyway, where are all the mercenaries??",bc_map,"0x00ff99";
+	monster .@map$,332,37,"Polvo Pequeno",MD_OCTOPUS,1;
+	monster .@map$,332,36,"Polvo Pequeno",MD_OCTOPUS,1;
+	monster .@map$,332,35,"Polvo Pequeno",MD_OCTOPUS,1;
+	monster .@map$,332,34,"Polvo Pequeno",MD_OCTOPUS,1;
+	monster .@map$,341,37,"Polvo Pequeno",MD_OCTOPUS,1;
+	monster .@map$,341,36,"Polvo Pequeno",MD_OCTOPUS,1;
+	monster .@map$,341,35,"Polvo Pequeno",MD_OCTOPUS,1;
+	monster .@map$,341,34,"Polvo Pequeno",MD_OCTOPUS,1;
+	monster .@map$,260,40,"Lula Mercenária",MD_MARSE,1;
+	monster .@map$,260,41,"Lula Mercenária",MD_MARSE,1;
+	monster .@map$,260,39,"Lula Mercenária",MD_MARSE,1;
+	monster .@map$,259,40,"Lula Mercenária",MD_MARSE,1;
+	monster .@map$,261,40,"Lula Mercenária",MD_MARSE,1;
+	mapannounce .@map$,"Que tática bem-sucedida com a pinça! O inimigo é forte! Não vamos nos perder! De qualquer forma, onde estão todos os mercenários?",bc_map,"0x00ff99";
 	initnpctimer;
 	hideonnpc instance_npcname("oct_backattack4");
 	end;
 OnTimer5000:
-	mapannounce instance_mapname("1@cash"),"Mercenary Squid : eh...eh... wrong direction. No enemies are shown in this direction.",bc_map,"0x00ff99";
+	mapannounce instance_mapname("1@cash"),"Marte mercenária: He... He... Direção errada. Não nenhum inimigo nessa direção.",bc_map,"0x00ff99";
 	end;
 OnTimer7000:
-	mapannounce instance_mapname("1@cash"),"Pervert Octopus : Fools! Can't you read the map??!! Useless!!",bc_map,"0x00ff99";
+	mapannounce instance_mapname("1@cash"),"Polvo pervertido: Tolos! Você não consegue ler o mapa?!?! Imprestável!",bc_map,"0x00ff99";
 	stopnpctimer;
 	end;
 OnEnable:
@@ -572,60 +565,60 @@ OnDisable:
 OnEnable:
 	enablenpc instance_npcname("oct_boss_con");
 	donpcevent instance_npcname("oct_boss_foot")+"::OnEnable";
-	monster instance_mapname("1@cash"),199,188,"Disgusting Octopus",2194,1,instance_npcname("oct_boss_con")+"::OnMyMobDead";
+	monster instance_mapname("1@cash"),199,188,"Polvo Gigante",MD_OCTOPUS,1,instance_npcname("oct_boss_con")+"::OnMyMobDead";
 	initnpctimer;
 	end;
 OnTimer7000:
 	callsub OnAnnounce,
-		"You won't attack the one man.",
-		"I got fired from ink manufacturer last week.",
-		"Disgusting Octopus : Arghhhhh, come on!";
+		"Você não vai atacar uma pessoa de bem.",
+		"Fui despedido da fabrica de tinta na semana passada.",
+		"Polvo nojento: Arghhhhh, qual é!";
 	end;
 OnTimer14000:
 	callsub OnAnnounce,
-		"Why... why can't you know my heart!",
-		"Do you know how hard it is to live these days because there are not many new adventurers?",
-		"You.. I'll destroy you all...!";
+		"Por que... Por que você consegue entender o que eu sinto?",
+		"Sabe como é difícil para viver hoje em dia por não haver tantas aventuras?",
+		"Vocês... Eu vou destruir todos vocês...!";
 	end;
 OnTimer21000:
 	callsub OnAnnounce,
-		"What? I'm a disgusting octopus? You're sadists.",
-		"Let's not do this and how about we look for the best solution, huh??",
-		"Even if I fail here, I will keep coming back, forever!!!";
+		"O quê? Sou um Polvo nojento? Vocês são sádicos.",
+		"Não vamos fazer isso, que tal procurarmos a melhor solução, hein?",
+		"Mesmo se eu falhar aqui, continuarei a voltar, sempre!!!";
 	end;
 OnTimer28000:
 	callsub OnAnnounce,
-		"Instinct of mating is for males, what did I do wrong?",
-		"Do you really want to solve the problem between humans by violence?? Ah, I'm an octopus...",
-		"That's enough! Back off!";
+		"O instinto de reprodução é para os machos, o que eu fiz de errado?",
+		"Você realmente quer resolver o problema com os seres humanos através da violência? Ah, eu sou um polvo...",
+		"Isso é o suficiente! Desista!";
 	end;
 OnTimer35000:
 	callsub OnAnnounce,
-		"Do I have to spend Christmas alone again...",
-		"Youth unemployment became a big issue these days... You won't get a job if you keep playing with me here.",
-		"This is as far as I can go!";
+		"Eu tenho que passar o Natal sozinho novamente...",
+		"O desemprego dos jovens tornou-se um grande problema nos dias de hoje... Você não vai conseguir um emprego se ficar aqui jogando.",
+		"Isto é, acabará como eu!";
 	end;
 OnTimer42000:
 	callsub OnAnnounce,
-		"Hand on your heart and think if you come onto anyone...",
-		"Let's not do this here and follow the law!",
-		"You'll keep on doing this til the end, is that it?";
+		"Vejo em seu coração acho que você deve parar...",
+		"Não faça isso!",
+		"Você vai continuar fazendo isso até o fim, é isso?";
 	end;
 OnTimer49000:
 	callsub OnAnnounce,
-		"errrrrrrrrrrrrrrrrrrrrrrrr... Cough! Cough!",
-		"Disgusting Octopus : Violence cannot be justified in any case.",
-		"This is my place!!!";
+		"errrrrrrrrrrrrrrrrrrrrrrrr... Coff!Coff!",
+		"Polvo nojento: A violência não é necessária neste caso.",
+		"Este é meu território!!!";
 	stopnpctimer;
 	initnpctimer;
 	end;
 OnAnnounce:
-	mapannounce instance_mapname("1@cash"),"Disgusting Octopus : "+getarg(rand(3)),bc_map,"0xFFFF00";
+	mapannounce instance_mapname("1@cash"),"Polvo nojento: "+getarg(rand(3)),bc_map,"0xFFFF00";
 	return;
 OnMyMobDead:
 	.@map$ = instance_mapname("1@cash");
 	if (mobcount(.@map$,instance_npcname("oct_boss_con")+"::OnMyMobDead") < 1) {
-		mapannounce .@map$,"Disgusting Octopus : That's it for the today! Next time, I will play with you badly!",bc_map,"0xFFFF00";
+		mapannounce .@map$,"Polvo nojento: Isso é o suficiente por hoje! Da próxima vez, vou brincar muito com você.",bc_map,"0xFFFF00";
 		enablenpc instance_npcname("oct_exit_1");
 		enablenpc instance_npcname("oct_exit_2");
 		donpcevent instance_npcname("oct_boss_foot")+"::OnDisable";
@@ -650,12 +643,12 @@ OnCall:
 	if (mobcount(.@map$,instance_npcname("oct_boss_foot")+"::OnMyMobDead") < 100) {
 		switch(rand(2)) {
 		case 0:
-			mapannounce .@map$,"Disgusting Octopus : Do you know how many legs octopus have? It doesn't matter, I have unlimited legs!!",bc_map,"0xFFFF00";
-			areamonster .@map$,192,181,206,195,"Octopus Leg",2193,1,instance_npcname("oct_boss_foot")+"::OnMyMobDead";
+			mapannounce .@map$,"Polvo nojento: Sabe quantas pernas tem um polvo? Não importa, tenho infinitas pernas!",bc_map,"0xFFFF00";
+			areamonster .@map$,192,181,206,195,"Tentáculo de Polvo",MD_OCTOPUS_LEG,1,instance_npcname("oct_boss_foot")+"::OnMyMobDead";
 			break;
 		case 1:
-			mapannounce .@map$,"Disgusting Octopus : I...cannot..hold anymore, my babies~ please come out and fight!",bc_map,"0xFFFF00";
-			areamonster .@map$,192,181,206,195,"Octopus's Henchman ",2192,5,instance_npcname("oct_boss_foot")+"::OnMyMobDead";
+			mapannounce .@map$,"Polvo nojento: Não... consigo mais.. segurar os meus bebês, por favor, saia e lute!",bc_map,"0xFFFF00";
+			areamonster .@map$,192,181,206,195,"Polvo Pequeno",MD_OCTOPUS,5,instance_npcname("oct_boss_foot")+"::OnMyMobDead";
 			break;
 		}
 	}
@@ -667,7 +660,7 @@ OnTimer10000:
 	end;
 OnDisable:
 	stopnpctimer;
-	killmonster instance_mapname("1@cash"),instance_npcname("oct_boss_foot")+"::OnMyMobDead"; // Not in official script.
+	killmonster instance_mapname("1@cash"),instance_npcname("oct_boss_foot")+"::OnMyMobDead";
 	disablenpc instance_npcname("oct_boss_foot");
 	end;
 OnMyMobDead:
@@ -690,18 +683,14 @@ OnInstanceInit:
 	disablenpc instance_npcname(strnpcinfo(0));
 	end;
 OnTouch:
-	mes "Do you want to go out from the octopus dungeon?";
+	mes "Você quer sair do calabouço do polvo?";
 	next;
-	if(select("No!:Yes!") == 2)
+	if(select("Não!:Sim!") == 2)
 		warp "mal_dun01",153,233;
 	close;
 }
 1@cash,198,82,0	duplicate(oct_exit_1)	oct_exit_2	WARPNPC,2,2
-// This is never enabled in the official script.
-//1@cash,200,161,0	duplicate(oct_exit_1)	oct_exit_3	WARPNPC,2,2
 
-// Warp Portals
-//============================================================
 1@cash,193,82,0	warp	oct_door1	2,2,1@cash,151,48
 1@cash,154,53,0	warp	oct_door2	2,2,1@cash,197,87
 1@cash,187,99,0	warp	oct_door3	2,2,1@cash,148,128
