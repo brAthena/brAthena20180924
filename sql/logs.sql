@@ -102,7 +102,7 @@ CREATE TABLE IF NOT EXISTS `cashitemshop` (
   `AccountName` varchar(23) NOT NULL DEFAULT '',
   `CharacterID` int(11) NOT NULL DEFAULT '0',
   `CharacterIPaddr` varchar(20) NOT NULL DEFAULT '',
-  `Type` enum('Botão de Cash','NPC') NOT NULL DEFAULT 'Botão de Cash',
+  `Type` enum('Botão de Cash','NPC') NOT NULL DEFAULT 'Botao de Cash',
   `PosX` smallint(4) NOT NULL DEFAULT '0',
   `PosY` smallint(4) NOT NULL DEFAULT '0',
   `NpcName` varchar(51) NOT NULL DEFAULT '',
