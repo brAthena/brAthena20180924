@@ -17803,7 +17803,7 @@ void clif_parse_CashShopBuy(int fd, struct map_session_data *sd) {
 						result = CSBR_SUCCESS;
 
 					if(result == CSBR_SUCCESS) /* Add to cashshop Log - [GreenStage]*/
-						logs->cash_buy_sql(sd,"Bot�o de Cash","",&item_tmp,get_count,clif->cs.data[tab][j]->price);
+						logs->cash_buy_sql(sd,"Botao de Cash","",&item_tmp,get_count,clif->cs.data[tab][j]->price);
 
 				}
 			}
