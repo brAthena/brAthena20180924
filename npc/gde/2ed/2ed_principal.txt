@@ -1105,7 +1105,7 @@ OnEnable:
 //============================================================
 -	script	Dispositivo de Controle#template	-1,{
 	.@GID = getcastledata(strnpcinfo(4),1);
-	.@num = atoi(charat(strnpcinfo(1),15));
+	.@num = atoi(charat(strnpcinfo(1),24));
 	.@var$ = "$agit_"+strnpcinfo(2);
 	if (getcharid(2) == .@GID) {
 		if (strcharinfo(0) == getguildmaster(.@GID)) {
