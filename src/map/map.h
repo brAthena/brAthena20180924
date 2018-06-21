@@ -716,6 +716,7 @@ struct map_data {
 		unsigned notomb : 1;
 		unsigned nocashshop : 1;
 		uint32 noviewid; ///< noviewid (bitmask - @see enum equip_pos)
+		unsigned block_dual_mac: 1; // [CarlosHenrq] Bloqueio de dual mac em um mesmo mapa.
 	} flag;
 	struct point save;
 	struct npc_data *npc[MAX_NPC_PER_MAP];

@@ -4314,6 +4314,8 @@ const char *npc_parse_mapflag(const char *w1, const char *w2, const char *w3, co
 		map->list[m].flag.nocashshop = (state) ? 1 : 0;
 	} else if (!strcmpi(w3,"noviewid")) {
 		map->list[m].flag.noviewid = (state) ? atoi(w4) : 0;
+	} else if (!strcmpi(w3, "block_dual_mac")) {
+		map->list[m].flag.block_dual_mac = (state) ? 1 : 0;
 	} else {
 		npc->parse_unknown_mapflag(mapname, w3, w4, start, buffer, filepath, retval);
 	}

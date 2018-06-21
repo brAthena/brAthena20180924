@@ -634,6 +634,7 @@ REPLACE INTO const_db VALUES('mf_reset','52',0);
 REPLACE INTO const_db VALUES('mf_notomb','53',0);
 REPLACE INTO const_db VALUES('mf_nocashshop','54',0);
 REPLACE INTO const_db VALUES('mf_noviewid','55',0);
+REPLACE INTO const_db VALUES('mf_block_dual_mac', '56', 0);
 REPLACE INTO const_db VALUES('cell_walkable','0',0);
 REPLACE INTO const_db VALUES('cell_shootable','1',0);
 REPLACE INTO const_db VALUES('cell_water','2',0);

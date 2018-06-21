@@ -5559,6 +5559,13 @@ int pc_setpos(struct map_session_data* sd, unsigned short map_index, int x, int 
 		pc->setrestartvalue(sd,1);
 	}
 
+	// [CarlosHenrq] O Mapa possui flag de dual-mac? Procura o mac lá dentro...
+	if(map->list[m].flag.block_dual_mac && pc->search_dual_mac2map(sd, m))
+	{
+		clif->message(sd->fd, msg_sd(sd, 3010));
+		return 1;
+	}
+
 	if( map->list[m].flag.src4instance ) {
 		struct party_data *p;
 		bool stop = false;
@@ -11935,6 +11942,66 @@ bool pc_too_many_vending_chat_near(struct map_session_data* sd)
 	return false;
 }
 
+/**
+ * Verifica se existe um mac_address dentro das rotinas.
+ */
+int pc_search_dual_mac_sub(struct block_list *bl, va_list ap)
+{
+	// Obtém o id do char para verificar o dual-mac...
+	int id = va_arg(ap, int);
+	struct map_session_data* src_sd = NULL,* target_sd = NULL;
+
+	// Somente pode fazer a verificação em objetos que não sejam
+	// do tipo jogador e também que não sejam do mesmo id que esteja
+	// procurando o dual.
+	if(bl == NULL || bl->type != BL_PC || bl->id == id)
+		return 0;
+
+	// Caso não encontre o SRC nem o TARGET então, não tem sentido continuar
+	// a verificação para vir o crash...
+	if((target_sd = BL_CAST(BL_PC, bl)) == NULL || (src_sd = map->id2sd(id)) == NULL)
+		return 0;
+
+	// Se não houver mac informado nos jogadores, desnecessário
+	// a verificação...
+	if(!strlen(src_sd->mac_address) || !strlen(target_sd->mac_address))
+		return 0;
+
+	// Jogadores de @autotrade não entram na contagem de dual-mac
+	// porque estão offline...
+	if(target_sd->state.autotrade)
+		return 0;
+
+	// Compara os endereços mac e se forem iguais, retornará 1
+	if(!strcmpi(src_sd->mac_address, target_sd->mac_address))
+		return 1;
+
+	// Se forem diferentes mantem o retorno em 0.
+	return 0;
+}
+
+/**
+ * Procura um dual map no mapa pedido pela rotina.
+ *
+ * @param sd
+ *
+ * @return Verdadeiro se houver dual mac
+ */
+bool pc_search_dual_mac2map(struct map_session_data* sd, int16 m)
+{
+	// Mapa não existe ou jogador acabou de deslogar...
+	if(sd == NULL || m < 0)
+		return false;
+
+	// Jogador em autotrade? Não pode fazer o teste.
+	if(sd->state.autotrade)
+		return false;
+
+	// Se encontrar um mac dentro do mapa...
+	// irá retornar verdadeiro.
+	return map->foreachinmap(pc->search_dual_mac_sub, m, BL_PC, sd->bl.id) > 0;
+}
+
 void do_final_pc(void) {
 	db_destroy(pc->itemcd_db);
 	pc->at_db->destroy(pc->at_db,pc->autotrade_final);
@@ -12313,4 +12380,8 @@ void pc_defaults(void) {
 	pc->check_time_vip = check_time_vip;
 	pc->add_time_vip = add_time_vip;
 	pc->show_time_vip = show_time_vip;
+
+	// [CarlosHenrq]
+	pc->search_dual_mac_sub = pc_search_dual_mac_sub;
+	pc->search_dual_mac2map = pc_search_dual_mac2map;
 }

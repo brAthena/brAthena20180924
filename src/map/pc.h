@@ -1121,7 +1121,11 @@ END_ZEROED_BLOCK; /* End */
 	bool (*too_many_vending_chat_near) (struct map_session_data* sd);
 	int (*check_time_vip) (int tid, int64 tick, int id, intptr_t data);
 	int (*add_time_vip) (struct map_session_data *sd, int type[4]);
-	void (*show_time_vip) (struct map_session_data *sd);	
+	void (*show_time_vip) (struct map_session_data *sd);
+
+	// [CarlosHenrq]
+	int (*search_dual_mac_sub) (struct block_list *bl, va_list ap);
+	bool (*search_dual_mac2map) (struct map_session_data* sd, int16 m);
 };
 
 struct pc_interface *pc;
