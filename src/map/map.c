@@ -3757,6 +3757,8 @@ int map_config_read(char *cfgName) {
 				map->minsave_interval = 1;
 		} else if (strcmpi(w1, "save_settings") == 0)
 			map->save_settings = atoi(w2);
+		else if(strcmpi(w1, "prevent_save_settings") == 0)
+			map->prevent_save_settings = atoi(w2);
 		else if (strcmpi(w1, "help_txt") == 0)
 			strcpy(map->help_txt, w2);
 		else if (strcmpi(w1, "help2_txt") == 0)

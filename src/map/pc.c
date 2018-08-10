@@ -10574,6 +10574,22 @@ int pc_autosave(int tid, int64 tick, int id, intptr_t data) {
 	else
 		save_flag = 1; //Noone was saved, so save first found char.
 
+	// [CarlosHenrq] Configurações de salvar personagem em casos desnecessários
+	if(map->prevent_save_settings)
+	{
+		// [CarlosHenrq] Configurações de salvar personagem em casos desnecessários
+		// 1: Não salvar automaticamente se a woe 1.0 estiver ativa
+		// 2: Não salvar automaticamente se a woe 2.0 estiver ativa
+		if((map->agit_flag && (map->prevent_save_settings&1)) || (map->agit2_flag && (map->prevent_save_settings&2)))
+		{
+			interval = map->autosave_interval/(map->usercount()+1);
+			if(interval < map->minsave_interval)
+				interval = map->minsave_interval;
+			timer->add(timer->gettick()+interval,pc->autosave,0,0);
+			return 0;
+		}
+	}
+
 	iter = mapit_getallusers();
 	for (sd = BL_UCAST(BL_PC, mapit->first(iter)); mapit->exists(iter); sd = BL_UCAST(BL_PC, mapit->next(iter))) {
 		if(sd->bl.id == last_save_id && save_flag != 1) {
@@ -10582,6 +10598,13 @@ int pc_autosave(int tid, int64 tick, int id, intptr_t data) {
 		}
 
 		if(save_flag != 1) //Not our turn to save yet.
+			continue;
+
+		// [CarlosHenrq] Configurações de salvar personagem em casos desnecessários
+		// 4: Não salvar automaticamente personagens dentro de castelos com woe 1.0 ativa
+		// 8: Não salvar automaticamente personagens dentro de castelos com woe 2.0 ativa
+		if (!sd->state.autotrade && ((map->agit_flag && (map->prevent_save_settings&4) && map->list[sd->bl.m].flag.gvg_castle)
+					|| (map->agit2_flag && (map->prevent_save_settings&8) && map->list[sd->bl.m].flag.gvg_castle)))
 			continue;
 
 		//Save char.

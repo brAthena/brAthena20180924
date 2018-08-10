@@ -277,6 +277,23 @@ bool chrif_save(struct map_session_data *sd, int flag) {
 
 	pc->makesavestatus(sd);
 
+	// Verifica os flags para serem necessários gravar no banco de dados informações de personagem.
+	if(!flag && !sd->state.autotrade)
+	{
+		// Configurações de salvar personagem em casos desnecessários
+		// 1: Não salvar automaticamente se a woe 1.0 estiver ativa
+		// 2: Não salvar automaticamente se a woe 2.0 estiver ativa
+		if (((map->prevent_save_settings&1) && map->agit_flag) || ((map->prevent_save_settings&2) && map->agit2_flag))
+			return false;
+
+		// Configurações de salvar personagem em casos desnecessários
+		// 4: Não salvar automaticamente personagens dentro de castelos com woe 1.0 ativa
+		// 8: Não salvar automaticamente personagens dentro de castelos com woe 2.0 ativa
+		if (((map->prevent_save_settings&4) && map->agit_flag && map->list[sd->bl.m].flag.gvg_castle)
+			|| ((map->prevent_save_settings&8) && map->agit2_flag && map->list[sd->bl.m].flag.gvg_castle))
+			return false;
+	}
+
 	if (flag && sd->state.active) { //Store player data which is quitting
 		//FIXME: SC are lost if there's no connection at save-time because of the way its related data is cleared immediately after this function. [Skotlex]
 		if ( chrif->isconnected() )

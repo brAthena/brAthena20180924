@@ -965,6 +965,22 @@ struct map_interface {
 	int enable_spy; //Determines if @spy commands are active.
 	char db_path[256];
 
+	// [CarlosHenrq] Previne autosave de dados...
+	// Algumas configurações para previnir que o servidor inteiro seja salvo
+	// em algumas situações bem espeficicas.
+	//   (Para reduzir o lag, isso pode causar problemas de perca de dados em caso de crash durante uma WoE por exemplo)
+	// As configurações 'save_settings' serão ignoradas por esta configuração.
+	// Somente serão considerados para salvar personagens em @autotrade
+	// Por exemplo, quando o personagem QUITAR ele será salvo.
+	// ===== Configurações de salvar personagem em casos desnecessários
+	// 1: Não salvar automaticamente se a woe 1.0 estiver ativa
+	// 2: Não salvar automaticamente se a woe 2.0 estiver ativa
+	// ===== Não salvar enquanto woe 1.0 e 2.0 estiver ativa: 1+2 = 3
+	// 4: Não salvar automaticamente personagens dentro de castelos com woe 1.0 ativa
+	// 8: Não salvar automaticamente personagens dentro de castelos com woe 2.0 ativa
+	// ===== Não salvar personagens em woe 1.0 + 2.0 ativas: 12
+	int prevent_save_settings;
+
 	char help_txt[256];
 	char help2_txt[256];
 	char charhelp_txt[256];
