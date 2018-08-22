@@ -145,7 +145,7 @@ int compare_item(struct item *a, struct item *b)
 int storage_additem(struct map_session_data* sd, struct item* item_data, int amount) {
 	struct storage_data* stor = &sd->status.storage;
 	struct item_data *data;
-	int i;
+	int i, start_amount = amount;
 
 	if( item_data->nameid <= 0 || amount <= 0 )
 		return 1;
@@ -225,7 +225,21 @@ int storage_additem(struct map_session_data* sd, struct item* item_data, int amo
 	// find free slot
 	ARR_FIND( 0, MAX_STORAGE, i, stor->items[i].nameid == 0 );
 	if( i >= MAX_STORAGE )
+	{
+		if(start_amount != amount)
+		{
+			item_data->amount -= (start_amount - amount);
+
+			clif->inventorylist(sd);
+			if(pc_iscarton(sd))
+			{
+				clif->cartlist(sd);
+				clif->updatestatus(sd,SP_CARTINFO);
+			}
+		}
+
 		return 1;
+	}
 
 	// add item to slot
 	memcpy(&stor->items[i],item_data,sizeof(stor->items[0]));
