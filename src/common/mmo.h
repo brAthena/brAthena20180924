@@ -256,7 +256,7 @@ struct quest {
 struct item {
 	int id;
 	short nameid;
-	short amount;
+	int amount;
 	unsigned int equip; // Location(s) where item is equipped (using enum equip_pos for bitmasking).
 	char identify;
 	char refine;

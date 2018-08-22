@@ -30,6 +30,7 @@
 #include "common/nullpo.h"
 #include "common/showmsg.h"
 #include "common/socket.h"
+#include "common/utils.h"
 #include "common/sql.h"
 #include "common/strlib.h" // StringBuf
 
@@ -55,7 +56,7 @@ int inter_storage_fromsql(int account_id, struct storage_data* p)
 	StringBuf buf;
 	char* data;
 	int i;
-	int j;
+	int j, store_amount = 0;
 
 	nullpo_ret(p);
 	memset(p, 0, sizeof(struct storage_data)); //clean up memory
@@ -90,8 +91,69 @@ int inter_storage_fromsql(int account_id, struct storage_data* p)
 			SQL->GetData(inter->sql_handle, 10+j, &data, NULL); item->card[j] = atoi(data);
 		}
 	}
-	p->storage_amount = i;
+	p->storage_amount = store_amount = i;
 	SQL->FreeResult(inter->sql_handle);
+
+	/**
+	 * Pequeno ajuste para arrumar entradas de itens com dados acima de 30k (normalmente)
+	 * [CarlosHenrq]
+	 */
+	for(i = 0; i < p->storage_amount; i++)
+	{
+		struct item* it = &p->items[i];
+		// Inicializador de quantidades para realizar os ajustes de entradas no storage.
+		int total_amount = (int)it->amount, total_diff = 0;
+		int total_new_entries = 0;
+
+		// Nada a se fazer por aqui.
+		if(it->amount <= MAX_AMOUNT)
+			continue;
+
+		// Faz o ajuste da entrada original e calcula a diferença necessária
+		// para o novo row.
+		it->amount = cap_value(total_amount, 0, MAX_AMOUNT);
+
+		// Diferença é o total
+		total_diff = total_amount - it->amount;
+
+		do
+		{
+			// Nova struct para tratar os dados de storage dos jogadores.
+			struct item it_new;
+			memset(&it_new, 0, sizeof(it_new));
+
+			it_new.id = it->id;
+			it_new.nameid = it->nameid;
+			it_new.amount = cap_value(total_diff, 0, MAX_AMOUNT);
+			it_new.equip = it->equip;
+			it_new.identify = it->identify;
+			it_new.refine = it->refine;
+			it_new.attribute = it->attribute;
+			it_new.expire_time = it->expire_time;
+			it_new.bound = it->bound;
+			it_new.unique_id = 0;
+
+			for(j = 0; j < MAX_SLOTS; j++)
+				it_new.card[j] = it->card[j];
+
+			// Adiciona uma nova entrada no storage
+			// do jogador
+			memcpy(&p->items[store_amount], &it_new, sizeof(it_new));
+			store_amount++;
+
+			// Remove os itens que foram adicionados a
+			// a nova entrada do diff somatório.
+			total_diff -= it_new.amount;
+
+		} while(total_diff > MAX_AMOUNT);
+	}
+
+	// Houve ajuste de itens no banco de dados
+	if(p->storage_amount < store_amount)
+	{
+		ShowWarning("Armazem: Houve %d  novas entradas para ajustar quantidade limite (id: %d)\n", (store_amount - p->storage_amount), account_id);
+		p->storage_amount = store_amount;
+	}
 
 	ShowInfo("Carregamento de armazem completo - id: %d (total: %d)\n", account_id, p->storage_amount);
 	return 1;

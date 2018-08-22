@@ -561,6 +561,10 @@ struct Battle_Config {
 
 	// Configuração para impedir drop de itens dentro de mapas com o flag 'town'. [CarlosHenrq]
 	int nodrop_in_town;
+
+	// Configuração para o storage do personagem se ajustar automaticamente
+	// quando o limite de itens máximo for atingido. [CarlosHenrq]
+	int storage_auto_new_entry;	
 };
 
 /* criteria for battle_config.idletime_critera */

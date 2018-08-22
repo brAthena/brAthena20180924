@@ -36,6 +36,7 @@
 #include "common/db.h"
 #include "common/memmgr.h"
 #include "common/nullpo.h"
+#include "common/utils.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -167,18 +168,56 @@ int storage_additem(struct map_session_data* sd, struct item* item_data, int amo
 		return 1;
 	}
 
-	if( itemdb->isstackable2(data) )
-	{//Stackable
-		for( i = 0; i < MAX_STORAGE; i++ )
+	if(itemdb->isstackable2(data))
+	{ // existing items found, stack them
+		for(i = 0; i < MAX_STORAGE; i++)
 		{
-			if( compare_item(&stor->items[i], item_data) )
-			{// existing items found, stack them
-				if( amount > MAX_AMOUNT - stor->items[i].amount || ( data->stack.storage && amount > data->stack.amount - stor->items[i].amount ) )
-					return 1;
+			if(compare_item(&stor->items[i], item_data))
+			{
+				// No novo teste, caso o item atinja o limite máximo permitido, então
+				// será procurado o item, adicionado a diferença em todas as entradas
+				// que ele existe, e se ainda sobrar, uma nova entrada será criada. [CarlosHenrq]
+				if(battle_config.storage_auto_new_entry)
+				{
+					// Será usado para a quantidade de itens que faltam para ser adicionados no
+					// storage do jogador.
+					int amount_diff = 0, amount_storaged = 0;
 
-				stor->items[i].amount += amount;
-				clif->storageitemadded(sd,&stor->items[i],i,amount);
-				return 0;
+					// Se atingir a entrada já está no limite máximo dos itens,
+					// pula a entrada.
+					if((stor->items[i].amount >= MAX_AMOUNT) || (data->stack.storage && stor->items[i].amount >= data->stack.amount))
+						continue;
+
+					// Quanto falta para atingir o limite dos itens no storage?
+					amount_diff = data->stack.storage ? data->stack.amount - stor->items[i].amount : MAX_AMOUNT - stor->items[i].amount;
+
+					// Quantidade de itens que serão armazenados
+					// Nesta entrada do storage
+					amount_storaged = cap_value(amount, 0, amount_diff);
+
+					// Insere o item no storage e pula para o próximo registro
+					// Apenas se for necessário
+					stor->items[i].amount += amount_storaged;
+					clif->storageitemadded(sd, &stor->items[i], i, amount_storaged);
+
+					// Remove da contagem total o item que foi armazenado
+					amount -= amount_storaged;
+
+					// Atingiu o limite de itens? Então, armazenou com sucesso
+					// Caso contrario irá continuar procurando uma próxima entrada
+					// para inserir os itens.
+					if(!amount)
+						return 0;
+				}
+				else
+				{
+					if( amount > MAX_AMOUNT - stor->items[i].amount || ( data->stack.storage && amount > data->stack.amount - stor->items[i].amount ) )
+						return 1;
+
+					stor->items[i].amount += amount;
+					clif->storageitemadded(sd,&stor->items[i],i,amount);
+					return 0;
+				}
 			}
 		}
 	}
