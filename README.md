@@ -1,3 +1,12 @@
+  Informamos que apartir da data de 24/09/2018, estaremos refazendo o fork do Hercules e trabalharemos emcima do mesmo.
+  Não mais iremos manter o desenvolvimento desta versão, por se tratar de uma versão muito antiga e haver a necessidade de atualização de imensas features que já foram implementadas. Iremos sim, corrigir eventuais problemas referentes a este repositório, porém, não mais será atualizado, assim como ocorreu na versão anterior.
+
+  No novo fork, iremos também possuir desenvolvimento interno, mas isso não nos isenta de continuarmos a ser um fork do Hercules, como sempre afirmamos que somos.
+
+  Solicitamos a todos que desejam contribuir para o projeto brAthena, que nos procure no discord e também no fórum. Desde já contamos com a colaboração de todos vocês, para a devida continuidade do projeto.
+
+
+
 [![N|Solid](https://i.imgur.com/IQKKbT8.png)](https://forum.brathena.org/)
 [![GitHub issues](https://img.shields.io/github/issues/brAthena/brAthena.svg)](https://github.com/brAthena/brAthena/issues) [![GitHub forks](https://img.shields.io/github/forks/brAthena/brAthena.svg)](https://github.com/brAthena/brAthena/network) [![GitHub stars](https://img.shields.io/github/stars/brAthena/brAthena.svg)](https://github.com/brAthena/brAthena/stargazers) [![GitHub license](https://img.shields.io/badge/license-AGPL-blue.svg)](https://raw.githubusercontent.com/brAthena/brAthena/master/LICENSE) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/651c5bd0a6c34fd48098fc04cc3c4dd3)](https://www.codacy.com/app/AlbericoD/brAthena?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=AlbericoD/brAthena&amp;utm_campaign=Badge_Grade)
 
