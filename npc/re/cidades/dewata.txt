@@ -273,7 +273,7 @@ dewata,146,109,5	script	Chefe do Restaurante#dew	4_COOK,{
 		mes "Na ilha Dewata, chamamos o arroz como Nasi, macarrão como Mie, pão como Roti, frango como Ayam, peixe como Ikan e milho como Jagung.";
 		next;
 		mes "[Chefe do Restaurante]";
-		mes "Então, se o arroz é frito, chamamos isso de "Nasi Goreng", e o macarrão frito é 'Mie Goreng'.";
+		mes "Então, se o arroz é frito, chamamos isso de \"Nasi Goreng\", e o macarrão frito é 'Mie Goreng'.";
 		next;
 		mes "[Chefe do Restaurante]";
 		mes "Bem ... Isso é suficiente para desfrutar nossos alimentos em Dewata !! Se você está com fome, nós temos nosso menu exclusivo por apenas ^0000FF5000^000000 Zeny.";
@@ -342,7 +342,7 @@ dewata,154,107,4	script	Turista#dew	4_M_04,{
 	emotion e_hmm;
 	next;
 	mes "[Turista]";
-	mes "Ele deve ser um grande comedor, não um "gourmet"...";
+	mes "Ele deve ser um grande comedor, não um \"gourmet\"...";
 	next;
 	mes "[Turista]";
 	mes "Você já esteve em Prontera? Eu acho que o vi em algum lugar..";
